@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  TCIAppDelegate.h
 //  individual
 //
 //  Created by 穆康 on 2016/10/18.
@@ -8,10 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface TCIAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-
 @end
-

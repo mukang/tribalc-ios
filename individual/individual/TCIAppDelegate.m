@@ -1,18 +1,18 @@
 //
-//  AppDelegate.m
+//  TCIAppDelegate.m
 //  individual
 //
 //  Created by 穆康 on 2016/10/18.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "TCIAppDelegate.h"
 
-@interface AppDelegate ()
+@interface TCIAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation TCIAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -46,6 +46,5 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
 
 @end
