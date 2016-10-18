@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		7A9CCED11DB62011003D90C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCED01DB62011003D90C6 /* main.m */; };
 		7A9CCED71DB62011003D90C6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCED61DB62011003D90C6 /* ViewController.m */; };
-		7A9CCEDA1DB62011003D90C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCED81DB62011003D90C6 /* Main.storyboard */; };
 		7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */; };
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
 		7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEE91DB62011003D90C6 /* individualTests.m */; };
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
 		7A9CCF041DB62682003D90C6 /* TCIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCF031DB62682003D90C6 /* TCIAppDelegate.m */; };
+		7A9CCF141DB6313B003D90C6 /* TCFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCF131DB6313B003D90C6 /* TCFunctions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +39,6 @@
 		7A9CCED01DB62011003D90C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7A9CCED51DB62011003D90C6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7A9CCED61DB62011003D90C6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		7A9CCED91DB62011003D90C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7A9CCEDE1DB62011003D90C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A9CCEE01DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -51,6 +50,8 @@
 		7A9CCEF61DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A9CCF021DB62682003D90C6 /* TCIAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIAppDelegate.h; sourceTree = "<group>"; };
 		7A9CCF031DB62682003D90C6 /* TCIAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIAppDelegate.m; sourceTree = "<group>"; };
+		7A9CCF121DB6313B003D90C6 /* TCFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCFunctions.h; sourceTree = "<group>"; };
+		7A9CCF131DB6313B003D90C6 /* TCFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCFunctions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +118,6 @@
 		7A9CCECF1DB62011003D90C6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7A9CCED81DB62011003D90C6 /* Main.storyboard */,
 				7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */,
 				7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */,
 				7A9CCEE01DB62011003D90C6 /* Info.plist */,
@@ -161,6 +161,9 @@
 		7A9CCF071DB6279C003D90C6 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				7A9CCF0C1DB62E08003D90C6 /* Common */,
+				7A9CCF0D1DB62E08003D90C6 /* LocalService */,
+				7A9CCF0E1DB62E08003D90C6 /* WebService */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -194,6 +197,29 @@
 			children = (
 			);
 			path = Tools;
+			sourceTree = "<group>";
+		};
+		7A9CCF0C1DB62E08003D90C6 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7A9CCF121DB6313B003D90C6 /* TCFunctions.h */,
+				7A9CCF131DB6313B003D90C6 /* TCFunctions.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7A9CCF0D1DB62E08003D90C6 /* LocalService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LocalService;
+			sourceTree = "<group>";
+		};
+		7A9CCF0E1DB62E08003D90C6 /* WebService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WebService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,7 +334,6 @@
 			files = (
 				7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
-				7A9CCEDA1DB62011003D90C6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +360,7 @@
 			files = (
 				7A9CCED71DB62011003D90C6 /* ViewController.m in Sources */,
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
+				7A9CCF141DB6313B003D90C6 /* TCFunctions.m in Sources */,
 				7A9CCF041DB62682003D90C6 /* TCIAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,14 +397,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		7A9CCED81DB62011003D90C6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7A9CCED91DB62011003D90C6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
