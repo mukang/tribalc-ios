@@ -20,6 +20,8 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     NSLog(@"\n%@\n%@\n%@\n%@\n%@\n%@\n%@", TCGetDeviceModel(), TCGetDeviceUUID(), TCGetAppIdentifier(), TCGetDeviceOSVersion(), TCGetAppVersion(), TCGetAppBuildVersion(), TCGetAppFullVersion());
+    
+    
 }
 
 

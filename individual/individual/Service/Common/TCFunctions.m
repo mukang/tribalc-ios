@@ -10,8 +10,8 @@
 #import <sys/utsname.h>
 #import <UIKit/UIKit.h>
 
-#ifndef _TCFUNCTIONS_M
-#define _TCFUNCTIONS_M
+#ifndef TCFunctions_m
+#define TCFunctions_m
 
 #pragma mark - 设备操作
 

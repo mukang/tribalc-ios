@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#ifndef _TCFUNCTIONS_H
-#define _TCFUNCTIONS_H
+#ifndef TCFunctions_h
+#define TCFunctions_h
 
 
 
