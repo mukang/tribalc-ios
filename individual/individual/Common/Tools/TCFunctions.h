@@ -13,6 +13,19 @@
 
 
 
+#pragma mark - NSString 操作
+
+/**
+ *  计算字符串的MD5摘要
+ *
+ *  @param text 需要计算MD5摘要的NSString字符串
+ *
+ *  @return 返回已计算的MD5摘要，为32个小写字符
+ */
+extern NSString * TCDigestMD5(NSString * text);
+
+
+
 #pragma mark - 线程操作
 
 #ifndef TC_CALL_ASYNC_MQ
