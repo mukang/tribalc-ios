@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TCIAppDelegate.h"
+#import "TCAppDelegate.h"
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([TCIAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([TCAppDelegate class]));
     }
 }

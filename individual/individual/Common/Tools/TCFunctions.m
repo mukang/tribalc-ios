@@ -11,8 +11,8 @@
 #import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonDigest.h>
 
-#ifndef TCFunctions_m
-#define TCFunctions_m
+#ifndef _TCFunctions_m
+#define _TCFunctions_m
 
 #pragma mark - NSString 操作
 

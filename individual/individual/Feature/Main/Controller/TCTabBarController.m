@@ -1,19 +1,19 @@
 //
-//  TCITabBarController.m
+//  TCTabBarController.m
 //  individual
 //
-//  Created by 穆康 on 2016/10/25.
+//  Created by 穆康 on 2016/10/26.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCITabBarController.h"
-#import "TCINavigationController.h"
+#import "TCTabBarController.h"
+#import "TCNavigationController.h"
 
-@interface TCITabBarController ()
+@interface TCTabBarController ()
 
 @end
 
-@implementation TCITabBarController
+@implementation TCTabBarController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,7 +31,7 @@
 - (void)addChildController:(UIViewController *)childController title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selecteImage {
     
     childController.navigationItem.title = title;
-    TCINavigationController *nav = [[TCINavigationController alloc] initWithRootViewController:childController];
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:childController];
     
     [nav.tabBarItem setTitleTextAttributes:@{
                                              NSForegroundColorAttributeName : [UIColor redColor]
@@ -49,13 +49,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

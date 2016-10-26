@@ -1,26 +1,22 @@
 //
-//  TCIAppDelegate.m
+//  TCAppDelegate.m
 //  individual
 //
-//  Created by 穆康 on 2016/10/18.
+//  Created by 穆康 on 2016/10/26.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCIAppDelegate.h"
-#import "TCITabBarController.h"
+#import "TCAppDelegate.h"
+#import "TCTabBarController.h"
 
-@interface TCIAppDelegate ()
-
-@end
-
-@implementation TCIAppDelegate
+@implementation TCAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    TCITabBarController *tabBarController = [[TCITabBarController alloc] init];
+    TCTabBarController *tabBarController = [[TCTabBarController alloc] init];
     self.window.rootViewController = tabBarController;
     
     self.window.backgroundColor = [UIColor whiteColor];
