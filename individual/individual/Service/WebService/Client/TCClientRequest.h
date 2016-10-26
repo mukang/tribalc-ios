@@ -8,8 +8,36 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TCClientRequest : NSObject
+
+@protocol TCClientRequest <NSObject>
+
+@required
+
+- (void)setValue:(id)value forParam:(NSString *)name;
+
+- (id)valueForParam:(NSString *)name;
+
+- (NSDictionary *)params;
+
+- (void)addFile:(NSURL *)fileURL;
+
+- (NSArray *)files;
+
+- (NSString *)httpMethod;
+
+- (NSTimeInterval)timeout;
+
+@end
+
+
+@interface TCClientRequest : NSObject <TCClientRequest>
 
 + (instancetype)requestWithApi:(NSString *)apiName;
 
+- (NSString *)requestIdentifier;
+
+- (NSString *)apiName;
+
 @end
+
+
