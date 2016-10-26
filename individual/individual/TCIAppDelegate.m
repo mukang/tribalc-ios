@@ -7,7 +7,7 @@
 //
 
 #import "TCIAppDelegate.h"
-#import "ViewController.h"
+#import "TCITabBarController.h"
 
 @interface TCIAppDelegate ()
 
@@ -20,7 +20,8 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    self.window.rootViewController = [[ViewController alloc] init];
+    TCITabBarController *tabBarController = [[TCITabBarController alloc] init];
+    self.window.rootViewController = tabBarController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
