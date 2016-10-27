@@ -8,6 +8,7 @@
 
 #import "TCTabBarController.h"
 #import "TCNavigationController.h"
+#import "TCProfileViewController.h"
 
 @interface TCTabBarController ()
 
@@ -21,11 +22,11 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self addChildController:[[UIViewController alloc] init] title:@"首页" image:nil selectedImage:nil];
-    [self addChildController:[[UIViewController alloc] init] title:@"发现" image:nil selectedImage:nil];
+    [self addChildController:[[UIViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
+    [self addChildController:[[UIViewController alloc] init] title:@"发现" image:@"tabBar_discover_normal" selectedImage:@"tabBar_discover_selected"];
     [self addChildController:[[UIViewController alloc] init] title:@"附近" image:nil selectedImage:nil];
-    [self addChildController:[[UIViewController alloc] init] title:@"常用" image:nil selectedImage:nil];
-    [self addChildController:[[UIViewController alloc] init] title:@"我的" image:nil selectedImage:nil];
+    [self addChildController:[[UIViewController alloc] init] title:@"常用" image:@"tabBar_common_normal" selectedImage:@"tabBar_common_selected"];
+    [self addChildController:[[TCProfileViewController alloc] init] title:@"我的" image:@"tabBar_profile_normal" selectedImage:@"tabBar_profile_selected"];
 }
 
 - (void)addChildController:(UIViewController *)childController title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selecteImage {
@@ -34,12 +35,16 @@
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:childController];
     
     [nav.tabBarItem setTitleTextAttributes:@{
-                                             NSForegroundColorAttributeName : [UIColor redColor]
+                                             NSForegroundColorAttributeName : TCRGBColor(112, 112, 112)
+                                             }
+                                  forState:UIControlStateNormal];
+    [nav.tabBarItem setTitleTextAttributes:@{
+                                             NSForegroundColorAttributeName : TCRGBColor(67, 67, 67)
                                              }
                                   forState:UIControlStateSelected];
     nav.tabBarItem.title = title;
-    nav.tabBarItem.image = [UIImage imageNamed:image];
-    nav.tabBarItem.selectedImage = [UIImage imageNamed:selecteImage];
+    nav.tabBarItem.image = [[UIImage imageNamed:image] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    nav.tabBarItem.selectedImage = [[UIImage imageNamed:selecteImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [self addChildViewController:nav];
 }
 

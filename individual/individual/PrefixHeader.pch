@@ -12,7 +12,7 @@
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
-
+#import "UIView+Category.h"
 
 
 // 颜色
@@ -29,6 +29,8 @@
 
 /** 屏幕高度 */
 #define TCScreenHeight [UIScreen mainScreen].bounds.size.height
+
+#define TCRealValue(value) ((value)/375.0f*TCScreenWidth)
 
 // 打印输出
 #ifdef DEBUG // 处于开发阶段

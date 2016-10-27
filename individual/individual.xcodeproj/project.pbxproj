@@ -14,6 +14,10 @@
 		7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF81DC0AA7D00651905 /* TCTabBarController.m */; };
 		7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AFB1DC0AAC200651905 /* TCNavigationController.m */; };
 		7A190AFF1DC0AB1300651905 /* TCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AFE1DC0AB1300651905 /* TCAppDelegate.m */; };
+		7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190B081DC0CBFE00651905 /* TCLoginViewController.m */; };
+		7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A190B091DC0CBFE00651905 /* TCLoginViewController.xib */; };
+		7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190B0F1DC0CC9800651905 /* TCProfileViewController.m */; };
+		7A190B121DC0CC9800651905 /* TCProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A190B101DC0CC9800651905 /* TCProfileViewController.xib */; };
 		7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47CB1DB720DE00E39207 /* UIView+Category.m */; };
 		7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47CE1DB7213C00E39207 /* UIImage+Category.m */; };
 		7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47D11DB76B4100E39207 /* TCFunctions.m */; };
@@ -27,6 +31,8 @@
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
 		7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEE91DB62011003D90C6 /* individualTests.m */; };
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
+		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
+		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +67,12 @@
 		7A190AFB1DC0AAC200651905 /* TCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCNavigationController.m; sourceTree = "<group>"; };
 		7A190AFD1DC0AB1300651905 /* TCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAppDelegate.h; sourceTree = "<group>"; };
 		7A190AFE1DC0AB1300651905 /* TCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAppDelegate.m; sourceTree = "<group>"; };
+		7A190B071DC0CBFE00651905 /* TCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLoginViewController.h; sourceTree = "<group>"; };
+		7A190B081DC0CBFE00651905 /* TCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLoginViewController.m; sourceTree = "<group>"; };
+		7A190B091DC0CBFE00651905 /* TCLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCLoginViewController.xib; sourceTree = "<group>"; };
+		7A190B0E1DC0CC9800651905 /* TCProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileViewController.h; sourceTree = "<group>"; };
+		7A190B0F1DC0CC9800651905 /* TCProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileViewController.m; sourceTree = "<group>"; };
+		7A190B101DC0CC9800651905 /* TCProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileViewController.xib; sourceTree = "<group>"; };
 		7A1A47CA1DB720DE00E39207 /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
 		7A1A47CB1DB720DE00E39207 /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
 		7A1A47CD1DB7213C00E39207 /* UIImage+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Category.h"; sourceTree = "<group>"; };
@@ -88,6 +100,9 @@
 		7A9CCEF41DB62011003D90C6 /* individualUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = individualUITests.m; sourceTree = "<group>"; };
 		7A9CCEF61DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7ABF57B41DB70E2D002E40A0 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
+		7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetPasswordView.m; sourceTree = "<group>"; };
+		7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCGetPasswordView.xib; sourceTree = "<group>"; };
 		FDF9BE3739BA95056A69F363 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -143,6 +158,43 @@
 			children = (
 			);
 			path = SubClasses;
+			sourceTree = "<group>";
+		};
+		7A190B051DC0CBC300651905 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7A190B061DC0CBC300651905 /* Controller */,
+				7AE32B811DC1BA8A004E303D /* View */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		7A190B061DC0CBC300651905 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7A190B071DC0CBFE00651905 /* TCLoginViewController.h */,
+				7A190B081DC0CBFE00651905 /* TCLoginViewController.m */,
+				7A190B091DC0CBFE00651905 /* TCLoginViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7A190B0C1DC0CC7800651905 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7A190B0D1DC0CC7800651905 /* Controller */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		7A190B0D1DC0CC7800651905 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7A190B0E1DC0CC9800651905 /* TCProfileViewController.h */,
+				7A190B0F1DC0CC9800651905 /* TCProfileViewController.m */,
+				7A190B101DC0CC9800651905 /* TCProfileViewController.xib */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		7A68C7F31DB9EF1F00027C6E /* CategoriesAndTools */ = {
@@ -234,6 +286,8 @@
 		7A9CCF061DB62790003D90C6 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				7A190B0C1DC0CC7800651905 /* Profile */,
+				7A190B051DC0CBC300651905 /* Login */,
 				7AD953431DBF082400AD2556 /* Main */,
 			);
 			path = Feature;
@@ -330,6 +384,16 @@
 				7A190AFB1DC0AAC200651905 /* TCNavigationController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		7AE32B811DC1BA8A004E303D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */,
+				7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */,
+				7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		DC5E1AD9F0BAB71FEB5CB837 /* Pods */ = {
@@ -455,7 +519,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */,
+				7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */,
+				7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
+				7A190B121DC0CC9800651905 /* TCProfileViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +596,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
+				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
+				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
+				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
 				7A190AF01DC09BF500651905 /* TCClient.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */,
