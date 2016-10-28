@@ -7,6 +7,8 @@
 //
 
 #import "TCBiographyViewController.h"
+#import "TCBioEditViewController.h"
+
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
 
@@ -15,6 +17,7 @@
 @interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (copy, nonatomic) NSArray *biographyTitles;
+@property (copy, nonatomic) NSArray *bioDetailsTitles;
 
 @end
 
@@ -51,7 +54,7 @@
     nib = [UINib nibWithNibName:@"TCBiographyAvatarViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"TCBiographyAvatarViewCell"];
     
-    
+    self.bioDetailsTitles = @[@[@"", @"瓜皮", @"女", @"1995年5月20日", @"单身"], @[@"15967897508", @"北京朝阳区", @"吉林省长春市九台区瓜皮小区"]];
 }
 
 #pragma mark - UITableViewDataSource
@@ -76,10 +79,13 @@
     } else {
         TCBiographyViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = self.biographyTitles[indexPath.section][indexPath.row];
+        cell.detailLabel.text = self.bioDetailsTitles[indexPath.section][indexPath.row];
         currentCell = cell;
     }
     return currentCell;
 }
+
+#pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && indexPath.row == 0) {
@@ -95,6 +101,23 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.1;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            
+        } else {
+            TCBioEditViewController *bioEditVC = [[TCBioEditViewController alloc] initWithNibName:nil bundle:nil];
+            self.definesPresentationContext = YES;
+            bioEditVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+            bioEditVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            bioEditVC.bioEditType = indexPath.row - 1;
+            [self presentViewController:bioEditVC animated:NO completion:nil];
+        }
+    } else {
+        
+    }
 }
 
 #pragma mark - overwrite 

@@ -25,7 +25,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *wechatButtonBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherLabelBottomConstraint;
 
-
 @end
 
 @implementation TCLoginViewController

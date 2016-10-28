@@ -30,6 +30,14 @@
 		7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A918ABB1DC32686002BD529 /* TCBiographyViewCell.xib */; };
 		7A918AC11DC32D90002BD529 /* TCBiographyAvatarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A918ABF1DC32D90002BD529 /* TCBiographyAvatarViewCell.m */; };
 		7A918AC21DC32D90002BD529 /* TCBiographyAvatarViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A918AC01DC32D90002BD529 /* TCBiographyAvatarViewCell.xib */; };
+		7A918AC51DC34104002BD529 /* TCBioEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A918AC41DC34104002BD529 /* TCBioEditViewController.m */; };
+		7A918AC81DC34AA6002BD529 /* TCBioEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A918AC71DC34AA6002BD529 /* TCBioEditView.m */; };
+		7A918ACA1DC34AC3002BD529 /* TCBioEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A918AC91DC34AC3002BD529 /* TCBioEditView.xib */; };
+		7A918ACE1DC362E0002BD529 /* TCBioEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A918ACD1DC362E0002BD529 /* TCBioEditViewController.xib */; };
+		7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A918AD01DC366BE002BD529 /* TCBioEditGenderView.m */; };
+		7A918AD31DC366CE002BD529 /* TCBioEditGenderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A918AD21DC366CE002BD529 /* TCBioEditGenderView.xib */; };
+		7A918AD61DC36D53002BD529 /* TCBioEditAffectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A918AD51DC36D53002BD529 /* TCBioEditAffectionView.m */; };
+		7A918AD81DC36D6E002BD529 /* TCBioEditAffectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A918AD71DC36D6E002BD529 /* TCBioEditAffectionView.xib */; };
 		7A9CCED11DB62011003D90C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCED01DB62011003D90C6 /* main.m */; };
 		7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */; };
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
@@ -99,6 +107,18 @@
 		7A918ABE1DC32D90002BD529 /* TCBiographyAvatarViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBiographyAvatarViewCell.h; sourceTree = "<group>"; };
 		7A918ABF1DC32D90002BD529 /* TCBiographyAvatarViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBiographyAvatarViewCell.m; sourceTree = "<group>"; };
 		7A918AC01DC32D90002BD529 /* TCBiographyAvatarViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBiographyAvatarViewCell.xib; sourceTree = "<group>"; };
+		7A918AC31DC34104002BD529 /* TCBioEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditViewController.h; sourceTree = "<group>"; };
+		7A918AC41DC34104002BD529 /* TCBioEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditViewController.m; sourceTree = "<group>"; };
+		7A918AC61DC34AA6002BD529 /* TCBioEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditView.h; sourceTree = "<group>"; };
+		7A918AC71DC34AA6002BD529 /* TCBioEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditView.m; sourceTree = "<group>"; };
+		7A918AC91DC34AC3002BD529 /* TCBioEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditView.xib; sourceTree = "<group>"; };
+		7A918ACD1DC362E0002BD529 /* TCBioEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditViewController.xib; sourceTree = "<group>"; };
+		7A918ACF1DC366BE002BD529 /* TCBioEditGenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditGenderView.h; sourceTree = "<group>"; };
+		7A918AD01DC366BE002BD529 /* TCBioEditGenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditGenderView.m; sourceTree = "<group>"; };
+		7A918AD21DC366CE002BD529 /* TCBioEditGenderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditGenderView.xib; sourceTree = "<group>"; };
+		7A918AD41DC36D53002BD529 /* TCBioEditAffectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditAffectionView.h; sourceTree = "<group>"; };
+		7A918AD51DC36D53002BD529 /* TCBioEditAffectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditAffectionView.m; sourceTree = "<group>"; };
+		7A918AD71DC36D6E002BD529 /* TCBioEditAffectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditAffectionView.xib; sourceTree = "<group>"; };
 		7A9CCECC1DB62011003D90C6 /* individual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = individual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9CCED01DB62011003D90C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -209,6 +229,9 @@
 				7A190B101DC0CC9800651905 /* TCProfileViewController.xib */,
 				7AE32B871DC21CA2004E303D /* TCBiographyViewController.h */,
 				7AE32B881DC21CA2004E303D /* TCBiographyViewController.m */,
+				7A918AC31DC34104002BD529 /* TCBioEditViewController.h */,
+				7A918AC41DC34104002BD529 /* TCBioEditViewController.m */,
+				7A918ACD1DC362E0002BD529 /* TCBioEditViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -421,6 +444,15 @@
 				7A918ABE1DC32D90002BD529 /* TCBiographyAvatarViewCell.h */,
 				7A918ABF1DC32D90002BD529 /* TCBiographyAvatarViewCell.m */,
 				7A918AC01DC32D90002BD529 /* TCBiographyAvatarViewCell.xib */,
+				7A918AC61DC34AA6002BD529 /* TCBioEditView.h */,
+				7A918AC71DC34AA6002BD529 /* TCBioEditView.m */,
+				7A918AC91DC34AC3002BD529 /* TCBioEditView.xib */,
+				7A918ACF1DC366BE002BD529 /* TCBioEditGenderView.h */,
+				7A918AD01DC366BE002BD529 /* TCBioEditGenderView.m */,
+				7A918AD21DC366CE002BD529 /* TCBioEditGenderView.xib */,
+				7A918AD41DC36D53002BD529 /* TCBioEditAffectionView.h */,
+				7A918AD51DC36D53002BD529 /* TCBioEditAffectionView.m */,
+				7A918AD71DC36D6E002BD529 /* TCBioEditAffectionView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -548,12 +580,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */,
+				7A918AD81DC36D6E002BD529 /* TCBioEditAffectionView.xib in Resources */,
 				7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */,
 				7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */,
 				7A918AC21DC32D90002BD529 /* TCBiographyAvatarViewCell.xib in Resources */,
+				7A918ACE1DC362E0002BD529 /* TCBioEditViewController.xib in Resources */,
+				7A918ACA1DC34AC3002BD529 /* TCBioEditView.xib in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
 				7A190B121DC0CC9800651905 /* TCProfileViewController.xib in Resources */,
 				7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */,
+				7A918AD31DC366CE002BD529 /* TCBioEditGenderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,14 +666,18 @@
 				7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */,
 				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
 				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
+				7A918AC81DC34AA6002BD529 /* TCBioEditView.m in Sources */,
 				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
 				7A190AF01DC09BF500651905 /* TCClient.m in Sources */,
+				7A918AC51DC34104002BD529 /* TCBioEditViewController.m in Sources */,
+				7A918AD61DC36D53002BD529 /* TCBioEditAffectionView.m in Sources */,
 				7A918AC11DC32D90002BD529 /* TCBiographyAvatarViewCell.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */,
 				7A918ABC1DC32686002BD529 /* TCBiographyViewCell.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
+				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
 				7A190AF61DC0A73600651905 /* TCClientRequest.m in Sources */,

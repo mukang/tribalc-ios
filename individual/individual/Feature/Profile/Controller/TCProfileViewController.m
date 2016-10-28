@@ -29,6 +29,7 @@
 
 - (IBAction)handleTaoBiographyButton:(UIButton *)sender {
     TCBiographyViewController *vc = [[TCBiographyViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
