@@ -24,8 +24,17 @@
                         <action selector="handleTapLoginButton:" destination="-1" eventType="touchUpInside" id="FvC-vx-IUO"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Sg-aH-64M">
+                    <frame key="frameInset" minX="121" minY="177" width="132" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="个人信息"/>
+                    <connections>
+                        <action selector="handleTaoBiographyButton:" destination="-1" eventType="touchUpInside" id="UCX-Hh-888"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <point key="canvasLocation" x="26.5" y="52.5"/>
         </view>
     </objects>
 </document>

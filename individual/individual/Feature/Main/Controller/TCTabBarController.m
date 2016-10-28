@@ -24,7 +24,7 @@
     
     [self addChildController:[[UIViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
     [self addChildController:[[UIViewController alloc] init] title:@"发现" image:@"tabBar_discover_normal" selectedImage:@"tabBar_discover_selected"];
-    [self addChildController:[[UIViewController alloc] init] title:@"附近" image:nil selectedImage:nil];
+    [self addChildController:[[UIViewController alloc] init] title:@"附近" image:@"tabBar_vicinity" selectedImage:@"tabBar_vicinity"];
     [self addChildController:[[UIViewController alloc] init] title:@"常用" image:@"tabBar_common_normal" selectedImage:@"tabBar_common_selected"];
     [self addChildController:[[TCProfileViewController alloc] init] title:@"我的" image:@"tabBar_profile_normal" selectedImage:@"tabBar_profile_selected"];
 }
@@ -45,6 +45,10 @@
     nav.tabBarItem.title = title;
     nav.tabBarItem.image = [[UIImage imageNamed:image] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     nav.tabBarItem.selectedImage = [[UIImage imageNamed:selecteImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    if ([title isEqualToString:@"附近"]) {
+        nav.tabBarItem.imageInsets = UIEdgeInsetsMake(-10, 0, 10, 0);
+    }
+    nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -2);
     [self addChildViewController:nav];
 }
 

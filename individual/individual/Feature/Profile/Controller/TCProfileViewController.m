@@ -8,6 +8,7 @@
 
 #import "TCProfileViewController.h"
 #import "TCLoginViewController.h"
+#import "TCBiographyViewController.h"
 
 @interface TCProfileViewController ()
 
@@ -26,6 +27,10 @@
     [self presentViewController:loginVC animated:YES completion:nil];
 }
 
+- (IBAction)handleTaoBiographyButton:(UIButton *)sender {
+    TCBiographyViewController *vc = [[TCBiographyViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

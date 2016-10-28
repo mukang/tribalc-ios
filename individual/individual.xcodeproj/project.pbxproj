@@ -26,6 +26,10 @@
 		7A68C7F51DB9EF6700027C6E /* TCDicToModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7F41DB9EF6700027C6E /* TCDicToModelTests.m */; };
 		7A68C7F81DB9F03600027C6E /* TCTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7F71DB9F03600027C6E /* TCTestModel.m */; };
 		7A68C7FB1DB9F37400027C6E /* TCTestBoss.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7FA1DB9F37400027C6E /* TCTestBoss.m */; };
+		7A918ABC1DC32686002BD529 /* TCBiographyViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A918ABA1DC32686002BD529 /* TCBiographyViewCell.m */; };
+		7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A918ABB1DC32686002BD529 /* TCBiographyViewCell.xib */; };
+		7A918AC11DC32D90002BD529 /* TCBiographyAvatarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A918ABF1DC32D90002BD529 /* TCBiographyAvatarViewCell.m */; };
+		7A918AC21DC32D90002BD529 /* TCBiographyAvatarViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A918AC01DC32D90002BD529 /* TCBiographyAvatarViewCell.xib */; };
 		7A9CCED11DB62011003D90C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCED01DB62011003D90C6 /* main.m */; };
 		7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */; };
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
@@ -33,6 +37,7 @@
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
 		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
+		7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B881DC21CA2004E303D /* TCBiographyViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +93,12 @@
 		7A68C7F71DB9F03600027C6E /* TCTestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTestModel.m; sourceTree = "<group>"; };
 		7A68C7F91DB9F37400027C6E /* TCTestBoss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCTestBoss.h; sourceTree = "<group>"; };
 		7A68C7FA1DB9F37400027C6E /* TCTestBoss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTestBoss.m; sourceTree = "<group>"; };
+		7A918AB91DC32686002BD529 /* TCBiographyViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBiographyViewCell.h; sourceTree = "<group>"; };
+		7A918ABA1DC32686002BD529 /* TCBiographyViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBiographyViewCell.m; sourceTree = "<group>"; };
+		7A918ABB1DC32686002BD529 /* TCBiographyViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBiographyViewCell.xib; sourceTree = "<group>"; };
+		7A918ABE1DC32D90002BD529 /* TCBiographyAvatarViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBiographyAvatarViewCell.h; sourceTree = "<group>"; };
+		7A918ABF1DC32D90002BD529 /* TCBiographyAvatarViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBiographyAvatarViewCell.m; sourceTree = "<group>"; };
+		7A918AC01DC32D90002BD529 /* TCBiographyAvatarViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBiographyAvatarViewCell.xib; sourceTree = "<group>"; };
 		7A9CCECC1DB62011003D90C6 /* individual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = individual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9CCED01DB62011003D90C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,6 +114,8 @@
 		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
 		7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetPasswordView.m; sourceTree = "<group>"; };
 		7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCGetPasswordView.xib; sourceTree = "<group>"; };
+		7AE32B871DC21CA2004E303D /* TCBiographyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBiographyViewController.h; sourceTree = "<group>"; };
+		7AE32B881DC21CA2004E303D /* TCBiographyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBiographyViewController.m; sourceTree = "<group>"; };
 		FDF9BE3739BA95056A69F363 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				7A190B0D1DC0CC7800651905 /* Controller */,
+				7AE32B8A1DC21CBA004E303D /* View */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -193,6 +207,8 @@
 				7A190B0E1DC0CC9800651905 /* TCProfileViewController.h */,
 				7A190B0F1DC0CC9800651905 /* TCProfileViewController.m */,
 				7A190B101DC0CC9800651905 /* TCProfileViewController.xib */,
+				7AE32B871DC21CA2004E303D /* TCBiographyViewController.h */,
+				7AE32B881DC21CA2004E303D /* TCBiographyViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -396,6 +412,19 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		7AE32B8A1DC21CBA004E303D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7A918AB91DC32686002BD529 /* TCBiographyViewCell.h */,
+				7A918ABA1DC32686002BD529 /* TCBiographyViewCell.m */,
+				7A918ABB1DC32686002BD529 /* TCBiographyViewCell.xib */,
+				7A918ABE1DC32D90002BD529 /* TCBiographyAvatarViewCell.h */,
+				7A918ABF1DC32D90002BD529 /* TCBiographyAvatarViewCell.m */,
+				7A918AC01DC32D90002BD529 /* TCBiographyAvatarViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DC5E1AD9F0BAB71FEB5CB837 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -521,8 +550,10 @@
 				7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */,
 				7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */,
 				7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */,
+				7A918AC21DC32D90002BD529 /* TCBiographyAvatarViewCell.xib in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
 				7A190B121DC0CC9800651905 /* TCProfileViewController.xib in Resources */,
+				7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,12 +627,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
+				7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */,
 				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
 				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
 				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
 				7A190AF01DC09BF500651905 /* TCClient.m in Sources */,
+				7A918AC11DC32D90002BD529 /* TCBiographyAvatarViewCell.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */,
+				7A918ABC1DC32686002BD529 /* TCBiographyViewCell.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
