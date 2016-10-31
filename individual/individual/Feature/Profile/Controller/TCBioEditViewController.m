@@ -12,22 +12,34 @@
 #import "TCBioEditGenderView.h"
 #import "TCBioEditAffectionView.h"
 
-@interface TCBioEditViewController ()
+@interface TCBioEditViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) TCBioEditView *editNickView;
 @property (weak, nonatomic) TCBioEditGenderView *editGenderView;
 @property (weak, nonatomic) TCBioEditView *editBirthdateView;
 @property (weak, nonatomic) TCBioEditAffectionView *editAffectionView;
 
+@property (strong, nonatomic) NSLayoutConstraint *nickViewTopConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *birthdateViewTopConstraint;
+
+@property (strong, nonatomic) NSLayoutConstraint *nickViewCenterYConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *birthdateViewCenterYConstraint;
+
 @end
 
-@implementation TCBioEditViewController
+@implementation TCBioEditViewController {
+    __weak TCBioEditViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    weakSelf = self;
     self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.82];
+    
+    [self addGesture];
+    [self registerNotifications];
     
     switch (self.bioEditType) {
         case TCBioEditTypeNick:
@@ -51,10 +63,88 @@
     }
 }
 
+- (void)dealloc {
+    [self removeNotifications];
+}
+
+#pragma mark - add gesture
+
+- (void)addGesture {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleBackgroundViewGesture:)];
+    [self.view addGestureRecognizer:tap];
+}
+
+#pragma mark - notifications
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+#pragma mark - actions
+
+- (void)keyboardWillShow:(NSNotification *)noti {
+    if (self.bioEditType == TCBioEditTypeNick) {
+        self.nickViewTopConstraint = [NSLayoutConstraint constraintWithItem:self.editNickView
+                                                                  attribute:NSLayoutAttributeTop
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.view
+                                                                  attribute:NSLayoutAttributeTop
+                                                                 multiplier:1.0
+                                                                   constant:TCRealValue(116)];
+        [self.view addConstraint:self.nickViewTopConstraint];
+        [self.view removeConstraint:self.nickViewCenterYConstraint];
+        
+        NSDictionary *userInfo = noti.userInfo;
+        CGFloat duration = [userInfo[@"UIKeyboardAnimationDurationUserInfoKey"] floatValue];
+        [UIView animateWithDuration:duration animations:^{
+            [weakSelf.view layoutIfNeeded];
+        }];
+    }
+}
+
+- (void)keyboardWillHidden:(NSNotification *)noti {
+    if (self.bioEditType == TCBioEditTypeNick) {
+        [self.view addConstraint:self.nickViewCenterYConstraint];
+        [self.view removeConstraint:self.nickViewTopConstraint];
+        
+        NSDictionary *userInfo = noti.userInfo;
+        CGFloat duration = [userInfo[@"UIKeyboardAnimationDurationUserInfoKey"] floatValue];
+        [UIView animateWithDuration:duration animations:^{
+            [weakSelf.view layoutIfNeeded];
+        }];
+    }
+}
+
+- (void)handleBackgroundViewGesture:(UITapGestureRecognizer *)gesture {
+    if (self.bioEditType == TCBioEditTypeNick && [self.editNickView.textField isFirstResponder]) {
+        [self.editNickView.textField resignFirstResponder];
+    }
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ([self.editNickView.textField isFirstResponder]) {
+        [self.editNickView.textField resignFirstResponder];
+    }
+    return YES;
+}
+
+#pragma mark - setup subviews
+
 - (void)setupBioEditNickView {
     TCBioEditView *editNickView = [[[NSBundle mainBundle] loadNibNamed:@"TCBioEditView" owner:nil options:nil] firstObject];
     editNickView.translatesAutoresizingMaskIntoConstraints = NO;
     editNickView.titleLabel.text = @"昵称";
+    editNickView.textField.returnKeyType = UIReturnKeyDone;
+    editNickView.textField.delegate = self;
     [self.view addSubview:editNickView];
     self.editNickView = editNickView;
 }
@@ -95,6 +185,7 @@
                                              multiplier:1.0
                                                constant:0];
     [self.view addConstraint:constraint];
+    self.nickViewCenterYConstraint = constraint;
 }
 
 - (void)setupBioEditGenderView {
@@ -186,6 +277,7 @@
                                              multiplier:1.0
                                                constant:0];
     [self.view addConstraint:constraint];
+    self.birthdateViewCenterYConstraint = constraint;
 }
 
 - (void)setupBioEditAffectionView {
