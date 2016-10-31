@@ -11,6 +11,7 @@
 #import "TCBioEditView.h"
 #import "TCBioEditGenderView.h"
 #import "TCBioEditAffectionView.h"
+#import "TCBirthdatePickView.h"
 
 @interface TCBioEditViewController () <UITextFieldDelegate>
 
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) TCBioEditGenderView *editGenderView;
 @property (weak, nonatomic) TCBioEditView *editBirthdateView;
 @property (weak, nonatomic) TCBioEditAffectionView *editAffectionView;
+@property (weak, nonatomic) UIDatePicker *datePicker;
 
 @property (strong, nonatomic) NSLayoutConstraint *nickViewTopConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *birthdateViewTopConstraint;
@@ -236,9 +238,12 @@
 - (void)setupBioEditBirthdateView {
     TCBioEditView *editBirthdateView = [[[NSBundle mainBundle] loadNibNamed:@"TCBioEditView" owner:nil options:nil] firstObject];
     editBirthdateView.translatesAutoresizingMaskIntoConstraints = NO;
+    editBirthdateView.textField.userInteractionEnabled = NO;
     editBirthdateView.titleLabel.text = @"出生日期";
     [self.view addSubview:editBirthdateView];
     self.editBirthdateView = editBirthdateView;
+    
+//    TCBirthdatePickView *birthdatePickView = 
 }
 
 - (void)setupBioEditBirthdateConstraints {

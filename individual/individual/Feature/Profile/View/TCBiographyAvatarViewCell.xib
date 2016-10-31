@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="106.5"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="287" height="105"/>
+                <frame key="frameInset" width="287" height="106"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Z2-Wy-yrr">
@@ -25,8 +24,8 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="头像" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZ2-Qr-k8l">
                         <constraints>
-                            <constraint firstAttribute="width" constant="75" id="MEz-r0-ORA"/>
-                            <constraint firstAttribute="height" constant="30" id="oQe-Gq-oHG"/>
+                            <constraint firstAttribute="width" constant="75" id="6WI-b3-Fii"/>
+                            <constraint firstAttribute="height" constant="30" id="tyo-En-IaZ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
@@ -35,9 +34,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="4Z2-Wy-yrr" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ov5-jS-YRo"/>
-                    <constraint firstItem="dZ2-Qr-k8l" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="gzD-DN-jcR"/>
+                    <constraint firstItem="dZ2-Qr-k8l" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="bk1-j7-OTG"/>
                     <constraint firstAttribute="trailing" secondItem="4Z2-Wy-yrr" secondAttribute="trailing" id="nMs-9z-R3Y"/>
-                    <constraint firstItem="dZ2-Qr-k8l" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xqo-R9-YeW"/>
+                    <constraint firstItem="dZ2-Qr-k8l" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="zz5-G1-kZg"/>
                 </constraints>
             </tableViewCellContentView>
             <point key="canvasLocation" x="25" y="51.25"/>

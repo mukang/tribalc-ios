@@ -43,6 +43,10 @@
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
 		7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEE91DB62011003D90C6 /* individualTests.m */; };
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
+		7ACE57A01DC73106004B383A /* TCBirthdatePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACE579F1DC73106004B383A /* TCBirthdatePickView.m */; };
+		7ACE57A21DC7311C004B383A /* TCBirthdatePickView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A11DC7311C004B383A /* TCBirthdatePickView.xib */; };
+		7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */; };
+		7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
 		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
 		7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B881DC21CA2004E303D /* TCBiographyViewController.m */; };
@@ -131,6 +135,12 @@
 		7A9CCEF41DB62011003D90C6 /* individualUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = individualUITests.m; sourceTree = "<group>"; };
 		7A9CCEF61DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7ABF57B41DB70E2D002E40A0 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		7ACE579E1DC73106004B383A /* TCBirthdatePickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBirthdatePickView.h; sourceTree = "<group>"; };
+		7ACE579F1DC73106004B383A /* TCBirthdatePickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBirthdatePickView.m; sourceTree = "<group>"; };
+		7ACE57A11DC7311C004B383A /* TCBirthdatePickView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBirthdatePickView.xib; sourceTree = "<group>"; };
+		7ACE57A61DC73BD9004B383A /* TCVicinityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVicinityViewController.h; sourceTree = "<group>"; };
+		7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVicinityViewController.m; sourceTree = "<group>"; };
+		7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCVicinityViewController.xib; sourceTree = "<group>"; };
 		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
 		7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetPasswordView.m; sourceTree = "<group>"; };
 		7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCGetPasswordView.xib; sourceTree = "<group>"; };
@@ -325,6 +335,7 @@
 		7A9CCF061DB62790003D90C6 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				7ACE57A31DC73BA6004B383A /* Vicinity */,
 				7A190B0C1DC0CC7800651905 /* Profile */,
 				7A190B051DC0CBC300651905 /* Login */,
 				7AD953431DBF082400AD2556 /* Main */,
@@ -406,6 +417,32 @@
 			path = WebService;
 			sourceTree = "<group>";
 		};
+		7ACE57A31DC73BA6004B383A /* Vicinity */ = {
+			isa = PBXGroup;
+			children = (
+				7ACE57A41DC73BA6004B383A /* Controller */,
+				7ACE57A51DC73BA6004B383A /* View */,
+			);
+			path = Vicinity;
+			sourceTree = "<group>";
+		};
+		7ACE57A41DC73BA6004B383A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7ACE57A61DC73BD9004B383A /* TCVicinityViewController.h */,
+				7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */,
+				7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7ACE57A51DC73BA6004B383A /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7AD953431DBF082400AD2556 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,6 +490,9 @@
 				7A918AD41DC36D53002BD529 /* TCBioEditAffectionView.h */,
 				7A918AD51DC36D53002BD529 /* TCBioEditAffectionView.m */,
 				7A918AD71DC36D6E002BD529 /* TCBioEditAffectionView.xib */,
+				7ACE579E1DC73106004B383A /* TCBirthdatePickView.h */,
+				7ACE579F1DC73106004B383A /* TCBirthdatePickView.m */,
+				7ACE57A11DC7311C004B383A /* TCBirthdatePickView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -580,6 +620,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */,
+				7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */,
 				7A918AD81DC36D6E002BD529 /* TCBioEditAffectionView.xib in Resources */,
 				7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */,
 				7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */,
@@ -587,6 +628,7 @@
 				7A918ACE1DC362E0002BD529 /* TCBioEditViewController.xib in Resources */,
 				7A918ACA1DC34AC3002BD529 /* TCBioEditView.xib in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
+				7ACE57A21DC7311C004B383A /* TCBirthdatePickView.xib in Resources */,
 				7A190B121DC0CC9800651905 /* TCProfileViewController.xib in Resources */,
 				7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */,
 				7A918AD31DC366CE002BD529 /* TCBioEditGenderView.xib in Resources */,
@@ -664,6 +706,7 @@
 			files = (
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
 				7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */,
+				7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */,
 				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
 				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
 				7A918AC81DC34AA6002BD529 /* TCBioEditView.m in Sources */,
@@ -684,6 +727,7 @@
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.m in Sources */,
+				7ACE57A01DC73106004B383A /* TCBirthdatePickView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

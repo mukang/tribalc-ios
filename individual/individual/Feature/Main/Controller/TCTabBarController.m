@@ -9,6 +9,7 @@
 #import "TCTabBarController.h"
 #import "TCNavigationController.h"
 #import "TCProfileViewController.h"
+#import "TCVicinityViewController.h"
 
 @interface TCTabBarController ()
 
@@ -24,7 +25,7 @@
     
     [self addChildController:[[UIViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
     [self addChildController:[[UIViewController alloc] init] title:@"发现" image:@"tabBar_discover_normal" selectedImage:@"tabBar_discover_selected"];
-    [self addChildController:[[UIViewController alloc] init] title:@"附近" image:@"tabBar_vicinity" selectedImage:@"tabBar_vicinity"];
+    [self addChildController:[[TCVicinityViewController alloc] init] title:@"附近" image:@"tabBar_vicinity" selectedImage:@"tabBar_vicinity"];
     [self addChildController:[[UIViewController alloc] init] title:@"常用" image:@"tabBar_common_normal" selectedImage:@"tabBar_common_selected"];
     [self addChildController:[[TCProfileViewController alloc] init] title:@"我的" image:@"tabBar_profile_normal" selectedImage:@"tabBar_profile_selected"];
 }
