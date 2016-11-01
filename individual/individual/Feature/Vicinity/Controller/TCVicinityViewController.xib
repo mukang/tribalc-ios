@@ -8,6 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TCVicinityViewController">
             <connections>
+                <outlet property="backgroundView" destination="ROX-m4-esT" id="onA-7o-CQh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,19 +17,26 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_bg" translatesAutoresizingMaskIntoConstraints="NO" id="bNL-bu-4Ge"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image_2" translatesAutoresizingMaskIntoConstraints="NO" id="bNL-bu-4Ge"/>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ROX-m4-esT">
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="ROX-m4-esT" secondAttribute="trailing" id="2uD-sD-kaJ"/>
+                <constraint firstAttribute="bottom" secondItem="ROX-m4-esT" secondAttribute="bottom" id="Axk-0N-ydo"/>
                 <constraint firstAttribute="bottom" secondItem="bNL-bu-4Ge" secondAttribute="bottom" id="K7J-W2-7FT"/>
                 <constraint firstItem="bNL-bu-4Ge" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Kbp-hP-rCN"/>
                 <constraint firstAttribute="trailing" secondItem="bNL-bu-4Ge" secondAttribute="trailing" id="OFn-Xu-hh6"/>
+                <constraint firstItem="ROX-m4-esT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hoP-Ts-9Wx"/>
                 <constraint firstItem="bNL-bu-4Ge" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qEO-CS-Pcx"/>
+                <constraint firstItem="ROX-m4-esT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="y7M-wY-SrP"/>
             </constraints>
             <point key="canvasLocation" x="-20" y="35"/>
         </view>
     </objects>
     <resources>
-        <image name="login_bg" width="375" height="667"/>
+        <image name="launch_image_2" width="375" height="667"/>
     </resources>
 </document>

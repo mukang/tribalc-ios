@@ -11,6 +11,7 @@
 
 @interface TCVicinityViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) UIButton *peopleButton;
 @property (weak, nonatomic) UIButton *diningButton;
 @property (weak, nonatomic) UIButton *entertainmentButton;
@@ -24,16 +25,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.navigationController.navigationBarHidden = YES;
     
-    CGSize size = CGSizeMake(42, 42);
-    CGPoint center = CGPointMake(TCScreenWidth * 0.5, TCScreenHeight - 30);
+    CGSize size = CGSizeMake(50, 50);
+    CGPoint center = CGPointMake(TCScreenWidth * 0.5, TCScreenHeight + 10);
     self.originCenter = center;
     
     UIButton *peopleButton = [UIButton buttonWithType:UIButtonTypeCustom];
     peopleButton.backgroundColor = [UIColor redColor];
     peopleButton.size = size;
     peopleButton.center = center;
-    peopleButton.layer.cornerRadius = 21;
+    peopleButton.layer.cornerRadius = 25;
     peopleButton.layer.masksToBounds = YES;
     [self.view addSubview:peopleButton];
     self.peopleButton = peopleButton;
@@ -42,7 +44,7 @@
     diningButton.backgroundColor = [UIColor blueColor];
     diningButton.size = size;
     diningButton.center = center;
-    diningButton.layer.cornerRadius = 21;
+    diningButton.layer.cornerRadius = 25;
     diningButton.layer.masksToBounds = YES;
     [self.view addSubview:diningButton];
     self.diningButton = diningButton;
@@ -51,7 +53,7 @@
     entertainmentButton.backgroundColor = [UIColor yellowColor];
     entertainmentButton.size = size;
     entertainmentButton.center = center;
-    entertainmentButton.layer.cornerRadius = 21;
+    entertainmentButton.layer.cornerRadius = 25;
     entertainmentButton.layer.masksToBounds = YES;
     [self.view addSubview:entertainmentButton];
     self.entertainmentButton = entertainmentButton;
@@ -62,13 +64,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [UIView animateWithDuration:0.1 animations:^{
+        self.backgroundView.alpha = 0.8;
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     CGFloat angle;
-    CGFloat radius = 100;
+    CGFloat radius = 150;
     CGPoint center;
     
     for (int i=0; i<self.buttons.count; i++) {
@@ -88,6 +93,8 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    
+    self.backgroundView.alpha = 0.0;
     
     for (UIButton *button in self.buttons) {
         button.center = self.originCenter;
