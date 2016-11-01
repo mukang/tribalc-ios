@@ -43,6 +43,10 @@
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
 		7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEE91DB62011003D90C6 /* individualTests.m */; };
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
+		7AC2921D1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2921B1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m */; };
+		7AC2921E1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC2921C1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib */; };
+		7AC292221DC88CF200B2C7E8 /* TCBioEditSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC292201DC88CF200B2C7E8 /* TCBioEditSMSViewController.m */; };
+		7AC292231DC88CF200B2C7E8 /* TCBioEditSMSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC292211DC88CF200B2C7E8 /* TCBioEditSMSViewController.xib */; };
 		7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */; };
 		7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
@@ -133,6 +137,12 @@
 		7A9CCEF41DB62011003D90C6 /* individualUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = individualUITests.m; sourceTree = "<group>"; };
 		7A9CCEF61DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7ABF57B41DB70E2D002E40A0 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		7AC2921A1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditPhoneViewController.h; sourceTree = "<group>"; };
+		7AC2921B1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditPhoneViewController.m; sourceTree = "<group>"; };
+		7AC2921C1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditPhoneViewController.xib; sourceTree = "<group>"; };
+		7AC2921F1DC88CF200B2C7E8 /* TCBioEditSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditSMSViewController.h; sourceTree = "<group>"; };
+		7AC292201DC88CF200B2C7E8 /* TCBioEditSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditSMSViewController.m; sourceTree = "<group>"; };
+		7AC292211DC88CF200B2C7E8 /* TCBioEditSMSViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditSMSViewController.xib; sourceTree = "<group>"; };
 		7ACE57A61DC73BD9004B383A /* TCVicinityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVicinityViewController.h; sourceTree = "<group>"; };
 		7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVicinityViewController.m; sourceTree = "<group>"; };
 		7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCVicinityViewController.xib; sourceTree = "<group>"; };
@@ -237,6 +247,12 @@
 				7A918AC31DC34104002BD529 /* TCBioEditViewController.h */,
 				7A918AC41DC34104002BD529 /* TCBioEditViewController.m */,
 				7A918ACD1DC362E0002BD529 /* TCBioEditViewController.xib */,
+				7AC2921A1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.h */,
+				7AC2921B1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m */,
+				7AC2921C1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib */,
+				7AC2921F1DC88CF200B2C7E8 /* TCBioEditSMSViewController.h */,
+				7AC292201DC88CF200B2C7E8 /* TCBioEditSMSViewController.m */,
+				7AC292211DC88CF200B2C7E8 /* TCBioEditSMSViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -615,7 +631,9 @@
 				7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */,
 				7A918AD81DC36D6E002BD529 /* TCBioEditAffectionView.xib in Resources */,
 				7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */,
+				7AC292231DC88CF200B2C7E8 /* TCBioEditSMSViewController.xib in Resources */,
 				7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */,
+				7AC2921E1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib in Resources */,
 				7A918AC21DC32D90002BD529 /* TCBiographyAvatarViewCell.xib in Resources */,
 				7A918ACE1DC362E0002BD529 /* TCBioEditViewController.xib in Resources */,
 				7A918ACA1DC34AC3002BD529 /* TCBioEditView.xib in Resources */,
@@ -712,10 +730,12 @@
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
 				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,
+				7AC2921D1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
 				7A190AF61DC0A73600651905 /* TCClientRequest.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
+				7AC292221DC88CF200B2C7E8 /* TCBioEditSMSViewController.m in Sources */,
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.m in Sources */,
 			);

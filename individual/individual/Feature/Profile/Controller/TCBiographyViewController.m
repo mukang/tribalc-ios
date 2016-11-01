@@ -8,6 +8,7 @@
 
 #import "TCBiographyViewController.h"
 #import "TCBioEditViewController.h"
+#import "TCBioEditPhoneViewController.h"
 
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
@@ -117,7 +118,10 @@
             [self presentViewController:bioEditVC animated:NO completion:nil];
         }
     } else {
-        
+        if (indexPath.row == 0) {
+            TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
+            [self.navigationController pushViewController:editPhoneVC animated:YES];
+        }
     }
 }
 
