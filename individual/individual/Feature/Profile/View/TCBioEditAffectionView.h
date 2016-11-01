@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCBioEditAffectionView;
+
+@protocol TCBioEditAffectionViewDelegate <NSObject>
+
+@optional
+- (void)didClickCancelButtonInBioEditAffectionView:(TCBioEditAffectionView *)view;
+
+@end
+
 @interface TCBioEditAffectionView : UIView
+
+@property (weak, nonatomic) id<TCBioEditAffectionViewDelegate> delegate;
 
 @end

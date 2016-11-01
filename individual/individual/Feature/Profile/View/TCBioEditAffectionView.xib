@@ -14,14 +14,13 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="seC-ey-TRq">
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="125" id="12J-PO-36y"/>
-                        <constraint firstAttribute="height" constant="31" id="H8U-kF-crB"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="提交">
                         <color key="titleColor" red="0.31764705879999999" green="0.78039215689999997" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="handleClickCommitButton:" destination="Diz-6z-DlW" eventType="touchUpInside" id="02N-CC-a7r"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="情感状况" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0h-uK-Xtj">
                     <constraints>
@@ -95,14 +94,29 @@
                         <action selector="handleTapAffectionButton:" destination="Diz-6z-DlW" eventType="touchDown" id="Os4-nf-Bym"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pE-Gw-nI4">
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="5p2-R9-bgX"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" red="0.31764705879999999" green="0.78039215689999997" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="handleClickCancelButton:" destination="Diz-6z-DlW" eventType="touchUpInside" id="ZcN-Iv-M6R"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="seC-ey-TRq" firstAttribute="width" secondItem="1pE-Gw-nI4" secondAttribute="width" id="5NG-3m-gAP"/>
+                <constraint firstAttribute="bottom" secondItem="seC-ey-TRq" secondAttribute="bottom" constant="23.5" id="6V9-RB-QxI"/>
                 <constraint firstAttribute="trailing" secondItem="0Cl-y5-xc6" secondAttribute="trailing" constant="16" id="6zf-lj-C3Q"/>
                 <constraint firstItem="2rw-0M-qA2" firstAttribute="leading" secondItem="Diz-6z-DlW" secondAttribute="leading" constant="16" id="9pN-NR-tsj"/>
                 <constraint firstItem="2rw-0M-qA2" firstAttribute="top" secondItem="YJx-A2-V4j" secondAttribute="bottom" constant="15" id="BHa-ak-P7I"/>
-                <constraint firstItem="seC-ey-TRq" firstAttribute="centerX" secondItem="Diz-6z-DlW" secondAttribute="centerX" id="FSX-1j-MGg"/>
                 <constraint firstItem="YJx-A2-V4j" firstAttribute="top" secondItem="qR4-rB-bPe" secondAttribute="bottom" constant="15" id="HBC-DM-Ec1"/>
+                <constraint firstAttribute="bottom" secondItem="1pE-Gw-nI4" secondAttribute="bottom" constant="23.5" id="NrL-KS-jQR"/>
                 <constraint firstItem="qR4-rB-bPe" firstAttribute="leading" secondItem="Diz-6z-DlW" secondAttribute="leading" constant="16" id="Y80-KT-pEo"/>
                 <constraint firstAttribute="trailing" secondItem="2rw-0M-qA2" secondAttribute="trailing" constant="16" id="aZD-Eq-c8X"/>
                 <constraint firstAttribute="trailing" secondItem="YJx-A2-V4j" secondAttribute="trailing" constant="16" id="ayk-w4-JeZ"/>
@@ -110,10 +124,13 @@
                 <constraint firstItem="0Cl-y5-xc6" firstAttribute="leading" secondItem="Diz-6z-DlW" secondAttribute="leading" constant="16" id="h1Q-PE-Jki"/>
                 <constraint firstItem="YJx-A2-V4j" firstAttribute="leading" secondItem="Diz-6z-DlW" secondAttribute="leading" constant="16" id="kSA-bO-tgj"/>
                 <constraint firstItem="qR4-rB-bPe" firstAttribute="top" secondItem="Diz-6z-DlW" secondAttribute="top" constant="52" id="m0B-K0-lqa"/>
+                <constraint firstItem="1pE-Gw-nI4" firstAttribute="leading" secondItem="Diz-6z-DlW" secondAttribute="leading" constant="16" id="q8d-H9-ZR9"/>
                 <constraint firstAttribute="trailing" secondItem="u0h-uK-Xtj" secondAttribute="trailing" constant="16" id="rdX-ip-UbV"/>
-                <constraint firstAttribute="bottom" secondItem="seC-ey-TRq" secondAttribute="bottom" constant="23.5" id="rsm-jc-BY9"/>
                 <constraint firstItem="u0h-uK-Xtj" firstAttribute="top" secondItem="Diz-6z-DlW" secondAttribute="top" constant="18" id="tCq-cI-C2q"/>
+                <constraint firstAttribute="trailing" secondItem="seC-ey-TRq" secondAttribute="trailing" constant="16" id="tUM-IK-TLn"/>
+                <constraint firstItem="seC-ey-TRq" firstAttribute="leading" secondItem="1pE-Gw-nI4" secondAttribute="trailing" constant="50" id="tei-fs-FYo"/>
                 <constraint firstItem="u0h-uK-Xtj" firstAttribute="leading" secondItem="Diz-6z-DlW" secondAttribute="leading" constant="16" id="uh7-In-Klk"/>
+                <constraint firstItem="seC-ey-TRq" firstAttribute="height" secondItem="1pE-Gw-nI4" secondAttribute="height" id="x1e-q5-LGw"/>
                 <constraint firstAttribute="trailing" secondItem="qR4-rB-bPe" secondAttribute="trailing" constant="16" id="y6Z-FD-I9z"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

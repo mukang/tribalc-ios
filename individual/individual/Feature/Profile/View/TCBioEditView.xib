@@ -12,16 +12,18 @@
             <rect key="frame" x="0.0" y="0.0" width="335" height="190"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncY-Jn-fEE">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5x-Pj-k5x">
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="31" id="Fb1-bM-9ic"/>
-                        <constraint firstAttribute="width" constant="125" id="saM-Gv-65A"/>
+                        <constraint firstAttribute="height" constant="31" id="wKK-Jm-jmJ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="提交">
                         <color key="titleColor" red="0.31764705879999999" green="0.78039215689999997" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="handleClickCommitButton:" destination="zKP-bI-WGM" eventType="touchUpInside" id="v5l-Jk-Hay"/>
+                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0HJ-QK-MxL">
                     <subviews>
@@ -49,17 +51,34 @@
                     <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncY-Jn-fEE">
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="Yk3-aU-yOo"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" red="0.31764705879999999" green="0.78039215689999997" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="handleClickCancelButton:" destination="zKP-bI-WGM" eventType="touchUpInside" id="lWe-E0-evJ"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="k5x-Pj-k5x" secondAttribute="bottom" constant="52" id="1Cu-uN-gLr"/>
                 <constraint firstItem="0HJ-QK-MxL" firstAttribute="leading" secondItem="zKP-bI-WGM" secondAttribute="leading" constant="16" id="2AR-LB-iJ5"/>
+                <constraint firstAttribute="trailing" secondItem="k5x-Pj-k5x" secondAttribute="trailing" constant="16" id="AGp-tW-mHM"/>
+                <constraint firstItem="k5x-Pj-k5x" firstAttribute="width" secondItem="ncY-Jn-fEE" secondAttribute="width" id="BkC-dG-4Mm"/>
                 <constraint firstItem="ug3-8e-UHo" firstAttribute="top" secondItem="zKP-bI-WGM" secondAttribute="top" constant="18" id="HU1-gs-w0y"/>
                 <constraint firstAttribute="trailing" secondItem="0HJ-QK-MxL" secondAttribute="trailing" constant="16" id="LQR-vG-Ca6"/>
                 <constraint firstAttribute="trailing" secondItem="ug3-8e-UHo" secondAttribute="trailing" constant="16" id="MEz-eX-81M"/>
-                <constraint firstAttribute="bottom" secondItem="ncY-Jn-fEE" secondAttribute="bottom" constant="51.5" id="UQy-iS-kdw"/>
                 <constraint firstItem="ug3-8e-UHo" firstAttribute="leading" secondItem="zKP-bI-WGM" secondAttribute="leading" constant="16" id="c5K-JT-y6Z"/>
                 <constraint firstItem="0HJ-QK-MxL" firstAttribute="top" secondItem="zKP-bI-WGM" secondAttribute="top" constant="52" id="obi-gY-lht"/>
-                <constraint firstItem="ncY-Jn-fEE" firstAttribute="centerX" secondItem="zKP-bI-WGM" secondAttribute="centerX" id="vqp-wT-M10"/>
+                <constraint firstItem="ncY-Jn-fEE" firstAttribute="leading" secondItem="zKP-bI-WGM" secondAttribute="leading" constant="16" id="qbd-XB-nhR"/>
+                <constraint firstItem="k5x-Pj-k5x" firstAttribute="leading" secondItem="ncY-Jn-fEE" secondAttribute="trailing" constant="50" id="rB5-SO-VZl"/>
+                <constraint firstAttribute="bottom" secondItem="ncY-Jn-fEE" secondAttribute="bottom" constant="52" id="taZ-xJ-5Ha"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

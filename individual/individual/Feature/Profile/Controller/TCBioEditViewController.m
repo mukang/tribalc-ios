@@ -11,9 +11,8 @@
 #import "TCBioEditView.h"
 #import "TCBioEditGenderView.h"
 #import "TCBioEditAffectionView.h"
-#import "TCBirthdatePickView.h"
 
-@interface TCBioEditViewController () <UITextFieldDelegate>
+@interface TCBioEditViewController () <UITextFieldDelegate, TCBioEditViewDelegate, TCBioEditGenderViewDelegate, TCBioEditAffectionViewDelegate>
 
 @property (weak, nonatomic) TCBioEditView *editNickView;
 @property (weak, nonatomic) TCBioEditGenderView *editGenderView;
@@ -38,9 +37,8 @@
     // Do any additional setup after loading the view.
     
     weakSelf = self;
-    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.82];
+    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
     
-    [self addGesture];
     [self registerNotifications];
     
     switch (self.bioEditType) {
@@ -65,15 +63,16 @@
     }
 }
 
-- (void)dealloc {
-    [self removeNotifications];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.82];
+    }];
 }
 
-#pragma mark - add gesture
-
-- (void)addGesture {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleBackgroundViewGesture:)];
-    [self.view addGestureRecognizer:tap];
+- (void)dealloc {
+    [self removeNotifications];
 }
 
 #pragma mark - notifications
@@ -123,11 +122,10 @@
     }
 }
 
-- (void)handleBackgroundViewGesture:(UITapGestureRecognizer *)gesture {
-    if (self.bioEditType == TCBioEditTypeNick && [self.editNickView.textField isFirstResponder]) {
-        [self.editNickView.textField resignFirstResponder];
-    }
-    [self dismissViewControllerAnimated:NO completion:nil];
+- (void)handleChangeDatePicker:(UIDatePicker *)datePicker {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy年MM月dd日";
+    self.editBirthdateView.textField.text = [dateFormatter stringFromDate:datePicker.date];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -139,6 +137,51 @@
     return YES;
 }
 
+#pragma mark - TCBioEditViewDelegate
+
+- (void)didClickCommitButtonInBioEditView:(TCBioEditView *)view {
+    
+}
+
+- (void)didClickCancelButtonInBioEditView:(TCBioEditView *)view {
+    if ([view isEqual:self.editNickView]) {
+        self.editNickView.hidden = YES;
+        if ([self.editNickView.textField isFirstResponder]) {
+            [self.editNickView.textField resignFirstResponder];
+        }
+    }
+    if ([view isEqual:self.editBirthdateView]) {
+        self.editBirthdateView.hidden = YES;
+        self.datePicker.hidden = YES;
+    }
+    
+    [self dismiss];
+}
+
+#pragma mark - TCBioEditGenderViewDelegate
+
+- (void)didClickCancelButtonInBioEditGenderView:(TCBioEditGenderView *)view {
+    view.hidden = YES;
+    [self dismiss];
+}
+
+#pragma mark - TCBioEditAffectionViewDelegate
+
+- (void)didClickCancelButtonInBioEditAffectionView:(TCBioEditAffectionView *)view {
+    view.hidden = YES;
+    [self dismiss];
+}
+
+#pragma mark - dismiss
+
+- (void)dismiss {
+    [UIView animateWithDuration:0.2 animations:^{
+        weakSelf.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+    } completion:^(BOOL finished) {
+        [weakSelf dismissViewControllerAnimated:NO completion:nil];
+    }];
+}
+
 #pragma mark - setup subviews
 
 - (void)setupBioEditNickView {
@@ -146,7 +189,9 @@
     editNickView.translatesAutoresizingMaskIntoConstraints = NO;
     editNickView.titleLabel.text = @"昵称";
     editNickView.textField.returnKeyType = UIReturnKeyDone;
+    editNickView.textField.keyboardType = UIKeyboardTypeDefault;
     editNickView.textField.delegate = self;
+    editNickView.delegate = self;
     [self.view addSubview:editNickView];
     self.editNickView = editNickView;
 }
@@ -193,6 +238,7 @@
 - (void)setupBioEditGenderView {
     TCBioEditGenderView *editGenderView = [[[NSBundle mainBundle] loadNibNamed:@"TCBioEditGenderView" owner:nil options:nil] firstObject];
     editGenderView.translatesAutoresizingMaskIntoConstraints = NO;
+    editGenderView.delegate = self;
     [self.view addSubview:editGenderView];
     self.editGenderView = editGenderView;
 }
@@ -240,10 +286,26 @@
     editBirthdateView.translatesAutoresizingMaskIntoConstraints = NO;
     editBirthdateView.textField.userInteractionEnabled = NO;
     editBirthdateView.titleLabel.text = @"出生日期";
+    editBirthdateView.delegate = self;
     [self.view addSubview:editBirthdateView];
     self.editBirthdateView = editBirthdateView;
     
-//    TCBirthdatePickView *birthdatePickView = 
+    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+    datePicker.translatesAutoresizingMaskIntoConstraints = NO;
+    datePicker.backgroundColor = [UIColor whiteColor];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    components.year = 1990;
+    components.month = 1;
+    components.day = 1;
+    datePicker.date = [[NSCalendar currentCalendar] dateFromComponents:components];
+    components.year = 2016;
+    components.month = 1;
+    components.day = 1;
+    datePicker.maximumDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+    [datePicker addTarget:self action:@selector(handleChangeDatePicker:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:datePicker];
+    self.datePicker = datePicker;
 }
 
 - (void)setupBioEditBirthdateConstraints {
@@ -275,19 +337,56 @@
     [self.view addConstraint:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:self.editBirthdateView
-                                              attribute:NSLayoutAttributeCenterY
+                                              attribute:NSLayoutAttributeTop
                                               relatedBy:NSLayoutRelationEqual
                                                  toItem:self.view
-                                              attribute:NSLayoutAttributeCenterY
+                                              attribute:NSLayoutAttributeTop
+                                             multiplier:1.0
+                                               constant:TCRealValue(116)];
+    [self.view addConstraint:constraint];
+    self.birthdateViewCenterYConstraint = constraint;
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.datePicker
+                                              attribute:NSLayoutAttributeLeft
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.view
+                                              attribute:NSLayoutAttributeLeft
                                              multiplier:1.0
                                                constant:0];
     [self.view addConstraint:constraint];
-    self.birthdateViewCenterYConstraint = constraint;
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.datePicker
+                                              attribute:NSLayoutAttributeRight
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.view
+                                              attribute:NSLayoutAttributeRight
+                                             multiplier:1.0
+                                               constant:0];
+    [self.view addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.datePicker
+                                              attribute:NSLayoutAttributeBottom
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.view
+                                              attribute:NSLayoutAttributeBottom
+                                             multiplier:1.0
+                                               constant:0];
+    [self.view addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.datePicker
+                                              attribute:NSLayoutAttributeHeight
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:nil
+                                              attribute:NSLayoutAttributeNotAnAttribute
+                                             multiplier:1.0
+                                               constant:190];
+    [self.datePicker addConstraint:constraint];
 }
 
 - (void)setupBioEditAffectionView {
     TCBioEditAffectionView *editAffectionView = [[[NSBundle mainBundle] loadNibNamed:@"TCBioEditAffectionView" owner:nil options:nil] firstObject];
     editAffectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    editAffectionView.delegate = self;
     [self.view addSubview:editAffectionView];
     self.editAffectionView = editAffectionView;
 }

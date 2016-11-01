@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCBioEditGenderView;
+
+@protocol TCBioEditGenderViewDelegate <NSObject>
+
+@optional
+- (void)didClickCancelButtonInBioEditGenderView:(TCBioEditGenderView *)view;
+
+@end
+
 @interface TCBioEditGenderView : UIView
+
+@property (weak, nonatomic) id<TCBioEditGenderViewDelegate> delegate;
 
 @end

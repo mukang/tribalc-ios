@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCBioEditView;
+
+@protocol TCBioEditViewDelegate <NSObject>
+
+@optional
+- (void)didClickCommitButtonInBioEditView:(TCBioEditView *)view;
+- (void)didClickCancelButtonInBioEditView:(TCBioEditView *)view;
+
+@end
+
 @interface TCBioEditView : UIView
 
+@property (weak, nonatomic) id<TCBioEditViewDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
