@@ -47,6 +47,9 @@
 		7AC2921E1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC2921C1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib */; };
 		7AC292221DC88CF200B2C7E8 /* TCBioEditSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC292201DC88CF200B2C7E8 /* TCBioEditSMSViewController.m */; };
 		7AC292231DC88CF200B2C7E8 /* TCBioEditSMSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC292211DC88CF200B2C7E8 /* TCBioEditSMSViewController.xib */; };
+		7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC292251DC8AA5700B2C7E8 /* TCCityPickerView.m */; };
+		7AC292281DC8AA6900B2C7E8 /* TCCityPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC292271DC8AA6900B2C7E8 /* TCCityPickerView.xib */; };
+		7AC2922B1DC8BEB300B2C7E8 /* citylist.data in Resources */ = {isa = PBXBuildFile; fileRef = 7AC2922A1DC8BEB300B2C7E8 /* citylist.data */; };
 		7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */; };
 		7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
@@ -143,6 +146,10 @@
 		7AC2921F1DC88CF200B2C7E8 /* TCBioEditSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditSMSViewController.h; sourceTree = "<group>"; };
 		7AC292201DC88CF200B2C7E8 /* TCBioEditSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditSMSViewController.m; sourceTree = "<group>"; };
 		7AC292211DC88CF200B2C7E8 /* TCBioEditSMSViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditSMSViewController.xib; sourceTree = "<group>"; };
+		7AC292241DC8AA5700B2C7E8 /* TCCityPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCityPickerView.h; sourceTree = "<group>"; };
+		7AC292251DC8AA5700B2C7E8 /* TCCityPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCityPickerView.m; sourceTree = "<group>"; };
+		7AC292271DC8AA6900B2C7E8 /* TCCityPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCityPickerView.xib; sourceTree = "<group>"; };
+		7AC2922A1DC8BEB300B2C7E8 /* citylist.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = citylist.data; sourceTree = "<group>"; };
 		7ACE57A61DC73BD9004B383A /* TCVicinityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVicinityViewController.h; sourceTree = "<group>"; };
 		7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVicinityViewController.m; sourceTree = "<group>"; };
 		7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCVicinityViewController.xib; sourceTree = "<group>"; };
@@ -339,6 +346,7 @@
 		7A9CCF051DB62782003D90C6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				7AC292291DC8BEA900B2C7E8 /* BinaryFiles */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -428,6 +436,14 @@
 			path = WebService;
 			sourceTree = "<group>";
 		};
+		7AC292291DC8BEA900B2C7E8 /* BinaryFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7AC2922A1DC8BEB300B2C7E8 /* citylist.data */,
+			);
+			path = BinaryFiles;
+			sourceTree = "<group>";
+		};
 		7ACE57A31DC73BA6004B383A /* Vicinity */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,6 +517,9 @@
 				7A918AD41DC36D53002BD529 /* TCBioEditAffectionView.h */,
 				7A918AD51DC36D53002BD529 /* TCBioEditAffectionView.m */,
 				7A918AD71DC36D6E002BD529 /* TCBioEditAffectionView.xib */,
+				7AC292241DC8AA5700B2C7E8 /* TCCityPickerView.h */,
+				7AC292251DC8AA5700B2C7E8 /* TCCityPickerView.m */,
+				7AC292271DC8AA6900B2C7E8 /* TCCityPickerView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -637,10 +656,12 @@
 				7A918AC21DC32D90002BD529 /* TCBiographyAvatarViewCell.xib in Resources */,
 				7A918ACE1DC362E0002BD529 /* TCBioEditViewController.xib in Resources */,
 				7A918ACA1DC34AC3002BD529 /* TCBioEditView.xib in Resources */,
+				7AC2922B1DC8BEB300B2C7E8 /* citylist.data in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
 				7A190B121DC0CC9800651905 /* TCProfileViewController.xib in Resources */,
 				7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */,
 				7A918AD31DC366CE002BD529 /* TCBioEditGenderView.xib in Resources */,
+				7AC292281DC8AA6900B2C7E8 /* TCCityPickerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +750,7 @@
 				7A918ABC1DC32686002BD529 /* TCBiographyViewCell.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
+				7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */,
 				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,
 				7AC2921D1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,

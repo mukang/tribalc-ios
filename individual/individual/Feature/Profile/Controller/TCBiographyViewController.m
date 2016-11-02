@@ -121,6 +121,10 @@
         if (indexPath.row == 0) {
             TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
             [self.navigationController pushViewController:editPhoneVC animated:YES];
+        } else if (indexPath.row == 1) {
+            
+        } else {
+            
         }
     }
 }

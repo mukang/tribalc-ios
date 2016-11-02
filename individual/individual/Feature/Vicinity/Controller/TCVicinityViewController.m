@@ -94,7 +94,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    self.backgroundView.alpha = 0.0;
+    self.backgroundView.alpha = 0.6;
     
     for (UIButton *button in self.buttons) {
         button.center = self.originCenter;
