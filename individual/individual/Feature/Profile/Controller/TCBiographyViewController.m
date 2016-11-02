@@ -12,13 +12,17 @@
 
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
+#import "TCCityPickerView.h"
 
 #import "UIImage+Category.h"
 
-@interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource, TCCityPickerViewDelegate>
 
 @property (copy, nonatomic) NSArray *biographyTitles;
 @property (copy, nonatomic) NSArray *bioDetailsTitles;
+
+@property (weak, nonatomic) UIView *backgroundView;
+@property (weak, nonatomic) TCCityPickerView *cityPickerView;
 
 @end
 
@@ -122,14 +126,57 @@
             TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
             [self.navigationController pushViewController:editPhoneVC animated:YES];
         } else if (indexPath.row == 1) {
-            
+            [self showPickerView];
         } else {
             
         }
     }
 }
 
-#pragma mark - overwrite 
+#pragma mark - TCCityPickerViewDelegate
+
+- (void)cityPickerView:(TCCityPickerView *)view didClickConfirmButtonWithCityInfo:(NSDictionary *)cityInfo {
+    TCLog(@"%@", cityInfo);
+    [self dismissPickerView];
+}
+
+- (void)didClickCancelButtonInCityPickerView:(TCCityPickerView *)view {
+    [self dismissPickerView];
+}
+
+#pragma mark - picker view
+
+- (void)showPickerView {
+    
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIView *backgroundView = [[UIView alloc] initWithFrame:keyWindow.bounds];
+    backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+    [keyWindow addSubview:backgroundView];
+    self.backgroundView = backgroundView;
+    
+    TCCityPickerView *cityPickerView = [[[NSBundle mainBundle] loadNibNamed:@"TCCityPickerView" owner:nil options:nil] firstObject];
+    cityPickerView.delegate = self;
+    cityPickerView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, 240);
+    [keyWindow addSubview:cityPickerView];
+    self.cityPickerView = cityPickerView;
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.82];
+        cityPickerView.y = TCScreenHeight - cityPickerView.height;
+    }];
+}
+
+- (void)dismissPickerView {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+        self.cityPickerView.y = TCScreenHeight;
+    } completion:^(BOOL finished) {
+        [self.backgroundView removeFromSuperview];
+        [self.cityPickerView removeFromSuperview];
+    }];
+}
+
+#pragma mark - overwrite
 
 - (NSArray *)biographyTitles {
     if (_biographyTitles == nil) {

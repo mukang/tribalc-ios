@@ -8,6 +8,10 @@
 
 #import "TCCityPickerView.h"
 
+NSString *const TCCityPickierViewProvinceKey = @"TCCityPickierViewProvinceKey";
+NSString *const TCCityPickierViewCityKey = @"TCCityPickierViewCityKey";
+NSString *const TCCityPickierViewCountryKey = @"TCCityPickierViewCountryKey";
+
 @interface TCCityPickerView () <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
@@ -90,8 +94,34 @@
 #pragma mark - actions
 
 - (IBAction)handleClickConfirmButton:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(cityPickerView:didClickConfirmButtonWithCityInfo:)]) {
+        NSDictionary *cityInfo = [self getCurrentSelectedInfo];
+        [self.delegate cityPickerView:self didClickConfirmButtonWithCityInfo:cityInfo];
+    }
 }
+
 - (IBAction)handleClickCancelButton:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(didClickCancelButtonInCityPickerView:)]) {
+        [self.delegate didClickCancelButtonInCityPickerView:self];
+    }
+}
+
+#pragma mark - get current info
+
+- (NSDictionary *)getCurrentSelectedInfo {
+    NSInteger provinceIndex = [self.pickerView selectedRowInComponent:0];
+    NSInteger cityIndex = [self.pickerView selectedRowInComponent:1];
+    NSInteger countryIndex = [self.pickerView selectedRowInComponent:2];
+    
+    NSString *province = self.provinceArray[provinceIndex][@"n"];
+    NSString *city = self.cityArray.count != 0 ? self.cityArray[cityIndex][@"n"] : @"";
+    NSString *country = self.countryArray.count != 0 ? self.countryArray[countryIndex][@"n"] : @"";
+    
+    return @{
+             TCCityPickierViewProvinceKey : province,
+             TCCityPickierViewCityKey     : city,
+             TCCityPickierViewCountryKey  : country
+             };
 }
 
 #pragma mark - load data

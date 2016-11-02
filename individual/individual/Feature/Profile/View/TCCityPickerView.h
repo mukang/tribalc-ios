@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCCityPickerView;
+
+extern NSString *const TCCityPickierViewProvinceKey;
+extern NSString *const TCCityPickierViewCityKey;
+extern NSString *const TCCityPickierViewCountryKey;
+
+@protocol TCCityPickerViewDelegate <NSObject>
+
+@optional
+- (void)cityPickerView:(TCCityPickerView *)view didClickConfirmButtonWithCityInfo:(NSDictionary *)cityInfo;
+- (void)didClickCancelButtonInCityPickerView:(TCCityPickerView *)view;
+
+@end
+
 @interface TCCityPickerView : UIView
+
+@property (weak, nonatomic) id<TCCityPickerViewDelegate> delegate;
 
 @end
