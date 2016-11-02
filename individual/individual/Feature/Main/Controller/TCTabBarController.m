@@ -11,6 +11,8 @@
 #import "TCProfileViewController.h"
 #import "TCVicinityViewController.h"
 
+#import "TCTabBar.h"
+
 @interface TCTabBarController ()
 
 @end
@@ -25,9 +27,16 @@
     
     [self addChildController:[[UIViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
     [self addChildController:[[UIViewController alloc] init] title:@"发现" image:@"tabBar_discover_normal" selectedImage:@"tabBar_discover_selected"];
-    [self addChildController:[[TCVicinityViewController alloc] init] title:@"附近" image:@"tabBar_vicinity" selectedImage:@"tabBar_vicinity"];
     [self addChildController:[[UIViewController alloc] init] title:@"常用" image:@"tabBar_common_normal" selectedImage:@"tabBar_common_selected"];
     [self addChildController:[[TCProfileViewController alloc] init] title:@"我的" image:@"tabBar_profile_normal" selectedImage:@"tabBar_profile_selected"];
+    
+    [self setValue:[[TCTabBar alloc] init] forKey:@"tabBar"];
+    
+    [self registerNotifications];
+}
+
+- (void)dealloc {
+    [self removeNotifications];
 }
 
 - (void)addChildController:(UIViewController *)childController title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selecteImage {
@@ -51,6 +60,25 @@
     }
     nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -2);
     [self addChildViewController:nav];
+}
+
+#pragma mark - notification
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleClickVicinityButton:) name:TCVicinityButtonDidClickNotification object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - actions
+
+- (void)handleClickVicinityButton:(NSNotification *)noti {
+    TCVicinityViewController *vicinityVC = [[TCVicinityViewController alloc] init];
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vicinityVC];
+    nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
