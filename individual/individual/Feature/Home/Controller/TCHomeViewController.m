@@ -7,6 +7,8 @@
 //
 
 #import "TCHomeViewController.h"
+#import "TCRecommendViewController.h"
+#import "TCRestaurantViewController.h"
 
 @interface TCHomeViewController ()
 
@@ -17,10 +19,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    
+    UIButton *shoppingButton = [[UIButton alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 100)/2.0, 200, 100, 40)];
+    [shoppingButton setTitle:@"餐饮" forState:UIControlStateNormal];
+    shoppingButton.backgroundColor = [UIColor greenColor];
+    [shoppingButton addTarget:self action:@selector(goResaurantList:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:shoppingButton];
 }
-
+- (void)goRecommendShoppingList :(id)sender
+{
+    TCRecommendViewController *recommend = [[TCRecommendViewController alloc]init];
+    [self.navigationController pushViewController:recommend animated:YES];
+}
+- (void)goResaurantList :(id)sender
+{
+    TCRestaurantViewController *resaurant = [[TCRestaurantViewController alloc]init];
+    [self.navigationController pushViewController:resaurant animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
