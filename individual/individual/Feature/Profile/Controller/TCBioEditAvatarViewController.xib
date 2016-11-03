@@ -8,8 +8,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TCBioEditAvatarViewController">
             <connections>
+                <outlet property="albumButtonTopConstraint" destination="clF-FX-FQh" id="KEP-o6-gx9"/>
+                <outlet property="buttonHeightConstraint" destination="sH4-4a-xvk" id="IWX-Ih-1wV"/>
+                <outlet property="buttonWidthConstraint" destination="7eL-7n-474" id="QZT-S1-1p7"/>
+                <outlet property="cancelButtonTopConstraint" destination="XNK-sd-e3u" id="Tgl-Os-Ebo"/>
                 <outlet property="imageView" destination="DM5-YA-kO6" id="ay6-Cq-kYa"/>
-                <outlet property="imageViewHeighConstraint" destination="Q5z-6g-v61" id="LQD-Dh-3zw"/>
+                <outlet property="imageViewHeightConstraint" destination="Q5z-6g-v61" id="LWY-ok-IEG"/>
+                <outlet property="saveButtonTopConstraint" destination="KJ6-sG-pqg" id="X6t-xX-lZL"/>
+                <outlet property="takePhotoButtonTopConstraint" destination="UTU-tr-sBV" id="v0d-2J-YFd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,6 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DM5-YA-kO6">
+                    <color key="backgroundColor" red="0.31764705879999999" green="0.78039215689999997" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="463" id="Q5z-6g-v61"/>
                     </constraints>
@@ -27,10 +34,6 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7oo-FT-c8C">
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="31" id="auy-HL-FaD"/>
-                                <constraint firstAttribute="width" constant="302" id="v7p-FF-S72"/>
-                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="从手机相册选择">
                                 <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,10 +44,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KHZ-II-jE1">
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="302" id="M2m-QO-oaG"/>
-                                <constraint firstAttribute="height" constant="31" id="S53-qA-2xS"/>
-                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="保存图片">
                                 <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -55,10 +54,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLx-ZK-mJJ">
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="302" id="J3w-Pj-Ue9"/>
-                                <constraint firstAttribute="height" constant="31" id="Vkw-J0-MsC"/>
-                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="取消">
                                 <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -85,12 +80,18 @@
                     <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="KHZ-II-jE1" firstAttribute="centerX" secondItem="Ebt-ct-pr4" secondAttribute="centerX" id="3LS-hi-xB1"/>
+                        <constraint firstItem="pLx-ZK-mJJ" firstAttribute="width" secondItem="KHZ-II-jE1" secondAttribute="width" id="9Wn-xq-qAF"/>
                         <constraint firstItem="7oo-FT-c8C" firstAttribute="centerX" secondItem="Ebt-ct-pr4" secondAttribute="centerX" id="9pR-vx-zNb"/>
+                        <constraint firstItem="KHZ-II-jE1" firstAttribute="width" secondItem="7oo-FT-c8C" secondAttribute="width" id="JAJ-2q-qC8"/>
                         <constraint firstItem="KHZ-II-jE1" firstAttribute="top" secondItem="7oo-FT-c8C" secondAttribute="bottom" constant="11.5" id="KJ6-sG-pqg"/>
                         <constraint firstItem="pSd-0y-OQE" firstAttribute="top" secondItem="Ebt-ct-pr4" secondAttribute="top" constant="19" id="UTU-tr-sBV"/>
                         <constraint firstItem="pLx-ZK-mJJ" firstAttribute="top" secondItem="KHZ-II-jE1" secondAttribute="bottom" constant="28.5" id="XNK-sd-e3u"/>
+                        <constraint firstItem="7oo-FT-c8C" firstAttribute="width" secondItem="pSd-0y-OQE" secondAttribute="width" id="ZJT-BF-lCU"/>
                         <constraint firstItem="7oo-FT-c8C" firstAttribute="top" secondItem="pSd-0y-OQE" secondAttribute="bottom" constant="11.5" id="clF-FX-FQh"/>
+                        <constraint firstItem="7oo-FT-c8C" firstAttribute="height" secondItem="pSd-0y-OQE" secondAttribute="height" id="iNU-8K-KJy"/>
                         <constraint firstItem="pSd-0y-OQE" firstAttribute="centerX" secondItem="Ebt-ct-pr4" secondAttribute="centerX" id="ipX-ol-bax"/>
+                        <constraint firstItem="pLx-ZK-mJJ" firstAttribute="height" secondItem="KHZ-II-jE1" secondAttribute="height" id="qVA-Fm-Odi"/>
+                        <constraint firstItem="KHZ-II-jE1" firstAttribute="height" secondItem="7oo-FT-c8C" secondAttribute="height" id="sLK-D8-mcY"/>
                         <constraint firstItem="pLx-ZK-mJJ" firstAttribute="centerX" secondItem="Ebt-ct-pr4" secondAttribute="centerX" id="upu-Uf-w5U"/>
                     </constraints>
                 </view>
