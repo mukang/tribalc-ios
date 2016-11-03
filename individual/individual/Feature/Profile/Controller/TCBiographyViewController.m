@@ -9,6 +9,7 @@
 #import "TCBiographyViewController.h"
 #import "TCBioEditViewController.h"
 #import "TCBioEditPhoneViewController.h"
+#import "TCShippingAddressViewController.h"
 
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
@@ -21,7 +22,7 @@
 @property (copy, nonatomic) NSArray *biographyTitles;
 @property (copy, nonatomic) NSArray *bioDetailsTitles;
 
-@property (weak, nonatomic) UIView *backgroundView;
+@property (weak, nonatomic) UIView *pickerBgView;
 @property (weak, nonatomic) TCCityPickerView *cityPickerView;
 
 @end
@@ -114,7 +115,7 @@
         if (indexPath.row == 0) {
             
         } else {
-            TCBioEditViewController *bioEditVC = [[TCBioEditViewController alloc] initWithNibName:nil bundle:nil];
+            TCBioEditViewController *bioEditVC = [[TCBioEditViewController alloc] initWithNibName:@"TCBioEditViewController" bundle:[NSBundle mainBundle]];
             self.definesPresentationContext = YES;
             bioEditVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
             bioEditVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -128,7 +129,8 @@
         } else if (indexPath.row == 1) {
             [self showPickerView];
         } else {
-            
+            TCShippingAddressViewController *vc = [[TCShippingAddressViewController alloc] initWithNibName:@"TCShippingAddressViewController" bundle:[NSBundle mainBundle]];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
 }
@@ -149,10 +151,10 @@
 - (void)showPickerView {
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    UIView *backgroundView = [[UIView alloc] initWithFrame:keyWindow.bounds];
-    backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
-    [keyWindow addSubview:backgroundView];
-    self.backgroundView = backgroundView;
+    UIView *pickerBgView = [[UIView alloc] initWithFrame:keyWindow.bounds];
+    pickerBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+    [keyWindow addSubview:pickerBgView];
+    self.pickerBgView = pickerBgView;
     
     TCCityPickerView *cityPickerView = [[[NSBundle mainBundle] loadNibNamed:@"TCCityPickerView" owner:nil options:nil] firstObject];
     cityPickerView.delegate = self;
@@ -161,17 +163,17 @@
     self.cityPickerView = cityPickerView;
     
     [UIView animateWithDuration:0.25 animations:^{
-        backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.82];
+        pickerBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.82];
         cityPickerView.y = TCScreenHeight - cityPickerView.height;
     }];
 }
 
 - (void)dismissPickerView {
     [UIView animateWithDuration:0.25 animations:^{
-        self.backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+        self.pickerBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
         self.cityPickerView.y = TCScreenHeight;
     } completion:^(BOOL finished) {
-        [self.backgroundView removeFromSuperview];
+        [self.pickerBgView removeFromSuperview];
         [self.cityPickerView removeFromSuperview];
     }];
 }
