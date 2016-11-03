@@ -10,6 +10,7 @@
 #import "TCBioEditViewController.h"
 #import "TCBioEditPhoneViewController.h"
 #import "TCShippingAddressViewController.h"
+#import "TCBioEditAvatarViewController.h"
 
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
@@ -113,7 +114,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            
+            TCBioEditAvatarViewController *vc = [[TCBioEditAvatarViewController alloc] initWithNibName:@"TCBioEditAvatarViewController" bundle:[NSBundle mainBundle]];
+            [self.navigationController pushViewController:vc animated:YES];
         } else {
             TCBioEditViewController *bioEditVC = [[TCBioEditViewController alloc] initWithNibName:@"TCBioEditViewController" bundle:[NSBundle mainBundle]];
             self.definesPresentationContext = YES;
