@@ -8,6 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TCBioEditAvatarViewController">
             <connections>
+                <outlet property="imageView" destination="DM5-YA-kO6" id="ay6-Cq-kYa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,7 +16,94 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DM5-YA-kO6">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="463" id="Q5z-6g-v61"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ebt-ct-pr4">
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7oo-FT-c8C">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="31" id="auy-HL-FaD"/>
+                                <constraint firstAttribute="width" constant="302" id="v7p-FF-S72"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="从手机相册选择">
+                                <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="handleClickAlbumButton:" destination="-1" eventType="touchUpInside" id="jBc-Xy-Nbc"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KHZ-II-jE1">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="302" id="M2m-QO-oaG"/>
+                                <constraint firstAttribute="height" constant="31" id="S53-qA-2xS"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="保存图片">
+                                <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="handleClickSaveButton:" destination="-1" eventType="touchUpInside" id="9M3-gn-Opi"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLx-ZK-mJJ">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="302" id="J3w-Pj-Ue9"/>
+                                <constraint firstAttribute="height" constant="31" id="Vkw-J0-MsC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="取消">
+                                <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="handleClickCancelButton:" destination="-1" eventType="touchUpInside" id="f01-eV-bMT"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pSd-0y-OQE">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="302" id="7eL-7n-474"/>
+                                <constraint firstAttribute="height" constant="31" id="sH4-4a-xvk"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="拍照">
+                                <color key="titleColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="handleClickTakePhotoButton:" destination="-1" eventType="touchUpInside" id="1bU-5q-uFx"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="KHZ-II-jE1" firstAttribute="centerX" secondItem="Ebt-ct-pr4" secondAttribute="centerX" id="3LS-hi-xB1"/>
+                        <constraint firstItem="7oo-FT-c8C" firstAttribute="centerX" secondItem="Ebt-ct-pr4" secondAttribute="centerX" id="9pR-vx-zNb"/>
+                        <constraint firstItem="KHZ-II-jE1" firstAttribute="top" secondItem="7oo-FT-c8C" secondAttribute="bottom" constant="11.5" id="KJ6-sG-pqg"/>
+                        <constraint firstItem="pSd-0y-OQE" firstAttribute="top" secondItem="Ebt-ct-pr4" secondAttribute="top" constant="19" id="UTU-tr-sBV"/>
+                        <constraint firstItem="pLx-ZK-mJJ" firstAttribute="top" secondItem="KHZ-II-jE1" secondAttribute="bottom" constant="28.5" id="XNK-sd-e3u"/>
+                        <constraint firstItem="7oo-FT-c8C" firstAttribute="top" secondItem="pSd-0y-OQE" secondAttribute="bottom" constant="11.5" id="clF-FX-FQh"/>
+                        <constraint firstItem="pSd-0y-OQE" firstAttribute="centerX" secondItem="Ebt-ct-pr4" secondAttribute="centerX" id="ipX-ol-bax"/>
+                        <constraint firstItem="pLx-ZK-mJJ" firstAttribute="centerX" secondItem="Ebt-ct-pr4" secondAttribute="centerX" id="upu-Uf-w5U"/>
+                    </constraints>
+                </view>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Ebt-ct-pr4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5zQ-ar-5Jp"/>
+                <constraint firstAttribute="bottom" secondItem="Ebt-ct-pr4" secondAttribute="bottom" id="9LL-4K-yz8"/>
+                <constraint firstItem="Ebt-ct-pr4" firstAttribute="top" secondItem="DM5-YA-kO6" secondAttribute="bottom" id="UEG-Cz-ebQ"/>
+                <constraint firstAttribute="trailing" secondItem="DM5-YA-kO6" secondAttribute="trailing" id="at5-0N-rkc"/>
+                <constraint firstItem="DM5-YA-kO6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bkt-Vm-9M5"/>
+                <constraint firstItem="DM5-YA-kO6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="iTT-Wy-2hB"/>
+                <constraint firstAttribute="trailing" secondItem="Ebt-ct-pr4" secondAttribute="trailing" id="noy-cf-bqn"/>
+            </constraints>
             <point key="canvasLocation" x="24.5" y="51.5"/>
         </view>
     </objects>

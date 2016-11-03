@@ -56,6 +56,8 @@
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
 		7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEE91DB62011003D90C6 /* individualTests.m */; };
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
+		7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */; };
+		7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */; };
 		7AC2921D1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC2921B1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m */; };
 		7AC2921E1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC2921C1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib */; };
 		7AC292221DC88CF200B2C7E8 /* TCBioEditSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC292201DC88CF200B2C7E8 /* TCBioEditSMSViewController.m */; };
@@ -172,6 +174,9 @@
 		7A9CCEF01DB62011003D90C6 /* individualUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = individualUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9CCEF41DB62011003D90C6 /* individualUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = individualUITests.m; sourceTree = "<group>"; };
 		7A9CCEF61DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeViewController.h; sourceTree = "<group>"; };
+		7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeViewController.m; sourceTree = "<group>"; };
+		7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCHomeViewController.xib; sourceTree = "<group>"; };
 		7ABF57B41DB70E2D002E40A0 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		7AC2921A1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditPhoneViewController.h; sourceTree = "<group>"; };
 		7AC2921B1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditPhoneViewController.m; sourceTree = "<group>"; };
@@ -405,6 +410,7 @@
 		7A9CCF061DB62790003D90C6 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				7AAF236E1DCAE7EB002B81A5 /* Home */,
 				7ACE57A31DC73BA6004B383A /* Vicinity */,
 				7A190B0C1DC0CC7800651905 /* Profile */,
 				7A190B051DC0CBC300651905 /* Login */,
@@ -485,6 +491,24 @@
 				7A190AED1DC09BBA00651905 /* SubClasses */,
 			);
 			path = WebService;
+			sourceTree = "<group>";
+		};
+		7AAF236E1DCAE7EB002B81A5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7AAF236F1DCAE7EB002B81A5 /* Controller */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		7AAF236F1DCAE7EB002B81A5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */,
+				7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */,
+				7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		7AC292291DC8BEA900B2C7E8 /* BinaryFiles */ = {
@@ -714,6 +738,7 @@
 				7AC292231DC88CF200B2C7E8 /* TCBioEditSMSViewController.xib in Resources */,
 				7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */,
 				7A6506DD1DC9EBCB00B0EDBF /* TCShippingAddressEditViewController.xib in Resources */,
+				7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */,
 				7A6506E21DC9EE5400B0EDBF /* TCShippingAddressViewCell.xib in Resources */,
 				7AC2921E1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib in Resources */,
 				7A918AC21DC32D90002BD529 /* TCBiographyAvatarViewCell.xib in Resources */,
@@ -809,6 +834,7 @@
 				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
 				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
 				7A918AC81DC34AA6002BD529 /* TCBioEditView.m in Sources */,
+				7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */,
 				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
 				7A190AF01DC09BF500651905 /* TCClient.m in Sources */,
 				7A918AC51DC34104002BD529 /* TCBioEditViewController.m in Sources */,

@@ -1,46 +1,22 @@
 //
-//  TCBioEditAvatarViewController.m
+//  TCHomeViewController.m
 //  individual
 //
-//  Created by 穆康 on 2016/11/2.
+//  Created by 穆康 on 2016/11/3.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCBioEditAvatarViewController.h"
+#import "TCHomeViewController.h"
 
-@interface TCBioEditAvatarViewController ()
-
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
+@interface TCHomeViewController ()
 
 @end
 
-@implementation TCBioEditAvatarViewController
+@implementation TCHomeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self setupSubviews];
-}
-
-- (void)setupSubviews {
-    UIImageView *avatarView = [[UIImageView alloc] init];
-    [self.view addSubview:avatarView];
-    
-}
-
-#pragma mark - actions
-
-- (IBAction)handleClickTakePhotoButton:(UIButton *)sender {
-}
-
-- (IBAction)handleClickAlbumButton:(UIButton *)sender {
-}
-
-- (IBAction)handleClickSaveButton:(UIButton *)sender {
-}
-
-- (IBAction)handleClickCancelButton:(UIButton *)sender {
 }
 
 - (void)didReceiveMemoryWarning {
