@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeighConstraint;
 
 @end
 
@@ -26,6 +27,10 @@
 - (void)setupSubviews {
     UIImageView *avatarView = [[UIImageView alloc] init];
     [self.view addSubview:avatarView];
+    
+}
+
+- (void)setupConstraints {
     
 }
 

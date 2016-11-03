@@ -9,6 +9,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TCBioEditAvatarViewController">
             <connections>
                 <outlet property="imageView" destination="DM5-YA-kO6" id="ay6-Cq-kYa"/>
+                <outlet property="imageViewHeighConstraint" destination="Q5z-6g-v61" id="LQD-Dh-3zw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
