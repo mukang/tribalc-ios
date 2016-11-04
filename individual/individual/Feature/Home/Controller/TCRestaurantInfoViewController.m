@@ -9,7 +9,9 @@
 #import "TCRestaurantInfoViewController.h"
 #import "MXNavigationBarManager.h"
 
-@interface TCRestaurantInfoViewController ()
+@interface TCRestaurantInfoViewController () {
+    UIImageView *restaurantInfoLogoImageView;
+}
 
 @end
 
@@ -43,8 +45,9 @@
 
     
     UIImage *restaurantInfoLogoImage = [UIImage imageNamed:@"restaurantInfoLogo"];
-    UIImageView *restaurantInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, 200)];
+    restaurantInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, 200)];
     restaurantInfoLogoImageView.image = restaurantInfoLogoImage;
+    restaurantInfoLogoImageView.backgroundColor = [UIColor blackColor];
     [mScrollView addSubview:restaurantInfoLogoImageView];
     
 }
@@ -65,6 +68,14 @@
 #pragma mark - scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [MXNavigationBarManager changeAlphaWithCurrentOffset:scrollView.contentOffset.y];
+    
+    CGPoint point = scrollView.contentOffset;
+    if (point.y < -64) {
+        double number = 1 + (-64 - point.y) / 220;
+        double width = self.view.frame.size.width * number;
+        double height = 200 * number;
+        [restaurantInfoLogoImageView setFrame:CGRectMake(self.view.frame.size.width / 2 - width / 2, point.y, width, height)];
+    }
 }
 
 @end
