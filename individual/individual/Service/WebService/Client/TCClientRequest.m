@@ -10,10 +10,13 @@
 #import "TCFunctions.h"
 #import "TCClientConfig.h"
 
+NSString *const TCClientHTTPMethodGet = @"GET";
+NSString *const TCClientHTTPMethodPost = @"POST";
+NSString *const TCClientHTTPMethodPut = @"PUT";
+NSString *const TCClientHTTPMethodDelete = @"DELETE";
+
 @interface TCClientRequest ()
 
-@property (nonatomic, copy) NSString *requestIdentifier;
-@property (nonatomic, copy) NSString *apiName;
 @property (nonatomic, strong) NSMutableDictionary *requestParams;
 @property (nonatomic, strong) NSMutableArray *requestFiles;
 
@@ -54,34 +57,35 @@
     return [self.requestFiles copy];
 }
 
-- (NSString *)httpMethod {
-    return @"GET";
-}
-
-- (NSTimeInterval)timeout {
-    return 20;
-}
-
 #pragma mark - Public Methods
 
 + (instancetype)requestWithApi:(NSString *)apiName {
-    NSParameterAssert(apiName != nil);
-    
-    NSString *requestClassName = [[self class] requestClassNameForApi:apiName];
-    Class requestClass = NSClassFromString(requestClassName);
-    NSAssert(requestClass != nil, @"未找到名为%@的类", requestClassName);
-    
-    return [[requestClass alloc] initWithApiName:apiName];
+    return [[self class] requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+}
+
++ (instancetype)requestWithHTTPMethod:(NSString *)HTTPMethod apiName:(NSString *)apiName {
+    if (HTTPMethod) HTTPMethod = TCClientHTTPMethodGet;
+    return [[self alloc] initWithHTTPMethod:HTTPMethod apiName:apiName];
 }
 
 #pragma mark - Private Methods
 
-- (instancetype)initWithApiName:(NSString *)apiName {
+- (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod apiName:(NSString *)apiName {
+    NSParameterAssert(HTTPMethod);
+    NSParameterAssert(apiName);
     if (self = [super init]) {
+        _HTTPMethod = HTTPMethod;
         _apiName = apiName;
         _requestIdentifier = [[self class] createIdentifier];
     }
     return self;
+}
+
+- (instancetype)init {
+    @throw [NSException exceptionWithName:@"TCClientRequest初始化错误"
+                                   reason:@"请使用接口文件提供的类方法"
+                                 userInfo:nil];
+    return nil;
 }
 
 + (NSString *)createIdentifier {
@@ -89,15 +93,6 @@
     int random = arc4random() % 1000;
     NSString *randomString = [NSString stringWithFormat:@"%lu%03d", (unsigned long)[now timeIntervalSince1970], random];
     return TCDigestMD5(randomString);
-}
-
-+ (NSString *)requestClassNameForApi:(NSString *)apiName {
-    NSArray *nameParts = [apiName componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/_"]];
-    NSMutableArray *caramelizedNameParts = [NSMutableArray array];
-    for (NSString *part in nameParts) {
-        [caramelizedNameParts addObject:part];
-    }
-    return [NSString stringWithFormat:TCCLIENT_REQUEST_CLASS_FORMAT, [caramelizedNameParts componentsJoinedByString:@""]];
 }
 
 #pragma mark - Override Methods

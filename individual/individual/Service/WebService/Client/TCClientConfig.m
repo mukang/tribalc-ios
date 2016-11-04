@@ -6,5 +6,10 @@
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCClientConfig.h"
+#ifndef _TCClientConfig_m
+#define _TCClientConfig_m
 
+
+
+
+#endif
