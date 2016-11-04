@@ -7,7 +7,7 @@
 //
 
 #import "TCHomeViewController.h"
-#import "TCRecommendViewController.h"
+
 #import "TCRestaurantViewController.h"
 
 @interface TCHomeViewController ()
@@ -18,16 +18,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view from its nib.
     UIButton *shoppingButton = [[UIButton alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 100)/2.0, 200, 100, 40)];
     [shoppingButton setTitle:@"餐饮" forState:UIControlStateNormal];
     shoppingButton.backgroundColor = [UIColor greenColor];
     [shoppingButton addTarget:self action:@selector(goResaurantList:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:shoppingButton];
+    
+    
+    UIButton *recommendBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 60)];
+    [recommendBtn setTitle:@"精品推荐" forState:UIControlStateNormal];
+    recommendBtn.backgroundColor = [UIColor redColor];
+    [recommendBtn addTarget:self action:@selector(goRecommendShoppingList:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:recommendBtn];
+    
 }
+
+
 - (void)goRecommendShoppingList :(id)sender
 {
-    TCRecommendViewController *recommend = [[TCRecommendViewController alloc]init];
+    TCRecommendListViewController *recommend = [[TCRecommendListViewController alloc]init];
+    recommend.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:recommend animated:YES];
 }
 - (void)goResaurantList :(id)sender

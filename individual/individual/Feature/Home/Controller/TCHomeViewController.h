@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCRecommendListViewController.h"
 
 @interface TCHomeViewController : UIViewController
 

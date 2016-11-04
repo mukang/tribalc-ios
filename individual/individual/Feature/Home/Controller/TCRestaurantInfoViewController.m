@@ -65,6 +65,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 #pragma mark - scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [MXNavigationBarManager changeAlphaWithCurrentOffset:scrollView.contentOffset.y];
