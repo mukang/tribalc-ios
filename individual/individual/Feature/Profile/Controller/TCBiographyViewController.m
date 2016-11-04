@@ -41,12 +41,7 @@
 - (void)setupNavBar {
     
     self.navigationItem.title = @"个人信息";
-    UIImage *bgImage = [UIImage imageWithColor:TCRGBColor(42, 42, 42)];
-    [self.navigationController.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.titleTextAttributes = @{
-                                                                    NSFontAttributeName : [UIFont systemFontOfSize:16],
-                                                                    NSForegroundColorAttributeName : [UIColor whiteColor]
-                                                                    };
+    
 }
 
 - (void)setupSubviews {

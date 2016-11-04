@@ -10,7 +10,11 @@
 #import "TCLoginViewController.h"
 #import "TCBiographyViewController.h"
 
-@interface TCProfileViewController ()
+#import "UIImage+Category.h"
+
+@interface TCProfileViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (weak, nonatomic) UITableView *tableView;
 
 @end
 
@@ -19,6 +23,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    
+}
+
+- (void)setupNavBar {
+    
+    UIImage *bgImage = [UIImage imageWithColor:TCRGBColor(42, 42, 42)];
+    [self.navigationController.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.titleTextAttributes = @{
+                                                                    NSFontAttributeName : [UIFont systemFontOfSize:16],
+                                                                    NSForegroundColorAttributeName : [UIColor whiteColor]
+                                                                    };
+}
+
+- (void)setupSubviews {
+//    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+//    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//    tableView.delegate = self;
+//    tableView.dataSource = self;
+//    [self.view addSubview:tableView];
+//    self.tableView = tableView;
 }
 
 - (IBAction)handleTapLoginButton:(UIButton *)sender {
