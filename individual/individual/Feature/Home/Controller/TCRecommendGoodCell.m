@@ -32,7 +32,7 @@
         [self.contentView addSubview:_priceLab];
         
         _collectionImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 33.5, 13.5, 20, 20)];
-        UIImage *collectionImg = [UIImage imageNamed:@"28"];
+        UIImage *collectionImg = [UIImage imageNamed:@"28n"];
         _collectionImgView.image = collectionImg;
         [_goodImageView addSubview:_collectionImgView];
         

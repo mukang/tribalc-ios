@@ -134,7 +134,9 @@
 }
 
 - (void)touchShopCar:(id)sender {
-    
+    TCShoppingCartViewController *shoppingCartViewController = [[TCShoppingCartViewController alloc] init];
+    shoppingCartViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:shoppingCartViewController animated:YES];
 }
 
 
