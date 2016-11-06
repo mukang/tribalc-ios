@@ -8,7 +8,7 @@
 
 #import "TCHomeViewController.h"
 
-#import "TCRestaurantViewController.h"
+
 
 @interface TCHomeViewController ()
 
@@ -45,6 +45,7 @@
 - (void)goResaurantList :(id)sender
 {
     TCRestaurantViewController *resaurant = [[TCRestaurantViewController alloc]init];
+    resaurant.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:resaurant animated:YES];
 }
 - (void)didReceiveMemoryWarning {

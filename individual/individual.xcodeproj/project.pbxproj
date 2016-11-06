@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0921587E1DCD761E0047A812 /* TCShoppingCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0921587D1DCD761E0047A812 /* TCShoppingCartViewController.m */; };
 		092158811DCD79CB0047A812 /* TCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092158801DCD79CB0047A812 /* TCShoppingCartTableViewCell.m */; };
+		093112121DCECD55000DB8E5 /* TCRestaurantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 093112111DCECD55000DB8E5 /* TCRestaurantTableViewCell.m */; };
 		098BC2AA1DCC5C6300532A4E /* TCRecommendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 098BC2A91DCC5C6300532A4E /* TCRecommendListViewController.m */; };
 		098BC2AD1DCC668900532A4E /* TCRecommendGoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 098BC2AC1DCC668900532A4E /* TCRecommendGoodCell.m */; };
 		1EA3289035216A7674F8F7F8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A240A7A9EE484200847270B /* libPods.a */; };
@@ -101,6 +102,8 @@
 		0921587D1DCD761E0047A812 /* TCShoppingCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShoppingCartViewController.m; sourceTree = "<group>"; };
 		0921587F1DCD79CB0047A812 /* TCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
 		092158801DCD79CB0047A812 /* TCShoppingCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShoppingCartTableViewCell.m; sourceTree = "<group>"; };
+		093112101DCECD55000DB8E5 /* TCRestaurantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantTableViewCell.h; sourceTree = "<group>"; };
+		093112111DCECD55000DB8E5 /* TCRestaurantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantTableViewCell.m; sourceTree = "<group>"; };
 		098BC2A81DCC5C6300532A4E /* TCRecommendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendListViewController.h; sourceTree = "<group>"; };
 		098BC2A91DCC5C6300532A4E /* TCRecommendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendListViewController.m; sourceTree = "<group>"; };
 		098BC2AB1DCC668900532A4E /* TCRecommendGoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendGoodCell.h; sourceTree = "<group>"; };
@@ -253,6 +256,8 @@
 				741C148C1DCB13F500FBAA03 /* TCRestaurantViewController.m */,
 				741C148E1DCB17E700FBAA03 /* TCRestaurantInfoViewController.h */,
 				741C148F1DCB17E700FBAA03 /* TCRestaurantInfoViewController.m */,
+				093112101DCECD55000DB8E5 /* TCRestaurantTableViewCell.h */,
+				093112111DCECD55000DB8E5 /* TCRestaurantTableViewCell.m */,
 			);
 			name = Restaurant;
 			sourceTree = "<group>";
@@ -921,6 +926,7 @@
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
 				7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */,
+				093112121DCECD55000DB8E5 /* TCRestaurantTableViewCell.m in Sources */,
 				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,
 				7AC2921D1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m in Sources */,
 				741C14941DCB324300FBAA03 /* MXNavigationBarManager.m in Sources */,

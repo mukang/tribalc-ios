@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TCRecommendListViewController.h"
 
+
 @interface TCRecommendGoodCell : UICollectionViewCell
 
 @property (strong, nonatomic) UIImageView *goodImageView;

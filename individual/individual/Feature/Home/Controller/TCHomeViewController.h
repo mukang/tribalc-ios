@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TCRecommendListViewController.h"
+#import "TCRestaurantViewController.h"
 
 @interface TCHomeViewController : UIViewController
 

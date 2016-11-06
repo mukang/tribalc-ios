@@ -7,9 +7,10 @@
 //
 
 #import "TCRestaurantViewController.h"
-#import "TCRestaurantInfoViewController.h"
 
-@interface TCRestaurantViewController ()
+@interface TCRestaurantViewController () {
+    NSArray *restaurantArray;
+}
 
 @end
 
@@ -19,42 +20,74 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"餐饮";
-    mResaurantTableView = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStylePlain];
+    
+    [self initialData];
+    
+    [self initialTopSelectView];
+    
+    [self initialTableView];
+    
+}
+
+- (void)initialData {
+    
+    NSDictionary *info1 = @{ @"name": @"麦当劳", @"location":@"朝阳区", @"type":@"快餐",  @"price":@"56", @"range":@"872m", @"room":@"1", @"reserve":@"0" };
+    
+    NSDictionary *info2 = @{ @"name": @"魏蜀吴老火锅", @"location":@"北苑家园", @"type":@"火锅",  @"price":@"100", @"range":@"1872m", @"room":@"1", @"reserve":@"1" };
+    
+    NSDictionary *info3 = @{ @"name": @"小院时光", @"location":@"朝阳区", @"type":@"创意菜",  @"price":@"35", @"range":@"72km" , @"room":@"0", @"reserve":@"1" };
+    
+    NSDictionary *info4 = @{ @"name": @"雕刻时光咖啡馆", @"location":@"北苑家园", @"type":@"雕刻时光", @"price":@"86", @"range":@"272m", @"room":@"1", @"reserve":@"0" };
+    
+    NSDictionary *info5 = @{ @"name": @"三和屋(北苑店)", @"location":@"朝阳区", @"type":@"寿司", @"price":@"56", @"range":@"872m", @"room":@"0", @"reserve":@"0"  };
+    restaurantArray = @[ info1, info2, info3, info4, info5 ];
+    
+}
+
+- (void)initialTopSelectView {
+    UIView *topSelectView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 50)];
+    topSelectView.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:topSelectView];
+}
+
+- (void)initialTableView {
+    mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64 + 50, self.view.frame.size.width, self.view.size.height - 64 - 50) style:UITableViewStylePlain];
     mResaurantTableView.delegate = self;
     mResaurantTableView.dataSource = self;
     [self.view addSubview:mResaurantTableView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-#pragma mark - UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        return 50;
-    }
-    return 150;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
-    [self.navigationController pushViewController:restaurantInfo animated:YES];
-}
+
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return restaurantArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[TCRestaurantTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.textLabel.text = @"麦当劳";
+    
+    NSDictionary *resInfo = restaurantArray[indexPath.row];
+    cell.resImgView.image = [UIImage imageNamed:@"null_length"];
+    cell.nameLab.text = resInfo[@"name"];
+    cell.locationAndTypeLab.text = [NSString stringWithFormat:@"%@ %@", resInfo[@"location"], resInfo[@"type"]];
+    cell.priceLab.text =  [NSString stringWithFormat:@"￥%@/人", resInfo[@"price"]];
+    [cell.priceLab sizeToFit];
+    cell.rangeLab.text = resInfo[@"range"];
+
+    if ([resInfo[@"room"] isEqualToString:@"1"]) {
+        cell.privateRoomBtn.hidden = NO;
+    }
+    if ([resInfo[@"reserve"] isEqualToString:@"1"]) {
+        cell.reserveBtn.hidden = NO;
+    }
+    [cell showRestaurantButton];
+    
     return cell;
 }
 
@@ -62,6 +95,43 @@
 {
     return 1;
 }
+
+
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 165;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
+    [self.navigationController pushViewController:restaurantInfo animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    if([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]){
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 /*
 #pragma mark - Navigation

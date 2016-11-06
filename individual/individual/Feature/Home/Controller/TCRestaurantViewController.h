@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TCRestaurantTableViewCell.h"
+#import "TCRestaurantInfoViewController.h"
+
+
 @interface TCRestaurantViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *mResaurantTableView;
