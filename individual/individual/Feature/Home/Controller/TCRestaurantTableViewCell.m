@@ -41,6 +41,7 @@
     return self;
 }
 
+
 - (void)showRestaurantButton {
     if (_privateRoomBtn.hidden == YES && _reserveBtn.hidden == NO) {
         _reserveBtn.origin = _privateRoomBtn.origin;
@@ -57,12 +58,6 @@
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.hidden = YES;
     return button;
-//    _privateRoomBtn = [[UIButton alloc] initWithFrame:CGRectMake(_locationAndTypeLab.origin.x, _locationAndTypeLab.origin.y + _locationAndTypeLab.size.height + 3, 65, 40)];
-//    _privateRoomBtn.layer.cornerRadius = 3;
-//    _privateRoomBtn.layer.borderWidth = 1;
-//    
-//    [self.contentView addSubview:_privateRoomBtn];
-    
     
 }
 
@@ -77,7 +72,6 @@
     float cellHeight = 165;
     
     _resImgView = [[UIImageView alloc] initWithFrame:CGRectMake(13, 15, cellWidth / 2 - 10, cellHeight - 15 - 18)];
-    _resImgView.backgroundColor = [UIColor grayColor];
     [self.contentView addSubview:_resImgView];
 }
 

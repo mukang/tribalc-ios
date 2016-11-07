@@ -16,23 +16,27 @@
     self = [super initWithFrame:frame];
     if(self) {
         UIImage *nullImage = [UIImage imageNamed:@"null"];
-                
-        _goodImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - 17 * 3 - 25)];
+        
+        self.backgroundColor = [UIColor whiteColor];
+        
+        _goodImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height * (1 - 0.26))];
         _goodImageView.image = nullImage;
+        
         [self.contentView addSubview:_goodImageView];
         
-        _typeAndNameLab = [self initialWithFrame:CGRectMake(_goodImageView.frame.origin.x, _goodImageView.frame.origin.y + _goodImageView.frame.size.height + 8, _goodImageView.frame.size.width, 17)];
+        _typeAndNameLab = [self initialWithFrame:CGRectMake(_goodImageView.frame.origin.x + 8, _goodImageView.frame.origin.y + _goodImageView.frame.size.height + 14, _goodImageView.frame.size.width, 15)];
+        _typeAndNameLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
         [self.contentView addSubview:_typeAndNameLab];
         
-        _shopNameLab = [self initialWithFrame:CGRectMake(_goodImageView.frame.origin.x , _typeAndNameLab.frame.origin.y + _typeAndNameLab.frame.size.height + 8, _goodImageView.frame.size.width, 17)];
+        _shopNameLab = [self initialWithFrame:CGRectMake(_typeAndNameLab.frame.origin.x + 1, _typeAndNameLab.frame.origin.y + _typeAndNameLab.frame.size.height + 13, _goodImageView.frame.size.width, 13)];
         [self.contentView addSubview:_shopNameLab];
         
-        _priceLab = [self initialWithFrame:CGRectMake(_goodImageView.frame.origin.x - 5, _shopNameLab.frame.origin.y + _shopNameLab.frame.size.height + 9, _goodImageView.frame.size.width, 17)];
-        _priceLab.textColor = [UIColor colorWithRed:63/255.0 green:171/255.0 blue:198/255.0 alpha:1];
+        _priceLab = [self initialWithFrame:CGRectMake(_shopNameLab.frame.origin.x - 1, _shopNameLab.frame.origin.y + _shopNameLab.frame.size.height + 9, _goodImageView.frame.size.width, 15)];
+        _priceLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
         [self.contentView addSubview:_priceLab];
         
-        _collectionImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 33.5, 13.5, 20, 20)];
-        UIImage *collectionImg = [UIImage imageNamed:@"28n"];
+        _collectionImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 8 - 20, self.height - 8 - 20, 20, 20)];
+        UIImage *collectionImg = [UIImage imageNamed:@"2"];
         _collectionImgView.image = collectionImg;
         [_goodImageView addSubview:_collectionImgView];
         
@@ -50,15 +54,14 @@
 
 - (UILabel *)initialWithFrame:(CGRect)frame{
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.font = [UIFont fontWithName:@"Arial" size:17];
-    label.textColor = [UIColor colorWithRed:88/255.0 green:88/255.0 blue:96/255.0 alpha:1];
-    
+    label.font = [UIFont fontWithName:@"Arial" size:12];
+    label.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
     return label;
 }
 
 - (void)touchCollectionBtn {
-    UIImage *image = [UIImage imageNamed:@"28n"];
-    UIImage *selectImg = [UIImage imageNamed:@"28"];
+    UIImage *image = [UIImage imageNamed:@"2"];
+    UIImage *selectImg = [UIImage imageNamed:@"3"];
     if ([_collectionImgView.image isEqual:image]) {
         _collectionImgView.image = selectImg;
     } else {

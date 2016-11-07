@@ -23,8 +23,6 @@
     
     [self initialData];
     
-    [self initialTopSelectView];
-    
     [self initialTableView];
     
 }
@@ -44,42 +42,42 @@
     
 }
 
-- (void)initialTopSelectView {
-    UIView *topSelectView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 50)];
-    topSelectView.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:topSelectView];
-}
+
 
 - (void)initialTableView {
-    mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64 + 50, self.view.frame.size.width, self.view.size.height - 64 - 50) style:UITableViewStylePlain];
+    mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStylePlain];
     mResaurantTableView.delegate = self;
     mResaurantTableView.dataSource = self;
     [self.view addSubview:mResaurantTableView];
 }
 
-
-
-
-#pragma mark - UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return restaurantArray.count;
+- (UITableViewCell *)getTopSelectViewWithTableView:(UITableView *)tableView {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    
+    
+    return cell;
 }
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+
+
+- (TCRestaurantTableViewCell *)getTableViewCellInfoWithIndex:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView{
     TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
         cell = [[TCRestaurantTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    
-    NSDictionary *resInfo = restaurantArray[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSDictionary *resInfo = restaurantArray[indexPath.row - 1];
     cell.resImgView.image = [UIImage imageNamed:@"null_length"];
     cell.nameLab.text = resInfo[@"name"];
     cell.locationAndTypeLab.text = [NSString stringWithFormat:@"%@ %@", resInfo[@"location"], resInfo[@"type"]];
     cell.priceLab.text =  [NSString stringWithFormat:@"￥%@/人", resInfo[@"price"]];
     [cell.priceLab sizeToFit];
     cell.rangeLab.text = resInfo[@"range"];
-
+    
     if ([resInfo[@"room"] isEqualToString:@"1"]) {
         cell.privateRoomBtn.hidden = NO;
     }
@@ -91,6 +89,26 @@
     return cell;
 }
 
+
+
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return restaurantArray.count + 1;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (indexPath.row == 0) {
+        return [self getTopSelectViewWithTableView:tableView];
+    }
+    else {
+        return [self getTableViewCellInfoWithIndex:indexPath AndTableView:tableView];
+    }
+    
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -100,14 +118,19 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0) {
+        return 84;
+    }
     return 165;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
-    [self.navigationController pushViewController:restaurantInfo animated:YES];
+    if (indexPath.row != 0) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
+        [self.navigationController pushViewController:restaurantInfo animated:YES];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -126,6 +149,8 @@
     }
 }
 
+
+# pragma makr - click
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
