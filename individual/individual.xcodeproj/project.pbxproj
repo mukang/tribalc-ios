@@ -22,6 +22,10 @@
 		7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47CE1DB7213C00E39207 /* UIImage+Category.m */; };
 		7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47D11DB76B4100E39207 /* TCFunctions.m */; };
 		7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47D41DB76C1900E39207 /* TCArchiveService.m */; };
+		7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E4381DD01F0400EF7427 /* TCProfileViewCell.m */; };
+		7A21E43B1DD01F0400EF7427 /* TCProfileViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E4391DD01F0400EF7427 /* TCProfileViewCell.xib */; };
+		7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */; };
+		7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */; };
 		7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */; };
 		7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A510F9F1DB8624400471A88 /* NSObject+TCModel.m */; };
 		7A6506D31DC993D400B0EDBF /* TCTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6506D21DC993D400B0EDBF /* TCTabBar.m */; };
@@ -125,6 +129,12 @@
 		7A1A47D11DB76B4100E39207 /* TCFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCFunctions.m; sourceTree = "<group>"; };
 		7A1A47D31DB76C1900E39207 /* TCArchiveService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCArchiveService.h; sourceTree = "<group>"; };
 		7A1A47D41DB76C1900E39207 /* TCArchiveService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCArchiveService.m; sourceTree = "<group>"; };
+		7A21E4371DD01F0400EF7427 /* TCProfileViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileViewCell.h; sourceTree = "<group>"; };
+		7A21E4381DD01F0400EF7427 /* TCProfileViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileViewCell.m; sourceTree = "<group>"; };
+		7A21E4391DD01F0400EF7427 /* TCProfileViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileViewCell.xib; sourceTree = "<group>"; };
+		7A21E43C1DD02DEA00EF7427 /* TCProfileProcessViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileProcessViewCell.h; sourceTree = "<group>"; };
+		7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileProcessViewCell.m; sourceTree = "<group>"; };
+		7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileProcessViewCell.xib; sourceTree = "<group>"; };
 		7A41C0D61DCC71C0003FC63C /* TCClientRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientRequestError.h; sourceTree = "<group>"; };
 		7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCClientRequestError.m; sourceTree = "<group>"; };
 		7A510F9E1DB8624400471A88 /* NSObject+TCModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TCModel.h"; sourceTree = "<group>"; };
@@ -624,12 +634,18 @@
 		7AE32B8A1DC21CBA004E303D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7A918AB91DC32686002BD529 /* TCBiographyViewCell.h */,
-				7A918ABA1DC32686002BD529 /* TCBiographyViewCell.m */,
-				7A918ABB1DC32686002BD529 /* TCBiographyViewCell.xib */,
 				7A7C19D81DCF29930092AEA1 /* TCProfileHeaderView.h */,
 				7A7C19D91DCF29930092AEA1 /* TCProfileHeaderView.m */,
 				7A7C19DB1DCF29B60092AEA1 /* TCProfileHeaderView.xib */,
+				7A21E4371DD01F0400EF7427 /* TCProfileViewCell.h */,
+				7A21E4381DD01F0400EF7427 /* TCProfileViewCell.m */,
+				7A21E4391DD01F0400EF7427 /* TCProfileViewCell.xib */,
+				7A21E43C1DD02DEA00EF7427 /* TCProfileProcessViewCell.h */,
+				7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */,
+				7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */,
+				7A918AB91DC32686002BD529 /* TCBiographyViewCell.h */,
+				7A918ABA1DC32686002BD529 /* TCBiographyViewCell.m */,
+				7A918ABB1DC32686002BD529 /* TCBiographyViewCell.xib */,
 				7A918ABE1DC32D90002BD529 /* TCBiographyAvatarViewCell.h */,
 				7A918ABF1DC32D90002BD529 /* TCBiographyAvatarViewCell.m */,
 				7A918AC01DC32D90002BD529 /* TCBiographyAvatarViewCell.xib */,
@@ -794,6 +810,7 @@
 				7A918AC21DC32D90002BD529 /* TCBiographyAvatarViewCell.xib in Resources */,
 				7A6506E71DCA130200B0EDBF /* TCShippingAddressEditViewCell.xib in Resources */,
 				7A6506D81DC9EBAA00B0EDBF /* TCShippingAddressViewController.xib in Resources */,
+				7A21E43B1DD01F0400EF7427 /* TCProfileViewCell.xib in Resources */,
 				7A918ACE1DC362E0002BD529 /* TCBioEditViewController.xib in Resources */,
 				7A918ACA1DC34AC3002BD529 /* TCBioEditView.xib in Resources */,
 				7AC2922B1DC8BEB300B2C7E8 /* citylist.data in Resources */,
@@ -804,6 +821,7 @@
 				7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */,
 				7A918AD31DC366CE002BD529 /* TCBioEditGenderView.xib in Resources */,
 				7AC292281DC8AA6900B2C7E8 /* TCCityPickerView.xib in Resources */,
+				7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -897,6 +915,7 @@
 				7A6506E11DC9EE5400B0EDBF /* TCShippingAddressViewCell.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */,
+				7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */,
 				7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */,
 				7A918ABC1DC32686002BD529 /* TCBiographyViewCell.m in Sources */,
 				7A6506D71DC9EBAA00B0EDBF /* TCShippingAddressViewController.m in Sources */,
@@ -905,6 +924,7 @@
 				7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */,
 				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,
 				7AAF237F1DCB5BF1002B81A5 /* TCUser.m in Sources */,
+				7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */,
 				7AC2921D1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,

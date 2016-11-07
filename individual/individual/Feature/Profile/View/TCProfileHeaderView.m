@@ -10,12 +10,35 @@
 
 @implementation TCProfileHeaderView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    self.avatarBgView.layer.cornerRadius = 32;
+    self.avatarBgView.layer.masksToBounds = YES;
+    self.avatarImageView.layer.cornerRadius = 29.5;
+    self.avatarImageView.layer.masksToBounds = YES;
+    self.wantGradeButton.layer.cornerRadius = 7.5;
+    self.wantGradeButton.layer.masksToBounds = YES;
 }
-*/
+
+- (void)updateConstraints {
+    [super updateConstraints];
+    
+    
+}
+
+#pragma mark - actions
+
+- (IBAction)handleClickCardButton:(UIButton *)sender {
+}
+
+- (IBAction)handleClickCollectButton:(UIButton *)sender {
+}
+
+- (IBAction)handleClickGradeButton:(UIButton *)sender {
+}
+
+- (IBAction)handleClickPhotographButton:(UIButton *)sender {
+}
 
 @end
