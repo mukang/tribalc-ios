@@ -14,15 +14,16 @@
 @property UILabel *nameLab;
 @property UILabel *rangeLab;
 
-@property UIButton *privateRoomBtn;
-@property UIButton *reserveBtn;
 
 - (void)setLocation:(NSString *)location;
 
 - (void)setType:(NSString *)type;
 
-- (void)showRestaurantButton;
 
 - (void)setPrice:(NSString *)price;
+
+- (void)isSupportRoom:(BOOL)b;
+
+- (void)isSupportReserve:(BOOL)b;
 
 @end

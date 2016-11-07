@@ -29,15 +29,15 @@
 
 - (void)initialData {
     
-    NSDictionary *info1 = @{ @"name": @"麦当劳", @"location":@"朝阳区", @"type":@"快餐",  @"price":@"56", @"range":@"872m", @"room":@"1", @"reserve":@"0" };
+    NSDictionary *info1 = @{ @"name": @"麦当劳", @"location":@"朝阳区", @"type":@"快餐",  @"price":@"56", @"range":@"872m", @"room":@true, @"reserve":@false };
     
-    NSDictionary *info2 = @{ @"name": @"魏蜀吴老火锅", @"location":@"北苑家园", @"type":@"火锅",  @"price":@"100", @"range":@"1872m", @"room":@"1", @"reserve":@"1" };
+    NSDictionary *info2 = @{ @"name": @"魏蜀吴老火锅", @"location":@"北苑家园", @"type":@"火锅",  @"price":@"100", @"range":@"1872m", @"room":@true, @"reserve":@true };
     
-    NSDictionary *info3 = @{ @"name": @"小院时光", @"location":@"朝阳区", @"type":@"创意菜",  @"price":@"35", @"range":@"72km" , @"room":@"0", @"reserve":@"1" };
+    NSDictionary *info3 = @{ @"name": @"小院时光", @"location":@"朝阳区", @"type":@"创意菜",  @"price":@"35", @"range":@"72km" , @"room":@false, @"reserve":@true };
     
-    NSDictionary *info4 = @{ @"name": @"雕刻时光咖啡馆", @"location":@"北苑家园", @"type":@"雕刻时光", @"price":@"86", @"range":@"272m", @"room":@"1", @"reserve":@"0" };
+    NSDictionary *info4 = @{ @"name": @"雕刻时光咖啡馆", @"location":@"北苑家园", @"type":@"雕刻时光", @"price":@"86", @"range":@"272m", @"room":@true, @"reserve":@false };
     
-    NSDictionary *info5 = @{ @"name": @"三和屋(北苑店)", @"location":@"朝阳区", @"type":@"寿司", @"price":@"56", @"range":@"872m", @"room":@"0", @"reserve":@"0"  };
+    NSDictionary *info5 = @{ @"name": @"三和屋(北苑店)", @"location":@"朝阳区", @"type":@"寿司", @"price":@"56", @"range":@"872m", @"room":@false, @"reserve":@false  };
     restaurantArray = @[ info1, info2, info3, info4, info5 ];
     
 }
@@ -48,6 +48,7 @@
     mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStylePlain];
     mResaurantTableView.delegate = self;
     mResaurantTableView.dataSource = self;
+    mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
     [self.view addSubview:mResaurantTableView];
 }
 
@@ -76,19 +77,16 @@
     [cell setLocation:resInfo[@"location"]];
     [cell setType:resInfo[@"type"]];
     [cell setPrice:resInfo[@"price"]];
+    NSLog(@"%@, %@", resInfo[@"room"], resInfo[@"reserve"]);
+    if ([resInfo[@"room"] isEqual:@YES]) {
+        [cell isSupportRoom:YES];
+    }
+    if ([resInfo[@"reserve"] isEqual:@YES]) {
+        [cell isSupportReserve:YES];
+    }
+    cell.rangeLab.text = resInfo[@"range"];
     
-//    cell.locationAndTypeLab.text = [NSString stringWithFormat:@"%@ %@", resInfo[@"location"], resInfo[@"type"]];
-//    cell.priceLab.text =  [NSString stringWithFormat:@"￥%@/人", resInfo[@"price"]];
-//    [cell.priceLab sizeToFit];
-//    cell.rangeLab.text = resInfo[@"range"];
-    
-//    if ([resInfo[@"room"] isEqualToString:@"1"]) {
-//        cell.privateRoomBtn.hidden = NO;
-//    }
-//    if ([resInfo[@"reserve"] isEqualToString:@"1"]) {
-//        cell.reserveBtn.hidden = NO;
-//    }
-//    [cell showRestaurantButton];
+
     
     return cell;
 }
