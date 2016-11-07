@@ -20,6 +20,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view from its nib.
+    
     UIButton *shoppingButton = [[UIButton alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 100)/2.0, 200, 100, 40)];
     [shoppingButton setTitle:@"餐饮" forState:UIControlStateNormal];
     shoppingButton.backgroundColor = [UIColor greenColor];

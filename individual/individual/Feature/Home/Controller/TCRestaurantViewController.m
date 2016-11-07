@@ -73,18 +73,22 @@
     NSDictionary *resInfo = restaurantArray[indexPath.row - 1];
     cell.resImgView.image = [UIImage imageNamed:@"null_length"];
     cell.nameLab.text = resInfo[@"name"];
-    cell.locationAndTypeLab.text = [NSString stringWithFormat:@"%@ %@", resInfo[@"location"], resInfo[@"type"]];
-    cell.priceLab.text =  [NSString stringWithFormat:@"￥%@/人", resInfo[@"price"]];
-    [cell.priceLab sizeToFit];
-    cell.rangeLab.text = resInfo[@"range"];
+    [cell setLocation:resInfo[@"location"]];
+    [cell setType:resInfo[@"type"]];
+    [cell setPrice:resInfo[@"price"]];
     
-    if ([resInfo[@"room"] isEqualToString:@"1"]) {
-        cell.privateRoomBtn.hidden = NO;
-    }
-    if ([resInfo[@"reserve"] isEqualToString:@"1"]) {
-        cell.reserveBtn.hidden = NO;
-    }
-    [cell showRestaurantButton];
+//    cell.locationAndTypeLab.text = [NSString stringWithFormat:@"%@ %@", resInfo[@"location"], resInfo[@"type"]];
+//    cell.priceLab.text =  [NSString stringWithFormat:@"￥%@/人", resInfo[@"price"]];
+//    [cell.priceLab sizeToFit];
+//    cell.rangeLab.text = resInfo[@"range"];
+    
+//    if ([resInfo[@"room"] isEqualToString:@"1"]) {
+//        cell.privateRoomBtn.hidden = NO;
+//    }
+//    if ([resInfo[@"reserve"] isEqualToString:@"1"]) {
+//        cell.reserveBtn.hidden = NO;
+//    }
+//    [cell showRestaurantButton];
     
     return cell;
 }
@@ -119,9 +123,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        return 84;
+        return 42;
     }
-    return 165;
+    return 160;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
