@@ -39,9 +39,11 @@
 }
 
 - (void)setupNavBar {
-    
     self.navigationItem.title = @"个人信息";
-    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(handleCickBackButton:)];
 }
 
 - (void)setupSubviews {
@@ -181,7 +183,13 @@
     }];
 }
 
-#pragma mark - overwrite
+#pragma mark - Actions
+
+- (void)handleCickBackButton:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Override Methods
 
 - (NSArray *)biographyTitles {
     if (_biographyTitles == nil) {

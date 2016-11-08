@@ -8,21 +8,71 @@
 
 #import "TCNavigationController.h"
 
-@interface TCNavigationController ()
+@interface TCNavigationController () <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
 @end
 
 @implementation TCNavigationController
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        _enableInteractivePopGesture = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.delegate = self;
+    self.interactivePopGestureRecognizer.delegate = self;
 }
 
 #pragma mark - Status Bar
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return [self.topViewController preferredStatusBarStyle];
+}
+
+#pragma mark - Override Methods
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (animated) {
+        self.interactivePopGestureRecognizer.enabled = NO;
+    }
+    [super pushViewController:viewController animated:animated];
+}
+
+- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
+    if (animated) {
+        self.interactivePopGestureRecognizer.enabled = NO;
+    }
+    return [super popToRootViewControllerAnimated:animated];
+}
+
+- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (animated) {
+        self.interactivePopGestureRecognizer.enabled = NO;
+    }
+    return [super popToViewController:viewController animated:animated];
+}
+
+#pragma mark - <UINavigationControllerDelegate>
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.interactivePopGestureRecognizer.enabled = self.enableInteractivePopGesture;
+}
+
+#pragma mark - <UIGestureRecognizerDelegate>
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.interactivePopGestureRecognizer) {
+        if (self.viewControllers.count < 2 || self.visibleViewController == [self.viewControllers objectAtIndex:0]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {
