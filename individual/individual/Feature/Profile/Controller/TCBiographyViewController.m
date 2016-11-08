@@ -59,6 +59,12 @@
     self.bioDetailsTitles = @[@[@"", @"瓜皮", @"女", @"1995年5月20日", @"单身"], @[@"15967897508", @"北京朝阳区", @"吉林省长春市九台区瓜皮小区"]];
 }
 
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

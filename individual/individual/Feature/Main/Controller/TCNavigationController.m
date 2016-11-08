@@ -19,6 +19,12 @@
     // Do any additional setup after loading the view.
 }
 
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return [self.topViewController preferredStatusBarStyle];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

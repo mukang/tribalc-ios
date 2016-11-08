@@ -8,6 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCProfileHeaderView;
+
+@protocol TCProfileHeaderViewDelegate <NSObject>
+
+@optional
+- (void)didClickCardButtonInProfileHeaderView:(TCProfileHeaderView *)view;
+- (void)didClickCollectButtonInProfileHeaderView:(TCProfileHeaderView *)view;
+- (void)didClickGradeButtonInProfileHeaderView:(TCProfileHeaderView *)view;
+- (void)didClickPhotographButtonInProfileHeaderView:(TCProfileHeaderView *)view;
+- (void)didTapBioInProfileHeaderView:(TCProfileHeaderView *)view;
+
+@end
+
 @interface TCProfileHeaderView : UIView
 
 @property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
@@ -18,5 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nickLabel;
 @property (weak, nonatomic) IBOutlet UIButton *wantGradeButton;
 @property (weak, nonatomic) IBOutlet UIButton *photographButton;
+
+@property (weak, nonatomic) id<TCProfileHeaderViewDelegate> delegate;
 
 @end

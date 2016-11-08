@@ -16,12 +16,20 @@
 
 #import "UIImage+Category.h"
 
-@interface TCProfileViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
+@interface TCProfileViewController ()
+<UITableViewDelegate,
+UITableViewDataSource,
+UIScrollViewDelegate,
+TCProfileHeaderViewDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
 @property (copy, nonatomic) NSArray *fodderArray;
+
+@property (nonatomic) BOOL needsLightContentStatusBar;
+
 @property (nonatomic) CGFloat headerViewHeight;
 @property (nonatomic) CGFloat topBarHeight;
+
 
 @end
 
@@ -35,11 +43,25 @@
     
     [self setupNavBar];
     [self setupSubviews];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self updateNavigationBar];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (![[self.navigationController.childViewControllers lastObject] isEqual:self]) {
+        [self restoreNavigationBar];
+    } else {
+        
+    }
 }
 
 - (void)setupNavBar {
     self.extendedLayoutIncludesOpaqueBars = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile_nav_QRcode_item"]
                                                                  style:UIBarButtonItemStylePlain
@@ -68,6 +90,7 @@
     self.tableView = tableView;
     
     TCProfileHeaderView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TCProfileHeaderView" owner:nil options:nil] firstObject];
+    headerView.delegate = self;
     tableView.tableHeaderView = headerView;
     
     UINib *nib = [UINib nibWithNibName:@"TCProfileViewCell" bundle:[NSBundle mainBundle]];
@@ -77,6 +100,10 @@
 }
 
 #pragma mark - Navigation Bar
+
+- (void)restoreNavigationBar {
+    [self updateNavigationBarWithAlpha:1.0];
+}
 
 - (void)updateNavigationBar {
     if ([[self.navigationController.childViewControllers lastObject] isEqual:self]) {
@@ -90,21 +117,25 @@
 }
 
 - (void)updateNavigationBarWithAlpha:(CGFloat)alpha {
-    UIColor *tintColor = nil;
+    UIColor *tintColor = nil, *titleColor = nil;
     if (alpha < 1.0) {
         self.navigationController.navigationBar.translucent = YES;
     } else {
         self.navigationController.navigationBar.translucent = NO;
     }
     if (alpha > 0.7) {
+        self.needsLightContentStatusBar = YES;
         tintColor = [UIColor whiteColor];
+        titleColor = [UIColor whiteColor];
     } else {
+        self.needsLightContentStatusBar = NO;
         tintColor = TCRGBColor(65, 65, 65);
+        titleColor = [UIColor clearColor];
     }
     [self.navigationController.navigationBar setTintColor:tintColor];
     self.navigationController.navigationBar.titleTextAttributes = @{
                                                                     NSFontAttributeName : [UIFont systemFontOfSize:16],
-                                                                    NSForegroundColorAttributeName : tintColor
+                                                                    NSForegroundColorAttributeName : titleColor
                                                                     };
     UIImage *bgImage = [UIImage imageWithColor:TCARGBColor(42, 42, 42, alpha)];
     [self.navigationController.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
@@ -112,7 +143,21 @@
 
 #pragma mark - Status Bar
 
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationFade;
+}
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.needsLightContentStatusBar ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
+}
+
+- (void)setNeedsLightContentStatusBar:(BOOL)needsLightContentStatusBar {
+    BOOL statusBarNeedsUpdate = (needsLightContentStatusBar != _needsLightContentStatusBar);
+    _needsLightContentStatusBar = needsLightContentStatusBar;
+    if (statusBarNeedsUpdate) {
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -193,30 +238,42 @@
     [self updateNavigationBar];
 }
 
-#pragma mark - Actions
+#pragma mark - TCProfileHeaderViewDelegate
 
-- (IBAction)handleTapLoginButton:(UIButton *)sender {
-    
-    TCLoginViewController *loginVC = [[TCLoginViewController alloc] init];
-    [self presentViewController:loginVC animated:YES completion:nil];
-}
-
-- (IBAction)handleTaoBiographyButton:(UIButton *)sender {
+- (void)didTapBioInProfileHeaderView:(TCProfileHeaderView *)view {
     TCBiographyViewController *vc = [[TCBiographyViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)didClickCardButtonInProfileHeaderView:(TCProfileHeaderView *)view {
+    TCLog(@"点击了名片按钮");
+}
+
+- (void)didClickCollectButtonInProfileHeaderView:(TCProfileHeaderView *)view {
+    TCLog(@"点击了收藏按钮");
+}
+
+- (void)didClickGradeButtonInProfileHeaderView:(TCProfileHeaderView *)view {
+    TCLog(@"点击了等级按钮");
+}
+
+- (void)didClickPhotographButtonInProfileHeaderView:(TCProfileHeaderView *)view {
+    TCLog(@"点击了换背景按钮");
+}
+
+#pragma mark - Actions
+
 - (void)handleClickQRCodeButton:(UIBarButtonItem *)sender {
-    
+    TCLog(@"点击了扫码按钮");
 }
 
 - (void)handleClickSettingButton:(UIBarButtonItem *)sender {
-    
+    TCLog(@"点击了设置按钮");
 }
 
 - (void)handleClickMessageButton:(UIBarButtonItem *)sender {
-    
+    TCLog(@"点击了消息按钮");
 }
 
 #pragma mark - Override Methods
