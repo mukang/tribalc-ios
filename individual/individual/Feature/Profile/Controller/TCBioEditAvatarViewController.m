@@ -99,11 +99,13 @@
 - (void)photoPicker:(TCPhotoPicker *)photoPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     TCLog(@"do something...");
     [photoPicker dismissPhotoPicker];
+    self.photoPicker = nil;
 }
 
 - (void)photoPickerDidCancel:(TCPhotoPicker *)photoPicker {
     TCLog(@"photoPickerDidCancel");
     [photoPicker dismissPhotoPicker];
+    self.photoPicker = nil;
 }
 
 

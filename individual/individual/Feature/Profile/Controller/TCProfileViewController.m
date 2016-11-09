@@ -13,6 +13,9 @@
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
 #import "TCProfileProcessViewCell.h"
+#import "TCProfileBgImageChangeView.h"
+
+#import "TCPhotoPicker.h"
 
 #import "UIImage+Category.h"
 
@@ -20,7 +23,9 @@
 <UITableViewDelegate,
 UITableViewDataSource,
 UIScrollViewDelegate,
-TCProfileHeaderViewDelegate>
+TCProfileHeaderViewDelegate,
+TCProfileBgImageChangeViewDelegate,
+TCPhotoPickerDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
 @property (copy, nonatomic) NSArray *fodderArray;
@@ -30,14 +35,23 @@ TCProfileHeaderViewDelegate>
 @property (nonatomic) CGFloat headerViewHeight;
 @property (nonatomic) CGFloat topBarHeight;
 
+/** 点击更换背景图片时弹出的半透明背景视图 */
+@property (weak, nonatomic) UIView *translucenceBgView;
+/** 点击更换背景图片时弹出的选择视图 */
+@property (weak, nonatomic) TCProfileBgImageChangeView *bgImageChangeView;
+
+@property (strong, nonatomic) TCPhotoPicker *photoPicker;
 
 @end
 
-@implementation TCProfileViewController
+@implementation TCProfileViewController {
+    __weak TCProfileViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    weakSelf = self;
     self.headerViewHeight = 240.0;
     self.topBarHeight = 64.0;
     
@@ -259,7 +273,74 @@ TCProfileHeaderViewDelegate>
 }
 
 - (void)didClickPhotographButtonInProfileHeaderView:(TCProfileHeaderView *)view {
-    TCLog(@"点击了换背景按钮");
+    [self showBgImageChangeView];
+}
+
+#pragma mark - TCProfileBgImageChangeViewDelegate
+
+- (void)didClickPhotographButtonInProfileBgImageChangeView:(TCProfileBgImageChangeView *)view {
+    [self dismissBgImageChangeView];
+    TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
+    photoPicker.delegate = self;
+    [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+    self.photoPicker = photoPicker;
+}
+
+- (void)didClickAlbumButtonInProfileBgImageChangeView:(TCProfileBgImageChangeView *)view {
+    [self dismissBgImageChangeView];
+    TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
+    photoPicker.delegate = self;
+    [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    self.photoPicker = photoPicker;
+}
+
+- (void)didClickCancelButtonInProfileBgImageChangeView:(TCProfileBgImageChangeView *)view {
+    [self dismissBgImageChangeView];
+}
+
+#pragma mark - TCPhotoPickerDelegate
+
+- (void)photoPicker:(TCPhotoPicker *)photoPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    TCLog(@"do something...");
+    [photoPicker dismissPhotoPicker];
+    self.photoPicker = nil;
+}
+
+- (void)photoPickerDidCancel:(TCPhotoPicker *)photoPicker {
+    TCLog(@"photoPickerDidCancel");
+    [photoPicker dismissPhotoPicker];
+    self.photoPicker = nil;
+}
+
+#pragma mark - Show BgImageChangeView
+
+- (void)showBgImageChangeView {
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIView *translucenceBgView = [[UIView alloc] initWithFrame:keyWindow.bounds];
+    translucenceBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+    [keyWindow addSubview:translucenceBgView];
+    self.translucenceBgView = translucenceBgView;
+    
+    TCProfileBgImageChangeView *bgImageChangeView = [[NSBundle mainBundle] loadNibNamed:@"TCProfileBgImageChangeView" owner:nil options:nil][0];
+    bgImageChangeView.delegate = self;
+    bgImageChangeView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, 182);
+    [keyWindow addSubview:bgImageChangeView];
+    self.bgImageChangeView = bgImageChangeView;
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        translucenceBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.82];
+        bgImageChangeView.y = TCScreenHeight - bgImageChangeView.height;
+    }];
+}
+
+- (void)dismissBgImageChangeView {
+    [UIView animateWithDuration:0.25 animations:^{
+        weakSelf.translucenceBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+        weakSelf.bgImageChangeView.y = TCScreenHeight;
+    } completion:^(BOOL finished) {
+        [weakSelf.translucenceBgView removeFromSuperview];
+        [weakSelf.bgImageChangeView removeFromSuperview];
+    }];
 }
 
 #pragma mark - Actions

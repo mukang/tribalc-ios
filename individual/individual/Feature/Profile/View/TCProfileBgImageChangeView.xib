@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="go0-I0-PoU" customClass="TCProfileBgImageChangeView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="182"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z59-YE-KGB">
+                    <rect key="frame" x="36" y="17" width="303" height="31"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="5wP-ZF-v5u"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="拍照">
+                        <color key="titleColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="handleClickPhotographButton:" destination="go0-I0-PoU" eventType="touchUpInside" id="9Tw-fy-gU0"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5e-dd-jOe">
+                    <rect key="frame" x="36" y="60" width="303" height="31"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="X6K-rG-tDK"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="从手机相册选择">
+                        <color key="titleColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="handleClickAlbumButton:" destination="go0-I0-PoU" eventType="touchUpInside" id="CJd-o1-8oQ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbd-3y-SdZ">
+                    <rect key="frame" x="36" y="103" width="303" height="31"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="NYJ-3O-dBF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="handleClickCancelButton:" destination="go0-I0-PoU" eventType="touchUpInside" id="OmD-wt-7oW"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="M5e-dd-jOe" firstAttribute="top" secondItem="Z59-YE-KGB" secondAttribute="bottom" constant="12" id="1Xc-BO-3MB"/>
+                <constraint firstItem="Z59-YE-KGB" firstAttribute="leading" secondItem="go0-I0-PoU" secondAttribute="leading" constant="36" id="2KB-5T-ENK"/>
+                <constraint firstItem="Z59-YE-KGB" firstAttribute="top" secondItem="go0-I0-PoU" secondAttribute="top" constant="17" id="BWp-qx-pRM"/>
+                <constraint firstAttribute="trailing" secondItem="M5e-dd-jOe" secondAttribute="trailing" constant="36" id="DXD-8o-jI5"/>
+                <constraint firstItem="nbd-3y-SdZ" firstAttribute="top" secondItem="M5e-dd-jOe" secondAttribute="bottom" constant="12" id="H1t-5A-1Ar"/>
+                <constraint firstAttribute="trailing" secondItem="Z59-YE-KGB" secondAttribute="trailing" constant="36" id="HDq-o7-26A"/>
+                <constraint firstAttribute="trailing" secondItem="nbd-3y-SdZ" secondAttribute="trailing" constant="36" id="QV1-FT-VHb"/>
+                <constraint firstItem="M5e-dd-jOe" firstAttribute="leading" secondItem="go0-I0-PoU" secondAttribute="leading" constant="36" id="kRB-IH-I3P"/>
+                <constraint firstItem="nbd-3y-SdZ" firstAttribute="leading" secondItem="go0-I0-PoU" secondAttribute="leading" constant="36" id="tvG-Ny-V0X"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-8.5" y="41"/>
+        </view>
+    </objects>
+</document>
