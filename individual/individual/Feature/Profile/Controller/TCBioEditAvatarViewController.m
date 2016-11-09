@@ -7,8 +7,9 @@
 //
 
 #import "TCBioEditAvatarViewController.h"
+#import "TCPhotoPicker.h"
 
-@interface TCBioEditAvatarViewController ()
+@interface TCBioEditAvatarViewController () <TCPhotoPickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
@@ -20,17 +21,31 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *saveButtonTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelButtonTopConstraint;
 
+@property (strong, nonatomic) TCPhotoPicker *photoPicker;
+
 @end
 
-@implementation TCBioEditAvatarViewController
+@implementation TCBioEditAvatarViewController {
+    __weak TCBioEditAvatarViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationController.navigationBarHidden = YES;
+    weakSelf = self;
     
     [self setupSubviews];
     [self setupConstraints];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -54,14 +69,20 @@
     self.cancelButtonTopConstraint.constant = TCRealValue(28.5);
 }
 
-#pragma mark - actions
+#pragma mark - Actions
 
 - (IBAction)handleClickTakePhotoButton:(UIButton *)sender {
-    
+    TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
+    photoPicker.delegate = self;
+    [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+    self.photoPicker = photoPicker;
 }
 
 - (IBAction)handleClickAlbumButton:(UIButton *)sender {
-    
+    TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
+    photoPicker.delegate = self;
+    [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    self.photoPicker = photoPicker;
 }
 
 - (IBAction)handleClickSaveButton:(UIButton *)sender {
@@ -73,10 +94,19 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - TCPhotoPickerDelegate
+
+- (void)photoPicker:(TCPhotoPicker *)photoPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    TCLog(@"do something...");
+    [photoPicker dismissPhotoPicker];
 }
+
+- (void)photoPickerDidCancel:(TCPhotoPicker *)photoPicker {
+    TCLog(@"photoPickerDidCancel");
+    [photoPicker dismissPhotoPicker];
+}
+
+
 
 /*
 #pragma mark - Navigation
