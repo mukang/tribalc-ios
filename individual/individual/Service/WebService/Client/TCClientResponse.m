@@ -13,25 +13,27 @@
 
 #pragma mark - Public Methods
 
-+ (instancetype)responseWithData:(NSDictionary *)data orError:(NSError *)error {
++ (instancetype)responseWithStatusCode:(NSInteger)statusCode data:(NSDictionary *)data orError:(NSError *)error {
     if (!error) {
-        return [[self alloc] initWithData:data];
+        return [[self alloc] initWithStatusCode:statusCode data:data];
     } else {
-        return [[self alloc] initWithError:error];
+        return [[self alloc] initWithStatusCode:statusCode error:error];
     }
 }
 
 #pragma mark - Private Methods
 
-- (instancetype)initWithData:(NSDictionary *)data {
+- (instancetype)initWithStatusCode:(NSInteger)statusCode data:(NSDictionary *)data {
     if (self = [super init]) {
+        _statusCode = statusCode;
         _data = data;
     }
     return self;
 }
 
-- (instancetype)initWithError:(NSError *)error {
+- (instancetype)initWithStatusCode:(NSInteger)statusCode error:(NSError *)error {
     if (self = [super init]) {
+        _statusCode = statusCode;
         _error = error;
     }
     return self;
@@ -48,7 +50,7 @@
 
 - (NSString *)description {
     id info = self.error ?: self.data;
-    return [NSString stringWithFormat:@"%@ : %@", [self class], info];
+    return [NSString stringWithFormat:@"%@ : (%zd) %@", [self class], self.statusCode, info];
 }
 
 @end

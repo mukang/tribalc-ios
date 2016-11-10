@@ -23,10 +23,6 @@ extern NSString *const TCClientHTTPMethodDelete;
 
 - (NSDictionary *)params;
 
-- (void)addFile:(NSURL *)fileURL;
-
-- (NSArray *)files;
-
 @end
 
 

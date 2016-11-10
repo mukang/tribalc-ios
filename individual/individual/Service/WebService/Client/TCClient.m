@@ -37,11 +37,11 @@
 - (instancetype)initPrivate {
     if (self = [super init]) {
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURL *baseURL = [NSURL URLWithString:@"http://xiaohua.hao.360.cn/m/"];
+        NSURL *baseURL = [NSURL URLWithString:TCCLIENT_BASE_URL];
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL sessionConfiguration:configuration];
         _requestSerializer = [AFJSONRequestSerializer serializer];
+        [_requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         _responseSerializer = [AFHTTPResponseSerializer serializer];
-        _responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
         _sessionManager.requestSerializer = _requestSerializer;
         _sessionManager.responseSerializer = _responseSerializer;
     }
@@ -59,14 +59,14 @@
     
     NSString *method = clientRequest.HTTPMethod;
     NSString *URLString = clientRequest.apiName;
-    NSDictionary *parameters = [clientRequest params];
+    NSDictionary *parameters = clientRequest.params;
     
     __block NSError *serializationError = nil;
-    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.sessionManager.baseURL] absoluteString] parameters:parameters error:&serializationError];
+    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[self.sessionManager.baseURL absoluteString] stringByAppendingString:URLString] parameters:parameters error:&serializationError];
     if (serializationError) {
         TCClientRequestError *error = [TCClientRequestError errorWithCode:TCClientRequestErrorRequestSerializationError
                                                            andDescription:serializationError.localizedDescription];
-        TCClientResponse *response = [TCClientResponse responseWithData:nil orError:error];
+        TCClientResponse *response = [TCClientResponse responseWithStatusCode:0 data:nil orError:error];
         if (responseBlock) {
             TC_CALL_ASYNC_MQ(responseBlock(response));
         }
@@ -76,6 +76,7 @@
     __block NSURLSessionDataTask *dataTask = nil;
     dataTask = [self.sessionManager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         NSDictionary *dataInResponse = nil;
+        NSInteger codeInResponse = 0;
         if (!error) {
             serializationError = nil;
             NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:responseObject
@@ -88,17 +89,23 @@
                 error = [TCClientRequestError errorWithCode:TCClientRequestErrorServerResponseNotJSON
                                              andDescription:serializationError.localizedDescription];
             } else {
-                dataInResponse = responseData;
+                NSNumber *code = responseData[@"code"];
+                codeInResponse = code.integerValue;
+                if (codeInResponse >= 400) {
+                    error = [TCClientRequestError errorWithCode:codeInResponse andDescription:responseData[@"message"]];
+                } else {
+                    dataInResponse = responseData[@"data"];
+                }
             }
         } else {
             if ([error.domain isEqualToString:NSURLErrorDomain]) {
                 TCClientRequestErrorCode errorCode = [TCClientRequestError codeFromNSURLErrorCode:error.code];
-                error = [TCClientRequestError errorWithCode:errorCode andDescription:nil];
+                error = [TCClientRequestError errorWithCode:errorCode andDescription:error.localizedDescription];
             } else {
-                error = [TCClientRequestError errorWithCode:TCClientRequestErrorNetworkError andDescription:nil];
+                error = [TCClientRequestError errorWithCode:TCClientRequestErrorNetworkError andDescription:error.localizedDescription];
             }
         }
-        TCClientResponse *clientResponse = [TCClientResponse responseWithData:dataInResponse orError:error];
+        TCClientResponse *clientResponse = [TCClientResponse responseWithStatusCode:codeInResponse data:dataInResponse orError:error];
         if (responseBlock) {
             responseBlock(clientResponse);
         }

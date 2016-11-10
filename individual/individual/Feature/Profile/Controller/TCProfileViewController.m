@@ -16,6 +16,7 @@
 #import "TCProfileBgImageChangeView.h"
 
 #import "TCPhotoPicker.h"
+#import "TCBuluoApi.h"
 
 #import "UIImage+Category.h"
 
@@ -90,7 +91,7 @@ TCPhotoPickerDelegate>
                                                                     style:UIBarButtonItemStylePlain
                                                                    target:self
                                                                    action:@selector(handleClickMessageButton:)];
-    self.navigationItem.rightBarButtonItems = @[settingItem, messageItem];
+    self.navigationItem.rightBarButtonItems = @[messageItem, settingItem];
 }
 
 - (void)setupSubviews {
@@ -351,6 +352,8 @@ TCPhotoPickerDelegate>
 
 - (void)handleClickSettingButton:(UIBarButtonItem *)sender {
     TCLog(@"点击了设置按钮");
+    TCLoginViewController *vc = [[TCLoginViewController alloc] initWithNibName:@"TCLoginViewController" bundle:[NSBundle mainBundle]];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)handleClickMessageButton:(UIBarButtonItem *)sender {

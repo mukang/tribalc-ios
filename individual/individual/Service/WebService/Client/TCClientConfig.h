@@ -12,9 +12,9 @@
 #define _TCClientConfig_h
 
 #if DEBUG
-#define TCCLIENT_API_HOST    @""
+#define TCCLIENT_API_HOST    @"app-services.buluo-gs.com:10086"
 #else
-#define TCCLIENT_API_HOST    @""
+#define TCCLIENT_API_HOST    @"app-services.buluo-gs.com:10086"
 #endif
 
 #define TCCLIENT_BASE_URL    @"http://" TCCLIENT_API_HOST "/tribalc/v1.0/"

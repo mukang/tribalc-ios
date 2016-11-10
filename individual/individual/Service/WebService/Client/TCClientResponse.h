@@ -12,7 +12,8 @@
 
 @property (copy, nonatomic, readonly) NSDictionary *data;
 @property (strong, nonatomic, readonly) NSError *error;
+@property (nonatomic, readonly) NSInteger statusCode;
 
-+ (instancetype)responseWithData:(NSDictionary *)data orError:(NSError *)error;
++ (instancetype)responseWithStatusCode:(NSInteger)statusCode data:(NSDictionary *)data orError:(NSError *)error;
 
 @end

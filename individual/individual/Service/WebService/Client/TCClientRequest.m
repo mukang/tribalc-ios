@@ -48,15 +48,6 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
     return [self.requestParams copy];
 }
 
-- (void)addFile:(NSURL *)fileURL {
-    NSAssert([fileURL isFileURL], @"只能添加本地文件");
-    [self.requestFiles addObject:fileURL];
-}
-
-- (NSArray *)files {
-    return [self.requestFiles copy];
-}
-
 #pragma mark - Public Methods
 
 + (instancetype)requestWithApi:(NSString *)apiName {
@@ -64,7 +55,7 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
 }
 
 + (instancetype)requestWithHTTPMethod:(NSString *)HTTPMethod apiName:(NSString *)apiName {
-    if (HTTPMethod) HTTPMethod = TCClientHTTPMethodGet;
+    if (!HTTPMethod) HTTPMethod = TCClientHTTPMethodGet;
     return [[self alloc] initWithHTTPMethod:HTTPMethod apiName:apiName];
 }
 
@@ -73,6 +64,7 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
 - (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod apiName:(NSString *)apiName {
     NSParameterAssert(HTTPMethod);
     NSParameterAssert(apiName);
+    NSAssert(![apiName hasPrefix:@"/"], @"apiName（%@）不能以“/”开头", apiName);
     if (self = [super init]) {
         _HTTPMethod = HTTPMethod;
         _apiName = apiName;
@@ -112,7 +104,7 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"request: %@, files: %@", self.params, self.files];
+    return [NSString stringWithFormat:@"request: %@ apiName: %@ HTTPMethod: %@ params: %@", [self class], self.apiName, self.HTTPMethod, self.params];
 }
 
 @end

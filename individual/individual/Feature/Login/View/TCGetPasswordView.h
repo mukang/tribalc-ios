@@ -26,4 +26,9 @@
  */
 - (void)startCountDown;
 
+/**
+ 停止倒计时
+ */
+- (void)stopCountDown;
+
 @end

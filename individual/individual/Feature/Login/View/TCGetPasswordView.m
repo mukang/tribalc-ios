@@ -23,7 +23,14 @@
     self.timeCount = 60;
     self.timeLabel.text = [NSString stringWithFormat:@"%02zds", self.timeCount];
     self.getPasswordButton.hidden = YES;
+    self.timeLabel.hidden = NO;
     [self addGetPasswordTimer];
+}
+
+- (void)stopCountDown {
+    [self removeGetPasswordTimer];
+    self.getPasswordButton.hidden = NO;
+    self.timeLabel.hidden = YES;
 }
 
 - (void)changeTimeLabel {
@@ -31,6 +38,7 @@
     if (self.timeCount <= 0) {
         [self removeGetPasswordTimer];
         self.getPasswordButton.hidden = NO;
+        self.timeLabel.hidden = YES;
     }
     self.timeLabel.text = [NSString stringWithFormat:@"%02zds", self.timeCount];
 }

@@ -11,6 +11,11 @@
 /** 已登录用户的session */
 @interface TCUserSession : NSObject <NSCoding>
 
-@property (copy, nonatomic) NSString *uid;
+/** 用户ID */
+@property (copy, nonatomic) NSString *assigned;
+/** TOKEN字符串 */
+@property (copy, nonatomic) NSString *token;
+/** TOKEN有效截止时间(毫秒) */
+@property (nonatomic) NSUInteger expired;
 
 @end

@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TCUser.h"
-#import "TCUserSession.h"
+#import "TCModelImport.h"
+
+extern NSString *const TCBuluoApiNotificationUserDidLogin;
+extern NSString *const TCBuluoApiNotificationUserDidLogout;
 
 @interface TCBuluoApi : NSObject
 
@@ -47,9 +49,26 @@
  */
 - (TCUserSession *)currentUserSession;
 
-#pragma mark - 测试
+#pragma mark - 普通用户资源
 
-- (void)getJokeSuccess:(void (^)(NSURLSessionDataTask *task, id responseObject))success
-               failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
+/**
+ 用户登录，登录后会保留登录状态
+
+ @param loginInfo 用户登录信息，TCUserLoginInfo对象
+ @param resultBlock 结果回调，userSession为nil时表示登录失败，失败原因见error的code和userInfo
+ */
+- (void)login:(TCUserLoginInfo *)loginInfo result:(void (^)(TCUserSession *userSession, NSError *error))resultBlock;
+
+#pragma mark - 验证码资源
+
+/**
+ 获取手机验证码
+ 
+ @param phone 手机号码
+ @param resultBlock 结果回调，success为NO时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchVerificationCodeWithPhone:(NSString *)phone result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+
 
 @end

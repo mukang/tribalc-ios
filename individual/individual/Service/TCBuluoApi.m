@@ -8,11 +8,16 @@
 
 #import "TCBuluoApi.h"
 
+#import "NSObject+TCModel.h"
+
 #import "TCClient.h"
 #import "TCFunctions.h"
 #import "TCArchiveService.h"
 #import "TCClientRequest.h"
 #import "TCClientResponse.h"
+
+NSString *const TCBuluoApiNotificationUserDidLogin = @"TCBuluoApiNotificationUserDidLogin";
+NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUserDidLogout";
 
 @implementation TCBuluoApi {
     TCUserSession *_userSession;
@@ -97,15 +102,81 @@
     }
 }
 
-#pragma mark - 测试
+#pragma mark - 普通用户资源
 
-- (void)getJokeSuccess:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
-    TCClientRequest *request = [TCClientRequest requestWithApi:@"iplookup/iplookup.php?format=json&ip=218.4.255.255"];
+- (void)login:(TCUserLoginInfo *)loginInfo result:(void (^)(TCUserSession *, NSError *))resultBlock {
+    NSString *apiName = @"persons/login";
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+    NSDictionary *dic = [loginInfo toObjectDictionary];
+    for (NSString *key in dic.allKeys) {
+        [request setValue:dic[key] forParam:key];
+    }
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
-        TCLog(@"%@", response);
+        NSError *error = response.error;
+        if (error) {
+            [self setUserSession:nil];
+            if (resultBlock) {
+                resultBlock(nil, error);
+            }
+        } else {
+            TCUserSession *userSession = [[TCUserSession alloc] initWithObjectDictionary:response.data];
+            [self setUserSession:userSession];
+            [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserDidLogin object:nil];
+            if (resultBlock) {
+                resultBlock(userSession, nil);
+            }
+        }
     }];
-    
 }
+
+#pragma mark - 验证码资源
+
+- (void)fetchVerificationCodeWithPhone:(NSString *)phone result:(void (^)(BOOL, NSError *))resultBlock {
+    NSString *apiName = @"verifications/phone";
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+    [request setValue:phone forParam:@"value"];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.statusCode == 202) {
+            if (resultBlock) {
+                resultBlock(YES, nil);
+            }
+        } else {
+            if (resultBlock) {
+                resultBlock(NO, response.error);
+            }
+        }
+    }];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end
