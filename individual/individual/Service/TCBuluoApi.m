@@ -15,6 +15,7 @@
 #import "TCArchiveService.h"
 #import "TCClientRequest.h"
 #import "TCClientResponse.h"
+#import "TCClientRequestError.h"
 
 NSString *const TCBuluoApiNotificationUserDidLogin = @"TCBuluoApiNotificationUserDidLogin";
 NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUserDidLogout";
@@ -187,6 +188,33 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             }
         }
     }];
+}
+
+- (void)changeUserNickName:(NSString *)nickName result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/nickname", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        [request setValue:nickName forParam:@"nickname"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userInfo.nickname = nickName;
+                [self setUserSession:userSession];
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
 }
 
 #pragma mark - 验证码资源

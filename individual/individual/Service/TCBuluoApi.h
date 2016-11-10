@@ -76,6 +76,14 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)fetchUserSensitiveInfoWithUserID:(NSString *)userID result:(void (^)(TCUserSensitiveInfo *userSensitiveInfo, NSError *error))resultBlock;
 
+/**
+ 修改用户昵称
+ 
+ @param nickName 要改为的昵称
+ @param resultBlock 结果回调，success为NO时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserNickName:(NSString *)nickName result:(void (^)(BOOL success, NSError *error))resultBlock;
+
 #pragma mark - 验证码资源
 
 /**
