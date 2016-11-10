@@ -29,19 +29,19 @@
         
         
         
-        _averageMinBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(24, 0, firstVerticalLine.x - 24, horizontalLine.y) AndImgName:@"average_min" AndText:@"人均最低"];
+        _averageMinBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(24, 0, firstVerticalLine.x - 24, horizontalLine.y) AndImgName:@"res_average_min" AndText:@"人均最低"];
         [self addSubview:_averageMinBtn];
 
-        _averageMaxBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(firstVerticalLine.x + firstVerticalLine.width, 0, secondVerticalLine.x - firstVerticalLine.x + firstVerticalLine.width, _averageMinBtn.height) AndImgName:@"average_max" AndText:@"人均最高"];
+        _averageMaxBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(firstVerticalLine.x + firstVerticalLine.width, 0, secondVerticalLine.x - firstVerticalLine.x + firstVerticalLine.width, _averageMinBtn.height) AndImgName:@"res_average_max" AndText:@"人均最高"];
         [self addSubview:_averageMaxBtn];
         
-        _popularityMaxBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(secondVerticalLine.x + 0.5, 0, frame.size.width - 24 - secondVerticalLine.x + 1, _averageMinBtn.height) AndImgName:@"popularity_max" AndText:@"人气最高"];
+        _popularityMaxBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(secondVerticalLine.x + 0.5, 0, frame.size.width - 24 - secondVerticalLine.x + 1, _averageMinBtn.height) AndImgName:@"res_popularity_max" AndText:@"人气最高"];
         [self addSubview:_popularityMaxBtn];
         
-        _distanceMinBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(_averageMinBtn.x, frame.size.height / 2, _averageMinBtn.width, frame.size.height - _averageMinBtn.height + 0.5) AndImgName:@"near" AndText:@"离我最近"];
+        _distanceMinBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(_averageMinBtn.x, frame.size.height / 2, _averageMinBtn.width, frame.size.height - _averageMinBtn.height + 0.5) AndImgName:@"res_near" AndText:@"离我最近"];
         [self addSubview:_distanceMinBtn];
         
-        _evaluateMaxBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(_averageMaxBtn.x, _distanceMinBtn.y, _averageMaxBtn.width, _distanceMinBtn.height) AndImgName:@"evaluate" AndText:@"评价最高"];
+        _evaluateMaxBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(_averageMaxBtn.x, _distanceMinBtn.y, _averageMaxBtn.width, _distanceMinBtn.height) AndImgName:@"res_evaluate" AndText:@"评价最高"];
         [self addSubview:_evaluateMaxBtn];
         
                 

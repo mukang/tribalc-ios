@@ -36,7 +36,7 @@
         [self.contentView addSubview:_priceLab];
         
         _collectionImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 8 - 20, self.height - 8 - 20, 20, 20)];
-        UIImage *collectionImg = [UIImage imageNamed:@"collection_no"];
+        UIImage *collectionImg = [UIImage imageNamed:@"good_collection_no"];
         _collectionImgView.image = collectionImg;
         [_goodImageView addSubview:_collectionImgView];
         
@@ -60,8 +60,8 @@
 }
 
 - (void)touchCollectionBtn {
-    UIImage *image = [UIImage imageNamed:@"collection_no"];
-    UIImage *selectImg = [UIImage imageNamed:@"collection_yes"];
+    UIImage *image = [UIImage imageNamed:@"good_collection_no"];
+    UIImage *selectImg = [UIImage imageNamed:@"good_collection_yes"];
     if ([_collectionImgView.image isEqual:image]) {
         _collectionImgView.image = selectImg;
     } else {

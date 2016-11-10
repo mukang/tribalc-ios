@@ -22,10 +22,10 @@
         [self addSubview:firstLine];
         [self addSubview:secondLine];
         
-        _reserveBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(12, 0, firstLine.x - 12, frame.size.height) AndImgName:@"reserve2" AndText:@"可预订"];
+        _reserveBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(12, 0, firstLine.x - 12, frame.size.height) AndImgName:@"res_reserve2" AndText:@"可预订"];
         [self addSubview:_reserveBtn];
         
-        _deliverBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(firstLine.x + firstLine.width, 0, secondLine.x - firstLine.x + firstLine.width, frame.size.height) AndImgName:@"deliver" AndText:@"接受送餐"];
+        _deliverBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(firstLine.x + firstLine.width, 0, secondLine.x - firstLine.x + firstLine.width, frame.size.height) AndImgName:@"res_deliver" AndText:@"接受送餐"];
         [self addSubview:_deliverBtn];
     }
     return self;

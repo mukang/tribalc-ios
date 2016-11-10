@@ -43,10 +43,10 @@
         
         [self createPrice];
         
-        roomImgView = [self createImageViewWithFrame:CGRectMake(_nameLab.x + 5, priceLab.y + priceLab.width + 26, 0, 0) AndImageName:@"room"];
+        roomImgView = [self createImageViewWithFrame:CGRectMake(_nameLab.x + 5, priceLab.y + priceLab.width + 26, 0, 0) AndImageName:@"res_room"];
         [self.contentView addSubview:roomImgView];
         
-        reserveImgView = [self createImageViewWithFrame:CGRectMake(roomImgView.x + roomImgView.width + 12, roomImgView.y + 1, 0, 0) AndImageName:@"reserve"];
+        reserveImgView = [self createImageViewWithFrame:CGRectMake(roomImgView.x + roomImgView.width + 12, roomImgView.y, 0, 0) AndImageName:@"res_reserve"];
         [self.contentView addSubview:reserveImgView];
         
         [self initialRangeLab];

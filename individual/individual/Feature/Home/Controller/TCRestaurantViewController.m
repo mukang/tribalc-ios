@@ -52,6 +52,7 @@
 }
 
 - (void)initialNavigationBar {
+    
 
     UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
     [leftBtn addTarget:self action:@selector(touchBackBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -59,7 +60,7 @@
     
     self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"餐饮"];
     
-    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:@"location"];
+    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:@"res_location"];
     [rightBtn addTarget:self action:@selector(touchLocationBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
 }
@@ -113,12 +114,12 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
-    sortButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(0, 0, self.view.width / 2, 42) AndText:@"智能排序" AndImgName:@"select_down"];
+    sortButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(0, 0, self.view.width / 2, 42) AndText:@"智能排序" AndImgName:@"res_select_down"];
     [cell.contentView addSubview:sortButton];
     [sortButton addTarget:self action:@selector(touchSortBtn:) forControlEvents:UIControlEventTouchUpInside];
 
     
-    filterButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(self.view.width / 2, 0, self.view.width / 2, 42) AndText:@"筛选" AndImgName:@"select_down"];
+    filterButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(self.view.width / 2, 0, self.view.width / 2, 42) AndText:@"筛选" AndImgName:@"res_select_down"];
     [filterButton addTarget:self action:@selector(touchFilterBtn:) forControlEvents:UIControlEventTouchUpInside];
     [cell.contentView addSubview:filterButton];
     
@@ -364,19 +365,19 @@
 
 - (NSString *)getBtnImageNameWithInstance:(TCSelectSortButton *)button {
     if ([button isEqual:sortView.averageMinBtn]) {
-        return @"average_min";
+        return @"res_average_min";
     } else if([button isEqual:sortView.averageMaxBtn]) {
-        return @"average_max";
+        return @"res_average_max";
     } else if([button isEqual:sortView.distanceMinBtn]) {
-        return @"near";
+        return @"res_near";
     } else if([button isEqual:sortView.evaluateMaxBtn]) {
-        return @"evaluate";
+        return @"res_evaluate";
     } else if([button isEqual:sortView.popularityMaxBtn]) {
-        return @"popularity_max";
+        return @"res_popularity_max";
     } else if([button isEqual:filterView.deliverBtn]) {
-        return @"deliver";
+        return @"res_deliver";
     } else if ([button isEqual:filterView.reserveBtn]) {
-        return @"reserve2";
+        return @"res_reserve2";
     }
     else {
         return NULL;
@@ -386,11 +387,11 @@
 - (void)showSortView {
     sortView.hidden = NO;
     sortButton.titleLab.textColor = [UIColor colorWithRed:80/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    sortButton.imgeView.image = [UIImage imageNamed:@"select_up"];
+    sortButton.imgeView.image = [UIImage imageNamed:@"res_select_up"];
     
     filterView.hidden = YES;
     filterButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    filterButton.imgeView.image = [UIImage imageNamed:@"select_down"];
+    filterButton.imgeView.image = [UIImage imageNamed:@"res_select_down"];
     
     backView.hidden = NO;
     
@@ -399,11 +400,11 @@
 - (void)showFilterView {
     filterView.hidden = NO;
     filterButton.titleLab.textColor = [UIColor colorWithRed:80/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    filterButton.imgeView.image = [UIImage imageNamed:@"select_up"];
+    filterButton.imgeView.image = [UIImage imageNamed:@"res_select_up"];
     
     sortView.hidden = YES;
     sortButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    sortButton.imgeView.image = [UIImage imageNamed:@"select_down"];
+    sortButton.imgeView.image = [UIImage imageNamed:@"res_select_down"];
     
     backView.hidden = NO;
 }
@@ -415,8 +416,12 @@
         filterView.hidden = YES;
     }
     button.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    button.imgeView.image = [UIImage imageNamed:@"select_down"];
+    button.imgeView.image = [UIImage imageNamed:@"res_select_down"];
     backView.hidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
 }
 
 - (void)didReceiveMemoryWarning {
