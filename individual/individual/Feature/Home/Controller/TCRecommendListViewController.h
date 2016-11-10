@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TCRecommendGoodCell.h"
 #import "TCShoppingCartViewController.h"
+#import "TCGetNavigationItem.h"
 
 @interface TCRecommendListViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 

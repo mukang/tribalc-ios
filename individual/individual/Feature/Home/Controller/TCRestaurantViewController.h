@@ -10,6 +10,7 @@
 
 #import "TCRestaurantTableViewCell.h"
 #import "TCRestaurantInfoViewController.h"
+#import "TCGetNavigationItem.h"
 
 
 @interface TCRestaurantViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>

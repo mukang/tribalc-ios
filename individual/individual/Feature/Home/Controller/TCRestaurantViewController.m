@@ -19,13 +19,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"餐饮";
+    
+    [self initialNavigationBar];
     
     [self initialData];
     
     [self initialTableView];
     
 }
+
+- (void)initialNavigationBar {
+
+    UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
+    [leftBtn addTarget:self action:@selector(touchBackBtn:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    
+    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"餐饮"];
+    
+    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:@"location"];
+    [rightBtn addTarget:self action:@selector(touchLocationBtn:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+}
+
+
 
 - (void)initialData {
     
@@ -38,6 +54,20 @@
     NSDictionary *info4 = @{ @"name": @"雕刻时光咖啡馆", @"location":@"北苑家园", @"type":@"雕刻时光", @"price":@"86", @"range":@"272m", @"room":@true, @"reserve":@false };
     
     NSDictionary *info5 = @{ @"name": @"三和屋(北苑店)", @"location":@"朝阳区", @"type":@"寿司", @"price":@"56", @"range":@"872m", @"room":@false, @"reserve":@false  };
+    
+    
+    NSURL *url = [NSURL URLWithString:@""];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            ///////////
+        }
+    }];
+    [dataTask resume];
+    
+    
     restaurantArray = @[ info1, info2, info3, info4, info5 ];
     
 }
@@ -59,9 +89,38 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    UIButton *sortBtn = [self getSelectButtonWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 2, 42) AndText:@"智能排序" AndImageName:@"select_down"];
+    [cell.contentView addSubview:sortBtn];
     
+    UIButton *filterBtn = [self getSelectButtonWithFrame:CGRectMake(self.view.width / 2, 0, self.view.width / 2, 42) AndText:@"筛选" AndImageName:@"select_down"];
+    [cell.contentView addSubview:filterBtn];
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width / 2 - 0.5, 14, 1, 46 - 16 * 2)];
+    lineView.backgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1];
+    [cell.contentView addSubview:lineView];
     
     return cell;
+}
+
+- (UIButton *)getSelectButtonWithFrame:(CGRect)frame AndText:(NSString *)text AndImageName:(NSString *)imgName {
+    UIButton *view = [[UIButton alloc] initWithFrame:frame];
+    
+    UIButton *button = [[UIButton alloc] init];
+    [button setTitle:text forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont fontWithName:@"Arial" size:14];
+    [button sizeToFit];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
+    [imgView sizeToFit];
+    
+    [button setOrigin:CGPointMake(frame.size.width / 2 - (button.width + imgView.width + 3) / 2, frame.size.height / 2 - button.height / 2)];
+    [imgView setOrigin:CGPointMake(button.x + button.width + 3, frame.size.height / 2 - imgView.frame.size.height / 2)];
+    
+    [view addSubview:button];
+    [view addSubview:imgView];
+    
+    return view;
 }
 
 
@@ -153,6 +212,14 @@
 
 
 # pragma makr - click
+- (void)touchBackBtn:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)touchLocationBtn:(id)sender {
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

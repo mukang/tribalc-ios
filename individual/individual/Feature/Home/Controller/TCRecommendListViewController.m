@@ -43,31 +43,23 @@
 }
 
 - (void)initialNavigationBar {
-    UIBarButtonItem *leftItem = [self getButtomItemWithFrame:CGRectMake(0, 10, 11, 18) AndImageName:@"back" AndAction:@selector(touchBackBtn:)];
-    self.navigationItem.leftBarButtonItem = leftItem;
+
     
-    UIBarButtonItem *rightItem = [self getButtomItemWithFrame:CGRectMake(self.view.frame.size.width - 80, 10, 26, 26) AndImageName:@"car" AndAction:@selector(touchShopCar:)];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
+    [leftBtn addTarget:self action:@selector(touchBackBtn:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     
-    UILabel *centerLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 0, 30)];
-    centerLab.font = [UIFont fontWithName:@"GillSans-SemiBold" size:16];
-    centerLab.textColor = [UIColor whiteColor];
-//    centerLab.font = [UIFont systemFontOfSize:19];
-    centerLab.text = @"精品推荐";
-    self.navigationItem.titleView = centerLab;
+    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"精品推荐"];
+    
+    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 25, 26) AndImageName:@"car"];
+    [rightBtn addTarget:self action:@selector(touchShopCar:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+
+    
+    
 
 }
 
-- (UIBarButtonItem *)getButtomItemWithFrame:(CGRect)frame AndImageName:(NSString *)imageName AndAction:(SEL)action {
-    UIButton *backBtn = [[UIButton alloc] initWithFrame:frame];
-    UIImage *img = [UIImage imageNamed:imageName];
-    UIImageView *backImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, img.size.width, img.size.height)];
-    backImgView.image = img;
-    [backBtn addSubview:backImgView];
-    [backBtn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    return item;
-}
 
 - (void)initialCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -94,7 +86,7 @@
     return goodsInfoArray.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *info = goodsInfoArray[indexPath.row];
     TCRecommendGoodCell *cell = (TCRecommendGoodCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     cell.shopNameLab.text = info[@"shop"];
@@ -130,6 +122,7 @@
 # pragma mark - touch 
 - (void)touchCollectionButton:(id)sender {
     NSLog(@"dwdwa");
+    
 }
 
 - (void)touchBackBtn:(id)sender {
