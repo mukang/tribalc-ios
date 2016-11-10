@@ -11,4 +11,11 @@
 
 @implementation TCUserSession
 
++ (NSDictionary *)objectClassInDictionary {
+    return @{
+             @"userInfo": [TCUserInfo class],
+             @"userSensitiveInfo": [TCUserSensitiveInfo class]
+             };
+}
+
 @end

@@ -70,7 +70,7 @@ TCPhotoPickerDelegate>
     if (![[self.navigationController.childViewControllers lastObject] isEqual:self]) {
         [self restoreNavigationBar];
     } else {
-        
+        // TODO:
     }
 }
 

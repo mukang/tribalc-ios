@@ -9,8 +9,9 @@
 
 /********** 用户相关 **********/
 
-#import "TCUser.h"
 #import "TCUserSession.h"
+#import "TCUserInfo.h"
+#import "TCUserSensitiveInfo.h"
 #import "TCUserLoginInfo.h"
 
 

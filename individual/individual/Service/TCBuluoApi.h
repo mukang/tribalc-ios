@@ -12,6 +12,7 @@
 
 extern NSString *const TCBuluoApiNotificationUserDidLogin;
 extern NSString *const TCBuluoApiNotificationUserDidLogout;
+extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 
 @interface TCBuluoApi : NSObject
 
@@ -58,6 +59,22 @@ extern NSString *const TCBuluoApiNotificationUserDidLogout;
  @param resultBlock 结果回调，userSession为nil时表示登录失败，失败原因见error的code和userInfo
  */
 - (void)login:(TCUserLoginInfo *)loginInfo result:(void (^)(TCUserSession *userSession, NSError *error))resultBlock;
+
+/**
+ 获取用户基本信息
+
+ @param userID 用户ID
+ @param resultBlock 结果回调，userInfo为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchUserInfoWithUserID:(NSString *)userID result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
+
+/**
+ 获取用户敏感信息
+
+ @param userID 用户ID
+ @param resultBlock 结果回调，userSensitiveInfo为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchUserSensitiveInfoWithUserID:(NSString *)userID result:(void (^)(TCUserSensitiveInfo *userSensitiveInfo, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 

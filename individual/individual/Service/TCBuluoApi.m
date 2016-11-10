@@ -18,6 +18,7 @@
 
 NSString *const TCBuluoApiNotificationUserDidLogin = @"TCBuluoApiNotificationUserDidLogin";
 NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUserDidLogout";
+NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificationUserInfoDidUpdate";
 
 @implementation TCBuluoApi {
     TCUserSession *_userSession;
@@ -102,6 +103,27 @@ NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUs
     }
 }
 
+- (void)fetchCurrentUserInfoWithUserID:(NSString *)userID {
+    [self fetchUserInfoWithUserID:userID result:^(TCUserInfo *userInfo, NSError *error) {
+        if (userInfo) {
+            TCUserSession *userSession = self.currentUserSession;
+            userSession.userInfo = userInfo;
+            [self setUserSession:userSession];
+            [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
+        }
+    }];
+}
+
+- (void)fetchCurrentUserSensitiveInfoWithUserID:(NSString *)userID {
+    [self fetchUserSensitiveInfoWithUserID:userID result:^(TCUserSensitiveInfo *userSensitiveInfo, NSError *error) {
+        if (userSensitiveInfo) {
+            TCUserSession *userSession = self.currentUserSession;
+            userSession.userSensitiveInfo = userSensitiveInfo;
+            [self setUserSession:userSession];
+        }
+    }];
+}
+
 #pragma mark - 普通用户资源
 
 - (void)login:(TCUserLoginInfo *)loginInfo result:(void (^)(TCUserSession *, NSError *))resultBlock {
@@ -121,9 +143,47 @@ NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUs
         } else {
             TCUserSession *userSession = [[TCUserSession alloc] initWithObjectDictionary:response.data];
             [self setUserSession:userSession];
+            [self fetchCurrentUserInfoWithUserID:userSession.assigned];
+            [self fetchCurrentUserSensitiveInfoWithUserID:userSession.assigned];
             [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserDidLogin object:nil];
             if (resultBlock) {
                 resultBlock(userSession, nil);
+            }
+        }
+    }];
+}
+
+- (void)fetchUserInfoWithUserID:(NSString *)userID result:(void (^)(TCUserInfo *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"persons/%@", userID];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        NSError *error = response.error;
+        if (error) {
+            if (resultBlock) {
+                resultBlock(nil, error);
+            }
+        } else {
+            TCUserInfo *userInfo = [[TCUserInfo alloc] initWithObjectDictionary:response.data];
+            if (resultBlock) {
+                resultBlock(userInfo, nil);
+            }
+        }
+    }];
+}
+
+- (void)fetchUserSensitiveInfoWithUserID:(NSString *)userID result:(void (^)(TCUserSensitiveInfo *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"persons/%@/sensitive_info", userID];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        NSError *error = response.error;
+        if (error) {
+            if (resultBlock) {
+                resultBlock(nil, error);
+            }
+        } else {
+            TCUserSensitiveInfo *info = [[TCUserSensitiveInfo alloc] initWithObjectDictionary:response.data];
+            if (resultBlock) {
+                resultBlock(info, nil);
             }
         }
     }];
