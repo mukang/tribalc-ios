@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		091B112C1DD40B5900F1A584 /* TCRestaurantSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B112B1DD40B5900F1A584 /* TCRestaurantSortView.m */; };
+		091B112F1DD418D600F1A584 /* TCSelectSortButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B112E1DD418D600F1A584 /* TCSelectSortButton.m */; };
+		091B11321DD43C5000F1A584 /* TCRestaurantSelectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B11311DD43C5000F1A584 /* TCRestaurantSelectButton.m */; };
+		091B11351DD447FB00F1A584 /* TCRestaurantFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B11341DD447FB00F1A584 /* TCRestaurantFilterView.m */; };
 		091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */; };
 		0921587E1DCD761E0047A812 /* TCShoppingCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0921587D1DCD761E0047A812 /* TCShoppingCartViewController.m */; };
 		092158811DCD79CB0047A812 /* TCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092158801DCD79CB0047A812 /* TCShoppingCartTableViewCell.m */; };
@@ -99,6 +103,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		091B112A1DD40B5900F1A584 /* TCRestaurantSortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantSortView.h; sourceTree = "<group>"; };
+		091B112B1DD40B5900F1A584 /* TCRestaurantSortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantSortView.m; sourceTree = "<group>"; };
+		091B112D1DD418D600F1A584 /* TCSelectSortButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectSortButton.h; sourceTree = "<group>"; };
+		091B112E1DD418D600F1A584 /* TCSelectSortButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectSortButton.m; sourceTree = "<group>"; };
+		091B11301DD43C5000F1A584 /* TCRestaurantSelectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantSelectButton.h; sourceTree = "<group>"; };
+		091B11311DD43C5000F1A584 /* TCRestaurantSelectButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantSelectButton.m; sourceTree = "<group>"; };
+		091B11331DD447FB00F1A584 /* TCRestaurantFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantFilterView.h; sourceTree = "<group>"; };
+		091B11341DD447FB00F1A584 /* TCRestaurantFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantFilterView.m; sourceTree = "<group>"; };
 		091BC6E01DD0968300EB5FBD /* TCGetNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetNavigationItem.h; sourceTree = "<group>"; };
 		091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetNavigationItem.m; sourceTree = "<group>"; };
 		0921587C1DCD761E0047A812 /* TCShoppingCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCShoppingCartViewController.h; sourceTree = "<group>"; };
@@ -252,6 +264,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		091B11281DD40B0E00F1A584 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				091B11291DD40B1600F1A584 /* Restaurant */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		091B11291DD40B1600F1A584 /* Restaurant */ = {
+			isa = PBXGroup;
+			children = (
+				091B112A1DD40B5900F1A584 /* TCRestaurantSortView.h */,
+				091B112B1DD40B5900F1A584 /* TCRestaurantSortView.m */,
+				091B112D1DD418D600F1A584 /* TCSelectSortButton.h */,
+				091B112E1DD418D600F1A584 /* TCSelectSortButton.m */,
+				091B11301DD43C5000F1A584 /* TCRestaurantSelectButton.h */,
+				091B11311DD43C5000F1A584 /* TCRestaurantSelectButton.m */,
+				091B11331DD447FB00F1A584 /* TCRestaurantFilterView.h */,
+				091B11341DD447FB00F1A584 /* TCRestaurantFilterView.m */,
+			);
+			name = Restaurant;
+			sourceTree = "<group>";
+		};
 		091BC6DC1DD091BC00EB5FBD /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -578,6 +613,7 @@
 		7AAF236E1DCAE7EB002B81A5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				091B11281DD40B0E00F1A584 /* View */,
 				7AAF236F1DCAE7EB002B81A5 /* Controller */,
 			);
 			path = Home;
@@ -774,6 +810,7 @@
 				TargetAttributes = {
 					7A9CCECB1DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = W8R8AW7WU4;
 						ProvisioningStyle = Automatic;
 					};
 					7A9CCEE41DB62011003D90C6 = {
@@ -926,12 +963,15 @@
 				741C148D1DCB13F500FBAA03 /* TCRestaurantViewController.m in Sources */,
 				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
+				091B112C1DD40B5900F1A584 /* TCRestaurantSortView.m in Sources */,
 				7A190AF01DC09BF500651905 /* TCClient.m in Sources */,
 				092158811DCD79CB0047A812 /* TCShoppingCartTableViewCell.m in Sources */,
+				091B11321DD43C5000F1A584 /* TCRestaurantSelectButton.m in Sources */,
 				7A918AC51DC34104002BD529 /* TCBioEditViewController.m in Sources */,
 				7A6506F01DCA1F4F00B0EDBF /* TCBioEditAvatarViewController.m in Sources */,
 				7A918AD61DC36D53002BD529 /* TCBioEditAffectionView.m in Sources */,
 				7A918AC11DC32D90002BD529 /* TCBiographyAvatarViewCell.m in Sources */,
+				091B112F1DD418D600F1A584 /* TCSelectSortButton.m in Sources */,
 				7A6506E11DC9EE5400B0EDBF /* TCShippingAddressViewCell.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */,
@@ -952,6 +992,7 @@
 				7AC292221DC88CF200B2C7E8 /* TCBioEditSMSViewController.m in Sources */,
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.m in Sources */,
+				091B11351DD447FB00F1A584 /* TCRestaurantFilterView.m in Sources */,
 				7A6506D31DC993D400B0EDBF /* TCTabBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1097,7 +1138,7 @@
 			baseConfigurationReference = 6119E9AF010F0BE87CA35612 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = W8R8AW7WU4;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
 				INFOPLIST_FILE = individual/Info.plist;
@@ -1113,7 +1154,7 @@
 			baseConfigurationReference = FDF9BE3739BA95056A69F363 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = W8R8AW7WU4;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
 				INFOPLIST_FILE = individual/Info.plist;

@@ -11,6 +11,9 @@
 #import "TCRestaurantTableViewCell.h"
 #import "TCRestaurantInfoViewController.h"
 #import "TCGetNavigationItem.h"
+#import "TCRestaurantSortView.h"
+#import "TCRestaurantSelectButton.h"
+#import "TCRestaurantFilterView.h"
 
 
 @interface TCRestaurantViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
