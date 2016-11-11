@@ -341,6 +341,21 @@
 
 
 # pragma mark other
+- (void)getNewDataWithUrl:(NSURL *)url AndMessage:(NSString *)message {
+//    NSURL *url = [NSURL URLWithString:@""];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+//            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            ///////////
+        }
+    }];
+    [dataTask resume];
+
+}
+
+
 - (void)removeOtherSelectBtnColor:(TCSelectSortButton *)button AndType:(NSString *)type{
     
     NSArray *btnArr;
