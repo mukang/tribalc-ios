@@ -55,10 +55,10 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 /**
  用户登录，登录后会保留登录状态
 
- @param loginInfo 用户登录信息，TCUserLoginInfo对象
+ @param phoneInfo 用户登录信息，TCUserPhoneInfo对象
  @param resultBlock 结果回调，userSession为nil时表示登录失败，失败原因见error的code和userInfo
  */
-- (void)login:(TCUserLoginInfo *)loginInfo result:(void (^)(TCUserSession *userSession, NSError *error))resultBlock;
+- (void)login:(TCUserPhoneInfo *)phoneInfo result:(void (^)(TCUserSession *userSession, NSError *error))resultBlock;
 
 /**
  获取用户基本信息
@@ -120,7 +120,7 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  修改用户常用地址
 
  @param userAddress 常用地址，TCUserAddress对象
- @param resultBlock 结果回调，success为NO时表示获取失败，失败原因见error的code和userInfo
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
  */
 - (void)changeUserAddress:(TCUserAddress *)userAddress result:(void (^)(BOOL success, NSError *error))resultBlock;
 
@@ -128,9 +128,17 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  修改用户坐标
 
  @param coordinate 用户坐标，[经度, 维度]
- @param resultBlock 结果回调，success为NO时表示获取失败，失败原因见error的code和userInfo
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
  */
 - (void)changeUserCoordinate:(NSArray *)coordinate result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 修改用户手机（敏感信息）
+
+ @param phoneInfo TCUserPhoneInfo对象
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserPhone:(TCUserPhoneInfo *)phoneInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 

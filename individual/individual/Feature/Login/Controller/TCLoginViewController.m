@@ -188,11 +188,11 @@
         [MBProgressHUD showHUDWithMessage:@"请您填写验证码!"];
     }
     
-    TCUserLoginInfo *userInfo = [[TCUserLoginInfo alloc] init];
-    userInfo.phone = self.accountTextField.text;
-    userInfo.verificationCode = self.passwordTextField.text;
+    TCUserPhoneInfo *phoneInfo = [[TCUserPhoneInfo alloc] init];
+    phoneInfo.phone = self.accountTextField.text;
+    phoneInfo.verificationCode = self.passwordTextField.text;
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] login:userInfo result:^(TCUserSession *userSession, NSError *error) {
+    [[TCBuluoApi api] login:phoneInfo result:^(TCUserSession *userSession, NSError *error) {
         [MBProgressHUD hideHUD:YES];
         if (userSession) {
             [weakSelf dismissViewControllerAnimated:YES completion:nil];

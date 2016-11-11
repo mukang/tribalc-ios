@@ -24,13 +24,13 @@
     self.buluoApi = [TCBuluoApi api];
     
     if ([self.buluoApi needLogin]) {
-        TCUserLoginInfo *userLoginInfo = [[TCUserLoginInfo alloc] init];
-        userLoginInfo.phone = @"18510509908";
-        userLoginInfo.verificationCode = @"123456";
+        TCUserPhoneInfo *phoneInfo = [[TCUserPhoneInfo alloc] init];
+        phoneInfo.phone = @"18510509908";
+        phoneInfo.verificationCode = @"123456";
         
         self.expectation = [self expectationWithDescription:@"Expect User Login"];
         
-        [[TCBuluoApi api] login:userLoginInfo result:^(TCUserSession *userSession, NSError *error) {
+        [[TCBuluoApi api] login:phoneInfo result:^(TCUserSession *userSession, NSError *error) {
             XCTAssertNotNil(userSession, @"User login failed with error: %@", error);
             [self.expectation fulfill];
         }];
@@ -160,6 +160,24 @@
     NSArray *coordinate = @[@(116.8234023), @(39.11428542)];
     [self.buluoApi changeUserCoordinate:coordinate result:^(BOOL success, NSError *error) {
         XCTAssertTrue(success, @"Change user coordinate failed with error: %@", error);
+        [self.expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail(@"Expection failed with error: %@", error);
+        }
+    }];
+}
+
+- (void)testUserPhone {
+    self.expectation = [self expectationWithDescription:@"Expect Change User Phone"];
+    
+    TCUserPhoneInfo *phoneInfo = [[TCUserPhoneInfo alloc] init];
+    phoneInfo.phone = @"13582438248";
+    phoneInfo.verificationCode = @"123456";
+    [self.buluoApi changeUserPhone:phoneInfo result:^(BOOL success, NSError *error) {
+        XCTAssertTrue(success, @"Change user phone failed with error: %@", error);
         [self.expectation fulfill];
     }];
     

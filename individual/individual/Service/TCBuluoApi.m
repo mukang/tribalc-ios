@@ -127,10 +127,10 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 #pragma mark - 普通用户资源
 
-- (void)login:(TCUserLoginInfo *)loginInfo result:(void (^)(TCUserSession *, NSError *))resultBlock {
+- (void)login:(TCUserPhoneInfo *)phoneInfo result:(void (^)(TCUserSession *, NSError *))resultBlock {
     NSString *apiName = @"persons/login";
     TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
-    NSDictionary *dic = [loginInfo toObjectDictionary];
+    NSDictionary *dic = [phoneInfo toObjectDictionary];
     for (NSString *key in dic.allKeys) {
         [request setValue:dic[key] forParam:key];
     }
@@ -394,6 +394,36 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             if (response.statusCode == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.coordinate = coordinate;
+                [self setUserSession:userSession];
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
+}
+
+- (void)changeUserPhone:(TCUserPhoneInfo *)phoneInfo result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/sensitive_info/phone", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        NSDictionary *dic = [phoneInfo toObjectDictionary];
+        for (NSString *key in dic.allKeys) {
+            [request setValue:dic[key] forParam:key];
+        }
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userSensitiveInfo.phone = phoneInfo.phone;
                 [self setUserSession:userSession];
                 if (resultBlock) {
                     resultBlock(YES, nil);

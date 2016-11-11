@@ -12,7 +12,7 @@
 #import "TCUserSession.h"
 #import "TCUserInfo.h"
 #import "TCUserSensitiveInfo.h"
-#import "TCUserLoginInfo.h"
+#import "TCUserPhoneInfo.h"
 #import "TCUserAddress.h"
 
 
