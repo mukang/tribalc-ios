@@ -13,7 +13,7 @@
 
 #pragma mark - Public Methods
 
-+ (instancetype)responseWithStatusCode:(NSInteger)statusCode data:(NSDictionary *)data orError:(NSError *)error {
++ (instancetype)responseWithStatusCode:(NSInteger)statusCode data:(id)data orError:(NSError *)error {
     if (!error) {
         return [[self alloc] initWithStatusCode:statusCode data:data];
     } else {
@@ -23,7 +23,7 @@
 
 #pragma mark - Private Methods
 
-- (instancetype)initWithStatusCode:(NSInteger)statusCode data:(NSDictionary *)data {
+- (instancetype)initWithStatusCode:(NSInteger)statusCode data:(id)data {
     if (self = [super init]) {
         _statusCode = statusCode;
         _data = data;

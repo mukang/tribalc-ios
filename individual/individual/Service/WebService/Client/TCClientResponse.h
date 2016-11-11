@@ -10,10 +10,10 @@
 
 @interface TCClientResponse : NSObject
 
-@property (copy, nonatomic, readonly) NSDictionary *data;
+@property (copy, nonatomic, readonly) id data;
 @property (strong, nonatomic, readonly) NSError *error;
 @property (nonatomic, readonly) NSInteger statusCode;
 
-+ (instancetype)responseWithStatusCode:(NSInteger)statusCode data:(NSDictionary *)data orError:(NSError *)error;
++ (instancetype)responseWithStatusCode:(NSInteger)statusCode data:(id)data orError:(NSError *)error;
 
 @end

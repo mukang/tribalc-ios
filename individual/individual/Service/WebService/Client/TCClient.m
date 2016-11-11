@@ -76,7 +76,7 @@
     
     __block NSURLSessionDataTask *dataTask = nil;
     dataTask = [self.sessionManager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-        NSDictionary *dataInResponse = nil;
+        id dataInResponse = nil;
         NSInteger codeInResponse = 0;
         if (!error) {
             serializationError = nil;

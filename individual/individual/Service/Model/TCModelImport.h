@@ -14,6 +14,7 @@
 #import "TCUserSensitiveInfo.h"
 #import "TCUserPhoneInfo.h"
 #import "TCUserAddress.h"
+#import "TCUserChippingAddress.h"
 
 
 

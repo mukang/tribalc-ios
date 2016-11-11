@@ -188,4 +188,43 @@
     }];
 }
 
+- (void)testAddUserChippingAddress {
+    self.expectation = [self expectationWithDescription:@"Expect Add User Chipping Address"];
+    
+    TCUserChippingAddress *address = [[TCUserChippingAddress alloc] init];
+    address.province = @"北京";
+    address.city = @"北京市";
+    address.district = @"朝阳区";
+    address.address = @"北苑路媒体村天畅园1号楼408室";
+    address.name = @"小明";
+    address.phone = @"18888888888";
+    __weak typeof(self) weakSelf = self;
+    [weakSelf.buluoApi addUserChippingAddress:address result:^(BOOL success, TCUserChippingAddress *chippingAddress, NSError *error) {
+        XCTAssertTrue(success, @"Add user chipping address failed with error: %@", error);
+        [weakSelf.expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail(@"Expection failed with error: %@", error);
+        }
+    }];
+}
+
+- (void)testFetchUserChippingAddressList {
+    self.expectation = [self expectationWithDescription:@"Expect Fetch User Chipping Address List"];
+    
+    [self.buluoApi fetchUserChippingAddressList:^(NSArray *addressList, NSError *error) {
+        NSLog(@"--->%zd", addressList.count);
+        XCTAssertNotNil(addressList, @"Fetch user chipping address list failed with error: %@", error);
+        [self.expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail(@"Expection failed with error: %@", error);
+        }
+    }];
+}
+
 @end

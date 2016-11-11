@@ -140,6 +140,21 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)changeUserPhone:(TCUserPhoneInfo *)phoneInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 添加用户收货地址
+
+ @param chippingAddress 用户收货地址，TCUserChippingAddress对象
+ @param resultBlock 结果回调，success为NO时表示添加失败，失败原因见error的code和userInfo
+ */
+- (void)addUserChippingAddress:(TCUserChippingAddress *)chippingAddress result:(void (^)(BOOL success, TCUserChippingAddress *chippingAddress, NSError *error))resultBlock;
+
+/**
+ 获取用户收货地址列表
+
+ @param resultBlock 结果回调，addressList为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchUserChippingAddressList:(void (^)(NSArray *addressList, NSError *error))resultBlock;
+
 #pragma mark - 验证码资源
 
 /**

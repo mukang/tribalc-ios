@@ -442,6 +442,64 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)addUserChippingAddress:(TCUserChippingAddress *)chippingAddress result:(void (^)(BOOL, TCUserChippingAddress *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        NSDictionary *dic = [chippingAddress toObjectDictionary];
+        for (NSString *key in dic.allKeys) {
+            [request setValue:dic[key] forParam:key];
+        }
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 201) {
+                TCUserChippingAddress *address = [[TCUserChippingAddress alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    resultBlock(YES, address, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, nil, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, nil, sessionError);
+        }
+    }
+}
+
+- (void)fetchUserChippingAddressList:(void (^)(NSArray *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            NSError *error = response.error;
+            if (error) {
+                if (resultBlock) {
+                    resultBlock(nil, error);
+                }
+            } else {
+                NSMutableArray *addressList = [NSMutableArray array];
+                NSArray *dics = response.data;
+                for (NSDictionary *dic in dics) {
+                    TCUserChippingAddress *address = [[TCUserChippingAddress alloc] initWithObjectDictionary:dic];
+                    [addressList addObject:address];
+                }
+                if (resultBlock) {
+                    resultBlock([addressList copy], nil);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(nil, sessionError);
+        }
+    }
+}
+
 #pragma mark - 验证码资源
 
 - (void)fetchVerificationCodeWithPhone:(NSString *)phone result:(void (^)(BOOL, NSError *))resultBlock {
