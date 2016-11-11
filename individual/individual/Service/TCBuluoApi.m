@@ -442,6 +442,30 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)changeUserDefaultChippingAddress:(NSString *)chippingAddressID result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/sensitive_info/addressID", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        [request setValue:chippingAddressID forKey:@"value"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
+}
+
 - (void)addUserChippingAddress:(TCUserChippingAddress *)chippingAddress result:(void (^)(BOOL, TCUserChippingAddress *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses", self.currentUserSession.assigned];
@@ -496,6 +520,80 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
             resultBlock(nil, sessionError);
+        }
+    }
+}
+
+- (void)fetchUserChippingAddress:(NSString *)chippingAddressID result:(void (^)(TCUserChippingAddress *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses/%@", self.currentUserSession.assigned, chippingAddressID];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.error) {
+                if (resultBlock) {
+                    resultBlock(nil, response.error);
+                }
+            } else {
+                TCUserChippingAddress *address = [[TCUserChippingAddress alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    resultBlock(address, nil);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(nil, sessionError);
+        }
+    }
+}
+
+- (void)changeUserChippingAddress:(TCUserChippingAddress *)chippingAddress result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses/%@", self.currentUserSession.assigned, chippingAddress.ID];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        NSDictionary *dic = [chippingAddress toObjectDictionary];
+        for (NSString *key in dic.allKeys) {
+            [request setValue:dic[key] forParam:key];
+        }
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
+}
+
+- (void)deleteUserChippingAddress:(NSString *)chippingAddressID result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses/%@", self.currentUserSession.assigned, chippingAddressID];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 204) {
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
         }
     }
 }

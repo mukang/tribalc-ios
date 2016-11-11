@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) XCTestExpectation *expectation;
 @property (strong, nonatomic) TCBuluoApi *buluoApi;
+@property (strong, nonatomic) TCUserChippingAddress *chippingAddress;
+@property (strong, nonatomic) NSMutableArray *chippingAddressList;
 
 @end
 
@@ -217,6 +219,84 @@
     [self.buluoApi fetchUserChippingAddressList:^(NSArray *addressList, NSError *error) {
         NSLog(@"--->%zd", addressList.count);
         XCTAssertNotNil(addressList, @"Fetch user chipping address list failed with error: %@", error);
+        self.chippingAddressList = [NSMutableArray arrayWithArray:addressList];
+        if (addressList.count) {
+            self.chippingAddress = addressList[0];
+        }
+        [self.expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail(@"Expection failed with error: %@", error);
+        }
+    }];
+}
+
+- (void)testFetchUserChippingAddress {
+    [self testFetchUserChippingAddressList];
+    
+    self.expectation = [self expectationWithDescription:@"Expect Fetch User Chipping Address"];
+    
+    [self.buluoApi fetchUserChippingAddress:self.chippingAddress.ID result:^(TCUserChippingAddress *chippingAddress, NSError *error) {
+        XCTAssertNotNil(chippingAddress, @"Fetch user chipping address failed with error: %@", error);
+        [self.expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail(@"Expection failed with error: %@", error);
+        }
+    }];
+}
+
+- (void)testChangeUserChippingAddress {
+    [self testFetchUserChippingAddressList];
+    self.expectation = [self expectationWithDescription:@"Expect Change User Chipping Address"];
+    
+    TCUserChippingAddress *chippingAddress = self.chippingAddress;
+    chippingAddress.name = @"小刚";
+    [self.buluoApi changeUserChippingAddress:chippingAddress result:^(BOOL success, NSError *error) {
+        XCTAssertTrue(success, @"Change user chipping address failed with error: %@", error);
+        if (success) {
+            self.chippingAddress.name = @"小刚";
+        }
+        [self.expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail(@"Expection failed with error: %@", error);
+        }
+    }];
+}
+
+- (void)testDeleteUserChippingAddress {
+    [self testFetchUserChippingAddressList];
+    self.expectation = [self expectationWithDescription:@"Expect Delete User Chipping Address"];
+    
+    [self.buluoApi deleteUserChippingAddress:self.chippingAddress.ID result:^(BOOL success, NSError *error) {
+        XCTAssertTrue(success, @"Delete user chipping address failed with error: %@", error);
+        if (success) {
+            self.chippingAddress = nil;
+            [self.chippingAddressList removeObjectAtIndex:0];
+        }
+        [self.expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail(@"Expection failed with error: %@", error);
+        }
+    }];
+}
+
+- (void)testChangeUserDefaultChippingAddress {
+    self.expectation = [self expectationWithDescription:@"Expect Change User Default Chipping Address"];
+    
+    TCUserChippingAddress *chippingAddress = self.chippingAddress;
+    [self.buluoApi changeUserDefaultChippingAddress:chippingAddress.ID result:^(BOOL success, NSError *error) {
+        XCTAssertTrue(success, @"Change user default chipping address failed with error: %@", error);
         [self.expectation fulfill];
     }];
     
