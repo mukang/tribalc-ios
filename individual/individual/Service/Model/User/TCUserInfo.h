@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, TCUserGender) {
+    TCUserGenderUnknown,
+    TCUserGenderMale,
+    TCUserGenderFemale
+};
+
+typedef NS_ENUM(NSInteger, TCUserEmotionState) {
+    TCUserEmotionStateUnknown,
+    TCUserEmotionStateMarried,
+    TCUserEmotionStateSingle,
+    TCUserEmotionStateLove
+};
+
 @interface TCUserInfo : NSObject
 
 /** 用户ID */
@@ -24,10 +37,14 @@
 @property (copy, nonatomic) NSString *name;
 /** 性别 */
 @property (copy, nonatomic) NSString *sex;
+/** 性别(枚举) */
+@property (nonatomic) TCUserGender gender;
 /** 出生日期 */
 @property (nonatomic) NSUInteger birthday;
 /** 情感状况 */
 @property (copy, nonatomic) NSString *emotion;
+/** 情感状况(枚举) */
+@property (nonatomic) TCUserEmotionState emotionState;
 /** 所在省份 */
 @property (copy, nonatomic) NSString *province;
 /** 所在城市 */

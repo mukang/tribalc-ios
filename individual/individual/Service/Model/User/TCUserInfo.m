@@ -11,4 +11,24 @@
 
 @implementation TCUserInfo
 
+- (void)setSex:(NSString *)sex {
+    _sex = sex;
+    if ([sex isEqualToString:@"MALE"]) {
+        self.gender = TCUserGenderMale;
+    } else if ([sex isEqualToString:@"FEMALE"]) {
+        self.gender = TCUserGenderFemale;
+    } else {
+        self.gender = TCUserGenderUnknown;
+    }
+}
+
+- (void)setEmotion:(NSString *)emotion {
+    _emotion = emotion;
+    if ([emotion isEqualToString:@"SINGLE"]) {
+        self.emotionState = TCUserEmotionStateSingle;
+    } else {
+        self.emotionState = TCUserEmotionStateUnknown;
+    }
+}
+
 @end

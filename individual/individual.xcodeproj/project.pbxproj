@@ -83,6 +83,8 @@
 		7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC292251DC8AA5700B2C7E8 /* TCCityPickerView.m */; };
 		7AC292281DC8AA6900B2C7E8 /* TCCityPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC292271DC8AA6900B2C7E8 /* TCCityPickerView.xib */; };
 		7AC2922B1DC8BEB300B2C7E8 /* citylist.data in Resources */ = {isa = PBXBuildFile; fileRef = 7AC2922A1DC8BEB300B2C7E8 /* citylist.data */; };
+		7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACA4FDC1DD57D79006634E8 /* TCUserAddress.m */; };
+		7ACA4FE01DD59EF5006634E8 /* TCUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACA4FDF1DD59EF5006634E8 /* TCUserTests.m */; };
 		7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */; };
 		7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
@@ -238,6 +240,9 @@
 		7AC292251DC8AA5700B2C7E8 /* TCCityPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCityPickerView.m; sourceTree = "<group>"; };
 		7AC292271DC8AA6900B2C7E8 /* TCCityPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCityPickerView.xib; sourceTree = "<group>"; };
 		7AC2922A1DC8BEB300B2C7E8 /* citylist.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = citylist.data; sourceTree = "<group>"; };
+		7ACA4FDB1DD57D79006634E8 /* TCUserAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserAddress.h; sourceTree = "<group>"; };
+		7ACA4FDC1DD57D79006634E8 /* TCUserAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserAddress.m; sourceTree = "<group>"; };
+		7ACA4FDF1DD59EF5006634E8 /* TCUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserTests.m; sourceTree = "<group>"; };
 		7ACE57A61DC73BD9004B383A /* TCVicinityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVicinityViewController.h; sourceTree = "<group>"; };
 		7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVicinityViewController.m; sourceTree = "<group>"; };
 		7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCVicinityViewController.xib; sourceTree = "<group>"; };
@@ -446,6 +451,7 @@
 			isa = PBXGroup;
 			children = (
 				7A9CCEE91DB62011003D90C6 /* individualTests.m */,
+				7ACA4FDE1DD59E9C006634E8 /* ApiTests */,
 				7A68C7F31DB9EF1F00027C6E /* CategoriesAndTools */,
 				7A9CCEEB1DB62011003D90C6 /* Info.plist */,
 			);
@@ -601,6 +607,8 @@
 				7AB29F301DD46C7D00564D93 /* TCUserSensitiveInfo.m */,
 				7A45147B1DD3060C009F170A /* TCUserLoginInfo.h */,
 				7A45147C1DD3060C009F170A /* TCUserLoginInfo.m */,
+				7ACA4FDB1DD57D79006634E8 /* TCUserAddress.h */,
+				7ACA4FDC1DD57D79006634E8 /* TCUserAddress.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -611,6 +619,14 @@
 				7AC2922A1DC8BEB300B2C7E8 /* citylist.data */,
 			);
 			path = BinaryFiles;
+			sourceTree = "<group>";
+		};
+		7ACA4FDE1DD59E9C006634E8 /* ApiTests */ = {
+			isa = PBXGroup;
+			children = (
+				7ACA4FDF1DD59EF5006634E8 /* TCUserTests.m */,
+			);
+			path = ApiTests;
 			sourceTree = "<group>";
 		};
 		7ACE57A31DC73BA6004B383A /* Vicinity */ = {
@@ -954,6 +970,7 @@
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A6506F01DCA1F4F00B0EDBF /* TCBioEditAvatarViewController.m in Sources */,
 				7A4514771DD2D0C3009F170A /* TCProfileBgImageChangeView.m in Sources */,
+				7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */,
 				7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */,
 				7A918AD61DC36D53002BD529 /* TCBioEditAffectionView.m in Sources */,
 				7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */,
@@ -995,6 +1012,7 @@
 				7A68C7FB1DB9F37400027C6E /* TCTestBoss.m in Sources */,
 				7A68C7F81DB9F03600027C6E /* TCTestModel.m in Sources */,
 				7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */,
+				7ACA4FE01DD59EF5006634E8 /* TCUserTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

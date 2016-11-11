@@ -190,15 +190,210 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
-- (void)changeUserNickName:(NSString *)nickName result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)changeUserNickname:(NSString *)nickname result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/nickname", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-        [request setValue:nickName forParam:@"nickname"];
+        [request setValue:nickname forParam:@"nickname"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
                 TCUserSession *userSession = self.currentUserSession;
-                userSession.userInfo.nickname = nickName;
+                userSession.userInfo.nickname = nickname;
+                [self setUserSession:userSession];
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
+}
+
+- (void)changeUserAvatar:(NSString *)avatar result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/picture", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        [request setValue:avatar forParam:@"picture"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userInfo.picture = avatar;
+                [self setUserSession:userSession];
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
+}
+
+- (void)changeUserGender:(TCUserGender)gender result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/sex", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        NSString *sex = nil;
+        switch (gender) {
+            case TCUserGenderMale:
+                sex = @"MALE";
+                break;
+            case TCUserGenderFemale:
+                sex = @"FEMALE";
+                break;
+            default:
+                break;
+        }
+        [request setValue:sex forParam:@"sex"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userInfo.sex = sex;
+                userSession.userInfo.gender = gender;
+                [self setUserSession:userSession];
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
+}
+
+- (void)changeUserBirthdate:(NSDate *)birthdate result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/birthday", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        NSTimeInterval timestamp = [birthdate timeIntervalSince1970];
+        [request setValue:[NSNumber numberWithUnsignedInteger:(NSUInteger)(timestamp * 1000)] forParam:@"birthday"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userInfo.birthday = (NSUInteger)(timestamp * 1000);
+                [self setUserSession:userSession];
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
+}
+
+- (void)changeUserEmotionState:(TCUserEmotionState)emotionState result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/emotion", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        NSString *emotion = nil;
+        switch (emotionState) {
+            case TCUserEmotionStateMarried:
+                
+                break;
+            case TCUserEmotionStateSingle:
+                emotion = @"SINGLE";
+                break;
+            case TCUserEmotionStateLove:
+                
+                break;
+            default:
+                break;
+        }
+        [request setValue:emotion forKey:@"emotion"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userInfo.emotion = emotion;
+                userSession.userInfo.emotionState = emotionState;
+                [self setUserSession:userSession];
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
+}
+
+- (void)changeUserAddress:(TCUserAddress *)userAddress result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/province,city,district", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        NSDictionary *dic = [userAddress toObjectDictionary];
+        for (NSString *key in dic.allKeys) {
+            [request setValue:dic[key] forParam:key];
+        }
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userInfo.province = userAddress.province;
+                userSession.userInfo.city = userAddress.city;
+                userSession.userInfo.district = userAddress.district;
+                [self setUserSession:userSession];
+                if (resultBlock) {
+                    resultBlock(YES, nil);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(NO, response.error);
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            resultBlock(NO, sessionError);
+        }
+    }
+}
+
+- (void)changeUserCoordinate:(NSArray *)coordinate result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/coordinate", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        [request setValue:coordinate forParam:@"coordinate"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userInfo.coordinate = coordinate;
                 [self setUserSession:userSession];
                 if (resultBlock) {
                     resultBlock(YES, nil);

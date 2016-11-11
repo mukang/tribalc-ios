@@ -79,10 +79,58 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 /**
  修改用户昵称
  
- @param nickName 要改为的昵称
+ @param nickname 要改为的昵称
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserNickname:(NSString *)nickname result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 修改用户头像
+
+ @param avatar 用户头像地址
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserAvatar:(NSString *)avatar result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 修改用户性别
+
+ @param gender 性别枚举值（只能传入TCUserGenderMale和TCUserGenderFemale）
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserGender:(TCUserGender)gender result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 修改用户出生日期
+
+ @param birthdate 出生日期
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserBirthdate:(NSDate *)birthdate result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 修改用户情感状况
+
+ @param emotionState 情感状况枚举值（不能传入TCUserEmotionStateUnknown）
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserEmotionState:(TCUserEmotionState)emotionState result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 修改用户常用地址
+
+ @param userAddress 常用地址，TCUserAddress对象
  @param resultBlock 结果回调，success为NO时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)changeUserNickName:(NSString *)nickName result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)changeUserAddress:(TCUserAddress *)userAddress result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 修改用户坐标
+
+ @param coordinate 用户坐标，[经度, 维度]
+ @param resultBlock 结果回调，success为NO时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserCoordinate:(NSArray *)coordinate result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 
