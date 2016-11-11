@@ -230,7 +230,7 @@
 
 - (void)createBottomButton {
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45, self.view.frame.size.width, 45)];
-    UIColor *backColor = [UIColor colorWithRed:71/255.0 green:188/255.0 blue:199/255.0 alpha:1];
+    UIColor *backColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     UIButton *orderBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"外卖订餐" AndFontSize:17 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
     UIButton *reserveBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"预订餐位" AndFontSize:17 AndBackColor:backColor AndTextColor:[UIColor whiteColor]];
     [bottomView addSubview:reserveBtn];
@@ -357,8 +357,10 @@
     
     if (point.y > 70) {
         [self initialNavLeftBarWithImgName:@"back_black" AndRightBarImgName:@"res_collection_black"];
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     } else {
         [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:@"res_collection"];
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     }
     
     NSLog(@"%f", point.y);
