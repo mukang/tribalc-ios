@@ -7,6 +7,7 @@
 //
 
 #import "TCUserInfo.h"
+#import "NSObject+TCModel.h"
 
 @implementation TCUserInfo
 
