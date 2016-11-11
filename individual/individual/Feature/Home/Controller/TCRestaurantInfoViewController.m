@@ -58,11 +58,22 @@
     
     UIButton *phoneBtn = [self createPhoneCustomViewWithFrame:CGRectMake(0, promptView.y + promptView.height + 7, self.view.frame.size.width, 45)];
     [mScrollView addSubview:phoneBtn];
+    
+    mScrollView.contentSize = CGSizeMake(self.view.width, phoneBtn.y + phoneBtn.height + 8);
 
     
 }
 
 
+- (void)initialNavLeftBarWithImgName:(NSString *)leftName AndRightBarImgName:(NSString *)rightName {
+    UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:leftName];
+    [leftBtn addTarget:self action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:rightName];
+    [rightBtn addTarget:self action:@selector(touchCollectionBtn) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+
+}
 
 - (void)initNavigationBar {
     self.navigationController.navigationBar.translucent = YES;
@@ -70,9 +81,8 @@
     barImageView = self.navigationController.navigationBar.subviews.firstObject;
     barImageView.backgroundColor = [UIColor whiteColor];
     barImageView.alpha = 0;
-    
-    self.navigationItem.leftBarButtonItem = [TCGetNavigationItem getBarItemWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
-    self.navigationItem.rightBarButtonItem = [TCGetNavigationItem getBarItemWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:@"res_collection"];
+
+    [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:@"res_collection"];
     
 }
 
@@ -88,7 +98,7 @@
 - (void)initBaseData {
     
     mScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 45)];
-    mScrollView.contentSize = CGSizeMake(mScrollView.frame.size.width, mScrollView.size.height + 200);
+//    mScrollView.contentSize = CGSizeMake(mScrollView.frame.size.width, mScrollView.size.height + 64 + 200);
     [self.view addSubview:mScrollView];
     
     
@@ -307,7 +317,14 @@
     return view;
 }
 
+#pragma mark - click
+- (void)touchBackBtn {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
+- (void)touchCollectionBtn {
+    
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -337,6 +354,14 @@
     
 
     CGPoint point = scrollView.contentOffset;
+    
+    if (point.y > 70) {
+        [self initialNavLeftBarWithImgName:@"back_black" AndRightBarImgName:@"res_collection_black"];
+    } else {
+        [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:@"res_collection"];
+    }
+    
+    NSLog(@"%f", point.y);
 
     if (point.y < -64) {
         double height = -point.y - 64 + 270;
