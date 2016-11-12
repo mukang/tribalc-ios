@@ -10,6 +10,7 @@
 
 @interface TCComponent : NSObject
 + (UILabel *)createLabelWithText:(NSString *)text AndFontSize:(float)font;
++ (UILabel *)createLabelWithText:(NSString *)text AndFontSize:(float)font AndTextColor:(UIColor *)color;
 + (UILabel *)createCenterLabWithFrame:(CGRect)frame AndFontSize:(float)font AndTitle:(NSString *)text;
 + (UILabel *)createLabelWithFrame:(CGRect)frame AndFontSize:(float)font AndTitle:(NSString *)text;
 + (UILabel *)createLabelWithFrame:(CGRect)frame AndFontSize:(float)font AndTitle:(NSString *)text AndTextColor:(UIColor *)color;

@@ -19,6 +19,16 @@
     return label;
 }
 
++ (UILabel *)createLabelWithText:(NSString *)text AndFontSize:(float)font AndTextColor:(UIColor *)color{
+    UILabel *label = [[UILabel alloc] init];
+    label.text = text;
+    label.font = [UIFont systemFontOfSize:font];
+    label.textColor = color;
+    [label sizeToFit];
+    
+    return label;
+}
+
 + (UILabel *)createLabelWithFrame:(CGRect)frame AndFontSize:(float)font AndTitle:(NSString *)text{
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.text = text;
@@ -44,7 +54,7 @@
 
 + (UIView *)createGrayLineWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
+    view.backgroundColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1];
     
     return view;
 }

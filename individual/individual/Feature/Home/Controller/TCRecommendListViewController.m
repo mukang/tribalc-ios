@@ -106,6 +106,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *info = goodsInfoArray[indexPath.row];
     NSLog(@"click%@", info);
+    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] init];
+    [self.navigationController pushViewController:recommendInfoViewController animated:YES];
+    
 }
 
 
