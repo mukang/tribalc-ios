@@ -97,55 +97,49 @@
     [dataTask resume];
     
     
-    restaurantArray = @[ info1, info2, info3, info4, info5 ];
+    restaurantArray = @[ info1, info2, info3, info4, info5,info1, info2, info3, info4, info5,info1, info2, info3, info4, info5,info1, info2, info3, info4, info5 ];
     
 }
 
 
 
 - (void)initialTableView {
-    mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStylePlain];
+    mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStyleGrouped];
     mResaurantTableView.delegate = self;
     mResaurantTableView.dataSource = self;
     mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
     [self.view addSubview:mResaurantTableView];
 }
 
-- (UITableViewCell *)getTopSelectViewWithTableView:(UITableView *)tableView {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+
+- (UIView *)getTopViewWithFrame:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
     
     sortButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(0, 0, self.view.width / 2, 42) AndText:@"智能排序" AndImgName:@"res_select_down"];
-    [cell.contentView addSubview:sortButton];
+    [view addSubview:sortButton];
     [sortButton addTarget:self action:@selector(touchSortBtn:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     
     filterButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(self.view.width / 2, 0, self.view.width / 2, 42) AndText:@"筛选" AndImgName:@"res_select_down"];
     [filterButton addTarget:self action:@selector(touchFilterBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.contentView addSubview:filterButton];
+    [view addSubview:filterButton];
     
-
+    
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width / 2 - 0.5, 14, 1, 46 - 16 * 2)];
     lineView.backgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1];
-    [cell.contentView addSubview:lineView];
+    [view addSubview:lineView];
     
-    return cell;
+    return view;
+    
 }
 
 
 
+- (TCRestaurantTableViewCell *)getTableViewCellInfoWithIndex:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView AndCell:(TCRestaurantTableViewCell *)cell{
 
-- (TCRestaurantTableViewCell *)getTableViewCellInfoWithIndex:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView{
-    TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (cell == nil) {
-        cell = [[TCRestaurantTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSDictionary *resInfo = restaurantArray[indexPath.row - 1];
+    NSDictionary *resInfo = restaurantArray[indexPath.row];
     cell.resImgView.image = [UIImage imageNamed:@"null_length"];
     cell.nameLab.text = resInfo[@"name"];
     [cell setLocation:resInfo[@"location"]];
@@ -170,20 +164,20 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return restaurantArray.count + 1;
+    return restaurantArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.row == 0) {
-        return [self getTopSelectViewWithTableView:tableView];
+    static NSString *identifier = @"cell";
+    TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[TCRestaurantTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    else {
-        return [self getTableViewCellInfoWithIndex:indexPath AndTableView:tableView];
-    }
+
+    return [self getTableViewCellInfoWithIndex:indexPath AndTableView:tableView AndCell:cell];
     
 }
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -194,9 +188,6 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 42;
-    }
     return 160;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -208,6 +199,15 @@
         [self.navigationController pushViewController:restaurantInfo animated:YES];
     }
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 42;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [self getTopViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 42)];
+    
+}
+
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {

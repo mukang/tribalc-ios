@@ -34,6 +34,7 @@
     
     [self initialTableView];
     
+    
     backView = [[UIView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, self.view.height - 42)];
     backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
     [self.view addSubview:backView];
@@ -51,6 +52,7 @@
     
 }
 
+
 - (void)initialNavigationBar {
     
     
@@ -67,10 +69,11 @@
 
 
 - (void)initialTableView {
-    mTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStylePlain];
+
+    mTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStyleGrouped];
     mTableView.delegate = self;
     mTableView.dataSource = self;
-    mTableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
+    
     [self.view addSubview:mTableView];
 }
 
@@ -100,16 +103,13 @@
     [dataTask resume];
     
     
-    entertainmentArr = @[ info1, info2, info3, info4, info5 ];
+    entertainmentArr = @[ info1, info2, info3, info4, info5, info1, info5, info2, info4, info5, info1, info5, info2, info4 ];
     
 }
 
 
-- (UITableViewCell *)getTopSelectViewWithTableView:(UITableView *)tableView {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
+- (UITableViewCell *)getTopSelectViewWithTableView:(UITableView *)tableView AndCell:(TCRestaurantTableViewCell *)cell{
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
@@ -130,15 +130,34 @@
     return cell;
 }
 
+- (UIView *)getTopViewWithFrame:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
+    
+    sortButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(0, 0, self.view.width / 2, 42) AndText:@"智能排序" AndImgName:@"res_select_down"];
+    [view addSubview:sortButton];
+    [sortButton addTarget:self action:@selector(touchSortBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    filterButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(self.view.width / 2, 0, self.view.width / 2, 42) AndText:@"筛选" AndImgName:@"res_select_down"];
+    [filterButton addTarget:self action:@selector(touchFilterBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:filterButton];
+    
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width / 2 - 0.5, 14, 1, 46 - 16 * 2)];
+    lineView.backgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1];
+    [view addSubview:lineView];
+    
+    return view;
+
+}
 
 
-- (TCRestaurantTableViewCell *)getTableViewCellInfoWithIndex:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView{
-    TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (cell == nil) {
-        cell = [[TCRestaurantTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
+
+- (TCRestaurantTableViewCell *)getTableViewCellInfoWithIndex:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView AndCell:(TCRestaurantTableViewCell *)cell{
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSDictionary *resInfo = entertainmentArr[indexPath.row - 1];
+    NSDictionary *resInfo = entertainmentArr[indexPath.row];
     cell.resImgView.image = [UIImage imageNamed:@"null_length"];
     cell.nameLab.text = resInfo[@"name"];
     [cell setLocation:resInfo[@"location"]];
@@ -163,33 +182,43 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return entertainmentArr.count + 1;
+    return entertainmentArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.row == 0) {
-        return [self getTopSelectViewWithTableView:tableView];
+    static NSString *identifier = @"cell";
+    TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+      cell = [[TCRestaurantTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    else {
-        return [self getTableViewCellInfoWithIndex:indexPath AndTableView:tableView];
-    }
+
+
+    return [self getTableViewCellInfoWithIndex:indexPath AndTableView:tableView AndCell:cell];
     
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [self getTopViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 42)];
+    
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 42;
+}
+
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 42;
-    }
+//    if (indexPath.row == 0) {
+//        return 42;
+//    }
     return 160;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
