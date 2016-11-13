@@ -192,12 +192,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row != 0) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-        TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
-        [self.navigationController pushViewController:restaurantInfo animated:YES];
-    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
+    [self.navigationController pushViewController:restaurantInfo animated:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 42;

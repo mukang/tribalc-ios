@@ -51,6 +51,9 @@
     UIWebView *textAndImageView = [self createURLInfoViewWithOrigin:CGPointMake(0, selectGoodInfoSegment.y + selectGoodInfoSegment.height) AndURLStr:goodInfoDic[@"image_text"]];
     [mScrollView addSubview:textAndImageView];
     
+    UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, self.view.height - 49, self.view.width, 49)];
+    [self.view addSubview:bottomView];
+    
     
 }
 
@@ -64,7 +67,7 @@
 }
 
 - (void)initScrollView {
-    mScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    mScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 49)];
     mScrollView.contentSize = CGSizeMake(self.view.width, 1500);
     mScrollView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     [self.view addSubview:mScrollView];
@@ -171,6 +174,25 @@
     UILabel *profitLab = [self getLabelWithText:profitStr AndOrigin:CGPointMake(salesLab.x + salesLab.width + 15, salesLab.y)];
     [view addSubview:profitLab];
 
+    return view;
+}
+
+- (UIView *)createBottomViewWithFrame:(CGRect)frame {
+    UIView *view=  [[UIView alloc] initWithFrame:frame];
+    
+    UIButton *collectionBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"res_collection" AndAction:@selector(touchCollectionBtn:)];
+    collectionBtn.backgroundColor = [UIColor blueColor];
+    [view addSubview:collectionBtn];
+    
+    UIButton *shopCarImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(collectionBtn.x + collectionBtn.width, 0, collectionBtn.width, collectionBtn.height) AndImageName:@"goods_shoppingcar" AndAction:@selector(touchShopCarBtn:)];
+    shopCarImgBtn.backgroundColor = [UIColor blueColor];
+    [view addSubview:shopCarImgBtn];
+    
+    UIButton *shopCarBtn = [TCComponent createButtonWithFrame:CGRectMake(shopCarImgBtn.x + shopCarImgBtn.width, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:18];
+    shopCarBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+    [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [view addSubview:shopCarBtn];
+    
     return view;
 }
 
