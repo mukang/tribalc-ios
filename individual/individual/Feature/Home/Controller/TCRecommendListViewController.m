@@ -18,6 +18,10 @@
 
 @implementation TCRecommendListViewController
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self initialNavigationBar];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -25,7 +29,6 @@
 
     // Do any additional setup after loading the view.
     
-    [self initialNavigationBar];
     [self initialGoodsData];
     [self initialCollectionView];
 }

@@ -22,7 +22,8 @@
     [super viewWillAppear:animated];
     
     mScrollView.delegate = self;
-    
+    [self initNavigationBar];
+
 }
 
 
@@ -31,7 +32,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
     
-    [self initNavigationBar];
 
     [self initRestaurantInfo];
     

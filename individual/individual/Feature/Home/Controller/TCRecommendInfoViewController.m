@@ -17,13 +17,18 @@
 
 @implementation TCRecommendInfoViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self initNavigationBar];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     [self initGoodInfoData];
-    
-    [self initNavigationBar];
+//    [self initNavigationBar];
     
     [self initScrollView];
     
@@ -70,6 +75,29 @@
     UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
     barImageView.backgroundColor = [UIColor whiteColor];
     barImageView.alpha = 0;
+
+//    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 23, 23)];
+//    backBtn.layer.cornerRadius = 11.5;
+//    backBtn.backgroundColor = [UIColor blackColor];
+//    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    UIButton *backBtn = [self getBackButton];
+    [backBtn addTarget:self action:@selector(touchBackButton) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    
+}
+
+- (UIButton *)getBackButton {
+    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 23, 23)];
+    backBtn.layer.cornerRadius = 11.5;
+    backBtn.backgroundColor = [UIColor colorWithRed:57/255.0 green:57/255.0 blue:57/255.0 alpha:1];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back"]];
+    [imgView sizeToFit];
+    [imgView setFrame:CGRectMake(backBtn.width / 2 - imgView.width * 0.8 / 2 - 1, backBtn.height / 2 - imgView.height * 0.8 / 2, imgView.width * 0.8, imgView.height * 0.8)];
+//    [imgView setOrigin:CGPointMake(backBtn.width / 2 - imgView.width / 2 - 3, backBtn.height / 2 - imgView.height / 2)];
+    [backBtn addSubview:imgView];
+
+    return backBtn;
 }
 
 #pragma mark - Main UI
@@ -274,6 +302,10 @@
 }
 
 #pragma mark - click
+- (void)touchBackButton {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)touchSegmentedControlAction: (UISegmentedControl *)seg {
     NSInteger index = seg.selectedSegmentIndex;
     UIWebView *webView;
@@ -289,10 +321,6 @@
 
 }
 
--(void)touchSelectImgButton:(UIButton *)btn {
-    btn.backgroundColor = [UIColor blackColor];
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
 
     self.navigationController.navigationBar.translucent = NO;
@@ -300,6 +328,7 @@
     UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
     barImageView.backgroundColor =[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
     barImageView.alpha = 1;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
 }
 
@@ -308,9 +337,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleDefault;
-}
 
 /*
 #pragma mark - Navigation

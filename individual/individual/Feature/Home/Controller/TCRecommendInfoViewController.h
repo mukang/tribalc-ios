@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TCComponent.h"
 #import "TCGoodImageSelectView.h"
+#import "TCGetNavigationItem.h"
 
 @interface TCRecommendInfoViewController : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
