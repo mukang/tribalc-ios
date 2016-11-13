@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		091AD3181DD7FFC100F444C6 /* TCImgPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 091AD3171DD7FFC100F444C6 /* TCImgPageControl.m */; };
+		091AD31C1DD8059F00F444C6 /* TCEntertainmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091AD31B1DD8059F00F444C6 /* TCEntertainmentViewController.m */; };
 		091B112C1DD40B5900F1A584 /* TCRestaurantSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B112B1DD40B5900F1A584 /* TCRestaurantSortView.m */; };
 		091B112F1DD418D600F1A584 /* TCSelectSortButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B112E1DD418D600F1A584 /* TCSelectSortButton.m */; };
 		091B11321DD43C5000F1A584 /* TCRestaurantSelectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B11311DD43C5000F1A584 /* TCRestaurantSelectButton.m */; };
@@ -108,6 +109,8 @@
 /* Begin PBXFileReference section */
 		091AD3161DD7FFC100F444C6 /* TCImgPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImgPageControl.h; sourceTree = "<group>"; };
 		091AD3171DD7FFC100F444C6 /* TCImgPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCImgPageControl.m; sourceTree = "<group>"; };
+		091AD31A1DD8059F00F444C6 /* TCEntertainmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCEntertainmentViewController.h; sourceTree = "<group>"; };
+		091AD31B1DD8059F00F444C6 /* TCEntertainmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCEntertainmentViewController.m; sourceTree = "<group>"; };
 		091B112A1DD40B5900F1A584 /* TCRestaurantSortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantSortView.h; sourceTree = "<group>"; };
 		091B112B1DD40B5900F1A584 /* TCRestaurantSortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantSortView.m; sourceTree = "<group>"; };
 		091B112D1DD418D600F1A584 /* TCSelectSortButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectSortButton.h; sourceTree = "<group>"; };
@@ -273,6 +276,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		091AD3191DD8050F00F444C6 /* Entertainment */ = {
+			isa = PBXGroup;
+			children = (
+				091AD31A1DD8059F00F444C6 /* TCEntertainmentViewController.h */,
+				091AD31B1DD8059F00F444C6 /* TCEntertainmentViewController.m */,
+			);
+			name = Entertainment;
+			sourceTree = "<group>";
+		};
 		091B11281DD40B0E00F1A584 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -654,6 +666,7 @@
 		7AAF236F1DCAE7EB002B81A5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				091AD3191DD8050F00F444C6 /* Entertainment */,
 				0921587A1DCD75990047A812 /* Restaurant */,
 				098BC2A11DCC5AED00532A4E /* RecommendBoutique */,
 				7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */,
@@ -983,6 +996,7 @@
 				092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */,
 				098BC2AD1DCC668900532A4E /* TCRecommendGoodCell.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
+				091AD31C1DD8059F00F444C6 /* TCEntertainmentViewController.m in Sources */,
 				7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */,
 				7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */,
 				7A6506E61DCA130200B0EDBF /* TCShippingAddressEditViewCell.m in Sources */,

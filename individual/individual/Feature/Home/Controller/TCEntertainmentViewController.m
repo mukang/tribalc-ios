@@ -1,43 +1,38 @@
 //
-//  TCRestaurantViewController.m
+//  TCEntertainmentViewController.m
 //  individual
 //
-//  Created by chen on 16/11/3.
+//  Created by WYH on 16/11/13.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCRestaurantViewController.h"
+#import "TCEntertainmentViewController.h"
 
-@interface TCRestaurantViewController () {
-    NSArray *restaurantArray;
+@interface TCEntertainmentViewController () {
+    UITableView *mTableView;
     UIView *backView;
+    NSArray *entertainmentArr;
     TCRestaurantSortView *sortView;
     TCRestaurantFilterView *filterView;
     TCRestaurantSelectButton *sortButton;
     TCRestaurantSelectButton *filterButton;
-    
 }
 
 @end
 
-@implementation TCRestaurantViewController
+@implementation TCEntertainmentViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     [self initialNavigationBar];
-
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
-    
-    [self initialNavigationBar];
     
     [self initialData];
     
     [self initialTableView];
-    
     
     backView = [[UIView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, self.view.height - 42)];
     backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
@@ -52,37 +47,45 @@
     filterView = [[TCRestaurantFilterView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, 105)];
     filterView.hidden = YES;
     [self.view addSubview:filterView];
-
+    
     
 }
 
 - (void)initialNavigationBar {
     
-
+    
     UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
-    [leftBtn addTarget:self action:@selector(touchBackBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [leftBtn addTarget:self action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     
-    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"餐饮"];
+    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"娱乐"];
     
     UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:@"res_location"];
-    [rightBtn addTarget:self action:@selector(touchLocationBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn addTarget:self action:@selector(touchLocationBtn) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
 }
 
 
+- (void)initialTableView {
+    mTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStylePlain];
+    mTableView.delegate = self;
+    mTableView.dataSource = self;
+    mTableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
+    [self.view addSubview:mTableView];
+}
+
 
 - (void)initialData {
     
-    NSDictionary *info1 = @{ @"name": @"麦当劳", @"location":@"朝阳区", @"type":@"快餐",  @"price":@"56", @"range":@"872m", @"room":@true, @"reserve":@false };
+    NSDictionary *info1 = @{ @"name": @"天午方收工陶艺", @"location":@"朝阳区", @"type":@"陶艺",  @"price":@"10000", @"range":@"872m", @"room":@true, @"reserve":@false };
     
-    NSDictionary *info2 = @{ @"name": @"魏蜀吴老火锅", @"location":@"北苑家园", @"type":@"火锅",  @"price":@"100", @"range":@"1872m", @"room":@true, @"reserve":@true };
+    NSDictionary *info2 = @{ @"name": @"自由人网咖", @"location":@"北苑家园", @"type":@"网吧",  @"price":@"100", @"range":@"1872m", @"room":@true, @"reserve":@true };
     
-    NSDictionary *info3 = @{ @"name": @"小院时光", @"location":@"朝阳区", @"type":@"创意菜",  @"price":@"35", @"range":@"72km" , @"room":@false, @"reserve":@true };
+    NSDictionary *info3 = @{ @"name": @"木子足疗", @"location":@"朝阳区", @"type":@"足疗",  @"price":@"35", @"range":@"72km" , @"room":@false, @"reserve":@true };
     
     NSDictionary *info4 = @{ @"name": @"雕刻时光咖啡馆", @"location":@"北苑家园", @"type":@"雕刻时光", @"price":@"86", @"range":@"272m", @"room":@true, @"reserve":@false };
     
-    NSDictionary *info5 = @{ @"name": @"三和屋(北苑店)", @"location":@"朝阳区", @"type":@"寿司", @"price":@"56", @"range":@"872m", @"room":@false, @"reserve":@false  };
+    NSDictionary *info5 = @{ @"name": @"万有引力电玩", @"location":@"朝阳区", @"type":@"电玩", @"price":@"2000", @"range":@"872m", @"room":@false, @"reserve":@false  };
     
     
     NSURL *url = [NSURL URLWithString:@""];
@@ -97,19 +100,10 @@
     [dataTask resume];
     
     
-    restaurantArray = @[ info1, info2, info3, info4, info5 ];
+    entertainmentArr = @[ info1, info2, info3, info4, info5 ];
     
 }
 
-
-
-- (void)initialTableView {
-    mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStylePlain];
-    mResaurantTableView.delegate = self;
-    mResaurantTableView.dataSource = self;
-    mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
-    [self.view addSubview:mResaurantTableView];
-}
 
 - (UITableViewCell *)getTopSelectViewWithTableView:(UITableView *)tableView {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
@@ -122,13 +116,13 @@
     sortButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(0, 0, self.view.width / 2, 42) AndText:@"智能排序" AndImgName:@"res_select_down"];
     [cell.contentView addSubview:sortButton];
     [sortButton addTarget:self action:@selector(touchSortBtn:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     
     filterButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(self.view.width / 2, 0, self.view.width / 2, 42) AndText:@"筛选" AndImgName:@"res_select_down"];
     [filterButton addTarget:self action:@selector(touchFilterBtn:) forControlEvents:UIControlEventTouchUpInside];
     [cell.contentView addSubview:filterButton];
     
-
+    
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width / 2 - 0.5, 14, 1, 46 - 16 * 2)];
     lineView.backgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1];
     [cell.contentView addSubview:lineView];
@@ -138,14 +132,13 @@
 
 
 
-
 - (TCRestaurantTableViewCell *)getTableViewCellInfoWithIndex:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView{
     TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
         cell = [[TCRestaurantTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSDictionary *resInfo = restaurantArray[indexPath.row - 1];
+    NSDictionary *resInfo = entertainmentArr[indexPath.row - 1];
     cell.resImgView.image = [UIImage imageNamed:@"null_length"];
     cell.nameLab.text = resInfo[@"name"];
     [cell setLocation:resInfo[@"location"]];
@@ -160,7 +153,7 @@
     }
     cell.rangeLab.text = resInfo[@"range"];
     
-
+    
     
     return cell;
 }
@@ -170,7 +163,7 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return restaurantArray.count + 1;
+    return entertainmentArr.count + 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -204,8 +197,8 @@
     if (indexPath.row != 0) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
-        [self.navigationController pushViewController:restaurantInfo animated:YES];
+//        TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
+//        [self.navigationController pushViewController:restaurantInfo animated:YES];
     }
 }
 
@@ -226,7 +219,14 @@
 }
 
 
-# pragma makr - click
+
+#pragma mark - click
+- (void)touchBackBtn {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)touchLocationBtn {
+    
+}
 - (void)touchBackBtn:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -250,7 +250,7 @@
         [sortView.distanceMinBtn addTarget:self action:@selector(touchSortByDistance) forControlEvents:UIControlEventTouchUpInside];
         [sortView.evaluateMaxBtn addTarget:self action:@selector(touchSortByEvaluate) forControlEvents:UIControlEventTouchUpInside];
         [sortView.popularityMaxBtn addTarget:self action:@selector(touchSortByPopularity) forControlEvents:UIControlEventTouchUpInside];
-
+        
     } else {
         [self hideViewWithButton:sortButton];
     }
@@ -321,24 +321,6 @@
     ///////////////
     
     [self hideViewWithButton:filterButton];
-}
-
-
-
-
-# pragma mark other
-- (void)getNewDataWithUrl:(NSURL *)url AndMessage:(NSString *)message {
-//    NSURL *url = [NSURL URLWithString:@""];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-//            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            ///////////
-        }
-    }];
-    [dataTask resume];
-
 }
 
 
@@ -421,15 +403,12 @@
     backView.hidden = YES;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 /*
 #pragma mark - Navigation

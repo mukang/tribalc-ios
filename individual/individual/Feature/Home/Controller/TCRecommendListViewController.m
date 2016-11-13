@@ -24,6 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initialNavigationBar];
+
     
     self.view.backgroundColor = [UIColor whiteColor];
 

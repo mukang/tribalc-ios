@@ -34,8 +34,19 @@
     [recommendBtn addTarget:self action:@selector(goRecommendShoppingList:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:recommendBtn];
     
+    UIButton *entertainmentBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 200, 100, 60)];
+    [entertainmentBtn setTitle:@"娱乐" forState:UIControlStateNormal];
+    entertainmentBtn.backgroundColor = [UIColor blueColor];
+    [entertainmentBtn addTarget:self action:@selector(goentertainmentList:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:entertainmentBtn];
+    
 }
 
+- (void)goentertainmentList:(id)sender {
+    TCEntertainmentViewController *entertainment = [[TCEntertainmentViewController alloc] init];
+    entertainment.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:entertainment animated:YES];
+}
 
 - (void)goRecommendShoppingList :(id)sender
 {
