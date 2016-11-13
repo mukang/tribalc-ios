@@ -7,10 +7,12 @@
 //
 
 #import "TCRecommendInfoViewController.h"
+#import "TCImgPageControl.h"
 
 @interface TCRecommendInfoViewController () {
     NSDictionary *goodInfoDic;
     UIScrollView *mScrollView;
+    TCImgPageControl *imgPageControl;
 }
 
 @end
@@ -28,7 +30,6 @@
     // Do any additional setup after loading the view.
     
     [self initGoodInfoData];
-//    [self initNavigationBar];
     
     [self initScrollView];
     
@@ -57,7 +58,7 @@
     goodInfoDic = @{ @"title": @"Nike耐克2016新款多划算的还是动画设2计", @"price":@"465",
                      @"size":@[@"2"], @"logoImg":@"", @"brand":@"品牌", @"evaluate":@"3",
                      @"sales":@"18.6万", @"profit":@"65573", @"phone":@"732173", @"image_text":@"https://www.baidu.com/"
-                     ,@"parameters":@"https://ssl.zc.qq.com/chs/", @"image":@[@"good_image", @"good_image", @"good_image", @"good_image"]
+                     ,@"parameters":@"https://ssl.zc.qq.com/chs/", @"image":@[@"good_image", @"good_image", @"good_image", @"good_image", @"null", @"null", @"null", @"null"]
                      };
     
 }
@@ -76,10 +77,6 @@
     barImageView.backgroundColor = [UIColor whiteColor];
     barImageView.alpha = 0;
 
-//    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 23, 23)];
-//    backBtn.layer.cornerRadius = 11.5;
-//    backBtn.backgroundColor = [UIColor blackColor];
-//    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     UIButton *backBtn = [self getBackButton];
     [backBtn addTarget:self action:@selector(touchBackButton) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
@@ -106,26 +103,16 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
-    NSArray *imageArr = goodInfoDic[@"image"];
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.itemSize = CGSizeMake(self.view.width, view.frame.size.height);
-    layout.minimumLineSpacing = 0.0f;
+    UICollectionView *imageCollectionView = [self getTitleImageViewWithFrame:frame];
     
-    UICollectionView *imageCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, view.width, view.height) collectionViewLayout:layout];
-    imageCollectionView.delegate = self;
-    imageCollectionView.dataSource = self;
-    imageCollectionView.pagingEnabled = YES;
-    imageCollectionView.showsHorizontalScrollIndicator = NO;
-    imageCollectionView.showsVerticalScrollIndicator = NO;
-    [imageCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
-    imageCollectionView.contentSize = CGSizeMake(imageArr.count * view.width, view.height);
-    imageCollectionView.contentOffset = CGPointMake(0, 0);
     [view addSubview:imageCollectionView];
     
-//    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"good_image"]];
-//    [view addSubview:imgView];
-    
+    NSArray *imgArr = goodInfoDic[@"image"];
+    imgPageControl = [[TCImgPageControl alloc] initWithFrame:CGRectMake(0, view.height - 20, self.view.width, 20)];
+    imgPageControl.numberOfPages = imgArr.count;
+    imgPageControl.userInteractionEnabled = NO;
+    imgPageControl.currentPage = 0;
+    [view addSubview:imgPageControl];
     
     return view;
 }
@@ -218,7 +205,25 @@
 
 #pragma mark - Component UI
 
+- (UICollectionView *)getTitleImageViewWithFrame:(CGRect)frame {
+    NSArray *imageArr = goodInfoDic[@"image"];
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    layout.itemSize = CGSizeMake(self.view.width, frame.size.height);
+    layout.minimumLineSpacing = 0.0f;
+    
+    UICollectionView *imageCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) collectionViewLayout:layout];
+    imageCollectionView.delegate = self;
+    imageCollectionView.dataSource = self;
+    imageCollectionView.pagingEnabled = YES;
+    imageCollectionView.showsHorizontalScrollIndicator = NO;
+    imageCollectionView.showsVerticalScrollIndicator = NO;
+    [imageCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    imageCollectionView.contentSize = CGSizeMake(imageArr.count * frame.size.width, frame.size.height);
+    imageCollectionView.contentOffset = CGPointMake(0, 0);
 
+    return imageCollectionView;
+}
 
 - (UISegmentedControl *)getSegmentControlWithFrame:(CGRect)frame {
     NSArray *segmentArr = @[ @"图文详情", @"产品参数" ];
@@ -299,6 +304,13 @@
     imageView.frame = CGRectMake(0, 0, collectionView.width, collectionView.height);
     [cell.contentView addSubview:imageView];
     return cell;
+}
+
+#pragma mark - UIScrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    int index = scrollView.contentOffset.x / self.view.width;
+    imgPageControl.currentPage = index;
 }
 
 #pragma mark - click
