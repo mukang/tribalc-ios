@@ -10,8 +10,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-@interface TCLocationViewController : UIViewController  {
+@interface TCLocationViewController : UIViewController <MKMapViewDelegate> {
     MKMapView *mMapView;
+    CLLocationManager *mLocationManager;
 }
 
 @end

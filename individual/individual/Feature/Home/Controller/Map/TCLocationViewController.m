@@ -19,10 +19,24 @@
     // Do any additional setup after loading the view.
     
     mMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    mMapView.delegate = self;
     [self.view addSubview:mMapView];
     
+    mLocationManager = [[CLLocationManager alloc] init];
+    if ([CLLocationManager locationServicesEnabled] || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [mLocationManager requestWhenInUseAuthorization];
+    }
+    
+    mMapView.userTrackingMode = MKUserTrackingModeFollow;
+    mMapView.mapType = MKMapTypeStandard;
     
 }
+
+#pragma mark - delegate
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    NSLog(@"经度%f 纬度%f", userLocation.location.coordinate.longitude, userLocation.location.coordinate.latitude);
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
