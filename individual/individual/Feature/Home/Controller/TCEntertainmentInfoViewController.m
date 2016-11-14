@@ -9,10 +9,10 @@
 #import "TCEntertainmentInfoViewController.h"
 
 @interface TCEntertainmentInfoViewController (){
-    UIImageView *restaurantInfoLogoImageView;
+    UIImageView *entertainmentInfoLogoImageView;
     TCRestaurantLogoView *logoView;
     UIImageView *barImageView;
-    NSDictionary *restaurantInfoDic;
+    NSDictionary *entertainmentInfoDic;
 }
 
 
@@ -41,17 +41,17 @@
     
     [self createBottomButton];
     
-    UIView *resBaseInfoView = [self createResBaseInfoViewWithFrame:CGRectMake(0,restaurantInfoLogoImageView.y + restaurantInfoLogoImageView.height, self.view.frame.size.width, 125)];
+    UIView *resBaseInfoView = [self createResBaseInfoViewWithFrame:CGRectMake(0,entertainmentInfoLogoImageView.y + entertainmentInfoLogoImageView.height, self.view.frame.size.width, 125)];
     resBaseInfoView.backgroundColor = [UIColor whiteColor];
     [mScrollView addSubview:resBaseInfoView];
     
     UIView *addressAndPhoneView = [self createAddressAndPhoneViewWithFrame:CGRectMake(0, resBaseInfoView.y + resBaseInfoView.height, self.view.width, 82)];
     [mScrollView addSubview:addressAndPhoneView];
     
-    UIView *recommendedReasonView = [self createTextViewWithFrame:CGRectMake(0, addressAndPhoneView.y + addressAndPhoneView.height, self.view.width, 175) AndTitle:@"推荐理由" AndText:restaurantInfoDic[@"recommend"] AndimgName:@"res_recommend"];
+    UIView *recommendedReasonView = [self createTextViewWithFrame:CGRectMake(0, addressAndPhoneView.y + addressAndPhoneView.height, self.view.width, 175) AndTitle:@"推荐理由" AndText:entertainmentInfoDic[@"recommend"] AndimgName:@"res_recommend"];
     [mScrollView addSubview:recommendedReasonView];
     
-    UIView *restTopicView = [self createTextViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, 175) AndTitle:@"娱乐话题" AndText:restaurantInfoDic[@"topic"] AndimgName:@"res_topic"];
+    UIView *restTopicView = [self createTextViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, 175) AndTitle:@"娱乐话题" AndText:entertainmentInfoDic[@"topic"] AndimgName:@"res_topic"];
     [mScrollView addSubview:restTopicView];
     
     
@@ -89,7 +89,7 @@
 }
 
 - (void)initRestaurantInfo {
-    restaurantInfoDic = @{
+    entertainmentInfoDic = @{
                           @"img":@"restaurantInfoLogo", @"name":@"天午方手工陶艺", @"type":@"陶艺", @"location":@"朝阳区", @"range":@"1006.5km",
                           @"price":@"22169元/人", @"collection":@"166321653", @"address":@"北京市朝阳区北苑大姐大小区", @"phone":@"1800000000", @"recommend":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"topic":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"wifi":@true, @"time":@"11:00-23:00", @"reserve":@true, @"room":@true, @"prompt":@[@"wifi", @"pack"]
                           };
@@ -102,36 +102,36 @@
     mScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 45)];
     [self.view addSubview:mScrollView];
     
-    UIImage *restaurantInfoLogoImage = [UIImage imageNamed:restaurantInfoDic[@"img"]];
-    restaurantInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, 270)];
-    restaurantInfoLogoImageView.image = restaurantInfoLogoImage;
-    restaurantInfoLogoImageView.backgroundColor = [UIColor lightGrayColor];
+    UIImage *restaurantInfoLogoImage = [UIImage imageNamed:entertainmentInfoDic[@"img"]];
+    entertainmentInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, 270)];
+    entertainmentInfoLogoImageView.image = restaurantInfoLogoImage;
+    entertainmentInfoLogoImageView.backgroundColor = [UIColor lightGrayColor];
     
-    float logoViewRadius = restaurantInfoLogoImageView.frame.size.height * 0.12;
-    logoView = [[TCRestaurantLogoView alloc] initWithFrame:CGRectMake(restaurantInfoLogoImageView.width / 2 - logoViewRadius, restaurantInfoLogoImageView.height - logoViewRadius, logoViewRadius * 2, logoViewRadius * 2) AndTitle:restaurantInfoDic[@"name"]];
-    [restaurantInfoLogoImageView addSubview:logoView];
+    float logoViewRadius = entertainmentInfoLogoImageView.frame.size.height * 0.12;
+    logoView = [[TCRestaurantLogoView alloc] initWithFrame:CGRectMake(entertainmentInfoLogoImageView.width / 2 - logoViewRadius, entertainmentInfoLogoImageView.height - logoViewRadius, logoViewRadius * 2, logoViewRadius * 2) AndTitle:entertainmentInfoDic[@"name"]];
+    [entertainmentInfoLogoImageView addSubview:logoView];
     
     mScrollView.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1];
     
-    [mScrollView addSubview:restaurantInfoLogoImageView];
+    [mScrollView addSubview:entertainmentInfoLogoImageView];
     
 }
 
 
 - (UIView *)createResBaseInfoViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UILabel *titleLab = [TCComponent createCenterLabWithFrame:CGRectMake(0, 22.5, frame.size.width, 22.5) AndFontSize:22.5 AndTitle:restaurantInfoDic[@"name"]];
+    UILabel *titleLab = [TCComponent createCenterLabWithFrame:CGRectMake(0, 22.5, frame.size.width, 22.5) AndFontSize:22.5 AndTitle:entertainmentInfoDic[@"name"]];
     [view addSubview:titleLab];
     
     UIView *typeAndAdressView = [self getRestTypeAndAddressInfoWithFrame:CGRectMake(0, titleLab.y + titleLab.height + 16, frame.size.width, 14)];
     [view addSubview:typeAndAdressView];
     
-    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(0, typeAndAdressView.y + typeAndAdressView.height + 18, frame.size.width / 2 - 20, 11) AndFontSize:11 AndTitle:restaurantInfoDic[@"price"] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(0, typeAndAdressView.y + typeAndAdressView.height + 18, frame.size.width / 2 - 20, 11) AndFontSize:11 AndTitle:entertainmentInfoDic[@"price"] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     priceLab.textAlignment = NSTextAlignmentRight;
     [view addSubview:priceLab];
     
-//    UILabel *collectionLab = [TCComponent createLabelWithFrame:CGRectMake(frame.size.width / 2, priceLab.y, frame.size.width / 2, 11) AndFontSize:11 AndTitle:[NSString stringWithFormat:@"❤%@已收藏",restaurantInfoDic[@"collection"]] AndTextColor:priceLab.textColor];
-    UIView *collectionView = [self getCollectionViewWithFrame:CGRectMake(frame.size.width / 2, priceLab.y, frame.size.width / 2, 11) AndNumber:restaurantInfoDic[@"collection"]];
+//    UILabel *collectionLab = [TCComponent createLabelWithFrame:CGRectMake(frame.size.width / 2, priceLab.y, frame.size.width / 2, 11) AndFontSize:11 AndTitle:[NSString stringWithFormat:@"❤%@已收藏",entertainmentInfoDic[@"collection"]] AndTextColor:priceLab.textColor];
+    UIView *collectionView = [self getCollectionViewWithFrame:CGRectMake(frame.size.width / 2, priceLab.y, frame.size.width / 2, 11) AndNumber:entertainmentInfoDic[@"collection"]];
     [view addSubview:collectionView];
     
     return view;
@@ -145,10 +145,10 @@
     [view addSubview:topLine];
     [view addSubview:downLine];
     
-    UILabel *addressLab = [TCComponent createLabelWithFrame:CGRectMake(20, 19, view.width - 20 - 16, 14) AndFontSize:14 AndTitle:restaurantInfoDic[@"address"]];
+    UILabel *addressLab = [TCComponent createLabelWithFrame:CGRectMake(20, 19, view.width - 20 - 16, 14) AndFontSize:14 AndTitle:entertainmentInfoDic[@"address"]];
     [view addSubview:addressLab];
     
-    UILabel *phoneLab = [TCComponent createLabelWithFrame:CGRectMake(20, view.height - 19 - 14, addressLab.width, addressLab.height) AndFontSize:14 AndTitle:restaurantInfoDic[@"phone"]];
+    UILabel *phoneLab = [TCComponent createLabelWithFrame:CGRectMake(20, view.height - 19 - 14, addressLab.width, addressLab.height) AndFontSize:14 AndTitle:entertainmentInfoDic[@"phone"]];
     [view addSubview:phoneLab];
     
     UIButton *phoneBtn = [TCComponent createImageBtnWithFrame:CGRectMake(view.width - 20 - 15, addressLab.y, 15, 15) AndImageName:@"res_phone"];
@@ -208,7 +208,7 @@
     [allImgView setOrigin:CGPointMake(self.view.frame.size.width / 2 - allImgView.width / 2, titleView.y + titleView.height + 13)];
     [view addSubview:allImgView];
     
-    NSString *time = [NSString stringWithFormat:@"每天 %@",restaurantInfoDic[@"time"]];
+    NSString *time = [NSString stringWithFormat:@"每天 %@",entertainmentInfoDic[@"time"]];
     UILabel *timeLab = [TCComponent createLabelWithFrame:CGRectMake(0, allImgView.y + allImgView.height + 12, self.view.frame.size.width, 13) AndFontSize:13 AndTitle:time AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     timeLab.textAlignment = NSTextAlignmentCenter;
     [view addSubview:timeLab];
@@ -260,7 +260,7 @@
 
 - (UIView *)getPromptImageView {
     UIView *view = [[UIView alloc] init];
-    NSArray *promptArr = restaurantInfoDic[@"prompt"];
+    NSArray *promptArr = entertainmentInfoDic[@"prompt"];
     for (int i = 0; i < promptArr.count; i++) {
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * 27 + 35, 0, 27, 27)];
         if (i == 0) {
@@ -324,7 +324,7 @@
 
 - (UIView *)getRestTypeAndAddressInfoWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UILabel *locationLab = [TCComponent createLabelWithText:restaurantInfoDic[@"location"] AndFontSize:14];
+    UILabel *locationLab = [TCComponent createLabelWithText:entertainmentInfoDic[@"location"] AndFontSize:14];
     [locationLab setOrigin:CGPointMake(frame.size.width / 2 - locationLab.width / 2, 0)];
     [view addSubview:locationLab];
     
@@ -334,11 +334,11 @@
     UIView *rightLine = [TCComponent createGrayLineWithFrame:CGRectMake(locationLab.x + locationLab.width + 8, locationLab.y, 0.5, locationLab.height)];
     [view addSubview:rightLine];
     
-    UILabel *typeLab = [TCComponent createLabelWithFrame:CGRectMake(0, locationLab.y, leftLine.x - 8, locationLab.height) AndFontSize:14 AndTitle:restaurantInfoDic[@"type"]];
+    UILabel *typeLab = [TCComponent createLabelWithFrame:CGRectMake(0, locationLab.y, leftLine.x - 8, locationLab.height) AndFontSize:14 AndTitle:entertainmentInfoDic[@"type"]];
     typeLab.textAlignment = NSTextAlignmentRight;
     [view addSubview:typeLab];
     
-    UILabel *rangeLab = [TCComponent createLabelWithFrame:CGRectMake(rightLine.x + 0.5 + 8, locationLab.y, frame.size.width - rightLine.x + 0.5 + 8, locationLab.height) AndFontSize:14 AndTitle:restaurantInfoDic[@"range"]];
+    UILabel *rangeLab = [TCComponent createLabelWithFrame:CGRectMake(rightLine.x + 0.5 + 8, locationLab.y, frame.size.width - rightLine.x + 0.5 + 8, locationLab.height) AndFontSize:14 AndTitle:entertainmentInfoDic[@"range"]];
     rangeLab.textAlignment = NSTextAlignmentLeft;
     [view addSubview:rangeLab];
     
@@ -417,8 +417,8 @@
         double width = self.view.frame.size.width * number;
         double logoRadius = height * 0.12;
         
-        [restaurantInfoLogoImageView setFrame:CGRectMake(self.view.frame.size.width / 2 - width / 2, point.y, width, height)];
-        [logoView setNewFrame:CGRectMake(restaurantInfoLogoImageView.frame.size.width / 2 - logoRadius, restaurantInfoLogoImageView.frame.size.height - logoRadius, logoRadius * 2, logoRadius * 2)];
+        [entertainmentInfoLogoImageView setFrame:CGRectMake(self.view.frame.size.width / 2 - width / 2, point.y, width, height)];
+        [logoView setNewFrame:CGRectMake(entertainmentInfoLogoImageView.frame.size.width / 2 - logoRadius, entertainmentInfoLogoImageView.frame.size.height - logoRadius, logoRadius * 2, logoRadius * 2)];
         
     }
 }
