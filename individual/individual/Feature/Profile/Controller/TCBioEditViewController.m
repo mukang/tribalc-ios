@@ -12,6 +12,12 @@
 #import "TCBioEditGenderView.h"
 #import "TCBioEditAffectionView.h"
 
+#import "TCBuluoApi.h"
+
+#import "MBProgressHUD+Category.h"
+
+static NSInteger const kMaxLength = 8;
+
 @interface TCBioEditViewController () <UITextFieldDelegate, TCBioEditViewDelegate, TCBioEditGenderViewDelegate, TCBioEditAffectionViewDelegate>
 
 @property (weak, nonatomic) TCBioEditView *editNickView;
@@ -80,11 +86,17 @@
 - (void)registerNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
+    if (self.bioEditType == TCBioEditTypeNick) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:nil];
+    }
 }
 
 - (void)removeNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    if (self.bioEditType == TCBioEditTypeNick) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    }
 }
 
 #pragma mark - actions
@@ -128,6 +140,16 @@
     self.editBirthdateView.textField.text = [dateFormatter stringFromDate:datePicker.date];
 }
 
+- (void)handleTextFieldTextDidChangeNotification:(NSNotification *)notification {
+    UITextField *textField = (UITextField *)notification.object;
+    UITextRange *markedRange = [textField markedTextRange];
+    NSInteger markedTextLength = [textField offsetFromPosition:markedRange.start toPosition:markedRange.end];
+    if (markedTextLength == 0 && textField.text.length > kMaxLength) {
+        NSRange range = [textField.text rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, kMaxLength)];
+        textField.text = [textField.text substringWithRange:range];
+    }
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -140,7 +162,9 @@
 #pragma mark - TCBioEditViewDelegate
 
 - (void)didClickCommitButtonInBioEditView:(TCBioEditView *)view {
-    
+    if ([view isEqual:self.editNickView]) {
+//        [[TCBuluoApi api] changeUserNickname:<#(NSString *)#> result:<#^(BOOL success, NSError *error)resultBlock#>]
+    }
 }
 
 - (void)didClickCancelButtonInBioEditView:(TCBioEditView *)view {
@@ -179,6 +203,25 @@
         weakSelf.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
     } completion:^(BOOL finished) {
         [weakSelf dismissViewControllerAnimated:NO completion:nil];
+    }];
+}
+
+#pragma mark - Networking 
+
+- (void)handleChangeUserNick {
+    NSString *nickname = self.editNickView.textField.text;
+    if (nickname.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请您输入昵称"];
+        return;
+    }
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] changeUserNickname:nickname result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"昵称修改失败!"];
+        }
     }];
 }
 

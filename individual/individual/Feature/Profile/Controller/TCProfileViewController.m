@@ -29,7 +29,9 @@ TCProfileBgImageChangeViewDelegate,
 TCPhotoPickerDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
+@property (weak, nonatomic) TCProfileHeaderView *headerView;
 @property (copy, nonatomic) NSArray *fodderArray;
+@property (strong, nonatomic) TCUserInfo *userInfo;
 
 @property (nonatomic) BOOL needsLightContentStatusBar;
 
@@ -58,6 +60,8 @@ TCPhotoPickerDelegate>
     
     [self setupNavBar];
     [self setupSubviews];
+    [self updateHeaderView];
+    [self registerNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -72,6 +76,10 @@ TCPhotoPickerDelegate>
     } else {
         // TODO:
     }
+}
+
+- (void)dealloc {
+    [self removeNotifications];
 }
 
 - (void)setupNavBar {
@@ -107,11 +115,33 @@ TCPhotoPickerDelegate>
     TCProfileHeaderView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TCProfileHeaderView" owner:nil options:nil] firstObject];
     headerView.delegate = self;
     tableView.tableHeaderView = headerView;
+    self.headerView = headerView;
     
     UINib *nib = [UINib nibWithNibName:@"TCProfileViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"TCProfileViewCell"];
     nib = [UINib nibWithNibName:@"TCProfileProcessViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"TCProfileProcessViewCell"];
+}
+
+- (void)updateHeaderView {
+    if ([[TCBuluoApi api] needLogin]) {
+        self.headerView.loginButton.hidden = NO;
+        self.headerView.nickBgView.hidden = YES;
+        [self.headerView.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
+//        [self.headerView.bgImageView setImage:[UIImage imageNamed:@""]];
+    } else {
+        self.headerView.loginButton.hidden = YES;
+        self.headerView.nickBgView.hidden = NO;
+        TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+        self.headerView.nickLabel.text = userInfo.nickname;
+        if (userInfo.picture) {
+            
+        } else {
+            [self.headerView.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
+        }
+        
+        // TODO:头像和背景图片
+    }
 }
 
 #pragma mark - Navigation Bar
@@ -256,9 +286,13 @@ TCPhotoPickerDelegate>
 #pragma mark - TCProfileHeaderViewDelegate
 
 - (void)didTapBioInProfileHeaderView:(TCProfileHeaderView *)view {
-    TCBiographyViewController *vc = [[TCBiographyViewController alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    if ([[TCBuluoApi api] needLogin]) {
+        [self showLoginViewController];
+    } else {
+        TCBiographyViewController *vc = [[TCBiographyViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)didClickCardButtonInProfileHeaderView:(TCProfileHeaderView *)view {
@@ -344,6 +378,25 @@ TCPhotoPickerDelegate>
     }];
 }
 
+#pragma mark - Show Login View Controller
+
+- (void)showLoginViewController {
+    TCLoginViewController *vc = [[TCLoginViewController alloc] initWithNibName:@"TCLoginViewController" bundle:[NSBundle mainBundle]];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+#pragma mark - Notifications 
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidLogin:) name:TCBuluoApiNotificationUserDidLogin object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidLogout:) name:TCBuluoApiNotificationUserDidLogout object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoDidUpdate:) name:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Actions
 
 - (void)handleClickQRCodeButton:(UIBarButtonItem *)sender {
@@ -352,12 +405,22 @@ TCPhotoPickerDelegate>
 
 - (void)handleClickSettingButton:(UIBarButtonItem *)sender {
     TCLog(@"点击了设置按钮");
-    TCLoginViewController *vc = [[TCLoginViewController alloc] initWithNibName:@"TCLoginViewController" bundle:[NSBundle mainBundle]];
-    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)handleClickMessageButton:(UIBarButtonItem *)sender {
     TCLog(@"点击了消息按钮");
+}
+
+- (void)handleUserDidLogin:(id)sender {
+    
+}
+
+- (void)handleUserDidLogout:(id)sender {
+    
+}
+
+- (void)handleUserInfoDidUpdate:(id)sender {
+    [self updateHeaderView];
 }
 
 #pragma mark - Override Methods

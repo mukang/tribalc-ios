@@ -11,7 +11,7 @@
 #import "TCUserSensitiveInfo.h"
 
 /** 已登录用户的session */
-@interface TCUserSession : NSObject <NSCoding>
+@interface TCUserSession : NSObject 
 
 /** 用户ID */
 @property (copy, nonatomic) NSString *assigned;

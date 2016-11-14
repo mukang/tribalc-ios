@@ -18,9 +18,12 @@
 
 #import "UIImage+Category.h"
 
+#import "TCBuluoApi.h"
+
 @interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource, TCCityPickerViewDelegate>
 
 @property (copy, nonatomic) NSArray *biographyTitles;
+@property (strong, nonatomic) TCUserInfo *userInfo;
 @property (copy, nonatomic) NSArray *bioDetailsTitles;
 
 @property (weak, nonatomic) UIView *pickerBgView;
@@ -33,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
     
     [self setupNavBar];
     [self setupSubviews];
@@ -59,6 +63,46 @@
     [tableView registerNib:nib forCellReuseIdentifier:@"TCBiographyAvatarViewCell"];
     
     self.bioDetailsTitles = @[@[@"", @"瓜皮", @"女", @"1995年5月20日", @"单身"], @[@"15967897508", @"北京朝阳区", @"吉林省长春市九台区瓜皮小区"]];
+}
+
+- (void)fetchUserInfo {
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+    TCUserSensitiveInfo *userSensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
+    NSString *nickname = userInfo.nickname;
+    NSString *genderStr = nil;
+    switch (userInfo.gender) {
+        case TCUserGenderMale:
+            genderStr = @"男";
+            break;
+        case TCUserGenderFemale:
+            genderStr = @"女";
+            break;
+        default:
+            break;
+    }
+    NSDate *birthDate = [NSDate dateWithTimeIntervalSince1970:(userInfo.birthday / 1000)];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy年MM月dd日";
+    NSString *birthDateStr = [dateFormatter stringFromDate:birthDate];
+    NSString *emotionStateStr = nil;
+    switch (userInfo.emotionState) {
+        case TCUserEmotionStateMarried:
+            emotionStateStr = @"已婚";
+            break;
+        case TCUserEmotionStateSingle:
+            emotionStateStr = @"单身";
+            break;
+        case TCUserEmotionStateLove:
+            emotionStateStr = @"热恋";
+            break;
+        default:
+            break;
+    }
+    NSString *phone = userSensitiveInfo.phone;
+    NSString *address = [NSString stringWithFormat:@"%@%@%@", userInfo.province, userInfo.city, userInfo.district];
+//    NSString 
+    
+    self.bioDetailsTitles = @[@[@"", userInfo.nickname, userInfo.sex, @"1995年5月20日", @"单身"], @[@"15967897508", @"北京朝阳区", @"吉林省长春市九台区瓜皮小区"]];
 }
 
 #pragma mark - Status Bar

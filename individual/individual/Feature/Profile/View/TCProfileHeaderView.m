@@ -7,6 +7,7 @@
 //
 
 #import "TCProfileHeaderView.h"
+#import "TCUserInfo.h"
 
 @implementation TCProfileHeaderView
 
@@ -25,6 +26,8 @@
     self.avatarImageView.layer.masksToBounds = YES;
     self.wantGradeButton.layer.cornerRadius = 7.5;
     self.wantGradeButton.layer.masksToBounds = YES;
+    
+    self.bgImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBio:)];
     self.bgImageView.userInteractionEnabled = YES;

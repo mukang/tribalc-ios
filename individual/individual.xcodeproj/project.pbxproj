@@ -816,8 +816,8 @@
 				TargetAttributes = {
 					7A9CCECB1DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = VYB975MGFB;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 452XNHBVYZ;
+						ProvisioningStyle = Manual;
 					};
 					7A9CCEE41DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
@@ -1152,7 +1152,7 @@
 			baseConfigurationReference = 6119E9AF010F0BE87CA35612 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VYB975MGFB;
+				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
 				INFOPLIST_FILE = individual/Info.plist;
@@ -1185,8 +1185,10 @@
 					"-framework",
 					"\"UIKit\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.buluogs.individual;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f95f115f-8aa2-4251-8ab1-c8c0c7ed9e3c";
+				PROVISIONING_PROFILE_SPECIFIER = "Individual Development By mukang";
 			};
 			name = Debug;
 		};
@@ -1195,7 +1197,7 @@
 			baseConfigurationReference = FDF9BE3739BA95056A69F363 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VYB975MGFB;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
 				INFOPLIST_FILE = individual/Info.plist;
@@ -1228,7 +1230,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.buluogs.individual;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

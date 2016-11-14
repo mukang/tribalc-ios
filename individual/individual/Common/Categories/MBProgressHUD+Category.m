@@ -12,7 +12,10 @@
 
 + (void)showHUDWithMessage:(NSString *)message {
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:keyWindow animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD HUDForView:keyWindow];
+    if (!hud) {
+        hud = [MBProgressHUD showHUDAddedTo:keyWindow animated:YES];
+    }
     hud.mode = MBProgressHUDModeText;
     hud.label.text = message;
     [hud hideAnimated:YES afterDelay:2.0];
