@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TCUserChippingAddress.h"
 
 @interface TCUserSensitiveInfo : NSObject
 
@@ -18,5 +19,7 @@
 @property (copy, nonatomic) NSString *idNo;
 /** 默认地址ID */
 @property (copy, nonatomic) NSString *addressID;
+/** 默认收货地址 */
+@property (strong, nonatomic) TCUserChippingAddress *chippingAddress;
 
 @end

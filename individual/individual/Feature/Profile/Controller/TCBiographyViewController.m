@@ -23,8 +23,9 @@
 @interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource, TCCityPickerViewDelegate>
 
 @property (copy, nonatomic) NSArray *biographyTitles;
-@property (strong, nonatomic) TCUserInfo *userInfo;
 @property (copy, nonatomic) NSArray *bioDetailsTitles;
+
+@property (weak, nonatomic) UITableView *tableView;
 
 @property (weak, nonatomic) UIView *pickerBgView;
 @property (weak, nonatomic) TCCityPickerView *cityPickerView;
@@ -36,10 +37,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
     
     [self setupNavBar];
     [self setupSubviews];
+    [self fetchUserInfo];
 }
 
 - (void)setupNavBar {
@@ -56,20 +57,19 @@
     tableView.dataSource = self;
     tableView.delegate = self;
     [self.view addSubview:tableView];
+    self.tableView = tableView;
     
     UINib *nib = [UINib nibWithNibName:@"TCBiographyViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"TCBiographyViewCell"];
     nib = [UINib nibWithNibName:@"TCBiographyAvatarViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"TCBiographyAvatarViewCell"];
-    
-    self.bioDetailsTitles = @[@[@"", @"瓜皮", @"女", @"1995年5月20日", @"单身"], @[@"15967897508", @"北京朝阳区", @"吉林省长春市九台区瓜皮小区"]];
 }
 
 - (void)fetchUserInfo {
     TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
     TCUserSensitiveInfo *userSensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
-    NSString *nickname = userInfo.nickname;
-    NSString *genderStr = nil;
+    NSString *nickname = userInfo.nickname ?: @"";
+    NSString *genderStr = @"";
     switch (userInfo.gender) {
         case TCUserGenderMale:
             genderStr = @"男";
@@ -80,11 +80,14 @@
         default:
             break;
     }
-    NSDate *birthDate = [NSDate dateWithTimeIntervalSince1970:(userInfo.birthday / 1000)];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yyyy年MM月dd日";
-    NSString *birthDateStr = [dateFormatter stringFromDate:birthDate];
-    NSString *emotionStateStr = nil;
+    NSString *birthDateStr = @"";
+    if (!userInfo.birthday) {
+        NSDate *birthDate = [NSDate dateWithTimeIntervalSince1970:(userInfo.birthday / 1000)];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"yyyy年MM月dd日";
+        birthDateStr = [dateFormatter stringFromDate:birthDate];
+    }
+    NSString *emotionStateStr = @"";
     switch (userInfo.emotionState) {
         case TCUserEmotionStateMarried:
             emotionStateStr = @"已婚";
@@ -98,11 +101,19 @@
         default:
             break;
     }
-    NSString *phone = userSensitiveInfo.phone;
-    NSString *address = [NSString stringWithFormat:@"%@%@%@", userInfo.province, userInfo.city, userInfo.district];
-//    NSString 
+    NSString *phone = userSensitiveInfo.phone ?: @"";
+    NSString *province = userInfo.province ?: @"";
+    NSString *city = userInfo.city ?: @"";
+    NSString *district = userInfo.district ?: @"";
+    NSString *address = [NSString stringWithFormat:@"%@%@%@", province, city, district];
+    NSString *chippingAddress = @"";
+    if (userSensitiveInfo.chippingAddress) {
+        chippingAddress = [NSString stringWithFormat:@"%@%@%@%@", userSensitiveInfo.chippingAddress.province, userSensitiveInfo.chippingAddress.city, userSensitiveInfo.chippingAddress.district, userSensitiveInfo.chippingAddress.address];
+    }
     
-    self.bioDetailsTitles = @[@[@"", userInfo.nickname, userInfo.sex, @"1995年5月20日", @"单身"], @[@"15967897508", @"北京朝阳区", @"吉林省长春市九台区瓜皮小区"]];
+    self.bioDetailsTitles = @[@[@"", nickname, genderStr, birthDateStr, emotionStateStr], @[phone, address, chippingAddress]];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Status Bar

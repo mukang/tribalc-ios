@@ -7,6 +7,7 @@
 //
 
 #import "TCUserChippingAddress.h"
+#import "NSObject+TCModel.h"
 
 @implementation TCUserChippingAddress
 

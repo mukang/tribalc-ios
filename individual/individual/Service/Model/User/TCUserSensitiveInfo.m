@@ -11,4 +11,10 @@
 
 @implementation TCUserSensitiveInfo
 
++ (NSDictionary *)objectClassInDictionary {
+    return @{
+             @"chippingAddress": [TCUserChippingAddress class]
+             };
+}
+
 @end

@@ -121,6 +121,19 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             TCUserSession *userSession = self.currentUserSession;
             userSession.userSensitiveInfo = userSensitiveInfo;
             [self setUserSession:userSession];
+            if (userSensitiveInfo.addressID) {
+                [self fetchUserDefaultChippingAddressWithAddressID:userSensitiveInfo.addressID];
+            }
+        }
+    }];
+}
+
+- (void)fetchUserDefaultChippingAddressWithAddressID:(NSString *)addressID {
+    [self fetchUserChippingAddress:addressID result:^(TCUserChippingAddress *chippingAddress, NSError *error) {
+        if (chippingAddress) {
+            TCUserSession *userSession = self.currentUserSession;
+            userSession.userSensitiveInfo.chippingAddress = chippingAddress;
+            [self setUserSession:userSession];
         }
     }];
 }
