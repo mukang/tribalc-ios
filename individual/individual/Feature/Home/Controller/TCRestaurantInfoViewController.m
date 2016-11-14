@@ -57,6 +57,7 @@
     [mScrollView addSubview:promptView];
     
     UIButton *phoneBtn = [self createPhoneCustomViewWithFrame:CGRectMake(0, promptView.y + promptView.height + 7, self.view.frame.size.width, 45)];
+    [phoneBtn addTarget:self action:@selector(touchCallCustomerService) forControlEvents:UIControlEventTouchUpInside];
     [mScrollView addSubview:phoneBtn];
     
     mScrollView.contentSize = CGSizeMake(self.view.width, phoneBtn.y + phoneBtn.height + 8);
@@ -243,7 +244,11 @@
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45, self.view.frame.size.width, 45)];
     UIColor *backColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     UIButton *orderBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"外卖订餐" AndFontSize:17 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
+    [orderBtn addTarget:self action:@selector(touchOrderRest) forControlEvents:UIControlEventTouchUpInside];
+    
     UIButton *reserveBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"预订餐位" AndFontSize:17 AndBackColor:backColor AndTextColor:[UIColor whiteColor]];
+    [reserveBtn addTarget:self action:@selector(touchReserveRest) forControlEvents:UIControlEventTouchUpInside];
+    
     [bottomView addSubview:reserveBtn];
     [bottomView addSubview:orderBtn];
     
@@ -362,22 +367,47 @@
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    mScrollView.delegate = nil;
+- (void)touchReserveRest {
+    //    restaurantInfoDic[@""]    data
     
-    [self.navigationController.navigationBar setTranslucent:NO];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    barImageView.alpha = 1.0;
+    UIViewController *viewController = [[UIViewController alloc] init];
+    viewController.title = @"预订餐位";
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (void)touchOrderRest {
+//    restaurantInfoDic[@""]    data
+    
+    UIViewController *viewController = [[UIViewController alloc] init];
+    viewController.title = @"外卖订餐";
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+-(void)touchPhoneBtn {
+    UIWebView *callView = [TCComponent callWithPhone:restaurantInfoDic[@"phone"]];
+    [self.view addSubview:callView];
+}
+
+- (void)touchCallCustomerService {
+    //    UIWebView *callView = [TCComponent callWithPhone:restaurantInfoDic[@""]];
+    //    [self.view addSubview:callView];
     
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)touchLocationBtn {
+    //    restaurantInfoDic[@"position"]
+    
+    TCLocationViewController *locationViewController = [[TCLocationViewController alloc] init];
+    [self.navigationController pushViewController:locationViewController animated:YES];
 }
 
+- (void)touchMoreRecommendInfo {
+    
+}
+
+- (void)touchMoreTopicInfo {
+    
+}
 
 #pragma mark - scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -413,22 +443,25 @@
     }
 }
 
-#pragma mark - click 
--(void)touchPhoneBtn {
+
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    mScrollView.delegate = nil;
+    
+    [self.navigationController.navigationBar setTranslucent:NO];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
+    barImageView.alpha = 1.0;
     
 }
 
-- (void)touchLocationBtn {
-    
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
-- (void)touchMoreRecommendInfo {
-    
-}
-
-- (void)touchMoreTopicInfo {
-    
-}
 
 
 @end

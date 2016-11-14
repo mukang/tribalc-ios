@@ -19,4 +19,6 @@
 + (UIButton *)createButtonWithFrame:(CGRect)frame AndTitle:(NSString *)title AndFontSize:(float)font AndBackColor:(UIColor *)backColor AndTextColor:(UIColor *)titleColor;
 + (UIButton *)createButtonWithFrame:(CGRect)frame AndTitle:(NSString *)title AndFontSize:(float)font;
 
++ (UIWebView *)callWithPhone:(NSString *)phoneStr;
+
 @end

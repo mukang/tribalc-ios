@@ -12,6 +12,7 @@
     NSArray *goodsInfoArray;
     UICollectionView *recommendCollectionView;
     UIImageView *collectionImageView;
+    NSMutableArray *collectionImgArr;
 }
 
 @end
@@ -26,6 +27,7 @@
     [super viewDidLoad];
     [self initialNavigationBar];
 
+    collectionImgArr = [[NSMutableArray alloc] init];
     
     self.view.backgroundColor = [UIColor whiteColor];
 
@@ -37,6 +39,20 @@
 
 # pragma mark - 初始化数据
 - (void)initialGoodsData {
+    
+    NSURL *url = [NSURL URLWithString:@""];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            goodsInfoArray = result[@""];
+            
+            [self initialCollectionView];
+        }
+    }];
+    [dataTask resume];
+    
     NSDictionary *info1 = @{ @"name": @"飞行员夹克", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"Zara" };
     NSDictionary *info2 = @{ @"name": @"印花围巾", @"type": @"男装", @"price": @"1000", @"image":@"", @"shop":@"Nike" };
     NSDictionary *info3 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威" };
@@ -44,7 +60,7 @@
     NSDictionary *info5 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威" };
     NSDictionary *info6 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威" };
     
-    goodsInfoArray = @[ info1, info2, info3, info4, info5, info6 ];
+    goodsInfoArray = @[ info1, info2, info3, info4, info5, info6, info1, info2, info3, info4, info5, info6, info1, info2, info3, info4, info5, info6, info1, info2, info3, info4, info5, info6 ];
 }
 
 - (void)initialNavigationBar {
@@ -94,11 +110,19 @@
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *info = goodsInfoArray[indexPath.row];
     TCRecommendGoodCell *cell = (TCRecommendGoodCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
+    
+    cell.goodImageView.image = [UIImage imageNamed:@"null"];
+//    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@""]];
+//    cell.goodImageView.image = [UIImage imageWithData:imgData];
+    
     cell.shopNameLab.text = info[@"shop"];
     cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info[@"type"], info[@"name"]];
     cell.priceLab.text = [NSString stringWithFormat:@"￥%@", info[@"price"]];
     
+    collectionImgArr[indexPath.row] = cell.collectionImgView;
+    
     [cell.collectionBtn addTarget:self action:@selector(touchCollectionButton:) forControlEvents:UIControlEventTouchUpInside];
+    cell.collectionBtn.tag = indexPath.row;
     
     return cell;
 }
@@ -109,8 +133,9 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *info = goodsInfoArray[indexPath.row];
-    NSLog(@"click%@", info);
+    
+//    NSDictionary *info = goodsInfoArray[indexPath.row];    data
+    
     TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] init];
     [self.navigationController pushViewController:recommendInfoViewController animated:YES];
     
@@ -128,9 +153,33 @@
 }
 
 # pragma mark - touch 
-- (void)touchCollectionButton:(id)sender {
-    NSLog(@"dwdwa");
+- (void)touchCollectionButton:(UIButton *)button {
+    NSInteger index = button.tag;
     
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@""]];
+    request.HTTPMethod = @"post";
+    NSDictionary *body = @{};
+    NSData *data = [NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
+    request.HTTPBody = data;
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            
+        }
+    }];
+    [dataTask resume];
+    
+    
+    UIImageView *imgView = collectionImgArr[index];
+    UIImage *image = [UIImage imageNamed:@"good_collection_no"];
+    UIImage *selectImg = [UIImage imageNamed:@"good_collection_yes"];
+    if ([imgView.image isEqual:image]) {
+        imgView.image = selectImg;
+    } else {
+        imgView.image = image;
+    }
+
 }
 
 - (void)touchBackBtn:(id)sender {

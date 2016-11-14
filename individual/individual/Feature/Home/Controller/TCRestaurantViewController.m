@@ -194,6 +194,8 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+//    restaurantArray   
+    
     TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
     [self.navigationController pushViewController:restaurantInfo animated:YES];
 }
@@ -232,9 +234,6 @@
 - (void)touchLocationBtn:(id)sender {
     
 }
-- (void)touchCollectionBtn:(id)sender {
-    
-}
 
 - (void)touchSortBtn:(id)sender {
     
@@ -260,36 +259,36 @@
 
 - (void)touchSortByAverageMin {
     [self removeOtherSelectBtnColor:sortView.averageMinBtn AndType:@"sort"];
-    ///////////////
-    
     [self hideViewWithButton:sortButton];
+    
+    [self sortByInfo:@"人均最低"];
     
 }
 - (void)touchSortByAverageMax {
     [self removeOtherSelectBtnColor:sortView.averageMaxBtn AndType:@"sort"];
-    
-    
     [self hideViewWithButton:sortButton];
     
+    [self sortByInfo:@"人均最高"];
     
 }
 - (void)touchSortByDistance {
     [self removeOtherSelectBtnColor:sortView.distanceMinBtn AndType:@"sort"];
-    
     [self hideViewWithButton:sortButton];
+    
+    [self sortByInfo:@"距离最近"];
+    
 }
 - (void)touchSortByEvaluate {
     [self removeOtherSelectBtnColor:sortView.evaluateMaxBtn AndType:@"sort"];
-    
-    
     [self hideViewWithButton:sortButton];
+    
+    [self sortByInfo:@"评价最高"];
     
 }
 - (void)touchSortByPopularity {
     [self removeOtherSelectBtnColor:sortView.popularityMaxBtn AndType:@"sort"];
-    
-    
     [self hideViewWithButton:sortButton];
+    [self sortByInfo:@"人气最高"];
 }
 
 
@@ -309,16 +308,16 @@
 
 - (void)touchDeliverBtn {
     [self removeOtherSelectBtnColor:filterView.deliverBtn AndType:@"filter"];
-    ///////////////
-    
     [self hideViewWithButton:filterButton];
+    
+    [self sortByInfo:@"接受送餐"];
 }
 
 - (void)touchReserveBtn {
     [self removeOtherSelectBtnColor:filterView.reserveBtn AndType:@"filter" ];
-    ///////////////
-    
     [self hideViewWithButton:filterButton];
+    
+    [self sortByInfo:@"可预订"];
 }
 
 
@@ -337,6 +336,24 @@
     }];
     [dataTask resume];
 
+}
+
+- (void)sortByInfo:(NSString *)info {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@""]];
+    request.HTTPMethod = @"post";
+    NSDictionary *body = @{};
+    NSData *data = [NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
+    request.HTTPBody = data;
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            restaurantArray = result[@""];
+            [mResaurantTableView reloadData];
+        }
+    }];
+    [dataTask resume];
 }
 
 

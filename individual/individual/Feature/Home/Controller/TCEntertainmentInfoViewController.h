@@ -10,6 +10,7 @@
 #import "TCRestaurantLogoView.h"
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
+#import "TCLocationViewController.h"
 
 @interface TCEntertainmentInfoViewController : UIViewController<UIScrollViewDelegate>
 {

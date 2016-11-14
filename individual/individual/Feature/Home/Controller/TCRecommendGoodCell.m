@@ -15,12 +15,11 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
-        UIImage *nullImage = [UIImage imageNamed:@"null"];
+        
         
         self.backgroundColor = [UIColor whiteColor];
         
         _goodImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height * (1 - 0.26))];
-        _goodImageView.image = nullImage;
         
         [self.contentView addSubview:_goodImageView];
         
@@ -41,8 +40,6 @@
         [_goodImageView addSubview:_collectionImgView];
         
         _collectionBtn = [[UIButton alloc] initWithFrame:_collectionImgView.frame];
-//        _collectionBtn.backgroundColor = [UIColor blackColor];
-        [_collectionBtn addTarget:self action:@selector(touchCollectionBtn) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_collectionBtn];
         
         
@@ -57,16 +54,6 @@
     label.font = [UIFont fontWithName:@"Arial" size:12];
     label.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
     return label;
-}
-
-- (void)touchCollectionBtn {
-    UIImage *image = [UIImage imageNamed:@"good_collection_no"];
-    UIImage *selectImg = [UIImage imageNamed:@"good_collection_yes"];
-    if ([_collectionImgView.image isEqual:image]) {
-        _collectionImgView.image = selectImg;
-    } else {
-        _collectionImgView.image = image;
-    }
 }
 
 

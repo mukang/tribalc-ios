@@ -82,4 +82,12 @@
     return button;
 }
 
++ (UIWebView *)callWithPhone:(NSString *)phoneStr {
+    UIWebView *callWebview =[[UIWebView alloc] init];
+    NSString *callStr = [NSString stringWithFormat:@"tel:%@", phoneStr];
+    NSURL *telURL =[NSURL URLWithString:callStr];
+    [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
+    return callWebview;
+}
+
 @end

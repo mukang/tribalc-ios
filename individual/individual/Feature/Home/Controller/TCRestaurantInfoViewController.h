@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TCRestaurantLogoView.h"
 #import "TCComponent.h"
+#import "TCLocationViewController.h"
 #import "TCGetNavigationItem.h"
 
 @interface TCRestaurantInfoViewController : UIViewController<UIScrollViewDelegate>

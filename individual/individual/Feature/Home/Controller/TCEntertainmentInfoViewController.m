@@ -90,7 +90,7 @@
 
 - (void)initRestaurantInfo {
     entertainmentInfoDic = @{
-                          @"img":@"restaurantInfoLogo", @"name":@"天午方手工陶艺", @"type":@"陶艺", @"location":@"朝阳区", @"range":@"1006.5km",
+                          @"img":@"null_en", @"name":@"天午方手工陶艺", @"type":@"陶艺", @"location":@"朝阳区", @"range":@"1006.5km",
                           @"price":@"22169元/人", @"collection":@"166321653", @"address":@"北京市朝阳区北苑大姐大小区", @"phone":@"1800000000", @"recommend":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"topic":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"wifi":@true, @"time":@"11:00-23:00", @"reserve":@true, @"room":@true, @"prompt":@[@"wifi", @"pack"]
                           };
     
@@ -246,8 +246,8 @@
 - (void)createBottomButton {
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45, self.view.frame.size.width, 45)];
     UIColor *backColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    UIButton *orderBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"外卖订餐" AndFontSize:17 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
-    UIButton *reserveBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"预订餐位" AndFontSize:17 AndBackColor:backColor AndTextColor:[UIColor whiteColor]];
+    UIButton *orderBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"预订" AndFontSize:17 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
+    UIButton *reserveBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"预订" AndFontSize:17 AndBackColor:backColor AndTextColor:[UIColor whiteColor]];
     [bottomView addSubview:reserveBtn];
     [bottomView addSubview:orderBtn];
     
@@ -426,10 +426,15 @@
 #pragma mark - click
 -(void)touchPhoneBtn {
     
+    UIWebView *callWebView = [TCComponent callWithPhone:entertainmentInfoDic[@"phone"]];
+    [self.view addSubview:callWebView];
+
 }
 
 - (void)touchLocationBtn {
-    
+//    NSString *position = entertainmentInfoDic[@"position"];
+    TCLocationViewController *locationViewController = [[TCLocationViewController alloc] init];
+    [self.navigationController pushViewController:locationViewController animated:YES];
 }
 
 @end

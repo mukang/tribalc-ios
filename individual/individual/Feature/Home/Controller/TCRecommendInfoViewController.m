@@ -58,6 +58,17 @@
 }
 
 - (void)initGoodInfoData {
+    NSURL *url = [NSURL URLWithString:@""];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            goodInfoDic = result[@""];
+        }
+    }];
+    [dataTask resume];
+    
     goodInfoDic = @{ @"title": @"Nike耐克2016新款多划算的还是动画设2计", @"price":@"465",
                      @"size":@[@"2"], @"logoImg":@"", @"brand":@"品牌", @"evaluate":@"3",
                      @"sales":@"18.6万", @"profit":@"65573", @"phone":@"732173", @"image_text":@"https://www.baidu.com/"
@@ -180,14 +191,12 @@
 - (UIView *)createBottomViewWithFrame:(CGRect)frame {
     UIView *view=  [[UIView alloc] initWithFrame:frame];
     
-    UIButton *collectionBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"res_collection"];
+    UIButton *collectionBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_collection_blue"];
     [collectionBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
-    collectionBtn.backgroundColor = [UIColor blueColor];
     [view addSubview:collectionBtn];
     
-    UIButton *shopCarImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(collectionBtn.x + collectionBtn.width, 0, collectionBtn.width, collectionBtn.height) AndImageName:@"goods_shoppingcar"];
+    UIButton *shopCarImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(collectionBtn.x + collectionBtn.width, 0, collectionBtn.width, collectionBtn.height) AndImageName:@"good_shoppingcar_blue"];
     [shopCarImgBtn addTarget:self action:@selector(touchShopCarBtn:) forControlEvents:UIControlEventTouchUpInside];
-    shopCarImgBtn.backgroundColor = [UIColor blueColor];
     [view addSubview:shopCarImgBtn];
     
     UIButton *shopCarBtn = [TCComponent createButtonWithFrame:CGRectMake(shopCarImgBtn.x + shopCarImgBtn.width, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:18];
@@ -324,6 +333,9 @@
         [view removeFromSuperview];
     }
     NSArray *imageArr = goodInfoDic[@"image"];
+//    UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageArr[indexPath.row]]];
+//    UIImageView *imageView = [[UIImageView alloc]initWithImage:img];
+
     UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:imageArr[indexPath.row]]];
     imageView.frame = CGRectMake(0, 0, collectionView.width, collectionView.height);
     [cell.contentView addSubview:imageView];
@@ -359,12 +371,42 @@
 
 
 - (void)touchShopCarBtn:(id)sender {
+//    goodInfoDic    
     
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@""]];
+    request.HTTPMethod = @"post";
+    NSDictionary *body = @{};
+    NSData *data = [NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
+    request.HTTPBody = data;
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            
+        }
+    }];
+    [dataTask resume];
+
 }
 
 
 - (void)touchCollectionBtn:(id)sender {
+    //    goodInfoDic
     
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@""]];
+    request.HTTPMethod = @"post";
+    NSDictionary *body = @{};
+    NSData *data = [NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
+    request.HTTPBody = data;
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            
+        }
+    }];
+    [dataTask resume];
+
 }
 
 
