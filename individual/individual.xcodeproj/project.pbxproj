@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		091AD3181DD7FFC100F444C6 /* TCImgPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 091AD3171DD7FFC100F444C6 /* TCImgPageControl.m */; };
-		091AD31C1DD8059F00F444C6 /* TCEntertainmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091AD31B1DD8059F00F444C6 /* TCEntertainmentViewController.m */; };
-		091B112C1DD40B5900F1A584 /* TCRestaurantSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B112B1DD40B5900F1A584 /* TCRestaurantSortView.m */; };
-		091B112F1DD418D600F1A584 /* TCSelectSortButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B112E1DD418D600F1A584 /* TCSelectSortButton.m */; };
-		091B11321DD43C5000F1A584 /* TCRestaurantSelectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B11311DD43C5000F1A584 /* TCRestaurantSelectButton.m */; };
-		091B11351DD447FB00F1A584 /* TCRestaurantFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 091B11341DD447FB00F1A584 /* TCRestaurantFilterView.m */; };
 		091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */; };
-		0921587E1DCD761E0047A812 /* TCShoppingCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0921587D1DCD761E0047A812 /* TCShoppingCartViewController.m */; };
-		092158811DCD79CB0047A812 /* TCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092158801DCD79CB0047A812 /* TCShoppingCartTableViewCell.m */; };
-		0928939F1DD6B1F100FC9670 /* TCRecommendInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0928939E1DD6B1F100FC9670 /* TCRecommendInfoViewController.m */; };
-		092B40881DD55B7900CEDAC6 /* TCRestaurantLogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092B40871DD55B7900CEDAC6 /* TCRestaurantLogoView.m */; };
 		092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 092B408A1DD5624300CEDAC6 /* TCComponent.m */; };
-		092CD3D81DD94E970073A9C1 /* TCEntertainmentInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3D71DD94E970073A9C1 /* TCEntertainmentInfoViewController.m */; };
-		092CD3DC1DD996DB0073A9C1 /* TCAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3DB1DD996DB0073A9C1 /* TCAnnotation.m */; };
-		092CD3DF1DD9991B0073A9C1 /* TCCalloutAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3DE1DD9991B0073A9C1 /* TCCalloutAnnotation.m */; };
-		092CD3E21DD99B6C0073A9C1 /* TCCalloutAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3E11DD99B6C0073A9C1 /* TCCalloutAnnotationView.m */; };
 		092CD3E71DD99DBC0073A9C1 /* TCLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3E61DD99DBC0073A9C1 /* TCLocationViewController.m */; };
-		093112121DCECD55000DB8E5 /* TCRestaurantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 093112111DCECD55000DB8E5 /* TCRestaurantTableViewCell.m */; };
-		098BC2AA1DCC5C6300532A4E /* TCRecommendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 098BC2A91DCC5C6300532A4E /* TCRecommendListViewController.m */; };
-		098BC2AD1DCC668900532A4E /* TCRecommendGoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 098BC2AC1DCC668900532A4E /* TCRecommendGoodCell.m */; };
+		092CD3ED1DD99F070073A9C1 /* TCEntertainmentInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3EA1DD99F070073A9C1 /* TCEntertainmentInfoViewController.m */; };
+		092CD3EE1DD99F070073A9C1 /* TCEntertainmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3EC1DD99F070073A9C1 /* TCEntertainmentViewController.m */; };
+		092CD3F61DD99F4A0073A9C1 /* TCRestaurantInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3F11DD99F4A0073A9C1 /* TCRestaurantInfoViewController.m */; };
+		092CD3F71DD99F4A0073A9C1 /* TCRestaurantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3F31DD99F4A0073A9C1 /* TCRestaurantTableViewCell.m */; };
+		092CD3F81DD99F4A0073A9C1 /* TCRestaurantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3F51DD99F4A0073A9C1 /* TCRestaurantViewController.m */; };
+		092CD4051DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3FC1DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.m */; };
+		092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3FE1DD99F9F0073A9C1 /* TCShoppingCartViewController.m */; };
+		092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4001DD99F9F0073A9C1 /* TCRecommendGoodCell.m */; };
+		092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4021DD99F9F0073A9C1 /* TCRecommendInfoViewController.m */; };
+		092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4041DD99F9F0073A9C1 /* TCRecommendListViewController.m */; };
+		092CD4221DD9A07C0073A9C1 /* TCAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD40D1DD9A07C0073A9C1 /* TCAnnotation.m */; };
+		092CD4231DD9A07C0073A9C1 /* TCCalloutAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD40F1DD9A07C0073A9C1 /* TCCalloutAnnotation.m */; };
+		092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4111DD9A07C0073A9C1 /* TCCalloutAnnotationView.m */; };
+		092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */; };
+		092CD4261DD9A07C0073A9C1 /* TCRestaurantLogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4181DD9A07C0073A9C1 /* TCRestaurantLogoView.m */; };
+		092CD4271DD9A07C0073A9C1 /* TCRestaurantFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD41B1DD9A07C0073A9C1 /* TCRestaurantFilterView.m */; };
+		092CD4281DD9A07C0073A9C1 /* TCRestaurantSelectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD41D1DD9A07C0073A9C1 /* TCRestaurantSelectButton.m */; };
+		092CD4291DD9A07C0073A9C1 /* TCRestaurantSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD41F1DD9A07C0073A9C1 /* TCRestaurantSortView.m */; };
+		092CD42A1DD9A07C0073A9C1 /* TCSelectSortButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */; };
 		1EA3289035216A7674F8F7F8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A240A7A9EE484200847270B /* libPods.a */; };
-		741C148D1DCB13F500FBAA03 /* TCRestaurantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 741C148C1DCB13F500FBAA03 /* TCRestaurantViewController.m */; };
-		741C14901DCB17E700FBAA03 /* TCRestaurantInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 741C148F1DCB17E700FBAA03 /* TCRestaurantInfoViewController.m */; };
 		7A190AF01DC09BF500651905 /* TCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AEF1DC09BF500651905 /* TCClient.m */; };
 		7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF21DC0A5DB00651905 /* TCClientConfig.m */; };
 		7A190AF61DC0A73600651905 /* TCClientRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF51DC0A73600651905 /* TCClientRequest.m */; };
@@ -112,52 +112,52 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		091AD3161DD7FFC100F444C6 /* TCImgPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImgPageControl.h; sourceTree = "<group>"; };
-		091AD3171DD7FFC100F444C6 /* TCImgPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCImgPageControl.m; sourceTree = "<group>"; };
-		091AD31A1DD8059F00F444C6 /* TCEntertainmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCEntertainmentViewController.h; sourceTree = "<group>"; };
-		091AD31B1DD8059F00F444C6 /* TCEntertainmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCEntertainmentViewController.m; sourceTree = "<group>"; };
-		091B112A1DD40B5900F1A584 /* TCRestaurantSortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantSortView.h; sourceTree = "<group>"; };
-		091B112B1DD40B5900F1A584 /* TCRestaurantSortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantSortView.m; sourceTree = "<group>"; };
-		091B112D1DD418D600F1A584 /* TCSelectSortButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectSortButton.h; sourceTree = "<group>"; };
-		091B112E1DD418D600F1A584 /* TCSelectSortButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectSortButton.m; sourceTree = "<group>"; };
-		091B11301DD43C5000F1A584 /* TCRestaurantSelectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantSelectButton.h; sourceTree = "<group>"; };
-		091B11311DD43C5000F1A584 /* TCRestaurantSelectButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantSelectButton.m; sourceTree = "<group>"; };
-		091B11331DD447FB00F1A584 /* TCRestaurantFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantFilterView.h; sourceTree = "<group>"; };
-		091B11341DD447FB00F1A584 /* TCRestaurantFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantFilterView.m; sourceTree = "<group>"; };
 		091BC6E01DD0968300EB5FBD /* TCGetNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetNavigationItem.h; sourceTree = "<group>"; };
 		091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetNavigationItem.m; sourceTree = "<group>"; };
-		0921587C1DCD761E0047A812 /* TCShoppingCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCShoppingCartViewController.h; sourceTree = "<group>"; };
-		0921587D1DCD761E0047A812 /* TCShoppingCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShoppingCartViewController.m; sourceTree = "<group>"; };
-		0921587F1DCD79CB0047A812 /* TCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
-		092158801DCD79CB0047A812 /* TCShoppingCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShoppingCartTableViewCell.m; sourceTree = "<group>"; };
-		0928939D1DD6B1F100FC9670 /* TCRecommendInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendInfoViewController.h; sourceTree = "<group>"; };
-		0928939E1DD6B1F100FC9670 /* TCRecommendInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendInfoViewController.m; sourceTree = "<group>"; };
-		092B40861DD55B7900CEDAC6 /* TCRestaurantLogoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantLogoView.h; sourceTree = "<group>"; };
-		092B40871DD55B7900CEDAC6 /* TCRestaurantLogoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantLogoView.m; sourceTree = "<group>"; };
 		092B40891DD5624300CEDAC6 /* TCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCComponent.h; sourceTree = "<group>"; };
 		092B408A1DD5624300CEDAC6 /* TCComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCComponent.m; sourceTree = "<group>"; };
-		092CD3D61DD94E970073A9C1 /* TCEntertainmentInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCEntertainmentInfoViewController.h; sourceTree = "<group>"; };
-		092CD3D71DD94E970073A9C1 /* TCEntertainmentInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCEntertainmentInfoViewController.m; sourceTree = "<group>"; };
-		092CD3DA1DD996DB0073A9C1 /* TCAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAnnotation.h; sourceTree = "<group>"; };
-		092CD3DB1DD996DB0073A9C1 /* TCAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAnnotation.m; sourceTree = "<group>"; };
-		092CD3DD1DD9991B0073A9C1 /* TCCalloutAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCalloutAnnotation.h; sourceTree = "<group>"; };
-		092CD3DE1DD9991B0073A9C1 /* TCCalloutAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCalloutAnnotation.m; sourceTree = "<group>"; };
-		092CD3E01DD99B6C0073A9C1 /* TCCalloutAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCalloutAnnotationView.h; sourceTree = "<group>"; };
-		092CD3E11DD99B6C0073A9C1 /* TCCalloutAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCalloutAnnotationView.m; sourceTree = "<group>"; };
 		092CD3E51DD99DBC0073A9C1 /* TCLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLocationViewController.h; sourceTree = "<group>"; };
 		092CD3E61DD99DBC0073A9C1 /* TCLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLocationViewController.m; sourceTree = "<group>"; };
-		093112101DCECD55000DB8E5 /* TCRestaurantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantTableViewCell.h; sourceTree = "<group>"; };
-		093112111DCECD55000DB8E5 /* TCRestaurantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantTableViewCell.m; sourceTree = "<group>"; };
-		098BC2A81DCC5C6300532A4E /* TCRecommendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendListViewController.h; sourceTree = "<group>"; };
-		098BC2A91DCC5C6300532A4E /* TCRecommendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendListViewController.m; sourceTree = "<group>"; };
-		098BC2AB1DCC668900532A4E /* TCRecommendGoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendGoodCell.h; sourceTree = "<group>"; };
-		098BC2AC1DCC668900532A4E /* TCRecommendGoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendGoodCell.m; sourceTree = "<group>"; };
+		092CD3E91DD99F070073A9C1 /* TCEntertainmentInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCEntertainmentInfoViewController.h; sourceTree = "<group>"; };
+		092CD3EA1DD99F070073A9C1 /* TCEntertainmentInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCEntertainmentInfoViewController.m; sourceTree = "<group>"; };
+		092CD3EB1DD99F070073A9C1 /* TCEntertainmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCEntertainmentViewController.h; sourceTree = "<group>"; };
+		092CD3EC1DD99F070073A9C1 /* TCEntertainmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCEntertainmentViewController.m; sourceTree = "<group>"; };
+		092CD3F01DD99F4A0073A9C1 /* TCRestaurantInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantInfoViewController.h; sourceTree = "<group>"; };
+		092CD3F11DD99F4A0073A9C1 /* TCRestaurantInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantInfoViewController.m; sourceTree = "<group>"; };
+		092CD3F21DD99F4A0073A9C1 /* TCRestaurantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantTableViewCell.h; sourceTree = "<group>"; };
+		092CD3F31DD99F4A0073A9C1 /* TCRestaurantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantTableViewCell.m; sourceTree = "<group>"; };
+		092CD3F41DD99F4A0073A9C1 /* TCRestaurantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantViewController.h; sourceTree = "<group>"; };
+		092CD3F51DD99F4A0073A9C1 /* TCRestaurantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantViewController.m; sourceTree = "<group>"; };
+		092CD3FB1DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
+		092CD3FC1DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShoppingCartTableViewCell.m; sourceTree = "<group>"; };
+		092CD3FD1DD99F9F0073A9C1 /* TCShoppingCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCShoppingCartViewController.h; sourceTree = "<group>"; };
+		092CD3FE1DD99F9F0073A9C1 /* TCShoppingCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShoppingCartViewController.m; sourceTree = "<group>"; };
+		092CD3FF1DD99F9F0073A9C1 /* TCRecommendGoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendGoodCell.h; sourceTree = "<group>"; };
+		092CD4001DD99F9F0073A9C1 /* TCRecommendGoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendGoodCell.m; sourceTree = "<group>"; };
+		092CD4011DD99F9F0073A9C1 /* TCRecommendInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendInfoViewController.h; sourceTree = "<group>"; };
+		092CD4021DD99F9F0073A9C1 /* TCRecommendInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendInfoViewController.m; sourceTree = "<group>"; };
+		092CD4031DD99F9F0073A9C1 /* TCRecommendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendListViewController.h; sourceTree = "<group>"; };
+		092CD4041DD99F9F0073A9C1 /* TCRecommendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendListViewController.m; sourceTree = "<group>"; };
+		092CD40C1DD9A07C0073A9C1 /* TCAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAnnotation.h; sourceTree = "<group>"; };
+		092CD40D1DD9A07C0073A9C1 /* TCAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAnnotation.m; sourceTree = "<group>"; };
+		092CD40E1DD9A07C0073A9C1 /* TCCalloutAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCalloutAnnotation.h; sourceTree = "<group>"; };
+		092CD40F1DD9A07C0073A9C1 /* TCCalloutAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCalloutAnnotation.m; sourceTree = "<group>"; };
+		092CD4101DD9A07C0073A9C1 /* TCCalloutAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCalloutAnnotationView.h; sourceTree = "<group>"; };
+		092CD4111DD9A07C0073A9C1 /* TCCalloutAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCalloutAnnotationView.m; sourceTree = "<group>"; };
+		092CD4131DD9A07C0073A9C1 /* TCImgPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImgPageControl.h; sourceTree = "<group>"; };
+		092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCImgPageControl.m; sourceTree = "<group>"; };
+		092CD4171DD9A07C0073A9C1 /* TCRestaurantLogoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantLogoView.h; sourceTree = "<group>"; };
+		092CD4181DD9A07C0073A9C1 /* TCRestaurantLogoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantLogoView.m; sourceTree = "<group>"; };
+		092CD41A1DD9A07C0073A9C1 /* TCRestaurantFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantFilterView.h; sourceTree = "<group>"; };
+		092CD41B1DD9A07C0073A9C1 /* TCRestaurantFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantFilterView.m; sourceTree = "<group>"; };
+		092CD41C1DD9A07C0073A9C1 /* TCRestaurantSelectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantSelectButton.h; sourceTree = "<group>"; };
+		092CD41D1DD9A07C0073A9C1 /* TCRestaurantSelectButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantSelectButton.m; sourceTree = "<group>"; };
+		092CD41E1DD9A07C0073A9C1 /* TCRestaurantSortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantSortView.h; sourceTree = "<group>"; };
+		092CD41F1DD9A07C0073A9C1 /* TCRestaurantSortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantSortView.m; sourceTree = "<group>"; };
+		092CD4201DD9A07C0073A9C1 /* TCSelectSortButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectSortButton.h; sourceTree = "<group>"; };
+		092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectSortButton.m; sourceTree = "<group>"; };
 		1A240A7A9EE484200847270B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6119E9AF010F0BE87CA35612 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		741C148B1DCB13F500FBAA03 /* TCRestaurantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantViewController.h; sourceTree = "<group>"; };
-		741C148C1DCB13F500FBAA03 /* TCRestaurantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantViewController.m; sourceTree = "<group>"; };
-		741C148E1DCB17E700FBAA03 /* TCRestaurantInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRestaurantInfoViewController.h; sourceTree = "<group>"; };
-		741C148F1DCB17E700FBAA03 /* TCRestaurantInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantInfoViewController.m; sourceTree = "<group>"; };
 		7A190AEE1DC09BF500651905 /* TCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClient.h; sourceTree = "<group>"; };
 		7A190AEF1DC09BF500651905 /* TCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCClient.m; sourceTree = "<group>"; };
 		7A190AF11DC0A5DB00651905 /* TCClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientConfig.h; sourceTree = "<group>"; };
@@ -291,60 +291,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		091AD3191DD8050F00F444C6 /* Entertainment */ = {
-			isa = PBXGroup;
-			children = (
-				091AD31A1DD8059F00F444C6 /* TCEntertainmentViewController.h */,
-				091AD31B1DD8059F00F444C6 /* TCEntertainmentViewController.m */,
-				092CD3D61DD94E970073A9C1 /* TCEntertainmentInfoViewController.h */,
-				092CD3D71DD94E970073A9C1 /* TCEntertainmentInfoViewController.m */,
-			);
-			name = Entertainment;
-			sourceTree = "<group>";
-		};
-		091B11281DD40B0E00F1A584 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				092CD3D91DD996B10073A9C1 /* Map */,
-				092893DF1DD6E53900FC9670 /* RecommendBoutique */,
-				091B11291DD40B1600F1A584 /* Restaurant */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		091B11291DD40B1600F1A584 /* Restaurant */ = {
-			isa = PBXGroup;
-			children = (
-				091B11371DD453B800F1A584 /* RestaurantInfo */,
-				091B11361DD453A100F1A584 /* RestaurantList */,
-			);
-			name = Restaurant;
-			sourceTree = "<group>";
-		};
-		091B11361DD453A100F1A584 /* RestaurantList */ = {
-			isa = PBXGroup;
-			children = (
-				091B112A1DD40B5900F1A584 /* TCRestaurantSortView.h */,
-				091B112B1DD40B5900F1A584 /* TCRestaurantSortView.m */,
-				091B112D1DD418D600F1A584 /* TCSelectSortButton.h */,
-				091B112E1DD418D600F1A584 /* TCSelectSortButton.m */,
-				091B11301DD43C5000F1A584 /* TCRestaurantSelectButton.h */,
-				091B11311DD43C5000F1A584 /* TCRestaurantSelectButton.m */,
-				091B11331DD447FB00F1A584 /* TCRestaurantFilterView.h */,
-				091B11341DD447FB00F1A584 /* TCRestaurantFilterView.m */,
-			);
-			name = RestaurantList;
-			sourceTree = "<group>";
-		};
-		091B11371DD453B800F1A584 /* RestaurantInfo */ = {
-			isa = PBXGroup;
-			children = (
-				092B40861DD55B7900CEDAC6 /* TCRestaurantLogoView.h */,
-				092B40871DD55B7900CEDAC6 /* TCRestaurantLogoView.m */,
-			);
-			name = RestaurantInfo;
-			sourceTree = "<group>";
-		};
 		091BC6DC1DD091BC00EB5FBD /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,52 +302,6 @@
 			name = Components;
 			sourceTree = "<group>";
 		};
-		0921587A1DCD75990047A812 /* Restaurant */ = {
-			isa = PBXGroup;
-			children = (
-				741C148B1DCB13F500FBAA03 /* TCRestaurantViewController.h */,
-				741C148C1DCB13F500FBAA03 /* TCRestaurantViewController.m */,
-				741C148E1DCB17E700FBAA03 /* TCRestaurantInfoViewController.h */,
-				741C148F1DCB17E700FBAA03 /* TCRestaurantInfoViewController.m */,
-				093112101DCECD55000DB8E5 /* TCRestaurantTableViewCell.h */,
-				093112111DCECD55000DB8E5 /* TCRestaurantTableViewCell.m */,
-			);
-			name = Restaurant;
-			sourceTree = "<group>";
-		};
-		0921587B1DCD75ED0047A812 /* ShoppingCart */ = {
-			isa = PBXGroup;
-			children = (
-				0921587C1DCD761E0047A812 /* TCShoppingCartViewController.h */,
-				0921587D1DCD761E0047A812 /* TCShoppingCartViewController.m */,
-				0921587F1DCD79CB0047A812 /* TCShoppingCartTableViewCell.h */,
-				092158801DCD79CB0047A812 /* TCShoppingCartTableViewCell.m */,
-			);
-			name = ShoppingCart;
-			sourceTree = "<group>";
-		};
-		092893DF1DD6E53900FC9670 /* RecommendBoutique */ = {
-			isa = PBXGroup;
-			children = (
-				091AD3161DD7FFC100F444C6 /* TCImgPageControl.h */,
-				091AD3171DD7FFC100F444C6 /* TCImgPageControl.m */,
-			);
-			name = RecommendBoutique;
-			sourceTree = "<group>";
-		};
-		092CD3D91DD996B10073A9C1 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				092CD3DA1DD996DB0073A9C1 /* TCAnnotation.h */,
-				092CD3DB1DD996DB0073A9C1 /* TCAnnotation.m */,
-				092CD3DD1DD9991B0073A9C1 /* TCCalloutAnnotation.h */,
-				092CD3DE1DD9991B0073A9C1 /* TCCalloutAnnotation.m */,
-				092CD3E01DD99B6C0073A9C1 /* TCCalloutAnnotationView.h */,
-				092CD3E11DD99B6C0073A9C1 /* TCCalloutAnnotationView.m */,
-			);
-			name = Map;
-			sourceTree = "<group>";
-		};
 		092CD3E41DD99DBC0073A9C1 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,18 +311,118 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
-		098BC2A11DCC5AED00532A4E /* RecommendBoutique */ = {
+		092CD3E81DD99F070073A9C1 /* Entertainment */ = {
 			isa = PBXGroup;
 			children = (
-				0921587B1DCD75ED0047A812 /* ShoppingCart */,
-				098BC2A81DCC5C6300532A4E /* TCRecommendListViewController.h */,
-				098BC2A91DCC5C6300532A4E /* TCRecommendListViewController.m */,
-				098BC2AB1DCC668900532A4E /* TCRecommendGoodCell.h */,
-				098BC2AC1DCC668900532A4E /* TCRecommendGoodCell.m */,
-				0928939D1DD6B1F100FC9670 /* TCRecommendInfoViewController.h */,
-				0928939E1DD6B1F100FC9670 /* TCRecommendInfoViewController.m */,
+				092CD3E91DD99F070073A9C1 /* TCEntertainmentInfoViewController.h */,
+				092CD3EA1DD99F070073A9C1 /* TCEntertainmentInfoViewController.m */,
+				092CD3EB1DD99F070073A9C1 /* TCEntertainmentViewController.h */,
+				092CD3EC1DD99F070073A9C1 /* TCEntertainmentViewController.m */,
 			);
-			name = RecommendBoutique;
+			path = Entertainment;
+			sourceTree = "<group>";
+		};
+		092CD3EF1DD99F4A0073A9C1 /* Restaurant */ = {
+			isa = PBXGroup;
+			children = (
+				092CD3F01DD99F4A0073A9C1 /* TCRestaurantInfoViewController.h */,
+				092CD3F11DD99F4A0073A9C1 /* TCRestaurantInfoViewController.m */,
+				092CD3F21DD99F4A0073A9C1 /* TCRestaurantTableViewCell.h */,
+				092CD3F31DD99F4A0073A9C1 /* TCRestaurantTableViewCell.m */,
+				092CD3F41DD99F4A0073A9C1 /* TCRestaurantViewController.h */,
+				092CD3F51DD99F4A0073A9C1 /* TCRestaurantViewController.m */,
+			);
+			path = Restaurant;
+			sourceTree = "<group>";
+		};
+		092CD3F91DD99F9F0073A9C1 /* RecommendBoutique */ = {
+			isa = PBXGroup;
+			children = (
+				092CD3FA1DD99F9F0073A9C1 /* ShoppingCart */,
+				092CD3FF1DD99F9F0073A9C1 /* TCRecommendGoodCell.h */,
+				092CD4001DD99F9F0073A9C1 /* TCRecommendGoodCell.m */,
+				092CD4011DD99F9F0073A9C1 /* TCRecommendInfoViewController.h */,
+				092CD4021DD99F9F0073A9C1 /* TCRecommendInfoViewController.m */,
+				092CD4031DD99F9F0073A9C1 /* TCRecommendListViewController.h */,
+				092CD4041DD99F9F0073A9C1 /* TCRecommendListViewController.m */,
+			);
+			path = RecommendBoutique;
+			sourceTree = "<group>";
+		};
+		092CD3FA1DD99F9F0073A9C1 /* ShoppingCart */ = {
+			isa = PBXGroup;
+			children = (
+				092CD3FB1DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.h */,
+				092CD3FC1DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.m */,
+				092CD3FD1DD99F9F0073A9C1 /* TCShoppingCartViewController.h */,
+				092CD3FE1DD99F9F0073A9C1 /* TCShoppingCartViewController.m */,
+			);
+			path = ShoppingCart;
+			sourceTree = "<group>";
+		};
+		092CD40A1DD9A07C0073A9C1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				092CD40B1DD9A07C0073A9C1 /* Map */,
+				092CD4121DD9A07C0073A9C1 /* RecommendBoutique */,
+				092CD4151DD9A07C0073A9C1 /* Restaurant */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		092CD40B1DD9A07C0073A9C1 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				092CD40C1DD9A07C0073A9C1 /* TCAnnotation.h */,
+				092CD40D1DD9A07C0073A9C1 /* TCAnnotation.m */,
+				092CD40E1DD9A07C0073A9C1 /* TCCalloutAnnotation.h */,
+				092CD40F1DD9A07C0073A9C1 /* TCCalloutAnnotation.m */,
+				092CD4101DD9A07C0073A9C1 /* TCCalloutAnnotationView.h */,
+				092CD4111DD9A07C0073A9C1 /* TCCalloutAnnotationView.m */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		092CD4121DD9A07C0073A9C1 /* RecommendBoutique */ = {
+			isa = PBXGroup;
+			children = (
+				092CD4131DD9A07C0073A9C1 /* TCImgPageControl.h */,
+				092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */,
+			);
+			path = RecommendBoutique;
+			sourceTree = "<group>";
+		};
+		092CD4151DD9A07C0073A9C1 /* Restaurant */ = {
+			isa = PBXGroup;
+			children = (
+				092CD4161DD9A07C0073A9C1 /* RestaurantInfo */,
+				092CD4191DD9A07C0073A9C1 /* RestaurantList */,
+			);
+			path = Restaurant;
+			sourceTree = "<group>";
+		};
+		092CD4161DD9A07C0073A9C1 /* RestaurantInfo */ = {
+			isa = PBXGroup;
+			children = (
+				092CD4171DD9A07C0073A9C1 /* TCRestaurantLogoView.h */,
+				092CD4181DD9A07C0073A9C1 /* TCRestaurantLogoView.m */,
+			);
+			path = RestaurantInfo;
+			sourceTree = "<group>";
+		};
+		092CD4191DD9A07C0073A9C1 /* RestaurantList */ = {
+			isa = PBXGroup;
+			children = (
+				092CD41A1DD9A07C0073A9C1 /* TCRestaurantFilterView.h */,
+				092CD41B1DD9A07C0073A9C1 /* TCRestaurantFilterView.m */,
+				092CD41C1DD9A07C0073A9C1 /* TCRestaurantSelectButton.h */,
+				092CD41D1DD9A07C0073A9C1 /* TCRestaurantSelectButton.m */,
+				092CD41E1DD9A07C0073A9C1 /* TCRestaurantSortView.h */,
+				092CD41F1DD9A07C0073A9C1 /* TCRestaurantSortView.m */,
+				092CD4201DD9A07C0073A9C1 /* TCSelectSortButton.h */,
+				092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */,
+			);
+			path = RestaurantList;
 			sourceTree = "<group>";
 		};
 		4A45F1D0EBA27A85F0B6685E /* Frameworks */ = {
@@ -697,7 +697,7 @@
 		7AAF236E1DCAE7EB002B81A5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				091B11281DD40B0E00F1A584 /* View */,
+				092CD40A1DD9A07C0073A9C1 /* View */,
 				7AAF236F1DCAE7EB002B81A5 /* Controller */,
 			);
 			path = Home;
@@ -706,10 +706,10 @@
 		7AAF236F1DCAE7EB002B81A5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				092CD3F91DD99F9F0073A9C1 /* RecommendBoutique */,
+				092CD3EF1DD99F4A0073A9C1 /* Restaurant */,
+				092CD3E81DD99F070073A9C1 /* Entertainment */,
 				092CD3E41DD99DBC0073A9C1 /* Map */,
-				091AD3191DD8050F00F444C6 /* Entertainment */,
-				0921587A1DCD75990047A812 /* Restaurant */,
-				098BC2A11DCC5AED00532A4E /* RecommendBoutique */,
 				7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */,
 				7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */,
 				7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */,
@@ -1033,61 +1033,61 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A6506DC1DC9EBCB00B0EDBF /* TCShippingAddressEditViewController.m in Sources */,
-				741C14901DCB17E700FBAA03 /* TCRestaurantInfoViewController.m in Sources */,
 				092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */,
-				098BC2AD1DCC668900532A4E /* TCRecommendGoodCell.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
-				091AD31C1DD8059F00F444C6 /* TCEntertainmentViewController.m in Sources */,
 				7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */,
-				092CD3D81DD94E970073A9C1 /* TCEntertainmentInfoViewController.m in Sources */,
+				092CD4231DD9A07C0073A9C1 /* TCCalloutAnnotation.m in Sources */,
 				7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */,
 				7A6506E61DCA130200B0EDBF /* TCShippingAddressEditViewCell.m in Sources */,
 				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
 				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
-				0921587E1DCD761E0047A812 /* TCShoppingCartViewController.m in Sources */,
 				7A918AC81DC34AA6002BD529 /* TCBioEditView.m in Sources */,
-				098BC2AA1DCC5C6300532A4E /* TCRecommendListViewController.m in Sources */,
 				7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */,
-				741C148D1DCB13F500FBAA03 /* TCRestaurantViewController.m in Sources */,
+				092CD3ED1DD99F070073A9C1 /* TCEntertainmentInfoViewController.m in Sources */,
+				092CD4221DD9A07C0073A9C1 /* TCAnnotation.m in Sources */,
+				092CD4281DD9A07C0073A9C1 /* TCRestaurantSelectButton.m in Sources */,
 				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
-				092CD3DF1DD9991B0073A9C1 /* TCCalloutAnnotation.m in Sources */,
-				091B112C1DD40B5900F1A584 /* TCRestaurantSortView.m in Sources */,
+				092CD4291DD9A07C0073A9C1 /* TCRestaurantSortView.m in Sources */,
+				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
 				7A190AF01DC09BF500651905 /* TCClient.m in Sources */,
-				092158811DCD79CB0047A812 /* TCShoppingCartTableViewCell.m in Sources */,
-				091B11321DD43C5000F1A584 /* TCRestaurantSelectButton.m in Sources */,
-				092CD3DC1DD996DB0073A9C1 /* TCAnnotation.m in Sources */,
+				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
+				092CD3F71DD99F4A0073A9C1 /* TCRestaurantTableViewCell.m in Sources */,
 				7A918AC51DC34104002BD529 /* TCBioEditViewController.m in Sources */,
-				0928939F1DD6B1F100FC9670 /* TCRecommendInfoViewController.m in Sources */,
+				092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */,
+				092CD4261DD9A07C0073A9C1 /* TCRestaurantLogoView.m in Sources */,
 				7A6506F01DCA1F4F00B0EDBF /* TCBioEditAvatarViewController.m in Sources */,
 				7A918AD61DC36D53002BD529 /* TCBioEditAffectionView.m in Sources */,
 				7A918AC11DC32D90002BD529 /* TCBiographyAvatarViewCell.m in Sources */,
-				091B112F1DD418D600F1A584 /* TCSelectSortButton.m in Sources */,
 				7A6506E11DC9EE5400B0EDBF /* TCShippingAddressViewCell.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */,
 				7A918ABC1DC32686002BD529 /* TCBiographyViewCell.m in Sources */,
+				092CD4051DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.m in Sources */,
 				7A6506D71DC9EBAA00B0EDBF /* TCShippingAddressViewController.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
-				092CD3E21DD99B6C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
-				092B40881DD55B7900CEDAC6 /* TCRestaurantLogoView.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
 				7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */,
-				093112121DCECD55000DB8E5 /* TCRestaurantTableViewCell.m in Sources */,
+				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
 				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,
 				7AC2921D1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m in Sources */,
 				092CD3E71DD99DBC0073A9C1 /* TCLocationViewController.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
+				092CD42A1DD9A07C0073A9C1 /* TCSelectSortButton.m in Sources */,
 				7A190AF61DC0A73600651905 /* TCClientRequest.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
+				092CD3F81DD99F4A0073A9C1 /* TCRestaurantViewController.m in Sources */,
+				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
+				092CD4271DD9A07C0073A9C1 /* TCRestaurantFilterView.m in Sources */,
 				7A6506EB1DCA132F00B0EDBF /* TCShippingAddressDetailViewCell.m in Sources */,
 				7AC292221DC88CF200B2C7E8 /* TCBioEditSMSViewController.m in Sources */,
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
+				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.m in Sources */,
-				091B11351DD447FB00F1A584 /* TCRestaurantFilterView.m in Sources */,
+				092CD3F61DD99F4A0073A9C1 /* TCRestaurantInfoViewController.m in Sources */,
 				7A6506D31DC993D400B0EDBF /* TCTabBar.m in Sources */,
-				091AD3181DD7FFC100F444C6 /* TCImgPageControl.m in Sources */,
+				092CD3EE1DD99F070073A9C1 /* TCEntertainmentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
