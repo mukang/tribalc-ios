@@ -9,20 +9,27 @@
 #import "TCRestaurantLogoView.h"
 
 @implementation TCRestaurantLogoView {
+    NSString *titleStr;
     UILabel *logoTitle;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame AndTitle:(NSString *)title {
     self = [super initWithFrame:frame];
     if (self) {
+        titleStr = title;
+        
         self.layer.cornerRadius = frame.size.height / 2;
         self.layer.borderWidth = 2;
         self.layer.borderColor = [UIColor blackColor].CGColor;
         self.backgroundColor = [UIColor whiteColor];
         
         logoTitle = [[UILabel alloc] initWithFrame:CGRectMake(frame.size.width * 0.06, 0.58 * frame.size.height / 2, frame.size.width - (frame.size.width * 0.06 * 2), frame.size.height / 2 * 0.38)];
-        logoTitle.font = [UIFont systemFontOfSize:frame.size.height / 2 * 0.38];
         logoTitle.text = title;
+        float fontFlo = logoTitle.width /  (titleStr.length + 1);
+        NSLog(@"%f", fontFlo);
+//        logoTitle.font = [UIFont systemFontOfSize:frame.size.height / 2 * 0.38];
+        logoTitle.font = [UIFont systemFontOfSize:fontFlo];
+
         logoTitle.textAlignment = NSTextAlignmentCenter;
         [self addSubview:logoTitle];
         
@@ -36,7 +43,8 @@
     [self setFrame:frame];
     self.layer.cornerRadius = frame.size.height / 2;
     [logoTitle setFrame:CGRectMake(frame.size.width * 0.06, 0.58 * frame.size.height / 2, frame.size.width - (frame.size.width * 0.06 * 2), frame.size.height / 2 * 0.38)];
-    logoTitle.font = [UIFont systemFontOfSize:logoTitle.height];
+    float fontFlo = logoTitle.width / (titleStr.length + 1);
+    logoTitle.font = [UIFont systemFontOfSize:fontFlo];
 }
 
 

@@ -73,7 +73,7 @@
     mTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStyleGrouped];
     mTableView.delegate = self;
     mTableView.dataSource = self;
-    
+    mTableView.contentInset = UIEdgeInsetsMake(0, 0, 42, 0);
     [self.view addSubview:mTableView];
 }
 
@@ -216,19 +216,17 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.row == 0) {
-//        return 42;
-//    }
+
     return 160;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row != 0) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-//        TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
-//        [self.navigationController pushViewController:restaurantInfo animated:YES];
-    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    TCEntertainmentInfoViewController *entertainmentViewController = [[TCEntertainmentInfoViewController alloc] init];
+    [self.navigationController pushViewController:entertainmentViewController animated:YES];
+
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -254,15 +252,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)touchLocationBtn {
-    
-}
-- (void)touchBackBtn:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    TCLocationViewController *locatiomView = [[TCLocationViewController alloc] init];
+    [self.navigationController pushViewController:locatiomView animated:YES];
+
 }
 
-- (void)touchLocationBtn:(id)sender {
-    
-}
 - (void)touchCollectionBtn:(id)sender {
     
 }

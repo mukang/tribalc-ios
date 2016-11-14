@@ -59,10 +59,9 @@
     return view;
 }
 
-+ (UIButton *)createImageBtnWithFrame:(CGRect)frame AndImageName:(NSString *)imgName AndAction:(SEL)action {
++ (UIButton *)createImageBtnWithFrame:(CGRect)frame AndImageName:(NSString *)imgName {
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     [button setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
-    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     
     return button;
 }

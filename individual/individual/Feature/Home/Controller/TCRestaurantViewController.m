@@ -107,7 +107,7 @@
     mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStyleGrouped];
     mResaurantTableView.delegate = self;
     mResaurantTableView.dataSource = self;
-    mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
+    mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, 42, 0);
     [self.view addSubview:mResaurantTableView];
 }
 

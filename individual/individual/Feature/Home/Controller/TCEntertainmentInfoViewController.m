@@ -1,29 +1,31 @@
 //
-//  TCResaurantInfoViewController.m
+//  TCEntertainmentInfoViewController.m
 //  individual
 //
-//  Created by chen on 16/11/3.
+//  Created by WYH on 16/11/14.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCRestaurantInfoViewController.h"
+#import "TCEntertainmentInfoViewController.h"
 
-@interface TCRestaurantInfoViewController () {
+@interface TCEntertainmentInfoViewController (){
     UIImageView *restaurantInfoLogoImageView;
     TCRestaurantLogoView *logoView;
     UIImageView *barImageView;
     NSDictionary *restaurantInfoDic;
 }
 
+
 @end
 
-@implementation TCRestaurantInfoViewController
+@implementation TCEntertainmentInfoViewController
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     mScrollView.delegate = self;
     [self initNavigationBar];
-
+    
 }
 
 
@@ -32,7 +34,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
     
-
+    
     [self initRestaurantInfo];
     
     [self initBaseData];
@@ -48,10 +50,10 @@
     
     UIView *recommendedReasonView = [self createTextViewWithFrame:CGRectMake(0, addressAndPhoneView.y + addressAndPhoneView.height, self.view.width, 175) AndTitle:@"推荐理由" AndText:restaurantInfoDic[@"recommend"] AndimgName:@"res_recommend"];
     [mScrollView addSubview:recommendedReasonView];
-
-    UIView *restTopicView = [self createTextViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, 175) AndTitle:@"餐厅话题" AndText:restaurantInfoDic[@"topic"] AndimgName:@"res_topic"];
+    
+    UIView *restTopicView = [self createTextViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, 175) AndTitle:@"娱乐话题" AndText:restaurantInfoDic[@"topic"] AndimgName:@"res_topic"];
     [mScrollView addSubview:restTopicView];
-
+    
     
     UIView *promptView = [self createPromptViewWithFrame:CGRectMake(0, restTopicView.y + restTopicView.height, self.view.frame.size.width, 145)];
     [mScrollView addSubview:promptView];
@@ -60,7 +62,7 @@
     [mScrollView addSubview:phoneBtn];
     
     mScrollView.contentSize = CGSizeMake(self.view.width, phoneBtn.y + phoneBtn.height + 8);
-
+    
     
 }
 
@@ -72,7 +74,7 @@
     UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:rightName];
     [rightBtn addTarget:self action:@selector(touchCollectionBtn) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-
+    
 }
 
 - (void)initNavigationBar {
@@ -81,15 +83,15 @@
     barImageView = self.navigationController.navigationBar.subviews.firstObject;
     barImageView.backgroundColor = [UIColor whiteColor];
     barImageView.alpha = 0;
-
+    
     [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:@"res_collection"];
     
 }
 
 - (void)initRestaurantInfo {
     restaurantInfoDic = @{
-                          @"img":@"", @"name":@"FNRON", @"type":@"披萨", @"location":@"北苑", @"range":@"6.5km",
-                          @"price":@"169元/人", @"collection":@"166653", @"address":@"北京市朝阳区北苑大姐大小区", @"phone":@"1800000000", @"recommend":@"等我打我对哇大无缝五福娃福娃福娃福娃福娃服务费瓦发五福娃福娃福嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒点点滴滴娃福娃发我发完福娃福娃福娃发五福娃", @"topic":@"对哇嘀呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒点点滴滴嘀ddddddddd嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒对的嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒多大的对的", @"wifi":@true, @"time":@"11:00-23:00", @"reserve":@true, @"room":@true, @"prompt":@[@"wifi", @"pack"]
+                          @"img":@"restaurantInfoLogo", @"name":@"天午方手工陶艺", @"type":@"陶艺", @"location":@"朝阳区", @"range":@"1006.5km",
+                          @"price":@"22169元/人", @"collection":@"166321653", @"address":@"北京市朝阳区北苑大姐大小区", @"phone":@"1800000000", @"recommend":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"topic":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"wifi":@true, @"time":@"11:00-23:00", @"reserve":@true, @"room":@true, @"prompt":@[@"wifi", @"pack"]
                           };
     
 }
@@ -98,11 +100,9 @@
 - (void)initBaseData {
     
     mScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 45)];
-//    mScrollView.contentSize = CGSizeMake(mScrollView.frame.size.width, mScrollView.size.height + 64 + 200);
     [self.view addSubview:mScrollView];
     
-    
-    UIImage *restaurantInfoLogoImage = [UIImage imageNamed:@"restaurantInfoLogo"];
+    UIImage *restaurantInfoLogoImage = [UIImage imageNamed:restaurantInfoDic[@"img"]];
     restaurantInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, 270)];
     restaurantInfoLogoImageView.image = restaurantInfoLogoImage;
     restaurantInfoLogoImageView.backgroundColor = [UIColor lightGrayColor];
@@ -130,6 +130,7 @@
     priceLab.textAlignment = NSTextAlignmentRight;
     [view addSubview:priceLab];
     
+//    UILabel *collectionLab = [TCComponent createLabelWithFrame:CGRectMake(frame.size.width / 2, priceLab.y, frame.size.width / 2, 11) AndFontSize:11 AndTitle:[NSString stringWithFormat:@"❤%@已收藏",restaurantInfoDic[@"collection"]] AndTextColor:priceLab.textColor];
     UIView *collectionView = [self getCollectionViewWithFrame:CGRectMake(frame.size.width / 2, priceLab.y, frame.size.width / 2, 11) AndNumber:restaurantInfoDic[@"collection"]];
     [view addSubview:collectionView];
     
@@ -163,7 +164,7 @@
 - (UIView *)createTextViewWithFrame:(CGRect)frame AndTitle:(NSString *)title AndText:(NSString *)text AndimgName:(NSString *)imgName{
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
-
+    
     
     UIView *titleView = [self getImageTitleViewWithFrame:CGRectMake(0, 22.5, frame.size.width, 23) AndImgName:imgName AndTitle:title];
     
@@ -171,9 +172,9 @@
     textLab.numberOfLines = 4;
     textLab.font = [UIFont systemFontOfSize:14];
     textLab.attributedText = [self getAttributedStringWithText:text];
-   
+    
     UIView *line = [TCComponent createGrayLineWithFrame:CGRectMake(20, view.size.height - 0.5, view.width - 40, 0.5)];
-
+    
     if (text.length > 80) {
         UIButton *moreInfoBtn = [self getMoreInfoButtonWithFrame:CGRectMake(0, frame.size.height - 10 - 12, frame.size.width, 12)];
         [view addSubview:moreInfoBtn];
@@ -182,6 +183,7 @@
         } else {
             [moreInfoBtn addTarget:self action:@selector(touchMoreTopicInfo) forControlEvents:UIControlEventTouchUpInside];
         }
+
     }
     
     [view addSubview:titleView];
@@ -190,6 +192,8 @@
     
     return view;
 }
+
+
 
 - (UIView *)createPromptViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
@@ -278,6 +282,19 @@
     return view;
 }
 
+- (UIView *)getCollectionViewWithFrame:(CGRect)frame AndNumber:(NSString *)number{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    UIImage *collectionImg = [UIImage imageNamed:@"res_collection_gray"];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 1, 11, 9)];
+    imgView.image = collectionImg;
+    [view addSubview:imgView];
+   
+    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(imgView.x + imgView.width + 1, 0, frame.size.width - imgView.x - imgView.width, frame.size.height) AndFontSize:frame.size.height AndTitle:[NSString stringWithFormat:@"%@已收藏", number] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    [view addSubview:label];
+
+    
+    return view;
+}
 
 - (UIView *)getImageTitleViewWithFrame:(CGRect)frame AndImgName:(NSString *)imgName AndTitle:(NSString *)title {
     UIView *view = [[UIView alloc] initWithFrame:frame];
@@ -289,7 +306,7 @@
     
     [view addSubview:imgView];
     [view addSubview:titleLab];
-
+    
     return view;
 }
 
@@ -297,10 +314,10 @@
     NSMutableAttributedString *attrText = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = 5;
-    paragraphStyle.alignment = NSTextAlignmentJustified;
-//    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+//        paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
     [attrText addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, text.length)];
-
+    
     return attrText;
 }
 
@@ -324,24 +341,9 @@
     UILabel *rangeLab = [TCComponent createLabelWithFrame:CGRectMake(rightLine.x + 0.5 + 8, locationLab.y, frame.size.width - rightLine.x + 0.5 + 8, locationLab.height) AndFontSize:14 AndTitle:restaurantInfoDic[@"range"]];
     rangeLab.textAlignment = NSTextAlignmentLeft;
     [view addSubview:rangeLab];
-
-    return view;
-}
-
-- (UIView *)getCollectionViewWithFrame:(CGRect)frame AndNumber:(NSString *)number{
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    UIImage *collectionImg = [UIImage imageNamed:@"res_collection_gray"];
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 1, 11, 9)];
-    imgView.image = collectionImg;
-    [view addSubview:imgView];
-    
-    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(imgView.x + imgView.width + 1, 0, frame.size.width - imgView.x - imgView.width, frame.size.height) AndFontSize:frame.size.height AndTitle:[NSString stringWithFormat:@"%@已收藏", number] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
-    [view addSubview:label];
-    
     
     return view;
 }
-
 
 - (UIButton *)getMoreInfoButtonWithFrame:(CGRect)frame {
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
@@ -352,7 +354,6 @@
     return button;
 }
 
-
 #pragma mark - click
 - (void)touchBackBtn {
     [self.navigationController popViewControllerAnimated:YES];
@@ -361,6 +362,15 @@
 - (void)touchCollectionBtn {
     
 }
+- (void)touchMoreRecommendInfo {
+    
+}
+
+- (void)touchMoreTopicInfo {
+    
+}
+
+
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -388,7 +398,7 @@
     CGFloat alpha = (offset - minAlphaOffset) / (maxAlphaOffset - minAlphaOffset);
     barImageView.alpha = alpha;
     
-
+    
     CGPoint point = scrollView.contentOffset;
     
     if (point.y > 70) {
@@ -400,7 +410,7 @@
     }
     
     NSLog(@"%f", point.y);
-
+    
     if (point.y < -64) {
         double height = -point.y - 64 + 270;
         double number = height / 270;
@@ -413,7 +423,7 @@
     }
 }
 
-#pragma mark - click 
+#pragma mark - click
 -(void)touchPhoneBtn {
     
 }
@@ -421,14 +431,5 @@
 - (void)touchLocationBtn {
     
 }
-
-- (void)touchMoreRecommendInfo {
-    
-}
-
-- (void)touchMoreTopicInfo {
-    
-}
-
 
 @end

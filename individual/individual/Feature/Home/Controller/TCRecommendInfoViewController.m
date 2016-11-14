@@ -180,11 +180,13 @@
 - (UIView *)createBottomViewWithFrame:(CGRect)frame {
     UIView *view=  [[UIView alloc] initWithFrame:frame];
     
-    UIButton *collectionBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"res_collection" AndAction:@selector(touchCollectionBtn:)];
+    UIButton *collectionBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"res_collection"];
+    [collectionBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
     collectionBtn.backgroundColor = [UIColor blueColor];
     [view addSubview:collectionBtn];
     
-    UIButton *shopCarImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(collectionBtn.x + collectionBtn.width, 0, collectionBtn.width, collectionBtn.height) AndImageName:@"goods_shoppingcar" AndAction:@selector(touchShopCarBtn:)];
+    UIButton *shopCarImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(collectionBtn.x + collectionBtn.width, 0, collectionBtn.width, collectionBtn.height) AndImageName:@"goods_shoppingcar"];
+    [shopCarImgBtn addTarget:self action:@selector(touchShopCarBtn:) forControlEvents:UIControlEventTouchUpInside];
     shopCarImgBtn.backgroundColor = [UIColor blueColor];
     [view addSubview:shopCarImgBtn];
     
@@ -354,6 +356,18 @@
 
 
 }
+
+
+- (void)touchShopCarBtn:(id)sender {
+    
+}
+
+
+- (void)touchCollectionBtn:(id)sender {
+    
+}
+
+
 
 - (void)viewWillDisappear:(BOOL)animated {
 

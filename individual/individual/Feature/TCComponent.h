@@ -15,7 +15,7 @@
 + (UILabel *)createLabelWithFrame:(CGRect)frame AndFontSize:(float)font AndTitle:(NSString *)text;
 + (UILabel *)createLabelWithFrame:(CGRect)frame AndFontSize:(float)font AndTitle:(NSString *)text AndTextColor:(UIColor *)color;
 + (UIView *)createGrayLineWithFrame:(CGRect)frame;
-+ (UIButton *)createImageBtnWithFrame:(CGRect)frame AndImageName:(NSString *)imgName AndAction:(SEL)action;
++ (UIButton *)createImageBtnWithFrame:(CGRect)frame AndImageName:(NSString *)imgName;
 + (UIButton *)createButtonWithFrame:(CGRect)frame AndTitle:(NSString *)title AndFontSize:(float)font AndBackColor:(UIColor *)backColor AndTextColor:(UIColor *)titleColor;
 + (UIButton *)createButtonWithFrame:(CGRect)frame AndTitle:(NSString *)title AndFontSize:(float)font;
 

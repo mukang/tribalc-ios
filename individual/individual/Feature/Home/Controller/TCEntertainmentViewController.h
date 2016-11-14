@@ -12,6 +12,8 @@
 #import "TCRestaurantFilterView.h"
 #import "TCRestaurantSelectButton.h"
 #import "TCRestaurantTableViewCell.h"
+#import "TCLocationViewController.h"
+#import "TCEntertainmentInfoViewController.h"
 
 @interface TCEntertainmentViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
