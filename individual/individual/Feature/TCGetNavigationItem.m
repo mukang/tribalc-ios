@@ -11,8 +11,6 @@
 @implementation TCGetNavigationItem
 
 
-
-
 + (UIBarButtonItem *)getBarItemWithFrame:(CGRect)frame AndImageName:(NSString *)imgName {
     
     UIButton *button = [self getBarButtonWithFrame:frame AndImageName:imgName];

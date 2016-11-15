@@ -9,10 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
+#import "TCAnnotation.h"
+#import "TCCalloutAnnotation.h"
+#import "TCCalloutAnnotationView.h"
 
 @interface TCLocationViewController : UIViewController <MKMapViewDelegate> {
     MKMapView *mMapView;
     CLLocationManager *mLocationManager;
+    
 }
 
 @end

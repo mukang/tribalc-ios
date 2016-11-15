@@ -70,9 +70,12 @@
     [dataTask resume];
     
     goodInfoDic = @{ @"title": @"Nike耐克2016新款多划算的还是动画设2计", @"price":@"465",
-                     @"size":@[@"2"], @"logoImg":@"", @"brand":@"品牌", @"evaluate":@"3",
+                     @"size":@[@"S", @"M", @"L", @"XL"], @"logoImg":@"", @"brand":@"品牌", @"evaluate":@"3",
                      @"sales":@"18.6万", @"profit":@"65573", @"phone":@"732173", @"image_text":@"https://www.baidu.com/"
-                     ,@"parameters":@"https://ssl.zc.qq.com/chs/", @"image":@[@"good_image", @"good_image", @"good_image", @"good_image", @"null", @"null", @"null", @"null"]
+                     ,@"parameters":@"https://ssl.zc.qq.com/chs/", @"image":@[@"good_image", @"good_image", @"good_image", @"good_image", @"null", @"null", @"null", @"null"],
+                     @"style":@[ @{ @"title": @"套装", @"price": @"300", @"img":@"good_image" }
+                             ,@{ @"title": @"鞋", @"price": @"50", @"img":@"null"}
+                             ,@{ @"title": @"连衣裙", @"price": @"3100", @"img":@"null"}]
                      };
     
 }
@@ -156,6 +159,8 @@
     [imgView sizeToFit];
     [imgView setOrigin:CGPointMake(frame.size.width - 20 - imgView.width, frame.size.height / 2 - imgView.height / 2)];
     [button addSubview:imgView];
+    
+    [button addTarget:self action:@selector(touchSelectSizeBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     return button;
 }
@@ -347,6 +352,7 @@
     
     int index = scrollView.contentOffset.x / self.view.width;
     imgPageControl.currentPage = index;
+    
 }
 
 #pragma mark - click
@@ -387,6 +393,17 @@
     }];
     [dataTask resume];
 
+}
+
+- (void)touchSelectSizeBtn:(UIButton *)btn {
+    TCStandardView *sizeView = [[TCStandardView alloc] initWithData:goodInfoDic AndTarget:self AndStyleAction:@selector(touchTest:) AndSizeAction:@selector(touchTest:)];
+    sizeView.backgroundColor = [UIColor grayColor];
+    [self.view addSubview:sizeView];
+    
+}
+
+- (void)touchTest:(UIButton *)btn {
+    
 }
 
 

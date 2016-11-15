@@ -29,6 +29,7 @@
 		092CD4281DD9A07C0073A9C1 /* TCRestaurantSelectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD41D1DD9A07C0073A9C1 /* TCRestaurantSelectButton.m */; };
 		092CD4291DD9A07C0073A9C1 /* TCRestaurantSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD41F1DD9A07C0073A9C1 /* TCRestaurantSortView.m */; };
 		092CD42A1DD9A07C0073A9C1 /* TCSelectSortButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */; };
+		092CD42D1DD9C5FC0073A9C1 /* TCStandardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */; };
 		1EA3289035216A7674F8F7F8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A240A7A9EE484200847270B /* libPods.a */; };
 		7A190AF01DC09BF500651905 /* TCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AEF1DC09BF500651905 /* TCClient.m */; };
 		7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF21DC0A5DB00651905 /* TCClientConfig.m */; };
@@ -156,6 +157,8 @@
 		092CD41F1DD9A07C0073A9C1 /* TCRestaurantSortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRestaurantSortView.m; sourceTree = "<group>"; };
 		092CD4201DD9A07C0073A9C1 /* TCSelectSortButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectSortButton.h; sourceTree = "<group>"; };
 		092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectSortButton.m; sourceTree = "<group>"; };
+		092CD42B1DD9C5FC0073A9C1 /* TCStandardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStandardView.h; sourceTree = "<group>"; };
+		092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStandardView.m; sourceTree = "<group>"; };
 		1A240A7A9EE484200847270B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6119E9AF010F0BE87CA35612 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7A190AEE1DC09BF500651905 /* TCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClient.h; sourceTree = "<group>"; };
@@ -388,6 +391,8 @@
 			children = (
 				092CD4131DD9A07C0073A9C1 /* TCImgPageControl.h */,
 				092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */,
+				092CD42B1DD9C5FC0073A9C1 /* TCStandardView.h */,
+				092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */,
 			);
 			path = RecommendBoutique;
 			sourceTree = "<group>";
@@ -895,7 +900,7 @@
 				TargetAttributes = {
 					7A9CCECB1DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = W8R8AW7WU4;
+						DevelopmentTeam = YXS4683M84;
 						ProvisioningStyle = Automatic;
 					};
 					7A9CCEE41DB62011003D90C6 = {
@@ -1074,6 +1079,7 @@
 				092CD3E71DD99DBC0073A9C1 /* TCLocationViewController.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
+				092CD42D1DD9C5FC0073A9C1 /* TCStandardView.m in Sources */,
 				092CD42A1DD9A07C0073A9C1 /* TCSelectSortButton.m in Sources */,
 				7A190AF61DC0A73600651905 /* TCClientRequest.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
@@ -1159,7 +1165,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 广 李 (47NNVGYWKJ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1181,6 +1188,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "3c64982e-6335-4976-96ac-ee7b28fc031f";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1207,7 +1215,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 广 李 (47NNVGYWKJ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1222,6 +1231,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "3c64982e-6335-4976-96ac-ee7b28fc031f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1232,14 +1242,17 @@
 			baseConfigurationReference = 6119E9AF010F0BE87CA35612 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = W8R8AW7WU4;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = YXS4683M84;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
 				INFOPLIST_FILE = individual/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.buluogs.individual;
+				PRODUCT_BUNDLE_IDENTIFIER = "-52XNHBVYZ.com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1248,14 +1261,17 @@
 			baseConfigurationReference = FDF9BE3739BA95056A69F363 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = W8R8AW7WU4;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = YXS4683M84;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
 				INFOPLIST_FILE = individual/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.buluogs.individual;
+				PRODUCT_BUNDLE_IDENTIFIER = "-52XNHBVYZ.com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
