@@ -28,8 +28,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.navigationItem.title = @"收货地址";
+    [self setupNavBar];
     [self setupSubviews];
+}
+
+- (void)setupNavBar {
+    self.navigationItem.title = @"收货地址";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(handleCickBackButton:)];
 }
 
 - (void)setupSubviews {
@@ -41,6 +49,12 @@
     [self.tableView registerNib:nib forCellReuseIdentifier:@"TCShippingAddressDetailViewCell"];
     nib = [UINib nibWithNibName:@"TCBiographyViewCell" bundle:[NSBundle mainBundle]];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"TCBiographyViewCell"];
+}
+
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - UITableViewDataSource
@@ -98,7 +112,7 @@
     [self dismissPickerView];
 }
 
-#pragma mark - picker view
+#pragma mark - Picker View
 
 - (void)showPickerView {
     
@@ -128,6 +142,12 @@
         [self.pickerBgView removeFromSuperview];
         [self.cityPickerView removeFromSuperview];
     }];
+}
+
+#pragma mark - Actions
+
+- (void)handleCickBackButton:(UIBarButtonItem *)sender {
+    
 }
 
 - (void)didReceiveMemoryWarning {

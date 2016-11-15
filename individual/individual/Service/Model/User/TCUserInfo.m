@@ -26,6 +26,10 @@
     _emotion = emotion;
     if ([emotion isEqualToString:@"SINGLE"]) {
         self.emotionState = TCUserEmotionStateSingle;
+    } else if ([emotion isEqualToString:@"MARRIED"]) {
+        self.emotionState = TCUserEmotionStateMarried;
+    } else if ([emotion isEqualToString:@"LOVE"]) {
+        self.emotionState = TCUserEmotionStateLove;
     } else {
         self.emotionState = TCUserEmotionStateUnknown;
     }

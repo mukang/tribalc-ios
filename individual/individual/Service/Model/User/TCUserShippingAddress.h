@@ -1,14 +1,14 @@
 //
-//  TCUserChippingAddress.h
+//  TCUserShippingAddress.h
 //  individual
 //
-//  Created by 穆康 on 2016/11/11.
+//  Created by 穆康 on 2016/11/15.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface TCUserChippingAddress : NSObject
+@interface TCUserShippingAddress : NSObject
 
 /** 地址ID */
 @property (copy, nonatomic) NSString *ID;

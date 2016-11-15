@@ -143,49 +143,49 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 /**
  修改用户默认收货地址
 
- @param chippingAddressID 收货地址ID
+ @param shippingAddressID 收货地址ID
  @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
  */
-- (void)changeUserDefaultChippingAddress:(NSString *)chippingAddressID result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)setUserDefaultShippingAddress:(NSString *)shippingAddressID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
  添加用户收货地址
 
- @param chippingAddress 用户收货地址，TCUserChippingAddress对象
+ @param shippingAddress 用户收货地址，TCUserShippingAddress对象
  @param resultBlock 结果回调，success为NO时表示添加失败，失败原因见error的code和userInfo
  */
-- (void)addUserChippingAddress:(TCUserChippingAddress *)chippingAddress result:(void (^)(BOOL success, TCUserChippingAddress *chippingAddress, NSError *error))resultBlock;
+- (void)addUserShippingAddress:(TCUserShippingAddress *)shippingAddress result:(void (^)(BOOL success, TCUserShippingAddress *shippingAddress, NSError *error))resultBlock;
 
 /**
  获取用户收货地址列表
 
  @param resultBlock 结果回调，addressList为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchUserChippingAddressList:(void (^)(NSArray *addressList, NSError *error))resultBlock;
+- (void)fetchUserShippingAddressList:(void (^)(NSArray *addressList, NSError *error))resultBlock;
 
 /**
  获取用户单个收货地址
 
- @param chippingAddressID 收货地址ID
+ @param shippingAddressID 收货地址ID
  @param resultBlock 结果回调，chippingAddress为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchUserChippingAddress:(NSString *)chippingAddressID result:(void (^)(TCUserChippingAddress *chippingAddress, NSError *error))resultBlock;
+- (void)fetchUserShippingAddress:(NSString *)shippingAddressID result:(void (^)(TCUserShippingAddress *shippingAddress, NSError *error))resultBlock;
 
 /**
  修改用户收货地址
 
- @param chippingAddress TCUserChippingAddress对象
+ @param shippingAddress TCUserShippingAddress对象
  @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
  */
-- (void)changeUserChippingAddress:(TCUserChippingAddress *)chippingAddress result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)changeUserShippingAddress:(TCUserShippingAddress *)shippingAddress result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
  删除用户收货地址
 
- @param chippingAddressID 收货地址ID
+ @param shippingAddressID 收货地址ID
  @param resultBlock 结果回调，success为NO时表示删除失败，失败原因见error的code和userInfo
  */
-- (void)deleteUserChippingAddress:(NSString *)chippingAddressID result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)deleteUserShippingAddress:(NSString *)shippingAddressID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 

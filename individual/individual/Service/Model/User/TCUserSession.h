@@ -18,7 +18,7 @@
 /** TOKEN字符串 */
 @property (copy, nonatomic) NSString *token;
 /** TOKEN有效截止时间(毫秒) */
-@property (nonatomic) NSUInteger expired;
+@property (nonatomic) NSInteger expired;
 /** 用户信息 */
 @property (strong, nonatomic) TCUserInfo *userInfo;
 /** 用户敏感信息 */

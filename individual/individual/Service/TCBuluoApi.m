@@ -122,17 +122,17 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             userSession.userSensitiveInfo = userSensitiveInfo;
             [self setUserSession:userSession];
             if (userSensitiveInfo.addressID) {
-                [self fetchUserDefaultChippingAddressWithAddressID:userSensitiveInfo.addressID];
+                [self fetchUserDefaultShippingAddressWithAddressID:userSensitiveInfo.addressID];
             }
         }
     }];
 }
 
-- (void)fetchUserDefaultChippingAddressWithAddressID:(NSString *)addressID {
-    [self fetchUserChippingAddress:addressID result:^(TCUserChippingAddress *chippingAddress, NSError *error) {
-        if (chippingAddress) {
+- (void)fetchUserDefaultShippingAddressWithAddressID:(NSString *)addressID {
+    [self fetchUserShippingAddress:addressID result:^(TCUserShippingAddress *shippingAddress, NSError *error) {
+        if (shippingAddress) {
             TCUserSession *userSession = self.currentUserSession;
-            userSession.userSensitiveInfo.chippingAddress = chippingAddress;
+            userSession.userSensitiveInfo.shippingAddress = shippingAddress;
             [self setUserSession:userSession];
         }
     }];
@@ -261,7 +261,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/sex", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-        NSString *sex = nil;
+        NSString *sex = @"UNKNOWN";
         switch (gender) {
             case TCUserGenderMale:
                 sex = @"MALE";
@@ -301,7 +301,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/birthday", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
         NSTimeInterval timestamp = [birthdate timeIntervalSince1970];
-        [request setValue:[NSNumber numberWithUnsignedInteger:(NSUInteger)(timestamp * 1000)] forParam:@"birthday"];
+        [request setValue:[NSNumber numberWithInteger:(timestamp * 1000)] forParam:@"birthday"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
                 TCUserSession *userSession = self.currentUserSession;
@@ -328,16 +328,16 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/emotion", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-        NSString *emotion = nil;
+        NSString *emotion = @"UNKNOWN";
         switch (emotionState) {
             case TCUserEmotionStateMarried:
-                
+                emotion = @"MARRIED";
                 break;
             case TCUserEmotionStateSingle:
                 emotion = @"SINGLE";
                 break;
             case TCUserEmotionStateLove:
-                
+                emotion = @"LOVE";
                 break;
             default:
                 break;
@@ -455,13 +455,16 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)changeUserDefaultChippingAddress:(NSString *)chippingAddressID result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)setUserDefaultShippingAddress:(NSString *)shippingAddressID result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/sensitive_info/addressID", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-        [request setValue:chippingAddressID forKey:@"value"];
+        [request setValue:shippingAddressID forKey:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userSensitiveInfo.addressID = shippingAddressID;
+                [self setUserSession:userSession];
                 if (resultBlock) {
                     resultBlock(YES, nil);
                 }
@@ -479,17 +482,17 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)addUserChippingAddress:(TCUserChippingAddress *)chippingAddress result:(void (^)(BOOL, TCUserChippingAddress *, NSError *))resultBlock {
+- (void)addUserShippingAddress:(TCUserShippingAddress *)shippingAddress result:(void (^)(BOOL, TCUserShippingAddress *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
-        NSDictionary *dic = [chippingAddress toObjectDictionary];
+        NSDictionary *dic = [shippingAddress toObjectDictionary];
         for (NSString *key in dic.allKeys) {
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 201) {
-                TCUserChippingAddress *address = [[TCUserChippingAddress alloc] initWithObjectDictionary:response.data];
+                TCUserShippingAddress *address = [[TCUserShippingAddress alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
                     resultBlock(YES, address, nil);
                 }
@@ -507,7 +510,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchUserChippingAddressList:(void (^)(NSArray *, NSError *))resultBlock {
+- (void)fetchUserShippingAddressList:(void (^)(NSArray *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
@@ -521,7 +524,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 NSMutableArray *addressList = [NSMutableArray array];
                 NSArray *dics = response.data;
                 for (NSDictionary *dic in dics) {
-                    TCUserChippingAddress *address = [[TCUserChippingAddress alloc] initWithObjectDictionary:dic];
+                    TCUserShippingAddress *address = [[TCUserShippingAddress alloc] initWithObjectDictionary:dic];
                     [addressList addObject:address];
                 }
                 if (resultBlock) {
@@ -537,9 +540,9 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchUserChippingAddress:(NSString *)chippingAddressID result:(void (^)(TCUserChippingAddress *, NSError *))resultBlock {
+- (void)fetchUserShippingAddress:(NSString *)shippingAddressID result:(void (^)(TCUserShippingAddress *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses/%@", self.currentUserSession.assigned, chippingAddressID];
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses/%@", self.currentUserSession.assigned, shippingAddressID];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.error) {
@@ -547,7 +550,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                     resultBlock(nil, response.error);
                 }
             } else {
-                TCUserChippingAddress *address = [[TCUserChippingAddress alloc] initWithObjectDictionary:response.data];
+                TCUserShippingAddress *address = [[TCUserShippingAddress alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
                     resultBlock(address, nil);
                 }
@@ -561,11 +564,11 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)changeUserChippingAddress:(TCUserChippingAddress *)chippingAddress result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)changeUserShippingAddress:(TCUserShippingAddress *)shippingAddress result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses/%@", self.currentUserSession.assigned, chippingAddress.ID];
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses/%@", self.currentUserSession.assigned, shippingAddress.ID];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-        NSDictionary *dic = [chippingAddress toObjectDictionary];
+        NSDictionary *dic = [shippingAddress toObjectDictionary];
         for (NSString *key in dic.allKeys) {
             [request setValue:dic[key] forParam:key];
         }
@@ -588,9 +591,9 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)deleteUserChippingAddress:(NSString *)chippingAddressID result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)deleteUserShippingAddress:(NSString *)shippingAddressID result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses/%@", self.currentUserSession.assigned, chippingAddressID];
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addresses/%@", self.currentUserSession.assigned, shippingAddressID];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 204) {

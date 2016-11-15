@@ -16,8 +16,14 @@ typedef NS_ENUM (NSInteger, TCBioEditType) {
     
 };
 
+typedef void(^TCBioEditBlock)(BOOL isEdit, TCBioEditType bioEditType);
+
 @interface TCBioEditViewController : UIViewController
 
 @property (nonatomic) TCBioEditType bioEditType;
+
+
+/** 简介编辑回调 */
+@property (copy, nonatomic) TCBioEditBlock bioEditBlock;
 
 @end

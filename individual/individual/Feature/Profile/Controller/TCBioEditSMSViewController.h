@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^TCEditPhoneBlock)(BOOL isEdit);
+
 @interface TCBioEditSMSViewController : UIViewController
 
 @property (copy, nonatomic) NSString *phone;
+
+/** 编辑新手机号回调 */
+@property (copy, nonatomic) TCEditPhoneBlock editPhoneBlock;
 
 @end

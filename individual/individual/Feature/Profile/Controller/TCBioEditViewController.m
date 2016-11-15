@@ -32,6 +32,8 @@ static NSInteger const kMaxLength = 8;
 @property (strong, nonatomic) NSLayoutConstraint *nickViewCenterYConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *birthdateViewCenterYConstraint;
 
+@property (strong, nonatomic) TCUserSession *userSession;
+
 @end
 
 @implementation TCBioEditViewController {
@@ -43,6 +45,7 @@ static NSInteger const kMaxLength = 8;
     // Do any additional setup after loading the view.
     
     weakSelf = self;
+    self.userSession = [[TCBuluoApi api] currentUserSession];
     self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
     
     [self registerNotifications];
@@ -99,7 +102,7 @@ static NSInteger const kMaxLength = 8;
     }
 }
 
-#pragma mark - actions
+#pragma mark - Actions
 
 - (void)keyboardWillShow:(NSNotification *)noti {
     if (self.bioEditType == TCBioEditTypeNick) {
@@ -159,12 +162,22 @@ static NSInteger const kMaxLength = 8;
     return YES;
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (![[textField textInputMode] primaryLanguage] || [[[textField textInputMode] primaryLanguage] isEqualToString:@"emoji"]) {
+        return NO;
+    }
+    return YES;
+}
+
 #pragma mark - TCBioEditViewDelegate
 
 - (void)didClickCommitButtonInBioEditView:(TCBioEditView *)view {
     if ([view isEqual:self.editNickView]) {
-//        [[TCBuluoApi api] changeUserNickname:<#(NSString *)#> result:<#^(BOOL success, NSError *error)resultBlock#>]
+        [self handleEditUserNick];
+    } else if ([view isEqual:self.editBirthdateView]) {
+        [self handleEditUserBirthdate];
     }
+    
 }
 
 - (void)didClickCancelButtonInBioEditView:(TCBioEditView *)view {
@@ -184,6 +197,15 @@ static NSInteger const kMaxLength = 8;
 
 #pragma mark - TCBioEditGenderViewDelegate
 
+- (void)bioEditGenderView:(TCBioEditGenderView *)view didClickCommitButtonWithGender:(TCUserGender)gender {
+    if (gender == self.userSession.userInfo.gender) {
+        view.hidden = YES;
+        [self dismiss];
+    } else {
+        [self handleEditUserGender:gender];
+    }
+}
+
 - (void)didClickCancelButtonInBioEditGenderView:(TCBioEditGenderView *)view {
     view.hidden = YES;
     [self dismiss];
@@ -191,15 +213,24 @@ static NSInteger const kMaxLength = 8;
 
 #pragma mark - TCBioEditAffectionViewDelegate
 
+- (void)bioEditAffectionView:(TCBioEditAffectionView *)view didClickCommitButtonWithEmotionState:(TCUserEmotionState)emotionState {
+    if (emotionState == self.userSession.userInfo.emotionState) {
+        view.hidden = YES;
+        [self dismiss];
+    } else {
+        [self handleEditUserEmotionState:emotionState];
+    }
+}
+
 - (void)didClickCancelButtonInBioEditAffectionView:(TCBioEditAffectionView *)view {
     view.hidden = YES;
     [self dismiss];
 }
 
-#pragma mark - dismiss
+#pragma mark - Dismiss
 
 - (void)dismiss {
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         weakSelf.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
     } completion:^(BOOL finished) {
         [weakSelf dismissViewControllerAnimated:NO completion:nil];
@@ -208,7 +239,7 @@ static NSInteger const kMaxLength = 8;
 
 #pragma mark - Networking 
 
-- (void)handleChangeUserNick {
+- (void)handleEditUserNick {
     NSString *nickname = self.editNickView.textField.text;
     if (nickname.length == 0) {
         [MBProgressHUD showHUDWithMessage:@"请您输入昵称"];
@@ -218,19 +249,73 @@ static NSInteger const kMaxLength = 8;
     [[TCBuluoApi api] changeUserNickname:nickname result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD hideHUD:YES];
-            
+            if (weakSelf.bioEditBlock) {
+                weakSelf.bioEditBlock(YES, TCBioEditTypeNick);
+            }
+            weakSelf.editNickView.hidden = YES;
+            [weakSelf dismiss];
         } else {
             [MBProgressHUD showHUDWithMessage:@"昵称修改失败!"];
         }
     }];
 }
 
-#pragma mark - setup subviews
+- (void)handleEditUserGender:(TCUserGender)gender {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] changeUserGender:gender result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            if (weakSelf.bioEditBlock) {
+                weakSelf.bioEditBlock(YES, TCBioEditTypeGender);
+            }
+            weakSelf.editGenderView.hidden = YES;
+            [weakSelf dismiss];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"性别修改失败!"];
+        }
+    }];
+}
+
+- (void)handleEditUserBirthdate {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] changeUserBirthdate:self.datePicker.date result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            if (weakSelf.bioEditBlock) {
+                weakSelf.bioEditBlock(YES, TCBioEditTypeBirthdate);
+            }
+            weakSelf.editBirthdateView.hidden = YES;
+            weakSelf.datePicker.hidden = YES;
+            [weakSelf dismiss];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"出生日期修改失败!"];
+        }
+    }];
+}
+
+- (void)handleEditUserEmotionState:(TCUserEmotionState)emotionState {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] changeUserEmotionState:emotionState result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            if (weakSelf.bioEditBlock) {
+                weakSelf.bioEditBlock(YES, TCBioEditTypeAffection);
+            }
+            weakSelf.editAffectionView.hidden = YES;
+            [weakSelf dismiss];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"情感状况修改失败!"];
+        }
+    }];
+}
+
+#pragma mark - Setup Subviews
 
 - (void)setupBioEditNickView {
     TCBioEditView *editNickView = [[[NSBundle mainBundle] loadNibNamed:@"TCBioEditView" owner:nil options:nil] firstObject];
     editNickView.translatesAutoresizingMaskIntoConstraints = NO;
     editNickView.titleLabel.text = @"昵称";
+    editNickView.textField.text = self.userSession.userInfo.nickname;
     editNickView.textField.returnKeyType = UIReturnKeyDone;
     editNickView.textField.keyboardType = UIKeyboardTypeDefault;
     editNickView.textField.delegate = self;
@@ -282,6 +367,7 @@ static NSInteger const kMaxLength = 8;
     TCBioEditGenderView *editGenderView = [[[NSBundle mainBundle] loadNibNamed:@"TCBioEditGenderView" owner:nil options:nil] firstObject];
     editGenderView.translatesAutoresizingMaskIntoConstraints = NO;
     editGenderView.delegate = self;
+    editGenderView.gender = self.userSession.userInfo.gender;
     [self.view addSubview:editGenderView];
     self.editGenderView = editGenderView;
 }
@@ -328,6 +414,7 @@ static NSInteger const kMaxLength = 8;
     TCBioEditView *editBirthdateView = [[[NSBundle mainBundle] loadNibNamed:@"TCBioEditView" owner:nil options:nil] firstObject];
     editBirthdateView.translatesAutoresizingMaskIntoConstraints = NO;
     editBirthdateView.textField.userInteractionEnabled = NO;
+    editBirthdateView.textField.text = @"1990年01月01日";
     editBirthdateView.titleLabel.text = @"出生日期";
     editBirthdateView.delegate = self;
     [self.view addSubview:editBirthdateView];
@@ -430,6 +517,7 @@ static NSInteger const kMaxLength = 8;
     TCBioEditAffectionView *editAffectionView = [[[NSBundle mainBundle] loadNibNamed:@"TCBioEditAffectionView" owner:nil options:nil] firstObject];
     editAffectionView.translatesAutoresizingMaskIntoConstraints = NO;
     editAffectionView.delegate = self;
+    editAffectionView.emotionState = self.userSession.userInfo.emotionState;
     [self.view addSubview:editAffectionView];
     self.editAffectionView = editAffectionView;
 }
@@ -450,7 +538,7 @@ static NSInteger const kMaxLength = 8;
                                                  toItem:nil
                                               attribute:NSLayoutAttributeNotAnAttribute
                                              multiplier:1.0
-                                               constant:300];
+                                               constant:254];
     [self.editAffectionView addConstraint:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:self.editAffectionView
@@ -471,6 +559,7 @@ static NSInteger const kMaxLength = 8;
                                                constant:0];
     [self.view addConstraint:constraint];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

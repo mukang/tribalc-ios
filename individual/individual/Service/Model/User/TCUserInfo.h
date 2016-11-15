@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, TCUserEmotionState) {
 /** 用户ID */
 @property (copy, nonatomic) NSString *ID;
 /** 注册时间 */
-@property (nonatomic) NSUInteger registrationDate;
+@property (nonatomic) NSInteger registrationDate;
 /** 服务等级 */
 @property (copy, nonatomic) NSString *serviceLeve;
 /** 昵称 */
@@ -35,13 +35,13 @@ typedef NS_ENUM(NSInteger, TCUserEmotionState) {
 @property (copy, nonatomic) NSString *picture;
 /** 姓名 */
 @property (copy, nonatomic) NSString *name;
-/** 性别 */
+/** 性别(UNKNOWN, MALE, FEMALE) */
 @property (copy, nonatomic) NSString *sex;
 /** 性别(枚举) */
 @property (nonatomic) TCUserGender gender;
 /** 出生日期 */
-@property (nonatomic) NSUInteger birthday;
-/** 情感状况 */
+@property (nonatomic) NSInteger birthday;
+/** 情感状况(UNKNOWN, SINGLE, LOVE, MARRIED) */
 @property (copy, nonatomic) NSString *emotion;
 /** 情感状况(枚举) */
 @property (nonatomic) TCUserEmotionState emotionState;

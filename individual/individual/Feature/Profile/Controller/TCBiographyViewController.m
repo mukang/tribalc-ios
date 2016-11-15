@@ -17,6 +17,7 @@
 #import "TCCityPickerView.h"
 
 #import "UIImage+Category.h"
+#import "MBProgressHUD+Category.h"
 
 #import "TCBuluoApi.h"
 
@@ -32,11 +33,14 @@
 
 @end
 
-@implementation TCBiographyViewController
+@implementation TCBiographyViewController {
+    __weak TCBiographyViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    weakSelf = self;
     
     [self setupNavBar];
     [self setupSubviews];
@@ -68,7 +72,9 @@
 - (void)fetchUserInfo {
     TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
     TCUserSensitiveInfo *userSensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
+    // 昵称
     NSString *nickname = userInfo.nickname ?: @"";
+    // 性别
     NSString *genderStr = @"";
     switch (userInfo.gender) {
         case TCUserGenderMale:
@@ -80,13 +86,15 @@
         default:
             break;
     }
+    // 出生日期
     NSString *birthDateStr = @"";
-    if (!userInfo.birthday) {
+    if (userInfo.birthday) {
         NSDate *birthDate = [NSDate dateWithTimeIntervalSince1970:(userInfo.birthday / 1000)];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy年MM月dd日";
         birthDateStr = [dateFormatter stringFromDate:birthDate];
     }
+    // 情感状况
     NSString *emotionStateStr = @"";
     switch (userInfo.emotionState) {
         case TCUserEmotionStateMarried:
@@ -101,18 +109,20 @@
         default:
             break;
     }
+    // 电话号码
     NSString *phone = userSensitiveInfo.phone ?: @"";
+    // 所在地
     NSString *province = userInfo.province ?: @"";
     NSString *city = userInfo.city ?: @"";
     NSString *district = userInfo.district ?: @"";
     NSString *address = [NSString stringWithFormat:@"%@%@%@", province, city, district];
+    // 收货地址
     NSString *chippingAddress = @"";
-    if (userSensitiveInfo.chippingAddress) {
-        chippingAddress = [NSString stringWithFormat:@"%@%@%@%@", userSensitiveInfo.chippingAddress.province, userSensitiveInfo.chippingAddress.city, userSensitiveInfo.chippingAddress.district, userSensitiveInfo.chippingAddress.address];
+    if (userSensitiveInfo.shippingAddress) {
+        chippingAddress = [NSString stringWithFormat:@"%@%@%@%@", userSensitiveInfo.shippingAddress.province, userSensitiveInfo.shippingAddress.city, userSensitiveInfo.shippingAddress.district, userSensitiveInfo.shippingAddress.address];
     }
     
     self.bioDetailsTitles = @[@[@"", nickname, genderStr, birthDateStr, emotionStateStr], @[phone, address, chippingAddress]];
-    
     [self.tableView reloadData];
 }
 
@@ -180,11 +190,21 @@
             bioEditVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
             bioEditVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
             bioEditVC.bioEditType = indexPath.row - 1;
+            bioEditVC.bioEditBlock = ^(BOOL isEdit, TCBioEditType bioEditType) {
+                if (isEdit) {
+                    [weakSelf fetchUserInfo];
+                }
+            };
             [self presentViewController:bioEditVC animated:NO completion:nil];
         }
     } else {
         if (indexPath.row == 0) {
             TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
+            editPhoneVC.editPhoneBlock = ^(BOOL isEdit) {
+                if (isEdit) {
+                    [weakSelf fetchUserInfo];
+                }
+            };
             [self.navigationController pushViewController:editPhoneVC animated:YES];
         } else if (indexPath.row == 1) {
             [self showPickerView];
@@ -198,7 +218,22 @@
 #pragma mark - TCCityPickerViewDelegate
 
 - (void)cityPickerView:(TCCityPickerView *)view didClickConfirmButtonWithCityInfo:(NSDictionary *)cityInfo {
-    TCLog(@"%@", cityInfo);
+    
+    TCUserAddress *address = [[TCUserAddress alloc] init];
+    address.province = cityInfo[TCCityPickierViewProvinceKey];
+    address.city = cityInfo[TCCityPickierViewCityKey];
+    address.district = cityInfo[TCCityPickierViewCountryKey];
+    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] changeUserAddress:address result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf fetchUserInfo];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"所在地修改失败！"];
+        }
+    }];
+    
     [self dismissPickerView];
 }
 

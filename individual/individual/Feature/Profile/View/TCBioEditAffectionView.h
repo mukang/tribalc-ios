@@ -7,18 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCUserInfo.h"
 
 @class TCBioEditAffectionView;
 
 @protocol TCBioEditAffectionViewDelegate <NSObject>
 
 @optional
+- (void)bioEditAffectionView:(TCBioEditAffectionView *)view didClickCommitButtonWithEmotionState:(TCUserEmotionState)emotionState;
 - (void)didClickCancelButtonInBioEditAffectionView:(TCBioEditAffectionView *)view;
 
 @end
 
+
+/**
+ 情感状况
+ */
 @interface TCBioEditAffectionView : UIView
 
 @property (weak, nonatomic) id<TCBioEditAffectionViewDelegate> delegate;
+
+@property (nonatomic) TCUserEmotionState emotionState;
 
 @end

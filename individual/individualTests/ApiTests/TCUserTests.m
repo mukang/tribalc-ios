@@ -13,8 +13,8 @@
 
 @property (strong, nonatomic) XCTestExpectation *expectation;
 @property (strong, nonatomic) TCBuluoApi *buluoApi;
-@property (strong, nonatomic) TCUserChippingAddress *chippingAddress;
-@property (strong, nonatomic) NSMutableArray *chippingAddressList;
+@property (strong, nonatomic) TCUserShippingAddress *shippingAddress;
+@property (strong, nonatomic) NSMutableArray *shippingAddressList;
 
 @end
 
@@ -125,7 +125,7 @@
 - (void)testUserEmotionState {
     self.expectation = [self expectationWithDescription:@"Expect Change User Emotion State"];
     
-    [self.buluoApi changeUserEmotionState:TCUserEmotionStateSingle result:^(BOOL success, NSError *error) {
+    [self.buluoApi changeUserEmotionState:TCUserEmotionStateLove result:^(BOOL success, NSError *error) {
         XCTAssertTrue(success, @"Change user emotion state failed with error: %@", error);
         [self.expectation fulfill];
     }];
@@ -190,10 +190,10 @@
     }];
 }
 
-- (void)testAddUserChippingAddress {
-    self.expectation = [self expectationWithDescription:@"Expect Add User Chipping Address"];
+- (void)testAddUserShippingAddress {
+    self.expectation = [self expectationWithDescription:@"Expect Add User Shipping Address"];
     
-    TCUserChippingAddress *address = [[TCUserChippingAddress alloc] init];
+    TCUserShippingAddress *address = [[TCUserShippingAddress alloc] init];
     address.province = @"北京";
     address.city = @"北京市";
     address.district = @"朝阳区";
@@ -201,8 +201,8 @@
     address.name = @"小明";
     address.phone = @"18888888888";
     __weak typeof(self) weakSelf = self;
-    [weakSelf.buluoApi addUserChippingAddress:address result:^(BOOL success, TCUserChippingAddress *chippingAddress, NSError *error) {
-        XCTAssertTrue(success, @"Add user chipping address failed with error: %@", error);
+    [weakSelf.buluoApi addUserShippingAddress:address result:^(BOOL success, TCUserShippingAddress *shippingAddress, NSError *error) {
+        XCTAssertTrue(success, @"Add user shipping address failed with error: %@", error);
         [weakSelf.expectation fulfill];
     }];
     
@@ -213,15 +213,15 @@
     }];
 }
 
-- (void)testFetchUserChippingAddressList {
-    self.expectation = [self expectationWithDescription:@"Expect Fetch User Chipping Address List"];
+- (void)testFetchUserShippingAddressList {
+    self.expectation = [self expectationWithDescription:@"Expect Fetch User Shipping Address List"];
     
-    [self.buluoApi fetchUserChippingAddressList:^(NSArray *addressList, NSError *error) {
+    [self.buluoApi fetchUserShippingAddressList:^(NSArray *addressList, NSError *error) {
         NSLog(@"--->%zd", addressList.count);
-        XCTAssertNotNil(addressList, @"Fetch user chipping address list failed with error: %@", error);
-        self.chippingAddressList = [NSMutableArray arrayWithArray:addressList];
+        XCTAssertNotNil(addressList, @"Fetch user shipping address list failed with error: %@", error);
+        self.shippingAddressList = [NSMutableArray arrayWithArray:addressList];
         if (addressList.count) {
-            self.chippingAddress = addressList[0];
+            self.shippingAddress = addressList[0];
         }
         [self.expectation fulfill];
     }];
@@ -233,13 +233,13 @@
     }];
 }
 
-- (void)testFetchUserChippingAddress {
-    [self testFetchUserChippingAddressList];
+- (void)testFetchUserShippingAddress {
+    [self testFetchUserShippingAddressList];
     
-    self.expectation = [self expectationWithDescription:@"Expect Fetch User Chipping Address"];
+    self.expectation = [self expectationWithDescription:@"Expect Fetch User Shipping Address"];
     
-    [self.buluoApi fetchUserChippingAddress:self.chippingAddress.ID result:^(TCUserChippingAddress *chippingAddress, NSError *error) {
-        XCTAssertNotNil(chippingAddress, @"Fetch user chipping address failed with error: %@", error);
+    [self.buluoApi fetchUserShippingAddress:self.shippingAddress.ID result:^(TCUserShippingAddress *shippingAddress, NSError *error) {
+        XCTAssertNotNil(shippingAddress, @"Fetch user shipping address failed with error: %@", error);
         [self.expectation fulfill];
     }];
     
@@ -250,16 +250,16 @@
     }];
 }
 
-- (void)testChangeUserChippingAddress {
-    [self testFetchUserChippingAddressList];
-    self.expectation = [self expectationWithDescription:@"Expect Change User Chipping Address"];
+- (void)testChangeUserShippingAddress {
+    [self testFetchUserShippingAddressList];
+    self.expectation = [self expectationWithDescription:@"Expect Change User Shipping Address"];
     
-    TCUserChippingAddress *chippingAddress = self.chippingAddress;
-    chippingAddress.name = @"小刚";
-    [self.buluoApi changeUserChippingAddress:chippingAddress result:^(BOOL success, NSError *error) {
-        XCTAssertTrue(success, @"Change user chipping address failed with error: %@", error);
+    TCUserShippingAddress *shippingAddress = self.shippingAddress;
+    shippingAddress.name = @"小刚";
+    [self.buluoApi changeUserShippingAddress:shippingAddress result:^(BOOL success, NSError *error) {
+        XCTAssertTrue(success, @"Change user shipping address failed with error: %@", error);
         if (success) {
-            self.chippingAddress.name = @"小刚";
+            self.shippingAddress.name = @"小刚";
         }
         [self.expectation fulfill];
     }];
@@ -271,15 +271,15 @@
     }];
 }
 
-- (void)testDeleteUserChippingAddress {
-    [self testFetchUserChippingAddressList];
-    self.expectation = [self expectationWithDescription:@"Expect Delete User Chipping Address"];
+- (void)testDeleteUserShippingAddress {
+    [self testFetchUserShippingAddressList];
+    self.expectation = [self expectationWithDescription:@"Expect Delete User Shipping Address"];
     
-    [self.buluoApi deleteUserChippingAddress:self.chippingAddress.ID result:^(BOOL success, NSError *error) {
-        XCTAssertTrue(success, @"Delete user chipping address failed with error: %@", error);
+    [self.buluoApi deleteUserShippingAddress:self.shippingAddress.ID result:^(BOOL success, NSError *error) {
+        XCTAssertTrue(success, @"Delete user shipping address failed with error: %@", error);
         if (success) {
-            self.chippingAddress = nil;
-            [self.chippingAddressList removeObjectAtIndex:0];
+            self.shippingAddress = nil;
+            [self.shippingAddressList removeObjectAtIndex:0];
         }
         [self.expectation fulfill];
     }];
@@ -291,12 +291,13 @@
     }];
 }
 
-- (void)testChangeUserDefaultChippingAddress {
-    self.expectation = [self expectationWithDescription:@"Expect Change User Default Chipping Address"];
+- (void)testSetUserDefaultShippingAddress {
+    self.expectation = [self expectationWithDescription:@"Expect Set User Default Shipping Address"];
     
-    TCUserChippingAddress *chippingAddress = self.chippingAddress;
-    [self.buluoApi changeUserDefaultChippingAddress:chippingAddress.ID result:^(BOOL success, NSError *error) {
-        XCTAssertTrue(success, @"Change user default chipping address failed with error: %@", error);
+    TCUserShippingAddress *shippingAddress = self.shippingAddress;
+    __weak typeof(self) weakSelf = self;
+    [weakSelf.buluoApi setUserDefaultShippingAddress:shippingAddress.ID result:^(BOOL success, NSError *error) {
+        XCTAssertTrue(success, @"Set user default shipping address failed with error: %@", error);
         [self.expectation fulfill];
     }];
     
