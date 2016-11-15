@@ -11,6 +11,7 @@
 #import "TCGetNavigationItem.h"
 #import "TCStandardView.h"
 
+
 @interface TCRecommendInfoViewController : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @end

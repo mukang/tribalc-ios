@@ -13,6 +13,7 @@
     NSDictionary *goodInfoDic;
     UIScrollView *mScrollView;
     TCImgPageControl *imgPageControl;
+    TCStandardView *sizeView;
 }
 
 @end
@@ -22,7 +23,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self initNavigationBar];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-
+    
+    [self initSelectSizeView];
 }
 
 - (void)viewDidLoad {
@@ -53,7 +55,13 @@
     
     UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, self.view.height - 49, self.view.width, 49)];
     [self.view addSubview:bottomView];
+
     
+}
+
+- (void)initSelectSizeView {
+    sizeView = [[TCStandardView alloc] initWithData:goodInfoDic AndTarget:self AndStyleAction:@selector(touchStyleSelectBtn:) AndSizeAction:@selector(touchSizeSelectBtn:) AndCloseAction:@selector(touchColseSelectSize:)];
+    [self.view addSubview:sizeView];
     
 }
 
@@ -360,6 +368,23 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)touchColseSelectSize:(UIButton *)btn {
+    [sizeView endSelectStandard];
+}
+
+- (void)touchStyleSelectBtn:(UIButton *)btn {
+    [self changeSizeButtonWithBtn:btn];
+    NSDictionary *styleInfo = goodInfoDic[@"style"][btn.tag];
+    sizeView.priceLab.text = styleInfo[@"price"];
+    [sizeView setStyle:styleInfo[@"title"]];
+}
+
+- (void)touchSizeSelectBtn:(UIButton *)btn {
+    [self changeSizeButtonWithBtn:btn];
+//    NSDictionary *styleInfo = goodInfoDic[@"style"][btn.tag];
+//    sizeView.priceLab.text = styleInfo[@"price"];
+}
+
 - (void)touchSegmentedControlAction: (UISegmentedControl *)seg {
     NSInteger index = seg.selectedSegmentIndex;
     UIWebView *webView;
@@ -396,15 +421,10 @@
 }
 
 - (void)touchSelectSizeBtn:(UIButton *)btn {
-    TCStandardView *sizeView = [[TCStandardView alloc] initWithData:goodInfoDic AndTarget:self AndStyleAction:@selector(touchTest:) AndSizeAction:@selector(touchTest:)];
-    sizeView.backgroundColor = [UIColor grayColor];
-    [self.view addSubview:sizeView];
-    
+    [sizeView startSelectStandard];
 }
 
-- (void)touchTest:(UIButton *)btn {
-    
-}
+
 
 
 - (void)touchCollectionBtn:(id)sender {
@@ -426,6 +446,22 @@
 
 }
 
+#pragma mark - other
+- (void)changeSizeButtonWithBtn:(UIButton *)btn {
+    btn.layer.borderColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1].CGColor;
+    [btn setTitleColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] forState:UIControlStateNormal];
+    
+    NSInteger tag = btn.tag;
+    NSArray *subviews = btn.superview.subviews;
+    for (int i = 0; i < subviews.count; i++) {
+        if (i != tag && [subviews[i] isKindOfClass:[UIButton class]]) {
+            UIButton *btn = subviews[i];
+            btn.layer.borderColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1].CGColor;
+            [btn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
+        }
+    }
+
+}
 
 
 - (void)viewWillDisappear:(BOOL)animated {

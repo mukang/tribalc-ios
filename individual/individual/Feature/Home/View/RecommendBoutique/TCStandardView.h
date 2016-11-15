@@ -12,12 +12,16 @@
 @interface TCStandardView : UIView
 
 @property UILabel *priceLab;
-@property UIImageView *titleImageView;
+@property UIImageView *selectedImgView;
 @property UILabel *selectStyleLab;
 @property UILabel *selectSizeLab;
 @property UILabel *inventoryLab;
 @property UILabel *numberLab;
 
+- (void)startSelectStandard;
+- (void)endSelectStandard ;
 
-- (instancetype)initWithData:(NSDictionary *)data AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction;
+- (instancetype)initWithData:(NSDictionary *)data AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction AndCloseAction:(SEL)closeAction;
+- (void)setStyle:(NSString *)style;
+
 @end
