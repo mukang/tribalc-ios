@@ -18,5 +18,6 @@
 @property UILabel *inventoryLab;
 @property UILabel *numberLab;
 
+
 - (instancetype)initWithData:(NSDictionary *)data AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction;
 @end

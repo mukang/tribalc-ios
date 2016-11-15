@@ -8,25 +8,63 @@
 
 #import "TCStandardView.h"
 
-@implementation TCStandardView
+@implementation TCStandardView {
+    UIButton *subBtn;
+    UIView *standardView;
+}
 
 - (instancetype)initWithData:(NSDictionary *)data AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction{
     self = [super init];
     if (self) {
         self.frame = [UIScreen mainScreen].bounds;
+        
+        standardView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 0)];
+        
         UIView *titleView = [self createTitleViewWithSize:CGSizeMake(self.width, 118) AndInfo:data];
-        titleView.origin = CGPointMake(0, 200);
-        [self addSubview:titleView];
+        titleView.origin = CGPointMake(0, 0);
+        [standardView addSubview:titleView];
         
         UIView *styleView = [self createStyleViewWithFrame:CGRectMake(titleView.x, titleView.y + titleView.height, self.width, 96) AndInfo:data[@"style"] AndAction:styleAction AndTarget:target];
-        [self addSubview:styleView];
+        [standardView addSubview:styleView];
         
+        UIView *sizeView = [self createSizeViewWithFrame:CGRectMake(styleView.x, styleView.y + styleView.height, self.width, 96) AndInfo:data[@"size"] AndAction:sizeAction AndTarget:target];
+        [standardView addSubview:sizeView];
     
+        UIView *computeView = [self createNumberViewWithFrame:CGRectMake(0, sizeView.y + sizeView.height, self.width, 89)];
+        [standardView addSubview:computeView];
+//        
+//        [computeView setY:self.height - computeView.height];
+//        [sizeView setY:computeView.y - sizeView.height];
+//        [styleView setY:sizeView.y - styleView.height];
+//        [titleView setY:styleView.y - titleView.height];
+        
+        UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, computeView.y + computeView.height, self.width, 49)];
+        [standardView addSubview:bottomView];
+        
+        [standardView setY:self.height - bottomView.height - bottomView.y];
+        [standardView setHeight:bottomView.height + bottomView.x];
+        [self addSubview:standardView];
     }
     
     return self;
 }
 
+- (UIView *)createBottomViewWithFrame:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    
+    UIButton *shopcarBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:17];
+    [shopcarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    shopcarBtn.backgroundColor = [UIColor colorWithRed:112/255.0 green:206/255.0 blue:213/255.0 alpha:1];
+    [view addSubview:shopcarBtn];
+    
+    UIButton *buyBtn = [TCComponent createButtonWithFrame:CGRectMake(frame.size.width / 2, 0, frame.size.width / 2, frame.size.height) AndTitle:@"立即购买" AndFontSize:17];
+    [buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    buyBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+    [view addSubview:buyBtn];
+
+    
+    return view;
+}
 
 - (UIView *)createTitleViewWithSize:(CGSize)size AndInfo:(NSDictionary *)info {
     UIView *view = [[UIView alloc] init];
@@ -69,18 +107,40 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, frame.size.width, 0.5)];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, frame.size.width - 40, 0.5)];
     [view addSubview:lineView];
     
     UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(20, 20, frame.size.width - 40, 14) AndFontSize:14 AndTitle:@"款式" AndTextColor:[UIColor blackColor]];
     titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     [view addSubview:titleLab];
     
-    UIView *buttonView =[self getStyleButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 20, titleLab.width, 22.5) AndData:infoArr];
+    UIView *styleButtonView =[self getStyleButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 20, titleLab.width, 22.5) AndData:infoArr];
 
-    [view addSubview:buttonView];
+    [view addSubview:styleButtonView];
 
-    [view setHeight:buttonView.height + 52 + 25];
+    [view setHeight:styleButtonView.height + 52 + 25];
+    
+    return view;
+}
+
+- (UIView *)createSizeViewWithFrame:(CGRect)frame AndInfo:(NSArray *)infoArr AndAction:(SEL)Action AndTarget:(id)target{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
+    
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, frame.size.width - 40, 0.5)];
+    [view addSubview:lineView];
+    
+    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(20, 20, frame.size.width - 40, 14) AndFontSize:14 AndTitle:@"款式" AndTextColor:[UIColor blackColor]];
+    titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+    [view addSubview:titleLab];
+    
+    UIView *sizeButtonView = [self getSizeButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 20, titleLab.width, 30) AndData:infoArr];
+    
+    [view addSubview:sizeButtonView];
+    
+    [view setHeight:sizeButtonView.height + 52 + 25];
+    
+
     
     return view;
 }
@@ -101,12 +161,78 @@
         UIButton *btn = buttonArr[i];
         width += btn.width + 13;
         [buttonView addSubview:buttonArr[i]];
+        if (i == 0) {
+            [btn setTitleColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]  forState:UIControlStateNormal];
+            btn.layer.borderColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1].CGColor;
+        }
         
     }
+
     
     return buttonView;
 
 }
+
+- (UIView *)getSizeButtonViewWithFrame:(CGRect)frame AndData:(NSArray *)infoArr {
+    UIView *buttonView = [[UIView alloc] initWithFrame:frame];
+    NSMutableArray *buttonArr = [[NSMutableArray alloc] init];
+    int width = 0;
+    int height = 0;
+    for (int i = 0; i < infoArr.count; i++) {
+        UIButton *widthBtn = [self getSizeButtonWithOrigin:CGPointMake(0, 0) AndTitle:infoArr[i]];
+        if (width + widthBtn.width > self.width - 40) {
+            width = 0;
+            height += 30 + 13;
+            [buttonView setHeight:height + 30];
+        }
+        buttonArr[i] = [self getSizeButtonWithOrigin:CGPointMake(width, height) AndTitle:infoArr[i]];
+        UIButton *btn = buttonArr[i];
+        [buttonView addSubview:buttonArr[i]];
+        width += btn.width + 13;
+        if (i == 0) {
+            [btn setTitleColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]  forState:UIControlStateNormal];
+            btn.layer.borderColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1].CGColor;
+        }
+    }
+    
+    return buttonView;
+}
+
+- (UIView *)createNumberViewWithFrame:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
+    UILabel *numberLab = [[UILabel alloc] initWithFrame:CGRectMake(20, 29, 50, 14)];
+    numberLab.text = @"数量";
+    [view addSubview:numberLab];
+
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, frame.size.width - 40, 0.5)];
+    [view addSubview:lineView];
+    
+    UIButton *addBtn = [self getComputeBtnWithFrame:CGRectMake(frame.size.width - 20 - 38, 20, 38, 35) AndText:@"+"];
+    [view addSubview:addBtn];
+    
+    _numberLab = [TCComponent createLabelWithText:@"132321321321" AndFontSize:16 AndTextColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1]];
+    _numberLab.textAlignment = NSTextAlignmentCenter;
+    [_numberLab setOrigin:CGPointMake(addBtn.x - _numberLab.width - 23, addBtn.y)];
+    [_numberLab setHeight:addBtn.height];
+    [view addSubview:_numberLab];
+    
+    subBtn = [self getComputeBtnWithFrame:CGRectMake(_numberLab.x - 38 - 23, addBtn.y, 38, 35) AndText:@"-"];
+    [view addSubview:subBtn];
+    
+    return view;
+}
+
+- (UIButton *)getComputeBtnWithFrame:(CGRect)frame AndText:(NSString *)text {
+    UIButton *button = [[UIButton alloc] initWithFrame:frame];
+    button.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1];
+    [button setTitleColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1] forState:UIControlStateNormal];
+    button.layer.cornerRadius = 3;
+    button.titleLabel.font = [UIFont systemFontOfSize:16];
+    [button setTitle:text forState:UIControlStateNormal];
+    return button;
+}
+
 
 - (UIButton *)getStyleButtonWithOrigin:(CGPoint)point AndText:(NSString *)text {
     UIButton *button = [[UIButton alloc] init];
@@ -124,11 +250,14 @@
 }
 
 - (UIButton *)getSizeButtonWithOrigin:(CGPoint)origin AndTitle:(NSString *)title{
-    UIButton *button = [[UIButton alloc] init];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(origin.x, origin.y, 30, 30)];
     [button setOrigin:origin];
-    
     [button setTitle:title forState:UIControlStateNormal];
-    
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1].CGColor;
+    button.layer.cornerRadius = button.height / 2;
+    button.titleLabel.font = [UIFont systemFontOfSize:16];
+    [button setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
     
     return button;
 }
