@@ -10,4 +10,6 @@
 
 @interface TCNavigationController : UINavigationController
 
+@property (nonatomic) BOOL enableInteractivePopGesture;
+
 @end

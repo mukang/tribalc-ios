@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const TCClientHTTPMethodGet;
+extern NSString *const TCClientHTTPMethodPost;
+extern NSString *const TCClientHTTPMethodPut;
+extern NSString *const TCClientHTTPMethodDelete;
 
 @protocol TCClientRequest <NSObject>
 
@@ -19,24 +23,17 @@
 
 - (NSDictionary *)params;
 
-- (void)addFile:(NSURL *)fileURL;
-
-- (NSArray *)files;
-
-- (NSString *)httpMethod;
-
-- (NSTimeInterval)timeout;
-
 @end
 
 
 @interface TCClientRequest : NSObject <TCClientRequest>
 
+@property (copy, nonatomic, readonly) NSString *apiName;
+@property (copy, nonatomic, readonly) NSString *HTTPMethod;
+@property (copy, nonatomic, readonly) NSString *requestIdentifier;
+
 + (instancetype)requestWithApi:(NSString *)apiName;
-
-- (NSString *)requestIdentifier;
-
-- (NSString *)apiName;
++ (instancetype)requestWithHTTPMethod:(NSString *)HTTPMethod apiName:(NSString *)apiName;
 
 @end
 

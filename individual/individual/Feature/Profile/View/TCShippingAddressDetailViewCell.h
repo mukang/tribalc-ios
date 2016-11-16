@@ -11,6 +11,7 @@
 @interface TCShippingAddressDetailViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+
 
 @end

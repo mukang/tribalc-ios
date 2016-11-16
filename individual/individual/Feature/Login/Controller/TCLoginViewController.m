@@ -7,9 +7,14 @@
 //
 
 #import "TCLoginViewController.h"
+
 #import "TCGetPasswordView.h"
 
 #import <YYText/YYText.h>
+
+#import "TCBuluoApi.h"
+
+#import "MBProgressHUD+Category.h"
 
 @interface TCLoginViewController () <UITextFieldDelegate, TCGetPasswordViewDelegate>
 
@@ -27,11 +32,14 @@
 
 @end
 
-@implementation TCLoginViewController
+@implementation TCLoginViewController {
+    __weak TCLoginViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    weakSelf = self;
     
     [self setupSubviews];
     [self setupConstraints];
@@ -164,11 +172,34 @@
 #pragma mark - button action
 
 - (IBAction)handleTapBackButton:(UIButton *)sender {
+    [self hideKeyboard];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)handleTapLoginButton:(UIButton *)sender {
-    NSLog(@"登录");
+    [self hideKeyboard];
+    
+    if (self.accountTextField.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请您填写手机号码！"];
+        return;
+    }
+    if (self.passwordTextField.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请您填写验证码!"];
+    }
+    
+    TCUserPhoneInfo *phoneInfo = [[TCUserPhoneInfo alloc] init];
+    phoneInfo.phone = self.accountTextField.text;
+    phoneInfo.verificationCode = self.passwordTextField.text;
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] login:phoneInfo result:^(TCUserSession *userSession, NSError *error) {
+        [MBProgressHUD hideHUD:YES];
+        if (userSession) {
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [MBProgressHUD showHUDWithMessage:error.localizedDescription];
+        }
+    }];
 }
 
 - (IBAction)handleTapAlipayButton:(UIButton *)sender {
@@ -191,8 +222,33 @@
 #pragma mark - TCGetPasswordViewDelegate
 
 - (void)didTapGetPasswordButtonInGetPasswordView:(TCGetPasswordView *)view {
-    NSLog(@"发送验证码");
+    [self hideKeyboard];
+    
+    if (self.accountTextField.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请您填写手机号码！"];
+        return;
+    }
+    
     [self.getPasswordView startCountDown];
+    [[TCBuluoApi api] fetchVerificationCodeWithPhone:self.accountTextField.text result:^(BOOL success, NSError *error) {
+        if (!success) {
+            [weakSelf.getPasswordView stopCountDown];
+            if (error) {
+                [MBProgressHUD showHUDWithMessage:error.localizedDescription];
+            }
+        }
+    }];
+}
+
+#pragma mark - Keyboard
+
+- (void)hideKeyboard {
+    if ([self.accountTextField isFirstResponder]) {
+        [self.accountTextField resignFirstResponder];
+    }
+    if ([self.passwordTextField isFirstResponder]) {
+        [self.passwordTextField resignFirstResponder];
+    }
 }
 
 

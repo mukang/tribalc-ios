@@ -135,6 +135,15 @@
     XCTAssertTrue(dict.count);
 }
 
+- (void)testModelToDic03 {
+    
+    TCTestModel *testModel = [[TCTestModel alloc] init];
+    testModel.ID = @"1";
+    NSDictionary *dict = [testModel toObjectDictionary];
+    
+    XCTAssertNotNil(dict);
+}
+
 - (void)testExample {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.

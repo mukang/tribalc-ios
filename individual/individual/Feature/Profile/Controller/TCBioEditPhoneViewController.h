@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBioEditSMSViewController.h"
 
 @interface TCBioEditPhoneViewController : UIViewController
+
+/** 编辑新手机号回调 */
+@property (copy, nonatomic) TCEditPhoneBlock editPhoneBlock;
 
 @end

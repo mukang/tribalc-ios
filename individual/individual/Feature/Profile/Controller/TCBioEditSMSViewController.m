@@ -9,6 +9,10 @@
 #import "TCBioEditSMSViewController.h"
 #import "TCBiographyViewController.h"
 
+#import "MBProgressHUD+Category.h"
+
+#import "TCBuluoApi.h"
+
 @interface TCBioEditSMSViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *noticeLabel;
@@ -21,14 +25,17 @@
 
 @end
 
-@implementation TCBioEditSMSViewController
+@implementation TCBioEditSMSViewController {
+    __weak TCBioEditSMSViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"手机绑定";
-    self.noticeLabel.text = [NSString stringWithFormat:@"请输入%@收到的短信校验码", self.phone];
     
+    weakSelf = self;
+    self.noticeLabel.text = [NSString stringWithFormat:@"请输入%@收到的短信校验码", self.phone];
+    [self setupNavBar];
     [self startCountDown];
 }
 
@@ -43,6 +50,20 @@
     [self removeGetSMSTimer];
 }
 
+- (void)setupNavBar {
+    self.navigationItem.title = @"手机绑定";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(handleCickBackButton:)];
+}
+
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -52,13 +73,45 @@
     return YES;
 }
 
-#pragma mark - actions
+#pragma mark - Actions
 
 - (IBAction)handleClickResendButton:(UIButton *)sender {
     [self startCountDown];
+    
+    [[TCBuluoApi api] fetchVerificationCodeWithPhone:self.phone result:^(BOOL success, NSError *error) {
+        if (!success) {
+            [MBProgressHUD showHUDWithMessage:@"手机号格式错误！"];
+            [weakSelf stopCountDown];
+        }
+    }];
 }
 
 - (IBAction)handleClickCommitButton:(UIButton *)sender {
+    NSString *code = self.textField.text;
+    if (code.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请输入验证码"];
+        return;
+    }
+    
+    TCUserPhoneInfo *phoneInfo = [[TCUserPhoneInfo alloc] init];
+    phoneInfo.phone = self.phone;
+    phoneInfo.verificationCode = code;
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] changeUserPhone:phoneInfo result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            if (self.editPhoneBlock) {
+                self.editPhoneBlock(YES);
+            }
+            TCBiographyViewController *bioVC = self.navigationController.viewControllers[1];
+            [self.navigationController popToViewController:bioVC animated:YES];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"手机号修改失败！"];
+        }
+    }];
+}
+
+- (void)handleCickBackButton:(UIBarButtonItem *)sender {
     TCBiographyViewController *bioVC = self.navigationController.viewControllers[1];
     [self.navigationController popToViewController:bioVC animated:YES];
 }
@@ -71,17 +124,24 @@
     [self addGetSMSTimer];
 }
 
+- (void)stopCountDown {
+    [self removeGetSMSTimer];
+    self.countdownLabel.hidden = YES;
+    self.resendButton.hidden = NO;
+}
+
 - (void)changeTimeLabel {
     self.timeCount --;
     if (self.timeCount <= 0) {
         [self removeGetSMSTimer];
         self.countdownLabel.hidden = YES;
         self.resendButton.hidden = NO;
+        return;
     }
     self.countdownLabel.text = [NSString stringWithFormat:@"%02zd秒后重发", self.timeCount];
 }
 
-#pragma mark - timer
+#pragma mark - Timer
 
 - (void)addGetSMSTimer {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(changeTimeLabel) userInfo:nil repeats:YES];

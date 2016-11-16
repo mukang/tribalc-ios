@@ -236,27 +236,20 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    NSDictionary *modelDict = [self toObjectDictionary];
-    for (NSString *key in modelDict.allKeys) {
-        id value = [modelDict objectForKey:key];
-        if ([value conformsToProtocol:@protocol(NSCoding)]) {
-            [aCoder encodeObject:value forKey:key];
-        }
+    NSArray *propertyNames = [self allPropertyNames];
+    for (NSString *key in propertyNames) {
+        id value = [self valueForKey:key];
+        [aCoder encodeObject:value forKey:key];
     }
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [self init]) {
         NSArray *propertyNames = [self allPropertyNames];
-        for (NSString *name in propertyNames) {
-            NSDictionary *systemVariablesMap = TCMODEL_SYSTEM_VARIABLES_MAP;
-            NSString *realKey = [systemVariablesMap objectForKey:name];
-            if (realKey == nil) {
-                realKey = name;
-            }
-            if ([aDecoder containsValueForKey:realKey]) {
-                id value = [aDecoder decodeObjectForKey:realKey];
-                [self setValue:value forKey:name];
+        for (NSString *key in propertyNames) {
+            if ([aDecoder containsValueForKey:key]) {
+                id value = [aDecoder decodeObjectForKey:key];
+                [self setValue:value forKey:key];
             }
         }
     }

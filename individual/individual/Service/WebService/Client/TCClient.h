@@ -7,9 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking.h>
+
+@class TCClientRequest;
+@class TCClientResponse;
 
 @interface TCClient : NSObject
 
+/**
+ 单例
+
+ @return 返回配置好的client
+ */
 + (instancetype)client;
+
+/**
+ 发送网络请求
+
+ @param clientRequest TCClientRequest对象
+ @param responseBlock 响应结果回调
+ */
+- (void)send:(TCClientRequest *)clientRequest
+      finish:(void (^)(TCClientResponse *response))responseBlock;
 
 @end

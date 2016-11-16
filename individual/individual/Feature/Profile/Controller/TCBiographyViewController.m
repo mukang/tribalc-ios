@@ -17,36 +17,42 @@
 #import "TCCityPickerView.h"
 
 #import "UIImage+Category.h"
+#import "MBProgressHUD+Category.h"
+
+#import "TCBuluoApi.h"
 
 @interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource, TCCityPickerViewDelegate>
 
 @property (copy, nonatomic) NSArray *biographyTitles;
 @property (copy, nonatomic) NSArray *bioDetailsTitles;
 
+@property (weak, nonatomic) UITableView *tableView;
+
 @property (weak, nonatomic) UIView *pickerBgView;
 @property (weak, nonatomic) TCCityPickerView *cityPickerView;
 
 @end
 
-@implementation TCBiographyViewController
+@implementation TCBiographyViewController {
+    __weak TCBiographyViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    weakSelf = self;
     
     [self setupNavBar];
     [self setupSubviews];
+    [self fetchUserInfo];
 }
 
 - (void)setupNavBar {
-    
     self.navigationItem.title = @"个人信息";
-    UIImage *bgImage = [UIImage imageWithColor:TCRGBColor(42, 42, 42)];
-    [self.navigationController.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.titleTextAttributes = @{
-                                                                    NSFontAttributeName : [UIFont systemFontOfSize:16],
-                                                                    NSForegroundColorAttributeName : [UIColor whiteColor]
-                                                                    };
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(handleCickBackButton:)];
 }
 
 - (void)setupSubviews {
@@ -55,13 +61,75 @@
     tableView.dataSource = self;
     tableView.delegate = self;
     [self.view addSubview:tableView];
+    self.tableView = tableView;
     
     UINib *nib = [UINib nibWithNibName:@"TCBiographyViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"TCBiographyViewCell"];
     nib = [UINib nibWithNibName:@"TCBiographyAvatarViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"TCBiographyAvatarViewCell"];
+}
+
+- (void)fetchUserInfo {
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+    TCUserSensitiveInfo *userSensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
+    // 昵称
+    NSString *nickname = userInfo.nickname ?: @"";
+    // 性别
+    NSString *genderStr = @"";
+    switch (userInfo.gender) {
+        case TCUserGenderMale:
+            genderStr = @"男";
+            break;
+        case TCUserGenderFemale:
+            genderStr = @"女";
+            break;
+        default:
+            break;
+    }
+    // 出生日期
+    NSString *birthDateStr = @"";
+    if (userInfo.birthday) {
+        NSDate *birthDate = [NSDate dateWithTimeIntervalSince1970:(userInfo.birthday / 1000)];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"yyyy年MM月dd日";
+        birthDateStr = [dateFormatter stringFromDate:birthDate];
+    }
+    // 情感状况
+    NSString *emotionStateStr = @"";
+    switch (userInfo.emotionState) {
+        case TCUserEmotionStateMarried:
+            emotionStateStr = @"已婚";
+            break;
+        case TCUserEmotionStateSingle:
+            emotionStateStr = @"单身";
+            break;
+        case TCUserEmotionStateLove:
+            emotionStateStr = @"热恋";
+            break;
+        default:
+            break;
+    }
+    // 电话号码
+    NSString *phone = userSensitiveInfo.phone ?: @"";
+    // 所在地
+    NSString *province = userInfo.province ?: @"";
+    NSString *city = userInfo.city ?: @"";
+    NSString *district = userInfo.district ?: @"";
+    NSString *address = [NSString stringWithFormat:@"%@%@%@", province, city, district];
+    // 收货地址
+    NSString *chippingAddress = @"";
+    if (userSensitiveInfo.shippingAddress) {
+        chippingAddress = [NSString stringWithFormat:@"%@%@%@%@", userSensitiveInfo.shippingAddress.province, userSensitiveInfo.shippingAddress.city, userSensitiveInfo.shippingAddress.district, userSensitiveInfo.shippingAddress.address];
+    }
     
-    self.bioDetailsTitles = @[@[@"", @"瓜皮", @"女", @"1995年5月20日", @"单身"], @[@"15967897508", @"北京朝阳区", @"吉林省长春市九台区瓜皮小区"]];
+    self.bioDetailsTitles = @[@[@"", nickname, genderStr, birthDateStr, emotionStateStr], @[phone, address, chippingAddress]];
+    [self.tableView reloadData];
+}
+
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - UITableViewDataSource
@@ -122,11 +190,21 @@
             bioEditVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
             bioEditVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
             bioEditVC.bioEditType = indexPath.row - 1;
+            bioEditVC.bioEditBlock = ^(BOOL isEdit, TCBioEditType bioEditType) {
+                if (isEdit) {
+                    [weakSelf fetchUserInfo];
+                }
+            };
             [self presentViewController:bioEditVC animated:NO completion:nil];
         }
     } else {
         if (indexPath.row == 0) {
             TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
+            editPhoneVC.editPhoneBlock = ^(BOOL isEdit) {
+                if (isEdit) {
+                    [weakSelf fetchUserInfo];
+                }
+            };
             [self.navigationController pushViewController:editPhoneVC animated:YES];
         } else if (indexPath.row == 1) {
             [self showPickerView];
@@ -140,7 +218,22 @@
 #pragma mark - TCCityPickerViewDelegate
 
 - (void)cityPickerView:(TCCityPickerView *)view didClickConfirmButtonWithCityInfo:(NSDictionary *)cityInfo {
-    TCLog(@"%@", cityInfo);
+    
+    TCUserAddress *address = [[TCUserAddress alloc] init];
+    address.province = cityInfo[TCCityPickierViewProvinceKey];
+    address.city = cityInfo[TCCityPickierViewCityKey];
+    address.district = cityInfo[TCCityPickierViewCountryKey];
+    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] changeUserAddress:address result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf fetchUserInfo];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"所在地修改失败！"];
+        }
+    }];
+    
     [self dismissPickerView];
 }
 
@@ -180,7 +273,13 @@
     }];
 }
 
-#pragma mark - overwrite
+#pragma mark - Actions
+
+- (void)handleCickBackButton:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Override Methods
 
 - (NSArray *)biographyTitles {
     if (_biographyTitles == nil) {

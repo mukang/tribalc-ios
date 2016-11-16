@@ -7,7 +7,10 @@
 //
 
 #import "TCBioEditPhoneViewController.h"
-#import "TCBioEditSMSViewController.h"
+
+#import "MBProgressHUD+Category.h"
+
+#import "TCBuluoApi.h"
 
 @interface TCBioEditPhoneViewController () <UITextFieldDelegate>
 
@@ -20,10 +23,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationItem.title = @"手机绑定";
     // Do any additional setup after loading the view from its nib.
     
+    [self setupNavBar];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -31,6 +33,20 @@
     if ([self.textField isFirstResponder]) {
         [self.textField resignFirstResponder];
     }
+}
+
+- (void)setupNavBar {
+    self.navigationItem.title = @"手机绑定";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(handleCickBackButton:)];
+}
+
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -42,14 +58,35 @@
     return YES;
 }
 
-#pragma mark - actions
+#pragma mark - Actions
 
 - (IBAction)handleClickNextButton:(UIButton *)sender {
+    NSString *phone = self.textField.text;
+    if (phone.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请输入新手机号"];
+        return;
+    }
     
-    TCBioEditSMSViewController *vc = [[TCBioEditSMSViewController alloc] initWithNibName:@"TCBioEditSMSViewController" bundle:[NSBundle mainBundle]];
-    vc.phone = self.textField.text;
-    [self.navigationController pushViewController:vc animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchVerificationCodeWithPhone:phone result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            TCBioEditSMSViewController *vc = [[TCBioEditSMSViewController alloc] initWithNibName:@"TCBioEditSMSViewController" bundle:[NSBundle mainBundle]];
+            vc.phone = phone;
+            vc.editPhoneBlock = self.editPhoneBlock;
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"手机号格式错误！"];
+        }
+    }];
 }
+
+- (void)handleCickBackButton:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Other
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

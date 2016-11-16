@@ -7,7 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TCUserShippingAddress;
+@class TCShippingAddressViewCell;
+
+@protocol TCShippingAddressViewCellDelegate <NSObject>
+
+@optional
+- (void)shippingAddressViewCell:(TCShippingAddressViewCell *)cell didClickDefaultAddressButtonWithShippingAddress:(TCUserShippingAddress *)shippingAddress;
+- (void)shippingAddressViewCell:(TCShippingAddressViewCell *)cell didClickEditAddressButtonWithShippingAddress:(TCUserShippingAddress *)shippingAddress;
+- (void)shippingAddressViewCell:(TCShippingAddressViewCell *)cell didClickDeleteAddressButtonWithShippingAddress:(TCUserShippingAddress *)shippingAddress;
+
+@end
 
 @interface TCShippingAddressViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UIButton *defaultAddressButton;
+
+@property (strong, nonatomic) TCUserShippingAddress *shippingAddress;
+
+@property (weak, nonatomic) id<TCShippingAddressViewCellDelegate> delegate;
 
 @end
