@@ -13,15 +13,17 @@
 
 @property UILabel *priceLab;
 @property UIImageView *selectedImgView;
-@property UILabel *selectStyleLab;
-@property UILabel *selectSizeLab;
+@property UILabel *selectedGoodStyleLab;
+@property UILabel *selectedGoodSizeLab;
 @property UILabel *inventoryLab;
 @property UILabel *numberLab;
 
 - (void)startSelectStandard;
 - (void)endSelectStandard ;
+- (void)modifyInventoryLabel;
 
-- (instancetype)initWithData:(NSDictionary *)data AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction AndCloseAction:(SEL)closeAction;
-- (void)setStyle:(NSString *)style;
+- (instancetype)initWithData:(NSDictionary *)data AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction AndCloseAction:(SEL)closeAction AndNumberAddAction:(SEL)addAction AndNumberSubAction:(SEL)subAction AndAddShoppingCartAction:(SEL)addCartAction AndBuyAction:(SEL)buyAction;
+- (void)setGoodStyle:(NSString *)style;
+- (void)setGoodSize:(NSString *)goodSize;
 
 @end

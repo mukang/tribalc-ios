@@ -60,10 +60,12 @@
 }
 
 - (void)initSelectSizeView {
-    sizeView = [[TCStandardView alloc] initWithData:goodInfoDic AndTarget:self AndStyleAction:@selector(touchStyleSelectBtn:) AndSizeAction:@selector(touchSizeSelectBtn:) AndCloseAction:@selector(touchColseSelectSize:)];
-    [self.view addSubview:sizeView];
+    sizeView = [[TCStandardView alloc] initWithData:goodInfoDic AndTarget:self AndStyleAction:@selector(touchStyleSelectBtn:) AndSizeAction:@selector(touchSizeSelectBtn:) AndCloseAction:@selector(touchColseSelectSize:) AndNumberAddAction:@selector(touchBuyNumberAddBtn:) AndNumberSubAction:@selector(touchBuyNumberSubBtn:) AndAddShoppingCartAction:@selector(touchAddShopCartBtn:) AndBuyAction:@selector(touchBuyBtn:)];
+//    [self.view addSubview:sizeView];
+    [[UIApplication sharedApplication].keyWindow addSubview:sizeView];
     
 }
+
 
 - (void)initGoodInfoData {
     NSURL *url = [NSURL URLWithString:@""];
@@ -83,7 +85,7 @@
                      ,@"parameters":@"https://ssl.zc.qq.com/chs/", @"image":@[@"good_image", @"good_image", @"good_image", @"good_image", @"null", @"null", @"null", @"null"],
                      @"style":@[ @{ @"title": @"套装", @"price": @"300", @"img":@"good_image" }
                              ,@{ @"title": @"鞋", @"price": @"50", @"img":@"null"}
-                             ,@{ @"title": @"连衣裙", @"price": @"3100", @"img":@"null"}]
+                             ,@{ @"title": @"连衣裙", @"price": @"3100", @"img":@"restaurantInfoLogo"}]
                      };
     
 }
@@ -163,7 +165,7 @@
     UILabel *selectLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, frame.size.width - 20, frame.size.height) AndFontSize:15 AndTitle:@"请选择规格"];
     [button addSubview:selectLab];
     
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"res_select_down"]];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"goods_select_standard"]];
     [imgView sizeToFit];
     [imgView setOrigin:CGPointMake(frame.size.width - 20 - imgView.width, frame.size.height / 2 - imgView.height / 2)];
     [button addSubview:imgView];
@@ -372,17 +374,49 @@
     [sizeView endSelectStandard];
 }
 
+- (void)touchBuyNumberAddBtn:(UIButton *)btn {
+    int number = sizeView.numberLab.text.intValue;
+    NSString *inventorStr = [[sizeView.inventoryLab.text componentsSeparatedByString:@":"][1] componentsSeparatedByString:@"件"][0];
+    
+    int inventorNumber = inventorStr.intValue;
+    if (number >= inventorNumber) {
+        
+    } else if (number == 9999) {
+        
+    }
+    else {
+        sizeView.numberLab.text = [NSString stringWithFormat:@"%i", number+1];
+    }
+
+    
+}
+
+- (void)touchBuyNumberSubBtn:(UIButton *)btn {
+    int number = sizeView.numberLab.text.intValue;
+    if (number <= 1) {
+        
+    } else {
+        sizeView.numberLab.text = [NSString stringWithFormat:@"%i", number-1];
+    }
+    
+}
+
+
 - (void)touchStyleSelectBtn:(UIButton *)btn {
     [self changeSizeButtonWithBtn:btn];
     NSDictionary *styleInfo = goodInfoDic[@"style"][btn.tag];
+    UIImage *selectImg = [UIImage imageNamed:styleInfo[@"img"]];
+    sizeView.selectedImgView.image = selectImg;
     sizeView.priceLab.text = styleInfo[@"price"];
-    [sizeView setStyle:styleInfo[@"title"]];
+    [sizeView setGoodStyle:styleInfo[@"title"]];
+    [sizeView modifyInventoryLabel];
+    sizeView.numberLab.text = @"1";
 }
 
 - (void)touchSizeSelectBtn:(UIButton *)btn {
     [self changeSizeButtonWithBtn:btn];
-//    NSDictionary *styleInfo = goodInfoDic[@"style"][btn.tag];
-//    sizeView.priceLab.text = styleInfo[@"price"];
+    [sizeView setGoodSize:goodInfoDic[@"size"][btn.tag]];
+    [sizeView modifyInventoryLabel];
 }
 
 - (void)touchSegmentedControlAction: (UISegmentedControl *)seg {
@@ -424,6 +458,20 @@
     [sizeView startSelectStandard];
 }
 
+- (void)touchAddShopCartBtn:(UIButton *)btn {
+    //    NSString *selectStyle = sizeView.selectedGoodSizeLab.text;
+    //    NSString *selectSize = sizeView.selectedGoodSizeLab.text;
+    //    NSString *number = sizeView.numberLab.text;
+    //    NSString *price = sizeView.priceLab.text;
+}
+
+- (void)touchBuyBtn:(UIButton *)btn {
+    //    NSString *selectStyle = sizeView.selectedGoodSizeLab.text;
+    //    NSString *selectSize = sizeView.selectedGoodSizeLab.text;
+    //    NSString *number = sizeView.numberLab.text;
+    //    NSString *price = sizeView.priceLab.text;
+    
+}
 
 
 
