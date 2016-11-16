@@ -248,7 +248,7 @@
         [buttonView addSubview:button];
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         button.tag = i;
-        width += button.width + 13;
+        width += button.width + 24;
         if (i == 0) {
             [self setSelectedButton:button];
         }
