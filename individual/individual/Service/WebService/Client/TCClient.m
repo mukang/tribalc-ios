@@ -7,11 +7,7 @@
 //
 
 #import "TCClient.h"
-#import "TCFunctions.h"
 #import "TCClientConfig.h"
-#import "TCClientRequest.h"
-#import "TCClientResponse.h"
-#import "TCClientRequestError.h"
 
 #import <AFNetworking.h>
 

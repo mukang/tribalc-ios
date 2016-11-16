@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AFNetworking.h>
-
-@class TCClientRequest;
-@class TCClientResponse;
+#import "TCFunctions.h"
+#import "TCClientRequest.h"
+#import "TCClientResponse.h"
+#import "TCClientRequestError.h"
 
 @interface TCClient : NSObject
 
