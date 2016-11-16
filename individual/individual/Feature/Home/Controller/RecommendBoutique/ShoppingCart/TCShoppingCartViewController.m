@@ -128,7 +128,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"打印");
+
 }
 
 # pragma mark - click

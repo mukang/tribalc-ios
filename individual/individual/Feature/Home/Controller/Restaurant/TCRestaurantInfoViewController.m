@@ -201,7 +201,6 @@
     
     
     UIView *allImgView = [self getPromptImageView];
-    NSLog(@"%f", allImgView.width);
     [allImgView setOrigin:CGPointMake(self.view.frame.size.width / 2 - allImgView.width / 2, titleView.y + titleView.height + 13)];
     [view addSubview:allImgView];
     
@@ -429,8 +428,6 @@
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     }
     
-    NSLog(@"%f", point.y);
-
     if (point.y < -64) {
         double height = -point.y - 64 + 270;
         double number = height / 270;

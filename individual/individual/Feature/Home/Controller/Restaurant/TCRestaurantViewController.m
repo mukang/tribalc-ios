@@ -145,7 +145,6 @@
     [cell setLocation:resInfo[@"location"]];
     [cell setType:resInfo[@"type"]];
     [cell setPrice:resInfo[@"price"]];
-    NSLog(@"%@, %@", resInfo[@"room"], resInfo[@"reserve"]);
     if ([resInfo[@"room"] isEqual:@YES]) {
         [cell isSupportRoom:YES];
     }

@@ -136,7 +136,7 @@
     view.backgroundColor = [UIColor whiteColor];
     
     UICollectionView *imageCollectionView = [self getTitleImageViewWithFrame:frame];
-    
+    imageCollectionView.bounces = NO;
     [view addSubview:imageCollectionView];
     
     NSArray *imgArr = goodInfoDic[@"image"];

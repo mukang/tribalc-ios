@@ -21,25 +21,25 @@
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view from its nib.
     
-    UIButton *shoppingButton = [[UIButton alloc]initWithFrame:CGRectMake((self.view.frame.size.width - 100)/2.0, 200, 100, 40)];
-    [shoppingButton setTitle:@"餐饮" forState:UIControlStateNormal];
-    shoppingButton.backgroundColor = [UIColor greenColor];
-    [shoppingButton addTarget:self action:@selector(goResaurantList:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:shoppingButton];
+    self.view.frame = [UIScreen mainScreen].bounds;
     
+    UIButton *shopButton = [self createButtonWithFrame:CGRectMake(0, 100, self.view.width, 100) AndText:@"餐厅" AndAction:@selector(goResaurantList:)];
+    [self.view addSubview:shopButton];
     
-    UIButton *recommendBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 60)];
-    [recommendBtn setTitle:@"精品推荐" forState:UIControlStateNormal];
-    recommendBtn.backgroundColor = [UIColor redColor];
-    [recommendBtn addTarget:self action:@selector(goRecommendShoppingList:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *recommendBtn = [self createButtonWithFrame:CGRectMake(0, 0, self.view.width, 100) AndText:@"精品推荐" AndAction:@selector(goRecommendShoppingList:)];
     [self.view addSubview:recommendBtn];
     
-    UIButton *entertainmentBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 200, 100, 60)];
-    [entertainmentBtn setTitle:@"娱乐" forState:UIControlStateNormal];
-    entertainmentBtn.backgroundColor = [UIColor blueColor];
-    [entertainmentBtn addTarget:self action:@selector(goentertainmentList:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *entertainmentBtn = [self createButtonWithFrame:CGRectMake(0, 200, self.view.width, 100) AndText:@"娱乐" AndAction:@selector(goentertainmentList:)];
     [self.view addSubview:entertainmentBtn];
     
+}
+
+- (UIButton *)createButtonWithFrame:(CGRect)frame AndText:(NSString *)text AndAction:(SEL)action{
+    UIButton *button = [[UIButton alloc] initWithFrame:frame];
+    [button setTitle:text forState:UIControlStateNormal];
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    return button;
 }
 
 - (void)goentertainmentList:(id)sender {

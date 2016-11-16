@@ -26,7 +26,6 @@
         logoTitle = [[UILabel alloc] initWithFrame:CGRectMake(frame.size.width * 0.06, 0.58 * frame.size.height / 2, frame.size.width - (frame.size.width * 0.06 * 2), frame.size.height / 2 * 0.38)];
         logoTitle.text = title;
         float fontFlo = logoTitle.width /  (titleStr.length + 1);
-        NSLog(@"%f", fontFlo);
 //        logoTitle.font = [UIFont systemFontOfSize:frame.size.height / 2 * 0.38];
         logoTitle.font = [UIFont systemFontOfSize:fontFlo];
 
