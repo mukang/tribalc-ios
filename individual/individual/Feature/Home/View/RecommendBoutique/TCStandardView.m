@@ -185,7 +185,7 @@
     UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, frame.size.width - 40, 0.5)];
     [view addSubview:lineView];
     
-    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(20, 20, frame.size.width - 40, 14) AndFontSize:14 AndTitle:@"款式" AndTextColor:[UIColor blackColor]];
+    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(20, 20, frame.size.width - 40, 14) AndFontSize:14 AndTitle:@"尺码" AndTextColor:[UIColor blackColor]];
     titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     [view addSubview:titleLab];
     
@@ -212,6 +212,7 @@
             height += 22.5 + 13;
             [buttonView setHeight:height + 22.5];
         }
+        [button setOrigin:CGPointMake(width, height)];
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         button.tag = i;
         width += button.width + 13;
@@ -243,6 +244,7 @@
             height += 30 + 13;
             [buttonView setHeight:height + 30];
         }
+        [button setOrigin:CGPointMake(width, height)];
         [buttonView addSubview:button];
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         button.tag = i;
