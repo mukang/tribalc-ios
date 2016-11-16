@@ -597,6 +597,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 204) {
+                if ([shippingAddressID isEqualToString:self.currentUserSession.userSensitiveInfo.addressID]) {
+                    TCUserSession *userSession = [self currentUserSession];
+                    userSession.userSensitiveInfo.addressID = nil;
+                    userSession.userSensitiveInfo.shippingAddress = nil;
+                    [self setUserSession:userSession];
+                }
                 if (resultBlock) {
                     resultBlock(YES, nil);
                 }
@@ -633,7 +639,26 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+#pragma mark - 商品类资源
 
+- (void)fetchGoodsWrapper:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCGoodsWrapper *, NSError *))resultBlock {
+    NSString *limitSizePart = [NSString stringWithFormat:@"limitSize=%zd&", limitSize];
+    NSString *sortSkipPart = sortSkip ? [NSString stringWithFormat:@"sortSkip=%@&", sortSkip] : @"";
+    NSString *apiName = [NSString stringWithFormat:@"goods?%@%@sort=saleQuantity,desc", limitSizePart, sortSkipPart];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                resultBlock(nil, response.error);
+            }
+        } else {
+            TCGoodsWrapper *goodsWrapper = [[TCGoodsWrapper alloc] initWithObjectDictionary:response.data];
+            if (resultBlock) {
+                resultBlock(goodsWrapper, nil);
+            }
+        }
+    }];
+}
 
 
 

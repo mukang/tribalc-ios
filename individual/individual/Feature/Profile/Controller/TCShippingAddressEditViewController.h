@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TCUserShippingAddress;
 
 @interface TCShippingAddressEditViewController : UIViewController
+
+@property (strong, nonatomic) TCUserShippingAddress *shippingAddress;
 
 @end

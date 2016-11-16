@@ -17,7 +17,7 @@
 #define TCCLIENT_API_HOST    @"app-services.buluo-gs.com:10086"
 #endif
 
-#define TCCLIENT_BASE_URL    @"http://" TCCLIENT_API_HOST "/tribalc/v1.0/"
+#define TCCLIENT_BASE_URL    @"http://" TCCLIENT_API_HOST "/tribalc/v1.0"
 
 
 #endif

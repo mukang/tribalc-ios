@@ -17,9 +17,10 @@
 #import "TCUserShippingAddress.h"
 
 
+/********** 商品相关 **********/
 
-
-
+#import "TCGoods.h"
+#import "TCGoodsWrapper.h"
 
 
 

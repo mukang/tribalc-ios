@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1EA3289035216A7674F8F7F8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A240A7A9EE484200847270B /* libPods.a */; };
+		7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */; };
+		7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC11DDC3F5C00FCAB95 /* TCGoodsWrapper.m */; };
+		7A133EC41DDC4CC000FCAB95 /* TCGoodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC31DDC4CC000FCAB95 /* TCGoodsTests.m */; };
 		7A1580311DD1DE8200B8F768 /* TCPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */; };
 		7A190AF01DC09BF500651905 /* TCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AEF1DC09BF500651905 /* TCClient.m */; };
 		7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF21DC0A5DB00651905 /* TCClientConfig.m */; };
@@ -113,6 +116,11 @@
 /* Begin PBXFileReference section */
 		1A240A7A9EE484200847270B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6119E9AF010F0BE87CA35612 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		7A133EBD1DDC12DF00FCAB95 /* TCGoods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoods.h; sourceTree = "<group>"; };
+		7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoods.m; sourceTree = "<group>"; };
+		7A133EC01DDC3F5C00FCAB95 /* TCGoodsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsWrapper.h; sourceTree = "<group>"; };
+		7A133EC11DDC3F5C00FCAB95 /* TCGoodsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsWrapper.m; sourceTree = "<group>"; };
+		7A133EC31DDC4CC000FCAB95 /* TCGoodsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsTests.m; sourceTree = "<group>"; };
 		7A15802F1DD1DE8200B8F768 /* TCPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPhotoPicker.h; sourceTree = "<group>"; };
 		7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPhotoPicker.m; sourceTree = "<group>"; };
 		7A190AEE1DC09BF500651905 /* TCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClient.h; sourceTree = "<group>"; };
@@ -289,6 +297,17 @@
 				1A240A7A9EE484200847270B /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7A133EBC1DDC12BF00FCAB95 /* Goods */ = {
+			isa = PBXGroup;
+			children = (
+				7A133EBD1DDC12DF00FCAB95 /* TCGoods.h */,
+				7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */,
+				7A133EC01DDC3F5C00FCAB95 /* TCGoodsWrapper.h */,
+				7A133EC11DDC3F5C00FCAB95 /* TCGoodsWrapper.m */,
+			);
+			path = Goods;
 			sourceTree = "<group>";
 		};
 		7A190AEC1DC09BBA00651905 /* Client */ = {
@@ -594,6 +613,7 @@
 			children = (
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
+				7A133EBC1DDC12BF00FCAB95 /* Goods */,
 				7AAF237C1DCB5BF1002B81A5 /* User */,
 			);
 			path = Model;
@@ -630,6 +650,7 @@
 			isa = PBXGroup;
 			children = (
 				7ACA4FDF1DD59EF5006634E8 /* TCUserTests.m */,
+				7A133EC31DDC4CC000FCAB95 /* TCGoodsTests.m */,
 			);
 			path = ApiTests;
 			sourceTree = "<group>";
@@ -984,6 +1005,7 @@
 				7A6506E11DC9EE5400B0EDBF /* TCShippingAddressViewCell.m in Sources */,
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
+				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
 				7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */,
 				7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */,
 				7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */,
@@ -991,6 +1013,7 @@
 				7A6506D71DC9EBAA00B0EDBF /* TCShippingAddressViewController.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
+				7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */,
 				7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */,
 				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,
 				7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */,
@@ -1017,6 +1040,7 @@
 				7A68C7F51DB9EF6700027C6E /* TCDicToModelTests.m in Sources */,
 				7A68C7FB1DB9F37400027C6E /* TCTestBoss.m in Sources */,
 				7A68C7F81DB9F03600027C6E /* TCTestModel.m in Sources */,
+				7A133EC41DDC4CC000FCAB95 /* TCGoodsTests.m in Sources */,
 				7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */,
 				7ACA4FE01DD59EF5006634E8 /* TCUserTests.m in Sources */,
 			);

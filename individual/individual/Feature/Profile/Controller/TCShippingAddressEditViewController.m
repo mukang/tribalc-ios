@@ -13,7 +13,14 @@
 #import "TCBiographyViewCell.h"
 #import "TCCityPickerView.h"
 
-@interface TCShippingAddressEditViewController () <UITableViewDataSource, UITableViewDelegate, TCCityPickerViewDelegate>
+#import "TCBuluoApi.h"
+
+@interface TCShippingAddressEditViewController ()
+<UITableViewDataSource,
+UITableViewDelegate,
+TCCityPickerViewDelegate,
+UITextViewDelegate,
+UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -68,16 +75,34 @@
     if (indexPath.row == 2) {
         TCBiographyViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyViewCell" forIndexPath:indexPath];
         cell.titleLabel.text = @"所在地区";
+        if (self.shippingAddress) {
+            NSString *province = self.shippingAddress.province ?: @"";
+            NSString *city = self.shippingAddress.city ?: @"";
+            NSString *district = self.shippingAddress.district ?: @"";
+            cell.detailLabel.text = [NSString stringWithFormat:@"%@%@%@", province, city, district];
+        }
         currentCell = cell;
     } else if (indexPath.row == 3) {
         TCShippingAddressDetailViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCShippingAddressDetailViewCell" forIndexPath:indexPath];
+        cell.textView.text = self.shippingAddress.address ?: @"";
+        cell.textView.delegate = self;
         currentCell = cell;
     } else {
         TCShippingAddressEditViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCShippingAddressEditViewCell" forIndexPath:indexPath];
         if (indexPath.row == 0) {
             cell.titleLabel.text = @"收货人";
+            cell.textField.placeholder = @"请填写收货人姓名";
+            if (self.shippingAddress) {
+                cell.textField.text = self.shippingAddress.name;
+            }
+            cell.textField.delegate = self;
         } else {
             cell.titleLabel.text = @"手机号码";
+            cell.textField.placeholder = @"请填写手机号码";
+            if (self.shippingAddress) {
+                cell.textField.text = self.shippingAddress.phone;
+            }
+            cell.textField.delegate = self;
         }
         currentCell = cell;
     }
@@ -147,7 +172,7 @@
 #pragma mark - Actions
 
 - (void)handleCickBackButton:(UIBarButtonItem *)sender {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -136,7 +136,7 @@
 }
 
 - (void)handleCickBackButton:(UIBarButtonItem *)sender {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)handleDeleteShippingAddress:(TCUserShippingAddress *)shippingAddress {
