@@ -30,6 +30,9 @@
 		092CD4291DD9A07C0073A9C1 /* TCRestaurantSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD41F1DD9A07C0073A9C1 /* TCRestaurantSortView.m */; };
 		092CD42A1DD9A07C0073A9C1 /* TCSelectSortButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */; };
 		092CD42D1DD9C5FC0073A9C1 /* TCStandardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */; };
+		099B38311DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38301DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m */; };
+		099B38341DDDA926003F5972 /* TCRecommendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38331DDDA926003F5972 /* TCRecommendHeader.m */; };
+		099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38361DDDA944003F5972 /* TCRecommendFooter.m */; };
 		7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */; };
 		7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC11DDC3F5C00FCAB95 /* TCGoodsWrapper.m */; };
 		7A133EC41DDC4CC000FCAB95 /* TCGoodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC31DDC4CC000FCAB95 /* TCGoodsTests.m */; };
@@ -184,6 +187,12 @@
 		092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectSortButton.m; sourceTree = "<group>"; };
 		092CD42B1DD9C5FC0073A9C1 /* TCStandardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStandardView.h; sourceTree = "<group>"; };
 		092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStandardView.m; sourceTree = "<group>"; };
+		099B382F1DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCalloutDetailAnnotationView.h; sourceTree = "<group>"; };
+		099B38301DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCalloutDetailAnnotationView.m; sourceTree = "<group>"; };
+		099B38321DDDA926003F5972 /* TCRecommendHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendHeader.h; sourceTree = "<group>"; };
+		099B38331DDDA926003F5972 /* TCRecommendHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendHeader.m; sourceTree = "<group>"; };
+		099B38351DDDA944003F5972 /* TCRecommendFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendFooter.h; sourceTree = "<group>"; };
+		099B38361DDDA944003F5972 /* TCRecommendFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendFooter.m; sourceTree = "<group>"; };
 		39C5AA3FC54D84E58748E333 /* Pods-individual.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-individual.release.xcconfig"; path = "Pods/Target Support Files/Pods-individual/Pods-individual.release.xcconfig"; sourceTree = "<group>"; };
 		7A133EBD1DDC12DF00FCAB95 /* TCGoods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoods.h; sourceTree = "<group>"; };
 		7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoods.m; sourceTree = "<group>"; };
@@ -448,6 +457,8 @@
 				092CD40F1DD9A07C0073A9C1 /* TCCalloutAnnotation.m */,
 				092CD4101DD9A07C0073A9C1 /* TCCalloutAnnotationView.h */,
 				092CD4111DD9A07C0073A9C1 /* TCCalloutAnnotationView.m */,
+				099B382F1DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.h */,
+				099B38301DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -459,6 +470,10 @@
 				092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */,
 				092CD42B1DD9C5FC0073A9C1 /* TCStandardView.h */,
 				092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */,
+				099B38321DDDA926003F5972 /* TCRecommendHeader.h */,
+				099B38331DDDA926003F5972 /* TCRecommendHeader.m */,
+				099B38351DDDA944003F5972 /* TCRecommendFooter.h */,
+				099B38361DDDA944003F5972 /* TCRecommendFooter.m */,
 			);
 			path = RecommendBoutique;
 			sourceTree = "<group>";
@@ -1049,7 +1064,7 @@
 					7A9CCECB1DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 452XNHBVYZ;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					7A9CCEE41DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
@@ -1221,6 +1236,7 @@
 				7A6506F01DCA1F4F00B0EDBF /* TCBioEditAvatarViewController.m in Sources */,
 				7A4514771DD2D0C3009F170A /* TCProfileBgImageChangeView.m in Sources */,
 				7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */,
+				099B38341DDDA926003F5972 /* TCRecommendHeader.m in Sources */,
 				7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */,
 				7A918AD61DC36D53002BD529 /* TCBioEditAffectionView.m in Sources */,
 				7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */,
@@ -1228,6 +1244,7 @@
 				7A918AC11DC32D90002BD529 /* TCBiographyAvatarViewCell.m in Sources */,
 				7A6506E11DC9EE5400B0EDBF /* TCShippingAddressViewCell.m in Sources */,
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
+				099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
 				7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */,
@@ -1252,6 +1269,7 @@
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
 				092CD3F81DD99F4A0073A9C1 /* TCRestaurantViewController.m in Sources */,
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
+				099B38311DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m in Sources */,
 				092CD4271DD9A07C0073A9C1 /* TCRestaurantFilterView.m in Sources */,
 				7AB29F311DD46C7D00564D93 /* TCUserSensitiveInfo.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
@@ -1417,7 +1435,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 452XNHBVYZ;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
 				INFOPLIST_FILE = individual/Info.plist;
@@ -1452,8 +1470,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f95f115f-8aa2-4251-8ab1-c8c0c7ed9e3c";
-				PROVISIONING_PROFILE_SPECIFIER = "Individual Development By mukang";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};

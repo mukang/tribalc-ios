@@ -9,11 +9,11 @@
 #import <MapKit/MapKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-#import "TCCalloutAnnotation.h"
+#import "TCAnnotation.h"
 
 @interface TCCalloutAnnotationView : MKAnnotationView
 
-@property (nonatomic, strong) TCCalloutAnnotation *calloutAnnotation;
+@property (nonatomic, strong) TCAnnotation *mAnnotation;
 
 +(instancetype)calloutViewWithMapView:(MKMapView *)mapView;
 
