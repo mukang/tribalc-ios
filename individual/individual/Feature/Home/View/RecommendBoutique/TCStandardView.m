@@ -134,7 +134,7 @@
     [self createTitleSelectedStyleAndSizeWithOrigin:CGPointMake(selectStamp.x + selectStamp.width + 8, selectStamp.y - 1) AndInfo:info AndView:view];
     
     
-    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - 15, 15, 15, 15)];
+    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - 20, 15, 20, 20)];
     [closeBtn addTarget:target action:closeAction forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:closeBtn];
     
