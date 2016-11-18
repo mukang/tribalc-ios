@@ -9,6 +9,10 @@
 #import "TCAppDelegate.h"
 #import "TCTabBarController.h"
 
+#import <Bugly/Bugly.h>
+
+static NSString *const kBuglyAppID = @"900059019";
+
 @implementation TCAppDelegate
 
 
@@ -23,6 +27,8 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [Bugly startWithAppId:kBuglyAppID];
     
     return YES;
 }
