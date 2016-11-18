@@ -19,7 +19,10 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *dataList;
+/** 默认收货地址，没有设置则为nil */
 @property (strong, nonatomic) TCUserShippingAddress *defaultShippingAddress;
+/** 默认地址是否被编辑或重设 */
+@property (nonatomic) BOOL defaultShippingAddressChange;
 
 @end
 
@@ -52,7 +55,7 @@
 }
 
 - (void)loadData {
-    
+    self.defaultShippingAddress = [[TCUserShippingAddress alloc] init];
     [[TCBuluoApi api] fetchUserShippingAddressList:^(NSArray *addressList, NSError *error) {
         if (addressList) {
             [weakSelf.dataList removeAllObjects];
@@ -100,12 +103,13 @@
         return;
     }
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] setUserDefaultShippingAddress:shippingAddress.ID result:^(BOOL success, NSError *error) {
+    [[TCBuluoApi api] setUserDefaultShippingAddress:shippingAddress result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD hideHUD:YES];
             weakSelf.defaultShippingAddress.defaultAddress = NO;
             shippingAddress.defaultAddress = YES;
             weakSelf.defaultShippingAddress = shippingAddress;
+            weakSelf.defaultShippingAddressChange = YES;
             [weakSelf.tableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"设置默认地址失败！"];
@@ -114,7 +118,13 @@
 }
 
 - (void)shippingAddressViewCell:(TCShippingAddressViewCell *)cell didClickEditAddressButtonWithShippingAddress:(TCUserShippingAddress *)shippingAddress {
-    
+    TCShippingAddressEditViewController *vc = [[TCShippingAddressEditViewController alloc] initWithNibName:@"TCShippingAddressEditViewController" bundle:[NSBundle mainBundle]];
+    vc.shippingAddressType = TCShippingAddressTypeEdit;
+    vc.shippingAddress = shippingAddress;
+    vc.shippingAddressBlock = ^(TCShippingAddressType shippingAddressType, TCUserShippingAddress *newShippingAddress) {
+        [weakSelf handleDidEditShippingAddress:newShippingAddress];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)shippingAddressViewCell:(TCShippingAddressViewCell *)cell didClickDeleteAddressButtonWithShippingAddress:(TCUserShippingAddress *)shippingAddress {
@@ -132,10 +142,17 @@
 
 - (IBAction)handleClickAddNewShippingAddressButton:(UIButton *)sender {
     TCShippingAddressEditViewController *vc = [[TCShippingAddressEditViewController alloc] initWithNibName:@"TCShippingAddressEditViewController" bundle:[NSBundle mainBundle]];
+    vc.shippingAddressType = TCShippingAddressTypeAdd;
+    vc.shippingAddressBlock = ^(TCShippingAddressType shippingAddressType, TCUserShippingAddress *newShippingAddress) {
+        [weakSelf handleDidAddShippingAddress:newShippingAddress];
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleCickBackButton:(UIBarButtonItem *)sender {
+    if (self.defaultShippingAddressChange && self.defaultShippingAddressChangeBlock) {
+        self.defaultShippingAddressChangeBlock(YES);
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -145,11 +162,38 @@
         if (success) {
             [MBProgressHUD hideHUD:YES];
             [weakSelf.dataList removeObject:shippingAddress];
+            if ([shippingAddress.ID isEqualToString:weakSelf.defaultShippingAddress.ID]) {
+                weakSelf.defaultShippingAddressChange = YES;
+                weakSelf.defaultShippingAddress = nil;
+            }
             [weakSelf.tableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"删除收货地址失败！"];
         }
     }];
+}
+
+#pragma mark - Change DataList
+
+- (void)handleDidEditShippingAddress:(TCUserShippingAddress *)newShippingAddress {
+    for (int i=0; i<self.dataList.count; i++) {
+        TCUserShippingAddress *shippingAddress = self.dataList[i];
+        if ([shippingAddress.ID isEqualToString:newShippingAddress.ID]) {
+            if ([newShippingAddress.ID isEqualToString:self.defaultShippingAddress.ID]) {
+                newShippingAddress.defaultAddress = YES;
+                self.defaultShippingAddressChange = YES;
+                self.defaultShippingAddress = newShippingAddress;
+            }
+            [self.dataList replaceObjectAtIndex:i withObject:newShippingAddress];
+            [self.tableView reloadData];
+            break;
+        }
+    }
+}
+
+- (void)handleDidAddShippingAddress:(TCUserShippingAddress *)newShippingAddress {
+    [self.dataList insertObject:newShippingAddress atIndex:0];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Override Methods

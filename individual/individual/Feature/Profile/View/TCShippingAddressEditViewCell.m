@@ -8,17 +8,32 @@
 
 #import "TCShippingAddressEditViewCell.h"
 
+@interface TCShippingAddressEditViewCell ()
+
+@property (weak, nonatomic) IBOutlet UIView *addressView;
+
+@end
+
 @implementation TCShippingAddressEditViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] init];
+    [tapGesture addTarget:self action:@selector(handleTapAddressView:)];
+    [self.addressView addGestureRecognizer:tapGesture];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+- (IBAction)handleTapAddressView:(UITapGestureRecognizer *)sender {
+    if ([self.delegate respondsToSelector:@selector(didTapAddressViewInShippingAddressEditViewCell:)]) {
+        [self.delegate didTapAddressViewInShippingAddressEditViewCell:self];
+    }
 }
 
 @end

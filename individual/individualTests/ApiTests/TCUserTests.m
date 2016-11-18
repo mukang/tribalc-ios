@@ -296,7 +296,7 @@
     
     TCUserShippingAddress *shippingAddress = self.shippingAddress;
     __weak typeof(self) weakSelf = self;
-    [weakSelf.buluoApi setUserDefaultShippingAddress:shippingAddress.ID result:^(BOOL success, NSError *error) {
+    [weakSelf.buluoApi setUserDefaultShippingAddress:shippingAddress result:^(BOOL success, NSError *error) {
         XCTAssertTrue(success, @"Set user default shipping address failed with error: %@", error);
         [self.expectation fulfill];
     }];

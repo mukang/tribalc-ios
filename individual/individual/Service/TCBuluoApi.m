@@ -450,15 +450,16 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)setUserDefaultShippingAddress:(NSString *)shippingAddressID result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)setUserDefaultShippingAddress:(TCUserShippingAddress *)shippingAddress result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/sensitive_info/addressID", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-        [request setValue:shippingAddressID forKey:@"value"];
+        [request setValue:shippingAddress.ID forKey:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
                 TCUserSession *userSession = self.currentUserSession;
-                userSession.userSensitiveInfo.addressID = shippingAddressID;
+                userSession.userSensitiveInfo.addressID = shippingAddress.ID;
+                userSession.userSensitiveInfo.shippingAddress = shippingAddress;
                 [self setUserSession:userSession];
                 if (resultBlock) {
                     resultBlock(YES, nil);
@@ -569,6 +570,11 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
+                if ([shippingAddress.ID isEqualToString:self.currentUserSession.userSensitiveInfo.addressID]) {
+                    TCUserSession *userSession = self.currentUserSession;
+                    userSession.userSensitiveInfo.shippingAddress = shippingAddress;
+                    [self setUserSession:userSession];
+                }
                 if (resultBlock) {
                     resultBlock(YES, nil);
                 }

@@ -9,8 +9,6 @@
 #import "TCShippingAddressEditViewController.h"
 
 #import "TCShippingAddressEditViewCell.h"
-#import "TCShippingAddressDetailViewCell.h"
-#import "TCBiographyViewCell.h"
 #import "TCCityPickerView.h"
 
 #import "TCBuluoApi.h"
@@ -20,21 +18,26 @@
 UITableViewDelegate,
 TCCityPickerViewDelegate,
 UITextViewDelegate,
-UITextFieldDelegate>
+UITextFieldDelegate,
+TCShippingAddressEditViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) TCShippingAddressEditViewCell *cell;
 
 @property (weak, nonatomic) UIView *pickerBgView;
 @property (weak, nonatomic) TCCityPickerView *cityPickerView;
 
 @end
 
-@implementation TCShippingAddressEditViewController
+@implementation TCShippingAddressEditViewController {
+    __weak TCShippingAddressEditViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    weakSelf = self;
     [self setupNavBar];
     [self setupSubviews];
 }
@@ -44,18 +47,19 @@ UITextFieldDelegate>
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
-                                                                            action:@selector(handleCickBackButton:)];
+                                                                            action:@selector(handleClickBackButton:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(handleClickSaveButton:)];
 }
 
 - (void)setupSubviews {
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     UINib *nib = [UINib nibWithNibName:@"TCShippingAddressEditViewCell" bundle:[NSBundle mainBundle]];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"TCShippingAddressEditViewCell"];
-    nib = [UINib nibWithNibName:@"TCShippingAddressDetailViewCell" bundle:[NSBundle mainBundle]];
-    [self.tableView registerNib:nib forCellReuseIdentifier:@"TCShippingAddressDetailViewCell"];
-    nib = [UINib nibWithNibName:@"TCBiographyViewCell" bundle:[NSBundle mainBundle]];
-    [self.tableView registerNib:nib forCellReuseIdentifier:@"TCBiographyViewCell"];
 }
 
 #pragma mark - Status Bar
@@ -67,69 +71,80 @@ UITextFieldDelegate>
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *currentCell;
-    if (indexPath.row == 2) {
-        TCBiographyViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyViewCell" forIndexPath:indexPath];
-        cell.titleLabel.text = @"所在地区";
-        if (self.shippingAddress) {
-            NSString *province = self.shippingAddress.province ?: @"";
-            NSString *city = self.shippingAddress.city ?: @"";
-            NSString *district = self.shippingAddress.district ?: @"";
-            cell.detailLabel.text = [NSString stringWithFormat:@"%@%@%@", province, city, district];
-        }
-        currentCell = cell;
-    } else if (indexPath.row == 3) {
-        TCShippingAddressDetailViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCShippingAddressDetailViewCell" forIndexPath:indexPath];
-        cell.textView.text = self.shippingAddress.address ?: @"";
-        cell.textView.delegate = self;
-        currentCell = cell;
-    } else {
-        TCShippingAddressEditViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCShippingAddressEditViewCell" forIndexPath:indexPath];
-        if (indexPath.row == 0) {
-            cell.titleLabel.text = @"收货人";
-            cell.textField.placeholder = @"请填写收货人姓名";
-            if (self.shippingAddress) {
-                cell.textField.text = self.shippingAddress.name;
-            }
-            cell.textField.delegate = self;
-        } else {
-            cell.titleLabel.text = @"手机号码";
-            cell.textField.placeholder = @"请填写手机号码";
-            if (self.shippingAddress) {
-                cell.textField.text = self.shippingAddress.phone;
-            }
-            cell.textField.delegate = self;
-        }
-        currentCell = cell;
+    TCShippingAddressEditViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCShippingAddressEditViewCell" forIndexPath:indexPath];
+    cell.nameTextField.delegate = self;
+    cell.phoneTextField.delegate = self;
+    cell.detailAddressTextView.delegate = self;
+    cell.delegate = self;
+    if (self.shippingAddressType == TCShippingAddressTypeEdit) {
+        TCUserShippingAddress *shippingAddress = self.shippingAddress;
+        cell.nameTextField.text = shippingAddress.name;
+        cell.phoneTextField.text = shippingAddress.phone;
+        NSString *province = shippingAddress.province ?: @"";
+        NSString *city = shippingAddress.city ?: @"";
+        NSString *district = shippingAddress.district ?: @"";
+        cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@", province, city, district];
+        cell.detailAddressTextView.text = shippingAddress.address;
     }
-    return currentCell;
+    self.cell = cell;
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 3) {
-        return 67;
-    } else {
-        return 45;
-    }
+    return 202;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row == 2) {
-        [self showPickerView];
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ([textField isFirstResponder]) {
+        [textField resignFirstResponder];
     }
+    return YES;
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
+        if ([textView isFirstResponder]) {
+            [textView resignFirstResponder];
+        }
+    }
+    return YES;
+}
+
+#pragma mark - TCShippingAddressEditViewCellDelegate
+
+- (void)didTapAddressViewInShippingAddressEditViewCell:(TCShippingAddressEditViewCell *)cell {
+    if ([self.cell.nameTextField isFirstResponder]) {
+        [self.cell.nameTextField resignFirstResponder];
+    }
+    if ([self.cell.phoneTextField isFirstResponder]) {
+        [self.cell.phoneTextField resignFirstResponder];
+    }
+    if ([self.cell.detailTextLabel isFirstResponder]) {
+        [self.cell.detailTextLabel resignFirstResponder];
+    }
+    [self showPickerView];
 }
 
 #pragma mark - TCCityPickerViewDelegate
 
 - (void)cityPickerView:(TCCityPickerView *)view didClickConfirmButtonWithCityInfo:(NSDictionary *)cityInfo {
-    TCLog(@"%@", cityInfo);
+    if (self.shippingAddress == nil) {
+        self.shippingAddress = [[TCUserShippingAddress alloc] init];
+    }
+    self.shippingAddress.province = cityInfo[TCCityPickierViewProvinceKey];
+    self.shippingAddress.city = cityInfo[TCCityPickierViewCityKey];
+    self.shippingAddress.district = cityInfo[TCCityPickierViewCountryKey];
+    self.cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@", self.shippingAddress.province, self.shippingAddress.city, self.shippingAddress.district];
     [self dismissPickerView];
 }
 
@@ -171,8 +186,70 @@ UITextFieldDelegate>
 
 #pragma mark - Actions
 
-- (void)handleCickBackButton:(UIBarButtonItem *)sender {
+- (void)handleClickBackButton:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)handleClickSaveButton:(UIBarButtonItem *)sender {
+    if (self.cell.nameTextField.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请填写收货人姓名！"];
+        return;
+    }
+    if (self.cell.phoneTextField.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请填写手机号码！"];
+        return;
+    }
+    if (self.cell.addressLabel.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请填写所在地！"];
+        return;
+    }
+    if (self.cell.addressLabel.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请填写详细地址！"];
+        return;
+    }
+    
+    if (self.shippingAddress == nil) {
+        self.shippingAddress = [[TCUserShippingAddress alloc] init];
+    }
+    self.shippingAddress.name = self.cell.nameTextField.text;
+    self.shippingAddress.phone = self.cell.phoneTextField.text;
+    self.shippingAddress.address = self.cell.detailAddressTextView.text;
+    
+    if (self.shippingAddressType == TCShippingAddressTypeAdd) {
+        [self addShippingAddress];
+    } else {
+        [self editShippingAddress];
+    }
+}
+
+- (void)addShippingAddress {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] addUserShippingAddress:self.shippingAddress result:^(BOOL success, TCUserShippingAddress *shippingAddress, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            if (weakSelf.shippingAddressBlock) {
+                weakSelf.shippingAddressBlock(TCShippingAddressTypeAdd, shippingAddress);
+            }
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"添加收货地址失败！"];
+        }
+    }];
+}
+
+- (void)editShippingAddress {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] changeUserShippingAddress:self.shippingAddress result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            if (weakSelf.shippingAddressBlock) {
+                weakSelf.shippingAddressBlock(TCShippingAddressTypeEdit, self.shippingAddress);
+            }
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"修改收货地址失败！"];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

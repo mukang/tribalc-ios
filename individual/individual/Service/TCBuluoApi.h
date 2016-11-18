@@ -143,10 +143,10 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 /**
  修改用户默认收货地址
 
- @param shippingAddressID 收货地址ID
+ @param shippingAddress 收货地址
  @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
  */
-- (void)setUserDefaultShippingAddress:(NSString *)shippingAddressID result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)setUserDefaultShippingAddress:(TCUserShippingAddress *)shippingAddress result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
  添加用户收货地址

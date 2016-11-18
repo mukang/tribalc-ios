@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^TCDefaultShippingAddressChangeBlock)(BOOL isChange);
+
 @interface TCShippingAddressViewController : UIViewController
+
+@property (copy, nonatomic) TCDefaultShippingAddressChangeBlock defaultShippingAddressChangeBlock;
 
 @end

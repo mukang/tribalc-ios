@@ -3,6 +3,6 @@ target 'individual' do
 pod 'AFNetworking', '~> 3.0'
 pod 'YYText'
 pod 'pop', '~> 1.0.7'
-pod 'MBProgressHUD', '~> 1.0.0'
+pod 'MBProgressHUD'
 #pod 'MXNavigationBarManager'
 end

@@ -8,10 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCShippingAddressEditViewCell;
+
+@protocol TCShippingAddressEditViewCellDelegate <NSObject>
+
+@optional
+- (void)didTapAddressViewInShippingAddressEditViewCell:(TCShippingAddressEditViewCell *)cell;
+
+@end
+
 @interface TCShippingAddressEditViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) id<TCShippingAddressEditViewCellDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UITextView *detailAddressTextView;
 
 @end

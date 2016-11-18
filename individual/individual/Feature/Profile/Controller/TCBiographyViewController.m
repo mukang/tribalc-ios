@@ -210,6 +210,11 @@
             [self showPickerView];
         } else {
             TCShippingAddressViewController *vc = [[TCShippingAddressViewController alloc] initWithNibName:@"TCShippingAddressViewController" bundle:[NSBundle mainBundle]];
+            vc.defaultShippingAddressChangeBlock = ^(BOOL isChange) {
+                if (isChange) {
+                    [weakSelf fetchUserInfo];
+                }
+            };
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
