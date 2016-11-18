@@ -112,6 +112,8 @@
 		7ACA4FE31DD5B8C2006634E8 /* TCUserPhoneInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACA4FE21DD5B8C2006634E8 /* TCUserPhoneInfo.m */; };
 		7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */; };
 		7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */; };
+		7ADB92BE1DDF10470055D557 /* TCWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADB92BC1DDF10470055D557 /* TCWalletViewController.m */; };
+		7ADB92BF1DDF10470055D557 /* TCWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ADB92BD1DDF10470055D557 /* TCWalletViewController.xib */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
 		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
 		7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B881DC21CA2004E303D /* TCBiographyViewController.m */; };
@@ -324,6 +326,9 @@
 		7ACE57A61DC73BD9004B383A /* TCVicinityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVicinityViewController.h; sourceTree = "<group>"; };
 		7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVicinityViewController.m; sourceTree = "<group>"; };
 		7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCVicinityViewController.xib; sourceTree = "<group>"; };
+		7ADB92BB1DDF10470055D557 /* TCWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletViewController.h; sourceTree = "<group>"; };
+		7ADB92BC1DDF10470055D557 /* TCWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletViewController.m; sourceTree = "<group>"; };
+		7ADB92BD1DDF10470055D557 /* TCWalletViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCWalletViewController.xib; sourceTree = "<group>"; };
 		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
 		7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetPasswordView.m; sourceTree = "<group>"; };
 		7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCGetPasswordView.xib; sourceTree = "<group>"; };
@@ -603,6 +608,9 @@
 				7A6506D91DC9EBCB00B0EDBF /* TCShippingAddressEditViewController.h */,
 				7A6506DA1DC9EBCB00B0EDBF /* TCShippingAddressEditViewController.m */,
 				7A6506DB1DC9EBCB00B0EDBF /* TCShippingAddressEditViewController.xib */,
+				7ADB92BB1DDF10470055D557 /* TCWalletViewController.h */,
+				7ADB92BC1DDF10470055D557 /* TCWalletViewController.m */,
+				7ADB92BD1DDF10470055D557 /* TCWalletViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1109,6 +1117,7 @@
 				7A4514791DD2D0DE009F170A /* TCProfileBgImageChangeView.xib in Resources */,
 				7A190B121DC0CC9800651905 /* TCProfileViewController.xib in Resources */,
 				7A6506F11DCA1F4F00B0EDBF /* TCBioEditAvatarViewController.xib in Resources */,
+				7ADB92BF1DDF10470055D557 /* TCWalletViewController.xib in Resources */,
 				7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */,
 				7A918AD31DC366CE002BD529 /* TCBioEditGenderView.xib in Resources */,
 				7AC292281DC8AA6900B2C7E8 /* TCCityPickerView.xib in Resources */,
@@ -1191,6 +1200,7 @@
 				7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
 				7AAF23821DCB5C04002B81A5 /* TCUserSession.m in Sources */,
+				7ADB92BE1DDF10470055D557 /* TCWalletViewController.m in Sources */,
 				7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */,
 				7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */,
 				7A6506E61DCA130200B0EDBF /* TCShippingAddressEditViewCell.m in Sources */,
