@@ -139,9 +139,13 @@
     UILabel *titleLab = [self createTitleLabelWithText:goodInfo.name WithFrame:CGRectMake(20, 15, frame.size.width - 40, 16)];
     [view addSubview:titleLab];
     
-    NSString *priceStr = [NSString stringWithFormat:@"￥%@", [self changeFloat:goodInfo.salePrice]];
-    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(20, view.height - 9 - 17, titleLab.width, 17) AndFontSize:17 AndTitle:priceStr AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
+    UILabel *priceLab = [self createPriceLabelWithFrame:CGRectMake(20, view.height - 9 - 17, titleLab.width, 17)];
     [view addSubview:priceLab];
+    
+    UILabel *originPriceLab = [self createOriginPriceLabelWithFrame:CGRectMake(priceLab.x + priceLab.width + 2, priceLab.y + 5, 0, 17 - 5)];
+    [view addSubview:originPriceLab];
+    
+
     
     UILabel *tagLab = [self createTagLabel];
     [tagLab setOrigin:CGPointMake(self.view.width - 20 - tagLab.width, priceLab.y - 2)];
@@ -149,6 +153,29 @@
     
     return view;
 }
+
+- (UILabel *)createPriceLabelWithFrame:(CGRect)frame {
+    NSString *priceStr = [NSString stringWithFormat:@"￥%@", [self changeFloat:goodInfo.salePrice]];
+    UILabel *label = [TCComponent createLabelWithText:priceStr AndFontSize:17];
+    label.textColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+    label.frame = frame;
+    [label sizeToFit];
+    
+    return label;
+}
+
+- (UILabel *)createOriginPriceLabelWithFrame:(CGRect)frame {
+    NSString *originalPriceStr = [NSString stringWithFormat:@"￥%@", [self changeFloat:goodInfo.originalPrice]];
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:originalPriceStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:frame.size.height], NSForegroundColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1], NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle|NSUnderlinePatternSolid), NSStrikethroughColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1]}];
+    ;
+    label.attributedText = attrStr;
+    [label sizeToFit];
+    
+    return label;
+}
+
 
 - (UILabel *)createTagLabel {
     NSArray *tagArr = goodInfo.tags;
@@ -170,7 +197,7 @@
     
     if (labelSize.width > label.width) {
         [label setHeight:2 * label.height + 17];
-        label.numberOfLines = 0;
+        label.numberOfLines = 2;
         [label sizeToFit];
     }
     label.lineBreakMode = NSLineBreakByCharWrapping;

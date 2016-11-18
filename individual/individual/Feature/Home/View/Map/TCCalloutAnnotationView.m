@@ -9,7 +9,7 @@
 #import "TCCalloutAnnotationView.h"
 
 @implementation TCCalloutAnnotationView {
-//    UIImageView *titleImgView;
+
     UILabel *titleLab;
 }
 
@@ -32,24 +32,20 @@
 }
 
 - (void)layoutUI {
-//    titleImgView = [[UIImageView alloc] init];
+
     titleLab = [[UILabel alloc] init];
     
-//    [self addSubview:titleImgView];
+
     [self addSubview:titleLab];
 }
 
 - (void)setAnnotation:(TCAnnotation *)annotation {
     [super setAnnotation:annotation];
-//    
-//    UIImage *image = annotation.titleImage;
-//    titleImgView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-//    titleImgView.image = image;
-    
+
     titleLab.text = annotation.name;
     titleLab.font = [UIFont systemFontOfSize:13];
     [titleLab sizeToFit];
-    [titleLab setOrigin:CGPointMake(20, 15 / 2 - 13 / 2)];
+    [titleLab setOrigin:CGPointMake(22, 4)];
     
     
 }

@@ -21,7 +21,6 @@
 		092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4021DD99F9F0073A9C1 /* TCRecommendInfoViewController.m */; };
 		092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4041DD99F9F0073A9C1 /* TCRecommendListViewController.m */; };
 		092CD4221DD9A07C0073A9C1 /* TCAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD40D1DD9A07C0073A9C1 /* TCAnnotation.m */; };
-		092CD4231DD9A07C0073A9C1 /* TCCalloutAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD40F1DD9A07C0073A9C1 /* TCCalloutAnnotation.m */; };
 		092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4111DD9A07C0073A9C1 /* TCCalloutAnnotationView.m */; };
 		092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */; };
 		092CD4261DD9A07C0073A9C1 /* TCRestaurantLogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4181DD9A07C0073A9C1 /* TCRestaurantLogoView.m */; };
@@ -30,7 +29,6 @@
 		092CD4291DD9A07C0073A9C1 /* TCRestaurantSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD41F1DD9A07C0073A9C1 /* TCRestaurantSortView.m */; };
 		092CD42A1DD9A07C0073A9C1 /* TCSelectSortButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */; };
 		092CD42D1DD9C5FC0073A9C1 /* TCStandardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */; };
-		099B38311DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38301DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m */; };
 		099B38341DDDA926003F5972 /* TCRecommendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38331DDDA926003F5972 /* TCRecommendHeader.m */; };
 		099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38361DDDA944003F5972 /* TCRecommendFooter.m */; };
 		7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */; };
@@ -167,8 +165,6 @@
 		092CD4041DD99F9F0073A9C1 /* TCRecommendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendListViewController.m; sourceTree = "<group>"; };
 		092CD40C1DD9A07C0073A9C1 /* TCAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAnnotation.h; sourceTree = "<group>"; };
 		092CD40D1DD9A07C0073A9C1 /* TCAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAnnotation.m; sourceTree = "<group>"; };
-		092CD40E1DD9A07C0073A9C1 /* TCCalloutAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCalloutAnnotation.h; sourceTree = "<group>"; };
-		092CD40F1DD9A07C0073A9C1 /* TCCalloutAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCalloutAnnotation.m; sourceTree = "<group>"; };
 		092CD4101DD9A07C0073A9C1 /* TCCalloutAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCalloutAnnotationView.h; sourceTree = "<group>"; };
 		092CD4111DD9A07C0073A9C1 /* TCCalloutAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCalloutAnnotationView.m; sourceTree = "<group>"; };
 		092CD4131DD9A07C0073A9C1 /* TCImgPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImgPageControl.h; sourceTree = "<group>"; };
@@ -185,8 +181,6 @@
 		092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectSortButton.m; sourceTree = "<group>"; };
 		092CD42B1DD9C5FC0073A9C1 /* TCStandardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStandardView.h; sourceTree = "<group>"; };
 		092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStandardView.m; sourceTree = "<group>"; };
-		099B382F1DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCalloutDetailAnnotationView.h; sourceTree = "<group>"; };
-		099B38301DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCalloutDetailAnnotationView.m; sourceTree = "<group>"; };
 		099B38321DDDA926003F5972 /* TCRecommendHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendHeader.h; sourceTree = "<group>"; };
 		099B38331DDDA926003F5972 /* TCRecommendHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendHeader.m; sourceTree = "<group>"; };
 		099B38351DDDA944003F5972 /* TCRecommendFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendFooter.h; sourceTree = "<group>"; };
@@ -448,12 +442,8 @@
 			children = (
 				092CD40C1DD9A07C0073A9C1 /* TCAnnotation.h */,
 				092CD40D1DD9A07C0073A9C1 /* TCAnnotation.m */,
-				092CD40E1DD9A07C0073A9C1 /* TCCalloutAnnotation.h */,
-				092CD40F1DD9A07C0073A9C1 /* TCCalloutAnnotation.m */,
 				092CD4101DD9A07C0073A9C1 /* TCCalloutAnnotationView.h */,
 				092CD4111DD9A07C0073A9C1 /* TCCalloutAnnotationView.m */,
-				099B382F1DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.h */,
-				099B38301DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -1202,7 +1192,6 @@
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
 				7AAF23821DCB5C04002B81A5 /* TCUserSession.m in Sources */,
 				7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */,
-				092CD4231DD9A07C0073A9C1 /* TCCalloutAnnotation.m in Sources */,
 				7ACE57A91DC73BD9004B383A /* TCVicinityViewController.m in Sources */,
 				7A6506E61DCA130200B0EDBF /* TCShippingAddressEditViewCell.m in Sources */,
 				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
@@ -1260,7 +1249,6 @@
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
 				092CD3F81DD99F4A0073A9C1 /* TCRestaurantViewController.m in Sources */,
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
-				099B38311DDD9ACD003F5972 /* TCCalloutDetailAnnotationView.m in Sources */,
 				092CD4271DD9A07C0073A9C1 /* TCRestaurantFilterView.m in Sources */,
 				7AB29F311DD46C7D00564D93 /* TCUserSensitiveInfo.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,

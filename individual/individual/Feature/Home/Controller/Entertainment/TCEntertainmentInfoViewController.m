@@ -13,6 +13,7 @@
     TCRestaurantLogoView *logoView;
     UIImageView *barImageView;
     NSDictionary *entertainmentInfoDic;
+    NSString *statusColorStr;
 }
 
 
@@ -23,6 +24,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    statusColorStr = @"white";
     mScrollView.delegate = self;
     [self initNavigationBar];
     
@@ -59,6 +61,7 @@
     [mScrollView addSubview:promptView];
     
     UIButton *phoneBtn = [self createPhoneCustomViewWithFrame:CGRectMake(0, promptView.y + promptView.height + 7, self.view.frame.size.width, 45)];
+    [phoneBtn addTarget:self action:@selector(touchCallCustomerService) forControlEvents:UIControlEventTouchUpInside];
     [mScrollView addSubview:phoneBtn];
     
     mScrollView.contentSize = CGSizeMake(self.view.width, phoneBtn.y + phoneBtn.height + 8);
@@ -403,9 +406,13 @@
     if (point.y > 70) {
         [self initialNavLeftBarWithImgName:@"back_black" AndRightBarImgName:@"res_collection_black"];
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+        statusColorStr = @"black";
+        [self setNeedsStatusBarAppearanceUpdate];
     } else {
         [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:@"res_collection"];
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+        statusColorStr = @"white";
+        [self setNeedsStatusBarAppearanceUpdate];
     }
     
     
@@ -429,8 +436,18 @@
 
 }
 
+- (void)touchCallCustomerService {
+    UIWebView *callView = [TCComponent callWithPhone:@"15733108692"];
+    [self.view addSubview:callView];
+    
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    if ([statusColorStr isEqualToString:@"black"]) {
+        return UIStatusBarStyleDefault;
+    } else {
+        return UIStatusBarStyleLightContent;
+    }
 }
 
 

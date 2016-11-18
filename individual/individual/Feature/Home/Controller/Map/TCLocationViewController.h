@@ -10,8 +10,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "TCAnnotation.h"
-#import "TCCalloutDetailAnnotationView.h"
-#import "TCCalloutAnnotation.h"
 #import "TCCalloutAnnotationView.h"
 
 @interface TCLocationViewController : UIViewController <MKMapViewDelegate> {

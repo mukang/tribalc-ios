@@ -15,10 +15,10 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         
-        UIView *firstVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(24 + 118, (frame.size.height - 169) / 2, 0.5, 169)];
+        UIView *firstVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(24 + 105, (frame.size.height - 169) / 2, 0.5, 169)];
         firstVerticalLine.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
         
-        UIView *secondVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - 24 - 119, firstVerticalLine.y, firstVerticalLine.width, firstVerticalLine.height)];
+        UIView *secondVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - 24 - 119 + 13, firstVerticalLine.y, firstVerticalLine.width, firstVerticalLine.height)];
         secondVerticalLine.backgroundColor = firstVerticalLine.backgroundColor;
         
         UIView *horizontalLine = [[UIView alloc] initWithFrame:CGRectMake(24, frame.size.height / 2 - 0.5, frame.size.width - 48, 0.5)];

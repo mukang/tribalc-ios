@@ -8,7 +8,9 @@
 
 #import "TCLocationViewController.h"
 
-@interface TCLocationViewController ()
+@interface TCLocationViewController () {
+    UIImageView *userLocationView;
+}
 
 @end
 
@@ -30,8 +32,24 @@
     mMapView.userTrackingMode = MKUserTrackingModeFollow;
     mMapView.mapType = MKMapTypeStandard;
     
+    userLocationView = [self createUserImageViewWithImageName:@"map_me"];
+    [self.view addSubview:userLocationView];
+    
     [self addAnnotation];
 }
+
+- (UIImageView *)createUserImageViewWithImageName:(NSString *)imgName {
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
+    UIImageView *headImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
+    
+    headImgView.frame = CGRectMake(3, 3, imageView.width - 6, imageView.width - 6);
+    headImgView.layer.cornerRadius = headImgView.width / 2;
+    headImgView.layer.masksToBounds = YES;
+    
+    [imageView addSubview:headImgView];
+    return imageView;
+}
+
 
 - (void)addAnnotation {
     CLLocationCoordinate2D location1=CLLocationCoordinate2DMake(37.785834, -122.405417);
@@ -46,6 +64,7 @@
 #pragma mark - delegate
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     NSLog(@"经度%f 纬度%f", userLocation.location.coordinate.longitude, userLocation.location.coordinate.latitude);
+    [userLocationView setOrigin:CGPointMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude)];
 }
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
@@ -56,12 +75,6 @@
         calloutAnnotationView.image = ((TCAnnotation *)annotation).image;
         [calloutAnnotationView setAnnotation:annotation];
         return calloutAnnotationView;
-    } else if([annotation isKindOfClass:[TCCalloutAnnotation class]]) {
-        MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"key" ];
-        if (!annotationView) {
-            
-        }
-        return annotationView;
     }else {
         return nil;
     }
@@ -71,13 +84,7 @@
 #pragma mark 选中大头针时触发
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
     
-    if ([view.annotation isKindOfClass:[TCAnnotation class]]) {
-        TCCalloutAnnotation *annotation = [[TCCalloutAnnotation alloc] init];
-        annotation.titleStr = @"打鱼铁板烧麻辣烫";
-        annotation.addressStr = @"朝阳北辰东路12号";
-        annotation.coordinate = view.annotation.coordinate;
-        [mapView addAnnotation:annotation];
-    }
+
 }
 
 //#pragma mark 取消选中时触发
