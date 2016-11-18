@@ -429,6 +429,11 @@
 
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+
 - (void)touchLocationBtn {
 //    NSString *position = entertainmentInfoDic[@"position"];
     TCLocationViewController *locationViewController = [[TCLocationViewController alloc] init];

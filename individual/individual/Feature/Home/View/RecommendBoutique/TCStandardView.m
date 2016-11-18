@@ -14,7 +14,7 @@
     float standardViewPointY;
 }
 
-- (instancetype)initWithData:(NSDictionary *)data AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction AndCloseAction:(SEL)closeAction AndNumberAddAction:(SEL)addAction AndNumberSubAction:(SEL)subAction AndAddShoppingCartAction:(SEL)addCartAction AndBuyAction:(SEL)buyAction
+- (instancetype)initWithData:(TCGoods *)goodInfo AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction AndCloseAction:(SEL)closeAction AndNumberAddAction:(SEL)addAction AndNumberSubAction:(SEL)subAction AndAddShoppingCartAction:(SEL)addCartAction AndBuyAction:(SEL)buyAction
 {
     self = [super init];
     if (self) {
@@ -22,22 +22,14 @@
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7];
         self.hidden = YES;
         
-        
         standardView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 0)];
-        
-        UIView *selectedInfoView = [self createSelectedInfoViewWithFrame:CGRectMake(0, 0, self.width, 118) AndInfo:data AndCloseAction:closeAction AndTarget:target];
+        UIView *selectedInfoView = [self createSelectedInfoViewWithFrame:CGRectMake(0, 0, self.width, 118) AndInfo:goodInfo AndCloseAction:closeAction AndTarget:target];
+        standardView.backgroundColor = [UIColor whiteColor];
         [standardView addSubview:selectedInfoView];
         
-        UIView *goodStyleSelectView = [self createGoodStyleSelectViewWithFrame:CGRectMake(selectedInfoView.x, selectedInfoView.y + selectedInfoView.height, self.width, 96) AndInfo:data[@"style"] AndStyleAction:styleAction AndTarget:target];
-        [standardView addSubview:goodStyleSelectView];
-        [standardView bringSubviewToFront:goodStyleSelectView];
-        
-        UIView *goodSizeSelectView = [self createGoodSizeSelectViewWithFrame:CGRectMake(goodStyleSelectView.x, goodStyleSelectView.y + goodStyleSelectView.height, self.width, 96) AndInfo:data[@"size"] AndAction:sizeAction AndTarget:target];
-        [standardView addSubview:goodSizeSelectView];
+        UIView *computeView = [self createStandardSelectViewAndComputeViewWithGood:goodInfo AndTarget:target AndStyleAction:styleAction AndSizeAction:sizeAction AndAddAction:addAction AndSubAction:subAction];
 
-        UIView *computeView = [self createNumberSelectViewWithFrame:CGRectMake(0, goodSizeSelectView.y + goodSizeSelectView.height, self.width, 89)AndAddAction:(SEL)addAction AndSubAction:(SEL)subAction AndTarget:(id)target];
         [standardView addSubview:computeView];
-
         
         UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, computeView.y + computeView.height, self.width, 49) AndTarget:target AndAddCartAction:addCartAction AndBuyAction:buyAction];
         [standardView addSubview:bottomView];
@@ -51,6 +43,29 @@
     
     return self;
 }
+
+- (UIView *)createStandardSelectViewAndComputeViewWithGood:(TCGoods *)good AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction AndAddAction:(SEL)addAction AndSubAction:(SEL)subAction{
+    NSArray *keyArr = good.standardDesc.allKeys;
+    UIView *computeView;
+    if (keyArr.count == 0) {
+        computeView = [self createNumberSelectViewWithFrame:CGRectMake(0, 118 + 193, self.width, 89)AndAddAction:(SEL)addAction AndSubAction:(SEL)subAction AndTarget:(id)target];
+    } else if (keyArr.count == 1) {
+        UIView *goodStyleSelectView = [self createGoodStyleSelectViewWithFrame:CGRectMake(0, 118, self.width, 96) AndInfo:good.standardDesc[@"level1"] AndStyleAction:styleAction AndTarget:target];
+        [standardView addSubview:goodStyleSelectView];
+        computeView = [self createNumberSelectViewWithFrame:CGRectMake(0, goodStyleSelectView.y + goodStyleSelectView.height + 96, self.width, 89)AndAddAction:(SEL)addAction AndSubAction:(SEL)subAction AndTarget:(id)target];
+    } else {
+        UIView *goodStyleSelectView = [self createGoodStyleSelectViewWithFrame:CGRectMake(0, 118, self.width, 96) AndInfo:good.standardDesc[@"level1"] AndStyleAction:styleAction AndTarget:target];
+        [standardView addSubview:goodStyleSelectView];
+        UIView *goodSizeSelectView = [self createGoodSizeSelectViewWithFrame:CGRectMake(0, goodStyleSelectView.y + goodStyleSelectView.height, self.width, 96) AndInfo:good.standardDesc[@"level2"] AndAction:sizeAction AndTarget:target];
+        [standardView addSubview:goodSizeSelectView];
+        computeView = [self createNumberSelectViewWithFrame:CGRectMake(0, goodSizeSelectView.y + goodSizeSelectView.height, self.width, 89)AndAddAction:(SEL)addAction AndSubAction:(SEL)subAction AndTarget:(id)target];
+    }
+    
+    [standardView addSubview:computeView];
+    
+    return computeView;
+}
+
 
 
 - (void)startSelectStandard {
@@ -88,34 +103,36 @@
     return view;
 }
 
-- (UIView *)createSelectedInfoViewWithFrame:(CGRect)frame AndInfo:(NSDictionary *)info AndCloseAction:(SEL)closeAction AndTarget:(id)target {
+
+
+
+
+
+- (UIView *)createSelectedInfoViewWithFrame:(CGRect)frame AndInfo:(TCGoods *)info AndCloseAction:(SEL)closeAction AndTarget:(id)target {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
-    _selectedImgView = [self createSelectGoodImgViewWithFrame:CGRectMake(20, -9, 115, 115)];
-    _selectedImgView.image = [UIImage imageNamed:info[@"style"][0][@"img"]];
+    _selectedImgView = [self createSelectGoodImgViewWithFrame:CGRectMake(20, -9, 115, 115) AndImageUrlStr:info.thumbnail];
     [view addSubview:_selectedImgView];
     
     UILabel *rmbStamp = [TCComponent createLabelWithFrame:CGRectMake(_selectedImgView.x + _selectedImgView.width + 12, 20, 20, 20) AndFontSize:20 AndTitle:@"￥" AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
     [view addSubview:rmbStamp];
     
-    _priceLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x + rmbStamp.width, rmbStamp.y, self.width - rmbStamp.x - rmbStamp.width, rmbStamp.height) AndFontSize:20 AndTitle:info[@"style"][0][@"price"] AndTextColor:rmbStamp.textColor];
+    _priceLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x + rmbStamp.width, rmbStamp.y, self.width - rmbStamp.x - rmbStamp.width, rmbStamp.height) AndFontSize:20 AndTitle:[self changeFloat:info.salePrice] AndTextColor:rmbStamp.textColor];
     [view addSubview:_priceLab];
     
-    NSString *inventoryStr = [NSString stringWithFormat:@"(剩余:%@件)", @"99999"];
+    id inventory = [self getInventoryStrWithGood:info AndStyleText:info.standardDesc[@"level1"][0] AndSizeText:info.standardDesc[@"level2"][0]];
+    NSString *inventoryStr = [NSString stringWithFormat:@"(剩余:%@件)", inventory];
     _inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, rmbStamp.y + rmbStamp.height + 12, self.width - rmbStamp.x, 12) AndFontSize:12 AndTitle:inventoryStr AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    [self correctInventoryLabelValue];
     [view addSubview:_inventoryLab];
     
     UILabel *selectStamp = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, _inventoryLab.y + _inventoryLab.height + 13, 50, 14) AndFontSize:14 AndTitle:@"已选择" AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
     [view addSubview:selectStamp];
     
-    _selectedGoodStyleLab = [TCComponent createLabelWithText:info[@"style"][0][@"title"] AndFontSize:14 AndTextColor:_priceLab.textColor];
-    [_selectedGoodStyleLab setOrigin:CGPointMake(selectStamp.x + selectStamp.width + 8, selectStamp.y - 1)];
-    [view addSubview:_selectedGoodStyleLab];
+
+    [self createTitleSelectedStyleAndSizeWithOrigin:CGPointMake(selectStamp.x + selectStamp.width + 8, selectStamp.y - 1) AndInfo:info AndView:view];
     
-    _selectedGoodSizeLab = [TCComponent createLabelWithText:info[@"size"][0] AndFontSize:14 AndTextColor:_selectedGoodStyleLab.textColor];
-    [_selectedGoodSizeLab setOrigin:CGPointMake(_selectedGoodStyleLab.x + _selectedGoodStyleLab.width + 9, _selectedGoodStyleLab.y)];
-    [view addSubview:_selectedGoodSizeLab];
     
     UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - 15, 15, 15, 15)];
     [closeBtn addTarget:target action:closeAction forControlEvents:UIControlEventTouchUpInside];
@@ -125,24 +142,58 @@
     return view;
 }
 
-- (void)modifyInventoryLabel {
-    NSURL *url = [NSURL URLWithString:@""];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"post";
-//    _selectedGoodSizeLab.text  _selectGoodStyleLab.text
-    NSDictionary *body = @{  };
-    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
-    request.HTTPBody = bodyData;
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            NSString *inventoryStr = [NSString stringWithFormat:@"(剩余:%@件)", result[@""]];
-            _inventoryLab.text = inventoryStr;
-            
-        }
-    }];
-    [dataTask resume];
+- (void)correctInventoryLabelValue {
+    if ([_inventoryLab.text isEqualToString:@"(剩余:(null)件)"]) {
+        _inventoryLab.text = @"(剩余:0件)";
+    }
+}
+
+- (id)getInventoryStrWithGood:(TCGoods *)good AndStyleText:(NSString *)styleStr AndSizeText:(NSString *)sizeStr{
+    NSArray *arr = good.standardDesc[@"level2"];
+    NSString *string;
+    NSDictionary *goodInventoryDic = good.standardRepertory;
+    id inventory;
+    if (arr.count != 0) {
+        string = [NSString stringWithFormat:@"%@^%@", styleStr, sizeStr];
+        inventory = [goodInventoryDic valueForKey:string];
+    } else {
+        string = [NSString stringWithFormat:@"%@", styleStr];
+        inventory = [goodInventoryDic valueForKey:string];
+    }
+    
+    
+    return inventory;
+    
+}
+
+- (void)createTitleSelectedStyleAndSizeWithOrigin:(CGPoint)point AndInfo:(TCGoods *)good AndView:(UIView *)view {
+    NSArray *arr = good.standardDesc[@"level1"];
+    if (arr.count != 0) {
+        _selectedGoodStyleLab = [TCComponent createLabelWithText:good.standardDesc[@"level1"][0] AndFontSize:14 AndTextColor:_priceLab.textColor];
+        [_selectedGoodStyleLab setOrigin:point];
+        [view addSubview:_selectedGoodStyleLab];
+    }
+    arr = good.standardDesc[@"level2"];
+    if (arr.count != 0) {
+        _selectedGoodSizeLab = [TCComponent createLabelWithText:good.standardDesc[@"level2"][0] AndFontSize:14 AndTextColor:_selectedGoodStyleLab.textColor];
+        [_selectedGoodSizeLab setOrigin:CGPointMake(_selectedGoodStyleLab.x + _selectedGoodStyleLab.width + 9, _selectedGoodStyleLab.y)];
+        [view addSubview:_selectedGoodSizeLab];
+
+    }
+}
+
+
+
+
+
+- (void)modifyInventoryLabelWithInfo:(TCGoods *)good {
+    
+
+    id inventory = [self getInventoryStrWithGood:good AndStyleText:_selectedGoodStyleLab.text AndSizeText:_selectedGoodSizeLab.text];
+    NSString *inventoryStr = [NSString stringWithFormat:@"(剩余:%@件)", inventory];
+    _inventoryLab.text = inventoryStr;
+    [self correctInventoryLabelValue];
+    
 
 }
 
@@ -206,7 +257,7 @@
     int width = 0;
     int height = 0;
     for (int i = 0; i < infoArr.count; i++) {
-        UIButton *button = [self createGoodStyleButtonWithOrigin:CGPointMake(width, height) AndText:infoArr[i][@"title"]];
+        UIButton *button = [self createGoodStyleButtonWithOrigin:CGPointMake(width, height) AndText:infoArr[i]];
         if (width + button.width > self.width - 40) {
             width = 0;
             height += 22.5 + 13;
@@ -248,9 +299,10 @@
         [buttonView addSubview:button];
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         button.tag = i;
-        width += button.width + 24;
+        width += button.width + 11;
         if (i == 0) {
-            [self setSelectedButton:button];
+            button.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
     
@@ -313,9 +365,14 @@
 }
 
 - (UIButton *)createGoodSizeButtonWithOrigin:(CGPoint)origin AndTitle:(NSString *)title{
-    UIButton *button = [self createGoodSelectButtonWithFrame:CGRectMake(origin.x, origin.y, 30, 30) AndText:title];
-    button.layer.cornerRadius = button.height / 2;
-    button.titleLabel.font = [UIFont systemFontOfSize:16];
+    UIButton *button = [self createGoodSelectButtonWithFrame:CGRectMake(origin.x, origin.y, 0, 0) AndText:title];
+    button.layer.cornerRadius = 13;
+    button.titleLabel.font = [UIFont systemFontOfSize:12];
+    [button sizeToFit];
+    button.layer.borderWidth = 0;
+    button.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
+    [button setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
+    [button setWidth:button.width + 20];
     
     return button;
 }
@@ -332,12 +389,16 @@
 
 
 
-- (UIImageView *)createSelectGoodImgViewWithFrame:(CGRect)frame {
+- (UIImageView *)createSelectGoodImgViewWithFrame:(CGRect)frame AndImageUrlStr:(NSString *)urlStr{
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
     imageView.layer.cornerRadius = 5;
     imageView.clipsToBounds = YES;
     imageView.layer.borderWidth = 1.5;
     imageView.layer.borderColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1].CGColor;
+    imageView.backgroundColor = [UIColor whiteColor];
+    
+    NSURL *imgUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, urlStr]];
+    [imageView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"null_length"]];
     
     return imageView;
 }
@@ -354,6 +415,31 @@
     [_selectedGoodSizeLab sizeToFit];
 }
 
+-(NSString *)changeFloat:(float)flo
+{
+    NSString *stringFloat = [NSString stringWithFormat:@"%f", flo];
+    const char *floatChars = [stringFloat UTF8String];
+    NSUInteger length = [stringFloat length];
+    int zeroLength = 0;
+    NSUInteger i = length-1;
+    for(; (int)i>=0; i--)
+    {
+        if(floatChars[i] == '0'/*0x30*/) {
+            zeroLength++;
+        } else {
+            if(floatChars[i] == '.')
+                i--;
+            break;
+        }
+    }
+    NSString *returnString;
+    if(i == -1) {
+        returnString = @"0";
+    } else {
+        returnString = [stringFloat substringToIndex:i+1];
+    }
+    return returnString;
+}
 
 
 /*

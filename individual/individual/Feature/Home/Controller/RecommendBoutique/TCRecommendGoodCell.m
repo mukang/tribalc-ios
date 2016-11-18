@@ -23,7 +23,8 @@
         
         [self.contentView addSubview:_goodImageView];
         
-        _typeAndNameLab = [self initialWithFrame:CGRectMake(_goodImageView.frame.origin.x + 8, _goodImageView.frame.origin.y + _goodImageView.frame.size.height + 14, _goodImageView.frame.size.width, 15)];
+        _typeAndNameLab = [self initialWithFrame:CGRectMake(_goodImageView.frame.origin.x + 8, _goodImageView.frame.origin.y + _goodImageView.frame.size.height + 14, _goodImageView.frame.size.width - 16, 15)];
+        
         _typeAndNameLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
         [self.contentView addSubview:_typeAndNameLab];
         

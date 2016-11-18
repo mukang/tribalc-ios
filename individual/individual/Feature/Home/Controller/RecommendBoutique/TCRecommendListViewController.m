@@ -9,7 +9,7 @@
 #import "TCRecommendListViewController.h"
 
 @interface TCRecommendListViewController () {
-    NSArray *goodsInfoArray;
+    TCGoodsWrapper *goodsInfoWrapper;
     UICollectionView *recommendCollectionView;
     UIImageView *collectionImageView;
     NSMutableArray *collectionImgArr;
@@ -31,36 +31,39 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
 
-    // Do any additional setup after loading the view.
     
-    [self initialGoodsData];
     [self initialCollectionView];
+    
+
+    [self initialGoodsData];
+
 }
 
 # pragma mark - 初始化数据
 - (void)initialGoodsData {
-    
-    NSURL *url = [NSURL URLWithString:@""];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            goodsInfoArray = result[@""];
-            
-            [self initialCollectionView];
-        }
+    TCBuluoApi *api = [TCBuluoApi api];
+    [api fetchGoodsWrapper:50 sortSkip:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+        
+        goodsInfoWrapper = goodsWrapper;
+        [recommendCollectionView reloadData];
+        [recommendCollectionView.mj_header endRefreshing];
+
     }];
-    [dataTask resume];
+
+}
+
+- (void)initialGoodsDataWithSortSkip:(NSString *)sortSkip {
+    TCBuluoApi *api = [TCBuluoApi api];
+    [api fetchGoodsWrapper:50 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+        
+        NSArray *infoArr = goodsInfoWrapper.content;
+        goodsInfoWrapper = goodsWrapper;
+        goodsInfoWrapper.content = [infoArr arrayByAddingObjectsFromArray:goodsWrapper.content];
+        [recommendCollectionView reloadData];
+        [recommendCollectionView.mj_footer endRefreshing];
+        
+    }];
     
-    NSDictionary *info1 = @{ @"name": @"飞行员夹克", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"Zara" };
-    NSDictionary *info2 = @{ @"name": @"印花围巾", @"type": @"男装", @"price": @"1000", @"image":@"", @"shop":@"Nike" };
-    NSDictionary *info3 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威" };
-    NSDictionary *info4 = @{ @"name": @"Jacket", @"type": @"Ladies", @"price": @"399", @"image":@"" , @"shop":@"Zara"};
-    NSDictionary *info5 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威" };
-    NSDictionary *info6 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威" };
-    
-    goodsInfoArray = @[ info1, info2, info3, info4, info5, info6, info1, info2, info3, info4, info5, info6, info1, info2, info3, info4, info5, info6, info1, info2, info3, info4, info5, info6 ];
 }
 
 - (void)initialNavigationBar {
@@ -95,6 +98,21 @@
     
     [recommendCollectionView registerClass:[TCRecommendGoodCell class] forCellWithReuseIdentifier:@"cellId"];
     [recommendCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"reusableView"];
+    
+    [self setCollectionPullToRefresh];
+}
+
+- (void)setCollectionPullToRefresh {
+    
+    TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^{
+        [self initialGoodsData];
+    }];
+    recommendCollectionView.mj_header = refreshHeader;
+    
+    TCRecommendFooter *refreshFooter = [TCRecommendFooter footerWithRefreshingBlock:^{
+        [self initialGoodsDataWithSortSkip:goodsInfoWrapper.nextSkip];
+    }];
+    recommendCollectionView.mj_footer = refreshFooter;
 }
 
 
@@ -104,20 +122,20 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return goodsInfoArray.count;
+    return goodsInfoWrapper.content.count;
 }
 
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *info = goodsInfoArray[indexPath.row];
+    TCGoods *info = goodsInfoWrapper.content[indexPath.row];
     TCRecommendGoodCell *cell = (TCRecommendGoodCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     
-    cell.goodImageView.image = [UIImage imageNamed:@"null"];
-//    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@""]];
-//    cell.goodImageView.image = [UIImage imageWithData:imgData];
+    NSString *imgUrlStr = [NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, info.mainPicture];
+    NSURL *imgURL = [NSURL URLWithString:imgUrlStr];
+    [cell.goodImageView sd_setImageWithURL:imgURL];
     
-    cell.shopNameLab.text = info[@"shop"];
-    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info[@"type"], info[@"name"]];
-    cell.priceLab.text = [NSString stringWithFormat:@"￥%@", info[@"price"]];
+    cell.shopNameLab.text = info.brand;
+    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info.category, info.name];
+    cell.priceLab.text = [NSString stringWithFormat:@"￥%@", [self changeFloat:info.salePrice]];
     
     collectionImgArr[indexPath.row] = cell.collectionImgView;
     
@@ -126,6 +144,8 @@
     
     return cell;
 }
+
+
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
@@ -136,7 +156,7 @@
     
 //    NSDictionary *info = goodsInfoArray[indexPath.row];    data
     
-    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] init];
+    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodInfo:goodsInfoWrapper.content[indexPath.row]];
     [self.navigationController pushViewController:recommendInfoViewController animated:YES];
     
 }
@@ -151,6 +171,7 @@
     return UIEdgeInsetsMake(7, 12.5, 7, 12);
 
 }
+
 
 # pragma mark - touch 
 - (void)touchCollectionButton:(UIButton *)button {
@@ -182,6 +203,7 @@
 
 }
 
+
 - (void)touchBackBtn:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -197,6 +219,38 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+-(NSString *)changeFloat:(float)flo
+{
+    NSString *stringFloat = [NSString stringWithFormat:@"%f", flo];
+    const char *floatChars = [stringFloat UTF8String];
+    NSUInteger length = [stringFloat length];
+    int zeroLength = 0;
+    NSUInteger i = length-1;
+    for(; (int)i>=0; i--)
+    {
+        if(floatChars[i] == '0'/*0x30*/) {
+            zeroLength++;
+        } else {
+            if(floatChars[i] == '.')
+                i--;
+            break;
+        }
+    }
+    NSString *returnString;
+    if(i == -1) {
+        returnString = @"0";
+    } else {
+        returnString = [stringFloat substringToIndex:i+1];
+    }
+    return returnString;
+}
+
+
 
 /*
 #pragma mark - Navigation

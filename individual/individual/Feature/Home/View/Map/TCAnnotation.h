@@ -16,9 +16,6 @@
 @property (nonatomic, copy) NSString *subtitle;
 
 @property (nonatomic,strong) UIImage *image;
-@property (nonatomic,strong) UIImage *icon;
-@property (nonatomic,copy) NSString *detail;
-@property (nonatomic,strong) UIImage *rate;
-
+@property (nonatomic, copy) NSString *name;
 
 @end

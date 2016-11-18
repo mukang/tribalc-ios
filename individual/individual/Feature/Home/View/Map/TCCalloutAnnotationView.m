@@ -9,10 +9,8 @@
 #import "TCCalloutAnnotationView.h"
 
 @implementation TCCalloutAnnotationView {
-    UIView *backgroundView;
-    UIImageView *iconView;
-    UILabel *detailLabel;
-    UIImageView *rateView;
+//    UIImageView *titleImgView;
+    UILabel *titleLab;
 }
 
 - (instancetype)init {
@@ -34,40 +32,24 @@
 }
 
 - (void)layoutUI {
-    backgroundView = [[UIView alloc] init];
-    backgroundView.backgroundColor = [UIColor whiteColor];
+//    titleImgView = [[UIImageView alloc] init];
+    titleLab = [[UILabel alloc] init];
     
-    iconView = [[UIImageView alloc] init];
-    
-    detailLabel = [[UILabel alloc] init];
-    detailLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    detailLabel.font = [UIFont systemFontOfSize:12];
-    
-    rateView = [[UIImageView alloc] init];
-    
-    [self addSubview:backgroundView];
-    [self addSubview:iconView];
-    [self addSubview:detailLabel];
-    [self addSubview:rateView];
+//    [self addSubview:titleImgView];
+    [self addSubview:titleLab];
 }
 
-- (void)setAnnotation:(TCCalloutAnnotation *)annotation {
+- (void)setAnnotation:(TCAnnotation *)annotation {
     [super setAnnotation:annotation];
+//    
+//    UIImage *image = annotation.titleImage;
+//    titleImgView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+//    titleImgView.image = image;
     
-    iconView.image = annotation.icon;
-    iconView.frame = CGRectMake(5, 5, annotation.icon.size.width, annotation.icon.size.height);
-    
-    detailLabel.text = annotation.detail;
-    float detailWidth = 150.0;
-    CGSize detailSize = [annotation.detail boundingRectWithSize:CGSizeMake(detailWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:12]} context:nil].size;
-    float detailX=CGRectGetMaxX(iconView.frame)+5;
-    detailLabel.frame = CGRectMake(detailX, 5, detailSize.width, detailSize.height);
-    rateView.image = annotation.rate;
-    rateView.frame = CGRectMake(detailX, CGRectGetMaxY(detailLabel.frame)+5, annotation.rate.size.width, annotation.rate.size.height);
-    float backgroundWidth=CGRectGetMaxX(detailLabel.frame)+5;
-    float backgroundHeight=iconView.frame.size.height+2*5;
-    backgroundView.frame=CGRectMake(0, 0, backgroundWidth, backgroundHeight);
-    self.bounds=CGRectMake(0, 0, backgroundWidth, backgroundHeight+80);
+    titleLab.text = annotation.name;
+    titleLab.font = [UIFont systemFontOfSize:13];
+    [titleLab sizeToFit];
+    [titleLab setOrigin:CGPointMake(20, 15 / 2 - 13 / 2)];
     
     
 }
