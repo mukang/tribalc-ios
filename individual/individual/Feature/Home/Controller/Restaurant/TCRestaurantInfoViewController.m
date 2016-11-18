@@ -13,6 +13,7 @@
     TCRestaurantLogoView *logoView;
     UIImageView *barImageView;
     NSDictionary *restaurantInfoDic;
+    NSString *statusColorStr;
 }
 
 @end
@@ -20,6 +21,8 @@
 @implementation TCRestaurantInfoViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    statusColorStr = @"white";
     
     mScrollView.delegate = self;
     [self initNavigationBar];
@@ -388,8 +391,8 @@
 }
 
 - (void)touchCallCustomerService {
-    //    UIWebView *callView = [TCComponent callWithPhone:restaurantInfoDic[@""]];
-    //    [self.view addSubview:callView];
+        UIWebView *callView = [TCComponent callWithPhone:@"15733108692"];
+        [self.view addSubview:callView];
     
 }
 
@@ -422,10 +425,12 @@
     
     if (point.y > 70) {
         [self initialNavLeftBarWithImgName:@"back_black" AndRightBarImgName:@"res_collection_black"];
-        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+        statusColorStr = @"black";
+        [self setNeedsStatusBarAppearanceUpdate];
     } else {
         [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:@"res_collection"];
-        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+        statusColorStr = @"white";
+        [self setNeedsStatusBarAppearanceUpdate];
     }
     
     if (point.y < -64) {
@@ -453,7 +458,12 @@
     
 }
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    if ([statusColorStr isEqualToString:@"black"]) {
+        return UIStatusBarStyleDefault;
+    } else {
+        return UIStatusBarStyleLightContent;
+    }
+    
 }
 
 
