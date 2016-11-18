@@ -452,6 +452,9 @@
     barImageView.alpha = 1.0;
     
 }
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 
 
 - (void)didReceiveMemoryWarning {

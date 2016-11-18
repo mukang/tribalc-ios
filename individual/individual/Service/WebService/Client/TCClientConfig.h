@@ -19,5 +19,6 @@
 
 #define TCCLIENT_BASE_URL    @"http://" TCCLIENT_API_HOST "/tribalc/v1.0"
 
+#define TCCLIENT_RESOURCES_BASE_URL    @"http://app-services.buluo-gs.com/resources"
 
 #endif

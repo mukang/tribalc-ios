@@ -7,8 +7,12 @@
 //
 
 #import <MapKit/MapKit.h>
+#import "TCCalloutAnnotation.h"
+
 
 @interface TCCalloutDetailAnnotationView : MKAnnotationView
+
+@property (nonatomic, strong)TCCalloutAnnotation *calloutAnnotation;
 
 +(instancetype)calloutViewWithMapView:(MKMapView *)mapView;
 

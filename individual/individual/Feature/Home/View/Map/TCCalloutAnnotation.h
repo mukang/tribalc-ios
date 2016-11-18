@@ -15,8 +15,8 @@
 @property (nonatomic, copy, readonly) NSString *title;
 @property (nonatomic, copy, readonly) NSString *subtitle;
 
-@property (nonatomic, strong) UIImage *icon;
-@property (nonatomic, copy) NSString *detail;
-@property (nonatomic, strong) UIImage *rate;
+@property (nonatomic, strong) NSString *titleStr;
+@property (nonatomic, strong) NSString *addressStr;
+
 
 @end

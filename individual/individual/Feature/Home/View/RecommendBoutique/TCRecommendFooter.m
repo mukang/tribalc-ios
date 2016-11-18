@@ -12,7 +12,7 @@
 
 - (void)prepare {
     [super prepare];
-    [self setTitle:@"刷新完毕" forState:MJRefreshStateIdle];
+    
     [self setTitle:@"刷新中" forState:MJRefreshStateRefreshing];
     [self setTitle:@"松手即刷新" forState:MJRefreshStatePulling];
 }

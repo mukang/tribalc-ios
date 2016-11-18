@@ -36,9 +36,8 @@
 - (void)addAnnotation {
     CLLocationCoordinate2D location1=CLLocationCoordinate2DMake(37.785834, -122.405417);
     TCAnnotation *annotation1 = [[TCAnnotation alloc] init];
-    annotation1.title = @"title1";
-    annotation1.subtitle = @"hahahahha";
-    annotation1.titleImage = [UIImage imageNamed:@"美食"];
+    annotation1.image = [UIImage imageNamed:@"美食"];
+    annotation1.name = @"麻辣烫";
     annotation1.coordinate = location1;
     [mMapView addAnnotation:annotation1];
     
@@ -54,31 +53,33 @@
     
     if ([annotation isKindOfClass:[TCAnnotation class]]) {
         TCCalloutAnnotationView *calloutAnnotationView = [TCCalloutAnnotationView calloutViewWithMapView:mapView];
+        calloutAnnotationView.image = ((TCAnnotation *)annotation).image;
         [calloutAnnotationView setAnnotation:annotation];
         return calloutAnnotationView;
-    } else {
+    } else if([annotation isKindOfClass:[TCCalloutAnnotation class]]) {
+        MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"key" ];
+        if (!annotationView) {
+            
+        }
+        return annotationView;
+    }else {
         return nil;
     }
     
 }
-//
-//#pragma mark 选中大头针时触发
-////点击一般的大头针KCAnnotation时添加一个大头针作为所点大头针的弹出详情视图
-//-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
-//    TCAnnotation *annotation=view.annotation;
-//    if ([view.annotation isKindOfClass:[TCAnnotation class]]) {
-//        //点击一个大头针时移除其他弹出详情视图
-//        //        [self removeCustomAnnotation];
-//        //添加详情大头针，渲染此大头针视图时将此模型对象赋值给自定义大头针视图完成自动布局
-//        TCCalloutAnnotation *annotation1=[[TCCalloutAnnotation alloc]init];
-//        annotation1.icon=annotation.icon;
-//        annotation1.detail=annotation.detail;
-//        annotation1.rate=annotation.rate;
-//        annotation1.coordinate=view.annotation.coordinate;
-//        [mapView addAnnotation:annotation1];
-//    }
-//}
-//
+
+#pragma mark 选中大头针时触发
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+    
+    if ([view.annotation isKindOfClass:[TCAnnotation class]]) {
+        TCCalloutAnnotation *annotation = [[TCCalloutAnnotation alloc] init];
+        annotation.titleStr = @"打鱼铁板烧麻辣烫";
+        annotation.addressStr = @"朝阳北辰东路12号";
+        annotation.coordinate = view.annotation.coordinate;
+        [mapView addAnnotation:annotation];
+    }
+}
+
 //#pragma mark 取消选中时触发
 //-(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
 //    [self removeCustomAnnotation];
@@ -92,5 +93,10 @@
 //        }
 //    }];
 //}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 
 @end

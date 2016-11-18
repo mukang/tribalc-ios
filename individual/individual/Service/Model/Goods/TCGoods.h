@@ -44,5 +44,7 @@
 @property (copy, nonatomic) NSString *originCountry;
 /** 发货地 */
 @property (copy, nonatomic) NSString *dispatch;
+/** 规格描述信息 */
+@property (copy, nonatomic) NSDictionary *standardDesc;
 
 @end

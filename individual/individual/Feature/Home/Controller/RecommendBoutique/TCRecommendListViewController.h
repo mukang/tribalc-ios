@@ -17,8 +17,9 @@
 #import "TCClientConfig.h"
 #import "MJRefresh.h"
 #import "TCRecommendHeader.h"
+#import "UIImageView+WebCache.h"
 #import "TCRecommendFooter.h"
 
-@interface TCRecommendListViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface TCRecommendListViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SDWebImageManagerDelegate>
 
 @end

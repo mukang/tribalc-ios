@@ -42,7 +42,7 @@
 # pragma mark - 初始化数据
 - (void)initialGoodsData {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchGoodsWrapper:8 sortSkip:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+    [api fetchGoodsWrapper:50 sortSkip:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
         
         goodsInfoWrapper = goodsWrapper;
         [recommendCollectionView reloadData];
@@ -54,7 +54,7 @@
 
 - (void)initialGoodsDataWithSortSkip:(NSString *)sortSkip {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchGoodsWrapper:8 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+    [api fetchGoodsWrapper:50 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
         
         NSArray *infoArr = goodsInfoWrapper.content;
         goodsInfoWrapper = goodsWrapper;
@@ -129,13 +129,13 @@
     TCGoods *info = goodsInfoWrapper.content[indexPath.row];
     TCRecommendGoodCell *cell = (TCRecommendGoodCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     
-    NSString *imgUrlStr = [NSString stringWithFormat:@"%@%@", TCCLIENT_BASE_URL, info.mainPicture];
-    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgUrlStr]];
-    cell.goodImageView.image = [UIImage imageWithData:imgData];
+    NSString *imgUrlStr = [NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, info.mainPicture];
+    NSURL *imgURL = [NSURL URLWithString:imgUrlStr];
+    [cell.goodImageView sd_setImageWithURL:imgURL];
     
     cell.shopNameLab.text = info.brand;
     cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info.category, info.name];
-    cell.priceLab.text = [NSString stringWithFormat:@"￥%i", (int)info.salePrice];
+    cell.priceLab.text = [NSString stringWithFormat:@"￥%@", [self changeFloat:info.salePrice]];
     
     collectionImgArr[indexPath.row] = cell.collectionImgView;
     
@@ -156,7 +156,7 @@
     
 //    NSDictionary *info = goodsInfoArray[indexPath.row];    data
     
-    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] init];
+    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodInfo:goodsInfoWrapper.content[indexPath.row]];
     [self.navigationController pushViewController:recommendInfoViewController animated:YES];
     
 }
@@ -219,6 +219,38 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+-(NSString *)changeFloat:(float)flo
+{
+    NSString *stringFloat = [NSString stringWithFormat:@"%f", flo];
+    const char *floatChars = [stringFloat UTF8String];
+    NSUInteger length = [stringFloat length];
+    int zeroLength = 0;
+    NSUInteger i = length-1;
+    for(; (int)i>=0; i--)
+    {
+        if(floatChars[i] == '0'/*0x30*/) {
+            zeroLength++;
+        } else {
+            if(floatChars[i] == '.')
+                i--;
+            break;
+        }
+    }
+    NSString *returnString;
+    if(i == -1) {
+        returnString = @"0";
+    } else {
+        returnString = [stringFloat substringToIndex:i+1];
+    }
+    return returnString;
+}
+
+
 
 /*
 #pragma mark - Navigation
