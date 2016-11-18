@@ -170,7 +170,7 @@
     
     if (labelSize.width > label.width) {
         [label setHeight:2 * label.height + 17];
-        label.numberOfLines = 0;
+        label.numberOfLines = 2;
         [label sizeToFit];
     }
     label.lineBreakMode = NSLineBreakByCharWrapping;
