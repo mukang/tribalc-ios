@@ -20,13 +20,12 @@
         
         self.layer.cornerRadius = frame.size.height / 2;
         self.layer.borderWidth = 2;
-        self.layer.borderColor = [UIColor blackColor].CGColor;
+        self.layer.borderColor = [UIColor colorWithRed:136/255.0 green:136/255.0 blue:136/255.0 alpha:0.3].CGColor;
         self.backgroundColor = [UIColor whiteColor];
         
         logoTitle = [[UILabel alloc] initWithFrame:CGRectMake(frame.size.width * 0.06, 0.58 * frame.size.height / 2, frame.size.width - (frame.size.width * 0.06 * 2), frame.size.height / 2 * 0.38)];
         logoTitle.text = title;
         float fontFlo = logoTitle.width /  (titleStr.length + 1);
-//        logoTitle.font = [UIFont systemFontOfSize:frame.size.height / 2 * 0.38];
         logoTitle.font = [UIFont systemFontOfSize:fontFlo];
 
         logoTitle.textAlignment = NSTextAlignmentCenter;

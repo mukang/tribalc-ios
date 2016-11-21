@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define BOLD_FONT   @"Helvetica-Bold"
+
 @interface TCComponent : NSObject
 + (UILabel *)createLabelWithText:(NSString *)text AndFontSize:(float)font;
 + (UILabel *)createLabelWithText:(NSString *)text AndFontSize:(float)font AndTextColor:(UIColor *)color;

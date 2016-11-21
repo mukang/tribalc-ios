@@ -42,7 +42,7 @@
 # pragma mark - 初始化数据
 - (void)initialGoodsData {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchGoodsWrapper:50 sortSkip:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+    [api fetchGoodsWrapper:8 sortSkip:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
         
         goodsInfoWrapper = goodsWrapper;
         [recommendCollectionView reloadData];
@@ -54,7 +54,7 @@
 
 - (void)initialGoodsDataWithSortSkip:(NSString *)sortSkip {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchGoodsWrapper:50 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+    [api fetchGoodsWrapper:8 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
         
         NSArray *infoArr = goodsInfoWrapper.content;
         goodsInfoWrapper = goodsWrapper;

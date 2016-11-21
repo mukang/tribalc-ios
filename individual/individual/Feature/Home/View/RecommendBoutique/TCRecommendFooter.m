@@ -15,14 +15,8 @@
     
     [self setTitle:@"刷新中" forState:MJRefreshStateRefreshing];
     [self setTitle:@"松手即刷新" forState:MJRefreshStatePulling];
+    [self setTitle:@"" forState:MJRefreshStateIdle];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end
