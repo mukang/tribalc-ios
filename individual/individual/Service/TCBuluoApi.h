@@ -187,6 +187,13 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)deleteUserShippingAddress:(NSString *)shippingAddressID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 获取用户钱包信息
+
+ @param resultBlock 结果回调，walletAccount为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchWalletAccountInfo:(void (^)(TCWalletAccount *walletAccount, NSError *error))resultBlock;
+
 #pragma mark - 验证码资源
 
 /**

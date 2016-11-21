@@ -23,8 +23,9 @@
 #import "TCGoodsWrapper.h"
 
 
+/********** 钱包相关 **********/
 
-
+#import "TCWalletAccount.h"
 
 
 @interface TCModelImport : NSObject

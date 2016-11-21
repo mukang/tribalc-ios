@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TCWalletViewController">
             <connections>
+                <outlet property="balanceLabel" destination="Skz-cf-oGd" id="hdl-LU-7ZG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="functionButtons" destination="ayO-WN-BAm" id="HdU-N7-KD7"/>
                 <outletCollection property="functionButtons" destination="75A-dg-Ybc" id="CxB-Vt-PBh"/>
