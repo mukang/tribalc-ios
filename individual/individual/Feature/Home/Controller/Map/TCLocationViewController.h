@@ -11,6 +11,10 @@
 #import <MapKit/MapKit.h>
 #import "TCAnnotation.h"
 #import "TCCalloutAnnotationView.h"
+#import "TCUserLocationAnnotation.h"
+#import "TCUserLocationAnnotationView.h"
+#import "TCDetailAnnotation.h"
+#import "TCDetailAnnotationView.h"
 
 @interface TCLocationViewController : UIViewController <MKMapViewDelegate> {
     MKMapView *mMapView;

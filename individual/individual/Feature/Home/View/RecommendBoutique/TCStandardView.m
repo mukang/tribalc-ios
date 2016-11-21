@@ -398,7 +398,7 @@
     imageView.backgroundColor = [UIColor whiteColor];
     
     NSURL *imgUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, urlStr]];
-    [imageView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"null_length"]];
+    [imageView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"home_image_place"]];
     
     return imageView;
 }

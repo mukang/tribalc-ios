@@ -30,6 +30,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self initNavigationBar];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     
@@ -43,7 +45,7 @@
     
     [self initScrollView];
     
-    UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, -64, self.view.width, 411)];
+    UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, -64, self.view.width, 394)];
     [mScrollView addSubview:titleImageView];
     
     UIView *titleView = [self createTitleViewWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, 87)];
@@ -99,14 +101,13 @@
 }
 
 - (UIButton *)getBackButton {
-    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 23, 23)];
-    backBtn.layer.cornerRadius = 11.5;
+    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 30, 30)];
+    backBtn.layer.cornerRadius = 15;
     backBtn.backgroundColor = [UIColor colorWithRed:57/255.0 green:57/255.0 blue:57/255.0 alpha:1];
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back"]];
     [imgView sizeToFit];
-    [imgView setFrame:CGRectMake(backBtn.width / 2 - imgView.width * 0.8 / 2 - 1, backBtn.height / 2 - imgView.height * 0.8 / 2, imgView.width * 0.8, imgView.height * 0.8)];
-//    [imgView setOrigin:CGPointMake(backBtn.width / 2 - imgView.width / 2 - 3, backBtn.height / 2 - imgView.height / 2)];
+    [imgView setFrame:CGRectMake(backBtn.width / 2 - imgView.width * 1.1 / 2 - 1.4, backBtn.height / 2 - imgView.height * 1.1 / 2, imgView.width * 1.1, imgView.height * 1.1)];
     [backBtn addSubview:imgView];
 
     return backBtn;
@@ -139,26 +140,51 @@
     UILabel *titleLab = [self createTitleLabelWithText:goodInfo.name WithFrame:CGRectMake(20, 15, frame.size.width - 40, 16)];
     [view addSubview:titleLab];
     
-    UILabel *priceLab = [self createPriceLabelWithFrame:CGRectMake(20, view.height - 9 - 17, titleLab.width, 17)];
-    [view addSubview:priceLab];
+    UIView *priceView = [self createPriceLabelWithOrigin:CGPointMake(20, titleLab.y + titleLab.height + 20)];
+    [view addSubview:priceView];
     
-    UILabel *originPriceLab = [self createOriginPriceLabelWithFrame:CGRectMake(priceLab.x + priceLab.width + 2, priceLab.y + 5, 0, 17 - 5)];
+    
+    UILabel *originPriceLab = [self createOriginPriceLabelWithFrame:CGRectMake(priceView.x + priceView.width + 18, priceView.y + 5, 0, 17 - 5)];
     [view addSubview:originPriceLab];
-    
 
+    [view setHeight:(priceView.y + priceView.height + 20)];
     
     UILabel *tagLab = [self createTagLabel];
-    [tagLab setOrigin:CGPointMake(self.view.width - 20 - tagLab.width, priceLab.y - 2)];
+    [tagLab setOrigin:CGPointMake(self.view.width - 20 - tagLab.width, priceView.y)];
     [view addSubview:tagLab];
+
     
     return view;
 }
 
-- (UILabel *)createPriceLabelWithFrame:(CGRect)frame {
-    NSString *priceStr = [NSString stringWithFormat:@"￥%@", [self changeFloat:goodInfo.salePrice]];
-    UILabel *label = [TCComponent createLabelWithText:priceStr AndFontSize:17];
-    label.textColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    label.frame = frame;
+
+- (UIView *)createPriceLabelWithOrigin:(CGPoint)point {
+    
+    UIView *view = [[UIView alloc] init];
+    [view setOrigin:point];
+    
+    NSString *priceIntegerStr = [NSString stringWithFormat:@"￥%i", (int)goodInfo.salePrice];
+    UILabel *priceIntegerLabel = [self createPriceLabelWithOrigin:CGPointMake(0, 0) AndFontSize:17 AndText:priceIntegerStr];
+    [view addSubview:priceIntegerLabel];
+    
+    UILabel *priceDecimalLabel;
+    if ([[self changeFloat:goodInfo.salePrice] rangeOfString:@"."].location != NSNotFound) {
+        NSString *priceDecimalStr = [[self changeFloat:goodInfo.salePrice] componentsSeparatedByString:@"."][1];
+        priceDecimalStr = [NSString stringWithFormat:@".%@", priceDecimalStr];
+        priceDecimalLabel = [self createPriceLabelWithOrigin:CGPointMake(priceIntegerLabel.x + priceIntegerLabel.width, priceIntegerLabel.y + 17 - 12) AndFontSize:12 AndText:priceDecimalStr];
+        [view addSubview:priceDecimalLabel];
+    }
+    
+    [view setSize:CGSizeMake(priceIntegerLabel.width + priceDecimalLabel.width , 17)];
+    
+    return view;
+}
+
+- (UILabel *)createPriceLabelWithOrigin:(CGPoint)point AndFontSize:(float)fontSize AndText:(NSString *)text {
+    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:fontSize];
+    label.origin = point;
+    label.font = [UIFont fontWithName:BOLD_FONT size:fontSize];
+    label.textColor = [UIColor blackColor];
     [label sizeToFit];
     
     return label;
@@ -185,7 +211,7 @@
     }
     UILabel *label = [TCComponent createLabelWithText:tagStr AndFontSize:11];
     label.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
-    
+    [label setHeight:17];
     return label;
 }
 
@@ -194,12 +220,21 @@
     labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16]}];
     UILabel *label =  [TCComponent createLabelWithFrame:frame AndFontSize:16 AndTitle:goodInfo.name AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
     label.text = text;
+    label.numberOfLines = 2;
+    
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+    style.lineSpacing = 7.0f;
+    NSRange range = NSMakeRange(0, text.length);
+    
+    NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];
+    [textAttr addAttribute:NSParagraphStyleAttributeName value:style range:range];
+    label.attributedText = textAttr;
     
     if (labelSize.width > label.width) {
         [label setHeight:2 * label.height + 17];
-        label.numberOfLines = 2;
-        [label sizeToFit];
     }
+    [label sizeToFit];
+
     label.lineBreakMode = NSLineBreakByCharWrapping;
     
     return label;
@@ -254,19 +289,38 @@
 - (UIView *)createBottomViewWithFrame:(CGRect)frame {
     UIView *view=  [[UIView alloc] initWithFrame:frame];
     
-    UIButton *collectionBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_collection_blue"];
-    [collectionBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:collectionBtn];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, frame.size.width, 0.5)];
+    [view addSubview:lineView];
     
-    UIButton *shopCarImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(collectionBtn.x + collectionBtn.width, 0, collectionBtn.width, collectionBtn.height) AndImageName:@"good_shoppingcar_blue"];
-    [shopCarImgBtn addTarget:self action:@selector(touchShopCarBtn:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *collectionView = [self createCollectionAndShopViewWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_collection_gray" AndText:@"收藏" AndAction:@selector(touchCollectionBtn:)];
+    [view addSubview:collectionView];
+    
+    UIButton *shopCarImgBtn = [self createCollectionAndShopViewWithFrame:CGRectMake(collectionView.width, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_shoppingcar_gray" AndText:@"购物车" AndAction:@selector(touchShopCarBtn:)];
     [view addSubview:shopCarImgBtn];
+    
     
     UIButton *shopCarBtn = [TCComponent createButtonWithFrame:CGRectMake(shopCarImgBtn.x + shopCarImgBtn.width, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:18];
     shopCarBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [view addSubview:shopCarBtn];
     
+    return view;
+}
+
+- (UIButton *)createCollectionAndShopViewWithFrame:(CGRect)frame AndImageName:(NSString *)imageName AndText:(NSString *)text AndAction:(SEL)action{
+    UIButton *view = [[UIButton alloc] initWithFrame:frame];
+    
+    UIImage *img = [UIImage imageNamed:imageName];
+    UIButton *button = [TCComponent createButtonWithFrame:CGRectMake((frame.size.width - img.size.width) / 2, 10, img.size.width, img.size.height) AndTitle:@"" AndFontSize:0];
+    [button setImage:img forState:UIControlStateNormal];
+    [view addSubview:button];
+    
+    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(0, button.y + button.height + 3, frame.size.width, 12) AndFontSize:12 AndTitle:text AndTextColor:[UIColor colorWithRed:130/255.0 green:130/255.0 blue:130/255.0 alpha:1]];
+    label.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:label];
+    
+    [view addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+
     return view;
 }
 
@@ -400,7 +454,7 @@
     
     NSURL *imgUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, goodInfo.pictures[indexPath.row]]];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, collectionView.width, collectionView.height)];
-    [imageView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"null_length"]];
+    [imageView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"home_image_place"]];
     imageView.backgroundColor = [UIColor whiteColor];
     
     [cell.contentView addSubview:imageView];
@@ -600,8 +654,9 @@
     // Dispose of any resources that can be recreated.
 }
 
--(NSString *)changeFloat:(float)flo
+-(NSString *)changeFloat:(double)flo
 {
+    
     NSString *stringFloat = [NSString stringWithFormat:@"%f", flo];
     const char *floatChars = [stringFloat UTF8String];
     NSUInteger length = [stringFloat length];

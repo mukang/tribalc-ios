@@ -140,7 +140,7 @@
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSDictionary *resInfo = restaurantArray[indexPath.row];
-    cell.resImgView.image = [UIImage imageNamed:@"null_length"];
+    cell.resImgView.image = [UIImage imageNamed:@"home_image_place"];
     cell.nameLab.text = resInfo[@"name"];
     [cell setLocation:resInfo[@"location"]];
     [cell setType:resInfo[@"type"]];
@@ -168,7 +168,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    static NSString *identifier = @"cell";
+    NSString *identifier = [NSString stringWithFormat:@"cell%ld%ld", (long)indexPath.section, (long)indexPath.row];
     TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[TCRestaurantTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
@@ -225,13 +225,14 @@
 }
 
 
-# pragma makr - click
+# pragma mark - click
 - (void)touchBackBtn:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)touchLocationBtn:(id)sender {
-    
+    TCLocationViewController *locationViewController = [[TCLocationViewController alloc] init];
+    [self.navigationController pushViewController:locationViewController animated:YES];
 }
 
 - (void)touchSortBtn:(id)sender {

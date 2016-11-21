@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */; };
+		09275FB41DDEF8C800502167 /* TCUserLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 09275FB31DDEF8C800502167 /* TCUserLocationAnnotation.m */; };
+		09275FB71DDEF94900502167 /* TCUserLocationAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09275FB61DDEF94900502167 /* TCUserLocationAnnotationView.m */; };
+		09275FBA1DDEFF5D00502167 /* TCDetailAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 09275FB91DDEFF5D00502167 /* TCDetailAnnotation.m */; };
+		09275FBD1DDEFF6E00502167 /* TCDetailAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09275FBC1DDEFF6E00502167 /* TCDetailAnnotationView.m */; };
 		092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 092B408A1DD5624300CEDAC6 /* TCComponent.m */; };
 		092CD3E71DD99DBC0073A9C1 /* TCLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3E61DD99DBC0073A9C1 /* TCLocationViewController.m */; };
 		092CD3ED1DD99F070073A9C1 /* TCEntertainmentInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3EA1DD99F070073A9C1 /* TCEntertainmentInfoViewController.m */; };
@@ -148,6 +152,14 @@
 		00B709DAE0FFB5E148A931FB /* Pods-individual.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-individual.debug.xcconfig"; path = "Pods/Target Support Files/Pods-individual/Pods-individual.debug.xcconfig"; sourceTree = "<group>"; };
 		091BC6E01DD0968300EB5FBD /* TCGetNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetNavigationItem.h; sourceTree = "<group>"; };
 		091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetNavigationItem.m; sourceTree = "<group>"; };
+		09275FB21DDEF8C800502167 /* TCUserLocationAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserLocationAnnotation.h; sourceTree = "<group>"; };
+		09275FB31DDEF8C800502167 /* TCUserLocationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserLocationAnnotation.m; sourceTree = "<group>"; };
+		09275FB51DDEF94900502167 /* TCUserLocationAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserLocationAnnotationView.h; sourceTree = "<group>"; };
+		09275FB61DDEF94900502167 /* TCUserLocationAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserLocationAnnotationView.m; sourceTree = "<group>"; };
+		09275FB81DDEFF5D00502167 /* TCDetailAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCDetailAnnotation.h; sourceTree = "<group>"; };
+		09275FB91DDEFF5D00502167 /* TCDetailAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCDetailAnnotation.m; sourceTree = "<group>"; };
+		09275FBB1DDEFF6E00502167 /* TCDetailAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCDetailAnnotationView.h; sourceTree = "<group>"; };
+		09275FBC1DDEFF6E00502167 /* TCDetailAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCDetailAnnotationView.m; sourceTree = "<group>"; };
 		092B40891DD5624300CEDAC6 /* TCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCComponent.h; sourceTree = "<group>"; };
 		092B408A1DD5624300CEDAC6 /* TCComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCComponent.m; sourceTree = "<group>"; };
 		092CD3E51DD99DBC0073A9C1 /* TCLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLocationViewController.h; sourceTree = "<group>"; };
@@ -468,6 +480,14 @@
 				092CD40D1DD9A07C0073A9C1 /* TCAnnotation.m */,
 				092CD4101DD9A07C0073A9C1 /* TCCalloutAnnotationView.h */,
 				092CD4111DD9A07C0073A9C1 /* TCCalloutAnnotationView.m */,
+				09275FB21DDEF8C800502167 /* TCUserLocationAnnotation.h */,
+				09275FB31DDEF8C800502167 /* TCUserLocationAnnotation.m */,
+				09275FB51DDEF94900502167 /* TCUserLocationAnnotationView.h */,
+				09275FB61DDEF94900502167 /* TCUserLocationAnnotationView.m */,
+				09275FB81DDEFF5D00502167 /* TCDetailAnnotation.h */,
+				09275FB91DDEFF5D00502167 /* TCDetailAnnotation.m */,
+				09275FBB1DDEFF6E00502167 /* TCDetailAnnotationView.h */,
+				09275FBC1DDEFF6E00502167 /* TCDetailAnnotationView.m */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -1286,6 +1306,7 @@
 				7A918ABC1DC32686002BD529 /* TCBiographyViewCell.m in Sources */,
 				7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */,
 				092CD4051DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.m in Sources */,
+				09275FB41DDEF8C800502167 /* TCUserLocationAnnotation.m in Sources */,
 				7A6506D71DC9EBAA00B0EDBF /* TCShippingAddressViewController.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A5F87761DE2CED900E4130B /* TCWalletBillViewController.m in Sources */,
@@ -1299,11 +1320,14 @@
 				092CD3E71DD99DBC0073A9C1 /* TCLocationViewController.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
+				09275FB71DDEF94900502167 /* TCUserLocationAnnotationView.m in Sources */,
 				092CD42D1DD9C5FC0073A9C1 /* TCStandardView.m in Sources */,
 				092CD42A1DD9A07C0073A9C1 /* TCSelectSortButton.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
 				092CD3F81DD99F4A0073A9C1 /* TCRestaurantViewController.m in Sources */,
+				09275FBA1DDEFF5D00502167 /* TCDetailAnnotation.m in Sources */,
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
+				09275FBD1DDEFF6E00502167 /* TCDetailAnnotationView.m in Sources */,
 				092CD4271DD9A07C0073A9C1 /* TCRestaurantFilterView.m in Sources */,
 				7AB29F311DD46C7D00564D93 /* TCUserSensitiveInfo.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
