@@ -13,6 +13,7 @@ NSString *const TCVicinityButtonDidClickNotification = @"TCVicinityButtonDidClic
 @interface TCTabBar ()
 
 @property (weak, nonatomic) UIButton *vicinityButton;
+@property (weak, nonatomic) UILabel *titleLabel;
 
 @end
 
@@ -34,6 +35,14 @@ NSString *const TCVicinityButtonDidClickNotification = @"TCVicinityButtonDidClic
     [vicinityButton addTarget:self action:@selector(handleClickVicinityButton:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:vicinityButton];
     self.vicinityButton = vicinityButton;
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"发布";
+    titleLabel.font = [UIFont systemFontOfSize:10];
+    titleLabel.textColor = TCRGBColor(112, 112, 112);
+    [titleLabel sizeToFit];
+    [self addSubview:titleLabel];
+    self.titleLabel = titleLabel;
 }
 
 - (void)layoutSubviews {
@@ -53,8 +62,10 @@ NSString *const TCVicinityButtonDidClickNotification = @"TCVicinityButtonDidClic
             }
         }
     }
+    CGFloat margin = 10;
     self.vicinityButton.size = self.vicinityButton.currentBackgroundImage.size;
-    self.vicinityButton.center = CGPointMake(self.width * 0.5, self.height * 0.5);
+    self.vicinityButton.center = CGPointMake(self.width * 0.5, self.height * 0.5 - 15.6);
+    self.titleLabel.center = CGPointMake(self.width * 0.5, CGRectGetMaxY(self.vicinityButton.frame) + margin);
 }
 
 - (void)handleClickVicinityButton:(UIButton *)sender {

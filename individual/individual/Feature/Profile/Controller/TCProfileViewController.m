@@ -9,6 +9,7 @@
 #import "TCProfileViewController.h"
 #import "TCLoginViewController.h"
 #import "TCBiographyViewController.h"
+#import "TCWalletViewController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
@@ -275,6 +276,17 @@ TCPhotoPickerDelegate>
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        
+    } else if (indexPath.section == 1) {
+        if (indexPath.row == 0) { // 我的钱包
+            TCWalletViewController *vc = [[TCWalletViewController alloc] initWithNibName:@"TCWalletViewController" bundle:[NSBundle mainBundle]];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    } else {
+        
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
