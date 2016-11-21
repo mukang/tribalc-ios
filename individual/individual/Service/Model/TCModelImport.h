@@ -26,6 +26,8 @@
 /********** 钱包相关 **********/
 
 #import "TCWalletAccount.h"
+#import "TCWalletBill.h"
+#import "TCWalletBillWrapper.h"
 
 
 @interface TCModelImport : NSObject

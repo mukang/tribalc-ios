@@ -7,6 +7,7 @@
 //
 
 #import "TCWalletViewController.h"
+#import "TCWalletBillViewController.h"
 
 #import "TCBuluoApi.h"
 
@@ -86,6 +87,10 @@
 
 - (IBAction)handleClickSweepCodeButton:(UIButton *)sender {
     
+}
+- (IBAction)handleClickWalletBillButton:(UIButton *)sender {
+    TCWalletBillViewController *vc = [[TCWalletBillViewController alloc] initWithNibName:@"TCWalletBillViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)handleClickCouponButton:(UIButton *)sender {
