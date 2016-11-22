@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TCWalletViewController">
             <connections>
+                <outlet property="balanceLabel" destination="Skz-cf-oGd" id="hdl-LU-7ZG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="functionButtons" destination="ayO-WN-BAm" id="HdU-N7-KD7"/>
                 <outletCollection property="functionButtons" destination="75A-dg-Ybc" id="CxB-Vt-PBh"/>
@@ -136,6 +137,9 @@
                     <state key="normal" title="对账单" image="wallet_statement_button">
                         <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="handleClickWalletBillButton:" destination="-1" eventType="touchUpInside" id="jRE-2J-rFL"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktT-TT-bWC">
                     <rect key="frame" x="20" y="364" width="105" height="122"/>

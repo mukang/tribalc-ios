@@ -7,21 +7,30 @@
 //
 
 #import "TCWalletViewController.h"
+#import "TCWalletBillViewController.h"
+
+#import "TCBuluoApi.h"
 
 @interface TCWalletViewController ()
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *functionButtons;
+@property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
 
 @end
 
-@implementation TCWalletViewController
+@implementation TCWalletViewController {
+    __weak TCWalletViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    weakSelf = self;
+    
     [self setupNavBar];
     [self setupSubviews];
+    [self fetchNetData];
 }
 
 - (void)setupNavBar {
@@ -42,6 +51,18 @@
         button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, labelSize.height + space, -labelSize.width + originSpace);
         button.titleEdgeInsets = UIEdgeInsetsMake(imageViewSize.height + space, -imageViewSize.width + originSpace, 0, 0);
     }
+}
+
+- (void)fetchNetData {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
+        if (walletAccount) {
+            [MBProgressHUD hideHUD:YES];
+            weakSelf.balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", walletAccount.balance];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"获取钱包信息失败！"];
+        }
+    }];
 }
 
 #pragma mark - Status Bar
@@ -66,6 +87,10 @@
 
 - (IBAction)handleClickSweepCodeButton:(UIButton *)sender {
     
+}
+- (IBAction)handleClickWalletBillButton:(UIButton *)sender {
+    TCWalletBillViewController *vc = [[TCWalletBillViewController alloc] initWithNibName:@"TCWalletBillViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)handleClickCouponButton:(UIButton *)sender {
