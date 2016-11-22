@@ -8,6 +8,7 @@
 
 #import "TCWalletViewController.h"
 #import "TCWalletBillViewController.h"
+#import "TCWalletPasswordViewController.h"
 
 #import "TCBuluoApi.h"
 
@@ -15,6 +16,8 @@
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *functionButtons;
 @property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
+
+@property (strong, nonatomic) TCWalletAccount *walletAccount;
 
 @end
 
@@ -31,6 +34,11 @@
     [self setupNavBar];
     [self setupSubviews];
     [self fetchNetData];
+    [self registerNotifications];
+}
+
+- (void)dealloc {
+    [self removeNotifications];
 }
 
 - (void)setupNavBar {
@@ -58,6 +66,7 @@
     [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
         if (walletAccount) {
             [MBProgressHUD hideHUD:YES];
+            weakSelf.walletAccount = walletAccount;
             weakSelf.balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", walletAccount.balance];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取钱包信息失败！"];
@@ -69,6 +78,16 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - Notifications
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWalletPasswordDidChangeNotification:) name:TCWalletPasswordDidChangeNotification object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Actions
@@ -102,7 +121,26 @@
 }
 
 - (IBAction)handleClickPasswordButton:(UIButton *)sender {
-    
+    if (!self.walletAccount) {
+        [MBProgressHUD showHUDWithMessage:@"暂时无法设置支付密码！"];
+        return;
+    }
+    TCWalletPasswordType passwordType;
+    NSString *oldPassword = nil;
+    if (self.walletAccount.password) {
+        passwordType = TCWalletPasswordTypeOldPassword;
+        oldPassword = self.walletAccount.password;
+    } else {
+        passwordType = TCWalletPasswordTypeNewPassword;
+    }
+    TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:passwordType];
+    vc.oldPassword = oldPassword;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleWalletPasswordDidChangeNotification:(NSNotification *)notification {
+    NSString *aNewPassword = notification.userInfo[TCWalletPasswordKey];
+    self.walletAccount.password = aNewPassword;
 }
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
