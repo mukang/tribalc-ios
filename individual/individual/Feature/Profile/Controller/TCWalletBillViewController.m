@@ -7,13 +7,14 @@
 //
 
 #import "TCWalletBillViewController.h"
+#import "TCWalletBillDetailViewController.h"
 
 #import "TCWalletBillViewCell.h"
 
 #import "TCBuluoApi.h"
 
-#import <MJRefresh/MJRefreshHeader.h>
-#import <MJRefresh/MJRefreshAutoFooter.h>
+#import "TCRefreshHeader.h"
+#import "TCRefreshFooter.h"
 
 @interface TCWalletBillViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -50,8 +51,8 @@
 - (void)setupSubviews {
     self.tableView.backgroundColor = TCRGBColor(242, 242, 242);
     
-    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadOldData)];
+    self.tableView.mj_header = [TCRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    self.tableView.mj_footer = [TCRefreshFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadOldData)];
     self.tableView.mj_footer.hidden = YES;
     
     UINib *nib = [UINib nibWithNibName:@"TCWalletBillViewCell" bundle:[NSBundle mainBundle]];
@@ -203,6 +204,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSMutableArray *temp = self.dataList[indexPath.section];
+    TCWalletBill *walletBill = temp[indexPath.row];
+    
+    TCWalletBillDetailViewController *vc = [[TCWalletBillDetailViewController alloc] initWithNibName:@"TCWalletBillDetailViewController" bundle:[NSBundle mainBundle]];
+    vc.walletBill = walletBill;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Actions

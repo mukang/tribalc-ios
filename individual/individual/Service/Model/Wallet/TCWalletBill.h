@@ -37,7 +37,9 @@
 @property (copy, nonatomic) NSString *monthDate;
 /** 周信息 */
 @property (copy, nonatomic) NSString *weekday;
-/** 确切日期时间 */
+/** 日期时间 */
 @property (copy, nonatomic) NSString *detailTime;
+/** 交易具体日期时间 */
+@property (copy, nonatomic) NSString *tradingTime;
 
 @end
