@@ -277,6 +277,9 @@ TCPhotoPickerDelegate>
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
+        TCUserOrderTabBarController *orderMainViewController = [[TCUserOrderTabBarController alloc] init];
+        orderMainViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:orderMainViewController animated:YES];
         
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) { // 我的钱包

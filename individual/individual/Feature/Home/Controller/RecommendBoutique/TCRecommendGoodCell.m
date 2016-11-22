@@ -32,8 +32,8 @@
         _shopNameLab = [self initialWithFrame:CGRectMake(_typeAndNameLab.frame.origin.x + 1, _typeAndNameLab.frame.origin.y + _typeAndNameLab.frame.size.height + 13, _goodImageView.frame.size.width, 13)];
         [self.contentView addSubview:_shopNameLab];
         
-        _priceLab = [self initialWithFrame:CGRectMake(_shopNameLab.frame.origin.x - 1, self.height - 2 - 15, _goodImageView.frame.size.width, 15)];
-        _priceLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+        _priceLab = [self initialWithFrame:CGRectMake(_shopNameLab.frame.origin.x - 1, self.height - 2 - 17, _goodImageView.frame.size.width, 15)];
+        _priceLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
         [self.contentView addSubview:_priceLab];
         
         _collectionImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 8 - 20, self.height - 8 - 20, 20, 20)];
