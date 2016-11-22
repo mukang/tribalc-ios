@@ -16,7 +16,7 @@
 #import "TCDetailAnnotation.h"
 #import "TCDetailAnnotationView.h"
 
-@interface TCLocationViewController : UIViewController <MKMapViewDelegate> {
+@interface TCLocationViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate> {
     MKMapView *mMapView;
     CLLocationManager *mLocationManager;
     

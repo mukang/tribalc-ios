@@ -21,6 +21,7 @@
         
         
         _imgeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
+        NSLog(@"%f %f", [UIImage imageNamed:imgName].size.width, [UIImage imageNamed:imgName].size.height);
         [_imgeView sizeToFit];
         
         [_titleLab setOrigin:CGPointMake(frame.size.width / 2 - (_titleLab.size.width + _imgeView.size.width) / 2, (frame.size.height - _titleLab.height) / 2)];

@@ -17,5 +17,6 @@
 
 +(instancetype)calloutViewWithMapView:(MKMapView *)mapView;
 
+@property UIButton *imgBtn;
 
 @end

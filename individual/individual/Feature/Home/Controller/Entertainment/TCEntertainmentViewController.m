@@ -392,7 +392,8 @@
 - (void)showSortView {
     sortView.hidden = NO;
     sortButton.titleLab.textColor = [UIColor colorWithRed:80/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    sortButton.imgeView.image = [UIImage imageNamed:@"res_select_up"];
+    sortButton.imgeView.image = [UIImage imageNamed:@"res_select_blue"];
+    [sortButton.imgeView setSize:CGSizeMake(13, 6)];
     
     filterView.hidden = YES;
     filterButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
@@ -405,7 +406,8 @@
 - (void)showFilterView {
     filterView.hidden = NO;
     filterButton.titleLab.textColor = [UIColor colorWithRed:80/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    filterButton.imgeView.image = [UIImage imageNamed:@"res_select_up"];
+    filterButton.imgeView.image = [UIImage imageNamed:@"res_select_blue"];
+    [filterButton.imgeView setSize:CGSizeMake(13, 6)];
     
     sortView.hidden = YES;
     sortButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];

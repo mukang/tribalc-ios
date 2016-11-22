@@ -38,11 +38,28 @@
         [self addSubview:standardView];
         [standardView setY:self.height];
         standardViewPointY = self.height - bottomView.height - bottomView.y;
+        
+
+        UIView *blankView = [self createBlankViewWithFrame:CGRectMake(0, 0, self.width, standardViewPointY)];
+        [self addSubview:blankView];
 
     }
     
     return self;
 }
+
+- (UIView *)createBlankViewWithFrame:(CGRect)frame {
+    UIView *blankView = [[UIView alloc] initWithFrame:frame];
+    UITapGestureRecognizer *hideSelectRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchHideSelect:)];
+    [blankView addGestureRecognizer:hideSelectRecognizer];
+    
+    return blankView;
+}
+
+- (void)touchHideSelect:(UITapGestureRecognizer *)tag {
+    [self endSelectStandard];
+}
+
 
 - (UIView *)createStandardSelectViewAndComputeViewWithGood:(TCGoods *)good AndTarget:(id)target AndStyleAction:(SEL)styleAction AndSizeAction:(SEL)sizeAction AndAddAction:(SEL)addAction AndSubAction:(SEL)subAction{
     NSArray *keyArr = good.standardDesc.allKeys;
@@ -134,7 +151,7 @@
     [self createTitleSelectedStyleAndSizeWithOrigin:CGPointMake(selectStamp.x + selectStamp.width + 8, selectStamp.y - 1) AndInfo:info AndView:view];
     
     
-    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - 20, 15, 20, 20)];
+    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - 23, 15, 23, 23)];
     [closeBtn addTarget:target action:closeAction forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:closeBtn];
     
@@ -199,12 +216,7 @@
 
 - (UIButton *)createColseBtnWithFrame:(CGRect)frame {
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
-    button.layer.cornerRadius = frame.size.height / 2;
-    button.layer.borderWidth = 1;
-    button.layer.borderColor = [UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1].CGColor;
-    [button setTitle:@"X" forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:11];
-    [button setTitleColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"good_close"] forState:UIControlStateNormal];
     return button;
 }
 

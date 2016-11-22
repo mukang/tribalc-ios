@@ -23,25 +23,73 @@
     
     [self initData];
     
+
+    
     userAnnotation = [[TCUserLocationAnnotation alloc] init];
     userAnnotation.userImage = [UIImage imageNamed:@"map_test"];
 
+    [self initLocation];
     
-    mMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
-    mMapView.delegate = self;
-    [self.view addSubview:mMapView];
+    [self initMap];
+    
+    [self addAnnotation];
+    
+}
+
+- (void)initLocation {
     
     mLocationManager = [[CLLocationManager alloc] init];
     if ([CLLocationManager locationServicesEnabled] || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
         [mLocationManager requestWhenInUseAuthorization];
     }
     
-    mMapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
+    mLocationManager.delegate = self;
+    
+    mLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    CLLocationDistance distance = 5.0;
+    mLocationManager.distanceFilter = distance;
+    [mLocationManager startUpdatingLocation];
+}
+
+- (void)initMap {
+    
+    mMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    mMapView.delegate = self;
+    [self.view addSubview:mMapView];
+    
+    UITapGestureRecognizer *pressMapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchMap:)];
+    [mMapView addGestureRecognizer:pressMapRecognizer];
+    
+    mMapView.userTrackingMode = MKUserTrackingModeNone;
     mMapView.mapType = MKMapTypeStandard;
     
     [mMapView addAnnotation:userAnnotation];
+
+}
+
+- (void)touchMap:(UITapGestureRecognizer *)gestureRecognizer {
     
-    [self addAnnotation];
+    
+    CGPoint touchPoint = [gestureRecognizer locationInView:mMapView];
+    CLLocationCoordinate2D touchMapCoordinate = [mMapView convertPoint:touchPoint toCoordinateFromView:mMapView];
+    
+
+    
+    CLLocationCoordinate2D location1=CLLocationCoordinate2DMake(37.785834, -122.405417);
+    
+    for (int i = 0; i < allShopArr.count; i++) {
+//        CLLocationCoordinate2D annotationCoordinate = allShopArr[i][@"coordinate"];
+        CLLocationCoordinate2D annotationCoordinate = CLLocationCoordinate2DMake(location1.latitude - 0.001 * i, location1.longitude - 0.001 * i);
+        CGPoint annotationPoint = [mMapView convertCoordinate:annotationCoordinate toPointToView:mMapView];
+
+        
+        if (annotationPoint.x - 15.5 < touchPoint.x && touchPoint.x < annotationPoint.x + 15.5 && touchPoint.y > annotationPoint.y - 15.5 && touchPoint.y < annotationPoint.y + 15.5 ) {
+            return;
+        }
+            
+    }
+    
+    userAnnotation.coordinate = touchMapCoordinate;
 }
 
 - (void)initData {
@@ -77,7 +125,7 @@
     
     for (int i = 0; i < allShopArr.count; i++) {
         TCAnnotation *annotation = [[TCAnnotation alloc] init];
-        annotation.image = [UIImage imageNamed:@"美食"];
+        annotation.image = [UIImage imageNamed:@"map_food"];
         annotation.name = allShopArr[i][@"name"];
         annotation.coordinate = CLLocationCoordinate2DMake(location1.latitude - 0.001 * i, location1.longitude - 0.001 * i);
         annotation.title = allShopArr[i][@"title"];
@@ -89,16 +137,17 @@
 
 
 #pragma mark - delegate
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    NSLog(@"经度%f 纬度%f", userLocation.location.coordinate.longitude, userLocation.location.coordinate.latitude);
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    userAnnotation.coordinate = [locations firstObject].coordinate;
     
-    userAnnotation.coordinate = userLocation.coordinate;
-    
+    MKCoordinateRegion region = MKCoordinateRegionMake(userAnnotation.coordinate, MKCoordinateSpanMake(0.01, 0.01));
+    [mMapView setRegion:region];
 }
 
+
+
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
-    
-    
+
     if ([annotation isKindOfClass:[TCAnnotation class]]) {
         TCCalloutAnnotationView *calloutAnnotationView = [TCCalloutAnnotationView calloutViewWithMapView:mapView];
         calloutAnnotationView.image = ((TCAnnotation *)annotation).image;
@@ -117,6 +166,19 @@
     else {
         return nil;
     }
+    
+}
+
+- (MKAnnotationView *)createMKAnnotationViewWithAnnotationView:(MKAnnotationView *)annotationView AndMKMapView:(MKMapView *)mapView AndAnnotation:(id<MKAnnotation>)annotation {
+    if ([annotation isKindOfClass:[TCAnnotation class]]) {
+        annotationView.image = ((TCAnnotation *)annotation).image;
+        [annotationView setAnnotation:annotation];
+        return annotationView;
+    } else {
+        [annotationView setAnnotation:annotation];
+        return annotationView;
+    }
+    
     
 }
 

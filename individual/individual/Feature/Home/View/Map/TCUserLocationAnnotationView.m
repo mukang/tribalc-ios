@@ -32,18 +32,21 @@
 
 - (void)layoutUI {
     
-    self.image = [UIImage imageNamed:@"map_me"];
     
 }
 
 - (void)setAnnotation:(TCUserLocationAnnotation *)annotation {
     [super setAnnotation:annotation];
     
+    UIImageView *backImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"map_me"]];
+    [backImgView setOrigin:CGPointMake(-backImgView.width / 2, -backImgView.height)];
+    [self addSubview:backImgView];
+    
     UIImageView *headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(3, 3, 29, 29)];
     headImgView.layer.cornerRadius = 14.5;
     headImgView.layer.masksToBounds = YES;
     headImgView.image = annotation.userImage;
-    [self addSubview:headImgView];
+    [backImgView addSubview:headImgView];
     
 }
 

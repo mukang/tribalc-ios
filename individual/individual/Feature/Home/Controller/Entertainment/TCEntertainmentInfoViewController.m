@@ -228,8 +228,8 @@
     UILabel *phoneLab = [TCComponent createLabelWithText:@"电话客服" AndFontSize:14];
     phoneLab.textColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     
-    UIImageView *arrowImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"test"]];
-    [arrowImgView setFrame:CGRectMake(0, frame.size.height / 2 - 7 + 1, 10, 14)];
+    UIImageView *arrowImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"res_phone_mark"]];
+    [arrowImgView setFrame:CGRectMake(0, frame.size.height / 2 - 7 + 1.7, 10, 14)];
     
     [phoneImgView setX:frame.size.width / 2 - (phoneImgView.width + phoneLab.width + arrowImgView.width + 3 + 3) / 2];
     [phoneLab setOrigin:CGPointMake(phoneImgView.x + phoneImgView.width + 3, frame.size.height / 2 - 7)];
