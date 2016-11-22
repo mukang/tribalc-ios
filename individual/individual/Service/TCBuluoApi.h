@@ -213,6 +213,30 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)changeWalletPassword:(NSString *)anOldPassword aNewPassword:(NSString *)aNewPassword result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 获取银行卡列表
+
+ @param resultBlock 结果回调，bankCardList为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchBankCardList:(void (^)(NSArray *bankCardList, NSError *error))resultBlock;
+
+/**
+ 添加银行卡
+
+ @param bankCard 银行卡信息
+ @param verificationCode 手机验证码
+ @param resultBlock 结果回调，success为NO时表示添加失败，失败原因见error的code和userInfo
+ */
+- (void)addBankCard:(TCBankCard *)bankCard withVerificationCode:(NSString *)verificationCode result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 删除银行卡
+
+ @param bankCardID 银行卡ID
+ @param resultBlock 结果回调，success为NO时表示删除失败，失败原因见error的code和userInfo
+ */
+- (void)deleteBankCard:(NSString *)bankCardID result:(void (^)(BOOL success, NSError *error))resultBlock;
+
 #pragma mark - 验证码资源
 
 /**

@@ -153,8 +153,6 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
 
 - (void)checkOldPassword {
     NSString *digestStr = TCDigestMD5(self.password);
-    TCLog(@"digestStr-->%@", digestStr);
-    TCLog(@"oldPassword-->%@", _oldPassword);
     if ([digestStr isEqualToString:self.oldPassword]) {
         TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeNewPassword];
         vc.oldPassword = self.password;

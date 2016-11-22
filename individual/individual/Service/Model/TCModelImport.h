@@ -15,6 +15,10 @@
 #import "TCUserPhoneInfo.h"
 #import "TCUserAddress.h"
 #import "TCUserShippingAddress.h"
+#import "TCWalletAccount.h"
+#import "TCWalletBill.h"
+#import "TCWalletBillWrapper.h"
+#import "TCBankCard.h"
 
 
 /********** 商品相关 **********/
@@ -23,11 +27,7 @@
 #import "TCGoodsWrapper.h"
 
 
-/********** 钱包相关 **********/
 
-#import "TCWalletAccount.h"
-#import "TCWalletBill.h"
-#import "TCWalletBillWrapper.h"
 
 
 @interface TCModelImport : NSObject

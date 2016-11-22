@@ -52,6 +52,7 @@
 		7A11F7071DE42356005F3EAB /* TCWalletPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A11F7051DE42356005F3EAB /* TCWalletPasswordViewController.xib */; };
 		7A11F7141DE43195005F3EAB /* MLBPasswordRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A11F7111DE43195005F3EAB /* MLBPasswordRenderView.m */; };
 		7A11F7151DE43195005F3EAB /* MLBPasswordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A11F7131DE43195005F3EAB /* MLBPasswordTextField.m */; };
+		7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A11F7171DE46894005F3EAB /* TCBankCard.m */; };
 		7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */; };
 		7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC11DDC3F5C00FCAB95 /* TCGoodsWrapper.m */; };
 		7A133EC41DDC4CC000FCAB95 /* TCGoodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC31DDC4CC000FCAB95 /* TCGoodsTests.m */; };
@@ -248,6 +249,8 @@
 		7A11F7111DE43195005F3EAB /* MLBPasswordRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLBPasswordRenderView.m; sourceTree = "<group>"; };
 		7A11F7121DE43195005F3EAB /* MLBPasswordTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLBPasswordTextField.h; sourceTree = "<group>"; };
 		7A11F7131DE43195005F3EAB /* MLBPasswordTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLBPasswordTextField.m; sourceTree = "<group>"; };
+		7A11F7161DE46894005F3EAB /* TCBankCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBankCard.h; sourceTree = "<group>"; };
+		7A11F7171DE46894005F3EAB /* TCBankCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBankCard.m; sourceTree = "<group>"; };
 		7A133EBD1DDC12DF00FCAB95 /* TCGoods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoods.h; sourceTree = "<group>"; };
 		7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoods.m; sourceTree = "<group>"; };
 		7A133EC01DDC3F5C00FCAB95 /* TCGoodsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsWrapper.h; sourceTree = "<group>"; };
@@ -763,6 +766,8 @@
 				7A5F877E1DE2EEB100E4130B /* TCWalletBill.m */,
 				7A5F87801DE2EFF500E4130B /* TCWalletBillWrapper.h */,
 				7A5F87811DE2EFF500E4130B /* TCWalletBillWrapper.m */,
+				7A11F7161DE46894005F3EAB /* TCBankCard.h */,
+				7A11F7171DE46894005F3EAB /* TCBankCard.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -1408,6 +1413,7 @@
 				7A6506E11DC9EE5400B0EDBF /* TCShippingAddressViewCell.m in Sources */,
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
 				099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */,
+				7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
 				7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */,
