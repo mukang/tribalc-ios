@@ -93,8 +93,8 @@
 
 - (void)initRestaurantInfo {
     entertainmentInfoDic = @{
-                          @"img":@"null_en", @"name":@"天午方手工陶艺", @"type":@"陶艺", @"location":@"朝阳区", @"range":@"1006.5km",
-                          @"price":@"22169元/人", @"collection":@"166321653", @"address":@"北京市朝阳区北苑大姐大小区", @"phone":@"1800000000", @"recommend":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"topic":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"wifi":@true, @"time":@"11:00-23:00", @"reserve":@true, @"room":@true, @"prompt":@[@"wifi", @"pack"]
+                          @"img":@"good_placeholder", @"name":@"天午方手工陶艺", @"type":@"陶艺", @"location":@"朝阳区", @"range":@"1006.5km",
+                          @"price":@"22169", @"collection":@"166321653", @"address":@"北京市朝阳区北苑大姐大小区", @"phone":@"1800000000", @"recommend":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"topic":@"传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求传统日式居酒屋风格的餐厅 榻榻米设计 日式风情更浓 独门蜜汁锅底 双层小楼极大延展性满足不同用户需求", @"wifi":@true, @"time":@"11:00-23:00", @"reserve":@true, @"room":@true, @"prompt":@[@"wifi", @"pack"]
                           };
     
 }
@@ -129,16 +129,29 @@
     UIView *typeAndAdressView = [self getRestTypeAndAddressInfoWithFrame:CGRectMake(0, titleLab.y + titleLab.height + 16, frame.size.width, 14)];
     [view addSubview:typeAndAdressView];
     
-    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(0, typeAndAdressView.y + typeAndAdressView.height + 18, frame.size.width / 2 - 20, 11) AndFontSize:11 AndTitle:entertainmentInfoDic[@"price"] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
-    priceLab.textAlignment = NSTextAlignmentRight;
-    [view addSubview:priceLab];
+    UIView *priceView = [self createPriceViewWithFrame:CGRectMake(0, typeAndAdressView.y + typeAndAdressView.height + 14, frame.size.width / 2 - 20, 15)];
+    [view addSubview:priceView];
     
-//    UILabel *collectionLab = [TCComponent createLabelWithFrame:CGRectMake(frame.size.width / 2, priceLab.y, frame.size.width / 2, 11) AndFontSize:11 AndTitle:[NSString stringWithFormat:@"❤%@已收藏",entertainmentInfoDic[@"collection"]] AndTextColor:priceLab.textColor];
-    UIView *collectionView = [self getCollectionViewWithFrame:CGRectMake(frame.size.width / 2, priceLab.y, frame.size.width / 2, 11) AndNumber:entertainmentInfoDic[@"collection"]];
+    
+    UIView *collectionView = [self getCollectionViewWithFrame:CGRectMake(frame.size.width / 2, priceView.y + 4, frame.size.width / 2, 11) AndNumber:entertainmentInfoDic[@"collection"]];
     [view addSubview:collectionView];
     
     return view;
 }
+
+
+- (UIView *)createPriceViewWithFrame:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    UILabel *unitLabel = [TCComponent createLabelWithFrame:CGRectMake(frame.size.width - 28, frame.size.height - 11, 28, 12) AndFontSize:11 AndTitle:@"元/人" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    [view addSubview:unitLabel];
+    
+    UILabel *priceLabel = [TCComponent createLabelWithFrame:CGRectMake(0, 0, view.width - 28, frame.size.height) AndFontSize:frame.size.height AndTitle:entertainmentInfoDic[@"price"] AndTextColor:[UIColor blackColor]];
+    priceLabel.textAlignment = NSTextAlignmentRight;
+    [view addSubview:priceLabel];
+    
+    return view;
+}
+
 
 - (UIView *)createAddressAndPhoneViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
@@ -245,20 +258,20 @@
 
 
 
-- (void)createBottomButton {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45, self.view.frame.size.width, 45)];
-    UIColor *backColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    UIButton *orderBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"预订" AndFontSize:17 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
-    UIButton *reserveBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"预订" AndFontSize:17 AndBackColor:backColor AndTextColor:[UIColor whiteColor]];
-    [bottomView addSubview:reserveBtn];
-    [bottomView addSubview:orderBtn];
-    
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0.5)];
-    [bottomView addSubview:lineView];
-    
-    [self.view addSubview:bottomView];
-    
-}
+//- (void)createBottomButton {
+//    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45, self.view.frame.size.width, 45)];
+//    UIColor *backColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+//    UIButton *orderBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"预订" AndFontSize:17 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
+//    UIButton *reserveBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"预订" AndFontSize:17 AndBackColor:backColor AndTextColor:[UIColor whiteColor]];
+//    [bottomView addSubview:reserveBtn];
+//    [bottomView addSubview:orderBtn];
+//    
+//    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0.5)];
+//    [bottomView addSubview:lineView];
+//    
+//    [self.view addSubview:bottomView];
+//    
+//}
 
 - (UIView *)getPromptImageView {
     UIView *view = [[UIView alloc] init];
@@ -356,6 +369,46 @@
     return button;
 }
 
+
+- (void)createBottomButton {
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45, self.view.frame.size.width, 45)];
+    UIColor *backColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+    UIButton *orderBtn = [self createBottomBtnWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndText:@"优惠买单" AndImgName:@"res_discount" AndBackColor: [UIColor colorWithRed:112/255.0 green:206/255.0 blue:213/255.0 alpha:1]];
+    [orderBtn addTarget:self action:@selector(touchOrderRest) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *reserveBtn = [self createBottomBtnWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndText:@"预订餐位" AndImgName:@"res_ordering" AndBackColor:backColor];
+    [reserveBtn addTarget:self action:@selector(touchReserveRest) forControlEvents:UIControlEventTouchUpInside];
+    
+    [bottomView addSubview:reserveBtn];
+    [bottomView addSubview:orderBtn];
+    
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0.5)];
+    [bottomView addSubview:lineView];
+    
+    [self.view addSubview:bottomView];
+    
+}
+
+- (UIButton *)createBottomBtnWithFrame:(CGRect)frame AndText:(NSString *)text AndImgName:(NSString *)imgName AndBackColor:(UIColor *)backColor{
+    UIButton *button = [[UIButton alloc] initWithFrame:frame];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
+    [imgView sizeToFit];
+    [imgView setOrigin:CGPointMake(53, frame.size.height / 2 - imgView.height / 2 + 1)];
+    [button addSubview:imgView];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(imgView.x + imgView.width + 2, 0, 100, frame.size.height)];
+    label.text = text;
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:17];
+    [button addSubview:label];
+    
+    button.backgroundColor = backColor;
+    
+    return button;
+}
+
+
 #pragma mark - click
 - (void)touchBackBtn {
     [self.navigationController popViewControllerAnimated:YES];
@@ -369,6 +422,14 @@
 }
 
 - (void)touchMoreTopicInfo {
+    
+}
+
+- (void)touchOrderRest {
+    
+}
+
+- (void)touchReserveRest {
     
 }
 

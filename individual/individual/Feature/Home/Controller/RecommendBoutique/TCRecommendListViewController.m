@@ -75,7 +75,7 @@
     
     self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"精品推荐"];
     
-    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 25, 26) AndImageName:@"goods_shoppingcar"];
+    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 15, 25, 15) AndImageName:@"good_shopping_white"];
     [rightBtn addTarget:self action:@selector(touchShopCar:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
 

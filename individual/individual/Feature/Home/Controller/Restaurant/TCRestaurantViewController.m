@@ -310,7 +310,7 @@
     [self removeOtherSelectBtnColor:filterView.deliverBtn AndType:@"filter"];
     [self hideViewWithButton:filterButton];
     
-    [self sortByInfo:@"接受送餐"];
+    [self sortByInfo:@"有包间"];
 }
 
 - (void)touchReserveBtn {

@@ -279,7 +279,8 @@
     UILabel *salesLab = [self getLabelWithText:salesStr AndOrigin:CGPointMake(brandLab.x, evaluateView.y + evaluateView.height + 5)];
     [view addSubview:salesLab];
     
-    NSString *profitStr = [NSString stringWithFormat:@"收益数 : %li",  (long)goodInfo.saleQuantity];
+    NSLog(@"%@", goodInfo);
+    NSString *profitStr = [NSString stringWithFormat:@"电话 : %@",  @"65573"];
     UILabel *profitLab = [self getLabelWithText:profitStr AndOrigin:CGPointMake(salesLab.x + salesLab.width + 15, salesLab.y)];
     [view addSubview:profitLab];
 

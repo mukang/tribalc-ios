@@ -33,6 +33,9 @@
 		092CD4291DD9A07C0073A9C1 /* TCRestaurantSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD41F1DD9A07C0073A9C1 /* TCRestaurantSortView.m */; };
 		092CD42A1DD9A07C0073A9C1 /* TCSelectSortButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */; };
 		092CD42D1DD9C5FC0073A9C1 /* TCStandardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */; };
+		093D03191DE40D71007A053C /* TCUserOrderTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D03181DE40D71007A053C /* TCUserOrderTabBarController.m */; };
+		093D031C1DE41B4A007A053C /* TCUserOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */; };
+		093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */; };
 		099B38341DDDA926003F5972 /* TCRecommendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38331DDDA926003F5972 /* TCRecommendHeader.m */; };
 		099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38361DDDA944003F5972 /* TCRecommendFooter.m */; };
 		7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */; };
@@ -195,6 +198,12 @@
 		092CD4211DD9A07C0073A9C1 /* TCSelectSortButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectSortButton.m; sourceTree = "<group>"; };
 		092CD42B1DD9C5FC0073A9C1 /* TCStandardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStandardView.h; sourceTree = "<group>"; };
 		092CD42C1DD9C5FC0073A9C1 /* TCStandardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStandardView.m; sourceTree = "<group>"; };
+		093D03171DE40D71007A053C /* TCUserOrderTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderTabBarController.h; sourceTree = "<group>"; };
+		093D03181DE40D71007A053C /* TCUserOrderTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderTabBarController.m; sourceTree = "<group>"; };
+		093D031A1DE41B4A007A053C /* TCUserOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderViewController.h; sourceTree = "<group>"; };
+		093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderViewController.m; sourceTree = "<group>"; };
+		093D031D1DE41D28007A053C /* TCUserOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderTableViewCell.h; sourceTree = "<group>"; };
+		093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderTableViewCell.m; sourceTree = "<group>"; };
 		099B38321DDDA926003F5972 /* TCRecommendHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendHeader.h; sourceTree = "<group>"; };
 		099B38331DDDA926003F5972 /* TCRecommendHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendHeader.m; sourceTree = "<group>"; };
 		099B38351DDDA944003F5972 /* TCRecommendFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendFooter.h; sourceTree = "<group>"; };
@@ -521,6 +530,26 @@
 			path = RestaurantList;
 			sourceTree = "<group>";
 		};
+		093D03151DE40498007A053C /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				093D03171DE40D71007A053C /* TCUserOrderTabBarController.h */,
+				093D03181DE40D71007A053C /* TCUserOrderTabBarController.m */,
+				093D031A1DE41B4A007A053C /* TCUserOrderViewController.h */,
+				093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */,
+				093D031D1DE41D28007A053C /* TCUserOrderTableViewCell.h */,
+				093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		093D03161DE404AB007A053C /* Order */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
 		3769491CE022BC9EEDD012C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -605,6 +634,7 @@
 		7A190B0D1DC0CC7800651905 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				093D03151DE40498007A053C /* Order */,
 				7A190B0E1DC0CC9800651905 /* TCProfileViewController.h */,
 				7A190B0F1DC0CC9800651905 /* TCProfileViewController.m */,
 				7A190B101DC0CC9800651905 /* TCProfileViewController.xib */,
@@ -962,6 +992,7 @@
 		7AE32B8A1DC21CBA004E303D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				093D03161DE404AB007A053C /* Order */,
 				7A7C19D81DCF29930092AEA1 /* TCProfileHeaderView.h */,
 				7A7C19D91DCF29930092AEA1 /* TCProfileHeaderView.m */,
 				7A7C19DB1DCF29B60092AEA1 /* TCProfileHeaderView.xib */,
@@ -1230,11 +1261,13 @@
 				7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */,
 				092CD3ED1DD99F070073A9C1 /* TCEntertainmentInfoViewController.m in Sources */,
 				092CD4221DD9A07C0073A9C1 /* TCAnnotation.m in Sources */,
+				093D031C1DE41B4A007A053C /* TCUserOrderViewController.m in Sources */,
 				092CD4281DD9A07C0073A9C1 /* TCRestaurantSelectButton.m in Sources */,
 				7A1580311DD1DE8200B8F768 /* TCPhotoPicker.m in Sources */,
 				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
 				092CD4291DD9A07C0073A9C1 /* TCRestaurantSortView.m in Sources */,
+				093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */,
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
 				7A190AF01DC09BF500651905 /* TCClient.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
@@ -1251,6 +1284,7 @@
 				7A918AD61DC36D53002BD529 /* TCBioEditAffectionView.m in Sources */,
 				7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */,
 				7AB29F341DD46EE600564D93 /* TCUserInfo.m in Sources */,
+				093D03191DE40D71007A053C /* TCUserOrderTabBarController.m in Sources */,
 				7A918AC11DC32D90002BD529 /* TCBiographyAvatarViewCell.m in Sources */,
 				7A6506E11DC9EE5400B0EDBF /* TCShippingAddressViewCell.m in Sources */,
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
