@@ -25,4 +25,11 @@
 /** 手机号 */
 @property (copy, nonatomic) NSString *phone;
 
+/** 银行logo */
+@property (copy, nonatomic) NSString *logo;
+/** 背景图 */
+@property (copy, nonatomic) NSString *bgImage;
+/** 显示删除按钮 */
+@property (nonatomic) BOOL showDelete;
+
 @end

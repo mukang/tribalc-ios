@@ -9,6 +9,7 @@
 #import "TCWalletViewController.h"
 #import "TCWalletBillViewController.h"
 #import "TCWalletPasswordViewController.h"
+#import "TCBankCardViewController.h"
 
 #import "TCBuluoApi.h"
 
@@ -101,7 +102,8 @@
 }
 
 - (IBAction)handleClickBankCardButton:(UIButton *)sender {
-    
+    TCBankCardViewController *vc = [[TCBankCardViewController alloc] initWithNibName:@"TCBankCardViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)handleClickSweepCodeButton:(UIButton *)sender {
