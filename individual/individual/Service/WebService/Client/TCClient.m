@@ -35,6 +35,7 @@
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         NSURL *baseURL = [NSURL URLWithString:TCCLIENT_BASE_URL];
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL sessionConfiguration:configuration];
+        _sessionManager.completionQueue = dispatch_queue_create("com.buluo-gs.queue", NULL);
         _requestSerializer = [AFJSONRequestSerializer serializer];
         [_requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         [_requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -65,7 +66,7 @@
                                                            andDescription:serializationError.localizedDescription];
         TCClientResponse *response = [TCClientResponse responseWithStatusCode:0 data:nil orError:error];
         if (responseBlock) {
-            TC_CALL_ASYNC_MQ(responseBlock(response));
+            responseBlock(response);
         }
         return;
     }
