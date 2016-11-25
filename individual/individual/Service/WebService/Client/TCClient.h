@@ -30,4 +30,15 @@
 - (void)send:(TCClientRequest *)clientRequest
       finish:(void (^)(TCClientResponse *response))responseBlock;
 
+/**
+ 上传文件
+
+ @param clientRequest TCClientRequest对象
+ @param progress 上传进度
+ @param responseBlock 响应结果回调
+ */
+- (void)upload:(TCClientRequest *)clientRequest
+      progress:(void (^)(NSProgress *progress))progress
+        finish:(void (^)(TCClientResponse *response))responseBlock;
+
 @end

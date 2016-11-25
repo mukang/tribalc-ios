@@ -111,4 +111,85 @@
     [dataTask resume];
 }
 
+- (void)upload:(TCClientRequest *)clientRequest
+      progress:(void (^)(NSProgress *))progress
+        finish:(void (^)(TCClientResponse *))responseBlock {
+    
+    NSString *method = clientRequest.HTTPMethod;
+    NSString *URLString = clientRequest.apiName;
+    NSData *imageData = clientRequest.imageData;
+    
+    [self.requestSerializer setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
+    
+    __block NSError *serializationError = nil;
+    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:URLString parameters:nil error:&serializationError];
+    if (serializationError) {
+        TCClientRequestError *error = [TCClientRequestError errorWithCode:TCClientRequestErrorRequestSerializationError
+                                                           andDescription:serializationError.localizedDescription];
+        TCClientResponse *response = [TCClientResponse responseWithStatusCode:0 data:nil orError:error];
+        if (responseBlock) {
+            responseBlock(response);
+        }
+        return;
+    }
+    
+    NSInputStream *inputStream = [[NSInputStream alloc] initWithData:imageData];
+    [request setHTTPBodyStream:inputStream];
+    
+    __block NSURLSessionDataTask *dataTask = nil;
+    dataTask = [self.sessionManager uploadTaskWithStreamedRequest:request progress:progress completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        id dataInResponse = nil;
+        NSInteger codeInResponse = 0;
+        if (!error) {
+            serializationError = nil;
+            NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                                         options:NSJSONReadingMutableLeaves
+                                                                           error:&serializationError];
+            if (serializationError) {
+                NSString *dataString = [[NSString alloc] initWithData:responseObject
+                                                             encoding:NSUTF8StringEncoding];
+                NSLog(@"服务器响应解析出错，响应文本为: %@, 状态码为: %zd", dataString, [(NSHTTPURLResponse *)response statusCode]);
+                error = [TCClientRequestError errorWithCode:TCClientRequestErrorServerResponseNotJSON
+                                             andDescription:serializationError.localizedDescription];
+            } else {
+                NSNumber *code = responseData[@"code"];
+                codeInResponse = code.integerValue;
+                if (codeInResponse >= 400) {
+                    error = [TCClientRequestError errorWithCode:codeInResponse andDescription:responseData[@"message"]];
+                } else {
+                    dataInResponse = responseData[@"data"];
+                }
+            }
+        } else {
+            if ([error.domain isEqualToString:NSURLErrorDomain]) {
+                TCClientRequestErrorCode errorCode = [TCClientRequestError codeFromNSURLErrorCode:error.code];
+                error = [TCClientRequestError errorWithCode:errorCode andDescription:error.localizedDescription];
+            } else {
+                error = [TCClientRequestError errorWithCode:TCClientRequestErrorNetworkError andDescription:error.localizedDescription];
+            }
+        }
+        TCClientResponse *clientResponse = [TCClientResponse responseWithStatusCode:codeInResponse data:dataInResponse orError:error];
+        if (responseBlock) {
+            responseBlock(clientResponse);
+        }
+    }];
+    
+    [dataTask resume];
+    
+//    [self.sessionManager setTaskNeedNewBodyStreamBlock:^NSInputStream * _Nonnull(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task) {
+//        return [[NSInputStream alloc] initWithData:imageData];
+//    }];
+}
+
+
+
+
+
+
+
+
+
+
+
+
 @end

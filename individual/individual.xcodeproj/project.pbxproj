@@ -75,6 +75,7 @@
 		7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */; };
 		7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */; };
 		7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */; };
+		7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */; };
 		7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */; };
 		7A4514631DE5725F007D7193 /* TCBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514611DE5725F007D7193 /* TCBankCardViewController.m */; };
 		7A4514641DE5725F007D7193 /* TCBankCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4514621DE5725F007D7193 /* TCBankCardViewController.xib */; };
@@ -301,6 +302,8 @@
 		7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileProcessViewCell.xib; sourceTree = "<group>"; };
 		7A34AF561DDB0E7400217161 /* TCUserShippingAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserShippingAddress.h; sourceTree = "<group>"; };
 		7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserShippingAddress.m; sourceTree = "<group>"; };
+		7A384E801DE84CF20094E1F5 /* TCUploadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUploadInfo.h; sourceTree = "<group>"; };
+		7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUploadInfo.m; sourceTree = "<group>"; };
 		7A41C0D61DCC71C0003FC63C /* TCClientRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientRequestError.h; sourceTree = "<group>"; };
 		7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCClientRequestError.m; sourceTree = "<group>"; };
 		7A4514601DE5725F007D7193 /* TCBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBankCardViewController.h; sourceTree = "<group>"; };
@@ -778,6 +781,15 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		7A384E7F1DE84CAA0094E1F5 /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+				7A384E801DE84CF20094E1F5 /* TCUploadInfo.h */,
+				7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */,
+			);
+			path = Upload;
+			sourceTree = "<group>";
+		};
 		7A45147A1DD303EB009F170A /* Request */ = {
 			isa = PBXGroup;
 			children = (
@@ -1021,6 +1033,7 @@
 			children = (
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
+				7A384E7F1DE84CAA0094E1F5 /* Upload */,
 				7A5F876F1DE2976900E4130B /* Wallet */,
 				7A133EBC1DDC12BF00FCAB95 /* Goods */,
 				7AAF237C1DCB5BF1002B81A5 /* User */,
@@ -1430,6 +1443,7 @@
 				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
 				092CD4291DD9A07C0073A9C1 /* TCRestaurantSortView.m in Sources */,
+				7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */,
 				093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */,
 				7A4514681DE57AB4007D7193 /* TCBankCardViewCell.m in Sources */,
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,

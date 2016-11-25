@@ -26,8 +26,9 @@
 #import "TCGoods.h"
 #import "TCGoodsWrapper.h"
 
+/********** OSS上传相关 **********/
 
-
+#import "TCUploadInfo.h"
 
 
 @interface TCModelImport : NSObject

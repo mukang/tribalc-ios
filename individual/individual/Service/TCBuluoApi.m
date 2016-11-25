@@ -799,6 +799,60 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+- (void)authorizeImageData:(NSData *)imageData result:(void (^)(TCUploadInfo *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"oss_authorization/picture?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        [request setValue:@"iOS_image.jpg" forParam:@"key"];
+        [request setValue:@"image/jpeg" forParam:@"contentType"];
+        [request setValue:TCDigestMD5ToData(imageData) forParam:@"contentMD5"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.error) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            } else {
+                TCUploadInfo *uploadInfo = [[TCUploadInfo alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(uploadInfo, nil));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+//- (void)ossAuthorizeImageData:(NSData *)imageData result:(void (^)(TCOSSParams *, NSError *))resultBlock {
+//    if ([self isUserSessionValid]) {
+//        NSString *apiName = [NSString stringWithFormat:@"oss_authorization/picture?me=%@", self.currentUserSession.assigned];
+//        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+//        [request setValue:@"icon.jpg" forParam:@"key"];
+//        [request setValue:@"image/jpeg" forParam:@"contentType"];
+//        [request setValue:[OSSUtil base64Md5ForData:imageData] forParam:@"contentMD5"];
+//        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+//            if (response.error) {
+//                if (resultBlock) {
+//                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+//                }
+//            } else {
+//                TCOSSParams *params = [[TCOSSParams alloc] initWithObjectDictionary:response.data];
+//                if (resultBlock) {
+//                    TC_CALL_ASYNC_MQ(resultBlock(params, nil));
+//                }
+//            }
+//        }];
+//    } else {
+//        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+//        if (resultBlock) {
+//            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+//        }
+//    }
+//}
+
 #pragma mark - 商品类资源
 
 - (void)fetchGoodsWrapper:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCGoodsWrapper *, NSError *))resultBlock {
@@ -820,10 +874,44 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+#pragma mark - 上传图片资源
 
-
-
-
+//- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, NSError *))resultBlock {
+//    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+//    [self ossAuthorizeImageData:imageData result:^(TCOSSParams *params, NSError *error) {
+//        if (error) {
+//            if (resultBlock) {
+//                TC_CALL_ASYNC_MQ(resultBlock(NO, error));
+//            }
+//        } else {
+//            NSString *apiName = params.url;
+//            TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+//            request.imageData = imageData;
+//            [[TCClient client] upload:request progress:nil finish:^(TCClientResponse *response) {
+//                if (response.error) {
+//                    if (resultBlock) {
+//                        TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+//                        }
+//                    } else {
+//                        if (resultBlock) {
+//                            TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+//                        }
+//                    }
+//            }];
+////            [[TCOSSClient client] ossUploadData:imageData params:params progress:nil result:^(BOOL success, NSError *error) {
+////                if (error) {
+////                    if (resultBlock) {
+////                        TC_CALL_ASYNC_MQ(resultBlock(NO, error));
+////                    }
+////                } else {
+////                    if (resultBlock) {
+////                        TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+////                    }
+////                }
+////            }];
+//        }
+//    }];
+//}
 
 
 

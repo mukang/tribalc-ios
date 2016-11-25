@@ -247,6 +247,14 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)fetchVerificationCodeWithPhone:(NSString *)phone result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 认证图片信息
+
+ @param imageData 图片数据
+ @param resultBlock 回调结果，uploadInfo是上传图片数据所需的信息，uploadInfo为nil时表示认证失败，失败原因见error的code和userInfo
+ */
+- (void)authorizeImageData:(NSData *)imageData result:(void (^)(TCUploadInfo *uploadInfo, NSError *error))resultBlock;
+
 #pragma mark - 商品类资源
 
 /**
@@ -258,6 +266,9 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)fetchGoodsWrapper:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCGoodsWrapper *goodsWrapper, NSError *error))resultBlock;
 
+#pragma mark - 上传图片资源
+
+- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 
 @end
