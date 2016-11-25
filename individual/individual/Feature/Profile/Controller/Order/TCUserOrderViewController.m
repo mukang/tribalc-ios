@@ -33,7 +33,7 @@
     
     self.tabBarController.tabBar.hidden = YES;
     
-    [self initData];
+//    [self initData];
     
     [self initTableView];
     
@@ -80,12 +80,26 @@
     UILabel *orderIdLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, self.view.width - 79, orderInfoView.height) AndFontSize:14 AndTitle:[NSString stringWithFormat:@"订单号:%@", orderIdStr] AndTextColor:[UIColor blackColor]];
     [orderInfoView addSubview:orderIdLab];
     
+    if (![self.title isEqualToString:@"全部"]) {
+        statusStr = [self getStatusWithText:statusStr];
+    }
+    
     UIView *statusView = [self getOrderStatusViewWithStatus:statusStr];
     [orderInfoView addSubview:statusView];
     
     [view addSubview:orderInfoView];
     
     return view;
+}
+
+- (NSString *)getStatusWithText:(NSString *)text {
+    if ([text isEqualToString:@"等待付款"]) {
+        return @"等待买家付款";
+    } else if ([text isEqualToString:@"等待收货"]) {
+        return @"卖家已发货";
+    } else {
+        return text;
+    }
 }
 
 - (UIView *)getOrderStatusViewWithStatus:(NSString *)statusStr {
@@ -96,7 +110,8 @@
         statusImgView.frame = CGRectMake((view.width - completeImg.size.width) / 2, (view.height - completeImg.size.height) / 2, completeImg.size.width, completeImg.size.height);
         [view addSubview:statusImgView];
     } else {
-        UILabel *statusLabel = [TCComponent createLabelWithFrame:CGRectMake(0, 0, view.width, view.height) AndFontSize:14 AndTitle:statusStr AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
+        UILabel *statusLabel = [TCComponent createLabelWithFrame:CGRectMake(-60, 0, view.width + 40, view.height) AndFontSize:14 AndTitle:statusStr AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
+        statusLabel.textAlignment = NSTextAlignmentRight;
         [view addSubview:statusLabel];
     }
     
@@ -117,7 +132,9 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *heightView = [self getTableViewHeightViewWithOrderId:@"2312312" AndStatus:@"已完成"];
+    NSString *status = myOrderInfoArr[section][@"status"];
+    
+    UIView *heightView = [self getTableViewHeightViewWithOrderId:@"2312312" AndStatus:status];
     heightView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     return heightView;
 }
@@ -144,6 +161,14 @@
         cell = [[TCUserOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
+    NSDictionary *dic = myOrderInfoArr[indexPath.section][@"content"][indexPath.row];
+    
+    cell.leftImgView.image = [UIImage imageNamed:@"good_placeholder"];
+    [cell setTitleLabWithText:dic[@"name"]];
+    [cell setPriceLabel:46.5];
+    [cell setNumberLabel:4];
+    [cell setSelectedStandardWithDic:dic[@"type"]];
+    
     return cell;
 }
 
@@ -155,63 +180,6 @@
     [super didReceiveMemoryWarning];
     
 }
-
-- (void)initData {
-    NSDictionary *dic1 = @{
-                           @"orderId":@"1350948", @"type":@"wait", @"price":@499.05,
-                           @"content":@[
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@[
-                                             @{@"typeName":@"颜色分类", @"typeSize":@"蓝色"},
-                                             @{@"typeName":@"口味", @"typeSize":@"S"}
-                                             ]
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@[
-                                             @{@"typeName":@"颜色分类", @"typeSize":@"蓝色"},
-                                             @{@"typeName":@"口味", @"typeSize":@"S"}
-                                             ]
-                                     }
-                                   ]
-                           };
-    NSDictionary *dic2 = @{
-                           @"orderId":@"1350948", @"type":@"wait", @"price":@499.05,
-                           @"content":@[
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@[
-                                             @{@"typeName":@"颜色分类", @"typeSize":@"蓝色"},
-                                             @{@"typeName":@"口味", @"typeSize":@"S"}
-                                             ]
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@[
-                                             @{@"typeName":@"颜色分类", @"typeSize":@"蓝色"},
-                                             @{@"typeName":@"口味", @"typeSize":@"S"}
-                                             ]
-                                     }
-                                   ]
-                           };
-    NSDictionary *dic3 = @{
-                           @"orderId":@"1350948", @"type":@"wait", @"price":@499.05,
-                           @"content":@[
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
-                                     @"type":@[
-                                             @{@"typeName":@"颜色分类", @"typeSize":@"蓝色"},
-                                             @{@"typeName":@"口味", @"typeSize":@"S"}
-                                             ]
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@[
-                                             @{@"typeName":@"颜色分类", @"typeSize":@"蓝色"},
-                                             @{@"typeName":@"口味", @"typeSize":@"S"}
-                                             ]
-                                     }
-                                   ]
-                           };
-    
-    myOrderInfoArr = [NSArray arrayWithObjects:dic1, dic2, dic3, nil];
-}
-
 
 
 @end
