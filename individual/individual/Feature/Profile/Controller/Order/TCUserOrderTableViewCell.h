@@ -10,4 +10,12 @@
 
 @interface TCUserOrderTableViewCell : UITableViewCell
 
+@property UIImageView *leftImgView;
+
+@property UILabel *titleLab;
+
+@property UILabel *priceLab;
+
+@property UILabel *numberLab;
+
 @end

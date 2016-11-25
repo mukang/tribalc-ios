@@ -35,8 +35,6 @@
 - (void)addChildController:(UIViewController *)childController {
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:childController];
     [navigationController.navigationBar setHidden:YES];
-    childController.hidesBottomBarWhenPushed = YES;
-    
     
     [self addChildViewController:childController];
 }

@@ -712,32 +712,39 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+- (void)fetchGoodDetail:(NSString *)goodsID result:(void (^)(TCGoodDetail *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"goods/%@", goodsID];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                resultBlock(nil, response.error);
+            }
+        } else {
+            TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:response.data];
+            if (resultBlock) {
+                resultBlock(goodDetail, nil);
+            }
+        }
+    }];
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- (void)fetchGoodStandards:(NSString *)goodStandardId result:(void (^)(TCGoodStandards *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"goods_standards/%@", goodStandardId];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                resultBlock(nil, response.error);
+            }
+        } else {
+            TCGoodStandards *goodStandard = [[TCGoodStandards alloc] initWithObjectDictionary:response.data];
+            if (resultBlock) {
+                resultBlock(goodStandard, nil);
+            }
+        }
+    }];
+}
 
 
 

@@ -21,13 +21,15 @@
 
 #import "TCGoods.h"
 #import "TCGoodsWrapper.h"
-
+#import "TCGoodDetail.h"
+#import "TCGoodStandards.h"
 
 /********** 钱包相关 **********/
 
 #import "TCWalletAccount.h"
 #import "TCWalletBill.h"
 #import "TCWalletBillWrapper.h"
+
 
 
 @interface TCModelImport : NSObject

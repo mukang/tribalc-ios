@@ -134,7 +134,8 @@
     [cell.goodImageView sd_setImageWithURL:imgURL];
     
     cell.shopNameLab.text = info.brand;
-    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info.category, info.name];
+//    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info.category, info.name];
+    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@", info.name];
     cell.priceLab.text = [NSString stringWithFormat:@"￥%@", [self changeFloat:info.salePrice]];
     
     collectionImgArr[indexPath.row] = cell.collectionImgView;
@@ -154,9 +155,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-//    NSDictionary *info = goodsInfoArray[indexPath.row];    data
+    TCGoods *goodInfo = goodsInfoWrapper.content[indexPath.row];
     
-    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodInfo:goodsInfoWrapper.content[indexPath.row]];
+    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodId:goodInfo.ID];
     [self.navigationController pushViewController:recommendInfoViewController animated:YES];
     
 }
