@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>中国交通银行</key>
+	<dict>
+		<key>logo</key>
+		<string>bank_BOCOM_logo</string>
+		<key>bgImage</key>
+		<string>bank_BOCOM_bgImage</string>
+	</dict>
+	<key>中国工商银行</key>
+	<dict>
+		<key>logo</key>
+		<string>bank_ICBC_logo</string>
+		<key>bgImage</key>
+		<string>bank_ICBC_bgImage</string>
+	</dict>
+</dict>
+</plist>

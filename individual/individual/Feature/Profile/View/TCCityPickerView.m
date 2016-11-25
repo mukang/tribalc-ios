@@ -91,7 +91,7 @@ NSString *const TCCityPickierViewCountryKey = @"TCCityPickierViewCountryKey";
     }
 }
 
-#pragma mark - actions
+#pragma mark - Actions
 
 - (IBAction)handleClickConfirmButton:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(cityPickerView:didClickConfirmButtonWithCityInfo:)]) {
@@ -106,7 +106,7 @@ NSString *const TCCityPickierViewCountryKey = @"TCCityPickierViewCountryKey";
     }
 }
 
-#pragma mark - get current info
+#pragma mark - Get Current Info
 
 - (NSDictionary *)getCurrentSelectedInfo {
     NSInteger provinceIndex = [self.pickerView selectedRowInComponent:0];
@@ -124,7 +124,7 @@ NSString *const TCCityPickierViewCountryKey = @"TCCityPickierViewCountryKey";
              };
 }
 
-#pragma mark - load data
+#pragma mark - Load Data
 
 - (void)loadData {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"citylist" ofType:@"data"];
