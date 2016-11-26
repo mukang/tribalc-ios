@@ -14,17 +14,18 @@
 
 @interface TCStandardView : UIView <SDWebImageManagerDelegate>
 
-@property UILabel *priceLab;
+
 @property UIImageView *selectedImgView;
-@property UILabel *selectedGoodStyleLab;
-@property UILabel *selectedGoodSizeLab;
-@property UILabel *inventoryLab;
+@property UILabel *selectedPrimaryLab;
+@property UILabel *selectedSecondLab;
+
 @property UILabel *numberLab;
 
 
 - (void)startSelectStandard;
 - (void)endSelectStandard;
 
+- (UILabel *)getInventoryLab;
 
 - (instancetype)initWithTarget:(id)target AndNumberAddAction:(SEL)addAction AndNumberSubAction:(SEL)subAction AndAddShopCarAction:(SEL)addShoppngCartAction AndGoCartAction:(SEL)addCartAction AndBuyAction:(SEL)buyAction AndCloseAction:(SEL)closeAction;
 
@@ -33,7 +34,6 @@
 
 - (void)setSelectedPrimaryStandardWithText:(NSString *)text;
 - (void)setSelectedSeconedStandardWithText:(NSString *)text;
-- (void)setGoodStyle:(NSString *)style;
-- (void)setGoodSize:(NSString *)goodSize;
+
 
 @end

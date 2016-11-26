@@ -35,13 +35,16 @@
 }
 
 - (void)setSalePriceWithPrice:(float)price {
+    NSString *floatPriceStr = [NSString stringWithFormat:@"%f", price];
+    NSString *accuratePriceStr = [NSString stringWithFormat:@"%@", @(floatPriceStr.floatValue)];
+    
     NSString *priceIntegerStr = [NSString stringWithFormat:@"￥%i", (int)price];
     _priceIntegerLab.text = priceIntegerStr;
     
     [_priceDecimalLab setX:_priceIntegerLab.x + _priceIntegerLab.width];
     
-    if ([[self changeFloat:price] rangeOfString:@"."].location != NSNotFound) {
-        NSString *priceDecimalStr = [[self changeFloat:price] componentsSeparatedByString:@"."][1];
+    if ([accuratePriceStr rangeOfString:@"."].location != NSNotFound) {
+        NSString *priceDecimalStr = [accuratePriceStr componentsSeparatedByString:@"."][1];
         _priceDecimalLab.text = [NSString stringWithFormat:@".%@", priceDecimalStr];
     } else {
         _priceDecimalLab.text = [NSString stringWithFormat:@""];
@@ -52,7 +55,7 @@
 }
 
 - (void)setOriginPriceLabWithOriginPrice:(float)originPrice {
-    NSString *originStr = [NSString stringWithFormat:@"￥%@", [self changeFloat:originPrice]];
+    NSString *originStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", originPrice].floatValue)];
     
     NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:originStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12], NSForegroundColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1], NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle|NSUnderlinePatternSolid), NSStrikethroughColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1]}];
     
@@ -86,12 +89,15 @@
 
 
 - (void)initSalePriceLabelWithPrice:(float)price {
+    NSString *floatPriceStr = [NSString stringWithFormat:@"%f", price];
+    NSString *accuratePriceStr = [NSString stringWithFormat:@"%@", @(floatPriceStr.floatValue)];
+    
     NSString *priceIntegerStr = [NSString stringWithFormat:@"￥%i", (int)price];
     _priceIntegerLab = [self createPriceLabelWithOrigin:CGPointMake(20, _titleLab.y + _titleLab.height + 20) AndFontSize:17 AndText:priceIntegerStr];
     [self addSubview:_priceIntegerLab];
     
-    if ([[self changeFloat:price] rangeOfString:@"."].location != NSNotFound) {
-        NSString *priceDecimalStr = [[self changeFloat:price] componentsSeparatedByString:@"."][1];
+    if ([accuratePriceStr rangeOfString:@"."].location != NSNotFound) {
+        NSString *priceDecimalStr = [accuratePriceStr componentsSeparatedByString:@"."][1];
         priceDecimalStr = [NSString stringWithFormat:@".%@", priceDecimalStr];
         _priceDecimalLab = [self createPriceLabelWithOrigin:CGPointMake(_priceIntegerLab.x + _priceIntegerLab.width, _priceIntegerLab.y + 17 - 12) AndFontSize:12 AndText:priceDecimalStr];
     } else {
@@ -102,7 +108,8 @@
 }
 
 - (UILabel *)getOriginPriceLabelWithFrame:(CGRect)frame AndOriginPrice:(float)originalPrice {
-    NSString *originalPriceStr = [NSString stringWithFormat:@"￥%@", [self changeFloat: originalPrice]];
+    NSString *accuratePriceStr = [NSString stringWithFormat:@"%@", @([NSString stringWithFormat:@"%f", originalPrice].floatValue)];
+    NSString *originalPriceStr = [NSString stringWithFormat:@"￥%@", accuratePriceStr];
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.font = [UIFont systemFontOfSize:12];
     
@@ -150,35 +157,6 @@
     
     return label;
 }
-
-
--(NSString *)changeFloat:(double)flo
-{
-    
-    NSString *stringFloat = [NSString stringWithFormat:@"%f", flo];
-    const char *floatChars = [stringFloat UTF8String];
-    NSUInteger length = [stringFloat length];
-    int zeroLength = 0;
-    NSUInteger i = length-1;
-    for(; (int)i>=0; i--)
-    {
-        if(floatChars[i] == '0'/*0x30*/) {
-            zeroLength++;
-        } else {
-            if(floatChars[i] == '.')
-                i--;
-            break;
-        }
-    }
-    NSString *returnString;
-    if(i == -1) {
-        returnString = @"0";
-    } else {
-        returnString = [stringFloat substringToIndex:i+1];
-    }
-    return returnString;
-}
-
 
 
 /*

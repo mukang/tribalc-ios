@@ -13,71 +13,11 @@
     UIView *standardView;
     float standardViewPointY;
     UIView *standardSelectView;
+    
+    UILabel *priceLab;
+    UILabel *inventoryLab;
 }
 
-- (UIView *)createSelectedInfoViewWithFrame:(CGRect)frame AndTarget:(id)target AndCloseAction:(SEL)closeAction{
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = [UIColor whiteColor];
-    
-    _selectedImgView = [self createSelectGoodImgViewWithFrame:CGRectMake(20, -9, 115, 115)];
-    [view addSubview:_selectedImgView];
-    
-    UILabel *rmbStamp = [TCComponent createLabelWithFrame:CGRectMake(_selectedImgView.x + _selectedImgView.width + 12, 20, 20, 20) AndFontSize:20 AndTitle:@"￥" AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
-    [view addSubview:rmbStamp];
-    
-    _priceLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x + rmbStamp.width, rmbStamp.y, self.width - rmbStamp.x - rmbStamp.width, rmbStamp.height) AndFontSize:20 AndTitle:@"" AndTextColor:rmbStamp.textColor];
-    [view addSubview:_priceLab];
-    
-    _inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, rmbStamp.y + rmbStamp.height + 12, self.width - rmbStamp.x, 12) AndFontSize:12 AndTitle:@"(剩余:(null)件)" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
-    [self correctInventoryLabelValue];
-    [view addSubview:_inventoryLab];
-    
-    UILabel *selectStamp = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, _inventoryLab.y + _inventoryLab.height + 13, 50, 14) AndFontSize:14 AndTitle:@"已选择" AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
-    [view addSubview:selectStamp];
-    
-    [self createTitleSelectedStyleAndSizeWithOrigin:CGPointMake(selectStamp.x + selectStamp.width + 8, selectStamp.y - 1) AndView:view];
-    
-    
-    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - 23, 15, 23, 23)];
-    [closeBtn addTarget:target action:closeAction forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:closeBtn];
-    
-    
-    return view;
-}
-
-
-
-
-- (void)setSalePriceAndInventoryWithSalePrice:(float)salePrice AndInventory:(NSInteger)inventory AndImgUrlStr:(NSString *)urlStr{
-    _priceLab.text = [self changeFloat:salePrice];
-    _inventoryLab.text = [NSString stringWithFormat:@"(剩余:%ld件)", (long)inventory];
-    urlStr = [NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, urlStr];
-    NSURL *imgUrl = [NSURL URLWithString:urlStr];
-    [_selectedImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"home_image_place"]];
-    
-}
-
-- (void)setSelectedPrimaryStandardWithText:(NSString *)text {
-    _selectedGoodStyleLab.text = text;
-}
-- (void)setSelectedSeconedStandardWithText:(NSString *)text {
-    _selectedGoodSizeLab.text = text;
-    _selectedGoodSizeLab.x = _selectedGoodStyleLab.x + _selectedGoodStyleLab.width;
-}
-
-- (void)setStandardSelectViewWithStandard:(TCGoodStandards *)standard AndPrimaryAction:(SEL)primaryAction AndSeconedAction:(SEL)seconedAction AndTarget:(id)target {
-    if (standard.descriptions != NULL) {
-        UIView *primaryView = [self createGoodStyleSelectViewWithFrame:CGRectMake(0, 0, self.width, 96) AndInfo:standard.descriptions[@"primary"] AndStyleAction:primaryAction AndTarget:target];
-        if (standard.descriptions[@"secondary"] != NULL) {
-            UIView *seconedView = [self createGoodSizeSelectViewWithFrame:CGRectMake(0, primaryView.y + primaryView.height, self.width, 96) AndInfo:standard.descriptions[@"secondary"] AndAction:seconedAction AndTarget:target];
-            [standardSelectView addSubview:seconedView];
-        }
-        [standardSelectView addSubview:primaryView];
-    }
-
-    
-}
 
 
 - (instancetype)initWithTarget:(id)target AndNumberAddAction:(SEL)addAction AndNumberSubAction:(SEL)subAction AndAddShopCarAction:(SEL)addShoppngCartAction AndGoCartAction:(SEL)addCartAction AndBuyAction:(SEL)buyAction AndCloseAction:(SEL)closeAction {
@@ -108,12 +48,82 @@
         
         UIView *blankView = [self createBlankViewWithFrame:CGRectMake(0, 0, self.width, standardViewPointY)];
         [self addSubview:blankView];
-
+        
         
     }
     
     return self;
 }
+
+
+- (UIView *)createSelectedInfoViewWithFrame:(CGRect)frame AndTarget:(id)target AndCloseAction:(SEL)closeAction{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
+    
+    _selectedImgView = [self createSelectGoodImgViewWithFrame:CGRectMake(20, -9, 115, 115)];
+    [view addSubview:_selectedImgView];
+    
+    UILabel *rmbStamp = [TCComponent createLabelWithFrame:CGRectMake(_selectedImgView.x + _selectedImgView.width + 12, 20, 20, 20) AndFontSize:20 AndTitle:@"￥" AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
+    [view addSubview:rmbStamp];
+    
+    priceLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x + rmbStamp.width, rmbStamp.y, self.width - rmbStamp.x - rmbStamp.width, rmbStamp.height) AndFontSize:20 AndTitle:@"" AndTextColor:rmbStamp.textColor];
+    [view addSubview:priceLab];
+    
+    inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, rmbStamp.y + rmbStamp.height + 12, self.width - rmbStamp.x, 12) AndFontSize:12 AndTitle:@"(剩余:(null)件)" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    [self correctInventoryLabelValue];
+    [view addSubview:inventoryLab];
+    
+    UILabel *selectStamp = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, inventoryLab.y + inventoryLab.height + 13, 50, 14) AndFontSize:14 AndTitle:@"已选择" AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
+    [view addSubview:selectStamp];
+    
+    [self createSelectedStandardWithOrigin:CGPointMake(selectStamp.x + selectStamp.width + 8, selectStamp.y - 1) AndView:view];
+    
+    
+    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - 23, 15, 23, 23)];
+    [closeBtn addTarget:target action:closeAction forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:closeBtn];
+    
+    
+    return view;
+}
+
+
+
+
+- (void)setSalePriceAndInventoryWithSalePrice:(float)salePrice AndInventory:(NSInteger)inventory AndImgUrlStr:(NSString *)urlStr{
+    priceLab.text = [NSString stringWithFormat:@"%@", @([NSString stringWithFormat:@"%f", salePrice].floatValue)];
+    inventoryLab.text = [NSString stringWithFormat:@"(剩余:%ld件)", (long)inventory];
+    urlStr = [NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, urlStr];
+    NSURL *imgUrl = [NSURL URLWithString:urlStr];
+    [_selectedImgView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"home_image_place"]];
+    
+}
+
+- (void)setSelectedPrimaryStandardWithText:(NSString *)text {
+    _selectedPrimaryLab.text = text;
+    [_selectedPrimaryLab sizeToFit];
+    _selectedSecondLab.x = _selectedPrimaryLab.x + _selectedPrimaryLab.width + 9;
+}
+
+- (void)setSelectedSeconedStandardWithText:(NSString *)text {
+    _selectedSecondLab.text = text;
+    _selectedSecondLab.x = _selectedPrimaryLab.x + _selectedPrimaryLab.width + 9;
+    [_selectedSecondLab sizeToFit];
+}
+
+- (void)setStandardSelectViewWithStandard:(TCGoodStandards *)standard AndPrimaryAction:(SEL)primaryAction AndSeconedAction:(SEL)seconedAction AndTarget:(id)target {
+    if (standard.descriptions != NULL) {
+        UIView *primaryView = [self createGoodStyleSelectViewWithFrame:CGRectMake(0, 0, self.width, 96) AndInfo:standard.descriptions[@"primary"] AndStyleAction:primaryAction AndTarget:target];
+        if (standard.descriptions[@"secondary"] != NULL) {
+            UIView *seconedView = [self createGoodSizeSelectViewWithFrame:CGRectMake(0, primaryView.y + primaryView.height, self.width, 96) AndInfo:standard.descriptions[@"secondary"] AndAction:seconedAction AndTarget:target];
+            [standardSelectView addSubview:seconedView];
+        }
+        [standardSelectView addSubview:primaryView];
+    }
+
+    
+}
+
 
 - (UIView *)createBlankViewWithFrame:(CGRect)frame {
     UIView *blankView = [[UIView alloc] initWithFrame:frame];
@@ -168,22 +178,22 @@
 
 
 - (void)correctInventoryLabelValue {
-    if ([_inventoryLab.text isEqualToString:@"(剩余:(null)件)"]) {
-        _inventoryLab.text = @"(剩余:0件)";
+    if ([inventoryLab.text isEqualToString:@"(剩余:(null)件)"]) {
+        inventoryLab.text = @"(剩余:0件)";
     }
 }
 
 
 
-- (void)createTitleSelectedStyleAndSizeWithOrigin:(CGPoint)point AndView:(UIView *)view {
+- (void)createSelectedStandardWithOrigin:(CGPoint)point AndView:(UIView *)view {
 
-    _selectedGoodStyleLab = [TCComponent createLabelWithText:@"" AndFontSize:14 AndTextColor:_priceLab.textColor];
-    [_selectedGoodStyleLab setOrigin:point];
-    [view addSubview:_selectedGoodStyleLab];
+    _selectedPrimaryLab = [TCComponent createLabelWithText:@"" AndFontSize:14 AndTextColor:priceLab.textColor];
+    [_selectedPrimaryLab setOrigin:point];
+    [view addSubview:_selectedPrimaryLab];
     
-    _selectedGoodSizeLab = [TCComponent createLabelWithText:@"" AndFontSize:14 AndTextColor:_selectedGoodStyleLab.textColor];
-    [_selectedGoodSizeLab setOrigin:CGPointMake(_selectedGoodStyleLab.x + _selectedGoodStyleLab.width + 9, _selectedGoodStyleLab.y)];
-    [view addSubview:_selectedGoodSizeLab];
+    _selectedSecondLab = [TCComponent createLabelWithText:@"" AndFontSize:14 AndTextColor:_selectedPrimaryLab.textColor];
+    [_selectedSecondLab setOrigin:CGPointMake(_selectedPrimaryLab.x + _selectedPrimaryLab.width + 9, _selectedPrimaryLab.y)];
+    [view addSubview:_selectedSecondLab];
 //    
 //    if (good.snapshot == TRUE) {
 //        if (![standardSnapshot containsString:@"^"]) {
@@ -267,8 +277,9 @@
         width += button.width + 13;
         [buttonView addSubview:button];
         
-        [self setSelectStyleWithIndex:i AndBtn:button AndArr:infoArr];
-        
+        if ([_selectedPrimaryLab.text isEqualToString:infoArr[i]]) {
+            [self setSelectedButton:button];
+        }
         
     }
     
@@ -276,36 +287,9 @@
 
 }
 
-- (void)setSelectStyleWithIndex:(int)index AndBtn:(UIButton *)btn AndArr:(NSArray *)arr{
-    if ([_selectedGoodStyleLab.text isEqualToString:@""] && [_selectedGoodSizeLab.text isEqualToString:@""]) {
-        if (index == 0) {
-//            [self setSelectedButton:btn];
-//            [self setGoodStyle:arr[index]];
-        }
-    } else {
-        if ([_selectedGoodStyleLab.text isEqualToString:arr[index]]) {
-            [self setSelectedButton:btn];
-        }
-    }
-    
+- (UILabel *)getInventoryLab {
+    return inventoryLab;
 }
-
-- (void)setSelectSizeWithIndex:(int)index AndBtn:(UIButton *)btn AndArr:(NSArray *)arr {
-    if ([_selectedGoodSizeLab.text isEqualToString:@""]) {
-        if (index == 0) {
-//            [self setGoodSize:arr[index]];
-//            btn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-//            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        }
-    } else {
-        if ([_selectedGoodSizeLab.text isEqualToString:arr[index]]) {
-            btn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
-        }
-    }
-}
-
 
 - (void)setSelectedButton:(UIButton *)button {
     [button setTitleColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]  forState:UIControlStateNormal];
@@ -329,8 +313,10 @@
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         button.tag = i;
         width += button.width + 11;
-        
-        [self setSelectSizeWithIndex:i AndBtn:button AndArr:infoArr];
+        if ([_selectedSecondLab.text isEqualToString:infoArr[i]]) {
+            button.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }
     }
     
     return buttonView;
@@ -431,42 +417,6 @@
 }
 
 
-- (void)setGoodStyle:(NSString *)style {
-    _selectedGoodStyleLab.text = style;
-    [_selectedGoodStyleLab sizeToFit];
-    [_selectedGoodSizeLab setX:_selectedGoodStyleLab.x + _selectedGoodStyleLab.width + 9];
-}
-
-- (void)setGoodSize:(NSString *)goodSize {
-    _selectedGoodSizeLab.text = goodSize;
-    [_selectedGoodSizeLab sizeToFit];
-}
-
--(NSString *)changeFloat:(double)flo
-{
-    NSString *stringFloat = [NSString stringWithFormat:@"%f", flo];
-    const char *floatChars = [stringFloat UTF8String];
-    NSUInteger length = [stringFloat length];
-    int zeroLength = 0;
-    NSUInteger i = length-1;
-    for(; (int)i>=0; i--)
-    {
-        if(floatChars[i] == '0'/*0x30*/) {
-            zeroLength++;
-        } else {
-            if(floatChars[i] == '.')
-                i--;
-            break;
-        }
-    }
-    NSString *returnString;
-    if(i == -1) {
-        returnString = @"0";
-    } else {
-        returnString = [stringFloat substringToIndex:i+1];
-    }
-    return returnString;
-}
 
 
 /*

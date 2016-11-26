@@ -136,8 +136,8 @@
     cell.shopNameLab.text = info.brand;
 //    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info.category, info.name];
     cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@", info.name];
-    cell.priceLab.text = [NSString stringWithFormat:@"￥%@", [self changeFloat:info.salePrice]];
-    
+    NSString *salePriceStr = [NSString stringWithFormat:@"%f", info.salePrice];
+    cell.priceLab.text = [NSString stringWithFormat:@"￥%@", @(salePriceStr.floatValue)];
     collectionImgArr[indexPath.row] = cell.collectionImgView;
     
     [cell.collectionBtn addTarget:self action:@selector(touchCollectionButton:) forControlEvents:UIControlEventTouchUpInside];
