@@ -267,10 +267,12 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 - (void)fetchGoodDetail:(NSString *)goodsID result:(void (^)(TCGoodDetail *, NSError *))resultBlock;
 
 /**
- 获取商品详情
+ 获取商品规格
  
  @param goodStandardId 商品规格的ID
  @param resultBlock 结果回调，TCGoodStandards为nil时表示获取失败，失败原因见error的code和userInfo
  */
 - (void)fetchGoodStandards:(NSString *)goodStandardId result:(void (^)(TCGoodStandards *, NSError *))resultBlock;
+
+
 @end

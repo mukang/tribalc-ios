@@ -220,7 +220,7 @@
                                              @"primary":@{@"label":@"口味", @"types":@"蓝色"}
                                              }
                                      },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
+                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔等我打我回到家哇靠恢复外套",@"price":@488, @"count":@3,
                                      @"type":@{
                                              @"primary":@{@"label":@"口味", @"types":@"蓝色"},
                                              @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}

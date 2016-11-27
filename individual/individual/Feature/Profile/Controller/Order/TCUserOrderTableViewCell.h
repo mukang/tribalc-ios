@@ -13,9 +13,11 @@
 
 @property UIImageView *leftImgView;
 
+- (instancetype)initOrderDetailCellWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
 - (void)setTitleLabWithText:(NSString *)text;
 - (void)setNumberLabel:(float)number;
 - (void)setPriceLabel:(float)price;
 - (void)setSelectedStandardWithDic:(NSDictionary *)standard;
-
+- (void)setBoldPriceLabel:(float)price ;
 @end
