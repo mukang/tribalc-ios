@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCComponent.h"
 
 @interface TCUserOrderTableViewCell : UITableViewCell
+
+@property UIImageView *leftImgView;
+
+- (void)setTitleLabWithText:(NSString *)text;
+- (void)setNumberLabel:(float)number;
+- (void)setPriceLabel:(float)price;
+- (void)setSelectedStandardWithDic:(NSDictionary *)standard;
 
 @end

@@ -134,9 +134,10 @@
     [cell.goodImageView sd_setImageWithURL:imgURL];
     
     cell.shopNameLab.text = info.brand;
-    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info.category, info.name];
-    cell.priceLab.text = [NSString stringWithFormat:@"￥%@", [self changeFloat:info.salePrice]];
-    
+//    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info.category, info.name];
+    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@", info.name];
+    NSString *salePriceStr = [NSString stringWithFormat:@"%f", info.salePrice];
+    cell.priceLab.text = [NSString stringWithFormat:@"￥%@", @(salePriceStr.floatValue)];
     collectionImgArr[indexPath.row] = cell.collectionImgView;
     
     [cell.collectionBtn addTarget:self action:@selector(touchCollectionButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -154,9 +155,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-//    NSDictionary *info = goodsInfoArray[indexPath.row];    data
+    TCGoods *goodInfo = goodsInfoWrapper.content[indexPath.row];
     
-    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodInfo:goodsInfoWrapper.content[indexPath.row]];
+    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodId:goodInfo.ID];
     [self.navigationController pushViewController:recommendInfoViewController animated:YES];
     
 }

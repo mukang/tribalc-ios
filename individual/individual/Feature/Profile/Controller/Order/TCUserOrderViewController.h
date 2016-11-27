@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCUserOrderTableViewCell.h"
+#import "TCComponent.h"
 
 @interface TCUserOrderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     UITableView *orderTableView;

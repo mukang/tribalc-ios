@@ -12,13 +12,16 @@
 #import "TCStandardView.h"
 #import "TCGoods.h"
 #import "UIImageView+WebCache.h"
+#import "TCBuluoApi.h"
+#import "TCModelImport.h"
 #import "TCClientConfig.h"
+#import "TCGoodTitleView.h"
+#import "NSObject+TCModel.h"
 
 
 @interface TCRecommendInfoViewController : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, SDWebImageManagerDelegate>
 
 
-- (instancetype)initWithGoodInfo:(TCGoods *)good ;
-
+- (instancetype)initWithGoodId:(NSString *)goodID;
 
 @end

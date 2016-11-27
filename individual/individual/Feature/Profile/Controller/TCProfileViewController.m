@@ -438,6 +438,7 @@ TCPhotoPickerDelegate>
     [self updateHeaderView];
 }
 
+
 #pragma mark - Override Methods
 
 - (NSArray *)fodderArray {

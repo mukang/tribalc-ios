@@ -25,6 +25,8 @@
 
 #import "TCGoods.h"
 #import "TCGoodsWrapper.h"
+#import "TCGoodDetail.h"
+#import "TCGoodStandards.h"
 
 /********** OSS上传相关 **********/
 
