@@ -9,6 +9,8 @@
 #import "TCBioEditAvatarViewController.h"
 #import "TCPhotoPicker.h"
 
+#import "TCBuluoApi.h"
+
 @interface TCBioEditAvatarViewController () <TCPhotoPickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -88,6 +90,15 @@
 - (IBAction)handleClickSaveButton:(UIButton *)sender {
     TCLog(@"保存图片");
     
+//    UIImage *image = [UIImage imageWithContentsOfFile:@"/Users/mukang/Desktop/QQ20161124-0.png"];
+//    [[TCBuluoApi api] uploadImage:image progress:nil result:^(BOOL success, NSError *error) {
+//        if (success) {
+//            TCLog(@"上传成功！");
+//        } else {
+//            TCLog(@"上传失败！%@", error);
+//        }
+//    }];
+    
 }
 
 - (IBAction)handleClickCancelButton:(UIButton *)sender {
@@ -98,6 +109,9 @@
 
 - (void)photoPicker:(TCPhotoPicker *)photoPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     TCLog(@"do something...");
+    NSString *type = info[UIImagePickerControllerMediaType];
+    NSLog(@"%@", type);
+    NSLog(@"--> %@", info);
     [photoPicker dismissPhotoPicker];
     self.photoPicker = nil;
 }

@@ -32,6 +32,8 @@ extern NSString *const TCClientHTTPMethodDelete;
 @property (copy, nonatomic, readonly) NSString *HTTPMethod;
 @property (copy, nonatomic, readonly) NSString *requestIdentifier;
 
+@property (strong, nonatomic) NSData *imageData;
+
 + (instancetype)requestWithApi:(NSString *)apiName;
 + (instancetype)requestWithHTTPMethod:(NSString *)HTTPMethod apiName:(NSString *)apiName;
 

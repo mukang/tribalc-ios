@@ -24,6 +24,13 @@
  */
 extern NSString * TCDigestMD5(NSString * text);
 
+/**
+ 计算二进制数据的MD5摘要
+
+ @param data 需要计算MD5摘要的二进制数据
+ @return 返回已计算的MD5摘要，为32个小写字符
+ */
+extern NSString * TCDigestMD5ToData(NSData *data);
 
 
 #pragma mark - 线程操作

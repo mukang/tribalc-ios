@@ -28,8 +28,9 @@
 #import "TCGoodDetail.h"
 #import "TCGoodStandards.h"
 
+/********** OSS上传相关 **********/
 
-
+#import "TCUploadInfo.h"
 
 
 @interface TCModelImport : NSObject

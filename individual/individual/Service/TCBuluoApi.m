@@ -143,20 +143,24 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:dic[key] forParam:key];
     }
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        TCUserSession *userSession = nil;
         NSError *error = response.error;
         if (error) {
             [self setUserSession:nil];
-            if (resultBlock) {
-                resultBlock(nil, error);
-            }
         } else {
-            TCUserSession *userSession = [[TCUserSession alloc] initWithObjectDictionary:response.data];
+            userSession = [[TCUserSession alloc] initWithObjectDictionary:response.data];
             [self setUserSession:userSession];
             [self fetchCurrentUserInfoWithUserID:userSession.assigned];
             [self fetchCurrentUserSensitiveInfoWithUserID:userSession.assigned];
-            [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserDidLogin object:nil];
-            if (resultBlock) {
-                resultBlock(userSession, nil);
+            TC_CALL_ASYNC_MQ({
+                [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserDidLogin object:nil];
+            });
+        }
+        if (resultBlock) {
+            if (error) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, error));
+            } else {
+                TC_CALL_ASYNC_MQ(resultBlock(userSession, nil));
             }
         }
     }];
@@ -169,12 +173,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSError *error = response.error;
         if (error) {
             if (resultBlock) {
-                resultBlock(nil, error);
+                TC_CALL_ASYNC_MQ(resultBlock(nil, error));
             }
         } else {
             TCUserInfo *userInfo = [[TCUserInfo alloc] initWithObjectDictionary:response.data];
             if (resultBlock) {
-                resultBlock(userInfo, nil);
+                TC_CALL_ASYNC_MQ(resultBlock(userInfo, nil));
             }
         }
     }];
@@ -187,12 +191,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSError *error = response.error;
         if (error) {
             if (resultBlock) {
-                resultBlock(nil, error);
+                TC_CALL_ASYNC_MQ(resultBlock(nil, error));
             }
         } else {
             TCUserSensitiveInfo *info = [[TCUserSensitiveInfo alloc] initWithObjectDictionary:response.data];
             if (resultBlock) {
-                resultBlock(info, nil);
+                TC_CALL_ASYNC_MQ(resultBlock(info, nil));
             }
         }
     }];
@@ -209,18 +213,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 userSession.userInfo.nickname = nickname;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -236,18 +240,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 userSession.userInfo.picture = avatar;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -275,18 +279,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 userSession.userInfo.gender = gender;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -303,18 +307,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 userSession.userInfo.birthday = (NSUInteger)(timestamp * 1000);
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -345,18 +349,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 userSession.userInfo.emotionState = emotionState;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -377,18 +381,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 userSession.userInfo.district = userAddress.district;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -404,18 +408,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 userSession.userInfo.coordinate = coordinate;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -434,18 +438,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 userSession.userSensitiveInfo.phone = phoneInfo.phone;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -462,18 +466,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 userSession.userSensitiveInfo.shippingAddress = shippingAddress;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -490,18 +494,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             if (response.statusCode == 201) {
                 TCUserShippingAddress *address = [[TCUserShippingAddress alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    resultBlock(YES, address, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, address, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, nil, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, nil, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, nil, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, nil, sessionError));
         }
     }
 }
@@ -514,7 +518,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             NSError *error = response.error;
             if (error) {
                 if (resultBlock) {
-                    resultBlock(nil, error);
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, error));
                 }
             } else {
                 NSMutableArray *addressList = [NSMutableArray array];
@@ -524,14 +528,14 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                     [addressList addObject:address];
                 }
                 if (resultBlock) {
-                    resultBlock([addressList copy], nil);
+                    TC_CALL_ASYNC_MQ(resultBlock([addressList copy], nil));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(nil, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
         }
     }
 }
@@ -543,19 +547,19 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.error) {
                 if (resultBlock) {
-                    resultBlock(nil, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             } else {
                 TCUserShippingAddress *address = [[TCUserShippingAddress alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    resultBlock(address, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(address, nil));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(nil, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
         }
     }
 }
@@ -576,18 +580,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                     [self setUserSession:userSession];
                 }
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -605,18 +609,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                     [self setUserSession:userSession];
                 }
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -628,19 +632,19 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.error) {
                 if (resultBlock) {
-                    resultBlock(nil, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             } else {
                 TCWalletAccount *walletAccount = [[TCWalletAccount alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    resultBlock(walletAccount, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(walletAccount, nil));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(nil, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
         }
     }
 }
@@ -655,19 +659,19 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.error) {
                 if (resultBlock) {
-                    resultBlock(nil, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             } else {
                 TCWalletBillWrapper *walletBillWrapper = [[TCWalletBillWrapper alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    resultBlock(walletBillWrapper, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(walletBillWrapper, nil));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(nil, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
         }
     }
 }
@@ -681,18 +685,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -704,7 +708,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.error) {
                 if (resultBlock) {
-                    resultBlock(nil, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             } else {
                 NSMutableArray *bankCardList = [NSMutableArray array];
@@ -714,14 +718,14 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                     [bankCardList addObject:bankCard];
                 }
                 if (resultBlock) {
-                    resultBlock([bankCardList copy], nil);
+                    TC_CALL_ASYNC_MQ(resultBlock([bankCardList copy], nil));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(nil, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
         }
     }
 }
@@ -737,18 +741,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 201) {
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -760,18 +764,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 204) {
                 if (resultBlock) {
-                    resultBlock(YES, nil);
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    resultBlock(NO, response.error);
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            resultBlock(NO, sessionError);
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -785,15 +789,69 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
         if (response.statusCode == 202) {
             if (resultBlock) {
-                resultBlock(YES, nil);
+                TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
             }
         } else {
             if (resultBlock) {
-                resultBlock(NO, response.error);
+                TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
             }
         }
     }];
 }
+
+- (void)authorizeImageData:(NSData *)imageData result:(void (^)(TCUploadInfo *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"oss_authorization/picture?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        [request setValue:@"iOS_image.jpg" forParam:@"key"];
+        [request setValue:@"image/jpeg" forParam:@"contentType"];
+        [request setValue:TCDigestMD5ToData(imageData) forParam:@"contentMD5"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.error) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            } else {
+                TCUploadInfo *uploadInfo = [[TCUploadInfo alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(uploadInfo, nil));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+//- (void)ossAuthorizeImageData:(NSData *)imageData result:(void (^)(TCOSSParams *, NSError *))resultBlock {
+//    if ([self isUserSessionValid]) {
+//        NSString *apiName = [NSString stringWithFormat:@"oss_authorization/picture?me=%@", self.currentUserSession.assigned];
+//        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+//        [request setValue:@"icon.jpg" forParam:@"key"];
+//        [request setValue:@"image/jpeg" forParam:@"contentType"];
+//        [request setValue:[OSSUtil base64Md5ForData:imageData] forParam:@"contentMD5"];
+//        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+//            if (response.error) {
+//                if (resultBlock) {
+//                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+//                }
+//            } else {
+//                TCOSSParams *params = [[TCOSSParams alloc] initWithObjectDictionary:response.data];
+//                if (resultBlock) {
+//                    TC_CALL_ASYNC_MQ(resultBlock(params, nil));
+//                }
+//            }
+//        }];
+//    } else {
+//        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+//        if (resultBlock) {
+//            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+//        }
+//    }
+//}
 
 #pragma mark - 商品类资源
 
@@ -805,12 +863,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
         if (response.error) {
             if (resultBlock) {
-                resultBlock(nil, response.error);
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
             }
         } else {
             TCGoodsWrapper *goodsWrapper = [[TCGoodsWrapper alloc] initWithObjectDictionary:response.data];
             if (resultBlock) {
-                resultBlock(goodsWrapper, nil);
+                TC_CALL_ASYNC_MQ(resultBlock(goodsWrapper, nil));
             }
         }
     }];
@@ -849,6 +907,47 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
     }];
 }
+
+
+#pragma mark - 上传图片资源
+
+//- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, NSError *))resultBlock {
+//    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+//    [self ossAuthorizeImageData:imageData result:^(TCOSSParams *params, NSError *error) {
+//        if (error) {
+//            if (resultBlock) {
+//                TC_CALL_ASYNC_MQ(resultBlock(NO, error));
+//            }
+//        } else {
+//            NSString *apiName = params.url;
+//            TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+//            request.imageData = imageData;
+//            [[TCClient client] upload:request progress:nil finish:^(TCClientResponse *response) {
+//                if (response.error) {
+//                    if (resultBlock) {
+//                        TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+//                        }
+//                    } else {
+//                        if (resultBlock) {
+//                            TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+//                        }
+//                    }
+//            }];
+////            [[TCOSSClient client] ossUploadData:imageData params:params progress:nil result:^(BOOL success, NSError *error) {
+////                if (error) {
+////                    if (resultBlock) {
+////                        TC_CALL_ASYNC_MQ(resultBlock(NO, error));
+////                    }
+////                } else {
+////                    if (resultBlock) {
+////                        TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+////                    }
+////                }
+////            }];
+//        }
+//    }];
+//}
+
 
 
 
