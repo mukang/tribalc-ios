@@ -13,6 +13,6 @@
 #import "UIImageView+WebCache.h"
 #import "TCClientConfig.h"
 
-@interface TCUserOrderDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface TCUserOrderDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate>
 
 @end

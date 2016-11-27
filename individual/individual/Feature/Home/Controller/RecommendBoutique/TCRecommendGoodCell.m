@@ -16,7 +16,6 @@
     self = [super initWithFrame:frame];
     if(self) {
         
-        NSLog(@"%f", self.height);
         
         self.backgroundColor = [UIColor whiteColor];
         

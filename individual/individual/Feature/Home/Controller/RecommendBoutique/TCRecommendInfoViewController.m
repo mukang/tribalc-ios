@@ -59,13 +59,15 @@
     [buluoApi fetchGoodDetail:goodId result:^(TCGoodDetail *goodDetail, NSError *error) {
         mGoodDetail = goodDetail;
         
-        [self initScrollView];
-        [self initUI];
-        [self initSelectSizeView];
+        [self performSelectorOnMainThread:@selector(initUI) withObject:nil waitUntilDone:NO];
+        
     }];
 }
 
 - (void)initUI {
+    [self initScrollView];
+
+    
     UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, 394)];
     [mScrollView addSubview:titleImageView];
     
@@ -86,9 +88,11 @@
     UIScrollView *tempView = (UIScrollView *)[textAndImageView.subviews objectAtIndex:0];
     tempView.scrollEnabled = NO;
     [mScrollView addSubview:textAndImageView];
-    
+
     UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, self.view.height - 49, self.view.width, 49)];
     [self.view addSubview:bottomView];
+
+    [self initSelectSizeView];
 
 }
 
@@ -256,6 +260,7 @@
 }
 
 - (UIWebView *)createURLInfoViewWithOrigin:(CGPoint)point AndURLStr:(NSString *)urlstr{
+    
     UIWebView *webView = [[UIWebView alloc] init];
     [webView setOrigin:point];
     NSURL *url = [NSURL URLWithString:urlstr];
@@ -522,15 +527,17 @@
 
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchGoodStandards:mGoodDetail.standardId result:^(TCGoodStandards *result, NSError *error) {
-        goodStandard = result;
-        [standardView setStandardSelectViewWithStandard:goodStandard AndPrimaryAction:@selector(touchStyleSelectBtn:) AndSeconedAction:@selector(touchSizeSelectBtn:) AndTarget:self];
-        [standardView startSelectStandard];
         
+        [self performSelectorOnMainThread:@selector(showStandardView:) withObject:result waitUntilDone:NO];
     }];
     
 }
 
-
+- (void)showStandardView:(TCGoodStandards *)result {
+    goodStandard = result;
+    [standardView setStandardSelectViewWithStandard:goodStandard AndPrimaryAction:@selector(touchStyleSelectBtn:) AndSeconedAction:@selector(touchSizeSelectBtn:) AndTarget:self];
+    [standardView startSelectStandard];
+}
 
 - (void)touchAddShopCartBtn:(UIButton *)btn {
   

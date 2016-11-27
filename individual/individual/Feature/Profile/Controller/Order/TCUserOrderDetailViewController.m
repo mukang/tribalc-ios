@@ -159,6 +159,7 @@
         cell.leftImgView.image = [UIImage imageNamed:@"good_placeholder"];
         [cell setTitleLabWithText:orderContentDic[@"title"]];
         [cell setBoldPriceLabel:39.00];
+        [cell setBoldNumberLabel:5];
         [cell setSelectedStandardWithDic:orderContentDic[@"standard"]];
         return cell;
 

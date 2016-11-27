@@ -20,4 +20,5 @@
 - (void)setPriceLabel:(float)price;
 - (void)setSelectedStandardWithDic:(NSDictionary *)standard;
 - (void)setBoldPriceLabel:(float)price ;
+- (void)setBoldNumberLabel:(float)number;
 @end

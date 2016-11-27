@@ -19,7 +19,7 @@
     self = [self initWithStyle:style reuseIdentifier:reuseIdentifier];
     CGRect screenRect = [UIScreen mainScreen].bounds;
     CGFloat height = 96.5;
-    backView.frame = CGRectMake(20, height / 2 - 79 / 2, screenRect.size.width, height);
+    backView.frame = CGRectMake(20, height / 2 - 79 / 2, screenRect.size.width - 40, height);
     backView.backgroundColor = [UIColor whiteColor];
     
     _leftImgView.frame = CGRectMake(8, 0, 79, 79);
@@ -90,6 +90,20 @@
 - (void)setNumberLabel:(float)number {
     NSString *numberStr = [NSString stringWithFormat:@"x %@", @([NSString stringWithFormat:@"%f", number].floatValue)];
     numberLab.text = numberStr;
+}
+
+- (void)setBoldNumberLabel:(float)number {
+    NSString *numberStr = [NSString stringWithFormat:@"x%@", @([NSString stringWithFormat:@"%f", number].floatValue)];
+    numberLab.font = [UIFont systemFontOfSize:13];
+    numberLab.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
+    
+    UIImageView *writeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(backView.width - 13, _leftImgView.height + _leftImgView.y - 20 + 1, 11, 11)];
+    writeImgView.image = [UIImage imageNamed:@"map_div"];
+    
+    numberLab.frame = CGRectMake(writeImgView.x - 50 - 2, _leftImgView.height + _leftImgView.y - 20, 50, 13);
+    numberLab.text = numberStr;
+    [backView addSubview:writeImgView];
+    
 }
 
 - (void)setPriceLabel:(float)price {
