@@ -95,7 +95,7 @@
 //        if (success) {
 //            TCLog(@"上传成功！");
 //        } else {
-//            TCLog(@"上传失败！%@", error);
+//            TCLog(@"上传失败！%@", error.localizedDescription);
 //        }
 //    }];
     

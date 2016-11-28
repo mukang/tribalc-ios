@@ -911,42 +911,32 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 #pragma mark - 上传图片资源
 
-//- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, NSError *))resultBlock {
-//    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-//    [self ossAuthorizeImageData:imageData result:^(TCOSSParams *params, NSError *error) {
-//        if (error) {
-//            if (resultBlock) {
-//                TC_CALL_ASYNC_MQ(resultBlock(NO, error));
-//            }
-//        } else {
-//            NSString *apiName = params.url;
-//            TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-//            request.imageData = imageData;
-//            [[TCClient client] upload:request progress:nil finish:^(TCClientResponse *response) {
-//                if (response.error) {
-//                    if (resultBlock) {
-//                        TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
-//                        }
-//                    } else {
-//                        if (resultBlock) {
-//                            TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
-//                        }
-//                    }
-//            }];
-////            [[TCOSSClient client] ossUploadData:imageData params:params progress:nil result:^(BOOL success, NSError *error) {
-////                if (error) {
-////                    if (resultBlock) {
-////                        TC_CALL_ASYNC_MQ(resultBlock(NO, error));
-////                    }
-////                } else {
-////                    if (resultBlock) {
-////                        TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
-////                    }
-////                }
-////            }];
-//        }
-//    }];
-//}
+- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, NSError *))resultBlock {
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+    [self authorizeImageData:imageData result:^(TCUploadInfo *uploadInfo, NSError *error) {
+        if (error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(NO, error));
+            }
+        } else {
+            NSString *uploadURLString = uploadInfo.url;
+            TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut uploadURLString:uploadURLString];
+            [request setImageData:imageData];
+            [[TCClient client] upload:request progress:progress finish:^(TCClientResponse *response) {
+                if (response.statusCode == 200) {
+                    if (resultBlock) {
+                        TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                    }
+                } else {
+                    if (resultBlock) {
+                        TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                    }
+                }
+            }];
+        }
+    }];
+}
+
 
 
 
