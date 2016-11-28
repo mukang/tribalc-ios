@@ -880,12 +880,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
         if (response.error) {
             if (resultBlock) {
-                resultBlock(nil, response.error);
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
             }
         } else {
             TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:response.data];
             if (resultBlock) {
-                resultBlock(goodDetail, nil);
+                TC_CALL_ASYNC_MQ(resultBlock(goodDetail, nil));
             }
         }
     }];
@@ -897,12 +897,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
         if (response.error) {
             if (resultBlock) {
-                resultBlock(nil, response.error);
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
             }
         } else {
             TCGoodStandards *goodStandard = [[TCGoodStandards alloc] initWithObjectDictionary:response.data];
             if (resultBlock) {
-                resultBlock(goodStandard, nil);
+                TC_CALL_ASYNC_MQ(resultBlock(goodStandard, nil));
             }
         }
     }];

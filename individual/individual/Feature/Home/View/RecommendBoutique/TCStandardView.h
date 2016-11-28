@@ -35,5 +35,6 @@
 - (void)setSelectedPrimaryStandardWithText:(NSString *)text;
 - (void)setSelectedSeconedStandardWithText:(NSString *)text;
 
-
+- (void)setPrimaryViewWithStandard:(TCGoodStandards *)standard AndTitle:(NSString *)title;
+- (void)setSeconedViewWithStandard:(TCGoodStandards *)standard AndTitle:(NSString *)title;
 @end

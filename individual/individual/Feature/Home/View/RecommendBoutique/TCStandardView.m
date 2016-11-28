@@ -16,6 +16,9 @@
     
     UILabel *priceLab;
     UILabel *inventoryLab;
+ 
+    UIView *goodStyleButtonView;
+    UIView *goodSizeButtonView;
 }
 
 
@@ -113,17 +116,56 @@
 
 - (void)setStandardSelectViewWithStandard:(TCGoodStandards *)standard AndPrimaryAction:(SEL)primaryAction AndSeconedAction:(SEL)seconedAction AndTarget:(id)target {
     if (standard.descriptions != NULL) {
-        UIView *primaryView = [self createGoodStyleSelectViewWithFrame:CGRectMake(0, 0, self.width, 96) AndInfo:standard.descriptions[@"primary"] AndStyleAction:primaryAction AndTarget:target];
+        UIView *primaryView = [self createGoodStyleSelectViewWithFrame:CGRectMake(0, 0, self.width, 96) AndStandard:standard AndStyleAction:primaryAction AndTarget:target];
         if (standard.descriptions[@"secondary"] != NULL) {
-            UIView *seconedView = [self createGoodSizeSelectViewWithFrame:CGRectMake(0, primaryView.y + primaryView.height, self.width, 96) AndInfo:standard.descriptions[@"secondary"] AndAction:seconedAction AndTarget:target];
+            UIView *seconedView = [self createGoodSizeSelectViewWithFrame:CGRectMake(0, primaryView.y + primaryView.height, self.width, 96) AndStandard:standard AndAction:seconedAction AndTarget:target];
             [standardSelectView addSubview:seconedView];
         }
         [standardSelectView addSubview:primaryView];
     }
 
-    
+
 }
 
+
+- (void)setPrimaryViewWithStandard:(TCGoodStandards *)standard AndTitle:(NSString *)title {
+    for (int i = 0; i < goodStyleButtonView.subviews.count; i++) {
+        if ([goodStyleButtonView.subviews[i] isKindOfClass:[UIButton class]]) {
+            UIButton *button = goodStyleButtonView.subviews[i];
+            NSString *key = [NSString stringWithFormat:@"%@^%@", button.titleLabel.text, title];
+            button.tag = i;
+            if ([button.titleLabel.text isEqualToString:_selectedPrimaryLab.text]) {
+                [button setTitleColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] forState:UIControlStateNormal];
+            } else {
+                [button setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
+            }
+            if (standard.goodsIndexes[key] == NULL) {
+                [button setTitleColor:[UIColor colorWithRed:195/225.0 green:195/225.0 blue:195/225.0 alpha:1] forState:UIControlStateNormal];
+                button.tag = -1;
+            }
+        }
+    }
+}
+
+
+- (void)setSeconedViewWithStandard:(TCGoodStandards *)standard AndTitle:(NSString *)title {
+    for (int i = 0; i < goodSizeButtonView.subviews.count; i++) {
+        if ([goodSizeButtonView.subviews[i] isKindOfClass:[UIButton class]]) {
+            UIButton *button = goodSizeButtonView.subviews[i];
+            NSString *key = [NSString stringWithFormat:@"%@^%@", title, button.titleLabel.text];
+            button.tag = i;
+            if ([button.titleLabel.text isEqualToString:_selectedSecondLab.text]) {
+                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            } else {
+                [button setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
+            }
+            if (standard.goodsIndexes[key] == NULL) {
+                [button setTitleColor:[UIColor colorWithRed:195/225.0 green:195/225.0 blue:195/225.0 alpha:1] forState:UIControlStateNormal];
+                button.tag = -1;
+            }
+        }
+    }
+}
 
 - (UIView *)createBlankViewWithFrame:(CGRect)frame {
     UIView *blankView = [[UIView alloc] initWithFrame:frame];
@@ -146,7 +188,7 @@
 
 - (void)startSelectStandard {
     self.hidden = NO;
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.15 animations:^{
         [standardView setY:standardViewPointY];
     } completion:nil];
 }
@@ -194,18 +236,6 @@
     _selectedSecondLab = [TCComponent createLabelWithText:@"" AndFontSize:14 AndTextColor:_selectedPrimaryLab.textColor];
     [_selectedSecondLab setOrigin:CGPointMake(_selectedPrimaryLab.x + _selectedPrimaryLab.width + 9, _selectedPrimaryLab.y)];
     [view addSubview:_selectedSecondLab];
-//    
-//    if (good.snapshot == TRUE) {
-//        if (![standardSnapshot containsString:@"^"]) {
-//            _selectedGoodStyleLab.text = good.standardSnapshot;
-//            
-//        } else {
-//            NSArray *selectArr = [standardSnapshot componentsSeparatedByString:@"^"];
-//            _selectedGoodStyleLab.text = selectArr[0];
-//            _selectedGoodSizeLab.text = selectArr[1];
-//        }
-//    }
-    
     
 }
 
@@ -216,7 +246,9 @@
     return button;
 }
 
-- (UIView *)createGoodStyleSelectViewWithFrame:(CGRect)frame AndInfo:(NSDictionary *)infoDic AndStyleAction:(SEL)action AndTarget:(id)target{
+- (UIView *)createGoodStyleSelectViewWithFrame:(CGRect)frame AndStandard:(TCGoodStandards *)goodStandard AndStyleAction:(SEL)action AndTarget:(id)target{
+    NSDictionary *infoDic = goodStandard.descriptions[@"primary"];
+    
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
@@ -227,7 +259,7 @@
     titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     [view addSubview:titleLab];
     
-    UIView *goodStyleButtonView =[self createGoodStyleButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 20, titleLab.width, 22.5) AndData:infoDic[@"types"] AndAction:(SEL)action AndTarget:target];
+    goodStyleButtonView =[self createGoodStyleButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 20, titleLab.width, 22.5) AndStandard:goodStandard AndAction:(SEL)action AndTarget:target];
 
     [view addSubview:goodStyleButtonView];
 
@@ -236,10 +268,11 @@
     return view;
 }
 
-- (UIView *)createGoodSizeSelectViewWithFrame:(CGRect)frame AndInfo:(NSDictionary *)infoDic AndAction:(SEL)action AndTarget:(id)target{
+- (UIView *)createGoodSizeSelectViewWithFrame:(CGRect)frame AndStandard:(TCGoodStandards *)goodStandard AndAction:(SEL)action AndTarget:(id)target{
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
+    NSDictionary *infoDic = goodStandard.descriptions[@"secondary"];
     
     UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, frame.size.width - 40, 0.5)];
     [view addSubview:lineView];
@@ -248,7 +281,7 @@
     titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     [view addSubview:titleLab];
     
-    UIView *goodSizeButtonView = [self createGoodSizeButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 20, titleLab.width, 30) AndData:infoDic[@"types"] AndTarget:target AndAction:action];
+    goodSizeButtonView = [self createGoodSizeButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 20, titleLab.width, 30) AndStandard:goodStandard AndTarget:target AndAction:action];
     
     [view addSubview:goodSizeButtonView];
     
@@ -259,9 +292,10 @@
     return view;
 }
 
-- (UIView *)createGoodStyleButtonViewWithFrame:(CGRect)frame AndData:(NSArray *)infoArr AndAction:(SEL)action AndTarget:(id)target{
+- (UIView *)createGoodStyleButtonViewWithFrame:(CGRect)frame AndStandard:(TCGoodStandards *)standard AndAction:(SEL)action AndTarget:(id)target{
     UIView *buttonView = [[UIView alloc] initWithFrame:frame];
     
+    NSArray *infoArr = standard.descriptions[@"primary"][@"types"];
     int width = 0;
     int height = 0;
     for (int i = 0; i < infoArr.count; i++) {
@@ -276,15 +310,26 @@
         button.tag = i;
         width += button.width + 13;
         [buttonView addSubview:button];
+        [self initEmptyButtonWithStandard:standard AndButton:button AndPrimary:infoArr[i] AndSecond:_selectedSecondLab.text];
         
         if ([_selectedPrimaryLab.text isEqualToString:infoArr[i]]) {
             [self setSelectedButton:button];
         }
         
+        
     }
     
     return buttonView;
 
+}
+
+- (void)initEmptyButtonWithStandard:(TCGoodStandards *)goodStandard AndButton:(UIButton *)btn AndPrimary:(NSString *)primary AndSecond:(NSString *)second{
+    if (![_selectedSecondLab.text isEqualToString:@""] || ![_selectedPrimaryLab.text isEqualToString:@""]) {
+        NSString *key = [NSString stringWithFormat:@"%@^%@", primary, second];
+        if (goodStandard.goodsIndexes[key] == NULL) {
+                [btn setTitleColor:[UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:195/255.0] forState:UIControlStateNormal];
+        }
+    }
 }
 
 - (UILabel *)getInventoryLab {
@@ -297,8 +342,10 @@
 }
 
 
-- (UIView *)createGoodSizeButtonViewWithFrame:(CGRect)frame AndData:(NSArray *)infoArr AndTarget:(id)target AndAction:(SEL)action{
+- (UIView *)createGoodSizeButtonViewWithFrame:(CGRect)frame AndStandard:(TCGoodStandards *)standard AndTarget:(id)target AndAction:(SEL)action{
     UIView *buttonView = [[UIView alloc] initWithFrame:frame];
+    NSArray *infoArr = standard.descriptions[@"secondary"][@"types"];
+    
     int width = 0;
     int height = 0;
     for (int i = 0; i < infoArr.count; i++) {
@@ -313,6 +360,7 @@
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         button.tag = i;
         width += button.width + 11;
+        [self initEmptyButtonWithStandard:standard AndButton:button AndPrimary:_selectedPrimaryLab.text AndSecond:infoArr[i]];
         if ([_selectedSecondLab.text isEqualToString:infoArr[i]]) {
             button.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

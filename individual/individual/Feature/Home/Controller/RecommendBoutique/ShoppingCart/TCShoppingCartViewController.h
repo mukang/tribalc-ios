@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCComponent.h"
+#import "TCGetNavigationItem.h"
 #import "TCShoppingCartTableViewCell.h"
 
 

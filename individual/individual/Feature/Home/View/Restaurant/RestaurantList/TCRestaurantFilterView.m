@@ -27,6 +27,10 @@
         
         _deliverBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(firstLine.x + firstLine.width, 0, secondLine.x - firstLine.x + firstLine.width, frame.size.height) AndImgName:@"res_deliver" AndText:@"有包间"];
         [self addSubview:_deliverBtn];
+        
+//        UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, self.height, self.width, [UIScreen mainScreen].bounds.size.height - self.height)];
+//        backView.backgroundColor = [UIColor redColor];
+//        [self addSubview:backView];
     }
     return self;
 }
