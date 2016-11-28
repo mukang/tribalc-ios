@@ -19,6 +19,7 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
 
 @property (nonatomic, strong) NSMutableDictionary *requestParams;
 @property (nonatomic, strong) NSMutableArray *requestFiles;
+@property (strong, nonatomic) NSData *requestImageData;
 
 @end
 
@@ -48,6 +49,14 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
     return [self.requestParams copy];
 }
 
+- (void)setImageData:(NSData *)imageData {
+    _requestImageData = imageData;
+}
+
+- (NSData *)imageData {
+    return _requestImageData;
+}
+
 #pragma mark - Public Methods
 
 + (instancetype)requestWithApi:(NSString *)apiName {
@@ -59,6 +68,11 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
     return [[self alloc] initWithHTTPMethod:HTTPMethod apiName:apiName];
 }
 
++ (instancetype)requestWithHTTPMethod:(NSString *)HTTPMethod uploadURLString:(NSString *)URLString {
+    if (!HTTPMethod) HTTPMethod = TCClientHTTPMethodPut;
+    return [[self alloc] initWithHTTPMethod:HTTPMethod uploadURLString:URLString];
+}
+
 #pragma mark - Private Methods
 
 - (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod apiName:(NSString *)apiName {
@@ -68,6 +82,17 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
     if (self = [super init]) {
         _HTTPMethod = HTTPMethod;
         _apiName = apiName;
+        _requestIdentifier = [[self class] createIdentifier];
+    }
+    return self;
+}
+
+- (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod uploadURLString:(NSString *)URLString {
+    NSParameterAssert(HTTPMethod);
+    NSParameterAssert(URLString);
+    if (self = [super init]) {
+        _HTTPMethod = HTTPMethod;
+        _uploadURLString = URLString;
         _requestIdentifier = [[self class] createIdentifier];
     }
     return self;

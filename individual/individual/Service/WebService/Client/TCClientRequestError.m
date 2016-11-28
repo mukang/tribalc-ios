@@ -76,11 +76,11 @@ NSString *const TCClientRequestOriginErrorDescriptionKey = @"TCClientRequestOrig
 }
 
 - (NSString *)localizedDescription {
-    NSDictionary *errorDefinitions = [[self class] errorDefinitions];
-    if ([errorDefinitions objectForKey:@(self.code)]) {
-        return [errorDefinitions objectForKey:@(self.code)];
-    } else {
+    if ([self.userInfo objectForKey:TCClientRequestOriginErrorDescriptionKey]) {
         return [self.userInfo objectForKey:TCClientRequestOriginErrorDescriptionKey];
+    } else {
+        NSDictionary *errorDefinitions = [[self class] errorDefinitions];
+        return [errorDefinitions objectForKey:@(self.code)];
     }
 }
 

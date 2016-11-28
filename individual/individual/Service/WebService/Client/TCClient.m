@@ -38,7 +38,6 @@
         _sessionManager.completionQueue = dispatch_queue_create("com.buluo-gs.queue", NULL);
         _requestSerializer = [AFJSONRequestSerializer serializer];
         [_requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [_requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         _responseSerializer = [AFHTTPResponseSerializer serializer];
         _sessionManager.requestSerializer = _requestSerializer;
         _sessionManager.responseSerializer = _responseSerializer;
@@ -59,6 +58,8 @@
     NSString *URLString = clientRequest.apiName;
     NSDictionary *parameters = clientRequest.params;
     
+    [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
     __block NSError *serializationError = nil;
     NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[self.sessionManager.baseURL absoluteString] stringByAppendingString:URLString] parameters:parameters error:&serializationError];
     if (serializationError) {
@@ -74,7 +75,7 @@
     __block NSURLSessionDataTask *dataTask = nil;
     dataTask = [self.sessionManager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         id dataInResponse = nil;
-        NSInteger codeInResponse = 0;
+        NSInteger codeInResponse = [(NSHTTPURLResponse *)response statusCode];
         if (!error) {
             serializationError = nil;
             NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:responseObject
@@ -98,9 +99,9 @@
         } else {
             if ([error.domain isEqualToString:NSURLErrorDomain]) {
                 TCClientRequestErrorCode errorCode = [TCClientRequestError codeFromNSURLErrorCode:error.code];
-                error = [TCClientRequestError errorWithCode:errorCode andDescription:error.localizedDescription];
+                error = [TCClientRequestError errorWithCode:errorCode andDescription:nil];
             } else {
-                error = [TCClientRequestError errorWithCode:TCClientRequestErrorNetworkError andDescription:error.localizedDescription];
+                error = [TCClientRequestError errorWithCode:TCClientRequestErrorNetworkError andDescription:nil];
             }
         }
         TCClientResponse *clientResponse = [TCClientResponse responseWithStatusCode:codeInResponse data:dataInResponse orError:error];
@@ -116,7 +117,7 @@
         finish:(void (^)(TCClientResponse *))responseBlock {
     
     NSString *method = clientRequest.HTTPMethod;
-    NSString *URLString = clientRequest.apiName;
+    NSString *URLString = clientRequest.uploadURLString;
     NSData *imageData = clientRequest.imageData;
     
     [self.requestSerializer setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
@@ -137,59 +138,23 @@
     [request setHTTPBodyStream:inputStream];
     
     __block NSURLSessionDataTask *dataTask = nil;
-    dataTask = [self.sessionManager uploadTaskWithStreamedRequest:request progress:progress completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-        id dataInResponse = nil;
-        NSInteger codeInResponse = 0;
-        if (!error) {
-            serializationError = nil;
-            NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:responseObject
-                                                                         options:NSJSONReadingMutableLeaves
-                                                                           error:&serializationError];
-            if (serializationError) {
-                NSString *dataString = [[NSString alloc] initWithData:responseObject
-                                                             encoding:NSUTF8StringEncoding];
-                NSLog(@"服务器响应解析出错，响应文本为: %@, 状态码为: %zd", dataString, [(NSHTTPURLResponse *)response statusCode]);
-                error = [TCClientRequestError errorWithCode:TCClientRequestErrorServerResponseNotJSON
-                                             andDescription:serializationError.localizedDescription];
-            } else {
-                NSNumber *code = responseData[@"code"];
-                codeInResponse = code.integerValue;
-                if (codeInResponse >= 400) {
-                    error = [TCClientRequestError errorWithCode:codeInResponse andDescription:responseData[@"message"]];
-                } else {
-                    dataInResponse = responseData[@"data"];
-                }
-            }
-        } else {
+    dataTask = [self.sessionManager uploadTaskWithStreamedRequest:request progress:progress completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        NSInteger codeInResponse = [(NSHTTPURLResponse *)response statusCode];
+        if (error) {
             if ([error.domain isEqualToString:NSURLErrorDomain]) {
                 TCClientRequestErrorCode errorCode = [TCClientRequestError codeFromNSURLErrorCode:error.code];
-                error = [TCClientRequestError errorWithCode:errorCode andDescription:error.localizedDescription];
+                error = [TCClientRequestError errorWithCode:errorCode andDescription:nil];
             } else {
-                error = [TCClientRequestError errorWithCode:TCClientRequestErrorNetworkError andDescription:error.localizedDescription];
+                error = [TCClientRequestError errorWithCode:TCClientRequestErrorNetworkError andDescription:nil];
             }
         }
-        TCClientResponse *clientResponse = [TCClientResponse responseWithStatusCode:codeInResponse data:dataInResponse orError:error];
+        TCClientResponse *clientResponse = [TCClientResponse responseWithStatusCode:codeInResponse data:nil orError:error];
         if (responseBlock) {
             responseBlock(clientResponse);
         }
     }];
-    
     [dataTask resume];
-    
-//    [self.sessionManager setTaskNeedNewBodyStreamBlock:^NSInputStream * _Nonnull(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task) {
-//        return [[NSInputStream alloc] initWithData:imageData];
-//    }];
 }
-
-
-
-
-
-
-
-
-
-
 
 
 @end
