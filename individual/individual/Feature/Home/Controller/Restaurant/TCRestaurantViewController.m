@@ -38,11 +38,7 @@
     
     [self initialTableView];
     
-    
-    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, self.view.height - 42)];
-    backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
-    [self.view addSubview:backView];
-    backView.hidden = YES;
+    [self initHiddenBackView];
     
     
     sortView = [[TCRestaurantSortView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, 169 + 10)];
@@ -54,6 +50,16 @@
     [self.view addSubview:filterView];
 
     
+}
+
+- (void)initHiddenBackView {
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, self.view.height - 42)];
+    backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchHiddenSelectView)];
+    [backView addGestureRecognizer:recognizer];
+    [self.view addSubview:backView];
+    backView.hidden = YES;
+
 }
 
 - (void)initialNavigationBar {
@@ -254,6 +260,20 @@
     
     
     
+}
+
+- (void)touchHiddenSelectView {
+    filterView.hidden = YES;
+    filterButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
+    filterButton.imgeView.image = [UIImage imageNamed:@"res_select_down"];
+    [filterButton.imgeView setSize:CGSizeMake(13, 6)];
+    
+    
+    sortView.hidden = YES;
+    sortButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
+    sortButton.imgeView.image = [UIImage imageNamed:@"res_select_down"];
+    
+    backView.hidden = YES;
 }
 
 
