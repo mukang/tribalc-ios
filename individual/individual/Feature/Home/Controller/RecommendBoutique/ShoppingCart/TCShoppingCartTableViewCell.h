@@ -7,25 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCComponent.h"
 
 @interface TCShoppingCartTableViewCell : UITableViewCell {
     
 }
 
-@property UIButton *select;
-@property UIImageView *imgView;
-@property UILabel *typeAndName;
-@property UILabel *shopName;
-@property UILabel *size;
-@property UILabel *count;
-@property UILabel *price;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
-@property UILabel *allSize;
-@property UIButton *subBtn;
-@property UIButton *addBtn;
+@property UIButton *selectedBtn;
+@property UIImageView *leftImgView;
+@property UILabel *titleLab;
 
-
-- (instancetype)initWithCellHeight:(float)cellHeihgt;
-
+- (void)setStandard:(NSDictionary *)standard;
+- (void)setCount:(NSInteger)count;
+- (void)setPrice:(CGFloat)price;
 
 @end

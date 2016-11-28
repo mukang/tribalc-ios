@@ -12,13 +12,13 @@
 
 - (instancetype)initWithOrigin:(CGPoint)point WithName:(NSString *)name AndPhone:(NSString *)phone AndAddress:(NSString *)address{
     CGRect screen = [UIScreen mainScreen].bounds;
-//    UIImage *backImg = [UIImage imageNamed:@""];
+    UIImage *backImg = [UIImage imageNamed:@"order_address_back"];
     
     self = [super initWithFrame:CGRectMake(point.x, point.y, screen.size.width, 107)];
     self.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     if (self) {
         UIImageView *backImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 7.5, screen.size.width, 96)];
-        backImgView.backgroundColor = [UIColor whiteColor];
+        backImgView.image = backImg;
         [self addSubview:backImgView];
         
         UILabel *receiverLab = [self getReceiverLabelWithFrame:CGRectMake(32, 20, 152, 14) AndName:name];
@@ -53,7 +53,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     NSString *nameStr = [NSString stringWithFormat:@"收货人 : %@", name];
     label.text = nameStr;
-    label.font = [UIFont systemFontOfSize:14];
+    label.font = [UIFont fontWithName:BOLD_FONT size:14];
     
     return label;
 }
@@ -61,8 +61,8 @@
 - (UILabel *)getPhoneLabWithFrame:(CGRect)frame AndPhoneStr:(NSString *)phone {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.text = phone;
-    label.font = [UIFont systemFontOfSize:14];
     label.textAlignment = NSTextAlignmentRight;
+    label.font = [UIFont fontWithName:BOLD_FONT size:14];
     
     return label;
 }

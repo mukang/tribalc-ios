@@ -98,7 +98,7 @@
     numberLab.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
     
     UIImageView *writeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(backView.width - 13, _leftImgView.height + _leftImgView.y - 20 + 1, 11, 11)];
-    writeImgView.image = [UIImage imageNamed:@"map_div"];
+    writeImgView.image = [UIImage imageNamed:@"order_write"];
     
     numberLab.frame = CGRectMake(writeImgView.x - 50 - 2, _leftImgView.height + _leftImgView.y - 20, 50, 13);
     numberLab.text = numberStr;
