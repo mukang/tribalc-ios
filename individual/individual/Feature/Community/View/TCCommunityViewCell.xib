@@ -18,9 +18,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="272"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kJG-7A-8Uv">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kJG-7A-8Uv">
                         <rect key="frame" x="20" y="10" width="280" height="188"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="187.5" id="kMb-3h-wwC"/>
                         </constraints>
@@ -51,7 +50,7 @@
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <state key="normal" title="010-0888 2888" image="community_phone_icon">
+                        <state key="normal" image="community_phone_icon">
                             <color key="titleColor" red="0.31764705879999999" green="0.78039215689999997" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>

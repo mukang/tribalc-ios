@@ -295,4 +295,13 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+#pragma mark - 社区资源
+
+/**
+ 获取社区列表
+
+ @param resultBlock 结果回调，communityList为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchCommunityList:(void (^)(NSArray *communityList, NSError *error))resultBlock;
+
 @end

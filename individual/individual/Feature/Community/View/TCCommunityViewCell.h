@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TCCommunity;
+@class TCCommunityViewCell;
+
+@protocol TCCommunityViewCellDelegate <NSObject>
+
+@optional
+- (void)communityViewCell:(TCCommunityViewCell *)cell didClickPhoneButtonWithCommunity:(TCCommunity *)community;
+
+@end
 
 @interface TCCommunityViewCell : UICollectionViewCell
+
+@property (strong, nonatomic) TCCommunity *community;
+
+@property (weak, nonatomic) id<TCCommunityViewCellDelegate> delegate;
 
 @end

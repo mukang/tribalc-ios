@@ -7,6 +7,9 @@
 //
 
 #import "TCCommunityViewCell.h"
+#import "TCCommunity.h"
+#import "TCClientConfig.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TCCommunityViewCell ()
 
@@ -14,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UIButton *phoneButton;
-
 
 @end
 
@@ -28,8 +30,30 @@
     self.imageView.layer.masksToBounds = YES;
 }
 
-- (IBAction)handleClickPhoneButton:(UIButton *)sender {
+- (void)setCommunity:(TCCommunity *)community {
+    _community = community;
     
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"" TCCLIENT_RESOURCES_BASE_URL "%@", community.mainPicture]];
+    [self.imageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
+    
+    self.nameLabel.text = community.name;
+    
+    self.addressLabel.text = community.address;
+    
+    NSString *phone = community.phone ?: @"";
+    NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:phone
+                                                                 attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:11],
+                                                                              NSForegroundColorAttributeName: TCRGBColor(81, 199, 209),
+                                                                              NSUnderlineColorAttributeName: TCRGBColor(81, 199, 209),
+                                                                              NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)
+                                                                              }];
+    [self.phoneButton setAttributedTitle:attStr forState:UIControlStateNormal];
+}
+
+- (IBAction)handleClickPhoneButton:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(communityViewCell:didClickPhoneButtonWithCommunity:)]) {
+        [self.delegate communityViewCell:self didClickPhoneButtonWithCommunity:self.community];
+    }
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
