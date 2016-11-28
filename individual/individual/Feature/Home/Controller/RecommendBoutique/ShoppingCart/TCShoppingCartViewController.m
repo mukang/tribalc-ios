@@ -20,6 +20,7 @@
 
 @implementation TCShoppingCartViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -27,56 +28,37 @@
     // Do any additional setup after loading the view.
     cellHeight = 150.0;
     
-    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 1)];
-    topLine.backgroundColor = [UIColor colorWithRed:173/255.0 green:173/255.0 blue:173/255.0 alpha:1];
-    [self.view addSubview:topLine];
-    
     [self initialNavigationBar];
-    [self initialShoppingCartInfoData];
+    [self forgeShoppingCartInfoData];
     [self initialTableView];
-    
-    
-    
     
 }
 
 - (void)initialNavigationBar {
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
-    [self initialRightBarButton];
+    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"购物车"];
     
+    UIButton *backBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    [backBtn addTarget:self action:@selector(touchBackBtn:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = backItem;
+    
+    UIButton *editBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 18, 40, 13) AndImageName:@""];
+    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    editBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    editBtn.titleLabel.textColor = [UIColor whiteColor];
+    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithCustomView:editBtn];
+    self.navigationItem.rightBarButtonItem = editItem;
 }
 
-- (void)initialRightBarButton {
-    navRightBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 100, 7, 80, 26)];
-    [navRightBtn setTitle:@"编辑" forState:UIControlStateNormal];
-    navRightBtn.titleLabel.font = [UIFont systemFontOfSize:17];
-    [navRightBtn setTitleColor:[UIColor colorWithRed:168/255.0 green:168/255.0 blue:168/255.0 alpha:1] forState:UIControlStateNormal];
-    [navRightBtn addTarget:self action:@selector(touchRightBar:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:navRightBtn];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
-
-}
 
 - (void)initialTableView {
-    cartTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 + 1, self.view.frame.size.width, self.view.frame.size.height - 2) style:UITableViewStylePlain];
-    
+    cartTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 98 / 2) style:UITableViewStylePlain];
     cartTableView.delegate = self;
     cartTableView.dataSource = self;
     cartTableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
     [self.view addSubview:cartTableView];
 }
 
--(void)initialShoppingCartInfoData {
-    NSDictionary *info1 = @{ @"name": @"飞行员夹克", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"Zara", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M" };
-    
-    NSDictionary *info2 = @{ @"name": @"印花围巾", @"type": @"男装", @"price": @"1000", @"image":@"", @"shop":@"Nike", @"count": @"5", @"allSize":@[ @"S", @"M",@"XL", @"L" ], @"size": @"XL" };
-    NSDictionary *info3 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M" };
-    NSDictionary *info4 = @{ @"name": @"Jacket", @"type": @"Ladies", @"price": @"399", @"image":@"" , @"shop":@"Zara", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M"};
-    NSDictionary *info5 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M" };
-    NSDictionary *info6 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M" };
-    cartInfoArray = [[NSMutableArray alloc] initWithObjects:info1, info2, info3, info4, info5, info6, nil];
-    
-}
 
 # pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -132,6 +114,11 @@
 }
 
 # pragma mark - click
+
+- (void)touchBackBtn:(UIButton *)button {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)touchRightBar:(id)sender {
     NSString *text = navRightBtn.titleLabel.text;
     if ([text isEqualToString:@"编辑"]) {
@@ -146,6 +133,12 @@
     }
     
     
+}
+
+
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -163,6 +156,30 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)forgeShoppingCartInfoData {
+//    NSDictionary *info1 = @{
+//                            @"store":@"",
+//                            @"content":@[
+//                                          @{
+//                                              
+//                                            }
+//                                        ]
+//                            };
+    
+    
+    NSDictionary *info1 = @{ @"name": @"飞行员夹克", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"Zara", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M" };
+    
+    NSDictionary *info2 = @{ @"name": @"印花围巾", @"type": @"男装", @"price": @"1000", @"image":@"", @"shop":@"Nike", @"count": @"5", @"allSize":@[ @"S", @"M",@"XL", @"L" ], @"size": @"XL" };
+    NSDictionary *info3 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M" };
+    NSDictionary *info4 = @{ @"name": @"Jacket", @"type": @"Ladies", @"price": @"399", @"image":@"" , @"shop":@"Zara", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M"};
+    NSDictionary *info5 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M" };
+    NSDictionary *info6 = @{ @"name": @"印花连衣裙", @"type": @"女装", @"price": @"399", @"image":@"", @"shop":@"美特斯邦威", @"count": @"3", @"allSize":@[ @"S", @"M", @"L" ], @"size": @"M" };
+    cartInfoArray = [[NSMutableArray alloc] initWithObjects:info1, info2, info3, info4, info5, info6, nil];
+    
+}
+
+
 
 /*
 #pragma mark - Navigation

@@ -439,23 +439,37 @@
             [standardView setSelectedPrimaryStandardWithText:styleInfo];
         }
     }
-    
-    if ([standardView.selectedPrimaryLab.text isEqualToString:@""] && [standardView.selectedSecondLab.text isEqualToString:@""]) {
+    else if ([standardView.selectedSecondLab.text isEqualToString:@""]) {
         [self changeStyleButtonWithBtn:btn];
         [standardView setSelectedPrimaryStandardWithText:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
-    } else {
-        NSString *styleInfo = goodStandard.descriptions[@"primary"][@"types"][btn.tag];
-        NSString *standardKey = [NSString stringWithFormat:@"%@^%@", styleInfo, standardView.selectedSecondLab.text];
-        TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
-        if (selectStandardGoodDetail != NULL) {
-            [self changeStyleButtonWithBtn:btn];
-            [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
-            [standardView setSelectedPrimaryStandardWithText:styleInfo];
+        [standardView setSeconedViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
+    }
+    else {
+        if (btn.tag != -1) {
+            NSString *styleInfo = goodStandard.descriptions[@"primary"][@"types"][btn.tag];
+            NSString *standardKey = [NSString stringWithFormat:@"%@^%@", styleInfo, standardView.selectedSecondLab.text];
+            TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
+            if (selectStandardGoodDetail != NULL) {
+                [self changeStyleButtonWithBtn:btn];
+                [standardView setSeconedViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
+                [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
+                [standardView setSelectedPrimaryStandardWithText:styleInfo];
+            }
         }
-
     }
 
 }
+
+- (void)promptOutOfStock {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"无货" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [standardView startSelectStandard];
+    }]];
+    [standardView endSelectStandard];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
+
 
 - (void)reloadDetailViewWithTouchGoodDetail:(TCGoodDetail *)goodDetail {
    
@@ -483,19 +497,23 @@
 
 - (void)touchSizeSelectBtn:(UIButton *)btn {
     
-    if ([standardView.selectedPrimaryLab.text isEqualToString:@""] && [standardView.selectedSecondLab.text isEqualToString:@""]) {
+    if ([standardView.selectedSecondLab.text isEqualToString:@""]) {
         [self changeSizeButtonWithBtn:btn];
         [standardView setSelectedSeconedStandardWithText:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
+        [standardView setPrimaryViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
     } else {
-        NSString *sizeInfo = goodStandard.descriptions[@"secondary"][@"types"][btn.tag];
-        NSString *standardKey = [NSString stringWithFormat:@"%@^%@", standardView.selectedPrimaryLab.text, sizeInfo];
-        TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
-        if (selectStandardGoodDetail != NULL) {
-            [self changeSizeButtonWithBtn:btn];
-            [standardView setSelectedSeconedStandardWithText:sizeInfo];
-            [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
+        if (btn.tag != -1) {
+            NSString *sizeInfo = goodStandard.descriptions[@"secondary"][@"types"][btn.tag];
+            NSString *standardKey = [NSString stringWithFormat:@"%@^%@", standardView.selectedPrimaryLab.text, sizeInfo];
+            TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
+            if (selectStandardGoodDetail != NULL) {
+                [self changeSizeButtonWithBtn:btn];
+                [standardView setPrimaryViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
+                [standardView setSelectedSeconedStandardWithText:sizeInfo];
+                [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
+            }
         }
-
+       
     }
 }
 
@@ -539,6 +557,7 @@
     [standardView startSelectStandard];
 }
 
+
 - (void)touchAddShopCartBtn:(UIButton *)btn {
   
 }
@@ -565,8 +584,10 @@
     for (int i = 0; i < subviews.count; i++) {
         if (i != tag && [subviews[i] isKindOfClass:[UIButton class]]) {
             UIButton *btn = subviews[i];
-            btn.layer.borderColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1].CGColor;
-            [btn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
+            if (btn.tag != -1) {
+                btn.layer.borderColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1].CGColor;
+                [btn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
+            }
         }
     }
 
@@ -582,8 +603,10 @@
     for (int i = 0; i < subviews.count; i++) {
         if (i != tag && [subviews[i] isKindOfClass:[UIButton class]]) {
             UIButton *btn = subviews[i];
-            [btn setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
-            btn.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
+            if (btn.tag != -1) {
+                [btn setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
+                btn.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
+            }
         }
     }
     
