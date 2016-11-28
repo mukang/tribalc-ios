@@ -174,10 +174,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSLog(@"%@", myOrderInfoArr);
     TCUserOrderDetailViewController *orderDetailViewController = [[TCUserOrderDetailViewController alloc] init];
     [self.navigationController pushViewController:orderDetailViewController animated:YES];
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

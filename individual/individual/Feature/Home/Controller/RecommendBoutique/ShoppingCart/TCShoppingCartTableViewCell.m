@@ -9,138 +9,87 @@
 #import "TCShoppingCartTableViewCell.h"
 
 @implementation TCShoppingCartTableViewCell {
-    UILabel *quantifier;
+    UILabel *countLab;
+    UILabel *priceLab;
+    UILabel *primaryLab;
+    UIButton *secondaryStandardBtn;
 }
 
-
-- (instancetype)initWithCellHeight:(float)cellHeihgt {
-    self = [super init];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
+        float height = 139;
+        float width = [UIScreen mainScreen].bounds.size.width;
         
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
+        [self.contentView addSubview:_selectedBtn];
         
-        if (cellHeihgt == 150.0) {
-            [self initialCompleteView];
-        } else {
-            [self initialCompleteView];
-            _typeAndName.origin = CGPointMake(_typeAndName.origin.x, _typeAndName.origin.y - 15);
-            _shopName.origin = CGPointMake(_typeAndName.origin.x, _shopName.origin.y - 15);
-            [self initialEditCount];
-            quantifier.hidden = YES;
-            _size.hidden = YES;
-            _price.origin = CGPointMake(_price.origin.x, 210 - 50);
-        }
+        _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + 20, height / 2 - 94 / 2, 94, 94)];
+        [self.contentView addSubview:_leftImgView];
         
+        _titleLab = [TCComponent createLabelWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width + 13, _leftImgView.y + 9, width - _leftImgView.x - _leftImgView.width - 13, 14) AndFontSize:14 AndTitle:@""];
+        _titleLab.font = [UIFont fontWithName:BOLD_FONT size:14];
+        [self.contentView addSubview:_titleLab];
         
+        [self initSeconedStandardButton];
+        
+        countLab = [TCComponent createLabelWithFrame:CGRectMake(secondaryStandardBtn.x + secondaryStandardBtn.width + 10, secondaryStandardBtn.y + secondaryStandardBtn.height / 2 - 12 / 2, 0, 12) AndFontSize:12 AndTitle:@"" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+        countLab.font = [UIFont fontWithName:BOLD_FONT size:12];
+        [self.contentView addSubview:countLab];
+        
+        primaryLab = [TCComponent createLabelWithFrame:CGRectMake(_titleLab.x, secondaryStandardBtn.y - 15.5 - 12, _titleLab.width, 12) AndFontSize:12 AndTitle:@"" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+        [self.contentView addSubview:primaryLab];
+        
+        priceLab = [TCComponent createLabelWithFrame:CGRectMake(0, height - 28 - 14, 0, 14) AndFontSize:14 AndTitle:@"" AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
+        priceLab.font = [UIFont fontWithName:BOLD_FONT size:14];
+        [self.contentView addSubview:priceLab];
+        
+        UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, width - 40, 0.5)];
+        [self.contentView addSubview:topLineView];
     }
     
     return self;
 }
 
-- (void)initialCompleteView {
-    float cellHeight = 150.0;
-    _select = [[UIButton alloc] initWithFrame:CGRectMake(10, cellHeight / 2 - 9, 20, 20)];
-    _select.layer.cornerRadius = 10;
-    _select.layer.borderWidth = 1;
-    _select.layer.borderColor = [UIColor colorWithRed:172/255.0 green:172/255.0 blue:172/255.0 alpha:1].CGColor;
-    [_select addTarget:self action:@selector(touchSelect:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:_select];
-    
-    _imgView = [[UIImageView alloc] initWithFrame:CGRectMake(_select.frame.origin.x + _select.frame.size.width + 10, 15, cellHeight - 33, cellHeight - 33)];
-    [self.contentView addSubview:_imgView];
-    
-    [self initialTypeAndNameAndShopLabel];
-    
-    [self initialSizeLabel];
-    
-    [self initialQuantifier];
-    
-    _count = [self initialLabWithFrame:CGRectMake(quantifier.origin.x + quantifier.size.width + 5, _size.frame.origin.y, 60, _size.size.height)];
-    _count.font = [UIFont systemFontOfSize:16];
-    [self.contentView addSubview:_count];
-    
-    [self initialPriceLabel];
+- (void)initSeconedStandardButton {
+    UIButton *seconedStandardImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(_titleLab.x, 139 - 24.5 - 23, 49.5, 23) AndImageName:@"car_second_button"];
+    secondaryStandardBtn = [TCComponent createButtonWithFrame:seconedStandardImgBtn.frame AndTitle:@"" AndFontSize:14 AndBackColor:[UIColor clearColor] AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
+    [self.contentView addSubview:seconedStandardImgBtn];
+    [self.contentView addSubview:secondaryStandardBtn];
 
 }
 
-- (void)initialEditCount {
-    _subBtn = [[UIButton alloc] initWithFrame:CGRectMake(_shopName.origin.x, _shopName.origin.y + _shopName.size.height + 15, 26, 18)];
-    [_subBtn setTitle:@"-" forState:UIControlStateNormal];
-    [_subBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _subBtn.backgroundColor = [UIColor colorWithRed:228/255.0 green:225/255.0 blue:229/255.0 alpha:1];
-    [self.contentView addSubview:_subBtn];
-   
-    _count.frame = CGRectMake(_subBtn.origin.x + _subBtn.size.width, _subBtn.origin.y, _subBtn.size.width, _subBtn.size.height);
-    _count.textAlignment = NSTextAlignmentCenter;
-   
-    _addBtn = [[UIButton alloc] initWithFrame:CGRectMake(_count.origin.x + _count.size.width, _count.origin.y, _subBtn.size.width, _subBtn.size.height)];
-    [_addBtn setTitle:@"+" forState:UIControlStateNormal];
-    [_addBtn setTitleColor:_price.textColor forState:UIControlStateNormal];
-    _addBtn.layer.borderWidth = 1;
-    _addBtn.layer.borderColor = _size.backgroundColor.CGColor;
-    [self.contentView addSubview:_addBtn];
+
+- (void)setStandard:(NSDictionary *)standard {
+    NSDictionary *primaryDic = standard[@"primary"];
+    NSString *primaryStandard = [NSString stringWithFormat:@"%@ : %@", primaryDic[@"label"], primaryDic[@"types"]];
+    primaryLab.text = primaryStandard;
+    NSDictionary *secondDic = standard[@"secondary"];
+    [secondaryStandardBtn setTitle:secondDic[@"types"] forState:UIControlStateNormal];
 }
 
-- (void)initialEditSizeButton {
-    
+- (void)setCount:(NSInteger)count {
+    NSString *countStr = [NSString stringWithFormat:@"X %li", (long)count];
+    countLab.text = countStr;
+    [countLab sizeToFit];
 }
 
-
-- (void)initialQuantifier {
-    quantifier = [[UILabel alloc] initWithFrame:CGRectMake(_size.origin.x + _size.size.width + 8, _size.frame.origin.y, 18, _size.frame.size.height)];
-    quantifier.text = @"X";
-    quantifier.font = [UIFont systemFontOfSize:18];
-    [self.contentView addSubview:quantifier];
-}
-
-- (void)initialPriceLabel {
-    _price = [self initialLabWithFrame:CGRectMake(_count.origin.x + _count.size.width, _count.origin.y + 3, [[UIScreen mainScreen] bounds].size.width - _count.frame.origin.x - _count.frame.size.width - 10, _count.frame.size.height)];
-    _price.font = [UIFont systemFontOfSize:22];
-    _price.textColor = [UIColor colorWithRed:63/255.0 green:171/255.0 blue:198/255.0 alpha:1];
-    _price.textAlignment = NSTextAlignmentRight;
-    [self.contentView addSubview:_price];
-}
-
-- (void)initialSizeLabel {
-    _size = [self initialLabWithFrame:CGRectMake(_shopName.frame.origin.x, _shopName.frame.origin.y + _shopName.frame.size.height + 10, 36, 36)];
-    _size.layer.cornerRadius = 18;
-    _size.clipsToBounds = YES;
-    _size.textColor = [UIColor whiteColor];
-    _size.font = [UIFont systemFontOfSize:15];
-    _size.textAlignment = NSTextAlignmentCenter;
-    _size.backgroundColor = [UIColor colorWithRed:172/255.0 green:172/255.0 blue:172/255.0 alpha:1];
-    [self.contentView addSubview:_size];
-}
-
-- (void)initialTypeAndNameAndShopLabel {
-    
-    _typeAndName = [self initialLabWithFrame:CGRectMake(_imgView.frame.origin.x + _imgView.frame.size.width + 15, 24, self.frame.size.width - (_imgView.frame.origin.x + _imgView.frame.size.width + 15), 18)];
-    [self.contentView addSubview:_typeAndName];
-    
-    _shopName = [self initialLabWithFrame:CGRectMake(_typeAndName.frame.origin.x, _typeAndName.frame.origin.y + _typeAndName.frame.size.height + 10, _typeAndName.frame.size.width, 18)];
-    [self.contentView addSubview:_shopName];
-    
+- (void)setPrice:(CGFloat)price {
+    NSString *priceStr = [NSString stringWithFormat:@"%f", price];
+    priceStr = [NSString stringWithFormat:@"￥%@", @(priceStr.floatValue)];
+    priceLab.text = priceStr;
+    [priceLab sizeToFit];
+    priceLab.x = [UIScreen mainScreen].bounds.size.width - 20 - priceLab.width;
     
 }
 
-- (UILabel *)initialLabWithFrame:(CGRect)frame {
-    UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.font = [UIFont systemFontOfSize:17];
+- (UIImageView *)getLeftImageViewWithFrame:(CGRect)frame {
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
+    imgView.layer.borderWidth = 1;
+    imgView.layer.borderColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1].CGColor;
     
-    
-    
-    return label;
-}
-
-
-- (void)touchSelect:(id)sender {
-    UIColor *color = _select.backgroundColor;
-    if ([color isEqual:_size.backgroundColor]) {
-        _select.backgroundColor = [UIColor clearColor];
-    } else {
-        _select.backgroundColor = _size.backgroundColor;
-    }
-
+    return imgView;
 }
 
 - (void)awakeFromNib {
