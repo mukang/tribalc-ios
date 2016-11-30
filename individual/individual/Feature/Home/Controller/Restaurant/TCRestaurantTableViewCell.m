@@ -68,8 +68,10 @@
     [typeLab sizeToFit];
 }
 
-- (void)setPrice:(NSString *)price {
-    priceLab.text = price;
+- (void)setPrice:(CGFloat)price {
+    NSString *priceStr = [NSString stringWithFormat:@"%f", price];
+    priceStr = [NSString stringWithFormat:@"%@", @(priceStr.floatValue)];
+    priceLab.text = priceStr;
     [priceLab sizeToFit];
     [unitLab setX:priceLab.x + priceLab.width];
 }

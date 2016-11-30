@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIImageView+WebCache.h"
 
-@interface TCRestaurantLogoView : UIView
+@interface TCRestaurantLogoView : UIImageView<SDWebImageManagerDelegate>
 
-- (instancetype)initWithFrame:(CGRect)frame AndTitle:(NSString *)title;
+- (instancetype)initWithFrame:(CGRect)frame AndUrlStr:(NSString *)urlStr;
 - (void)setNewFrame:(CGRect)frame;
 
 @end

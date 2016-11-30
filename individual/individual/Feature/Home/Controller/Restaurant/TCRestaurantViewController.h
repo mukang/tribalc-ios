@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 #import "TCRestaurantTableViewCell.h"
 #import "TCRestaurantInfoViewController.h"
@@ -15,9 +16,15 @@
 #import "TCRestaurantSelectButton.h"
 #import "TCRestaurantFilterView.h"
 #import "TCLocationViewController.h"
+#import "TCBuluoApi.h"
+#import "TCModelImport.h"
+#import "TCClientConfig.h"
+#import "UIImageView+WebCache.h"
+#import "TCRecommendFooter.h"
+#import "TCRecommendHeader.h"
+#import "MJRefresh.h"
 
-
-@interface TCRestaurantViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface TCRestaurantViewController : UIViewController<UITableViewDelegate,UITableViewDataSource, SDWebImageManagerDelegate, CLLocationManagerDelegate>
 {
     UITableView *mResaurantTableView;
 }

@@ -111,7 +111,7 @@
     entertainmentInfoLogoImageView.backgroundColor = [UIColor lightGrayColor];
     
     float logoViewRadius = entertainmentInfoLogoImageView.frame.size.height * 0.12;
-    logoView = [[TCRestaurantLogoView alloc] initWithFrame:CGRectMake(entertainmentInfoLogoImageView.width / 2 - logoViewRadius, entertainmentInfoLogoImageView.height - logoViewRadius, logoViewRadius * 2, logoViewRadius * 2) AndTitle:entertainmentInfoDic[@"name"]];
+//    logoView = [[TCRestaurantLogoView alloc] initWithFrame:CGRectMake(entertainmentInfoLogoImageView.width / 2 - logoViewRadius, entertainmentInfoLogoImageView.height - logoViewRadius, logoViewRadius * 2, logoViewRadius * 2) AndTitle:entertainmentInfoDic[@"name"]];
     [entertainmentInfoLogoImageView addSubview:logoView];
     
     mScrollView.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1];

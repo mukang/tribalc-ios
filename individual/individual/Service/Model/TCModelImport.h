@@ -28,6 +28,15 @@
 #import "TCGoodDetail.h"
 #import "TCGoodStandards.h"
 
+/********** 服务相关 **********/
+#import "TCServiceWrapper.h"
+#import "TCServices.h"
+#import "TCServiceDetail.h"
+#import "TCMarkStore.h"
+#import "TCListStore.h"
+#import "TCDetailStore.h"
+
+
 /********** OSS上传相关 **********/
 
 #import "TCUploadInfo.h"

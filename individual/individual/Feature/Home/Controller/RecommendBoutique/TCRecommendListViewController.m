@@ -225,33 +225,6 @@
     return UIStatusBarStyleLightContent;
 }
 
--(NSString *)changeFloat:(float)flo
-{
-    NSString *stringFloat = [NSString stringWithFormat:@"%f", flo];
-    const char *floatChars = [stringFloat UTF8String];
-    NSUInteger length = [stringFloat length];
-    int zeroLength = 0;
-    NSUInteger i = length-1;
-    for(; (int)i>=0; i--)
-    {
-        if(floatChars[i] == '0'/*0x30*/) {
-            zeroLength++;
-        } else {
-            if(floatChars[i] == '.')
-                i--;
-            break;
-        }
-    }
-    NSString *returnString;
-    if(i == -1) {
-        returnString = @"0";
-    } else {
-        returnString = [stringFloat substringToIndex:i+1];
-    }
-    return returnString;
-}
-
-
 
 /*
 #pragma mark - Navigation
