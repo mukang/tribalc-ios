@@ -7,6 +7,7 @@
 //
 
 #import "TCCommunityDetailViewController.h"
+#import "TCCommunityVisitViewController.h"
 
 #import "TCCommunityDetailHeaderView.h"
 #import "TCCommunityIntroViewCell.h"
@@ -164,7 +165,12 @@
 #pragma mark - TCCommunityIntroViewCellDelegate
 
 - (void)communityIntroViewCell:(TCCommunityIntroViewCell *)cell didClickVisitButtonWithCommunityDetailInfo:(TCCommunityDetailInfo *)info {
-    
+    if (!self.communityDetailInfo) {
+        return;
+    }
+    TCCommunityVisitViewController *vc = [[TCCommunityVisitViewController alloc] initWithNibName:@"TCCommunityVisitViewController" bundle:[NSBundle mainBundle]];
+    vc.communityDetailInfo = self.communityDetailInfo;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Actions
