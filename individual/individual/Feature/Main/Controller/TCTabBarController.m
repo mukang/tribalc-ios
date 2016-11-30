@@ -11,6 +11,7 @@
 #import "TCProfileViewController.h"
 #import "TCVicinityViewController.h"
 #import "TCHomeViewController.h"
+#import "TCCommunitiesViewController.h"
 
 #import "TCTabBar.h"
 
@@ -27,7 +28,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self addChildController:[[TCHomeViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
-    [self addChildController:[[UIViewController alloc] init] title:@"发现" image:@"tabBar_discover_normal" selectedImage:@"tabBar_discover_selected"];
+    [self addChildController:[[TCCommunitiesViewController alloc] init] title:@"社区" image:@"tabBar_discover_normal" selectedImage:@"tabBar_discover_selected"];
     [self addChildController:[[UIViewController alloc] init] title:@"常用" image:@"tabBar_common_normal" selectedImage:@"tabBar_common_selected"];
     [self addChildController:[[TCProfileViewController alloc] init] title:@"我的" image:@"tabBar_profile_normal" selectedImage:@"tabBar_profile_selected"];
     

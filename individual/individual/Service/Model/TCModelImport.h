@@ -41,6 +41,10 @@
 
 #import "TCUploadInfo.h"
 
+/********** 商品相关 **********/
+
+#import "TCCommunity.h"
+
 
 @interface TCModelImport : NSObject
 

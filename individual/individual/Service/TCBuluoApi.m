@@ -980,7 +980,29 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+#pragma mark - 社区资源
 
+- (void)fetchCommunityList:(void (^)(NSArray *, NSError *))resultBlock {
+    NSString *apiName = @"communities";
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            NSMutableArray *communityList = [NSMutableArray array];
+            NSArray *dics = response.data;
+            for (NSDictionary *dic in dics) {
+                TCCommunity *community = [[TCCommunity alloc] initWithObjectDictionary:dic];
+                [communityList addObject:community];
+            }
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock([communityList copy], nil));
+            }
+        }
+    }];
+}
 
 
 
