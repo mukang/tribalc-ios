@@ -13,6 +13,21 @@
     UILabel *priceLab;
     UILabel *primaryLab;
     UIButton *secondaryStandardBtn;
+    
+    TCComputeView *computeView;
+}
+
+- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [self initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
+    computeView = [[TCComputeView alloc] initWithFrame:CGRectMake(0, priceLab.y, 0, 20)];
+    computeView.x = [UIScreen mainScreen].bounds.size.width - 20 - computeView.width;
+    [self addSubview:computeView];
+    
+    priceLab.y = priceLab.y - 37 - priceLab.height;
+    [countLab removeFromSuperview];
+    
+    return self;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -21,6 +36,8 @@
         self.backgroundColor = [UIColor whiteColor];
         float height = 139;
         float width = [UIScreen mainScreen].bounds.size.width;
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
         [self.contentView addSubview:_selectedBtn];
@@ -74,6 +91,13 @@
     countLab.text = countStr;
     [countLab sizeToFit];
 }
+
+- (void)setEditCount:(NSInteger)count AddAction:(SEL)addAction SubAction:(SEL)subAction Target:(id)target{
+    [computeView setCount:count];
+    [computeView.addBtn addTarget:target action:addAction forControlEvents:UIControlEventTouchUpInside];
+    [computeView.subBtn addTarget:target action:subAction forControlEvents:UIControlEventTouchUpInside];
+}
+
 
 - (void)setPrice:(CGFloat)price {
     NSString *priceStr = [NSString stringWithFormat:@"%f", price];

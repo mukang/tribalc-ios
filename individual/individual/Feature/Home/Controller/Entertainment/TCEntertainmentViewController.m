@@ -166,7 +166,7 @@
     cell.nameLab.text = resInfo[@"name"];
     [cell setLocation:resInfo[@"location"]];
     [cell setType:resInfo[@"type"]];
-    [cell setPrice:resInfo[@"price"]];
+    [cell setPrice:321];
     if ([resInfo[@"room"] isEqual:@YES]) {
         [cell isSupportRoom:YES];
     }

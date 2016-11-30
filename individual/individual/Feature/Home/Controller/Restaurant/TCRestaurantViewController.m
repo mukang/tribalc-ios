@@ -9,7 +9,7 @@
 #import "TCRestaurantViewController.h"
 
 @interface TCRestaurantViewController () {
-    NSArray *restaurantArray;
+    TCServiceWrapper *mServiceWrapper;
     UIView *backView;
     TCRestaurantSortView *sortView;
     TCRestaurantFilterView *filterView;
@@ -23,6 +23,7 @@
 @implementation TCRestaurantViewController
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.view.backgroundColor = [UIColor whiteColor];
     [self initialNavigationBar];
 
 }
@@ -30,13 +31,43 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
-    
     [self initialNavigationBar];
-    
-    [self initialData];
+
+    [self initRestaurantDataWithSortType:nil];
     
     [self initialTableView];
+    
+    [self initUI];
+    
+    
+}
+
+
+
+- (void)initRestaurantDataWithSortType:(NSString *)sortType {
+    TCBuluoApi *api = [TCBuluoApi api];
+    [api fetchServiceWrapper:@"REPAST" limiSize:20 sortSkip:nil sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
+        mServiceWrapper = serviceWrapper;
+        [mResaurantTableView reloadData];
+        [mResaurantTableView.mj_header endRefreshing];
+    }];
+    
+}
+
+- (void)initResturantDataWithSortSkip:(NSString *)nextSkip AndSort:(NSString *)sortType {
+    TCBuluoApi *api = [TCBuluoApi api];
+    [api fetchServiceWrapper:@"REPAST" limiSize:20 sortSkip:nextSkip sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
+        NSArray *contentArr = mServiceWrapper.content;
+        mServiceWrapper = serviceWrapper;
+        mServiceWrapper.content = [contentArr arrayByAddingObjectsFromArray:serviceWrapper.content];
+        [mResaurantTableView reloadData];
+        [mResaurantTableView.mj_footer endRefreshing];
+    }];
+
+}
+
+- (void)initUI {
+    
     
     [self initHiddenBackView];
     
@@ -48,8 +79,8 @@
     filterView = [[TCRestaurantFilterView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, 105)];
     filterView.hidden = YES;
     [self.view addSubview:filterView];
-
     
+
 }
 
 - (void)initHiddenBackView {
@@ -69,7 +100,8 @@
     [leftBtn addTarget:self action:@selector(touchBackBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     
-    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"餐饮"];
+    
+    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:self.title];
     
     UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:@"res_location"];
     [rightBtn addTarget:self action:@selector(touchLocationBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -78,44 +110,52 @@
 
 
 
-- (void)initialData {
-    
-    NSDictionary *info1 = @{ @"name": @"麦当劳", @"location":@"朝阳区", @"type":@"快餐",  @"price":@"56", @"range":@"872m", @"room":@true, @"reserve":@false };
-    
-    NSDictionary *info2 = @{ @"name": @"魏蜀吴老火锅", @"location":@"北苑家园", @"type":@"火锅",  @"price":@"100", @"range":@"1872m", @"room":@true, @"reserve":@true };
-    
-    NSDictionary *info3 = @{ @"name": @"小院时光", @"location":@"朝阳区", @"type":@"创意菜",  @"price":@"35", @"range":@"72km" , @"room":@false, @"reserve":@true };
-    
-    NSDictionary *info4 = @{ @"name": @"雕刻时光咖啡馆", @"location":@"北苑家园", @"type":@"雕刻时光", @"price":@"86", @"range":@"272m", @"room":@true, @"reserve":@false };
-    
-    NSDictionary *info5 = @{ @"name": @"三和屋(北苑店)", @"location":@"朝阳区", @"type":@"寿司", @"price":@"56", @"range":@"872m", @"room":@false, @"reserve":@false  };
-    
-    
-    NSURL *url = [NSURL URLWithString:@""];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            ///////////
-        }
-    }];
-    [dataTask resume];
-    
-    
-    restaurantArray = @[ info1, info2, info3, info4, info5,info1, info2, info3, info4, info5,info1, info2, info3, info4, info5,info1, info2, info3, info4, info5 ];
-    
-}
-
-
 
 - (void)initialTableView {
     mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStyleGrouped];
     mResaurantTableView.delegate = self;
     mResaurantTableView.dataSource = self;
-    mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, 42, 0);
+    mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, 22, 0);
     [self.view addSubview:mResaurantTableView];
+    
+    TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^{
+        [self initRestaurantDataWithSortType:mServiceWrapper.sort];
+    }];
+    mResaurantTableView.mj_header = refreshHeader;
+    
+    TCRecommendFooter *refreshFooter = [TCRecommendFooter footerWithRefreshingBlock:^{
+        [self initResturantDataWithSortSkip:mServiceWrapper.nextSkip AndSort:mServiceWrapper.sort];
+    }];
+    mResaurantTableView.mj_footer = refreshFooter;
+    
 }
+
+- (NSString *)getDistanceWithLocation:(NSArray *)locationArr {
+    NSString *distance;
+    CLLocationManager *locationManager = [[CLLocationManager alloc] init];
+    
+    if (![CLLocationManager locationServicesEnabled]) {
+        NSLog(@"定位服务当前可能尚未打开，请设置打开！");
+    }
+    if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusNotDetermined){
+        [locationManager requestWhenInUseAuthorization];
+    }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse){
+        //设置代理
+        locationManager.delegate=self;
+        //设置定位精度
+        locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+        //定位频率,每隔多少米定位一次
+        CLLocationDistance distance=10.0;
+        locationManager.distanceFilter=distance;
+        //启动跟踪定位
+        [locationManager startUpdatingLocation];
+    }
+    
+    
+    
+    return distance;
+}
+
 
 
 - (UIView *)getTopViewWithFrame:(CGRect)frame {
@@ -145,19 +185,22 @@
 - (TCRestaurantTableViewCell *)getTableViewCellInfoWithIndex:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView AndCell:(TCRestaurantTableViewCell *)cell{
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSDictionary *resInfo = restaurantArray[indexPath.row];
-    cell.resImgView.image = [UIImage imageNamed:@"home_image_place"];
-    cell.nameLab.text = resInfo[@"name"];
-    [cell setLocation:resInfo[@"location"]];
-    [cell setType:resInfo[@"type"]];
-    [cell setPrice:resInfo[@"price"]];
-    if ([resInfo[@"room"] isEqual:@YES]) {
+    TCServices *resInfo = mServiceWrapper.content[indexPath.row];
+    NSURL *imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, resInfo.mainPicture]];
+    [cell.resImgView sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"home_image_place"]];
+    cell.nameLab.text = resInfo.name;
+    
+    TCListStore *storeInfo = resInfo.store;
+    [cell setLocation:storeInfo.markPlace];
+    [cell setType:storeInfo.brand];
+    [cell setPrice:resInfo.personExpense];
+//    if ([resInfo[@"room"] isEqual:@YES]) {
         [cell isSupportRoom:YES];
-    }
-    if ([resInfo[@"reserve"] isEqual:@YES]) {
+//    }
+    if (resInfo.reservable == TRUE) {
         [cell isSupportReserve:YES];
     }
-    cell.rangeLab.text = resInfo[@"range"];
+    cell.rangeLab.text = @"233m";
     
 
     
@@ -169,7 +212,7 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return restaurantArray.count;
+    return mServiceWrapper.content.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -199,9 +242,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    restaurantArray   
     
-    TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]init];
+    TCServices *service = mServiceWrapper.content[indexPath.row];
+    TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]initWithServiceId:service.ID];
     [self.navigationController pushViewController:restaurantInfo animated:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -359,21 +402,18 @@
 }
 
 - (void)sortByInfo:(NSString *)info {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@""]];
-    request.HTTPMethod = @"post";
-    NSDictionary *body = @{};
-    NSData *data = [NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
-    request.HTTPBody = data;
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            restaurantArray = result[@""];
-            [mResaurantTableView reloadData];
-        }
-    }];
-    [dataTask resume];
+    NSString *type;
+    if ([info isEqualToString:@"人均最低"]) {
+        type = @"personExpense,asc";
+
+    } else if ([info isEqualToString:@"人均最高"]) {
+        type = @"personExpense,desc";
+
+    } else if ([info isEqualToString:@"人气最高"]) {
+        type = @"popularValue,desc";
+    }
+    [self initRestaurantDataWithSortType:type];
+
 }
 
 
@@ -385,6 +425,7 @@
     } else {
         btnArr = @[filterView.reserveBtn, filterView.deliverBtn];
     }
+    
     
     for (int i = 0; i < btnArr.count; i++) {
         TCSelectSortButton *sortBtn = btnArr[i];

@@ -43,9 +43,10 @@
 }
 
 - (void)goentertainmentList:(id)sender {
-    TCEntertainmentViewController *entertainment = [[TCEntertainmentViewController alloc] init];
-    entertainment.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:entertainment animated:YES];
+    TCRestaurantViewController *resaurant = [[TCRestaurantViewController alloc]init];
+    resaurant.title = @"娱乐";
+    resaurant.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:resaurant animated:YES];
 }
 
 - (void)goRecommendShoppingList :(id)sender
@@ -57,6 +58,7 @@
 - (void)goResaurantList :(id)sender
 {
     TCRestaurantViewController *resaurant = [[TCRestaurantViewController alloc]init];
+    resaurant.title = @"餐饮";
     resaurant.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:resaurant animated:YES];
 }

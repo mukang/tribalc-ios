@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "TCComponent.h"
+#import "TCComputeView.h"
 
 @interface TCShoppingCartTableViewCell : UITableViewCell {
     
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
+- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
 @property UIButton *selectedBtn;
 @property UIImageView *leftImgView;
@@ -22,5 +25,6 @@
 - (void)setStandard:(NSDictionary *)standard;
 - (void)setCount:(NSInteger)count;
 - (void)setPrice:(CGFloat)price;
+- (void)setEditCount:(NSInteger)count AddAction:(SEL)addAction SubAction:(SEL)subAction Target:(id)target;
 
 @end

@@ -20,7 +20,7 @@
 - (void)setType:(NSString *)type;
 
 
-- (void)setPrice:(NSString *)price;
+- (void)setPrice:(CGFloat)price;
 
 - (void)isSupportRoom:(BOOL)b;
 

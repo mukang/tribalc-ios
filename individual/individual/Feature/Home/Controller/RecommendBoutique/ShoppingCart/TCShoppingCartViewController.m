@@ -15,7 +15,6 @@
     UIView *bottomView;
     UILabel *totalPriceLab;
     
-    NSMutableArray *selectBtnArr;
 }
 
 @end
@@ -31,7 +30,6 @@
     
     [self forgeShoppingCartInfoData];
     
-    [self initSelectButtonArr];
     
     [self initialNavigationBar];
     [self initialTableView];
@@ -39,16 +37,6 @@
     
 }
 
-- (void)initSelectButtonArr {
-    selectBtnArr = [[NSMutableArray alloc] init];
-    for (int i = 0; i < cartInfoArray.count; i++) {
-        selectBtnArr[i] = [[NSMutableArray alloc] init];
-        NSArray *contentArr = cartInfoArray[i][@"content"];
-        for (int j = 0; j <= contentArr.count; j++) {
-            selectBtnArr[i][j] = [[UIButton alloc] init];
-        }
-    }
-}
 
 - (void)initialNavigationBar {
     self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"购物车"];
@@ -58,13 +46,20 @@
     [backBtn addTarget:self action:@selector(touchBackBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = backItem;
     
+    UIBarButtonItem *editItem = [self getRightBarButtonItem:@"编辑" AndAction:@selector(touchEditBar:)];
+    self.navigationItem.rightBarButtonItem = editItem;
+}
+
+- (UIBarButtonItem *)getRightBarButtonItem:(NSString *)text AndAction:(SEL)action {
     UIButton *editBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 0, 40, 30) AndImageName:@""];
-    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [editBtn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    [editBtn setTitle:text forState:UIControlStateNormal];
     editBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     editBtn.titleLabel.textColor = [UIColor whiteColor];
     UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithCustomView:editBtn];
-    self.navigationItem.rightBarButtonItem = editItem;
+    return editItem;
 }
+
 
 - (UIView *)getBottomViewWithText:(NSString *)text AndAction:(SEL)action{
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 48, self.view.width, 49)];
@@ -72,7 +67,9 @@
     [view addSubview:topLineView];
     
     UIButton *selectBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, view.height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
+    [selectBtn addTarget:self action:@selector(touchSelectAllBtn:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:selectBtn];
+    
     UILabel *selectAllLab = [TCComponent createLabelWithFrame:CGRectMake(selectBtn.x + selectBtn.width + 20, 0, 30, view.height) AndFontSize:14 AndTitle:@"全选"];
     [view addSubview:selectAllLab];
     
@@ -81,6 +78,23 @@
     [titleBtn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     return view;
 }
+
+- (UIView *)getStoreViewWithFrame:(CGRect)frame AndSection:(NSInteger)section{
+    UIView *storeInfoView = [[UIView alloc] initWithFrame:frame];
+    NSDictionary *storeInfo = cartInfoArray[section];
+    storeInfoView.backgroundColor = [UIColor whiteColor];
+    UIButton *selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, storeInfoView.height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
+    
+    [selectedBtn addTarget:self action:@selector(touchSelectStoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [storeInfoView addSubview:selectedBtn];
+    
+    UILabel *storeTitleLab = [TCComponent createLabelWithFrame:CGRectMake(selectedBtn.x + selectedBtn.width + 20, 0, self.view.width - selectedBtn.x - selectedBtn.width - 20, storeInfoView.height) AndFontSize:12 AndTitle:storeInfo[@"store"] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    [storeInfoView addSubview:storeTitleLab];
+    
+    return storeInfoView;
+}
+
+
 
 
 - (void)initBottomView {
@@ -113,48 +127,51 @@
     return contentArr.count;
 }
 
+
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSDictionary *shopInfo = cartInfoArray[section];
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 39)];
-    headerView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
-    UIView *shopInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 8, self.view.width, 31)];
-    [headerView addSubview:shopInfoView];
-    shopInfoView.backgroundColor = [UIColor whiteColor];
-    UIButton *selectBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, shopInfoView.height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
-    NSArray *contentArr = shopInfo[@"content"];
-    selectBtnArr[section][contentArr.count] = selectBtn;
-    [selectBtn addTarget:self action:@selector(touchSelectGoodBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [shopInfoView addSubview:selectBtn];
-    UILabel *shopTitleLab = [TCComponent createLabelWithFrame:CGRectMake(selectBtn.x + selectBtn.width + 20, 0, self.view.width - selectBtn.x - selectBtn.width - 20, shopInfoView.height) AndFontSize:12 AndTitle:shopInfo[@"store"] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
-    [shopInfoView addSubview:shopTitleLab];
+    NSString *identifier = [NSString stringWithFormat:@"%li", (long)section];
+    UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:identifier];
+    if (!headerView) {
+        headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:identifier];
+        headerView.frame = CGRectMake(0, 0, self.view.width, 39);
+        UIView *storeView = [self getStoreViewWithFrame:CGRectMake(0, 8, self.view.width, 39 - 8) AndSection:section];
+        [headerView addSubview:storeView];
+    }
     
     return headerView;
+    
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     NSString *identifier = [NSString stringWithFormat:@"%li%li", (long)indexPath.section, (long)indexPath.row];
     TCShoppingCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[TCShoppingCartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    [cell.selectedBtn setImage: [UIImage imageNamed:@"car_unselected"] forState:UIControlStateNormal];
+    [cell setCount:3];
     NSArray *contentArr = cartInfoArray[indexPath.section][@"content"];
     NSDictionary *contentDic = contentArr[indexPath.row];
     
-    selectBtnArr[indexPath.section][indexPath.row] = cell.selectedBtn;
     [cell.selectedBtn addTarget:self action:@selector(touchSelectGoodBtn:) forControlEvents:UIControlEventTouchUpInside];
-    cell.titleLab.text = contentDic[@"title"];
-    cell.leftImgView.image = [UIImage imageNamed:@"home_image_place"];
-    [cell setStandard:contentDic[@"standard"]];
-    [cell setCount:3];
-    [cell setPrice:309.2];
-
+    [self initTableViewCell:cell AndContent:contentDic];
     
     return cell;
 }
+
+
+- (void)initTableViewCell:(TCShoppingCartTableViewCell *)cell AndContent:(NSDictionary *)contentDic {
+    cell.titleLab.text = contentDic[@"title"];
+    cell.leftImgView.image = [UIImage imageNamed:@"home_image_place"];
+    [cell setStandard:contentDic[@"standard"]];
+    [cell setPrice:309.2];
+
+}
+
+
 
 
 
@@ -188,8 +205,30 @@
 }
 
 - (void)touchSelectGoodBtn:(UIButton *)button {
+    NSLog(@"点击选择商品");
+}
+
+- (void)touchSelectStoreBtn:(UIButton *)button {
+    NSLog(@"点击选择商店按钮");
+}
+
+- (void)touchSelectAllBtn:(UIButton *)button {
+    NSLog(@"点击选择全部");
+}
+
+- (void)touchEditBar:(UIButton *)btn {
+
     
 }
+
+- (void)touchAddBtn:(UIButton *)btn {
+    NSLog(@"点击增加");
+}
+
+- (void)touchSubBtn:(UIButton *)btn {
+    NSLog(@"点击减少");
+}
+
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;

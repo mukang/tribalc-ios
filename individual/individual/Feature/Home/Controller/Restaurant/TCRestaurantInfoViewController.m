@@ -12,19 +12,32 @@
     UIImageView *restaurantInfoLogoImageView;
     TCRestaurantLogoView *logoView;
     UIImageView *barImageView;
-    NSDictionary *restaurantInfoDic;
+//    NSDictionary *restaurantInfoDic;
+    TCServiceDetail *serviceDetail;
     NSString *statusColorStr;
+    
+    NSString *mServiceId;
 }
 
 @end
 
 @implementation TCRestaurantInfoViewController
+
+
+- (instancetype)initWithServiceId:(NSString *)serviceId {
+    self = [super init];
+    if (self) {
+        mServiceId = serviceId;
+    }
+    
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     statusColorStr = @"white";
     
-    mScrollView.delegate = self;
     [self initNavigationBar];
 
 }
@@ -34,9 +47,22 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
+    [self initNavigationBar];
     
+    [self initServiceDetail];
+    
+}
 
-    [self initRestaurantInfo];
+- (void)initServiceDetail {
+    TCBuluoApi *api = [TCBuluoApi api];
+    [api fetchServiceDetail:mServiceId result:^(TCServiceDetail *service, NSError *error) {
+        serviceDetail = service;
+        [self initUI];
+    }];
+}
+
+
+- (void)initUI {
     
     [self initBaseData];
     
@@ -49,12 +75,12 @@
     UIView *addressAndPhoneView = [self createAddressAndPhoneViewWithFrame:CGRectMake(0, resBaseInfoView.y + resBaseInfoView.height, self.view.width, 82)];
     [mScrollView addSubview:addressAndPhoneView];
     
-    UIView *recommendedReasonView = [self createTextViewWithFrame:CGRectMake(0, addressAndPhoneView.y + addressAndPhoneView.height, self.view.width, 175) AndTitle:@"推荐理由" AndText:restaurantInfoDic[@"recommend"] AndimgName:@"res_recommend"];
+    UIView *recommendedReasonView = [self createTextViewWithFrame:CGRectMake(0, addressAndPhoneView.y + addressAndPhoneView.height, self.view.width, 175) AndTitle:@"推荐理由" AndText:serviceDetail.recommendedReason AndimgName:@"res_recommend"];
     [mScrollView addSubview:recommendedReasonView];
-
-    UIView *restTopicView = [self createTextViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, 175) AndTitle:@"餐厅话题" AndText:restaurantInfoDic[@"topic"] AndimgName:@"res_topic"];
+    
+    UIView *restTopicView = [self createTextViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, 175) AndTitle:@"餐厅话题" AndText:serviceDetail.topics AndimgName:@"res_topic"];
     [mScrollView addSubview:restTopicView];
-
+    
     
     UIView *promptView = [self createPromptViewWithFrame:CGRectMake(0, restTopicView.y + restTopicView.height, self.view.frame.size.width, 145)];
     [mScrollView addSubview:promptView];
@@ -64,10 +90,9 @@
     [mScrollView addSubview:phoneBtn];
     
     mScrollView.contentSize = CGSizeMake(self.view.width, phoneBtn.y + phoneBtn.height + 8);
-
     
-}
 
+}
 
 - (void)initialNavLeftBarWithImgName:(NSString *)leftName AndRightBarImgName:(NSString *)rightName {
     UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:leftName];
@@ -90,13 +115,6 @@
     
 }
 
-- (void)initRestaurantInfo {
-    restaurantInfoDic = @{
-                          @"img":@"good_placeholder", @"name":@"FNRON", @"type":@"披萨", @"location":@"北苑", @"range":@"6.5km",
-                          @"price":@"169", @"collection":@"166653", @"address":@"北京市朝阳区北苑大姐大小区", @"phone":@"1800000000", @"recommend":@"等我打我对哇大无缝五福娃福娃福娃福娃福娃服务费瓦发五福娃福娃福嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒点点滴滴娃福娃发我发完福娃福娃福娃发五福娃", @"topic":@"对哇嘀呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜呜嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒点点滴滴嘀ddddddddd嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒对的嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒嗒嘀嗒嘀嗒嘀嗒嘀嗒嘀嗒多大的对的", @"wifi":@true, @"time":@"11:00-23:00", @"reserve":@true, @"room":@true, @"prompt":@[@"wifi", @"pack"]
-                          };
-    
-}
 
 
 - (void)initBaseData {
@@ -105,17 +123,18 @@
 //    mScrollView.contentSize = CGSizeMake(mScrollView.frame.size.width, mScrollView.size.height + 64 + 200);
     [self.view addSubview:mScrollView];
     
-    
-    UIImage *restaurantInfoLogoImage = [UIImage imageNamed:@"good_placeholder"];
-    restaurantInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, 270)];
-    restaurantInfoLogoImageView.image = restaurantInfoLogoImage;
+    NSURL *logoImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, serviceDetail.mainPicture]];
+    restaurantInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 270)];
+    [restaurantInfoLogoImageView sd_setImageWithURL:logoImageUrl placeholderImage:[UIImage imageNamed:@"home_image_place"]];
     restaurantInfoLogoImageView.backgroundColor = [UIColor lightGrayColor];
     
     float logoViewRadius = restaurantInfoLogoImageView.frame.size.height * 0.12;
-    logoView = [[TCRestaurantLogoView alloc] initWithFrame:CGRectMake(restaurantInfoLogoImageView.width / 2 - logoViewRadius, restaurantInfoLogoImageView.height - logoViewRadius, logoViewRadius * 2, logoViewRadius * 2) AndTitle:restaurantInfoDic[@"name"]];
+    logoView = [[TCRestaurantLogoView alloc] initWithFrame:CGRectMake(restaurantInfoLogoImageView.width / 2 - logoViewRadius, restaurantInfoLogoImageView.height - logoViewRadius, logoViewRadius * 2, logoViewRadius * 2) AndUrlStr:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, serviceDetail.detailStore.logo]];
     [restaurantInfoLogoImageView addSubview:logoView];
     
     mScrollView.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1];
+    
+    mScrollView.delegate = self;
     
     [mScrollView addSubview:restaurantInfoLogoImageView];
     
@@ -124,7 +143,7 @@
 
 - (UIView *)createResBaseInfoViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UILabel *titleLab = [TCComponent createCenterLabWithFrame:CGRectMake(0, 22.5, frame.size.width, 22.5) AndFontSize:22.5 AndTitle:restaurantInfoDic[@"name"]];
+    UILabel *titleLab = [TCComponent createCenterLabWithFrame:CGRectMake(0, 22.5, frame.size.width, 22.5) AndFontSize:22.5 AndTitle:serviceDetail.name];
     [view addSubview:titleLab];
     
     UIView *typeAndAdressView = [self getRestTypeAndAddressInfoWithFrame:CGRectMake(0, titleLab.y + titleLab.height + 16, frame.size.width, 14)];
@@ -133,7 +152,7 @@
     UIView *priceView = [self createPriceViewWithFrame:CGRectMake(0, typeAndAdressView.y + typeAndAdressView.height + 14, frame.size.width / 2 - 20, 15)];
     [view addSubview:priceView];
     
-    UIView *collectionView = [self getCollectionViewWithFrame:CGRectMake(frame.size.width / 2, priceView.y + 4, frame.size.width / 2, 11) AndNumber:restaurantInfoDic[@"collection"]];
+    UIView *collectionView = [self getCollectionViewWithFrame:CGRectMake(frame.size.width / 2, priceView.y + 4, frame.size.width / 2, 11) AndNumber:serviceDetail.collectionNum];
     [view addSubview:collectionView];
     
     return view;
@@ -144,7 +163,9 @@
     UILabel *unitLabel = [TCComponent createLabelWithFrame:CGRectMake(frame.size.width - 28, frame.size.height - 11, 28, 12) AndFontSize:11 AndTitle:@"元/人" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     [view addSubview:unitLabel];
 
-    UILabel *priceLabel = [TCComponent createLabelWithFrame:CGRectMake(0, 0, view.width - 28, frame.size.height) AndFontSize:frame.size.height AndTitle:restaurantInfoDic[@"price"] AndTextColor:[UIColor blackColor]];
+    NSString *priceStr = [NSString stringWithFormat:@"%f", serviceDetail.personExpense];
+    priceStr = [NSString stringWithFormat:@"%@", @(priceStr.floatValue)];
+    UILabel *priceLabel = [TCComponent createLabelWithFrame:CGRectMake(0, 0, view.width - 28, frame.size.height) AndFontSize:frame.size.height AndTitle:priceStr AndTextColor:[UIColor blackColor]];
     priceLabel.textAlignment = NSTextAlignmentRight;
     [view addSubview:priceLabel];
     
@@ -159,10 +180,11 @@
     [view addSubview:topLine];
     [view addSubview:downLine];
     
-    UILabel *addressLab = [TCComponent createLabelWithFrame:CGRectMake(20, 19, view.width - 20 - 16, 14) AndFontSize:14 AndTitle:restaurantInfoDic[@"address"]];
+    TCDetailStore *storeDetail = serviceDetail.detailStore;
+    UILabel *addressLab = [TCComponent createLabelWithFrame:CGRectMake(20, 19, view.width - 20 - 16, 14) AndFontSize:14 AndTitle: storeDetail.address];
     [view addSubview:addressLab];
     
-    UILabel *phoneLab = [TCComponent createLabelWithFrame:CGRectMake(20, view.height - 19 - 14, addressLab.width, addressLab.height) AndFontSize:14 AndTitle:restaurantInfoDic[@"phone"]];
+    UILabel *phoneLab = [TCComponent createLabelWithFrame:CGRectMake(20, view.height - 19 - 14, addressLab.width, addressLab.height) AndFontSize:14 AndTitle:storeDetail.phone];
     [view addSubview:phoneLab];
     
     UIButton *phoneBtn = [TCComponent createImageBtnWithFrame:CGRectMake(view.width - 20 - 15, addressLab.y, 15, 15) AndImageName:@"res_phone"];
@@ -218,7 +240,8 @@
     [allImgView setOrigin:CGPointMake(self.view.frame.size.width / 2 - allImgView.width / 2, titleView.y + titleView.height + 13)];
     [view addSubview:allImgView];
     
-    NSString *time = [NSString stringWithFormat:@"每天 %@",restaurantInfoDic[@"time"]];
+    TCDetailStore *storeDetail = serviceDetail.detailStore;
+    NSString *time = [NSString stringWithFormat:@"每天 %@",storeDetail.businessHours];
     UILabel *timeLab = [TCComponent createLabelWithFrame:CGRectMake(0, allImgView.y + allImgView.height + 12, self.view.frame.size.width, 13) AndFontSize:13 AndTitle:time AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     timeLab.textAlignment = NSTextAlignmentCenter;
     [view addSubview:timeLab];
@@ -293,12 +316,15 @@
 
 - (UIView *)getPromptImageView {
     UIView *view = [[UIView alloc] init];
-    NSArray *promptArr = restaurantInfoDic[@"prompt"];
+    NSArray *promptArr = serviceDetail.detailStore.tags;
+//    NSArray *promptImageArr = serviceDetail.pictures;
     for (int i = 0; i < promptArr.count; i++) {
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * 27 + 35, 0, 27, 27)];
         if (i == 0) {
             [imgView setX:0];
         }
+//        NSURL *imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL,promptImageArr[i]]];
+//        [imgView sd_setImageWithURL:imageURL];
         imgView.image = [UIImage imageNamed:@"res_phone"];
         UILabel *titleLab = [[UILabel alloc] init];
         titleLab.text = promptArr[i];
@@ -344,7 +370,8 @@
 
 - (UIView *)getRestTypeAndAddressInfoWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UILabel *locationLab = [TCComponent createLabelWithText:restaurantInfoDic[@"location"] AndFontSize:14];
+    TCDetailStore *detailStore = serviceDetail.detailStore;
+    UILabel *locationLab = [TCComponent createLabelWithText:detailStore.address AndFontSize:14];
     [locationLab setOrigin:CGPointMake(frame.size.width / 2 - locationLab.width / 2, 0)];
     [view addSubview:locationLab];
     
@@ -354,25 +381,26 @@
     UIView *rightLine = [TCComponent createGrayLineWithFrame:CGRectMake(locationLab.x + locationLab.width + 8, locationLab.y, 0.5, locationLab.height)];
     [view addSubview:rightLine];
     
-    UILabel *typeLab = [TCComponent createLabelWithFrame:CGRectMake(0, locationLab.y, leftLine.x - 8, locationLab.height) AndFontSize:14 AndTitle:restaurantInfoDic[@"type"]];
+    UILabel *typeLab = [TCComponent createLabelWithFrame:CGRectMake(0, locationLab.y, leftLine.x - 8, locationLab.height) AndFontSize:14 AndTitle:detailStore.brand];
     typeLab.textAlignment = NSTextAlignmentRight;
     [view addSubview:typeLab];
     
-    UILabel *rangeLab = [TCComponent createLabelWithFrame:CGRectMake(rightLine.x + 0.5 + 8, locationLab.y, frame.size.width - rightLine.x + 0.5 + 8, locationLab.height) AndFontSize:14 AndTitle:restaurantInfoDic[@"range"]];
+    UILabel *rangeLab = [TCComponent createLabelWithFrame:CGRectMake(rightLine.x + 0.5 + 8, locationLab.y, frame.size.width - rightLine.x + 0.5 + 8, locationLab.height) AndFontSize:14 AndTitle:@"2222m"];
     rangeLab.textAlignment = NSTextAlignmentLeft;
     [view addSubview:rangeLab];
 
     return view;
 }
 
-- (UIView *)getCollectionViewWithFrame:(CGRect)frame AndNumber:(NSString *)number{
+- (UIView *)getCollectionViewWithFrame:(CGRect)frame AndNumber:(NSInteger)number{
     UIView *view = [[UIView alloc] initWithFrame:frame];
     UIImage *collectionImg = [UIImage imageNamed:@"res_collection_gray"];
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 1, 11, 9)];
     imgView.image = collectionImg;
     [view addSubview:imgView];
     
-    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(imgView.x + imgView.width + 1, 0, frame.size.width - imgView.x - imgView.width, frame.size.height) AndFontSize:frame.size.height AndTitle:[NSString stringWithFormat:@"%@已收藏", number] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    NSString *numberStr = [NSString stringWithFormat:@"%li", (long)number];
+    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(imgView.x + imgView.width + 1, 0, frame.size.width - imgView.x - imgView.width, frame.size.height) AndFontSize:frame.size.height AndTitle:[NSString stringWithFormat:@"%@已收藏", numberStr] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     [view addSubview:label];
     
     
@@ -416,7 +444,8 @@
 }
 
 -(void)touchPhoneBtn {
-    UIWebView *callView = [TCComponent callWithPhone:restaurantInfoDic[@"phone"]];
+    TCDetailStore *detailStore = serviceDetail.detailStore;
+    UIWebView *callView = [TCComponent callWithPhone:detailStore.phone];
     [self.view addSubview:callView];
 }
 
@@ -444,7 +473,7 @@
 #pragma mark - scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    CGFloat minAlphaOffset = - 64;
+    CGFloat minAlphaOffset = 0;
     CGFloat maxAlphaOffset = 270;
     CGFloat offset = scrollView.contentOffset.y;
     CGFloat alpha = (offset - minAlphaOffset) / (maxAlphaOffset - minAlphaOffset);
@@ -463,8 +492,8 @@
         [self setNeedsStatusBarAppearanceUpdate];
     }
     
-    if (point.y < -64) {
-        double height = -point.y - 64 + 270;
+    if (point.y < 0) {
+        double height = -point.y + 270;
         double number = height / 270;
         double width = self.view.frame.size.width * number;
         double logoRadius = height * 0.12;

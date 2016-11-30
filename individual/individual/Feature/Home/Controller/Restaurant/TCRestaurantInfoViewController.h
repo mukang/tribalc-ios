@@ -11,9 +11,16 @@
 #import "TCComponent.h"
 #import "TCLocationViewController.h"
 #import "TCGetNavigationItem.h"
+#import "TCClientConfig.h"
+#import "TCBuluoApi.h"
+#import "UIImageView+WebCache.h"
 
-@interface TCRestaurantInfoViewController : UIViewController<UIScrollViewDelegate>
+
+@interface TCRestaurantInfoViewController : UIViewController<UIScrollViewDelegate, SDWebImageManagerDelegate>
 {
     UIScrollView *mScrollView;
 }
+
+- (instancetype)initWithServiceId:(NSString *)serviceId;
+
 @end
