@@ -961,6 +961,22 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+- (void)fetchCommunityDetailInfo:(NSString *)communityID result:(void (^)(TCCommunityDetailInfo *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"communities/%@", communityID];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            TCCommunityDetailInfo *communityDetailInfo = [[TCCommunityDetailInfo alloc] initWithObjectDictionary:response.data];
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(communityDetailInfo, nil));
+            }
+        }
+    }];
+}
 
 
 @end

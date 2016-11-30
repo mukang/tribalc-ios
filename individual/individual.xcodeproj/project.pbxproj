@@ -80,11 +80,27 @@
 		7A1F12951DEC0DFA00A9B58F /* TCCommunityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F12931DEC0DFA00A9B58F /* TCCommunityViewCell.m */; };
 		7A1F12961DEC0DFA00A9B58F /* TCCommunityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F12941DEC0DFA00A9B58F /* TCCommunityViewCell.xib */; };
 		7A1F129A1DEC28F900A9B58F /* TCCommunity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F12991DEC28F900A9B58F /* TCCommunity.m */; };
+		7A1F129E1DEC551400A9B58F /* TCCommunityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F129C1DEC551400A9B58F /* TCCommunityDetailViewController.m */; };
+		7A1F129F1DEC551400A9B58F /* TCCommunityDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F129D1DEC551400A9B58F /* TCCommunityDetailViewController.xib */; };
 		7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E4381DD01F0400EF7427 /* TCProfileViewCell.m */; };
 		7A21E43B1DD01F0400EF7427 /* TCProfileViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E4391DD01F0400EF7427 /* TCProfileViewCell.xib */; };
 		7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */; };
 		7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */; };
 		7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */; };
+		7A381BC41DED5DC4008BDBF7 /* TCCommunityDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BC31DED5DC4008BDBF7 /* TCCommunityDetailInfo.m */; };
+		7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BCB1DED6969008BDBF7 /* TCCommunityIntroViewCell.m */; };
+		7A381BCE1DED6969008BDBF7 /* TCCommunityIntroViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A381BCC1DED6969008BDBF7 /* TCCommunityIntroViewCell.xib */; };
+		7A381BD11DED6EC1008BDBF7 /* TCCommunityDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BD01DED6EC1008BDBF7 /* TCCommunityDetailHeaderView.m */; };
+		7A381BD31DED6EE5008BDBF7 /* TCCommunityDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A381BD21DED6EE5008BDBF7 /* TCCommunityDetailHeaderView.xib */; };
+		7A381BD71DED7856008BDBF7 /* TCCommunityLocationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BD51DED7856008BDBF7 /* TCCommunityLocationViewCell.m */; };
+		7A381BD81DED7856008BDBF7 /* TCCommunityLocationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A381BD61DED7856008BDBF7 /* TCCommunityLocationViewCell.xib */; };
+		7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BDA1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m */; };
+		7A381BDD1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A381BDB1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.xib */; };
+		7A381BE11DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BDF1DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.m */; };
+		7A381BE21DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A381BE01DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.xib */; };
+		7A381BE61DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BE41DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.m */; };
+		7A381BE71DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A381BE51DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib */; };
+		7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381C031DEDA5CE008BDBF7 /* TCStoreInfo.m */; };
 		7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */; };
 		7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */; };
 		7A4514631DE5725F007D7193 /* TCBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514611DE5725F007D7193 /* TCBankCardViewController.m */; };
@@ -99,6 +115,7 @@
 		7A4514771DD2D0C3009F170A /* TCProfileBgImageChangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514761DD2D0C3009F170A /* TCProfileBgImageChangeView.m */; };
 		7A4514791DD2D0DE009F170A /* TCProfileBgImageChangeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4514781DD2D0DE009F170A /* TCProfileBgImageChangeView.xib */; };
 		7A4514881DD30C48009F170A /* TCModelImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514871DD30C48009F170A /* TCModelImport.m */; };
+		7A4E05051DEE86D0002371B0 /* TCImageURLSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E05041DEE86D0002371B0 /* TCImageURLSynthesizer.m */; };
 		7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A510F9F1DB8624400471A88 /* NSObject+TCModel.m */; };
 		7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87711DE297A100E4130B /* TCWalletAccount.m */; };
 		7A5F87761DE2CED900E4130B /* TCWalletBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87741DE2CED900E4130B /* TCWalletBillViewController.m */; };
@@ -322,6 +339,9 @@
 		7A1F12941DEC0DFA00A9B58F /* TCCommunityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunityViewCell.xib; sourceTree = "<group>"; };
 		7A1F12981DEC28F900A9B58F /* TCCommunity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunity.h; sourceTree = "<group>"; };
 		7A1F12991DEC28F900A9B58F /* TCCommunity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunity.m; sourceTree = "<group>"; };
+		7A1F129B1DEC551400A9B58F /* TCCommunityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityDetailViewController.h; sourceTree = "<group>"; };
+		7A1F129C1DEC551400A9B58F /* TCCommunityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityDetailViewController.m; sourceTree = "<group>"; };
+		7A1F129D1DEC551400A9B58F /* TCCommunityDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunityDetailViewController.xib; sourceTree = "<group>"; };
 		7A21E4371DD01F0400EF7427 /* TCProfileViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileViewCell.h; sourceTree = "<group>"; };
 		7A21E4381DD01F0400EF7427 /* TCProfileViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileViewCell.m; sourceTree = "<group>"; };
 		7A21E4391DD01F0400EF7427 /* TCProfileViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileViewCell.xib; sourceTree = "<group>"; };
@@ -330,6 +350,28 @@
 		7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileProcessViewCell.xib; sourceTree = "<group>"; };
 		7A34AF561DDB0E7400217161 /* TCUserShippingAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserShippingAddress.h; sourceTree = "<group>"; };
 		7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserShippingAddress.m; sourceTree = "<group>"; };
+		7A381BC21DED5DC4008BDBF7 /* TCCommunityDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityDetailInfo.h; sourceTree = "<group>"; };
+		7A381BC31DED5DC4008BDBF7 /* TCCommunityDetailInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityDetailInfo.m; sourceTree = "<group>"; };
+		7A381BCA1DED6969008BDBF7 /* TCCommunityIntroViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityIntroViewCell.h; sourceTree = "<group>"; };
+		7A381BCB1DED6969008BDBF7 /* TCCommunityIntroViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityIntroViewCell.m; sourceTree = "<group>"; };
+		7A381BCC1DED6969008BDBF7 /* TCCommunityIntroViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunityIntroViewCell.xib; sourceTree = "<group>"; };
+		7A381BCF1DED6EC1008BDBF7 /* TCCommunityDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityDetailHeaderView.h; sourceTree = "<group>"; };
+		7A381BD01DED6EC1008BDBF7 /* TCCommunityDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityDetailHeaderView.m; sourceTree = "<group>"; };
+		7A381BD21DED6EE5008BDBF7 /* TCCommunityDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunityDetailHeaderView.xib; sourceTree = "<group>"; };
+		7A381BD41DED7856008BDBF7 /* TCCommunityLocationViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityLocationViewCell.h; sourceTree = "<group>"; };
+		7A381BD51DED7856008BDBF7 /* TCCommunityLocationViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityLocationViewCell.m; sourceTree = "<group>"; };
+		7A381BD61DED7856008BDBF7 /* TCCommunityLocationViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunityLocationViewCell.xib; sourceTree = "<group>"; };
+		7A381BD91DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunitySurroundingViewCell.h; sourceTree = "<group>"; };
+		7A381BDA1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunitySurroundingViewCell.m; sourceTree = "<group>"; };
+		7A381BDB1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunitySurroundingViewCell.xib; sourceTree = "<group>"; };
+		7A381BDE1DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunitySurroundingTitleViewCell.h; sourceTree = "<group>"; };
+		7A381BDF1DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunitySurroundingTitleViewCell.m; sourceTree = "<group>"; };
+		7A381BE01DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunitySurroundingTitleViewCell.xib; sourceTree = "<group>"; };
+		7A381BE31DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunitySurroundingSubtitleViewCell.h; sourceTree = "<group>"; };
+		7A381BE41DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunitySurroundingSubtitleViewCell.m; sourceTree = "<group>"; };
+		7A381BE51DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunitySurroundingSubtitleViewCell.xib; sourceTree = "<group>"; };
+		7A381C021DEDA5CE008BDBF7 /* TCStoreInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStoreInfo.h; sourceTree = "<group>"; };
+		7A381C031DEDA5CE008BDBF7 /* TCStoreInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreInfo.m; sourceTree = "<group>"; };
 		7A384E801DE84CF20094E1F5 /* TCUploadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUploadInfo.h; sourceTree = "<group>"; };
 		7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUploadInfo.m; sourceTree = "<group>"; };
 		7A41C0D61DCC71C0003FC63C /* TCClientRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientRequestError.h; sourceTree = "<group>"; };
@@ -352,6 +394,8 @@
 		7A4514781DD2D0DE009F170A /* TCProfileBgImageChangeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileBgImageChangeView.xib; sourceTree = "<group>"; };
 		7A4514861DD30C48009F170A /* TCModelImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCModelImport.h; sourceTree = "<group>"; };
 		7A4514871DD30C48009F170A /* TCModelImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCModelImport.m; sourceTree = "<group>"; };
+		7A4E05031DEE86D0002371B0 /* TCImageURLSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImageURLSynthesizer.h; sourceTree = "<group>"; };
+		7A4E05041DEE86D0002371B0 /* TCImageURLSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCImageURLSynthesizer.m; sourceTree = "<group>"; };
 		7A510F9E1DB8624400471A88 /* NSObject+TCModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TCModel.h"; sourceTree = "<group>"; };
 		7A510F9F1DB8624400471A88 /* NSObject+TCModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TCModel.m"; sourceTree = "<group>"; };
 		7A5F87701DE297A100E4130B /* TCWalletAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletAccount.h; sourceTree = "<group>"; };
@@ -834,6 +878,9 @@
 				7A1F128D1DEC0BDD00A9B58F /* TCCommunitiesViewController.h */,
 				7A1F128E1DEC0BDD00A9B58F /* TCCommunitiesViewController.m */,
 				7A1F128F1DEC0BDD00A9B58F /* TCCommunitiesViewController.xib */,
+				7A1F129B1DEC551400A9B58F /* TCCommunityDetailViewController.h */,
+				7A1F129C1DEC551400A9B58F /* TCCommunityDetailViewController.m */,
+				7A1F129D1DEC551400A9B58F /* TCCommunityDetailViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -844,6 +891,24 @@
 				7A1F12921DEC0DFA00A9B58F /* TCCommunityViewCell.h */,
 				7A1F12931DEC0DFA00A9B58F /* TCCommunityViewCell.m */,
 				7A1F12941DEC0DFA00A9B58F /* TCCommunityViewCell.xib */,
+				7A381BCF1DED6EC1008BDBF7 /* TCCommunityDetailHeaderView.h */,
+				7A381BD01DED6EC1008BDBF7 /* TCCommunityDetailHeaderView.m */,
+				7A381BD21DED6EE5008BDBF7 /* TCCommunityDetailHeaderView.xib */,
+				7A381BCA1DED6969008BDBF7 /* TCCommunityIntroViewCell.h */,
+				7A381BCB1DED6969008BDBF7 /* TCCommunityIntroViewCell.m */,
+				7A381BCC1DED6969008BDBF7 /* TCCommunityIntroViewCell.xib */,
+				7A381BD41DED7856008BDBF7 /* TCCommunityLocationViewCell.h */,
+				7A381BD51DED7856008BDBF7 /* TCCommunityLocationViewCell.m */,
+				7A381BD61DED7856008BDBF7 /* TCCommunityLocationViewCell.xib */,
+				7A381BD91DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.h */,
+				7A381BDA1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m */,
+				7A381BDB1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.xib */,
+				7A381BDE1DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.h */,
+				7A381BDF1DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.m */,
+				7A381BE01DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.xib */,
+				7A381BE31DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.h */,
+				7A381BE41DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.m */,
+				7A381BE51DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -853,8 +918,19 @@
 			children = (
 				7A1F12981DEC28F900A9B58F /* TCCommunity.h */,
 				7A1F12991DEC28F900A9B58F /* TCCommunity.m */,
+				7A381BC21DED5DC4008BDBF7 /* TCCommunityDetailInfo.h */,
+				7A381BC31DED5DC4008BDBF7 /* TCCommunityDetailInfo.m */,
 			);
 			path = Community;
+			sourceTree = "<group>";
+		};
+		7A381BE81DED9304008BDBF7 /* Commercial */ = {
+			isa = PBXGroup;
+			children = (
+				7A381C021DEDA5CE008BDBF7 /* TCStoreInfo.h */,
+				7A381C031DEDA5CE008BDBF7 /* TCStoreInfo.m */,
+			);
+			path = Commercial;
 			sourceTree = "<group>";
 		};
 		7A384E7F1DE84CAA0094E1F5 /* Upload */ = {
@@ -1055,6 +1131,8 @@
 				7A1A47D41DB76C1900E39207 /* TCArchiveService.m */,
 				7A15802F1DD1DE8200B8F768 /* TCPhotoPicker.h */,
 				7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */,
+				7A4E05031DEE86D0002371B0 /* TCImageURLSynthesizer.h */,
+				7A4E05041DEE86D0002371B0 /* TCImageURLSynthesizer.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1110,6 +1188,7 @@
 			children = (
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
+				7A381BE81DED9304008BDBF7 /* Commercial */,
 				7A1F12971DEC28D200A9B58F /* Community */,
 				7A384E7F1DE84CAA0094E1F5 /* Upload */,
 				7A5F876F1DE2976900E4130B /* Wallet */,
@@ -1395,6 +1474,8 @@
 				7A6506DD1DC9EBCB00B0EDBF /* TCShippingAddressEditViewController.xib in Resources */,
 				7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */,
 				7A4514701DE58D62007D7193 /* TCBankCardAddViewController.xib in Resources */,
+				7A1F129F1DEC551400A9B58F /* TCCommunityDetailViewController.xib in Resources */,
+				7A381BD81DED7856008BDBF7 /* TCCommunityLocationViewCell.xib in Resources */,
 				7A4514751DE5BF5B007D7193 /* TCBankPickerView.xib in Resources */,
 				7A6506E21DC9EE5400B0EDBF /* TCShippingAddressViewCell.xib in Resources */,
 				7AC2921E1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.xib in Resources */,
@@ -1403,17 +1484,22 @@
 				7A6506D81DC9EBAA00B0EDBF /* TCShippingAddressViewController.xib in Resources */,
 				7A21E43B1DD01F0400EF7427 /* TCProfileViewCell.xib in Resources */,
 				7A918ACE1DC362E0002BD529 /* TCBioEditViewController.xib in Resources */,
+				7A381BCE1DED6969008BDBF7 /* TCCommunityIntroViewCell.xib in Resources */,
 				7A918ACA1DC34AC3002BD529 /* TCBioEditView.xib in Resources */,
 				7AC2922B1DC8BEB300B2C7E8 /* citylist.data in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
 				7A4514691DE57AB4007D7193 /* TCBankCardViewCell.xib in Resources */,
 				7A11F6F61DE3F1C5005F3EAB /* TCWalletBillDetailViewCell.xib in Resources */,
+				7A381BE21DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.xib in Resources */,
 				7A4514641DE5725F007D7193 /* TCBankCardViewController.xib in Resources */,
+				7A381BE71DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib in Resources */,
+				7A381BDD1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.xib in Resources */,
 				7A4514791DD2D0DE009F170A /* TCProfileBgImageChangeView.xib in Resources */,
 				7A11F6FB1DE3F200005F3EAB /* TCWalletBillDetailHeaderView.xib in Resources */,
 				7A190B121DC0CC9800651905 /* TCProfileViewController.xib in Resources */,
 				7A6506F11DCA1F4F00B0EDBF /* TCBioEditAvatarViewController.xib in Resources */,
 				7A11F7071DE42356005F3EAB /* TCWalletPasswordViewController.xib in Resources */,
+				7A381BD31DED6EE5008BDBF7 /* TCCommunityDetailHeaderView.xib in Resources */,
 				7ADB92BF1DDF10470055D557 /* TCWalletViewController.xib in Resources */,
 				7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */,
 				7A918AD31DC366CE002BD529 /* TCBioEditGenderView.xib in Resources */,
@@ -1503,6 +1589,7 @@
 				7A4514731DE5BF40007D7193 /* TCBankPickerView.m in Sources */,
 				7A6506DC1DC9EBCB00B0EDBF /* TCShippingAddressEditViewController.m in Sources */,
 				7A11F7151DE43195005F3EAB /* MLBPasswordTextField.m in Sources */,
+				7A381BE11DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.m in Sources */,
 				092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */,
 				7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
@@ -1524,10 +1611,13 @@
 				092CD4281DD9A07C0073A9C1 /* TCRestaurantSelectButton.m in Sources */,
 				7A1580311DD1DE8200B8F768 /* TCPhotoPicker.m in Sources */,
 				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
+				7A381BD71DED7856008BDBF7 /* TCCommunityLocationViewCell.m in Sources */,
+				7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */,
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
 				092CD4291DD9A07C0073A9C1 /* TCRestaurantSortView.m in Sources */,
 				7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */,
 				093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */,
+				7A381BE61DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.m in Sources */,
 				7A4514681DE57AB4007D7193 /* TCBankCardViewCell.m in Sources */,
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
@@ -1539,6 +1629,7 @@
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A6506F01DCA1F4F00B0EDBF /* TCBioEditAvatarViewController.m in Sources */,
 				7A11F6F51DE3F1C5005F3EAB /* TCWalletBillDetailViewCell.m in Sources */,
+				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
 				7A4514771DD2D0C3009F170A /* TCProfileBgImageChangeView.m in Sources */,
 				7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */,
 				099B38341DDDA926003F5972 /* TCRecommendHeader.m in Sources */,
@@ -1574,6 +1665,8 @@
 				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
 				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,
 				0978DB111DE95D62006B6437 /* TCUserOrderDetailViewController.m in Sources */,
+				7A1F129E1DEC551400A9B58F /* TCCommunityDetailViewController.m in Sources */,
+				7A381BC41DED5DC4008BDBF7 /* TCCommunityDetailInfo.m in Sources */,
 				7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */,
 				7AC2921D1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m in Sources */,
 				092CD3E71DD99DBC0073A9C1 /* TCLocationViewController.m in Sources */,
@@ -1583,6 +1676,7 @@
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
 				09275FB71DDEF94900502167 /* TCUserLocationAnnotationView.m in Sources */,
 				092CD42D1DD9C5FC0073A9C1 /* TCStandardView.m in Sources */,
+				7A381BD11DED6EC1008BDBF7 /* TCCommunityDetailHeaderView.m in Sources */,
 				7A45146F1DE58D62007D7193 /* TCBankCardAddViewController.m in Sources */,
 				092CD42A1DD9A07C0073A9C1 /* TCSelectSortButton.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
@@ -1592,6 +1686,7 @@
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
 				092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */,
 				09275FBD1DDEFF6E00502167 /* TCDetailAnnotationView.m in Sources */,
+				7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */,
 				092CD4271DD9A07C0073A9C1 /* TCRestaurantFilterView.m in Sources */,
 				7AB29F311DD46C7D00564D93 /* TCUserSensitiveInfo.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
@@ -1599,6 +1694,7 @@
 				7AC292221DC88CF200B2C7E8 /* TCBioEditSMSViewController.m in Sources */,
 				7ACA4FE31DD5B8C2006634E8 /* TCUserPhoneInfo.m in Sources */,
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
+				7A4E05051DEE86D0002371B0 /* TCImageURLSynthesizer.m in Sources */,
 				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.m in Sources */,
 				092CD3F61DD99F4A0073A9C1 /* TCRestaurantInfoViewController.m in Sources */,
