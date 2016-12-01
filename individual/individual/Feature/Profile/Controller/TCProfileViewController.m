@@ -16,10 +16,13 @@
 #import "TCProfileProcessViewCell.h"
 #import "TCProfileBgImageChangeView.h"
 
+#import "TCImageURLSynthesizer.h"
 #import "TCPhotoPicker.h"
 #import "TCBuluoApi.h"
 
 #import "UIImage+Category.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TCProfileViewController ()
 <UITableViewDelegate,
@@ -136,12 +139,13 @@ TCPhotoPickerDelegate>
         TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
         self.headerView.nickLabel.text = userInfo.nickname;
         if (userInfo.picture) {
-            
+            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:userInfo.picture];
+            [self.headerView.avatarImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
         } else {
             [self.headerView.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
         }
         
-        // TODO:头像和背景图片
+        // TODO: 背景图片
     }
 }
 

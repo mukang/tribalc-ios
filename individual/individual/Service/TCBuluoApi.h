@@ -316,7 +316,7 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  @param progress 上传进度
  @param resultBlock 结果回调，success为NO时表示上传失败，失败原因见error的code和userInfo
  */
-- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, TCUploadInfo *uploadInfo, NSError *error))resultBlock;
 
 #pragma mark - 社区资源
 
