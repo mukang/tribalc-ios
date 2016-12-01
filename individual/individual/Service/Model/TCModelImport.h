@@ -21,12 +21,13 @@
 #import "TCBankCard.h"
 
 
-/********** 商品相关 **********/
+/********** 商业相关 **********/
 
 #import "TCGoods.h"
 #import "TCGoodsWrapper.h"
 #import "TCGoodDetail.h"
 #import "TCGoodStandards.h"
+#import "TCStoreInfo.h"
 
 /********** 服务相关 **********/
 #import "TCServiceWrapper.h"
@@ -45,9 +46,10 @@
 
 #import "TCUploadInfo.h"
 
-/********** 商品相关 **********/
+/********** 社区相关 **********/
 
 #import "TCCommunity.h"
+#import "TCCommunityDetailInfo.h"
 
 
 @interface TCModelImport : NSObject

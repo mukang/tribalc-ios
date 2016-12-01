@@ -7,6 +7,7 @@
 //
 
 #import "TCCommunitiesViewController.h"
+#import "TCCommunityDetailViewController.h"
 
 #import "TCCommunityViewCell.h"
 #import "TCRefreshHeader.h"
@@ -100,7 +101,11 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    TCCommunityDetailViewController *vc = [[TCCommunityDetailViewController alloc] initWithNibName:@"TCCommunityDetailViewController" bundle:[NSBundle mainBundle]];
+    TCCommunity *community = self.dataList[indexPath.item];
+    vc.communityID = community.ID;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - TCCommunityViewCellDelegate

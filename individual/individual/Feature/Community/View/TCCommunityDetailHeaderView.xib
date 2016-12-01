@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="YQq-LF-dpr" customClass="TCCommunityDetailHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="270"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xqP-KN-khH">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="270"/>
+                </scrollView>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="zt3-vV-UMT">
+                    <rect key="frame" x="168" y="225" width="39" height="37"/>
+                </pageControl>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="zt3-vV-UMT" secondAttribute="bottom" constant="8" id="7i3-U6-AD8"/>
+                <constraint firstAttribute="trailing" secondItem="xqP-KN-khH" secondAttribute="trailing" id="9af-Yf-drc"/>
+                <constraint firstItem="xqP-KN-khH" firstAttribute="top" secondItem="YQq-LF-dpr" secondAttribute="top" id="e63-xr-6i0"/>
+                <constraint firstItem="zt3-vV-UMT" firstAttribute="centerX" secondItem="YQq-LF-dpr" secondAttribute="centerX" id="rKa-KK-jak"/>
+                <constraint firstItem="xqP-KN-khH" firstAttribute="leading" secondItem="YQq-LF-dpr" secondAttribute="leading" id="y1I-1V-dK5"/>
+                <constraint firstAttribute="bottom" secondItem="xqP-KN-khH" secondAttribute="bottom" id="znQ-mz-l2L"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="pageControl" destination="zt3-vV-UMT" id="8w5-1m-buP"/>
+                <outlet property="scrollView" destination="xqP-KN-khH" id="Uci-8h-aIU"/>
+            </connections>
+            <point key="canvasLocation" x="-93.5" y="-50.5"/>
+        </view>
+    </objects>
+</document>

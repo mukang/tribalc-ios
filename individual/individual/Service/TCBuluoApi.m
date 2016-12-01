@@ -983,12 +983,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 #pragma mark - 上传图片资源
 
-- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, TCUploadInfo *, NSError *))resultBlock {
     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
     [self authorizeImageData:imageData result:^(TCUploadInfo *uploadInfo, NSError *error) {
         if (error) {
             if (resultBlock) {
-                TC_CALL_ASYNC_MQ(resultBlock(NO, error));
+                TC_CALL_ASYNC_MQ(resultBlock(NO, nil, error));
             }
         } else {
             NSString *uploadURLString = uploadInfo.url;
@@ -997,11 +997,11 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [[TCClient client] upload:request progress:progress finish:^(TCClientResponse *response) {
                 if (response.statusCode == 200) {
                     if (resultBlock) {
-                        TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                        TC_CALL_ASYNC_MQ(resultBlock(YES, uploadInfo, nil));
                     }
                 } else {
                     if (resultBlock) {
-                        TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                        TC_CALL_ASYNC_MQ(resultBlock(NO, nil, response.error));
                     }
                 }
             }];
@@ -1033,6 +1033,22 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+- (void)fetchCommunityDetailInfo:(NSString *)communityID result:(void (^)(TCCommunityDetailInfo *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"communities/%@", communityID];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            TCCommunityDetailInfo *communityDetailInfo = [[TCCommunityDetailInfo alloc] initWithObjectDictionary:response.data];
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(communityDetailInfo, nil));
+            }
+        }
+    }];
+}
 
 
 @end

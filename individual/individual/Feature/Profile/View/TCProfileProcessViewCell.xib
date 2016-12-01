@@ -21,7 +21,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ccw-dz-Md9">
                         <rect key="frame" x="0.0" y="0.0" width="80" height="79"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="待付款" image="profile_process_payment_button">
+                        <state key="normal" title="全部" image="profile_process_all_button">
                             <color key="titleColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>
@@ -31,7 +31,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KAb-DA-Kq5" userLabel="待收货">
                         <rect key="frame" x="80" y="0.0" width="80.5" height="79"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="待收货" image="profile_process_receiving_button">
+                        <state key="normal" title="待付款" image="profile_process_payment_button">
                             <color key="titleColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>
@@ -41,7 +41,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zPh-kE-Y94">
                         <rect key="frame" x="240.5" y="0.0" width="79.5" height="79"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="售后" image="profile_process_after_sale_button">
+                        <state key="normal" title="已结束" image="profile_process_end_button">
                             <color key="titleColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>
@@ -51,7 +51,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIy-kX-RFN">
                         <rect key="frame" x="160.5" y="0.0" width="80" height="79"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="待评价" image="profile_process_evaluation_button">
+                        <state key="normal" title="待收货" image="profile_process_receiving_button">
                             <color key="titleColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>
@@ -89,8 +89,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="profile_process_after_sale_button" width="26" height="26"/>
-        <image name="profile_process_evaluation_button" width="26" height="26"/>
+        <image name="profile_process_all_button" width="26" height="26"/>
+        <image name="profile_process_end_button" width="26" height="26"/>
         <image name="profile_process_payment_button" width="26" height="26"/>
         <image name="profile_process_receiving_button" width="26" height="26"/>
     </resources>

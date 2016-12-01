@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="190" id="KGk-i7-Jjw" customClass="TCCommunityLocationViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="189"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="svg-Nb-zWa">
+                        <rect key="frame" x="0.0" y="6" width="320" height="141"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="svg-Nb-zWa" secondAttribute="height" multiplier="375:165" id="Jis-c8-lxH"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZGB-EI-V4s">
+                        <rect key="frame" x="36" y="158.5" width="264" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="zMf-6m-88n"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="community_location_icon" translatesAutoresizingMaskIntoConstraints="NO" id="bnf-Be-7jA">
+                        <rect key="frame" x="20" y="159" width="11" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="CLR-0y-Vhh"/>
+                            <constraint firstAttribute="width" constant="11" id="xhh-nt-wTC"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="svg-Nb-zWa" secondAttribute="trailing" id="HwH-d1-SSm"/>
+                    <constraint firstItem="bnf-Be-7jA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="bXQ-QT-Thp"/>
+                    <constraint firstItem="bnf-Be-7jA" firstAttribute="top" secondItem="svg-Nb-zWa" secondAttribute="bottom" constant="12" id="f2l-2H-C16"/>
+                    <constraint firstAttribute="bottom" secondItem="bnf-Be-7jA" secondAttribute="bottom" constant="18" id="kbR-0B-sp4"/>
+                    <constraint firstItem="svg-Nb-zWa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="lh6-m3-RqI"/>
+                    <constraint firstAttribute="trailing" secondItem="ZGB-EI-V4s" secondAttribute="trailing" constant="20" id="qym-nE-ilw"/>
+                    <constraint firstItem="ZGB-EI-V4s" firstAttribute="leading" secondItem="bnf-Be-7jA" secondAttribute="trailing" constant="5" id="rfR-fv-I8w"/>
+                    <constraint firstItem="ZGB-EI-V4s" firstAttribute="centerY" secondItem="bnf-Be-7jA" secondAttribute="centerY" id="w0x-5O-kw8"/>
+                    <constraint firstItem="svg-Nb-zWa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="wRe-hz-Vkm"/>
+                </constraints>
+            </tableViewCellContentView>
+            <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+            <connections>
+                <outlet property="addressLabel" destination="ZGB-EI-V4s" id="ci5-vp-GZI"/>
+                <outlet property="mapImageView" destination="svg-Nb-zWa" id="CUE-KY-Sde"/>
+            </connections>
+            <point key="canvasLocation" x="-42" y="58"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="community_location_icon" width="11" height="12"/>
+    </resources>
+</document>

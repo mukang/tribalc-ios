@@ -10,4 +10,6 @@
 
 @interface TCBiographyAvatarViewCell : UITableViewCell
 
+@property (copy, nonatomic) NSString *avatar;
+
 @end

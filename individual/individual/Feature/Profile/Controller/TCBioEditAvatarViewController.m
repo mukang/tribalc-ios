@@ -10,10 +10,16 @@
 #import "TCPhotoPicker.h"
 
 #import "TCBuluoApi.h"
+#import "TCImageURLSynthesizer.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TCBioEditAvatarViewController () <TCPhotoPickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+@property (nonatomic, getter=isAvatarChanged) BOOL avatarChanged;
+@property (strong, nonatomic) UIImage *avatarImage;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonWidthConstraint;
@@ -56,8 +62,15 @@
 }
 
 - (void)setupSubviews {
-    UIImageView *avatarView = [[UIImageView alloc] init];
-    [self.view addSubview:avatarView];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    NSString *avatar = [[TCBuluoApi api] currentUserSession].userInfo.picture;
+    if (avatar) {
+        NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:avatar];
+        [self.imageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
+    } else {
+        [self.imageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
+    }
     
 }
 
@@ -88,17 +101,34 @@
 }
 
 - (IBAction)handleClickSaveButton:(UIButton *)sender {
-    TCLog(@"保存图片");
+    if (!self.isAvatarChanged || !self.avatarImage) {
+        [self handleClickCancelButton:nil];
+        return;
+    }
     
-//    UIImage *image = [UIImage imageWithContentsOfFile:@"/Users/mukang/Desktop/QQ20161124-0.png"];
-//    [[TCBuluoApi api] uploadImage:image progress:nil result:^(BOOL success, NSError *error) {
-//        if (success) {
-//            TCLog(@"上传成功！");
-//        } else {
-//            TCLog(@"上传失败！%@", error.localizedDescription);
-//        }
-//    }];
-    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] uploadImage:self.avatarImage progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
+        if (success) {
+            [weakSelf changeUserAvatarWithName:uploadInfo.objectKey];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"保存失败，%@", reason]];
+        }
+    }];
+}
+
+- (void)changeUserAvatarWithName:(NSString *)name {
+    NSString *imagePath = [TCImageURLSynthesizer synthesizeImagePathWithName:name source:kTCImageSourceOSS];
+    [[TCBuluoApi api] changeUserAvatar:imagePath result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
+            [weakSelf handleClickCancelButton:nil];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"保存失败，%@", reason]];
+        }
+    }];
 }
 
 - (IBAction)handleClickCancelButton:(UIButton *)sender {
@@ -108,10 +138,15 @@
 #pragma mark - TCPhotoPickerDelegate
 
 - (void)photoPicker:(TCPhotoPicker *)photoPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    TCLog(@"do something...");
-    NSString *type = info[UIImagePickerControllerMediaType];
-    NSLog(@"%@", type);
-    NSLog(@"--> %@", info);
+    
+    if (info[UIImagePickerControllerEditedImage]) {
+        self.avatarImage = info[UIImagePickerControllerEditedImage];
+    } else {
+        self.avatarImage = info[UIImagePickerControllerOriginalImage];
+    }
+    self.imageView.image = self.avatarImage;
+    self.avatarChanged = YES;
+    
     [photoPicker dismissPhotoPicker];
     self.photoPicker = nil;
 }

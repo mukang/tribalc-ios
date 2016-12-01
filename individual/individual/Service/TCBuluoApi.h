@@ -318,7 +318,7 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  @param progress 上传进度
  @param resultBlock 结果回调，success为NO时表示上传失败，失败原因见error的code和userInfo
  */
-- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, TCUploadInfo *uploadInfo, NSError *error))resultBlock;
 
 #pragma mark - 社区资源
 
@@ -328,5 +328,13 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  @param resultBlock 结果回调，communityList为nil时表示获取失败，失败原因见error的code和userInfo
  */
 - (void)fetchCommunityList:(void (^)(NSArray *communityList, NSError *error))resultBlock;
+
+/**
+ 获取社区详情
+
+ @param communityID 社区id
+ @param resultBlock 结果回调，communityDetailInfo为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchCommunityDetailInfo:(NSString *)communityID result:(void (^)(TCCommunityDetailInfo *communityDetailInfo, NSError *error))resultBlock;
 
 @end

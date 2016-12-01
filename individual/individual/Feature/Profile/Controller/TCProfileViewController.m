@@ -16,10 +16,13 @@
 #import "TCProfileProcessViewCell.h"
 #import "TCProfileBgImageChangeView.h"
 
+#import "TCImageURLSynthesizer.h"
 #import "TCPhotoPicker.h"
 #import "TCBuluoApi.h"
 
 #import "UIImage+Category.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TCProfileViewController ()
 <UITableViewDelegate,
@@ -136,12 +139,13 @@ TCPhotoPickerDelegate>
         TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
         self.headerView.nickLabel.text = userInfo.nickname;
         if (userInfo.picture) {
-            
+            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:userInfo.picture];
+            [self.headerView.avatarImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
         } else {
             [self.headerView.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
         }
         
-        // TODO:头像和背景图片
+        // TODO: 背景图片
     }
 }
 
@@ -208,17 +212,12 @@ TCPhotoPickerDelegate>
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return self.fodderArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 2;
-    } else if (section == 1) {
-        return 7;
-    } else {
-        return 1;
-    }
+    NSArray *temp = self.fodderArray[section];
+    return temp.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -448,12 +447,9 @@ TCPhotoPickerDelegate>
                            @{@"title": @"", @"icon": @""}],
                          @[@{@"title": @"我的钱包", @"icon": @"profile_wallet_icon"},
                            @{@"title": @"身份认证", @"icon": @"profile_identity_icon"},
-                           @{@"title": @"审核事项", @"icon": @"profile_check_icon"},
-                           @{@"title": @"我的活动", @"icon": @"profile_activity_icon"},
-                           @{@"title": @"优惠券", @"icon": @"profile_coupon_icon"},
+                           @{@"title": @"我的预定", @"icon": @"profile_check_icon"},
                            @{@"title": @"我的公司", @"icon": @"profile_company_icon"},
-                           @{@"title": @"足迹", @"icon": @"profile_footprint_icon"}],
-                         @[@{@"title": @"我的关注", @"icon": @"profile_attention_icon"}]
+                           @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"}]
                          ];
     }
     return _fodderArray;

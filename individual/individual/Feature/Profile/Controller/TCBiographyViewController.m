@@ -45,6 +45,12 @@
     [self setupNavBar];
     [self setupSubviews];
     [self fetchUserInfo];
+    [self registerNotifications];
+}
+
+- (void)dealloc {
+    self.tableView.delegate = nil;
+    [self removeNotifications];
 }
 
 - (void)setupNavBar {
@@ -150,6 +156,7 @@
     UITableViewCell *currentCell = nil;
     if (indexPath.section == 0 && indexPath.row == 0) {
         TCBiographyAvatarViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyAvatarViewCell" forIndexPath:indexPath];
+        cell.avatar = [[TCBuluoApi api] currentUserSession].userInfo.picture;
         currentCell = cell;
     } else {
         TCBiographyViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyViewCell" forIndexPath:indexPath];
@@ -278,7 +285,22 @@
     }];
 }
 
+#pragma mark - Notifications
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoDidUpdate:) name:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Actions
+
+- (void)handleUserInfoDidUpdate:(id)sender {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
 
 - (void)handleCickBackButton:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];

@@ -7,12 +7,34 @@
 //
 
 #import "TCBiographyAvatarViewCell.h"
+#import "TCImageURLSynthesizer.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
+@interface TCBiographyAvatarViewCell ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+
+@end
 
 @implementation TCBiographyAvatarViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.avatarImageView.layer.cornerRadius = 30;
+    self.avatarImageView.layer.masksToBounds = YES;
+}
+
+- (void)setAvatar:(NSString *)avatar {
+    _avatar = avatar;
+    
+    if (!avatar) {
+        [self.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
+    } else {
+        NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:avatar];
+        [self.avatarImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
