@@ -109,6 +109,12 @@
 		7A381BE71DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A381BE51DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib */; };
 		7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381C031DEDA5CE008BDBF7 /* TCStoreInfo.m */; };
 		7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */; };
+		7A3C81C21DF00B26009ABCEC /* TCPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */; };
+		7A3C81C51DF00DE7009ABCEC /* TCPaymentDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C41DF00DE7009ABCEC /* TCPaymentDetailView.m */; };
+		7A3C81C71DF00DFD009ABCEC /* TCPaymentDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3C81C61DF00DFD009ABCEC /* TCPaymentDetailView.xib */; };
+		7A3C81CA1DF02C16009ABCEC /* TCPaymentPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C91DF02C16009ABCEC /* TCPaymentPasswordView.m */; };
+		7A3C81CC1DF02FDA009ABCEC /* TCPaymentPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3C81CB1DF02FDA009ABCEC /* TCPaymentPasswordView.xib */; };
+		7A3C81CF1DF04DD5009ABCEC /* TCExtendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81CE1DF04DD5009ABCEC /* TCExtendButton.m */; };
 		7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */; };
 		7A4514631DE5725F007D7193 /* TCBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514611DE5725F007D7193 /* TCBankCardViewController.m */; };
 		7A4514641DE5725F007D7193 /* TCBankCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4514621DE5725F007D7193 /* TCBankCardViewController.xib */; };
@@ -399,6 +405,16 @@
 		7A381C031DEDA5CE008BDBF7 /* TCStoreInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreInfo.m; sourceTree = "<group>"; };
 		7A384E801DE84CF20094E1F5 /* TCUploadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUploadInfo.h; sourceTree = "<group>"; };
 		7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUploadInfo.m; sourceTree = "<group>"; };
+		7A3C81C01DF00B26009ABCEC /* TCPaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentView.h; sourceTree = "<group>"; };
+		7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentView.m; sourceTree = "<group>"; };
+		7A3C81C31DF00DE7009ABCEC /* TCPaymentDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentDetailView.h; sourceTree = "<group>"; };
+		7A3C81C41DF00DE7009ABCEC /* TCPaymentDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentDetailView.m; sourceTree = "<group>"; };
+		7A3C81C61DF00DFD009ABCEC /* TCPaymentDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentDetailView.xib; sourceTree = "<group>"; };
+		7A3C81C81DF02C16009ABCEC /* TCPaymentPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentPasswordView.h; sourceTree = "<group>"; };
+		7A3C81C91DF02C16009ABCEC /* TCPaymentPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentPasswordView.m; sourceTree = "<group>"; };
+		7A3C81CB1DF02FDA009ABCEC /* TCPaymentPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentPasswordView.xib; sourceTree = "<group>"; };
+		7A3C81CD1DF04DD5009ABCEC /* TCExtendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCExtendButton.h; sourceTree = "<group>"; };
+		7A3C81CE1DF04DD5009ABCEC /* TCExtendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCExtendButton.m; sourceTree = "<group>"; };
 		7A41C0D61DCC71C0003FC63C /* TCClientRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientRequestError.h; sourceTree = "<group>"; };
 		7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCClientRequestError.m; sourceTree = "<group>"; };
 		7A4514601DE5725F007D7193 /* TCBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBankCardViewController.h; sourceTree = "<group>"; };
@@ -787,6 +803,8 @@
 		7A11F6FC1DE41E93005F3EAB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7A3C81CD1DF04DD5009ABCEC /* TCExtendButton.h */,
+				7A3C81CE1DF04DD5009ABCEC /* TCExtendButton.m */,
 				7A11F6FD1DE41F43005F3EAB /* TCRefreshHeader.h */,
 				7A11F6FE1DE41F43005F3EAB /* TCRefreshHeader.m */,
 				7A11F7001DE41F63005F3EAB /* TCRefreshFooter.h */,
@@ -794,6 +812,14 @@
 				7A4E050B1DEEDC69002371B0 /* TCCommonInputViewCell.h */,
 				7A4E050C1DEEDC69002371B0 /* TCCommonInputViewCell.m */,
 				7A4E050D1DEEDC69002371B0 /* TCCommonInputViewCell.xib */,
+				7A3C81C01DF00B26009ABCEC /* TCPaymentView.h */,
+				7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */,
+				7A3C81C31DF00DE7009ABCEC /* TCPaymentDetailView.h */,
+				7A3C81C41DF00DE7009ABCEC /* TCPaymentDetailView.m */,
+				7A3C81C61DF00DFD009ABCEC /* TCPaymentDetailView.xib */,
+				7A3C81C81DF02C16009ABCEC /* TCPaymentPasswordView.h */,
+				7A3C81C91DF02C16009ABCEC /* TCPaymentPasswordView.m */,
+				7A3C81CB1DF02FDA009ABCEC /* TCPaymentPasswordView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1542,7 +1568,9 @@
 				7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */,
 				7A6506DD1DC9EBCB00B0EDBF /* TCShippingAddressEditViewController.xib in Resources */,
 				7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */,
+				7A3C81CC1DF02FDA009ABCEC /* TCPaymentPasswordView.xib in Resources */,
 				7A4514701DE58D62007D7193 /* TCBankCardAddViewController.xib in Resources */,
+				7A3C81C71DF00DFD009ABCEC /* TCPaymentDetailView.xib in Resources */,
 				7A1F129F1DEC551400A9B58F /* TCCommunityDetailViewController.xib in Resources */,
 				7A381BD81DED7856008BDBF7 /* TCCommunityLocationViewCell.xib in Resources */,
 				7A4514751DE5BF5B007D7193 /* TCBankPickerView.xib in Resources */,
@@ -1671,6 +1699,7 @@
 				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
 				7A918AC81DC34AA6002BD529 /* TCBioEditView.m in Sources */,
 				7A1F129A1DEC28F900A9B58F /* TCCommunity.m in Sources */,
+				7A3C81CF1DF04DD5009ABCEC /* TCExtendButton.m in Sources */,
 				7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */,
 				093048BC1DE57E56000FDCBF /* TCGoodDetail.m in Sources */,
 				092CD3ED1DD99F070073A9C1 /* TCEntertainmentInfoViewController.m in Sources */,
@@ -1697,7 +1726,9 @@
 				092CD3F71DD99F4A0073A9C1 /* TCRestaurantTableViewCell.m in Sources */,
 				7A918AC51DC34104002BD529 /* TCBioEditViewController.m in Sources */,
 				092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */,
+				7A3C81C21DF00B26009ABCEC /* TCPaymentView.m in Sources */,
 				7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */,
+				7A3C81CA1DF02C16009ABCEC /* TCPaymentPasswordView.m in Sources */,
 				092CD4261DD9A07C0073A9C1 /* TCRestaurantLogoView.m in Sources */,
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A6506F01DCA1F4F00B0EDBF /* TCBioEditAvatarViewController.m in Sources */,
@@ -1765,6 +1796,7 @@
 				09275FBD1DDEFF6E00502167 /* TCDetailAnnotationView.m in Sources */,
 				7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */,
 				092CD4271DD9A07C0073A9C1 /* TCRestaurantFilterView.m in Sources */,
+				7A3C81C51DF00DE7009ABCEC /* TCPaymentDetailView.m in Sources */,
 				7AB29F311DD46C7D00564D93 /* TCUserSensitiveInfo.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
 				7AAF23851DCB6668002B81A5 /* TCClientResponse.m in Sources */,
