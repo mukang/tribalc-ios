@@ -12,16 +12,16 @@
 
 @interface TCRecommendGoodCell : UICollectionViewCell
 
-@property (strong, nonatomic) UIImageView *goodImageView;
+@property (retain, nonatomic) UIImageView *goodImageView;
 
-@property (strong, nonatomic) UILabel *typeAndNameLab;
+@property (retain, nonatomic) UILabel *typeAndNameLab;
 
-@property (strong, nonatomic) UILabel *shopNameLab;
+@property (retain, nonatomic) UILabel *shopNameLab;
 
-@property (strong, nonatomic) UILabel *priceLab;
+@property (retain, nonatomic) UILabel *priceLab;
 
-@property UIImageView *collectionImgView;
+@property (nonatomic) UIImageView *collectionImgView;
 
-@property UIButton *collectionBtn;
+@property (nonatomic) UIButton *collectionBtn;
 
 @end

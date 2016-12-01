@@ -15,11 +15,11 @@
 @interface TCStandardView : UIView <SDWebImageManagerDelegate>
 
 
-@property UIImageView *selectedImgView;
-@property UILabel *selectedPrimaryLab;
-@property UILabel *selectedSecondLab;
+@property (nonatomic,retain) UIImageView *selectedImgView;
+@property (retain, nonatomic) UILabel *selectedPrimaryLab;
+@property (retain, nonatomic) UILabel *selectedSecondLab;
 
-@property UILabel *numberLab;
+@property (retain, nonatomic) UILabel *numberLab;
 
 
 - (void)startSelectStandard;

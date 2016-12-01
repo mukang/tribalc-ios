@@ -12,7 +12,7 @@
     UIImageView *restaurantInfoLogoImageView;
     TCRestaurantLogoView *logoView;
     UIImageView *barImageView;
-//    NSDictionary *restaurantInfoDic;
+
     TCServiceDetail *serviceDetail;
     NSString *statusColorStr;
     
@@ -37,6 +37,7 @@
     [super viewWillAppear:animated];
     
     statusColorStr = @"white";
+    mScrollView.delegate = self;
     
     [self initNavigationBar];
 
@@ -428,19 +429,16 @@
 }
 
 - (void)touchReserveRest {
-    //    restaurantInfoDic[@""]    data
-    
-    UIViewController *viewController = [[UIViewController alloc] init];
-    viewController.title = @"预订餐位";
-    [self.navigationController pushViewController:viewController animated:YES];
+    TCReserveOnlineViewController *reserveOnlineViewController = [[TCReserveOnlineViewController alloc] init];
+    [self.navigationController pushViewController:reserveOnlineViewController animated:YES];
 }
 
 - (void)touchOrderRest {
 //    restaurantInfoDic[@""]    data
-    
-    UIViewController *viewController = [[UIViewController alloc] init];
-    viewController.title = @"外卖订餐";
-    [self.navigationController pushViewController:viewController animated:YES];
+//    
+//    UIViewController *viewController = [[UIViewController alloc] init];
+//    viewController.title = @"外卖订餐";
+//    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 -(void)touchPhoneBtn {

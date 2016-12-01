@@ -11,9 +11,9 @@
 
 @interface TCRestaurantFilterView : UIView
 
-@property TCSelectSortButton *reserveBtn;
+@property (retain, nonatomic) TCSelectSortButton *reserveBtn;
 
-@property TCSelectSortButton *deliverBtn;
+@property (retain, nonatomic) TCSelectSortButton *deliverBtn;
 
 
 @end

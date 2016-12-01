@@ -10,9 +10,9 @@
 
 @interface TCRestaurantTableViewCell : UITableViewCell
 
-@property UIImageView *resImgView;
-@property UILabel *nameLab;
-@property UILabel *rangeLab;
+@property (retain, nonatomic) UIImageView *resImgView;
+@property (retain, nonatomic) UILabel *nameLab;
+@property (retain, nonatomic) UILabel *rangeLab;
 
 
 - (void)setLocation:(NSString *)location;

@@ -17,6 +17,6 @@
 
 +(instancetype)calloutViewWithMapView:(MKMapView *)mapView;
 
-@property UIButton *imgBtn;
+@property (nonatomic, retain) UIButton *imgBtn;
 
 @end

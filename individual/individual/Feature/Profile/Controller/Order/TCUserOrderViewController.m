@@ -7,8 +7,12 @@
 //
 
 #import "TCUserOrderViewController.h"
+#import "TCBuluoApi.h"
+#import "TCModelImport.h"
 
-@interface TCUserOrderViewController ()
+@interface TCUserOrderViewController () {
+    TCOrderWrapper *mOrderWrapper;
+}
 
 @end
 
@@ -33,16 +37,24 @@
     
     self.tabBarController.tabBar.hidden = YES;
     
-//    [self initData];
+    [self initOrderItem];
     
     [self initTableView];
     
     
 }
 
+- (void)initOrderItem {
+    TCBuluoApi *api = [TCBuluoApi api];
+    [api fetchOrderWrapper:nil limiSize:10 sortSkip:nil result:^(TCOrderWrapper *orderWrapper, NSError *error) {
+        mOrderWrapper = orderWrapper;
+    }];
+}
+
 
 - (void)initTableView {
     orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40.5, self.view.width, self.view.height- 40.5) style:UITableViewStyleGrouped];
+    orderTableView.showsHorizontalScrollIndicator = NO;
     orderTableView.delegate = self;
     orderTableView.dataSource = self;
     orderTableView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];

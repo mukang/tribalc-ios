@@ -37,6 +37,10 @@
 #import "TCListStore.h"
 #import "TCDetailStore.h"
 
+/********** 订单相关 **********/
+#import "TCOrderWrapper.h"
+#import "TCOrderItem.h"
+#import "TCOrder.h"
 
 /********** OSS上传相关 **********/
 

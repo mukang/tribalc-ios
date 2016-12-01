@@ -951,6 +951,35 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+#pragma mark - 订单类资源
+- (void)fetchOrderWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCOrderWrapper *, NSError *))resultBlock {
+
+    if ([self isUserSessionValid]) {
+        NSString *statusPart = status ? [NSString stringWithFormat:@"&status=%@", status] : @"";
+        NSString *limitSizePart = limitSize ? [NSString stringWithFormat:@"&limitSize=%lu", (unsigned long)limitSize] : @"";
+        NSString *sortSkipPart = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%@", sortSkip] : @"";
+        NSString *apiName = [NSString stringWithFormat:@"orders?type=owner&me=%@%@%@%@", self.currentUserSession.assigned, statusPart, limitSizePart, sortSkipPart];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.error) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            } else {
+                TCOrderWrapper *orderWrapper = [[TCOrderWrapper alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(orderWrapper, nil));
+                }
+            }
+        }];
+    }else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 
 #pragma mark - 上传图片资源
 
