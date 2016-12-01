@@ -11,8 +11,8 @@
 
 @interface TCComputeView : UIView
 
-@property UIButton *addBtn;
-@property UIButton *subBtn;
+@property (retain, nonatomic) UIButton *addBtn;
+@property (retain, nonatomic) UIButton *subBtn;
 
 - (void)setCount:(NSInteger)count;
 

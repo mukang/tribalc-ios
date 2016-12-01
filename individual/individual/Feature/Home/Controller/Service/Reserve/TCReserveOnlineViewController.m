@@ -9,12 +9,13 @@
 #import "TCReserveOnlineViewController.h"
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
+#import "TCReserveUserBaseInfoView.h"
 
 @interface TCReserveOnlineViewController () {
     UILabel *timeLab;
     UILabel *personNumberLab;
-    UITextField *nameTextField;
     
+    TCReserveUserBaseInfoView *userInfoView;
     
     UIView *timeSelectView;
     UIView *personNumberSelectView;
@@ -55,42 +56,31 @@
 
 - (void)initUI {
     
+    
     UIView *timeAndPersonNumberView = [self getTimeAndPersonNumberView];
     [self.view addSubview:timeAndPersonNumberView];
     
     [self initPickerView];
     
+    userInfoView = [[TCReserveUserBaseInfoView alloc] initWithFrame:CGRectMake(0, timeAndPersonNumberView.y + timeAndPersonNumberView.height + 11, self.view.width, self.view.height - timeAndPersonNumberView.y - timeAndPersonNumberView.height)];
+    [self.view addSubview:userInfoView];
     
+    UIButton *reserveBtn = [self getReserveButtonWithFrame:CGRectMake(33, self.view.height - 15 - 43 - 64, self.view.width - 66, 43)];
+    [reserveBtn bringSubviewToFront:self.view];
+    [self.view addSubview:reserveBtn];
     
 }
 
-- (UIView *)getUserBaseInfoViewWithFrame:(CGRect)frame {
-    UIView *userBaseView = [[UIView alloc] initWithFrame:frame];
-    
-    return userBaseView;
-}
 
 
-- (void)showSelectTimePickerView {
-    [UIView animateWithDuration:0.15 animations:^{
-        timeSelectView.hidden = NO;
-        timeSelectView.y = timeSelectView.y - 256 ;
-    } completion:nil];
-}
-
-- (void)showSelectPersonNumberView {
-    [UIView animateWithDuration:0.15 animations:^{
-        personNumberSelectView.hidden = NO;
-        personNumberSelectView.y = personNumberSelectView.y - 256;
-    } completion:nil];
-}
-
-- (void)cancelShowSelectView {
-    timeSelectView.hidden = YES;
-    personNumberSelectView.hidden = YES;
-    timeSelectView.y = 0;
-    personNumberSelectView.y = 0;
-    
+- (UIButton *)getReserveButtonWithFrame:(CGRect)frame {
+    UIButton *reserveBtn = [[UIButton alloc] initWithFrame:frame];
+    [reserveBtn setTitle:@"预订餐位" forState:UIControlStateNormal];
+    reserveBtn.backgroundColor = TCRGBColor(81, 199, 209);
+    [reserveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    reserveBtn.layer.cornerRadius = 5;
+    [reserveBtn addTarget:self action:@selector(touchReserveBtn:) forControlEvents:UIControlEventTouchUpInside];
+    return reserveBtn;
 }
 
 
@@ -223,9 +213,27 @@
 - (NSString *)getTimeString {
     NSDate *date = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY-mm-dd HH:mm"];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm"];
     
     return [dateFormatter stringFromDate:date];
+}
+
+- (NSString *)getTimeStringWithSelectDateStr:(NSString *)dateStr AndTimeStr:(NSString *)timeStr{
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM"];
+    NSString *monthStr = [dateFormatter stringFromDate:date];
+    
+    NSString *selectMonth = [dateStr componentsSeparatedByString:@"-"][0];
+    [dateFormatter setDateFormat:@"YYYY"];
+    NSString *yearStr;
+    if (selectMonth.integerValue >= monthStr.integerValue) {
+        yearStr = [dateFormatter stringFromDate:date];
+    } else {
+        yearStr = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * 30 * 12]];
+    }
+    
+    return [NSString stringWithFormat:@"%@-%@ %@", yearStr, [dateStr componentsSeparatedByString:@" "][0], timeStr];
 }
 
 - (NSString *)getTimeString:(NSDate *)date {
@@ -261,6 +269,30 @@
     
     
 }
+
+- (void)showSelectTimePickerView {
+    [UIView animateWithDuration:0.15 animations:^{
+        timeSelectView.hidden = NO;
+        timeSelectView.y = timeSelectView.y - 256 ;
+    } completion:nil];
+}
+
+- (void)showSelectPersonNumberView {
+    [UIView animateWithDuration:0.15 animations:^{
+        personNumberSelectView.hidden = NO;
+        personNumberSelectView.y = personNumberSelectView.y - 256;
+    } completion:nil];
+}
+
+- (void)cancelShowSelectView {
+    timeSelectView.hidden = YES;
+    personNumberSelectView.hidden = YES;
+    timeSelectView.y = 0;
+    personNumberSelectView.y = 0;
+    
+}
+
+
 
 #pragma mark - UIPickerView
 
@@ -349,7 +381,13 @@
     [self cancelShowSelectView];
 }
 
+
 - (void)touchConfirmSelectBtn:(UIButton *)button {
+    NSInteger dateRow = [timePickerView selectedRowInComponent:0];
+    NSInteger timeRow = [timePickerView selectedRowInComponent:1];
+    NSString *dateString = [self getTimeAndWeek:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * dateRow]];
+    NSString *timeString = [self getTimeString:[NSDate dateWithTimeIntervalSinceNow:30 * 60 * timeRow]];
+    timeLab.text = [self getTimeStringWithSelectDateStr:dateString AndTimeStr:timeString];
     
     NSInteger personNumberRow = [personNumberPickerView selectedRowInComponent:0];
     NSString *personNumberStr = [NSString stringWithFormat:@"%li", personNumberRow + 1];
@@ -358,6 +396,9 @@
     [self cancelShowSelectView];
 }
 
+- (void)touchReserveBtn:(UIButton *)btn {
+    NSLog(@"点击预订按钮");
+}
 
 - (void)touchBackBtn {
     [self.navigationController popViewControllerAnimated:YES];

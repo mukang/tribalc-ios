@@ -12,8 +12,8 @@
 
 - (instancetype)initWithFrame:(CGRect)frame AndText:(NSString *)text AndImgName:(NSString *)imgName;
 
-@property UILabel *titleLab;
+@property (retain, nonatomic) UILabel *titleLab;
 
-@property UIImageView *imgeView;
+@property (retain, nonatomic) UIImageView *imgeView;
 
 @end

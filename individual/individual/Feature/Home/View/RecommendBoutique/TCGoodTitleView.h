@@ -11,15 +11,15 @@
 
 @interface TCGoodTitleView : UIView
 
-@property UILabel *titleLab;
+@property (retain, nonatomic) UILabel *titleLab;
 
-@property UILabel *priceIntegerLab;
+@property (retain, nonatomic) UILabel *priceIntegerLab;
 
-@property UILabel *priceDecimalLab;
+@property (retain, nonatomic) UILabel *priceDecimalLab;
 
-@property UILabel *originPriceLab;
+@property (retain, nonatomic) UILabel *originPriceLab;
 
-@property UILabel *tagLab;
+@property (retain, nonatomic) UILabel *tagLab;
 
 - (instancetype)initWithFrame:(CGRect)frame WithTitle:(NSString *)title AndPrice:(float)price AndOriginPrice:(float)originPrice AndTags:(NSArray *)tags;
 

@@ -11,14 +11,14 @@
 
 @interface TCRestaurantSortView : UIView
 
-@property TCSelectSortButton *averageMinBtn;
+@property  (retain, nonatomic) TCSelectSortButton *averageMinBtn;
 
-@property TCSelectSortButton *averageMaxBtn;
+@property (retain, nonatomic) TCSelectSortButton *averageMaxBtn;
 
-@property TCSelectSortButton *popularityMaxBtn;
+@property (retain, nonatomic) TCSelectSortButton *popularityMaxBtn;
 
-@property TCSelectSortButton *distanceMinBtn;
+@property (retain, nonatomic) TCSelectSortButton *distanceMinBtn;
 
-@property TCSelectSortButton *evaluateMaxBtn;
+@property (retain, nonatomic) TCSelectSortButton *evaluateMaxBtn;
 
 @end

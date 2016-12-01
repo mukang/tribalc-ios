@@ -11,9 +11,8 @@
 
 @interface TCReserveRadioBtnView : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame AndTarget:(id)target;
 
 
-@property NSString *selectStr;
+@property (copy, nonatomic) NSString *selectStr;
 
 @end

@@ -18,9 +18,9 @@
 
 - (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
-@property UIButton *selectedBtn;
-@property UIImageView *leftImgView;
-@property UILabel *titleLab;
+@property (retain, nonatomic) UIButton *selectedBtn;
+@property (retain, nonatomic) UIImageView *leftImgView;
+@property (retain, nonatomic) UILabel *titleLab;
 
 - (void)setStandard:(NSDictionary *)standard;
 - (void)setCount:(NSInteger)count;

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCReserveRadioBtnView.h"
 
 @interface TCReserveOnlineViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 
