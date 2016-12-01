@@ -56,6 +56,8 @@
 
 - (UIScrollView *)getScrollViewWithFrame:(CGRect)frame {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:frame];
+    scrollView.showsVerticalScrollIndicator = NO;
+    scrollView.bounces = NO;
     scrollView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     [self.view addSubview:scrollView];
     return scrollView;

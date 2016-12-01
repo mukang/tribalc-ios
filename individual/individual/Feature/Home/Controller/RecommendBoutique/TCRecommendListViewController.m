@@ -53,17 +53,21 @@
 }
 
 - (void)initialGoodsDataWithSortSkip:(NSString *)sortSkip {
-    TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchGoodsWrapper:8 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
-        
-        NSArray *infoArr = goodsInfoWrapper.content;
-        goodsInfoWrapper = goodsWrapper;
-        goodsInfoWrapper.content = [infoArr arrayByAddingObjectsFromArray:goodsWrapper.content];
-        [recommendCollectionView reloadData];
+    if (goodsInfoWrapper.hasMore == YES) {
+        TCBuluoApi *api = [TCBuluoApi api];
+        [api fetchGoodsWrapper:8 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+            
+            NSArray *infoArr = goodsInfoWrapper.content;
+            goodsInfoWrapper = goodsWrapper;
+            goodsInfoWrapper.content = [infoArr arrayByAddingObjectsFromArray:goodsWrapper.content];
+            [recommendCollectionView reloadData];
+            [recommendCollectionView.mj_footer endRefreshing];
+        }];
+    } else {
+        TCRecommendFooter *footer = (TCRecommendFooter *)recommendCollectionView.mj_footer;
+        [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];
         [recommendCollectionView.mj_footer endRefreshing];
-        
-    }];
-    
+    }
 }
 
 - (void)initialNavigationBar {

@@ -38,6 +38,8 @@
     
 }
 
+
+
 - (void)addChildController:(UIViewController *)childController AndTitle:(NSString *)title {
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:childController];
     [navigationController.navigationBar setHidden:YES];

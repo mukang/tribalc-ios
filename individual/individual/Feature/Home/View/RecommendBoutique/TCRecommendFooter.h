@@ -10,4 +10,5 @@
 
 @interface TCRecommendFooter : MJRefreshAutoNormalFooter
 
+
 @end

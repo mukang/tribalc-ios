@@ -14,6 +14,7 @@
 #import "TCClientConfig.h"
 #import "TCBuluoApi.h"
 #import "UIImageView+WebCache.h"
+#import "TCReserveOnlineViewController.h"
 
 
 @interface TCRestaurantInfoViewController : UIViewController<UIScrollViewDelegate, SDWebImageManagerDelegate>

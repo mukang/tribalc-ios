@@ -305,6 +305,8 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 - (void)fetchServiceDetail:(NSString *)serviceID result:(void (^)(TCServiceDetail *, NSError *))resultBlock;
 
 
+#pragma mark - 订单类资源
+- (void)fetchOrderWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCOrderWrapper *, NSError *))resultBlock;
 
 
 #pragma mark - 上传图片资源
