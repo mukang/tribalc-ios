@@ -22,6 +22,8 @@
 
 #import "UIImage+Category.h"
 
+#import "TCUserReserveViewController.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TCProfileViewController ()
@@ -285,6 +287,10 @@ TCPhotoPickerDelegate>
             TCWalletViewController *vc = [[TCWalletViewController alloc] initWithNibName:@"TCWalletViewController" bundle:[NSBundle mainBundle]];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 2) {
+            TCUserReserveViewController *userReserveViewController = [[TCUserReserveViewController alloc] init];
+            userReserveViewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:userReserveViewController animated:YES];
         }
     } else {
         

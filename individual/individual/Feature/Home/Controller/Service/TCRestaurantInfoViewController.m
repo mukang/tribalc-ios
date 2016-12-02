@@ -13,10 +13,14 @@
     TCRestaurantLogoView *logoView;
     UIImageView *barImageView;
 
+    UIView *baseInfoView;
+    
     TCServiceDetail *serviceDetail;
     NSString *statusColorStr;
     
     NSString *mServiceId;
+    
+    BOOL isCollection;
 }
 
 @end
@@ -52,6 +56,8 @@
     
     [self initServiceDetail];
     
+    isCollection = NO;
+    
 }
 
 - (void)initServiceDetail {
@@ -69,28 +75,33 @@
     
     [self createBottomButton];
     
-    UIView *resBaseInfoView = [self createResBaseInfoViewWithFrame:CGRectMake(0,restaurantInfoLogoImageView.y + restaurantInfoLogoImageView.height, self.view.frame.size.width, 125)];
+    
+    baseInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, restaurantInfoLogoImageView.y + restaurantInfoLogoImageView.height + 35, TCScreenWidth, 0)];
+    baseInfoView.backgroundColor =  [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1];
+    UIView *resBaseInfoView = [self createResBaseInfoViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 125)];
     resBaseInfoView.backgroundColor = [UIColor whiteColor];
-    [mScrollView addSubview:resBaseInfoView];
+    [baseInfoView addSubview:resBaseInfoView];
     
     UIView *addressAndPhoneView = [self createAddressAndPhoneViewWithFrame:CGRectMake(0, resBaseInfoView.y + resBaseInfoView.height, self.view.width, 82)];
-    [mScrollView addSubview:addressAndPhoneView];
+    [baseInfoView addSubview:addressAndPhoneView];
     
     UIView *recommendedReasonView = [self createTextViewWithFrame:CGRectMake(0, addressAndPhoneView.y + addressAndPhoneView.height, self.view.width, 175) AndTitle:@"推荐理由" AndText:serviceDetail.recommendedReason AndimgName:@"res_recommend"];
-    [mScrollView addSubview:recommendedReasonView];
+    [baseInfoView addSubview:recommendedReasonView];
     
     UIView *restTopicView = [self createTextViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, 175) AndTitle:@"餐厅话题" AndText:serviceDetail.topics AndimgName:@"res_topic"];
-    [mScrollView addSubview:restTopicView];
+    [baseInfoView addSubview:restTopicView];
     
     
     UIView *promptView = [self createPromptViewWithFrame:CGRectMake(0, restTopicView.y + restTopicView.height, self.view.frame.size.width, 145)];
-    [mScrollView addSubview:promptView];
+    [baseInfoView addSubview:promptView];
     
     UIButton *phoneBtn = [self createPhoneCustomViewWithFrame:CGRectMake(0, promptView.y + promptView.height + 7, self.view.frame.size.width, 45)];
     [phoneBtn addTarget:self action:@selector(touchCallCustomerService) forControlEvents:UIControlEventTouchUpInside];
-    [mScrollView addSubview:phoneBtn];
+    [baseInfoView addSubview:phoneBtn];
+    baseInfoView.height = phoneBtn.y + phoneBtn.height + 8;
+    [mScrollView addSubview:baseInfoView];
     
-    mScrollView.contentSize = CGSizeMake(self.view.width, phoneBtn.y + phoneBtn.height + 8);
+    mScrollView.contentSize = CGSizeMake(self.view.width, baseInfoView.y + baseInfoView.height);
     
 
 }
@@ -100,7 +111,7 @@
     [leftBtn addTarget:self action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:rightName];
-    [rightBtn addTarget:self action:@selector(touchCollectionBtn) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
 
 }
@@ -112,7 +123,7 @@
     barImageView.backgroundColor = [UIColor whiteColor];
     barImageView.alpha = 0;
 
-    [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:@"res_collection"];
+    [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:[self getCollectionImageName]];
     
 }
 
@@ -121,20 +132,21 @@
 - (void)initBaseData {
     
     mScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 45)];
-//    mScrollView.contentSize = CGSizeMake(mScrollView.frame.size.width, mScrollView.size.height + 64 + 200);
+    
     [self.view addSubview:mScrollView];
     
     NSURL *logoImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, serviceDetail.mainPicture]];
+    
     restaurantInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 270)];
     [restaurantInfoLogoImageView sd_setImageWithURL:logoImageUrl placeholderImage:[UIImage imageNamed:@"home_image_place"]];
-    restaurantInfoLogoImageView.backgroundColor = [UIColor lightGrayColor];
+    restaurantInfoLogoImageView.clipsToBounds = NO;
     
     float logoViewRadius = restaurantInfoLogoImageView.frame.size.height * 0.12;
     logoView = [[TCRestaurantLogoView alloc] initWithFrame:CGRectMake(restaurantInfoLogoImageView.width / 2 - logoViewRadius, restaurantInfoLogoImageView.height - logoViewRadius, logoViewRadius * 2, logoViewRadius * 2) AndUrlStr:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, serviceDetail.detailStore.logo]];
     [restaurantInfoLogoImageView addSubview:logoView];
+    [restaurantInfoLogoImageView bringSubviewToFront:mScrollView];
     
-    mScrollView.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1];
-    
+    mScrollView.backgroundColor = [UIColor whiteColor];
     mScrollView.delegate = self;
     
     [mScrollView addSubview:restaurantInfoLogoImageView];
@@ -424,8 +436,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)touchCollectionBtn {
-    
+- (void)touchCollectionBtn:(UIButton *)button {
+    isCollection = !isCollection;
+    [button setImage:[UIImage imageNamed:[self getCollectionImageName]] forState:UIControlStateNormal];
 }
 
 - (void)touchReserveRest {
@@ -468,6 +481,14 @@
     
 }
 
+- (NSString *)getCollectionImageName {
+    if (isCollection == YES) {
+        return @"res_collection";
+    } else {
+        return @"res_collection_not";
+    }
+}
+
 #pragma mark - scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
@@ -485,7 +506,7 @@
         statusColorStr = @"black";
         [self setNeedsStatusBarAppearanceUpdate];
     } else {
-        [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:@"res_collection"];
+        [self initialNavLeftBarWithImgName:@"back" AndRightBarImgName:[self getCollectionImageName]];
         statusColorStr = @"white";
         [self setNeedsStatusBarAppearanceUpdate];
     }
@@ -495,9 +516,11 @@
         double number = height / 270;
         double width = self.view.frame.size.width * number;
         double logoRadius = height * 0.12;
-        
+        double addHeight = logoRadius * 2 - logoView.height;
+    
         [restaurantInfoLogoImageView setFrame:CGRectMake(self.view.frame.size.width / 2 - width / 2, point.y, width, height)];
         [logoView setNewFrame:CGRectMake(restaurantInfoLogoImageView.frame.size.width / 2 - logoRadius, restaurantInfoLogoImageView.frame.size.height - logoRadius, logoRadius * 2, logoRadius * 2)];
+        baseInfoView.y = baseInfoView.y + addHeight;
         
     }
 }

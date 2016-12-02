@@ -19,13 +19,13 @@
 //        
         self.layer.cornerRadius = frame.size.height / 2;
         self.layer.borderWidth = 2;
-        self.layer.borderColor = [UIColor colorWithRed:136/255.0 green:136/255.0 blue:136/255.0 alpha:0.3].CGColor;
+        self.layer.borderColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8].CGColor;
         self.backgroundColor = [UIColor whiteColor];
         self.layer.masksToBounds = YES;
 
-        logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height / 2)];
+        logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
         NSURL *url = [NSURL URLWithString:urlStr];
-        [logoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"home_image_place"]];
+        [logoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
         [self addSubview:logoImageView];
         
         
@@ -38,7 +38,7 @@
     
     [self setFrame:frame];
     self.layer.cornerRadius = frame.size.height / 2;
-    [logoImageView setSize:CGSizeMake(self.width, self.height / 2)];
+    [logoImageView setSize:CGSizeMake(self.width, self.height)];
     
 }
 
