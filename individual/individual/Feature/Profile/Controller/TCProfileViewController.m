@@ -10,6 +10,7 @@
 #import "TCLoginViewController.h"
 #import "TCBiographyViewController.h"
 #import "TCWalletViewController.h"
+#import "TCIDAuthViewController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
@@ -285,9 +286,11 @@ TCPhotoPickerDelegate>
             TCWalletViewController *vc = [[TCWalletViewController alloc] initWithNibName:@"TCWalletViewController" bundle:[NSBundle mainBundle]];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 1) {
+            TCIDAuthViewController *vc = [[TCIDAuthViewController alloc] initWithNibName:@"TCIDAuthViewController" bundle:[NSBundle mainBundle]];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
-    } else {
-        
     }
 }
 
