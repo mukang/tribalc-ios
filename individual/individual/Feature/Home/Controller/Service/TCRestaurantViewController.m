@@ -46,7 +46,7 @@
 
 - (void)initRestaurantDataWithSortType:(NSString *)sortType {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchServiceWrapper:@"REPAST" limiSize:20 sortSkip:nil sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
+    [api fetchServiceWrapper:nil limiSize:20 sortSkip:nil sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
         mServiceWrapper = serviceWrapper;
         [mResaurantTableView reloadData];
         [mResaurantTableView.mj_header endRefreshing];
@@ -58,7 +58,7 @@
     
     if (mServiceWrapper.hasMore == YES) {
         TCBuluoApi *api = [TCBuluoApi api];
-        [api fetchServiceWrapper:@"REPAST" limiSize:20 sortSkip:nextSkip sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
+        [api fetchServiceWrapper:nil limiSize:20 sortSkip:nextSkip sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
             NSArray *contentArr = mServiceWrapper.content;
             mServiceWrapper = serviceWrapper;
             mServiceWrapper.content = [contentArr arrayByAddingObjectsFromArray:serviceWrapper.content];

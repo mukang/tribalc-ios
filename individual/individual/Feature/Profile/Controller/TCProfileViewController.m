@@ -23,6 +23,8 @@
 
 #import "UIImage+Category.h"
 
+#import "TCUserReserveViewController.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TCProfileViewController ()
@@ -290,6 +292,10 @@ TCPhotoPickerDelegate>
             TCIDAuthViewController *vc = [[TCIDAuthViewController alloc] initWithNibName:@"TCIDAuthViewController" bundle:[NSBundle mainBundle]];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 2) {
+            TCUserReserveViewController *userReserveViewController = [[TCUserReserveViewController alloc] init];
+            userReserveViewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:userReserveViewController animated:YES];
         }
     }
 }

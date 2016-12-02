@@ -189,6 +189,8 @@
     
     additionalView.y = downLineView.y + downLineView.height + 45;
     
+    _verificationCodeTextField.text = @"";
+    
     _isNeedVerification = YES;
     
 }

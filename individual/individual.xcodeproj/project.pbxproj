@@ -33,6 +33,8 @@
 		092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C67E21DE6E245008873E7 /* TCGoodStandards.m */; };
 		092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C696F1DEFD33500FE2FD8 /* TCReserveRadioBtnView.m */; };
 		092C69731DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C69721DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m */; };
+		092C697D1DF0378600FE2FD8 /* TCUserReserveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C697C1DF0378600FE2FD8 /* TCUserReserveViewController.m */; };
+		092C69801DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C697F1DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m */; };
 		092CD3E71DD99DBC0073A9C1 /* TCLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3E61DD99DBC0073A9C1 /* TCLocationViewController.m */; };
 		092CD4051DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3FC1DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.m */; };
 		092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3FE1DD99F9F0073A9C1 /* TCShoppingCartViewController.m */; };
@@ -280,6 +282,10 @@
 		092C696F1DEFD33500FE2FD8 /* TCReserveRadioBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCReserveRadioBtnView.m; sourceTree = "<group>"; };
 		092C69711DF002C100FE2FD8 /* TCReserveUserBaseInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReserveUserBaseInfoView.h; sourceTree = "<group>"; };
 		092C69721DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCReserveUserBaseInfoView.m; sourceTree = "<group>"; };
+		092C697B1DF0378600FE2FD8 /* TCUserReserveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserReserveViewController.h; sourceTree = "<group>"; };
+		092C697C1DF0378600FE2FD8 /* TCUserReserveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserReserveViewController.m; sourceTree = "<group>"; };
+		092C697E1DF03D9500FE2FD8 /* TCUserReserveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserReserveTableViewCell.h; sourceTree = "<group>"; };
+		092C697F1DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserReserveTableViewCell.m; sourceTree = "<group>"; };
 		092CD3E51DD99DBC0073A9C1 /* TCLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLocationViewController.h; sourceTree = "<group>"; };
 		092CD3E61DD99DBC0073A9C1 /* TCLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLocationViewController.m; sourceTree = "<group>"; };
 		092CD3FB1DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
@@ -669,6 +675,10 @@
 			children = (
 				09222E301DEE99860064C0DF /* TCReserveOnlineViewController.h */,
 				09222E311DEE99860064C0DF /* TCReserveOnlineViewController.m */,
+				092C697B1DF0378600FE2FD8 /* TCUserReserveViewController.h */,
+				092C697C1DF0378600FE2FD8 /* TCUserReserveViewController.m */,
+				092C697E1DF03D9500FE2FD8 /* TCUserReserveTableViewCell.h */,
+				092C697F1DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m */,
 			);
 			path = Reserve;
 			sourceTree = "<group>";
@@ -1747,6 +1757,7 @@
 				092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */,
 				09222E2A1DEE98550064C0DF /* TCRestaurantFilterView.m in Sources */,
 				7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */,
+				092C69801DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
 				7AAF23821DCB5C04002B81A5 /* TCUserSession.m in Sources */,
 				7ADB92BE1DDF10470055D557 /* TCWalletViewController.m in Sources */,
@@ -1776,6 +1787,7 @@
 				7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */,
 				7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */,
 				093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */,
+				092C697D1DF0378600FE2FD8 /* TCUserReserveViewController.m in Sources */,
 				7A381BE61DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.m in Sources */,
 				7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */,
 				7A4514681DE57AB4007D7193 /* TCBankCardViewCell.m in Sources */,
