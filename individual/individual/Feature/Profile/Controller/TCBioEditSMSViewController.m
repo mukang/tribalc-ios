@@ -36,6 +36,7 @@
     weakSelf = self;
     self.noticeLabel.text = [NSString stringWithFormat:@"请输入%@收到的短信校验码", self.phone];
     [self setupNavBar];
+    [self setupSubviews];
     [self startCountDown];
 }
 
@@ -56,6 +57,11 @@
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(handleCickBackButton:)];
+}
+
+- (void)setupSubviews {
+    self.commitButton.layer.cornerRadius = 2.5;
+    self.commitButton.layer.masksToBounds = YES;
 }
 
 #pragma mark - Status Bar

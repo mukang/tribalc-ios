@@ -31,7 +31,7 @@
                             <constraint firstAttribute="width" constant="75" id="6WI-b3-Fii"/>
                             <constraint firstAttribute="height" constant="30" id="tyo-En-IaZ"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>

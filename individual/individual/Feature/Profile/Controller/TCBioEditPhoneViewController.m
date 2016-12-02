@@ -26,6 +26,7 @@
     // Do any additional setup after loading the view from its nib.
     
     [self setupNavBar];
+    [self setupSubviews];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -41,6 +42,11 @@
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(handleCickBackButton:)];
+}
+
+- (void)setupSubviews {
+    self.nextButton.layer.cornerRadius = 2.5;
+    self.nextButton.layer.masksToBounds = YES;
 }
 
 #pragma mark - Status Bar
