@@ -15,6 +15,34 @@
     return @{@"itemList": [TCOrderItem class]};
 }
 
+- (void)setStatus:(NSString *)status {
+    _status = status;
+    if ([status isEqualToString:@"CANCEL"]) {
+        self.orderStatus = TCOrderCancel;
+    } else if ([status isEqualToString:@"NO_SETTLE"]) {
+        self.orderStatus = TCOrderNoSettle;
+    } else if ([status isEqualToString:@"SETTLE"]) {
+        self.orderStatus = TCOrderSettle;
+    } else if ([status isEqualToString:@"DELIVERY"]) {
+        self.orderStatus = TCOrderDelivery;
+    } else {
+        self.orderStatus = TCOrderReceived;
+    }
+}
+
+- (void)setPayChannel:(NSString *)payChannel {
+    _payChannel = payChannel;
+    if ([payChannel isEqualToString:@"BALANCE"]) {
+        self.orderBalance = TCPayBalance;
+    } else if ([payChannel isEqualToString:@"ALIPAY"]) {
+        self.orderBalance = TCPayAlipay;
+    } else if ([payChannel isEqualToString:@"WEICHAT"]) {
+        self.orderBalance = TCPayWeichat;
+    } else {
+        self.orderBalance = TCPayBankcard;
+    }
+}
+
 
 @end
 

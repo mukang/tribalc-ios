@@ -104,7 +104,7 @@
 
 - (UIImageView *)getStoreImageViewWithFrame:(CGRect)frame {
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
-    imgView.layer.cornerRadius = 5;
+    imgView.layer.cornerRadius = 30;
     
     
     return imgView;

@@ -11,6 +11,21 @@
 
 @interface TCOrder : NSObject
 
+typedef NS_ENUM(NSInteger, TCOrderStatus) {
+    TCOrderCancel,
+    TCOrderNoSettle,
+    TCOrderSettle,
+    TCOrderDelivery,
+    TCOrderReceived
+};
+typedef NS_ENUM(NSInteger, TCOrderBalance) {
+    TCPayBalance,
+    TCPayAlipay,
+    TCPayWeichat,
+    TCPayBankcard
+};
+
+
 /** 订单ID */
 @property (copy, nonatomic) NSString *ID;
 /** 订单编号 */
@@ -27,10 +42,14 @@
 @property (nonatomic) CGFloat totalFee;
 /** 订单补充说明 */
 @property (nonatomic) NSString *note;
-/** 支付方式 */
+/** 支付方式(BALANCE, ALIPAY, WEICHAT, BANKCARD) */
 @property (copy, nonatomic) NSString *payChannel;
-/** 订单状态 */
+/** 支付方式(枚举) */
+@property (nonatomic) TCOrderBalance orderBalance;
+/** 订单状态(CANCEL, NO_SETTLE, SETTLE, DELIVERY, RECEIVED) */
 @property (copy, nonatomic) NSString *status;
+/** 订单状态(枚举) */
+@property (nonatomic) TCOrderStatus orderStatus;
 /** 创建时间 */
 @property (nonatomic) NSInteger createTime;
 /** 结算时间 */
