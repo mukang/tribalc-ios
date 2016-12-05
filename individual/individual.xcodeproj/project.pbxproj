@@ -167,6 +167,7 @@
 		7A68C7FB1DB9F37400027C6E /* TCTestBoss.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7FA1DB9F37400027C6E /* TCTestBoss.m */; };
 		7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C19D91DCF29930092AEA1 /* TCProfileHeaderView.m */; };
 		7A7C19DC1DCF29B60092AEA1 /* TCProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A7C19DB1DCF29B60092AEA1 /* TCProfileHeaderView.xib */; };
+		7A7E93F41DF502E7006A47CE /* TCGenderPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7E93F31DF502E7006A47CE /* TCGenderPickerView.m */; };
 		7A918ABC1DC32686002BD529 /* TCBiographyViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A918ABA1DC32686002BD529 /* TCBiographyViewCell.m */; };
 		7A918ABD1DC32686002BD529 /* TCBiographyViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A918ABB1DC32686002BD529 /* TCBiographyViewCell.xib */; };
 		7A918AC11DC32D90002BD529 /* TCBiographyAvatarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A918ABF1DC32D90002BD529 /* TCBiographyAvatarViewCell.m */; };
@@ -511,6 +512,8 @@
 		7A7C19D81DCF29930092AEA1 /* TCProfileHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileHeaderView.h; sourceTree = "<group>"; };
 		7A7C19D91DCF29930092AEA1 /* TCProfileHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileHeaderView.m; sourceTree = "<group>"; };
 		7A7C19DB1DCF29B60092AEA1 /* TCProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileHeaderView.xib; sourceTree = "<group>"; };
+		7A7E93F21DF502E7006A47CE /* TCGenderPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGenderPickerView.h; sourceTree = "<group>"; };
+		7A7E93F31DF502E7006A47CE /* TCGenderPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGenderPickerView.m; sourceTree = "<group>"; };
 		7A918AB91DC32686002BD529 /* TCBiographyViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBiographyViewCell.h; sourceTree = "<group>"; };
 		7A918ABA1DC32686002BD529 /* TCBiographyViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBiographyViewCell.m; sourceTree = "<group>"; };
 		7A918ABB1DC32686002BD529 /* TCBiographyViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBiographyViewCell.xib; sourceTree = "<group>"; };
@@ -881,6 +884,8 @@
 				7A1AC8281DF125F40052132F /* TCCommonButton.m */,
 				7A1AC8301DF1A32E0052132F /* TCDatePickerView.h */,
 				7A1AC8311DF1A32E0052132F /* TCDatePickerView.m */,
+				7A7E93F21DF502E7006A47CE /* TCGenderPickerView.h */,
+				7A7E93F31DF502E7006A47CE /* TCGenderPickerView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1844,6 +1849,7 @@
 				7A5F87761DE2CED900E4130B /* TCWalletBillViewController.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
 				7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */,
+				7A7E93F41DF502E7006A47CE /* TCGenderPickerView.m in Sources */,
 				7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */,
 				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
 				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,

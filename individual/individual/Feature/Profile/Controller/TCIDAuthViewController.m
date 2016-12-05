@@ -12,6 +12,7 @@
 
 #import "TCCommonButton.h"
 #import "TCDatePickerView.h"
+#import "TCGenderPickerView.h"
 
 typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeName = 0,
@@ -20,7 +21,12 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeIDNumber
 };
 
-@interface TCIDAuthViewController () <UITableViewDataSource, UITableViewDelegate, TCCommonInputViewCellDelegate, TCDatePickerViewDelegate>
+@interface TCIDAuthViewController ()
+<UITableViewDataSource,
+UITableViewDelegate,
+TCCommonInputViewCellDelegate,
+TCDatePickerViewDelegate,
+TCGenderPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) TCCommonButton *commitButton;
@@ -126,6 +132,10 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
         TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithDatePickerMode:UIDatePickerModeDate fromController:self];
         datePickerView.delegate = self;
         [datePickerView show];
+    } else if (cell.inputCellType == TCInputCellTypeGender) {
+        TCGenderPickerView *genderPickerView = [[TCGenderPickerView alloc] initWithController:self];
+        genderPickerView.delegate = self;
+        [genderPickerView show];
     }
 }
 
@@ -133,6 +143,12 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 
 - (void)datePickerView:(TCDatePickerView *)view didClickConfirmButtonWithDate:(NSDate *)date {
     TCLog(@"--%@", date);
+}
+
+#pragma mark - TCGenderPickerViewDelegate
+
+- (void)genderPickerView:(TCGenderPickerView *)view didClickConfirmButtonWithGender:(NSString *)gender {
+    
 }
 
 #pragma mark - Actions
