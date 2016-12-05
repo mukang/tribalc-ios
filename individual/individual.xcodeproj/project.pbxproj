@@ -89,6 +89,10 @@
 		7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47CE1DB7213C00E39207 /* UIImage+Category.m */; };
 		7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47D11DB76B4100E39207 /* TCFunctions.m */; };
 		7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47D41DB76C1900E39207 /* TCArchiveService.m */; };
+		7A1AC8251DF122C80052132F /* TCIDAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1AC8231DF122C80052132F /* TCIDAuthViewController.m */; };
+		7A1AC8261DF122C80052132F /* TCIDAuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A1AC8241DF122C80052132F /* TCIDAuthViewController.xib */; };
+		7A1AC8291DF125F40052132F /* TCCommonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1AC8281DF125F40052132F /* TCCommonButton.m */; };
+		7A1AC8321DF1A32E0052132F /* TCDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1AC8311DF1A32E0052132F /* TCDatePickerView.m */; };
 		7A1F12901DEC0BDD00A9B58F /* TCCommunitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F128E1DEC0BDD00A9B58F /* TCCommunitiesViewController.m */; };
 		7A1F12911DEC0BDD00A9B58F /* TCCommunitiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F128F1DEC0BDD00A9B58F /* TCCommunitiesViewController.xib */; };
 		7A1F12951DEC0DFA00A9B58F /* TCCommunityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F12931DEC0DFA00A9B58F /* TCCommunityViewCell.m */; };
@@ -383,6 +387,13 @@
 		7A1A47D11DB76B4100E39207 /* TCFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCFunctions.m; sourceTree = "<group>"; };
 		7A1A47D31DB76C1900E39207 /* TCArchiveService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCArchiveService.h; sourceTree = "<group>"; };
 		7A1A47D41DB76C1900E39207 /* TCArchiveService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCArchiveService.m; sourceTree = "<group>"; };
+		7A1AC8221DF122C80052132F /* TCIDAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIDAuthViewController.h; sourceTree = "<group>"; };
+		7A1AC8231DF122C80052132F /* TCIDAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthViewController.m; sourceTree = "<group>"; };
+		7A1AC8241DF122C80052132F /* TCIDAuthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCIDAuthViewController.xib; sourceTree = "<group>"; };
+		7A1AC8271DF125F40052132F /* TCCommonButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommonButton.h; sourceTree = "<group>"; };
+		7A1AC8281DF125F40052132F /* TCCommonButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommonButton.m; sourceTree = "<group>"; };
+		7A1AC8301DF1A32E0052132F /* TCDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCDatePickerView.h; sourceTree = "<group>"; };
+		7A1AC8311DF1A32E0052132F /* TCDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCDatePickerView.m; sourceTree = "<group>"; };
 		7A1F128D1DEC0BDD00A9B58F /* TCCommunitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunitiesViewController.h; sourceTree = "<group>"; };
 		7A1F128E1DEC0BDD00A9B58F /* TCCommunitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunitiesViewController.m; sourceTree = "<group>"; };
 		7A1F128F1DEC0BDD00A9B58F /* TCCommunitiesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunitiesViewController.xib; sourceTree = "<group>"; };
@@ -878,6 +889,10 @@
 				7A3C81C81DF02C16009ABCEC /* TCPaymentPasswordView.h */,
 				7A3C81C91DF02C16009ABCEC /* TCPaymentPasswordView.m */,
 				7A3C81CB1DF02FDA009ABCEC /* TCPaymentPasswordView.xib */,
+				7A1AC8271DF125F40052132F /* TCCommonButton.h */,
+				7A1AC8281DF125F40052132F /* TCCommonButton.m */,
+				7A1AC8301DF1A32E0052132F /* TCDatePickerView.h */,
+				7A1AC8311DF1A32E0052132F /* TCDatePickerView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1006,6 +1021,9 @@
 				7A45146C1DE58D62007D7193 /* TCBankCardAddViewController.h */,
 				7A45146D1DE58D62007D7193 /* TCBankCardAddViewController.m */,
 				7A45146E1DE58D62007D7193 /* TCBankCardAddViewController.xib */,
+				7A1AC8221DF122C80052132F /* TCIDAuthViewController.h */,
+				7A1AC8231DF122C80052132F /* TCIDAuthViewController.m */,
+				7A1AC8241DF122C80052132F /* TCIDAuthViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1619,6 +1637,7 @@
 				7A4E050A1DEED401002371B0 /* TCCommunityVisitViewController.xib in Resources */,
 				7A5F87771DE2CED900E4130B /* TCWalletBillViewController.xib in Resources */,
 				7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */,
+				7A1AC8261DF122C80052132F /* TCIDAuthViewController.xib in Resources */,
 				7A918AD81DC36D6E002BD529 /* TCBioEditAffectionView.xib in Resources */,
 				7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */,
 				7A4E050F1DEEDC69002371B0 /* TCCommonInputViewCell.xib in Resources */,
@@ -1738,6 +1757,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A1AC8251DF122C80052132F /* TCIDAuthViewController.m in Sources */,
 				7A11F6EC1DE3E39B005F3EAB /* TCVicinityViewController.m in Sources */,
 				7A11F6EB1DE3E304005F3EAB /* TCClient.m in Sources */,
 				091AABA41DE7CE1B003A4192 /* TCGoodTitleView.m in Sources */,
@@ -1816,6 +1836,7 @@
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
 				099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */,
 				7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */,
+				7A1AC8321DF1A32E0052132F /* TCDatePickerView.m in Sources */,
 				092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
@@ -1826,6 +1847,7 @@
 				7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */,
 				7A1A47D21DB76B4100E39207 /* TCFunctions.m in Sources */,
 				7A918ABC1DC32686002BD529 /* TCBiographyViewCell.m in Sources */,
+				7A1AC8291DF125F40052132F /* TCCommonButton.m in Sources */,
 				7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */,
 				092CD4051DD99F9F0073A9C1 /* TCShoppingCartTableViewCell.m in Sources */,
 				09222E111DEE732D0064C0DF /* TCDetailStore.m in Sources */,

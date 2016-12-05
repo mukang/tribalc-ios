@@ -24,7 +24,6 @@
     // Initialization code
     
     self.textField.delegate = self;
-    
 }
 
 - (void)setTitle:(NSString *)title {
@@ -84,7 +83,16 @@
 }
 
 - (void)handleTapContainerViewGesture:(UITapGestureRecognizer *)sender {
-    
+    if ([self.delegate respondsToSelector:@selector(didTapContainerViewIncommonInputViewCell:)]) {
+        [self.delegate didTapContainerViewIncommonInputViewCell:self];
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (![[textField textInputMode] primaryLanguage] || [[[textField textInputMode] primaryLanguage] isEqualToString:@"emoji"]) {
+        return NO;
+    }
+    return YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
