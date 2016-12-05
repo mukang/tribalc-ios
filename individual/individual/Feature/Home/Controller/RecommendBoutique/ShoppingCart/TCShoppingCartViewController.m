@@ -94,7 +94,19 @@
     return storeInfoView;
 }
 
-
+- (void)changeAllSelected {
+    for (int i = 0; i < cartInfoArray.count; i++) {
+        NSArray *contentArr = cartInfoArray[i][@"content"];
+        for (int j = 0; j < contentArr.count; j++) {
+            NSNumber *isSelected = contentArr[i][@"select"];
+            if ([isSelected isEqual:[NSNumber numberWithBool:YES]]) {
+                contentArr[i][@"select"] = [NSNumber numberWithBool:NO];
+            } else {
+                contentArr[i][@"select"] = [NSNumber numberWithBool:YES];
+            }
+        }
+    }
+}
 
 
 - (void)initBottomView {
@@ -151,10 +163,14 @@
     if (!cell) {
         cell = [[TCShoppingCartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    [cell.selectedBtn setImage: [UIImage imageNamed:@"car_unselected"] forState:UIControlStateNormal];
-    [cell setCount:3];
     NSArray *contentArr = cartInfoArray[indexPath.section][@"content"];
     NSDictionary *contentDic = contentArr[indexPath.row];
+    if ([contentDic[@"select"] isEqual:[NSNumber numberWithBool:YES]]) {
+        [cell.selectedBtn setImage: [UIImage imageNamed:@"car_selected"] forState:UIControlStateNormal];
+    } else {
+        [cell.selectedBtn setImage: [UIImage imageNamed:@"car_unselected"] forState:UIControlStateNormal];
+    }
+    [cell setCount:3];
     
     [cell.selectedBtn addTarget:self action:@selector(touchSelectGoodBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self initTableViewCell:cell AndContent:contentDic];
@@ -213,7 +229,9 @@
 }
 
 - (void)touchSelectAllBtn:(UIButton *)button {
-    NSLog(@"点击选择全部");
+//    [self changeAllSelected];
+    
+    [cartTableView reloadData];
 }
 
 - (void)touchEditBar:(UIButton *)btn {
@@ -256,6 +274,7 @@
                             @"content":@[
                                           @{
                                               @"title":@"飞行员夹克",
+                                              @"select":@NO,
                                               @"price":@309,
                                               @"count":@3,
                                               @"standard":@{
@@ -272,6 +291,7 @@
                                           @{
                                               @"title":@"印花连衣裙dwadwadwa",
                                               @"price":@309,
+                                              @"select":@NO,
                                               @"count":@1,
                                               @"standard":@{
                                                       @"primary":@{
@@ -293,6 +313,7 @@
                                         @"title":@"女装 户外长袖衬衫",
                                         @"price":@309,
                                         @"count":@3,
+                                        @"select":@NO,
                                         @"standard":@{
                                                 @"primary":@{
                                                         @"label":@"颜色",
@@ -314,6 +335,7 @@
                                         @"title":@"飞行员夹克",
                                         @"price":@309,
                                         @"count":@3,
+                                        @"select":@NO,
                                         @"standard":@{
                                                 @"primary":@{
                                                         @"label":@"颜色",
@@ -329,6 +351,7 @@
                                         @"title":@"印花连衣裙dwadwadwa",
                                         @"price":@309,
                                         @"count":@1,
+                                        @"select":@NO,
                                         @"standard":@{
                                                 @"primary":@{
                                                         @"label":@"颜色",
@@ -345,8 +368,12 @@
 
 
     
-    
-    cartInfoArray = [[NSMutableArray alloc] initWithObjects:info1, info2, info3, nil];
+    NSMutableDictionary *dic1 = [[NSMutableDictionary alloc] initWithDictionary:info1];
+    NSMutableDictionary *dic2 = [[NSMutableDictionary alloc] initWithDictionary:info2];
+    NSMutableDictionary *dic3 = [[NSMutableDictionary alloc] initWithDictionary:info3];
+    NSMutableDictionary *dic4 = [[NSMutableDictionary alloc] initWithDictionary:info1];
+
+    cartInfoArray = [[NSMutableArray alloc] initWithObjects:dic1, dic2, dic3, dic4, nil];
     
 }
 

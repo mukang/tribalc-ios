@@ -9,6 +9,7 @@
 #import "TCUserReserveViewController.h"
 #import "TCGetNavigationItem.h"
 #import "TCUserReserveTableViewCell.h"
+#import "TCUserReserveDetailViewController.h"
 #import "TCComponent.h"
 
 @interface TCUserReserveViewController ()
@@ -136,12 +137,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    TCUserReserveDetailViewController *reserveDetailViewController = [[TCUserReserveDetailViewController alloc] init];
+    [self.navigationController pushViewController:reserveDetailViewController animated:YES];
 }
 
 #pragma mark - Click
 
 - (void)touchBackBtn {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)didReceiveMemoryWarning {
