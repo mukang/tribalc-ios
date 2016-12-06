@@ -39,7 +39,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MnK-Co-dN2">
-                        <rect key="frame" x="124.5" y="58" width="1" height="245"/>
+                        <rect key="frame" x="125" y="58" width="1" height="245"/>
                         <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="0.5" id="8VH-X2-dSz"/>
@@ -47,7 +47,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1X-dU-hGc">
-                        <rect key="frame" x="249.5" y="58" width="1" height="245"/>
+                        <rect key="frame" x="250" y="58" width="1" height="245"/>
                         <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="0.5" id="GCi-1a-7Ex"/>
@@ -62,7 +62,7 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J5H-H7-qM6">
-                        <rect key="frame" x="20" y="58" width="104.5" height="122"/>
+                        <rect key="frame" x="20" y="58" width="105" height="122"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="管件维修" image="repairs_pipe_button">
                             <color key="titleColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
@@ -72,7 +72,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbe-is-P6e">
-                        <rect key="frame" x="125.5" y="58" width="124" height="122"/>
+                        <rect key="frame" x="126" y="58" width="124" height="122"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="公共照明" image="repairs_lighting_button">
                             <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -82,7 +82,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QaS-nw-9x7">
-                        <rect key="frame" x="250.5" y="58" width="104.5" height="122"/>
+                        <rect key="frame" x="251" y="58" width="104" height="122"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="水管维修" image="repairs_water_pipe_button">
                             <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -92,7 +92,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M3i-DS-2am">
-                        <rect key="frame" x="20" y="181" width="104.5" height="122"/>
+                        <rect key="frame" x="20" y="181" width="105" height="122"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="电器维修" image="repairs_electric_appliance_button">
                             <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -102,7 +102,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8H-RY-TpE">
-                        <rect key="frame" x="125.5" y="181" width="124" height="122"/>
+                        <rect key="frame" x="126" y="181" width="124" height="122"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="其他" image="repairs_more_button">
                             <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -111,24 +111,59 @@
                             <action selector="handleClickRepairsButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="v1a-wN-TaT"/>
                         </connections>
                     </button>
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Jv-9l-dYj">
+                        <rect key="frame" x="20" y="374" width="80" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="akp-fe-uxL"/>
+                            <constraint firstAttribute="height" constant="16" id="szK-dt-Cgz"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="温馨提示" image="repairs_prompt_icon">
+                            <color key="titleColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1、本类服务由物业师傅提供" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dw7-sA-SVG">
+                        <rect key="frame" x="20" y="397" width="335" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="13" id="c3A-H2-DrB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2、如涉及耗材费或特殊人工费请与物业师傅协调" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMy-d7-DB7">
+                        <rect key="frame" x="20" y="414" width="335" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="13" id="aO4-G6-YPC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
+                    <constraint firstItem="dw7-sA-SVG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="0tv-cd-O4R"/>
                     <constraint firstAttribute="trailing" secondItem="rYP-91-Iu8" secondAttribute="trailing" constant="20" id="3Ab-8A-vBT"/>
                     <constraint firstItem="22b-ca-YCM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Dkf-vN-gxn"/>
                     <constraint firstItem="M3i-DS-2am" firstAttribute="bottom" secondItem="MnK-Co-dN2" secondAttribute="bottom" id="IZW-Uc-KhW"/>
+                    <constraint firstItem="dw7-sA-SVG" firstAttribute="top" secondItem="0Jv-9l-dYj" secondAttribute="bottom" constant="7" id="J6I-XP-WMN"/>
                     <constraint firstItem="k1X-dU-hGc" firstAttribute="leading" secondItem="Rbe-is-P6e" secondAttribute="trailing" id="JdL-Pp-jND"/>
+                    <constraint firstItem="dMy-d7-DB7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="LPV-C6-9UO"/>
                     <constraint firstItem="MnK-Co-dN2" firstAttribute="leading" secondItem="J5H-H7-qM6" secondAttribute="trailing" id="MXT-JT-di1"/>
                     <constraint firstItem="rYP-91-Iu8" firstAttribute="top" secondItem="Rbe-is-P6e" secondAttribute="bottom" id="Mou-n6-0sr"/>
                     <constraint firstItem="J5H-H7-qM6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="NI0-R6-4w4"/>
                     <constraint firstAttribute="trailing" secondItem="22b-ca-YCM" secondAttribute="trailing" id="Noj-o1-1VT"/>
                     <constraint firstItem="rYP-91-Iu8" firstAttribute="centerY" secondItem="MnK-Co-dN2" secondAttribute="centerY" id="QL1-Fb-JnT"/>
                     <constraint firstItem="22b-ca-YCM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="R1G-2a-wiZ"/>
+                    <constraint firstItem="dMy-d7-DB7" firstAttribute="top" secondItem="dw7-sA-SVG" secondAttribute="bottom" constant="4" id="RBp-M3-wRt"/>
                     <constraint firstItem="rYP-91-Iu8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Rfl-Ou-eYP"/>
                     <constraint firstItem="Rbe-is-P6e" firstAttribute="top" secondItem="22b-ca-YCM" secondAttribute="bottom" constant="35" id="UO0-C1-fMe"/>
                     <constraint firstItem="k1X-dU-hGc" firstAttribute="top" secondItem="22b-ca-YCM" secondAttribute="bottom" constant="35" id="VhE-fV-PmU"/>
                     <constraint firstItem="k1X-dU-hGc" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="trailing" multiplier="2:3" id="Viu-NX-2hL"/>
                     <constraint firstItem="j8H-RY-TpE" firstAttribute="leading" secondItem="MnK-Co-dN2" secondAttribute="trailing" id="XK2-mE-bEN"/>
+                    <constraint firstItem="0Jv-9l-dYj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="XkN-ui-1pE"/>
                     <constraint firstItem="QaS-nw-9x7" firstAttribute="top" secondItem="22b-ca-YCM" secondAttribute="bottom" constant="35" id="b36-wK-7eT"/>
                     <constraint firstItem="Rbe-is-P6e" firstAttribute="leading" secondItem="MnK-Co-dN2" secondAttribute="trailing" id="cht-tp-7JZ"/>
                     <constraint firstItem="j8H-RY-TpE" firstAttribute="bottom" secondItem="M3i-DS-2am" secondAttribute="bottom" id="h4G-kU-fcV"/>
@@ -139,11 +174,14 @@
                     <constraint firstItem="rYP-91-Iu8" firstAttribute="top" secondItem="J5H-H7-qM6" secondAttribute="bottom" id="ohm-a1-ofB"/>
                     <constraint firstAttribute="trailing" secondItem="QaS-nw-9x7" secondAttribute="trailing" constant="20" id="pjA-ck-TTl"/>
                     <constraint firstItem="j8H-RY-TpE" firstAttribute="top" secondItem="rYP-91-Iu8" secondAttribute="bottom" id="qSR-Qf-hNh"/>
+                    <constraint firstAttribute="trailing" secondItem="dw7-sA-SVG" secondAttribute="trailing" constant="20" id="r9B-CY-Uhd"/>
                     <constraint firstItem="M3i-DS-2am" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="rON-L7-Ecx"/>
                     <constraint firstItem="MnK-Co-dN2" firstAttribute="leading" secondItem="M3i-DS-2am" secondAttribute="trailing" id="uWh-F4-Nyu"/>
                     <constraint firstItem="QaS-nw-9x7" firstAttribute="leading" secondItem="k1X-dU-hGc" secondAttribute="trailing" id="vbA-TA-gXo"/>
                     <constraint firstItem="M3i-DS-2am" firstAttribute="top" secondItem="rYP-91-Iu8" secondAttribute="bottom" id="vdx-6O-mnB"/>
                     <constraint firstItem="MnK-Co-dN2" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="trailing" multiplier="1:3" id="wDW-Qt-dJg"/>
+                    <constraint firstAttribute="bottom" secondItem="0Jv-9l-dYj" secondAttribute="bottom" constant="115" id="wzl-x5-8n8"/>
+                    <constraint firstAttribute="trailing" secondItem="dMy-d7-DB7" secondAttribute="trailing" constant="20" id="xzd-hN-2t6"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -153,7 +191,7 @@
                 <outletCollection property="repairsButtons" destination="M3i-DS-2am" id="vPm-Qg-RXz"/>
                 <outletCollection property="repairsButtons" destination="j8H-RY-TpE" id="Ckj-m4-oBc"/>
             </connections>
-            <point key="canvasLocation" x="-31" y="101"/>
+            <point key="canvasLocation" x="-31.5" y="101"/>
         </tableViewCell>
     </objects>
     <resources>
@@ -161,6 +199,7 @@
         <image name="repairs_lighting_button" width="33" height="33"/>
         <image name="repairs_more_button" width="33" height="33"/>
         <image name="repairs_pipe_button" width="33" height="33"/>
+        <image name="repairs_prompt_icon" width="10" height="13"/>
         <image name="repairs_water_pipe_button" width="33" height="33"/>
     </resources>
 </document>
