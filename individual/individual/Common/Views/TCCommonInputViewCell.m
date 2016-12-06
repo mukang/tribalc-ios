@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIView *separatorView;
 @property (weak, nonatomic) UITapGestureRecognizer *tapGesture;
 
 @end
@@ -24,6 +25,7 @@
     // Initialization code
     
     self.textField.delegate = self;
+    self.separatorView.hidden = YES;
 }
 
 - (void)setTitle:(NSString *)title {
@@ -66,6 +68,12 @@
     }
 }
 
+- (void)setHideSeparatorView:(BOOL)hideSeparatorView {
+    _hideSeparatorView = hideSeparatorView;
+    
+    self.separatorView.hidden = hideSeparatorView;
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -82,10 +90,11 @@
     }
 }
 
-- (void)handleTapContainerViewGesture:(UITapGestureRecognizer *)sender {
-    if ([self.delegate respondsToSelector:@selector(didTapContainerViewIncommonInputViewCell:)]) {
-        [self.delegate didTapContainerViewIncommonInputViewCell:self];
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if ([self.delegate respondsToSelector:@selector(commonInputViewCell:textFieldShouldBeginEditing:)]) {
+        return [self.delegate commonInputViewCell:self textFieldShouldBeginEditing:self.textField];
     }
+    return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -93,6 +102,14 @@
         return NO;
     }
     return YES;
+}
+
+#pragma mark - Actions
+
+- (void)handleTapContainerViewGesture:(UITapGestureRecognizer *)sender {
+    if ([self.delegate respondsToSelector:@selector(didTapContainerViewIncommonInputViewCell:)]) {
+        [self.delegate didTapContainerViewIncommonInputViewCell:self];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="506" id="KGk-i7-Jjw" customClass="TCRepairsViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="506"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="505"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="22b-ca-YCM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="23"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择服务类型" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NdC-FY-51V">
+                                <rect key="frame" x="20" y="0.0" width="335" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22.5" id="2Z9-pQ-73g"/>
+                            <constraint firstItem="NdC-FY-51V" firstAttribute="leading" secondItem="22b-ca-YCM" secondAttribute="leading" constant="20" id="FFS-Tl-dO2"/>
+                            <constraint firstAttribute="trailing" secondItem="NdC-FY-51V" secondAttribute="trailing" constant="20" id="Fr9-om-spc"/>
+                            <constraint firstAttribute="bottom" secondItem="NdC-FY-51V" secondAttribute="bottom" id="Nvm-4r-Pxa"/>
+                            <constraint firstItem="NdC-FY-51V" firstAttribute="top" secondItem="22b-ca-YCM" secondAttribute="top" id="Whx-1h-b2N"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MnK-Co-dN2">
+                        <rect key="frame" x="124.5" y="58" width="1" height="245"/>
+                        <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="0.5" id="8VH-X2-dSz"/>
+                            <constraint firstAttribute="height" constant="245" id="kaz-Xo-ceC"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1X-dU-hGc">
+                        <rect key="frame" x="249.5" y="58" width="1" height="245"/>
+                        <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="0.5" id="GCi-1a-7Ex"/>
+                            <constraint firstAttribute="height" constant="245" id="fMH-SZ-HDJ"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rYP-91-Iu8">
+                        <rect key="frame" x="20" y="180" width="335" height="1"/>
+                        <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="VmB-ut-9nM"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J5H-H7-qM6">
+                        <rect key="frame" x="20" y="58" width="104.5" height="122"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="管件维修" image="repairs_pipe_button">
+                            <color key="titleColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="handleClickRepairsButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hDz-Q6-GUI"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbe-is-P6e">
+                        <rect key="frame" x="125.5" y="58" width="124" height="122"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="公共照明" image="repairs_lighting_button">
+                            <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="handleClickRepairsButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="SRq-jA-dHp"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QaS-nw-9x7">
+                        <rect key="frame" x="250.5" y="58" width="104.5" height="122"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="水管维修" image="repairs_water_pipe_button">
+                            <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="handleClickRepairsButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hos-vx-mge"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M3i-DS-2am">
+                        <rect key="frame" x="20" y="181" width="104.5" height="122"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="电器维修" image="repairs_electric_appliance_button">
+                            <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="handleClickRepairsButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="L3e-6a-YYW"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8H-RY-TpE">
+                        <rect key="frame" x="125.5" y="181" width="124" height="122"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="其他" image="repairs_more_button">
+                            <color key="titleColor" red="0.60392156860000001" green="0.60392156860000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="handleClickRepairsButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="v1a-wN-TaT"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="rYP-91-Iu8" secondAttribute="trailing" constant="20" id="3Ab-8A-vBT"/>
+                    <constraint firstItem="22b-ca-YCM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Dkf-vN-gxn"/>
+                    <constraint firstItem="M3i-DS-2am" firstAttribute="bottom" secondItem="MnK-Co-dN2" secondAttribute="bottom" id="IZW-Uc-KhW"/>
+                    <constraint firstItem="k1X-dU-hGc" firstAttribute="leading" secondItem="Rbe-is-P6e" secondAttribute="trailing" id="JdL-Pp-jND"/>
+                    <constraint firstItem="MnK-Co-dN2" firstAttribute="leading" secondItem="J5H-H7-qM6" secondAttribute="trailing" id="MXT-JT-di1"/>
+                    <constraint firstItem="rYP-91-Iu8" firstAttribute="top" secondItem="Rbe-is-P6e" secondAttribute="bottom" id="Mou-n6-0sr"/>
+                    <constraint firstItem="J5H-H7-qM6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="NI0-R6-4w4"/>
+                    <constraint firstAttribute="trailing" secondItem="22b-ca-YCM" secondAttribute="trailing" id="Noj-o1-1VT"/>
+                    <constraint firstItem="rYP-91-Iu8" firstAttribute="centerY" secondItem="MnK-Co-dN2" secondAttribute="centerY" id="QL1-Fb-JnT"/>
+                    <constraint firstItem="22b-ca-YCM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="R1G-2a-wiZ"/>
+                    <constraint firstItem="rYP-91-Iu8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Rfl-Ou-eYP"/>
+                    <constraint firstItem="Rbe-is-P6e" firstAttribute="top" secondItem="22b-ca-YCM" secondAttribute="bottom" constant="35" id="UO0-C1-fMe"/>
+                    <constraint firstItem="k1X-dU-hGc" firstAttribute="top" secondItem="22b-ca-YCM" secondAttribute="bottom" constant="35" id="VhE-fV-PmU"/>
+                    <constraint firstItem="k1X-dU-hGc" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="trailing" multiplier="2:3" id="Viu-NX-2hL"/>
+                    <constraint firstItem="j8H-RY-TpE" firstAttribute="leading" secondItem="MnK-Co-dN2" secondAttribute="trailing" id="XK2-mE-bEN"/>
+                    <constraint firstItem="QaS-nw-9x7" firstAttribute="top" secondItem="22b-ca-YCM" secondAttribute="bottom" constant="35" id="b36-wK-7eT"/>
+                    <constraint firstItem="Rbe-is-P6e" firstAttribute="leading" secondItem="MnK-Co-dN2" secondAttribute="trailing" id="cht-tp-7JZ"/>
+                    <constraint firstItem="j8H-RY-TpE" firstAttribute="bottom" secondItem="M3i-DS-2am" secondAttribute="bottom" id="h4G-kU-fcV"/>
+                    <constraint firstItem="MnK-Co-dN2" firstAttribute="top" secondItem="22b-ca-YCM" secondAttribute="bottom" constant="35" id="ilh-mB-xxk"/>
+                    <constraint firstItem="J5H-H7-qM6" firstAttribute="top" secondItem="22b-ca-YCM" secondAttribute="bottom" constant="35" id="jLw-6R-4cC"/>
+                    <constraint firstItem="k1X-dU-hGc" firstAttribute="leading" secondItem="j8H-RY-TpE" secondAttribute="trailing" id="mdh-7C-p07"/>
+                    <constraint firstItem="rYP-91-Iu8" firstAttribute="top" secondItem="QaS-nw-9x7" secondAttribute="bottom" id="oa7-Rb-A2K"/>
+                    <constraint firstItem="rYP-91-Iu8" firstAttribute="top" secondItem="J5H-H7-qM6" secondAttribute="bottom" id="ohm-a1-ofB"/>
+                    <constraint firstAttribute="trailing" secondItem="QaS-nw-9x7" secondAttribute="trailing" constant="20" id="pjA-ck-TTl"/>
+                    <constraint firstItem="j8H-RY-TpE" firstAttribute="top" secondItem="rYP-91-Iu8" secondAttribute="bottom" id="qSR-Qf-hNh"/>
+                    <constraint firstItem="M3i-DS-2am" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="rON-L7-Ecx"/>
+                    <constraint firstItem="MnK-Co-dN2" firstAttribute="leading" secondItem="M3i-DS-2am" secondAttribute="trailing" id="uWh-F4-Nyu"/>
+                    <constraint firstItem="QaS-nw-9x7" firstAttribute="leading" secondItem="k1X-dU-hGc" secondAttribute="trailing" id="vbA-TA-gXo"/>
+                    <constraint firstItem="M3i-DS-2am" firstAttribute="top" secondItem="rYP-91-Iu8" secondAttribute="bottom" id="vdx-6O-mnB"/>
+                    <constraint firstItem="MnK-Co-dN2" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="trailing" multiplier="1:3" id="wDW-Qt-dJg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outletCollection property="repairsButtons" destination="J5H-H7-qM6" id="1TM-lP-GuD"/>
+                <outletCollection property="repairsButtons" destination="Rbe-is-P6e" id="SPM-SP-UWE"/>
+                <outletCollection property="repairsButtons" destination="QaS-nw-9x7" id="Mxk-Kp-3f9"/>
+                <outletCollection property="repairsButtons" destination="M3i-DS-2am" id="vPm-Qg-RXz"/>
+                <outletCollection property="repairsButtons" destination="j8H-RY-TpE" id="Ckj-m4-oBc"/>
+            </connections>
+            <point key="canvasLocation" x="-31" y="101"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="repairs_electric_appliance_button" width="33" height="33"/>
+        <image name="repairs_lighting_button" width="33" height="33"/>
+        <image name="repairs_more_button" width="33" height="33"/>
+        <image name="repairs_pipe_button" width="33" height="33"/>
+        <image name="repairs_water_pipe_button" width="33" height="33"/>
+    </resources>
+</document>

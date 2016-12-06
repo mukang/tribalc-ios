@@ -61,8 +61,8 @@ TCGenderPickerViewDelegate>
 - (void)setupSubviews {
     
     TCCommonButton *commitButton = [TCCommonButton buttonWithTitle:@"认证" target:self action:@selector(handleClickCommitButton:)];
-    commitButton.centerX = self.tableView.width * 0.5;
-    commitButton.y = self.tableView.height - commitButton.height - TCRealValue(70) - 64;
+    commitButton.centerX = TCScreenWidth * 0.5;
+    commitButton.y = TCScreenHeight - commitButton.height - TCRealValue(70) - 64;
     [self.tableView addSubview:commitButton];
     self.commitButton = commitButton;
     
@@ -86,7 +86,6 @@ TCGenderPickerViewDelegate>
     TCCommonInputViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCommonInputViewCell" forIndexPath:indexPath];
     cell.title = self.titleArray[indexPath.row];
     cell.placeholder = self.placeholderArray[indexPath.row];
-    cell.inputCellType = indexPath.row;
     cell.delegate = self;
     if (indexPath.row == TCInputCellTypeBirthdate || indexPath.row == TCInputCellTypeGender) {
         cell.inputEnabled = NO;
@@ -128,11 +127,12 @@ TCGenderPickerViewDelegate>
 }
 
 - (void)didTapContainerViewIncommonInputViewCell:(TCCommonInputViewCell *)cell {
-    if (cell.inputCellType == TCInputCellTypeBirthdate) {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    if (indexPath.row == TCInputCellTypeBirthdate) {
         TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithDatePickerMode:UIDatePickerModeDate fromController:self];
         datePickerView.delegate = self;
         [datePickerView show];
-    } else if (cell.inputCellType == TCInputCellTypeGender) {
+    } else if (indexPath.row == TCInputCellTypeGender) {
         TCGenderPickerView *genderPickerView = [[TCGenderPickerView alloc] initWithController:self];
         genderPickerView.delegate = self;
         [genderPickerView show];

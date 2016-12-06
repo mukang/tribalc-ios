@@ -94,7 +94,6 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCCommonInputViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCommonInputViewCell" forIndexPath:indexPath];
     cell.title = self.titleArray[indexPath.row];
     cell.placeholder = self.placeholderArray[indexPath.row];
-    cell.inputCellType = indexPath.row;
     cell.delegate = self;
     switch (indexPath.row) {
         case TCInputCellTypeCommunity:
