@@ -979,6 +979,32 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
     }
 }
+- (void)createOrderWithGoodsId:(NSString *)goodsId AddressId:(NSString *)addressId Amount:(NSInteger)amount result:(void(^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"orders?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        NSDictionary *dic = @{ @"amount":@2, @"goodsId":goodsId };
+        [request setValue:addressId forKey:@"addressId"];
+        [request setValue:dic forKey:@"itemList"];
+        [[TCClient client] send:request finish:^(TCClientResponse *respone) {
+            if (respone.statusCode == 201) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, respone.error));
+                }
+            }
+        }];
+    }  else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+}
+
 
 
 #pragma mark - 上传图片资源
