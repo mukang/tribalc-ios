@@ -12,6 +12,7 @@
 @protocol TCCommonInputViewCellDelegate <NSObject>
 
 @optional
+- (BOOL)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldShouldBeginEditing:(UITextField *)textField;
 - (void)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldDidEndEditing:(UITextField *)textField;
 - (BOOL)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldShouldReturn:(UITextField *)textField;
 - (void)didTapContainerViewIncommonInputViewCell:(TCCommonInputViewCell *)cell;
@@ -24,7 +25,7 @@
 @property (copy, nonatomic) NSString *content;
 @property (copy, nonatomic) NSString *placeholder;
 @property (nonatomic, getter=isInputEnabled) BOOL inputEnabled;
-@property (nonatomic) NSInteger inputCellType;
+@property (nonatomic) BOOL hideSeparatorView; // default is YES.
 @property (weak, nonatomic) id<TCCommonInputViewCellDelegate> delegate;
 
 @end

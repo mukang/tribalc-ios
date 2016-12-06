@@ -13,7 +13,7 @@
 
 #import "TCBuluoApi.h"
 
-#import "TCPaymentView.h";
+#import "TCPaymentView.h"
 
 @interface TCWalletViewController ()
 

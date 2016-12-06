@@ -12,6 +12,7 @@
 
 #import "TCCommonButton.h"
 #import "TCDatePickerView.h"
+#import "TCGenderPickerView.h"
 
 typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeName = 0,
@@ -20,7 +21,12 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeIDNumber
 };
 
-@interface TCIDAuthViewController () <UITableViewDataSource, UITableViewDelegate, TCCommonInputViewCellDelegate, TCDatePickerViewDelegate>
+@interface TCIDAuthViewController ()
+<UITableViewDataSource,
+UITableViewDelegate,
+TCCommonInputViewCellDelegate,
+TCDatePickerViewDelegate,
+TCGenderPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) TCCommonButton *commitButton;
@@ -55,8 +61,8 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 - (void)setupSubviews {
     
     TCCommonButton *commitButton = [TCCommonButton buttonWithTitle:@"认证" target:self action:@selector(handleClickCommitButton:)];
-    commitButton.centerX = self.tableView.width * 0.5;
-    commitButton.y = self.tableView.height - commitButton.height - TCRealValue(70) - 64;
+    commitButton.centerX = TCScreenWidth * 0.5;
+    commitButton.y = TCScreenHeight - commitButton.height - TCRealValue(70) - 64;
     [self.tableView addSubview:commitButton];
     self.commitButton = commitButton;
     
@@ -80,7 +86,6 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCCommonInputViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCommonInputViewCell" forIndexPath:indexPath];
     cell.title = self.titleArray[indexPath.row];
     cell.placeholder = self.placeholderArray[indexPath.row];
-    cell.inputCellType = indexPath.row;
     cell.delegate = self;
     if (indexPath.row == TCInputCellTypeBirthdate || indexPath.row == TCInputCellTypeGender) {
         cell.inputEnabled = NO;
@@ -122,10 +127,15 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 }
 
 - (void)didTapContainerViewIncommonInputViewCell:(TCCommonInputViewCell *)cell {
-    if (cell.inputCellType == TCInputCellTypeBirthdate) {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    if (indexPath.row == TCInputCellTypeBirthdate) {
         TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithDatePickerMode:UIDatePickerModeDate fromController:self];
         datePickerView.delegate = self;
         [datePickerView show];
+    } else if (indexPath.row == TCInputCellTypeGender) {
+        TCGenderPickerView *genderPickerView = [[TCGenderPickerView alloc] initWithController:self];
+        genderPickerView.delegate = self;
+        [genderPickerView show];
     }
 }
 
@@ -133,6 +143,12 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 
 - (void)datePickerView:(TCDatePickerView *)view didClickConfirmButtonWithDate:(NSDate *)date {
     TCLog(@"--%@", date);
+}
+
+#pragma mark - TCGenderPickerViewDelegate
+
+- (void)genderPickerView:(TCGenderPickerView *)view didClickConfirmButtonWithGender:(NSString *)gender {
+    
 }
 
 #pragma mark - Actions
