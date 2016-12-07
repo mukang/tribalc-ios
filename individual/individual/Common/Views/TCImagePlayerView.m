@@ -1,41 +1,55 @@
 //
-//  TCCommunityDetailHeaderView.m
+//  TCImagePlayerView.m
 //  individual
 //
-//  Created by 穆康 on 2016/11/29.
+//  Created by 穆康 on 2016/12/7.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCCommunityDetailHeaderView.h"
-
+#import "TCImagePlayerView.h"
 #import "TCImageURLSynthesizer.h"
-
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSInteger const plusNum = 2;  // 需要加上的数
 
-@interface TCCommunityDetailHeaderView () <UIScrollViewDelegate>
+@interface TCImagePlayerView () <UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
-
+@property (weak, nonatomic) UIScrollView *scrollView;
+@property (weak, nonatomic) UIPageControl *pageControl;
 @property (strong, nonatomic) NSTimer *timer;
 
 @end
 
-@implementation TCCommunityDetailHeaderView
+@implementation TCImagePlayerView
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    
-    [self setupImagePlayer];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setupSubviews];
+    }
+    return self;
 }
 
-- (void)setupImagePlayer {
-    self.scrollView.delegate = self;
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.scrollsToTop = NO;
+- (void)dealloc {
+    [self removeTimer];
+}
+
+- (void)setupSubviews {
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    scrollView.pagingEnabled = YES;
+    scrollView.scrollsToTop = NO;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.delegate = self;
+    [self addSubview:scrollView];
+    self.scrollView = scrollView;
+    
+    UIPageControl *pageControl = [[UIPageControl alloc] init];
+    pageControl.currentPage = 0;
+    pageControl.centerX = self.width * 0.5;
+    pageControl.centerY = self.height - 15;
+    [self addSubview:pageControl];
+    self.pageControl = pageControl;
 }
 
 - (void)setPictures:(NSArray *)pictures {
@@ -75,10 +89,18 @@ static NSInteger const plusNum = 2;  // 需要加上的数
         NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:URLString];
         [imageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
     }
-    
+}
+
+#pragma mark - Public Methods
+
+- (void)startPlaying {
     if (!self.timer) {
         [self addTimer];
     }
+}
+
+- (void)stopPlaying {
+    [self removeTimer];
 }
 
 #pragma mark - Timer
@@ -88,7 +110,6 @@ static NSInteger const plusNum = 2;  // 需要加上的数
 }
 
 - (void)removeTimer {
-    
     [self.timer invalidate];
     self.timer = nil;
 }
@@ -148,21 +169,11 @@ static NSInteger const plusNum = 2;  // 需要加上的数
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self removeTimer];
+    [self stopPlaying];
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    if (!self.timer) {
-        [self addTimer];
-    }
+    [self startPlaying];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end
