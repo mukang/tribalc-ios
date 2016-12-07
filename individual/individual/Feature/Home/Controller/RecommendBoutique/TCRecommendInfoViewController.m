@@ -7,6 +7,7 @@
 //
 
 #import "TCRecommendInfoViewController.h"
+#import "TCUserOrderDetailViewController.h"
 #import "TCImgPageControl.h"
 
 @interface TCRecommendInfoViewController () {
@@ -563,13 +564,18 @@
 }
 
 - (void)touchBuyBtn:(UIButton *)btn {
-    NSLog(@"%@", mGoodDetail.standardId);
-    NSLog(@"%@", mGoodDetail.ID);
-    NSLog(@"%@", standardView.numberLab.text);
-    [[TCBuluoApi api] createOrderWithGoodsId:mGoodDetail.ID AddressId:mGoodDetail.standardId Amount:[standardView.numberLab.text integerValue] result:^(BOOL result, NSError *error) {
-        
-    }];
+
+    TCGoods *good = [self getListGoods];
+    TCOrderItem *orderItem = [[TCOrderItem alloc] init];
+    orderItem.amount = standardView.numberLab.text.integerValue;
+    orderItem.goods = good;
+    TCUserOrderDetailViewController *confirmOrderViewController = [[TCUserOrderDetailViewController alloc] initWithItemList:@[ orderItem ]];
+    confirmOrderViewController.title = @"确认下单";
+    [self.navigationController pushViewController:confirmOrderViewController animated:YES];
+    
+    [standardView endSelectStandard];
 }
+
 
 
 
@@ -580,6 +586,20 @@
 }
 
 #pragma mark - other
+- (TCGoods *)getListGoods {
+    TCGoods *good = [[TCGoods alloc] init];
+    good.ID = mGoodDetail.ID;
+    good.storeId = mGoodDetail.storeId;
+    good.name = mGoodDetail.name;
+    good.brand = mGoodDetail.brand;
+    good.mainPicture = mGoodDetail.mainPicture;
+    good.originPrice = mGoodDetail.originPrice;
+    good.salePrice = mGoodDetail.salePrice;
+    good.saleQuantity = mGoodDetail.saleQuantity;
+    good.standardSnapshot = mGoodDetail.standardSnapshot;
+    return good;
+}
+
 - (void)changeStyleButtonWithBtn:(UIButton *)btn {
     btn.layer.borderColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1].CGColor;
     [btn setTitleColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] forState:UIControlStateNormal];

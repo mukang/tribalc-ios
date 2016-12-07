@@ -7,7 +7,15 @@
 //
 
 #import "TCOrderItem.h"
+#import "TCGoods.h"
 
 @implementation TCOrderItem
+
++ (NSDictionary *)objectClassInDictionary {
+    return @{
+             @"goods": [TCGoods class]
+             };
+}
+
 
 @end

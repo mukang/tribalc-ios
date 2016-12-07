@@ -28,10 +28,10 @@
     UIView *selectTabBarView = [self getSelectTabBarViewWithFrame:CGRectMake(0, 0, self.view.width, 40.5)];
     [self.view addSubview:selectTabBarView];
     
-    [self addChildController:[[TCUserOrderViewController alloc] initWithMyOrderInfo:[self forgeData]] AndTitle:@"全部"];
-    [self addChildController:[self getControllerWithStatus:@"等待付款"] AndTitle:@"等代付款"];
-    [self addChildController:[self getControllerWithStatus:@"等待收货"] AndTitle:@"等待收货"];
-    [self addChildController:[self getControllerWithStatus:@"已完成"] AndTitle:@"已完成"];
+    [self addChildController:[[TCUserOrderViewController alloc] initWithStatus:@""] AndTitle:@"全部"];
+    [self addChildController:[self getControllerWithStatus:@"NO_SETTLE"] AndTitle:@"等代付款"];
+    [self addChildController:[self getControllerWithStatus:@"DELIVERY"] AndTitle:@"等待收货"];
+    [self addChildController:[self getControllerWithStatus:@"RECEIVED"] AndTitle:@"已完成"];
     
     self.selectedIndex = 0;
     
@@ -47,16 +47,9 @@
     [self addChildViewController:childController];
 }
 
-- (TCUserOrderViewController *)getControllerWithStatus:(NSString *)stautsStr {
-    NSArray *arr = [self forgeData];
-    NSMutableArray *dataArr = [[NSMutableArray alloc] init];
-    for (int i = 0; i < arr.count; i++) {
-        if ([arr[i][@"status"] isEqualToString:stautsStr]) {
-            [dataArr addObject:arr[i]];
-        }
-    }
-    
-    TCUserOrderViewController *userOrderController = [[TCUserOrderViewController alloc] initWithMyOrderInfo:dataArr];
+- (TCUserOrderViewController *)getControllerWithStatus:(NSString *)status {
+
+    TCUserOrderViewController *userOrderController = [[TCUserOrderViewController alloc] initWithStatus:status];
     return userOrderController;
 }
 

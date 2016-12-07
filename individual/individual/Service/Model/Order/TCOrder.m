@@ -17,16 +17,18 @@
 
 - (void)setStatus:(NSString *)status {
     _status = status;
-    if ([status isEqualToString:@"CANCEL"]) {
-        self.orderStatus = TCOrderCancel;
+    if ([status isEqualToString:@"CANNEL"]) {
+        self.orderStatus = TCOrderCannel;
     } else if ([status isEqualToString:@"NO_SETTLE"]) {
         self.orderStatus = TCOrderNoSettle;
     } else if ([status isEqualToString:@"SETTLE"]) {
         self.orderStatus = TCOrderSettle;
     } else if ([status isEqualToString:@"DELIVERY"]) {
         self.orderStatus = TCOrderDelivery;
-    } else {
+    } else if ([status isEqualToString:@"RECEIVED"]){
         self.orderStatus = TCOrderReceived;
+    } else {
+        self.orderStatus = TCOrderNoCreate;
     }
 }
 
@@ -40,6 +42,15 @@
         self.orderBalance = TCPayWeichat;
     } else {
         self.orderBalance = TCPayBankcard;
+    }
+}
+
+- (void)setExpressType:(NSString *)expressType {
+    _expressType = expressType;
+    if ([expressType isEqualToString:@"NOT_PAYPOSTAGE"]) {
+        self.express = TCExpressTypeNotPayPostage;
+    } else {
+        self.express = TCExpressTypePayPostage;
     }
 }
 

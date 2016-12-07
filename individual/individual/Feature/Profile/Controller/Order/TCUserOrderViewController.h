@@ -10,11 +10,11 @@
 #import "TCUserOrderTableViewCell.h"
 #import "TCComponent.h"
 #import "TCUserOrderDetailViewController.h"
+#import "UIImageView+WebCache.h"
 
-@interface TCUserOrderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface TCUserOrderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate> {
     UITableView *orderTableView;
-    NSArray *myOrderInfoArr;
 }
-- (instancetype)initWithMyOrderInfo:(NSArray *)array;
+- (instancetype)initWithStatus:(NSString *)statusStr;
 
 @end

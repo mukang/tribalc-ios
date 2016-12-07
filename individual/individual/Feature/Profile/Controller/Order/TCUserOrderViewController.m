@@ -9,9 +9,13 @@
 #import "TCUserOrderViewController.h"
 #import "TCBuluoApi.h"
 #import "TCModelImport.h"
+#import "TCImageURLSynthesizer.h"
+#import "TCRecommendHeader.h"
+#import "TCRecommendFooter.h"
 
 @interface TCUserOrderViewController () {
     TCOrderWrapper *mOrderWrapper;
+    NSString *mStatus;
 }
 
 @end
@@ -19,17 +23,19 @@
 @implementation TCUserOrderViewController
 
 
-- (instancetype)initWithMyOrderInfo:(NSArray *)array {
+
+- (instancetype)initWithStatus:(NSString *)statusStr {
     self = [super init];
     if (self) {
-        myOrderInfoArr = array;
+        mStatus = statusStr;
     }
+    
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [orderTableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -41,17 +47,35 @@
     
     [self initTableView];
     
-    
 }
 
 - (void)initOrderItem {
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchOrderWrapper:nil limiSize:10 sortSkip:nil result:^(TCOrderWrapper *orderWrapper, NSError *error) {
         mOrderWrapper = orderWrapper;
+        [orderTableView reloadData];
+        [orderTableView.mj_header endRefreshing];
         
     }];
 }
 
+- (void)setupOrderItem {
+    TCBuluoApi *api = [TCBuluoApi api];
+    [api fetchOrderWrapper:nil limiSize:10 sortSkip:mOrderWrapper.nextSkip result:^(TCOrderWrapper *orderWrapper, NSError *error) {
+        if (mOrderWrapper.hasMore == YES) {
+            NSArray *beforeContentArr = mOrderWrapper.content;
+            mOrderWrapper = orderWrapper;
+            mOrderWrapper.content = [beforeContentArr arrayByAddingObjectsFromArray:orderWrapper.content];
+            [orderTableView reloadData];
+            [orderTableView.mj_footer endRefreshing];
+        } else {
+            TCRecommendFooter *footer = (TCRecommendFooter *)orderTableView.mj_footer;
+            [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];
+            [orderTableView.mj_footer endRefreshing];
+
+        }
+    }];
+}
 
 - (void)initTableView {
     orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40.5, self.view.width, self.view.height- 40.5) style:UITableViewStyleGrouped];
@@ -63,6 +87,20 @@
     orderTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     orderTableView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
     [self.view addSubview:orderTableView];
+    
+    [self setupTableViewRefreshView];
+}
+
+- (void)setupTableViewRefreshView {
+    TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^(void) {
+        [self initOrderItem];
+    }];
+    orderTableView.mj_header = refreshHeader;
+    
+    TCRecommendFooter *refreshFooter = [TCRecommendFooter footerWithRefreshingBlock:^(void) {
+        [self setupOrderItem];
+    }];
+    orderTableView.mj_footer = refreshFooter;
 }
 
 - (UIView *)getTableViewFooterViewWithTotalprice:(NSString *)totalPrice {
@@ -95,6 +133,8 @@
     
     if (![self.title isEqualToString:@"全部"]) {
         statusStr = [self getStatusWithText:statusStr];
+    } else {
+        statusStr = [self getStatusForAllTabWithText:statusStr];
     }
     
     UIView *statusView = [self getOrderStatusViewWithStatus:statusStr];
@@ -105,19 +145,37 @@
     return view;
 }
 
+- (NSString *)getStatusForAllTabWithText:(NSString *)text {
+    if ([text isEqualToString:@"NO_SETTLE"]) {
+        return @"等待付款";
+    } else if ([text isEqualToString:@"DELIVERY"]) {
+        return @"等待收货";
+    } else if ([text isEqualToString:@"SETTLE"]) {
+        return @"等待发货";
+    } else if ([text isEqualToString:@"CANNEL"]) {
+        return @"订单已取消";
+    }
+     else{
+        return text;
+    }
+
+}
+
 - (NSString *)getStatusWithText:(NSString *)text {
-    if ([text isEqualToString:@"等待付款"]) {
+    if ([text isEqualToString:@"NO_SETTLE"]) {
         return @"等待买家付款";
-    } else if ([text isEqualToString:@"等待收货"]) {
+    } else if ([text isEqualToString:@"DELIVERY"]) {
         return @"卖家已发货";
-    } else {
+    } else if ([text isEqualToString:@"SETTLE"]) {
+        return @"等待卖家发货";
+    } else{
         return text;
     }
 }
 
 - (UIView *)getOrderStatusViewWithStatus:(NSString *)statusStr {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.view.width - 79, 0, 79, 40.5)];
-    if ([statusStr isEqualToString:@"已完成"]) {
+    if ([statusStr isEqualToString:@"RECEIVED"]) {
         UIImage *completeImg = [UIImage imageNamed:@"order_complete"];
         UIImageView *statusImgView = [[UIImageView alloc] initWithImage:completeImg];
         statusImgView.frame = CGRectMake((view.width - completeImg.size.width) / 2, (view.height - completeImg.size.height) / 2, completeImg.size.width, completeImg.size.height);
@@ -145,26 +203,34 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *status = myOrderInfoArr[section][@"status"];
-    
-    UIView *heightView = [self getTableViewHeightViewWithOrderId:@"2312312" AndStatus:status];
+    NSArray *contentArr = mOrderWrapper.content;
+    TCOrder *order = contentArr[section];
+    NSString *statusStr = order.status;
+    UIView *heightView = [self getTableViewHeightViewWithOrderId:order.orderNum AndStatus:statusStr];
     heightView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     return heightView;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIView *footerView = [self getTableViewFooterViewWithTotalprice:@"33212"];
+    NSArray *contentArr = mOrderWrapper.content;
+    TCOrder *order = contentArr[section];
+    NSString *totalFeeStr = [NSString stringWithFormat:@"%@", @([NSString stringWithFormat:@"%f", order.totalFee].floatValue)];
+    UIView *footerView = [self getTableViewFooterViewWithTotalprice:totalFeeStr];
     footerView.backgroundColor = [UIColor whiteColor];
     return footerView;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *orderContentArr = myOrderInfoArr[section][@"content"];
-    return orderContentArr.count;
+    NSArray *orderContentArr = mOrderWrapper.content;
+    TCOrder *order = orderContentArr[section];
+    NSArray *itemList = order.itemList;
+    
+    return itemList.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return myOrderInfoArr.count;
+    NSArray *orderContentArr = mOrderWrapper.content;
+    return orderContentArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -174,21 +240,49 @@
         cell = [[TCUserOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    NSDictionary *dic = myOrderInfoArr[indexPath.section][@"content"][indexPath.row];
+    NSArray *orderContentArr = mOrderWrapper.content;
+    TCOrder *order = orderContentArr[indexPath.section];
+    NSArray *itemList = order.itemList;
+    TCOrderItem *orderItem = itemList[indexPath.row];
+    TCGoods *goods = orderItem.goods;
     
     cell.leftImgView.image = [UIImage imageNamed:@"good_placeholder"];
-    [cell setTitleLabWithText:dic[@"name"]];
-    [cell setPriceLabel:46.5];
-    [cell setNumberLabel:4];
-    [cell setSelectedStandardWithDic:dic[@"type"]];
+    [cell.leftImgView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:goods.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
+    [cell setTitleLabWithText:goods.name];
+    [cell setPriceLabel:goods.salePrice];
+    [cell setNumberLabel:orderItem.amount];
+    [cell setSelectedStandard:goods.standardSnapshot];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSLog(@"%@", myOrderInfoArr);
-    TCUserOrderDetailViewController *orderDetailViewController = [[TCUserOrderDetailViewController alloc] init];
+    
+    NSArray *orderContentArr = mOrderWrapper.content;
+    TCOrder *order = orderContentArr[indexPath.section];
+    
+//    TCGoods *good2 = [[TCGoods alloc] init];
+//    good2.ID = @"5820539b8d6a4b5693f39beb";
+//    good2.storeId = @"5820539b8d6a4b5693f39b66";
+//    good2.name = @"天山雪莲爽肤水";
+//    good2.brand = @"屈臣氏";
+//    good2.mainPicture = @"";
+//    good2.originPrice = 200.5;
+//    good2.salePrice = 500.5;
+//    good2.saleQuantity = 200;
+//    good2.standardSnapshot = @"口味:臭豆腐味|尺寸:500g";
+//    
+//    TCOrderItem *orderItem = [[TCOrderItem alloc] init];
+//    orderItem.amount = 3;
+//    orderItem.goods = good2;
+//    
+//    NSArray *itemList = @[
+//                          orderItem
+//                          ];
+    
+    TCUserOrderDetailViewController *orderDetailViewController = [[TCUserOrderDetailViewController alloc] initWithOrder:order];
+    orderDetailViewController.title = @"订单详情";
     [self.navigationController pushViewController:orderDetailViewController animated:YES];
     
 }

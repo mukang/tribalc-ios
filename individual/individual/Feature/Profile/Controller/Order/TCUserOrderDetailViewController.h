@@ -12,7 +12,13 @@
 #import "TCUserOrderTableViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "TCClientConfig.h"
+#import "TCModelImport.h"
+#import "TCImageURLSynthesizer.h"
 
 @interface TCUserOrderDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate>
+
+- (instancetype)initWithItemList:(NSArray *)itemList;
+
+- (instancetype)initWithOrder:(TCOrder *)order;
 
 @end
