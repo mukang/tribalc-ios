@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TCListStore.h"
+#import "TCGoods.h"
 
 @interface TCOrderItem : NSObject
 
 /** 产品数量 */
 @property (nonatomic) NSInteger amount;
 /** 产品信息 */
-@property (copy, nonatomic) TCListStore *goods;
+@property (retain, nonatomic) TCGoods *goods;
 
 
 @end

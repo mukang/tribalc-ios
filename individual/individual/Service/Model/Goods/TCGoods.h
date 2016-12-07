@@ -26,6 +26,7 @@
 @property (nonatomic) CGFloat salePrice;
 /** 总销量 */
 @property (nonatomic) NSInteger saleQuantity;
-
+/** 规格文本信息 */
+@property (nonatomic, copy) NSString *standardSnapshot;
 
 @end

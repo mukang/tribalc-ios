@@ -12,17 +12,23 @@
 @interface TCOrder : NSObject
 
 typedef NS_ENUM(NSInteger, TCOrderStatus) {
-    TCOrderCancel,
+    TCOrderCannel,
     TCOrderNoSettle,
     TCOrderSettle,
     TCOrderDelivery,
-    TCOrderReceived
+    TCOrderReceived,
+    TCOrderNoCreate
 };
 typedef NS_ENUM(NSInteger, TCOrderBalance) {
     TCPayBalance,
     TCPayAlipay,
     TCPayWeichat,
     TCPayBankcard
+};
+
+typedef NS_ENUM(NSInteger, TCOrderExpressType) {
+    TCExpressTypePayPostage,
+    TCExpressTypeNotPayPostage
 };
 
 
@@ -34,8 +40,11 @@ typedef NS_ENUM(NSInteger, TCOrderBalance) {
 @property (copy, nonatomic) NSString *ownerId;
 /** 收货地址 */
 @property (copy, nonatomic) NSString *address;
+@property (copy, nonatomic) NSString *addressId;
 /** 配送方式 */
 @property (copy, nonatomic) NSString *expressType;
+/** 配送方式(枚举) */
+@property (nonatomic) TCOrderExpressType express;
 /** 邮递费 */
 @property (nonatomic) NSInteger expressFee;
 /** 价格合计 */
@@ -61,7 +70,7 @@ typedef NS_ENUM(NSInteger, TCOrderBalance) {
 /** 商铺简要信息 */
 @property (nonatomic) TCMarkStore *store;
 /** 关联商品信息 */
-@property (nonatomic) NSArray *itemList;
+@property (retain, nonatomic) NSArray *itemList;
 
 
 @end

@@ -79,6 +79,8 @@
         [label setHeight:(label.height * 2) + 4];
     }
     
+    text = text == nil ? @"" : text;
+    
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     style.lineSpacing = 4;

@@ -315,7 +315,23 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  @param resultBlock 结果回调，TCOrderWrapper为nil时表示获取失败，失败原因见error的code和userInfo
  */
 - (void)fetchOrderWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCOrderWrapper *, NSError *))resultBlock;
-- (void)createOrderWithGoodsId:(NSString *)goodsId AddressId:(NSString *)addressId Amount:(NSInteger)amount result:(void(^)(BOOL, NSError *))resultBlock ;
+
+/**
+ 创建商品订单
+ 
+ @param itemList 数组，包含多个字典，字典格式为 @{ amount:2, goodsId:@"xxxxx" }
+ @param addressId 收货地址id
+ */
+- (void)createOrderWithItemList:(NSArray *)itemList AddressId:(NSString *)addressId result:(void(^)(BOOL, NSError *))resultBlock;
+
+/**
+ 更改订单状态
+ 
+ @param statusStr 更改后的状态
+ @param orderId  订单id
+ */
+- (void)changeOrderStatus:(NSString *)statusStr OrderId:(NSString *)orderId result:(void(^)(BOOL, NSError *))resultBlock;
+
 
 #pragma mark - 上传图片资源
 

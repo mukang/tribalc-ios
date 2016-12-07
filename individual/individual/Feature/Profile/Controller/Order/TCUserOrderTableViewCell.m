@@ -74,8 +74,35 @@
     return label;
 }
 
-- (void)setSelectedStandardWithDic:(NSDictionary *)standard{
+- (NSDictionary *)getSelectesStandardDic:(NSString *)standard {
+    if (![standard containsString:@":"]) {
+        return nil;
+    }
+    if ([standard containsString:@":"] && ![standard containsString:@"|"]) {
+        NSArray *standardArr = [standard componentsSeparatedByString:@":"];
+        return @{
+                 @"primary":@{
+                     @"label":standardArr[0],
+                     @"types":standardArr[1]
+                 }
+                 };
+    }
+    if ([standard containsString:@":"] && [standard containsString:@"|"]) {
+        NSArray *standardArr = [standard componentsSeparatedByString:@"|"];
+        NSArray *primaryArr = [standardArr[0] componentsSeparatedByString:@":"];
+        NSArray *secondaryArr = [standardArr[1] componentsSeparatedByString:@":"];
+        return @{
+                 @"primary": @{ @"label":primaryArr[0], @"types":primaryArr[1] },
+                 @"secondary":@{  @"label":secondaryArr[0], @"types":secondaryArr[1] }
+                 };
+    }
+    
+    return nil;
+}
+
+- (void)setSelectedStandard:(NSString *)standardStr{
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width + 9, _leftImgView.height + _leftImgView.y - 20, [UIScreen mainScreen].bounds.size.width - 20 - 71.5 - 20 - 9, 13)];
+    NSDictionary *standard = [self getSelectesStandardDic:standardStr];
     if (standard[@"secondary"] == NULL && standard[@"primary"] != NULL) {
         UILabel *primaryStandardLab = [self getStandardLabelWithOrigin:CGPointMake(0, 0) AndText:[NSString stringWithFormat:@"%@ : %@", standard[@"primary"][@"label"], standard[@"primary"][@"types"]]];
         [view addSubview:primaryStandardLab];

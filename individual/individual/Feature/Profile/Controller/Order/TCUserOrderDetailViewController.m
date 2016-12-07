@@ -7,9 +7,11 @@
 //
 
 #import "TCUserOrderDetailViewController.h"
+#import "TCUserOrderTabBarController.h"
+#import "TCBuluoApi.h"
 
 @interface TCUserOrderDetailViewController () {
-    NSDictionary *orderDetail;
+    TCOrder *orderDetail;
     UITableView *orderDetailTableView;
 }
 
@@ -17,17 +19,43 @@
 
 @implementation TCUserOrderDetailViewController
 
-- (instancetype)initWithData {
+
+
+- (instancetype)initWithOrder:(TCOrder *)order {
     self = [super init];
     if (self) {
-        [self forgeData];
+        orderDetail = order;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithItemList:(NSArray *)itemList {
+    self = [super init];
+    if (self) {
+        TCUserSession *userSession = [[TCBuluoApi api] currentUserSession];
+        orderDetail = [[TCOrder alloc] init];
+        orderDetail.itemList = itemList;
+        orderDetail.ownerId = userSession.userInfo.ID;
+        TCUserShippingAddress *shippingAddress = userSession.userSensitiveInfo.shippingAddress;
+        orderDetail.address = [NSString stringWithFormat:@"%@|%@|%@%@%@%@", shippingAddress.name, shippingAddress.phone, shippingAddress.province, shippingAddress.city, shippingAddress.district, shippingAddress.address];
+        TCMarkStore *store = [[TCMarkStore alloc] init];
+        store.name = @"三只松鼠";
+        store.logo = @"";
+        orderDetail.store = store;
+        orderDetail.addressId = userSession.userSensitiveInfo.addressID;
+        orderDetail.expressType = @"NOT_PAYPOSTAGE";
+        orderDetail.expressFee = 7.0;
+        orderDetail.status = @"";
+        orderDetail.totalFee = [self getConfirmOrderViewTotalPrice];
+        
     }
     
     return self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-
+    [super viewDidAppear:animated];
 }
 
 - (void)viewDidLoad {
@@ -36,22 +64,41 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self initNavigationBar];
     
-    [self forgeData];
+
     
     UIScrollView *scrollView = [self getScrollViewWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - 49)];
     
-    NSArray *addressArr = [orderDetail[@"address"] componentsSeparatedByString:@"|"];
+    NSArray *addressArr = [self getAddressArr];
     UIView *userAddressView = [[TCOrderAddressView alloc] initWithOrigin:CGPointMake(0, 0) WithName:addressArr[0] AndPhone:addressArr[1] AndAddress:addressArr[2]];
     [scrollView addSubview:userAddressView];
     
-    NSArray *orderList = orderDetail[@"itemList"];
+    NSArray *orderList = orderDetail.itemList;
     orderDetailTableView = [self getOrderDetailTableViewWithFrame:CGRectMake(0, userAddressView.y + userAddressView.height, self.view.width, 40 * 3 + 56 + 41 + orderList.count * 96.5)];
     [scrollView addSubview:orderDetailTableView];
     
     scrollView.contentSize = CGSizeMake(self.view.width, self.view.height);
     
-    [self initBottomViewWithStatus:@"待付款"];
+    [self initBottomViewWithStatus:orderDetail.orderStatus];
 
+}
+
+- (NSArray *)getAddressArr {
+    if ([orderDetail.address containsString:@"|"]) {
+        return [orderDetail.address componentsSeparatedByString:@"|"];
+    } else {
+        return @[@"", @"", @""];
+    }
+}
+
+- (CGFloat)getConfirmOrderViewTotalPrice {
+    NSArray *itemList = orderDetail.itemList;
+    CGFloat totalPrice = 0;
+    for (int i = 0; i < itemList.count; i++) {
+        TCOrderItem *orderItem = itemList[i];
+        totalPrice += orderItem.amount * orderItem.goods.salePrice;
+    }
+    
+    return  totalPrice;
 }
 
 - (UIScrollView *)getScrollViewWithFrame:(CGRect)frame {
@@ -69,20 +116,65 @@
     [backbtn addTarget:self action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = backItem;
     
-    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"订单详情"];
+    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:self.title];
 }
 
-- (void)initBottomViewWithStatus:(NSString *)status {
+- (void)initBottomViewWithStatus:(TCOrderStatus)status {
+    UIView *bottomView;
+    switch (status) {
+        case TCOrderNoSettle:
+            bottomView = [self getNotSettleBottomView];
+            break;
+        case TCOrderSettle:
+            bottomView = [self getSettleBottomView];
+            break;
+        case TCOrderCannel:
+            break;
+        case TCOrderDelivery:
+            bottomView = [self getDeliveryBottomView];
+            break;
+        case TCOrderReceived:
+            break;
+        default:
+            bottomView = [self getNotCreateBottomView];
+            break;
+    }
 //    UIView *bottomView = [self getWaitPayOrderBottomView];
-//    UIView *bottomView = [self getWaitTakeOrderBottomView];
-//    UIView *bottomView = [self getRemindTakeOrderBottomView];
 
-    UIView *bottomView = [self getPayMoneyBottomView];
+
     bottomView.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:bottomView];
 }
 
+- (UIView *)getSettleBottomView {
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
+    UIButton *confirmPayBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - 111, 0, 111, bottomView.height) AndTitle:@"提醒发货" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+    [confirmPayBtn addTarget:self action:@selector(touchOrderRemindBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [bottomView addSubview:confirmPayBtn];
+    
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
+    [bottomView addSubview:lineView];
+    
+    return bottomView;
+
+}
+
+- (UIView *)getNotCreateBottomView {
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
+    UILabel *payMoneyLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, 35, bottomView.height) AndFontSize:14 AndTitle:@"合计:"];
+    [bottomView addSubview:payMoneyLab];
+    UIButton *confirmPayBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - 111, 0, 111, bottomView.height) AndTitle:@"确认下单" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+    [confirmPayBtn addTarget:self action:@selector(touchOrderCreateBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [bottomView addSubview:confirmPayBtn];
+    NSString *totalStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", orderDetail.totalFee].floatValue)];
+    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(payMoneyLab.x + payMoneyLab.width, 0, confirmPayBtn.x - payMoneyLab.x - payMoneyLab.width, bottomView.height) AndFontSize:14 AndTitle:totalStr AndTextColor:confirmPayBtn.backgroundColor];
+    [bottomView addSubview:priceLab];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
+    [bottomView addSubview:lineView];
+    
+    return bottomView;
+}
 
 
 - (UIView *)getWaitPayOrderBottomView {
@@ -91,7 +183,8 @@
     [bottomView addSubview:payMoneyLab];
     UIButton *waitPayBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - 111, 0, 111, bottomView.height) AndTitle:@"待付款" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
     [bottomView addSubview:waitPayBtn];
-    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(payMoneyLab.x + payMoneyLab.width, 0, waitPayBtn.x - payMoneyLab.x - payMoneyLab.width, bottomView.height) AndFontSize:14 AndTitle:@"￥309" AndTextColor:waitPayBtn.backgroundColor];
+    NSString *totalStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", orderDetail.totalFee].floatValue)];
+    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(payMoneyLab.x + payMoneyLab.width, 0, waitPayBtn.x - payMoneyLab.x - payMoneyLab.width, bottomView.height) AndFontSize:14 AndTitle:totalStr AndTextColor:waitPayBtn.backgroundColor];
     [bottomView addSubview:priceLab];
     UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
     [bottomView addSubview:lineView];
@@ -100,9 +193,10 @@
     return bottomView;
 }
 
-- (UIView *)getWaitTakeOrderBottomView {
+- (UIView *)getDeliveryBottomView {
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
     UIButton *waitTakeBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - 111, 0, 111, bottomView.height) AndTitle:@"确认收货" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+    [waitTakeBtn addTarget:self action:@selector(touchOrderConfrimTake:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:waitTakeBtn];
     UIButton *delayTakeBtn = [TCComponent createButtonWithFrame:CGRectMake(waitTakeBtn.x - 101, bottomView.height / 2 - 30 / 2, 87, 30) AndTitle:@"延迟收货" AndFontSize:16 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
     delayTakeBtn.layer.borderWidth = 0.5;
@@ -115,24 +209,14 @@
     return bottomView;
 }
 
-- (UIView *)getRemindTakeOrderBottomView {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
 
-    UIButton *remindTakeBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - 111, 0, 111, bottomView.height) AndTitle:@"提醒发货" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
-    [bottomView addSubview:remindTakeBtn];
-    
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
-    [bottomView addSubview:lineView];
-    
-    return bottomView;
-
-}
-
-- (UIView *)getPayMoneyBottomView {
+- (UIView *)getNotSettleBottomView {
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
 
     UIButton *payBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"去付款" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+    [payBtn addTarget:self action:@selector(touchOrderPayBtn:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *cancelBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"取消订单" AndFontSize:16 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
+    [cancelBtn addTarget:self action:@selector(touchOrderCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:cancelBtn];
     [bottomView addSubview:payBtn];
     UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
@@ -170,7 +254,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *orderList = orderDetail[@"itemList"];
+    NSArray *orderList = orderDetail.itemList;
     return orderList.count + 3;
 }
 
@@ -183,7 +267,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *orderList = orderDetail[@"itemList"];
+    NSArray *orderList = orderDetail.itemList;
     if (indexPath.row >= orderList.count) {
         return 40;
     }
@@ -194,12 +278,12 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 41)];
-    NSDictionary *storeDic = orderDetail[@"store"];
+    TCMarkStore *markStore = orderDetail.store;
     UIImageView *storeLogoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(20, headerView.height / 2 - 17 / 2, 17, 17)];
-    NSURL *logoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, storeDic[@"logo"]]];
+    NSURL *logoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, markStore.logo]];
     [storeLogoImgView sd_setImageWithURL:logoUrl placeholderImage:[UIImage imageNamed:@"map_bar"]];
     
-    UILabel *storeLabel = [TCComponent createLabelWithFrame:CGRectMake(storeLogoImgView.x + storeLogoImgView.width + 5, 0, self.view.width - storeLogoImgView.x - storeLogoImgView.width - 5, headerView.height) AndFontSize:12 AndTitle:storeDic[@"name"] AndTextColor:[UIColor blackColor]];
+    UILabel *storeLabel = [TCComponent createLabelWithFrame:CGRectMake(storeLogoImgView.x + storeLogoImgView.width + 5, 0, self.view.width - storeLogoImgView.x - storeLogoImgView.width - 5, headerView.height) AndFontSize:12 AndTitle:markStore.name AndTextColor:[UIColor blackColor]];
     storeLabel.font = [UIFont fontWithName:BOLD_FONT size:12];
     
     [headerView addSubview:storeLogoImgView];
@@ -217,6 +301,12 @@
     supplementField.placeholder = @"订单补充说明:";
     supplementField.font = [UIFont systemFontOfSize:11];
     supplementField.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
+    supplementField.text = orderDetail.note;
+    if ([self.title isEqualToString:@"确认下单"]) {
+        supplementField.userInteractionEnabled = YES;
+    } else {
+        supplementField.userInteractionEnabled = NO;
+    }
     
     [backView addSubview:supplementField];
     
@@ -228,7 +318,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *orderList = orderDetail[@"itemList"];
+    NSArray *orderList = orderDetail.itemList;
     if (indexPath.row >= orderList.count) {
         return [self getOrderInfoTableViewCellWithIndexPath:indexPath];
     } else {
@@ -237,21 +327,17 @@
         if (!cell) {
             cell = [[TCUserOrderTableViewCell alloc] initOrderDetailCellWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
-        NSArray *orderList = orderDetail[@"itemList"];
-        NSDictionary *orderContentDic = orderList[indexPath.row];
+        TCOrderItem *orderItem = orderList[indexPath.row];
+        TCGoods *good = orderItem.goods;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.leftImgView.image = [UIImage imageNamed:@"good_placeholder"];
-        [cell setTitleLabWithText:orderContentDic[@"title"]];
-        [cell setBoldPriceLabel:39.00];
-        [cell setBoldNumberLabel:5];
-        [cell setSelectedStandardWithDic:orderContentDic[@"standard"]];
+        [cell.leftImgView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:good.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
+        [cell setTitleLabWithText:good.name];
+        [cell setBoldPriceLabel:good.salePrice];
+        [cell setBoldNumberLabel:orderItem.amount];
+        [cell setSelectedStandard:good.standardSnapshot];
         return cell;
 
     }
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
 }
 
 
@@ -263,13 +349,14 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UIView *orderInfoView;
-    NSArray *orderList = orderDetail[@"itemList"];
+    NSArray *orderList = orderDetail.itemList;
     if (indexPath.row == orderList.count) {
         orderInfoView = [self getOrderInfoViewWithTitle:@"配送方式:" AndText:@"全国包邮"];
     } else if (indexPath.row == orderList.count + 1) {
         orderInfoView = [self getOrderInfoViewWithTitle:@"快递运费:" AndText:@"￥0.00"];
     } else {
-        orderInfoView = [self getOrderInfoViewWithTitle:@"价格合计:" AndText:@"￥309.00"];
+        NSString *totalStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", orderDetail.totalFee].floatValue)];
+        orderInfoView = [self getOrderInfoViewWithTitle:@"价格合计:" AndText:totalStr];
     }
     [cell.contentView addSubview:orderInfoView];
     
@@ -281,58 +368,60 @@
     return cell;
 }
 
+- (void)showHUDMessageWithResult:(BOOL)result AndTitle:(NSString *)title {
+    if (result) {
+        [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"%@成功", title]];
+    } else {
+        [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"%@失败", title]];
+    }
+}
+
 #pragma mark - click
 - (void)touchBackBtn {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)forgeData {
-    orderDetail = @{
-                    @"id":@"69aec39b8d6a4b5693f39be1",
-                    @"orderNum":@"2016112101000000",
-                    @"ownerId":@"56dfg39b8d6a4b5693f39be2",
-                    @"address":@"王丹|18633601521|北京朝阳区北苑茉莉园",
-                    @"expressType":@"NOT_PAYPOSTAGE",
-                    @"expressFee":@7.0,
-                    @"totalFee":@106.5,
-                    @"note":@"采用圆通快递",
-                    @"payChannel":@"AliPay",
-                    @"status":@"NO_SETTLE",
-                    @"createTime":@1478513563773,
-                    @"settleTime":@1478683563998,
-                    @"deliveryTime":@1478683563998,
-                    @"receivedTime":@1478713563773,
-                    @"store":@{ @"name":@"五欢喜的衣橱", @"logo":@"" },
-                    @"itemList":@[@{
-                                      @"thumbnail":@"",
-                                      @"title":@"长大一：秋冬加厚外套甜美手机锁哈哈哈哈哈哈哈哈哈哈",
-                                      @"standard":@{
-                                              @"primary":@{
-                                                      @"label":@"颜色", @"types":@"浅蓝"
-                                                      },
-                                              @"secondary":@{
-                                                      @"label":@"尺码", @"types":@"M"
-                                                      }
-                                              },
-                                      @"price":@309,
-                                      @"count":@3
-                                    },
-                                    @{
-                                      @"thumbnail":@"",
-                                      @"title":@"长大一：秋冬加厚外套甜美手机锁哈哈哈哈哈哈哈哈哈哈",
-                                      @"standard":@{
-                                              @"primary":@{
-                                                      @"label":@"颜色", @"types":@"浅蓝"
-                                                      },
-                                              @"secondary":@{
-                                                      @"label":@"尺码", @"types":@"M"
-                                                      }
-                                              },
-                                      @"price":@309,
-                                      @"count":@3
-                                      }
-                                  ]
-                    };
+- (void)touchOrderCreateBtn:(UIButton *)btn {
+    NSMutableArray *itemList = [[NSMutableArray alloc] init];
+    NSArray *orderList = orderDetail.itemList;
+    for (int i = 0; i < orderList.count; i++) {
+        TCOrderItem *orderItem = orderList[i];
+        itemList[i] = @{ @"amount": [NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID };
+    }
+    [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:orderDetail.addressId result:^(BOOL result, NSError *error) {
+        [self showHUDMessageWithResult:result AndTitle:@"创建订单"];
+    }];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+}
+
+- (void)touchOrderCancelBtn:(UIButton *)btn {
+    [[TCBuluoApi api] changeOrderStatus:@"CANNEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
+        [self showHUDMessageWithResult:result AndTitle:@"取消订单"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
+- (void)touchOrderPayBtn:(UIButton *)btn {
+    [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
+        [self showHUDMessageWithResult:result AndTitle:@"付款"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
+- (void)touchOrderRemindBtn:(UIButton *)btn {
+    [[TCBuluoApi api] changeOrderStatus:@"DELIVERY" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
+        [self showHUDMessageWithResult:result AndTitle:@"无权限，发货"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
+- (void)touchOrderConfrimTake:(UIButton *)btn {
+    [[TCBuluoApi api] changeOrderStatus:@"RECEIVED" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
+        [self showHUDMessageWithResult:result AndTitle:@"确认收货"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

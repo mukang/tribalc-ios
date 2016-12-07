@@ -18,7 +18,7 @@
 - (void)setTitleLabWithText:(NSString *)text;
 - (void)setNumberLabel:(float)number;
 - (void)setPriceLabel:(float)price;
-- (void)setSelectedStandardWithDic:(NSDictionary *)standard;
+- (void)setSelectedStandard:(NSString *)standard;
 - (void)setBoldPriceLabel:(float)price ;
 - (void)setBoldNumberLabel:(float)number;
 @end
