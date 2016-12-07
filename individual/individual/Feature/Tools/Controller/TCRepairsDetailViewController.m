@@ -25,7 +25,8 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 <UITableViewDataSource,
 UITableViewDelegate,
 TCCommonInputViewCellDelegate,
-TCRepairsDescViewCellDelegate>
+TCRepairsDescViewCellDelegate,
+TCRepairsPhotosViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSIndexPath *currentEditIndex;
@@ -148,6 +149,7 @@ TCRepairsDescViewCellDelegate>
             currentCell = cell;
         } else if (indexPath.row == 1) {
             TCRepairsPhotosViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRepairsPhotosViewCell" forIndexPath:indexPath];
+            cell.delegate = self;
             currentCell = cell;
         } else {
             TCRepairsCommitViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRepairsCommitViewCell" forIndexPath:indexPath];
@@ -195,7 +197,7 @@ TCRepairsDescViewCellDelegate>
     return YES;
 }
 
-- (void)didTapContainerViewIncommonInputViewCell:(TCCommonInputViewCell *)cell {
+- (void)didTapContainerViewInCommonInputViewCell:(TCCommonInputViewCell *)cell {
     
 }
 
@@ -211,6 +213,16 @@ TCRepairsDescViewCellDelegate>
         [textView resignFirstResponder];
     }
     return YES;
+}
+
+#pragma mark - TCRepairsPhotosViewCellDelegate
+
+- (void)didClickAddButtonInRepairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell {
+    
+}
+
+- (void)didClickDeleteButtonInRepairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell {
+    
 }
 
 #pragma mark - Notifications

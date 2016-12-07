@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TCRepairsPhotosViewCell;
+
+@protocol TCRepairsPhotosViewCellDelegate <NSObject>
+
+@optional
+- (void)didClickAddButtonInRepairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell;
+- (void)didClickDeleteButtonInRepairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell;
+
+@end
 
 @interface TCRepairsPhotosViewCell : UITableViewCell
+
+@property (strong, nonatomic) NSMutableArray *selectedPhotos;
+@property (weak, nonatomic) id<TCRepairsPhotosViewCellDelegate> delegate;
 
 @end

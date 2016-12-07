@@ -107,8 +107,8 @@
 #pragma mark - Actions
 
 - (void)handleTapContainerViewGesture:(UITapGestureRecognizer *)sender {
-    if ([self.delegate respondsToSelector:@selector(didTapContainerViewIncommonInputViewCell:)]) {
-        [self.delegate didTapContainerViewIncommonInputViewCell:self];
+    if ([self.delegate respondsToSelector:@selector(didTapContainerViewInCommonInputViewCell:)]) {
+        [self.delegate didTapContainerViewInCommonInputViewCell:self];
     }
 }
 
