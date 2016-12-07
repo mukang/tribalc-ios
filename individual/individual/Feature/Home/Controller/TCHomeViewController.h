@@ -10,6 +10,6 @@
 #import "TCRecommendListViewController.h"
 #import "TCRestaurantViewController.h"
 
-@interface TCHomeViewController : UIViewController
+@interface TCHomeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
 @end

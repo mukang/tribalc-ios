@@ -210,7 +210,7 @@
     
     UIButton *buyBtn = [TCComponent createButtonWithFrame:CGRectMake(frame.size.width / 2, 0, frame.size.width / 2, frame.size.height) AndTitle:@"立即购买" AndFontSize:17];
     [buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [shopcarBtn addTarget:target action:buyAction forControlEvents:UIControlEventTouchUpInside];
+    [buyBtn addTarget:target action:buyAction forControlEvents:UIControlEventTouchUpInside];
     buyBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     [view addSubview:buyBtn];
 

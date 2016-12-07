@@ -306,8 +306,16 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 
 
 #pragma mark - 订单类资源
+/**
+ 获取商品订单列表
+ 
+ @param status 订单状态
+ @param limitSize 获取的数量
+ @param sortSkip 默认查询止步的时间和跳过条数，以逗号分隔，如“1478513563773,3”表示查询早于时间1478513563773并跳过后3条记录，首次获取数据和下拉刷新数据时该参数传nil，上拉获取更多数据时该参数传上一次从服务器获取到的TCOrderWrapper对象中属性nextSkip的值
+ @param resultBlock 结果回调，TCOrderWrapper为nil时表示获取失败，失败原因见error的code和userInfo
+ */
 - (void)fetchOrderWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCOrderWrapper *, NSError *))resultBlock;
-
+- (void)createOrderWithGoodsId:(NSString *)goodsId AddressId:(NSString *)addressId Amount:(NSInteger)amount result:(void(^)(BOOL, NSError *))resultBlock ;
 
 #pragma mark - 上传图片资源
 

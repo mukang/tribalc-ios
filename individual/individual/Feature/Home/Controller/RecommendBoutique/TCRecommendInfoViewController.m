@@ -101,7 +101,7 @@
 
 - (void)initSelectSizeView {
 
-    standardView = [[TCStandardView alloc] initWithTarget:self AndNumberAddAction:@selector(touchBuyNumberAddBtn:) AndNumberSubAction:@selector(touchBuyNumberSubBtn:) AndAddShopCarAction:@selector(touchAddShopCartBtn:) AndGoCartAction:@selector(touchBuyBtn:) AndBuyAction:@selector(touchBuyBtn:) AndCloseAction:@selector(touchCloseBtn)];
+    standardView = [[TCStandardView alloc] initWithTarget:self AndNumberAddAction:@selector(touchBuyNumberAddBtn:) AndNumberSubAction:@selector(touchBuyNumberSubBtn:) AndAddShopCarAction:@selector(touchAddShopCartBtn:) AndGoCartAction:@selector(touchAddShopCartBtn:) AndBuyAction:@selector(touchBuyBtn:) AndCloseAction:@selector(touchCloseBtn)];
     [standardView setSalePriceAndInventoryWithSalePrice:mGoodDetail.salePrice AndInventory:mGoodDetail.repertory AndImgUrlStr:mGoodDetail.thumbnail];
     [self.view addSubview:standardView];
     [[UIApplication sharedApplication].keyWindow addSubview:standardView];
@@ -563,7 +563,12 @@
 }
 
 - (void)touchBuyBtn:(UIButton *)btn {
-    
+    NSLog(@"%@", mGoodDetail.standardId);
+    NSLog(@"%@", mGoodDetail.ID);
+    NSLog(@"%@", standardView.numberLab.text);
+    [[TCBuluoApi api] createOrderWithGoodsId:mGoodDetail.ID AddressId:mGoodDetail.standardId Amount:[standardView.numberLab.text integerValue] result:^(BOOL result, NSError *error) {
+        
+    }];
 }
 
 

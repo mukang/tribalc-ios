@@ -209,6 +209,14 @@
 }
 
 
+- (void)setTranslucentNavigationBar {
+    [self.navigationController.navigationBar setTranslucent:YES];
+    UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
+    barImageView.backgroundColor = TCRGBColor(42, 42, 42);
+    barImageView.alpha = 0;
+}
+
+
 - (void)touchBackBtn:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }

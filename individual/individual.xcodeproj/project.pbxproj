@@ -49,6 +49,7 @@
 		093D03191DE40D71007A053C /* TCUserOrderTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D03181DE40D71007A053C /* TCUserOrderTabBarController.m */; };
 		093D031C1DE41B4A007A053C /* TCUserOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */; };
 		093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */; };
+		0960B3521DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0960B3511DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m */; };
 		096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 096254341DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m */; };
 		0978DB111DE95D62006B6437 /* TCUserOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0978DB101DE95D62006B6437 /* TCUserOrderDetailViewController.m */; };
 		0978DB141DE96E40006B6437 /* TCOrderAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0978DB131DE96E40006B6437 /* TCOrderAddressView.m */; };
@@ -332,6 +333,8 @@
 		093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderViewController.m; sourceTree = "<group>"; };
 		093D031D1DE41D28007A053C /* TCUserOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderTableViewCell.h; sourceTree = "<group>"; };
 		093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderTableViewCell.m; sourceTree = "<group>"; };
+		0960B3501DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCHomeCommodityTableViewCell.h; path = Map/TCHomeCommodityTableViewCell.h; sourceTree = "<group>"; };
+		0960B3511DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCHomeCommodityTableViewCell.m; path = Map/TCHomeCommodityTableViewCell.m; sourceTree = "<group>"; };
 		096254331DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserReserveDetailViewController.h; sourceTree = "<group>"; };
 		096254341DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserReserveDetailViewController.m; sourceTree = "<group>"; };
 		0978DB0F1DE95D62006B6437 /* TCUserOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderDetailViewController.h; sourceTree = "<group>"; };
@@ -1439,6 +1442,8 @@
 				7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */,
 				7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */,
 				7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */,
+				0960B3501DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.h */,
+				0960B3511DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1992,6 +1997,7 @@
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
 				092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */,
 				09275FBD1DDEFF6E00502167 /* TCDetailAnnotationView.m in Sources */,
+				0960B3521DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m in Sources */,
 				7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */,
 				7A3C81C51DF00DE7009ABCEC /* TCPaymentDetailView.m in Sources */,
 				7AB29F311DD46C7D00564D93 /* TCUserSensitiveInfo.m in Sources */,

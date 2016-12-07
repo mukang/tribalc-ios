@@ -132,7 +132,7 @@
     UIButton *cancelBtn = [TCComponent createButtonWithFrame:CGRectMake(20, 0, 30, titleView.height) AndTitle:@"取消" AndFontSize:14 AndBackColor:nil AndTextColor:[UIColor blackColor]];
     [cancelBtn addTarget:self action:@selector(touchCancelSelectBtn:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *confirmBtn = [TCComponent createButtonWithFrame:CGRectMake(titleView.width - 20 - 30, 0, 30, titleView.height) AndTitle:@"确定" AndFontSize:14 AndBackColor:nil AndTextColor:[UIColor blackColor]];
-    [confirmBtn addTarget:self action:@selector(touchConfirmSelectBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [confirmBtn addTarget:self action:[self getSelectTitleViewConfirmBtnActionWithTitle:title] forControlEvents:UIControlEventTouchUpInside];
     UILabel *titleLab = [TCComponent createLabelWithText:title AndFontSize:14];
     titleLab.frame = CGRectMake(50, 0, titleView.width - 50 * 2, titleView.height);
     titleLab.textAlignment = NSTextAlignmentCenter;
@@ -143,6 +143,14 @@
     [titleView addSubview:titleLab];
     
     return titleView;
+}
+
+- (SEL)getSelectTitleViewConfirmBtnActionWithTitle:(NSString *)title {
+    if ([title isEqualToString:@"时间和日期"]) {
+        return @selector(touchTimeConfirmSelectBtn:);
+    } else {
+        return @selector(touchAmountConfirmSelectBtn:);
+    }
 }
 
 - (UIView *)getTimeAndPersonNumberView {
@@ -381,20 +389,24 @@
     [self cancelShowSelectView];
 }
 
-
-- (void)touchConfirmSelectBtn:(UIButton *)button {
+- (void)touchTimeConfirmSelectBtn:(UIButton *)button {
     NSInteger dateRow = [timePickerView selectedRowInComponent:0];
     NSInteger timeRow = [timePickerView selectedRowInComponent:1];
     NSString *dateString = [self getTimeAndWeek:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * dateRow]];
     NSString *timeString = [self getTimeString:[NSDate dateWithTimeIntervalSinceNow:30 * 60 * timeRow]];
     timeLab.text = [self getTimeStringWithSelectDateStr:dateString AndTimeStr:timeString];
-    
+    [self cancelShowSelectView];
+}
+
+- (void)touchAmountConfirmSelectBtn:(UIButton *)button {
     NSInteger personNumberRow = [personNumberPickerView selectedRowInComponent:0];
     NSString *personNumberStr = [NSString stringWithFormat:@"%li", personNumberRow + 1];
     personNumberLab.text = [NSString stringWithFormat:@"%@人", personNumberStr];
     
     [self cancelShowSelectView];
+
 }
+
 
 - (void)touchReserveBtn:(UIButton *)btn {
     NSLog(@"点击预订按钮");

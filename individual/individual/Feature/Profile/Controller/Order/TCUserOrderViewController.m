@@ -48,6 +48,7 @@
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchOrderWrapper:nil limiSize:10 sortSkip:nil result:^(TCOrderWrapper *orderWrapper, NSError *error) {
         mOrderWrapper = orderWrapper;
+        
     }];
 }
 
