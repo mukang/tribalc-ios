@@ -30,7 +30,7 @@ static NSInteger const kMaxPhotoItems = 3;
 
 - (void)setupSubviews {
     CGFloat margin = 20;
-    CGFloat itemWH = floorf((TCScreenWidth - (kMaxPhotoItems - 1) * margin) / kMaxPhotoItems);
+    CGFloat itemWH = floorf(((TCScreenWidth - 40) - (kMaxPhotoItems - 1) * margin) / kMaxPhotoItems);
     self.flowLayout.itemSize = CGSizeMake(itemWH, itemWH);
     self.flowLayout.minimumInteritemSpacing = margin;
     self.flowLayout.sectionInset = UIEdgeInsetsMake(10, 0, 10, 0);
@@ -42,6 +42,12 @@ static NSInteger const kMaxPhotoItems = 3;
     
     UINib *nib = [UINib nibWithNibName:@"TCRepairsPhotoViewCell" bundle:[NSBundle mainBundle]];
     [self.collectionView registerNib:nib forCellWithReuseIdentifier:@"TCRepairsPhotoViewCell"];
+}
+
+- (void)setSelectedPhotos:(NSMutableArray *)selectedPhotos {
+    _selectedPhotos = selectedPhotos;
+    
+    [self.collectionView reloadData];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -80,8 +86,9 @@ static NSInteger const kMaxPhotoItems = 3;
 }
 
 - (void)didClickDeleteButtonInRepairsPhotoViewCell:(TCRepairsPhotoViewCell *)cell {
-    if ([self.delegate respondsToSelector:@selector(didClickDeleteButtonInRepairsPhotosViewCell:)]) {
-        [self.delegate didClickDeleteButtonInRepairsPhotosViewCell:self];
+    if ([self.delegate respondsToSelector:@selector(repairsPhotosViewCell:didClickDeleteButtonWithPhotoIndex:)]) {
+        NSInteger photoIndex = [self.collectionView indexPathForCell:cell].item;
+        [self.delegate repairsPhotosViewCell:self didClickDeleteButtonWithPhotoIndex:photoIndex];
     }
 }
 

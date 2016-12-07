@@ -13,7 +13,7 @@
 
 @optional
 - (void)didClickAddButtonInRepairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell;
-- (void)didClickDeleteButtonInRepairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell;
+- (void)repairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell didClickDeleteButtonWithPhotoIndex:(NSInteger)photoIndex;
 
 @end
 
