@@ -134,7 +134,7 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     
 }
 
-- (void)didTapContainerViewIncommonInputViewCell:(TCCommonInputViewCell *)cell {
+- (void)didTapContainerViewInCommonInputViewCell:(TCCommonInputViewCell *)cell {
     
 }
 

@@ -13,6 +13,8 @@
 #import "TCRepairsPhotosViewCell.h"
 #import "TCRepairsCommitViewCell.h"
 
+#import "TCPhotoPicker.h"
+
 typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeCommunity = 0,
     TCInputCellTypeCompany,
@@ -25,10 +27,15 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 <UITableViewDataSource,
 UITableViewDelegate,
 TCCommonInputViewCellDelegate,
-TCRepairsDescViewCellDelegate>
+TCRepairsDescViewCellDelegate,
+TCRepairsPhotosViewCellDelegate,
+TCPhotoPickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSIndexPath *currentEditIndex;
+
+@property (strong, nonatomic) TCPhotoPicker *photoPicker;
+@property (strong, nonatomic) NSMutableArray *selectedPhotos;
 
 @end
 
@@ -148,6 +155,8 @@ TCRepairsDescViewCellDelegate>
             currentCell = cell;
         } else if (indexPath.row == 1) {
             TCRepairsPhotosViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRepairsPhotosViewCell" forIndexPath:indexPath];
+            cell.selectedPhotos = self.selectedPhotos;
+            cell.delegate = self;
             currentCell = cell;
         } else {
             TCRepairsCommitViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRepairsCommitViewCell" forIndexPath:indexPath];
@@ -195,7 +204,7 @@ TCRepairsDescViewCellDelegate>
     return YES;
 }
 
-- (void)didTapContainerViewIncommonInputViewCell:(TCCommonInputViewCell *)cell {
+- (void)didTapContainerViewInCommonInputViewCell:(TCCommonInputViewCell *)cell {
     
 }
 
@@ -211,6 +220,55 @@ TCRepairsDescViewCellDelegate>
         [textView resignFirstResponder];
     }
     return YES;
+}
+
+#pragma mark - TCRepairsPhotosViewCellDelegate
+
+- (void)didClickAddButtonInRepairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [weakSelf showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+    }];
+    [alertController addAction:cameraAction];
+    UIAlertAction *albumAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [weakSelf showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }];
+    [alertController addAction:albumAction];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)repairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell didClickDeleteButtonWithPhotoIndex:(NSInteger)photoIndex {
+    [self.selectedPhotos removeObjectAtIndex:photoIndex];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+#pragma mark - TCPhotoPickerDelegate
+
+- (void)photoPicker:(TCPhotoPicker *)photoPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [photoPicker dismissPhotoPicker];
+    self.photoPicker = nil;
+    
+    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    if ([type isEqualToString:@"public.image"]) {
+        UIImage *photoImage;
+        if (info[UIImagePickerControllerEditedImage]) {
+            photoImage = info[UIImagePickerControllerEditedImage];
+        } else {
+            photoImage = info[UIImagePickerControllerOriginalImage];
+        }
+        [self.selectedPhotos addObject:photoImage];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+- (void)photoPickerDidCancel:(TCPhotoPicker *)photoPicker {
+    [photoPicker dismissPhotoPicker];
+    self.photoPicker = nil;
 }
 
 #pragma mark - Notifications
@@ -249,6 +307,22 @@ TCRepairsDescViewCellDelegate>
 - (void)handleKeyboardWillHideNotification:(NSNotification *)notification {
     self.tableView.contentInset = UIEdgeInsetsZero;
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
+}
+
+- (void)showPhotoPikerWithSourceType:(UIImagePickerControllerSourceType)sourceType {
+    TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
+    photoPicker.delegate = self;
+    [photoPicker showPhotoPikerWithSourceType:sourceType];
+    self.photoPicker = photoPicker;
+}
+
+#pragma mark - Override Methods
+
+- (NSMutableArray *)selectedPhotos {
+    if (_selectedPhotos == nil) {
+        _selectedPhotos = [NSMutableArray array];
+    }
+    return _selectedPhotos;
 }
 
 - (void)didReceiveMemoryWarning {

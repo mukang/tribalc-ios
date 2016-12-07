@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="248"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="247.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="247"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="添加图片" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Btx-ny-OIY">
@@ -28,12 +28,30 @@
                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ci0-wC-icg">
+                        <rect key="frame" x="20" y="28" width="280" height="219"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="CL4-iS-O7Y">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                    </collectionView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Ci0-wC-icg" firstAttribute="top" secondItem="Btx-ny-OIY" secondAttribute="bottom" id="5cc-Wz-Eed"/>
+                    <constraint firstAttribute="trailing" secondItem="Ci0-wC-icg" secondAttribute="trailing" constant="20" id="P9M-GR-slP"/>
                     <constraint firstItem="Btx-ny-OIY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="f38-rA-f3k"/>
+                    <constraint firstAttribute="bottom" secondItem="Ci0-wC-icg" secondAttribute="bottom" id="hMd-ga-s8o"/>
+                    <constraint firstItem="Ci0-wC-icg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="sjT-cY-lTo"/>
                     <constraint firstItem="Btx-ny-OIY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="xiU-35-y2r"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="collectionView" destination="Ci0-wC-icg" id="Sd8-3F-kwk"/>
+                <outlet property="flowLayout" destination="CL4-iS-O7Y" id="V9l-MC-Awo"/>
+            </connections>
             <point key="canvasLocation" x="6" y="141"/>
         </tableViewCell>
     </objects>

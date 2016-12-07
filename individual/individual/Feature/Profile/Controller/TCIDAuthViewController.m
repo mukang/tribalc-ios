@@ -126,7 +126,7 @@ TCGenderPickerViewDelegate>
     
 }
 
-- (void)didTapContainerViewIncommonInputViewCell:(TCCommonInputViewCell *)cell {
+- (void)didTapContainerViewInCommonInputViewCell:(TCCommonInputViewCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if (indexPath.row == TCInputCellTypeBirthdate) {
         TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithDatePickerMode:UIDatePickerModeDate fromController:self];

@@ -77,6 +77,8 @@
 		7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC11DDC3F5C00FCAB95 /* TCGoodsWrapper.m */; };
 		7A133EC41DDC4CC000FCAB95 /* TCGoodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC31DDC4CC000FCAB95 /* TCGoodsTests.m */; };
 		7A133ECC1DDC7AEE00FCAB95 /* TCClientRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF51DC0A73600651905 /* TCClientRequest.m */; };
+		7A14FC581DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A14FC561DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m */; };
+		7A14FC591DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A14FC571DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib */; };
 		7A1580311DD1DE8200B8F768 /* TCPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */; };
 		7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF21DC0A5DB00651905 /* TCClientConfig.m */; };
 		7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF81DC0AA7D00651905 /* TCTabBarController.m */; };
@@ -377,6 +379,9 @@
 		7A133EC01DDC3F5C00FCAB95 /* TCGoodsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsWrapper.h; sourceTree = "<group>"; };
 		7A133EC11DDC3F5C00FCAB95 /* TCGoodsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsWrapper.m; sourceTree = "<group>"; };
 		7A133EC31DDC4CC000FCAB95 /* TCGoodsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsTests.m; sourceTree = "<group>"; };
+		7A14FC551DF6C09800DF3DDA /* TCRepairsPhotoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRepairsPhotoViewCell.h; sourceTree = "<group>"; };
+		7A14FC561DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRepairsPhotoViewCell.m; sourceTree = "<group>"; };
+		7A14FC571DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCRepairsPhotoViewCell.xib; sourceTree = "<group>"; };
 		7A15802F1DD1DE8200B8F768 /* TCPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPhotoPicker.h; sourceTree = "<group>"; };
 		7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPhotoPicker.m; sourceTree = "<group>"; };
 		7A190AEE1DC09BF500651905 /* TCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClient.h; sourceTree = "<group>"; };
@@ -1233,6 +1238,9 @@
 				7A7E941B1DF57136006A47CE /* TCRepairsPhotosViewCell.h */,
 				7A7E941C1DF57136006A47CE /* TCRepairsPhotosViewCell.m */,
 				7A7E941D1DF57136006A47CE /* TCRepairsPhotosViewCell.xib */,
+				7A14FC551DF6C09800DF3DDA /* TCRepairsPhotoViewCell.h */,
+				7A14FC561DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m */,
+				7A14FC571DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib */,
 				7A7E94201DF5723A006A47CE /* TCRepairsCommitViewCell.h */,
 				7A7E94211DF5723A006A47CE /* TCRepairsCommitViewCell.m */,
 				7A7E94221DF5723A006A47CE /* TCRepairsCommitViewCell.xib */,
@@ -1760,6 +1768,7 @@
 				7A11F6F61DE3F1C5005F3EAB /* TCWalletBillDetailViewCell.xib in Resources */,
 				7A7E94241DF5723A006A47CE /* TCRepairsCommitViewCell.xib in Resources */,
 				7A381BE21DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.xib in Resources */,
+				7A14FC591DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib in Resources */,
 				7A4514641DE5725F007D7193 /* TCBankCardViewController.xib in Resources */,
 				7A381BE71DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib in Resources */,
 				7A381BDD1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.xib in Resources */,
@@ -1876,6 +1885,7 @@
 				09222E7F1DEEC2C70064C0DF /* TCOrderItem.m in Sources */,
 				7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */,
 				09222E2D1DEE98550064C0DF /* TCSelectSortButton.m in Sources */,
+				7A14FC581DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m in Sources */,
 				7A6506E61DCA130200B0EDBF /* TCShippingAddressEditViewCell.m in Sources */,
 				09222E321DEE99860064C0DF /* TCReserveOnlineViewController.m in Sources */,
 				7A11F6FF1DE41F43005F3EAB /* TCRefreshHeader.m in Sources */,

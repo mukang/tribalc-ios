@@ -15,7 +15,7 @@
 - (BOOL)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldShouldBeginEditing:(UITextField *)textField;
 - (void)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldDidEndEditing:(UITextField *)textField;
 - (BOOL)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldShouldReturn:(UITextField *)textField;
-- (void)didTapContainerViewIncommonInputViewCell:(TCCommonInputViewCell *)cell;
+- (void)didTapContainerViewInCommonInputViewCell:(TCCommonInputViewCell *)cell;
 
 @end
 
