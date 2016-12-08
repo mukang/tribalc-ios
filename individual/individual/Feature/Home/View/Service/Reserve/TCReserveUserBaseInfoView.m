@@ -7,6 +7,7 @@
 //
 
 #import "TCReserveUserBaseInfoView.h"
+#import "TCBuluoApi.h"
 
 @implementation TCReserveUserBaseInfoView {
     UIView *downLineView;
@@ -110,10 +111,19 @@
     return view;
 }
 
+- (TCUserInfo *)getUserInfo {
+    return [TCBuluoApi api].currentUserSession.userInfo;
+}
+
+- (TCUserSensitiveInfo *)getUserSensitiveInfo {
+    return [TCBuluoApi api].currentUserSession.userSensitiveInfo;
+}
+
 - (UIView *)getNameAndSenderViewWithFrame:(CGRect)frame {
     UIView *nameAndSenderView = [[UIView alloc] initWithFrame:frame];
     nameAndSenderView.backgroundColor = [UIColor whiteColor];
-    _nameLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, 247, frame.size.height) AndFontSize:14 AndTitle:@"西瓜"];
+    
+    _nameLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, 247, frame.size.height) AndFontSize:14 AndTitle:[self getUserInfo].nickname];
     [nameAndSenderView addSubview:_nameLab];
     
     _senderView = [[TCReserveRadioBtnView alloc] initWithFrame:CGRectMake(_nameLab.x + _nameLab.width, 0, nameAndSenderView.width - 20 - _nameLab.x - _nameLab.width, nameAndSenderView.height)];
@@ -126,7 +136,7 @@
     UIView *phoneView = [[UIView alloc] initWithFrame:frame];
     phoneView.backgroundColor  =[UIColor whiteColor];
     _phoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, 247, phoneView.height)];
-    _phoneTextField.text = @"13223323221";
+    _phoneTextField.text = [self getUserSensitiveInfo].phone;
     _phoneTextField.font = [UIFont systemFontOfSize:14];
     _phoneTextField.placeholder = @"请输入电话号码";
     [_phoneTextField setValue:TCRGBColor(154, 154, 154) forKeyPath:@"_placeholderLabel.textColor"];
@@ -160,10 +170,12 @@
 }
 
 - (void)modifyPhoneView {
+    
+    
     _phoneTextField.userInteractionEnabled = !_phoneTextField.userInteractionEnabled;
     cancelModifyBtn.hidden = !cancelModifyBtn.hidden;
     modifyBtn.hidden = !modifyBtn.hidden;
-    _phoneTextField.text = [_phoneTextField.text isEqualToString:@""] ? @"132312312321" : @"";
+    _phoneTextField.text = [_phoneTextField.text isEqualToString:@""] ? [self getUserSensitiveInfo].phone : @"";
     
 }
 
@@ -173,7 +185,7 @@
     sendVerficationCodeView.hidden = YES;
     downLineView.y = baseInfoView.y + baseInfoView.height + 40 - 1;
     
-    _phoneTextField.text = @"132312312321";
+    _phoneTextField.text = [self getUserSensitiveInfo].phone;
     
     additionalView.y = downLineView.y + downLineView.height + 11;
     

@@ -11,4 +11,7 @@
 
 @interface TCReserveOnlineViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 
+- (instancetype)initWithStoreSetMealId:(NSString *)storeSetMeal;
+
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "TCProfileProcessViewCell.h"
+#import "TCUserOrderTabBarController.h"
 
 @interface TCProfileProcessViewCell ()
 
@@ -31,30 +32,36 @@
     }
 }
 
+
 #pragma mark - actions
+
 
 - (IBAction)hadleClickPaymentButton:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(didClickPaymentButtonInProfileProcessViewCell:)]) {
         [self.delegate didClickPaymentButtonInProfileProcessViewCell:self];
     }
+    
 }
 
 - (IBAction)hadleClickReceivingButton:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(didClickReceivingButtonInProfileProcessViewCell:)]) {
         [self.delegate didClickReceivingButtonInProfileProcessViewCell:self];
     }
+
 }
 
 - (IBAction)hadleClickEvaluationButton:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(didClickEvaluationButtonInProfileProcessViewCell:)]) {
         [self.delegate didClickEvaluationButtonInProfileProcessViewCell:self];
     }
+    
 }
 
 - (IBAction)handleClickAfterSaleButton:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(didClickAfterSaleButtonInProfileProcessViewCell:)]) {
         [self.delegate didClickAfterSaleButtonInProfileProcessViewCell:self];
     }
+    
 }
 
 

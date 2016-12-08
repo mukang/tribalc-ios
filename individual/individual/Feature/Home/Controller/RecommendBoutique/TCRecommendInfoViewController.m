@@ -8,6 +8,7 @@
 
 #import "TCRecommendInfoViewController.h"
 #import "TCUserOrderDetailViewController.h"
+#import "TCBuluoApi.h"
 #import "TCImgPageControl.h"
 
 @interface TCRecommendInfoViewController () {
@@ -102,7 +103,7 @@
 
 - (void)initSelectSizeView {
 
-    standardView = [[TCStandardView alloc] initWithTarget:self AndNumberAddAction:@selector(touchBuyNumberAddBtn:) AndNumberSubAction:@selector(touchBuyNumberSubBtn:) AndAddShopCarAction:@selector(touchAddShopCartBtn:) AndGoCartAction:@selector(touchAddShopCartBtn:) AndBuyAction:@selector(touchBuyBtn:) AndCloseAction:@selector(touchCloseBtn)];
+    standardView = [[TCStandardView alloc] initWithTarget:self AndNumberAddAction:@selector(touchBuyNumberAddBtn:) AndNumberSubAction:@selector(touchBuyNumberSubBtn:) AndAddShopCarAction:@selector(touchAddShopCartBtn:) AndBuyAction:@selector(touchBuyBtn:) AndCloseAction:@selector(touchCloseBtn)];
     [standardView setSalePriceAndInventoryWithSalePrice:mGoodDetail.salePrice AndInventory:mGoodDetail.repertory AndImgUrlStr:mGoodDetail.thumbnail];
     [self.view addSubview:standardView];
     [[UIApplication sharedApplication].keyWindow addSubview:standardView];
@@ -220,6 +221,7 @@
     
     
     UIButton *shopCarBtn = [TCComponent createButtonWithFrame:CGRectMake(shopCarImgBtn.x + shopCarImgBtn.width, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:18];
+    [shopCarBtn addTarget:self action:@selector(touchAddShopCartBtnInDetailView:) forControlEvents:UIControlEventTouchUpInside];
     shopCarBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [view addSubview:shopCarBtn];
@@ -537,8 +539,16 @@
 }
 
 
+- (void)touchAddShopCartBtnInDetailView:(UIButton *) btn {
+    TCBuluoApi *api = [TCBuluoApi api];
+    [api fetchGoodStandards:mGoodDetail.standardId result:^(TCGoodStandards *result, NSError *error) {
+        
+        [self performSelectorOnMainThread:@selector(showStandardView:) withObject:result waitUntilDone:NO];
+    }];
+}
+
+
 - (void)touchShopCarBtn:(id)sender {
-    
 
 }
 
@@ -560,7 +570,16 @@
 
 
 - (void)touchAddShopCartBtn:(UIButton *)btn {
-  
+    
+    [[TCBuluoApi api] createShoppingCartWithAmount:[standardView.numberLab.text  integerValue] goodsId:mGoodDetail.ID result:^(BOOL result, NSError *error) {
+        if (result) {
+            [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"加入购物车失败"];
+        }
+        [standardView endSelectStandard];
+    }];
+
 }
 
 - (void)touchBuyBtn:(UIButton *)btn {

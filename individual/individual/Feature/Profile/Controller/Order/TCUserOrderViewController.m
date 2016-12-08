@@ -35,7 +35,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [orderTableView reloadData];
+    
 }
 
 - (void)viewDidLoad {
@@ -262,24 +262,6 @@
     NSArray *orderContentArr = mOrderWrapper.content;
     TCOrder *order = orderContentArr[indexPath.section];
     
-//    TCGoods *good2 = [[TCGoods alloc] init];
-//    good2.ID = @"5820539b8d6a4b5693f39beb";
-//    good2.storeId = @"5820539b8d6a4b5693f39b66";
-//    good2.name = @"天山雪莲爽肤水";
-//    good2.brand = @"屈臣氏";
-//    good2.mainPicture = @"";
-//    good2.originPrice = 200.5;
-//    good2.salePrice = 500.5;
-//    good2.saleQuantity = 200;
-//    good2.standardSnapshot = @"口味:臭豆腐味|尺寸:500g";
-//    
-//    TCOrderItem *orderItem = [[TCOrderItem alloc] init];
-//    orderItem.amount = 3;
-//    orderItem.goods = good2;
-//    
-//    NSArray *itemList = @[
-//                          orderItem
-//                          ];
     
     TCUserOrderDetailViewController *orderDetailViewController = [[TCUserOrderDetailViewController alloc] initWithOrder:order];
     orderDetailViewController.title = @"订单详情";

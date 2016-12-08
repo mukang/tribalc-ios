@@ -7,6 +7,7 @@
 //
 
 #import "TCShoppingCartViewController.h"
+#import "TCBuluoApi.h"
 
 @interface TCShoppingCartViewController () {
     NSMutableArray *cartInfoArray;
@@ -30,6 +31,7 @@
     
     [self forgeShoppingCartInfoData];
     
+    [self initShoppingCartData];
     
     [self initialNavigationBar];
     [self initialTableView];
@@ -37,6 +39,12 @@
     
 }
 
+
+- (void)initShoppingCartData {
+    [[TCBuluoApi api] fetchShoppingCartWrapperWithSortSkip:nil result:^(TCReservationWrapper *wrapper, NSError *error) {
+        
+    }];
+}
 
 - (void)initialNavigationBar {
     self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"购物车"];
