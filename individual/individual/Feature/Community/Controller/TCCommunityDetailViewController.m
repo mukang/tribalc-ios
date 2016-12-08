@@ -9,7 +9,7 @@
 #import "TCCommunityDetailViewController.h"
 #import "TCCommunityVisitViewController.h"
 
-#import "TCCommunityDetailHeaderView.h"
+#import "TCImagePlayerView.h"
 #import "TCCommunityIntroViewCell.h"
 #import "TCCommunityLocationViewCell.h"
 #import "TCCommunitySurroundingViewCell.h"
@@ -23,7 +23,7 @@
 @interface TCCommunityDetailViewController () <UITableViewDataSource, UITableViewDelegate, TCCommunityIntroViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) TCCommunityDetailHeaderView *tableHeaderView;
+@property (weak, nonatomic) TCImagePlayerView *tableHeaderView;
 @property (strong, nonatomic) TCCommunityDetailInfo *communityDetailInfo;
 
 @end
@@ -54,8 +54,8 @@
 - (void)setupSubviews {
     self.tableView.estimatedRowHeight = 220;
     
-    TCCommunityDetailHeaderView *tableHeaderView = [[NSBundle mainBundle] loadNibNamed:@"TCCommunityDetailHeaderView" owner:nil options:nil].lastObject;
-    tableHeaderView.frame = CGRectMake(0, 0, TCScreenWidth, TCRealValue(270));
+    CGRect frame = CGRectMake(0, 0, TCScreenWidth, TCRealValue(270));
+    TCImagePlayerView *tableHeaderView = [[TCImagePlayerView alloc] initWithFrame:frame];
     self.tableView.tableHeaderView = tableHeaderView;
     self.tableHeaderView = tableHeaderView;
     
@@ -89,6 +89,7 @@
 
 - (void)updateTableHeaderView {
     self.tableHeaderView.pictures = self.communityDetailInfo.pictures;
+    [self.tableHeaderView startPlaying];
 }
 
 #pragma mark - Status Bar
