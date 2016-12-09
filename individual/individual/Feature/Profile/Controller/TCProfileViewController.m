@@ -455,7 +455,7 @@ TCPhotoPickerDelegate>
 - (void)handleDidSelectedMyCompanyCell {
     [[TCBuluoApi api] fetchCompanyBlindStatus:^(TCUserCompanyInfo *userCompanyInfo, NSError *error) {
         if (userCompanyInfo) {
-            TCCompanyViewController *vc = [[TCCompanyViewController alloc] initWithNibName:@"TCCompanyViewController" bundle:[NSBundle mainBundle]];
+            TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
             vc.userCompanyInfo = userCompanyInfo;
             vc.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:vc animated:YES];

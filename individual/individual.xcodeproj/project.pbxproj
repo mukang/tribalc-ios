@@ -81,7 +81,6 @@
 		7A133EC41DDC4CC000FCAB95 /* TCGoodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC31DDC4CC000FCAB95 /* TCGoodsTests.m */; };
 		7A133ECC1DDC7AEE00FCAB95 /* TCClientRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF51DC0A73600651905 /* TCClientRequest.m */; };
 		7A13EEA31DF8114E00377869 /* TCCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A13EEA11DF8114E00377869 /* TCCompanyViewController.m */; };
-		7A13EEA41DF8114E00377869 /* TCCompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A13EEA21DF8114E00377869 /* TCCompanyViewController.xib */; };
 		7A13EEA81DF813F000377869 /* TCCompanyApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A13EEA61DF813F000377869 /* TCCompanyApplyViewController.m */; };
 		7A13EEA91DF813F000377869 /* TCCompanyApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A13EEA71DF813F000377869 /* TCCompanyApplyViewController.xib */; };
 		7A13EEAD1DF8140A00377869 /* TCCompanyApplyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A13EEAB1DF8140A00377869 /* TCCompanyApplyDetailViewController.m */; };
@@ -94,6 +93,8 @@
 		7A14FC581DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A14FC561DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m */; };
 		7A14FC591DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A14FC571DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib */; };
 		7A1580311DD1DE8200B8F768 /* TCPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */; };
+		7A16665B1DFAB01E007B5733 /* TCCompanyHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A16665A1DFAB01E007B5733 /* TCCompanyHeaderView.m */; };
+		7A16665E1DFAC213007B5733 /* TCCompanyTitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A16665D1DFAC213007B5733 /* TCCompanyTitleViewCell.m */; };
 		7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF21DC0A5DB00651905 /* TCClientConfig.m */; };
 		7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AF81DC0AA7D00651905 /* TCTabBarController.m */; };
 		7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AFB1DC0AAC200651905 /* TCNavigationController.m */; };
@@ -402,7 +403,6 @@
 		7A133EC31DDC4CC000FCAB95 /* TCGoodsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsTests.m; sourceTree = "<group>"; };
 		7A13EEA01DF8114E00377869 /* TCCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyViewController.h; sourceTree = "<group>"; };
 		7A13EEA11DF8114E00377869 /* TCCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyViewController.m; sourceTree = "<group>"; };
-		7A13EEA21DF8114E00377869 /* TCCompanyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCompanyViewController.xib; sourceTree = "<group>"; };
 		7A13EEA51DF813F000377869 /* TCCompanyApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyViewController.h; sourceTree = "<group>"; };
 		7A13EEA61DF813F000377869 /* TCCompanyApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyApplyViewController.m; sourceTree = "<group>"; };
 		7A13EEA71DF813F000377869 /* TCCompanyApplyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCompanyApplyViewController.xib; sourceTree = "<group>"; };
@@ -422,6 +422,10 @@
 		7A14FC571DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCRepairsPhotoViewCell.xib; sourceTree = "<group>"; };
 		7A15802F1DD1DE8200B8F768 /* TCPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPhotoPicker.h; sourceTree = "<group>"; };
 		7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPhotoPicker.m; sourceTree = "<group>"; };
+		7A1666591DFAB01E007B5733 /* TCCompanyHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyHeaderView.h; sourceTree = "<group>"; };
+		7A16665A1DFAB01E007B5733 /* TCCompanyHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyHeaderView.m; sourceTree = "<group>"; };
+		7A16665C1DFAC213007B5733 /* TCCompanyTitleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyTitleViewCell.h; sourceTree = "<group>"; };
+		7A16665D1DFAC213007B5733 /* TCCompanyTitleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyTitleViewCell.m; sourceTree = "<group>"; };
 		7A190AEE1DC09BF500651905 /* TCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClient.h; sourceTree = "<group>"; };
 		7A190AEF1DC09BF500651905 /* TCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCClient.m; sourceTree = "<group>"; };
 		7A190AF11DC0A5DB00651905 /* TCClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientConfig.h; sourceTree = "<group>"; };
@@ -1032,7 +1036,6 @@
 			children = (
 				7A13EEA01DF8114E00377869 /* TCCompanyViewController.h */,
 				7A13EEA11DF8114E00377869 /* TCCompanyViewController.m */,
-				7A13EEA21DF8114E00377869 /* TCCompanyViewController.xib */,
 				7A13EEA51DF813F000377869 /* TCCompanyApplyViewController.h */,
 				7A13EEA61DF813F000377869 /* TCCompanyApplyViewController.m */,
 				7A13EEA71DF813F000377869 /* TCCompanyApplyViewController.xib */,
@@ -1280,8 +1283,12 @@
 		7A7467451DF8FC4C00ACD815 /* Company */ = {
 			isa = PBXGroup;
 			children = (
+				7A1666591DFAB01E007B5733 /* TCCompanyHeaderView.h */,
+				7A16665A1DFAB01E007B5733 /* TCCompanyHeaderView.m */,
 				7A7467491DF90F8300ACD815 /* TCCompanyIntroViewCell.h */,
 				7A74674A1DF90F8300ACD815 /* TCCompanyIntroViewCell.m */,
+				7A16665C1DFAC213007B5733 /* TCCompanyTitleViewCell.h */,
+				7A16665D1DFAC213007B5733 /* TCCompanyTitleViewCell.m */,
 			);
 			path = Company;
 			sourceTree = "<group>";
@@ -1864,7 +1871,6 @@
 				7A918ACE1DC362E0002BD529 /* TCBioEditViewController.xib in Resources */,
 				7A381BCE1DED6969008BDBF7 /* TCCommunityIntroViewCell.xib in Resources */,
 				7A918ACA1DC34AC3002BD529 /* TCBioEditView.xib in Resources */,
-				7A13EEA41DF8114E00377869 /* TCCompanyViewController.xib in Resources */,
 				7AC2922B1DC8BEB300B2C7E8 /* citylist.data in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
 				7A4514691DE57AB4007D7193 /* TCBankCardViewCell.xib in Resources */,
@@ -2056,6 +2062,7 @@
 				099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */,
 				7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */,
 				7A1AC8321DF1A32E0052132F /* TCDatePickerView.m in Sources */,
+				7A16665E1DFAC213007B5733 /* TCCompanyTitleViewCell.m in Sources */,
 				0928B3351DF8F7090085A182 /* TCReservationDetail.m in Sources */,
 				092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
@@ -2090,6 +2097,7 @@
 				09222E291DEE98550064C0DF /* TCRestaurantLogoView.m in Sources */,
 				7A1F129E1DEC551400A9B58F /* TCCommunityDetailViewController.m in Sources */,
 				7A381BC41DED5DC4008BDBF7 /* TCCommunityDetailInfo.m in Sources */,
+				7A16665B1DFAB01E007B5733 /* TCCompanyHeaderView.m in Sources */,
 				7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */,
 				7AC2921D1DC8862E00B2C7E8 /* TCBioEditPhoneViewController.m in Sources */,
 				09222E2B1DEE98550064C0DF /* TCRestaurantSelectButton.m in Sources */,
