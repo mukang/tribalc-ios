@@ -24,6 +24,7 @@
     [self initNavigationBar];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    NSLog(@"%@", self.title);
     
     UIView *selectTabBarView = [self getSelectTabBarViewWithFrame:CGRectMake(0, 0, self.view.width, 40.5)];
     [self.view addSubview:selectTabBarView];
@@ -35,8 +36,8 @@
     
     self.selectedIndex = 0;
     
-    
 }
+
 
 
 

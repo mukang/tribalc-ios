@@ -11,13 +11,17 @@
 #import "TCUserReserveTableViewCell.h"
 #import "TCUserReserveDetailViewController.h"
 #import "TCComponent.h"
+#import "TCBuluoApi.h"
+#import "TCRecommendHeader.h"
+#import "TCRecommendFooter.h"
 
 @interface TCUserReserveViewController ()
 
 @end
 
 @implementation TCUserReserveViewController {
-    NSArray *userReserveOrderArr;
+    TCReservationWrapper *userReserveWrapper;
+//    NSArray *userReserveOrderArr;
     UITableView *reserveTableView;
 }
 
@@ -26,10 +30,41 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self forgeData];
+    [self initReservationData];
+    
     [self initNavigationBar];
     [self initTableView];
     
+}
+
+
+- (void)initReservationData {
+    [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:10 sortSkip:nil result:^(TCReservationWrapper *wrapper, NSError *error) {
+        userReserveWrapper = wrapper;
+        
+        [reserveTableView reloadData];
+        [reserveTableView.mj_header endRefreshing];
+        
+    }];
+}
+
+- (void)loadReservationData {
+    [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:10 sortSkip:userReserveWrapper.nextSkip result:^(TCReservationWrapper *wrapper, NSError *error) {
+        
+        if (userReserveWrapper.hasMore) {
+            NSArray *contentArr = userReserveWrapper.content;
+            userReserveWrapper = wrapper;
+            userReserveWrapper.content = [contentArr arrayByAddingObjectsFromArray:wrapper.content];
+            
+            [reserveTableView reloadData];
+        } else {
+            TCRecommendFooter *footer = (TCRecommendFooter *)reserveTableView.mj_footer;
+            [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];
+        }
+        [reserveTableView.mj_footer endRefreshing];
+
+    }];
+
 }
 
 
@@ -48,9 +83,22 @@
     reserveTableView.delegate = self;
     reserveTableView.dataSource = self;
     reserveTableView.backgroundColor = [UIColor whiteColor];
+    [self initRefreshTableView];
     
     [self.view addSubview:reserveTableView];
     
+}
+
+- (void)initRefreshTableView {
+    TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^(void) {
+        [self initReservationData];
+    }];
+    reserveTableView.mj_header = refreshHeader;
+    
+    TCRecommendFooter *refreshFooter = [TCRecommendFooter footerWithRefreshingBlock:^(void) {
+        [self loadReservationData];
+    }];
+    reserveTableView.mj_footer = refreshFooter;
 }
 
 - (UIColor *)getHeaderStatusTextColor:(NSString *)text {
@@ -65,7 +113,8 @@
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return userReserveOrderArr.count;
+    NSArray *reserveArr = userReserveWrapper.content;
+    return reserveArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -73,13 +122,14 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *identifier = [NSString stringWithFormat:@"%li", (long)section];
+    NSString *identifier = [NSString stringWithFormat:@"header%li", (long)section];
     UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:identifier];
     if (!headerView) {
         headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:identifier];
     }
-    NSDictionary *orderDic = userReserveOrderArr[section];
-    UILabel *statusLab = [TCComponent createLabelWithFrame:CGRectMake(22.5, 0, TCScreenWidth - 45, 42) AndFontSize:14 AndTitle:orderDic[@"status"]];
+    NSArray *userReserveOrderArr = userReserveWrapper.content;
+    TCReservation *reservation = userReserveOrderArr[section];
+    UILabel *statusLab = [TCComponent createLabelWithFrame:CGRectMake(22.5, 0, TCScreenWidth - 45, 42) AndFontSize:14 AndTitle:reservation.status];
     statusLab.textColor = [self getHeaderStatusTextColor:statusLab.text];
     [headerView addSubview:statusLab];
     UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 42 - 0.5, TCScreenWidth, 0.5)];
@@ -89,7 +139,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    NSString *identifier = [NSString stringWithFormat:@"%li", (long)section];
+    NSString *identifier = [NSString stringWithFormat:@"footer%li", (long)section];
     UITableViewHeaderFooterView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:identifier];
     if (!footerView) {
         footerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:identifier];
@@ -104,19 +154,19 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = [NSString stringWithFormat:@"%li", (long)indexPath.row];
+    NSString *identifier = [NSString stringWithFormat:@"cell%li", (long)indexPath.section];
     TCUserReserveTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[TCUserReserveTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    
-    NSDictionary *orderInfo = userReserveOrderArr[indexPath.section];
-    cell.storeImageView.image = [UIImage imageNamed:orderInfo[@"leftImage"]];
-    [cell setTitleLabText:orderInfo[@"title"]];
-    [cell setBrandLabText:orderInfo[@"brand"]];
-    [cell setPlaceLabText:orderInfo[@"place"]];
-    cell.timeLab.text = orderInfo[@"time"];
-    cell.personNumberLab.text = orderInfo[@"number"];
+    NSArray *userReserveOrderArr = userReserveWrapper.content;
+    TCReservation *reservation = userReserveOrderArr[indexPath.section];
+    cell.storeImageView.image = [UIImage imageNamed:@"good_placeholder"];
+    [cell setTitleLabText:reservation.storeName];
+    [cell setBrandLabText:@"西餐"];
+    [cell setPlaceLabText:reservation.markPlace];
+    cell.timeLab.text = @"2016-11-01 16:05";
+    cell.personNumberLab.text = [NSString stringWithFormat:@"%li", (long)reservation.personNum];
     
     return cell;
 }
@@ -138,7 +188,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    TCUserReserveDetailViewController *reserveDetailViewController = [[TCUserReserveDetailViewController alloc] init];
+    TCReservation *reservation = userReserveWrapper.content[indexPath.section];
+    TCUserReserveDetailViewController *reserveDetailViewController = [[TCUserReserveDetailViewController alloc] initWithReservationId:reservation.ID];
     [self.navigationController pushViewController:reserveDetailViewController animated:YES];
 }
 
@@ -155,19 +206,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)forgeData {
-    
-    NSDictionary *dic1 = @{ @"status":@"订座处理中", @"leftImage":@"good_placeholder", @"title":@"FNRON", @"brand":@"西餐", @"place":@"安定门", @"time":@"2016-11-01 16:50", @"number":@"3" };
-    
-    NSDictionary *dic2 = @{ @"status":@"订座失败", @"leftImage":@"good_placeholder", @"title":@"FNdwDW失败失败失败失败失败失败失败失败失败失败DWDWDWDRON", @"brand":@"西餐", @"place":@"安定门", @"time":@"2016-11-01 16:50", @"number":@"3" };
-    
-    NSDictionary *dic3 = @{ @"status":@"订座成功", @"leftImage":@"good_placeholder", @"title":@"FNROOUHBIGHUWBWBHJDN", @"brand":@"西餐", @"place":@"安定门", @"time":@"2016-11-01 16:50", @"number":@"3" };
-    
-    NSDictionary *dic4 = @{ @"status":@"订座成功", @"leftImage":@"good_placeholder", @"title":@"FNRDHU圣诞晚dwdwwww呜呜呜呜呜呜呜呜我问问", @"brand":@"西餐", @"place":@"安定门", @"time":@"2016-11-01 16:50", @"number":@"3" };
-    
-    userReserveOrderArr = @[ dic1, dic2, dic3, dic4 ];
 }
 
 

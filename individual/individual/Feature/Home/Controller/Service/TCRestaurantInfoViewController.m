@@ -442,7 +442,8 @@
 }
 
 - (void)touchReserveRest {
-    TCReserveOnlineViewController *reserveOnlineViewController = [[TCReserveOnlineViewController alloc] init];
+    NSString *storeSetMealId = serviceDetail.ID;
+    TCReserveOnlineViewController *reserveOnlineViewController = [[TCReserveOnlineViewController alloc] initWithStoreSetMealId:storeSetMealId];
     [self.navigationController pushViewController:reserveOnlineViewController animated:YES];
 }
 

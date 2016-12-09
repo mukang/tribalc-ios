@@ -10,6 +10,7 @@
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
 #import "TCReserveUserBaseInfoView.h"
+#import "TCBuluoApi.h"
 
 @interface TCReserveOnlineViewController () {
     UILabel *timeLab;
@@ -23,11 +24,21 @@
     UIPickerView *timePickerView;
     UIPickerView *personNumberPickerView;
     
+    NSString *storeSetMealId;
 }
 
 @end
 
 @implementation TCReserveOnlineViewController
+
+
+- (instancetype)initWithStoreSetMealId:(NSString *)storeSetMeal {
+    self = [super init];
+    if (self) {
+        storeSetMealId = storeSetMeal;
+    }
+    return self;
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -409,11 +420,37 @@
 
 
 - (void)touchReserveBtn:(UIButton *)btn {
-    NSLog(@"点击预订按钮");
+    NSInteger timeSp = [self transToTimeSp:timeLab.text];
+    NSInteger personNum = [personNumberLab.text integerValue];
+    NSString *nickName = [TCBuluoApi api].currentUserSession.userInfo.nickname;
+    NSString *phoneStr = userInfoView.phoneTextField.text;
+    NSString *noteStr = userInfoView.additionalTextField.text;
+    NSString *vcodeStr;
+    if (userInfoView.isNeedVerification) {
+        vcodeStr = userInfoView.verificationCodeTextField.text;
+    } else {
+        vcodeStr = nil;
+    }
+    [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(BOOL result, NSError *error) {
+        if (result) {
+            [MBProgressHUD showHUDWithMessage:@"预订成功"];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"预订失败"];
+        }
+    }];
 }
 
 - (void)touchBackBtn {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (NSInteger)transToTimeSp:(NSString *)time {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
+    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm"];
+    NSDate *date = [dateFormat dateFromString:time];
+    NSInteger timeSp = [date timeIntervalSince1970];
+    return timeSp * 1000;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -29,6 +29,7 @@
 		09275FB71DDEF94900502167 /* TCUserLocationAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09275FB61DDEF94900502167 /* TCUserLocationAnnotationView.m */; };
 		09275FBA1DDEFF5D00502167 /* TCDetailAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 09275FB91DDEFF5D00502167 /* TCDetailAnnotation.m */; };
 		09275FBD1DDEFF6E00502167 /* TCDetailAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09275FBC1DDEFF6E00502167 /* TCDetailAnnotationView.m */; };
+		0928B3351DF8F7090085A182 /* TCReservationDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0928B3341DF8F7090085A182 /* TCReservationDetail.m */; };
 		092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 092B408A1DD5624300CEDAC6 /* TCComponent.m */; };
 		092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C67E21DE6E245008873E7 /* TCGoodStandards.m */; };
 		092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C696F1DEFD33500FE2FD8 /* TCReserveRadioBtnView.m */; };
@@ -49,6 +50,8 @@
 		093D03191DE40D71007A053C /* TCUserOrderTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D03181DE40D71007A053C /* TCUserOrderTabBarController.m */; };
 		093D031C1DE41B4A007A053C /* TCUserOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */; };
 		093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */; };
+		0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0955A4A01DF83A7C0019A57D /* TCReservationWrapper.m */; };
+		0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0955A4A31DF83AB60019A57D /* TCReservation.m */; };
 		0960B3521DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0960B3511DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m */; };
 		096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 096254341DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m */; };
 		0978DB111DE95D62006B6437 /* TCUserOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0978DB101DE95D62006B6437 /* TCUserOrderDetailViewController.m */; };
@@ -305,6 +308,8 @@
 		09275FB91DDEFF5D00502167 /* TCDetailAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCDetailAnnotation.m; sourceTree = "<group>"; };
 		09275FBB1DDEFF6E00502167 /* TCDetailAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCDetailAnnotationView.h; sourceTree = "<group>"; };
 		09275FBC1DDEFF6E00502167 /* TCDetailAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCDetailAnnotationView.m; sourceTree = "<group>"; };
+		0928B3331DF8F7090085A182 /* TCReservationDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReservationDetail.h; sourceTree = "<group>"; };
+		0928B3341DF8F7090085A182 /* TCReservationDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCReservationDetail.m; sourceTree = "<group>"; };
 		092B40891DD5624300CEDAC6 /* TCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCComponent.h; sourceTree = "<group>"; };
 		092B408A1DD5624300CEDAC6 /* TCComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCComponent.m; sourceTree = "<group>"; };
 		092C67E11DE6E245008873E7 /* TCGoodStandards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodStandards.h; sourceTree = "<group>"; };
@@ -345,6 +350,10 @@
 		093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderViewController.m; sourceTree = "<group>"; };
 		093D031D1DE41D28007A053C /* TCUserOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderTableViewCell.h; sourceTree = "<group>"; };
 		093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderTableViewCell.m; sourceTree = "<group>"; };
+		0955A49F1DF83A7C0019A57D /* TCReservationWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReservationWrapper.h; sourceTree = "<group>"; };
+		0955A4A01DF83A7C0019A57D /* TCReservationWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCReservationWrapper.m; sourceTree = "<group>"; };
+		0955A4A21DF83AB60019A57D /* TCReservation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReservation.h; sourceTree = "<group>"; };
+		0955A4A31DF83AB60019A57D /* TCReservation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCReservation.m; sourceTree = "<group>"; };
 		0960B3501DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCHomeCommodityTableViewCell.h; path = Map/TCHomeCommodityTableViewCell.h; sourceTree = "<group>"; };
 		0960B3511DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCHomeCommodityTableViewCell.m; path = Map/TCHomeCommodityTableViewCell.m; sourceTree = "<group>"; };
 		096254331DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserReserveDetailViewController.h; sourceTree = "<group>"; };
@@ -900,6 +909,19 @@
 				0978DB131DE96E40006B6437 /* TCOrderAddressView.m */,
 			);
 			path = Order;
+			sourceTree = "<group>";
+		};
+		0955A49E1DF8390A0019A57D /* Reservation */ = {
+			isa = PBXGroup;
+			children = (
+				0955A49F1DF83A7C0019A57D /* TCReservationWrapper.h */,
+				0955A4A01DF83A7C0019A57D /* TCReservationWrapper.m */,
+				0955A4A21DF83AB60019A57D /* TCReservation.h */,
+				0955A4A31DF83AB60019A57D /* TCReservation.m */,
+				0928B3331DF8F7090085A182 /* TCReservationDetail.h */,
+				0928B3341DF8F7090085A182 /* TCReservationDetail.m */,
+			);
+			path = Reservation;
 			sourceTree = "<group>";
 		};
 		09AE0F6F1DED2A6200F307D8 /* Service */ = {
@@ -1531,6 +1553,7 @@
 				7A384E7F1DE84CAA0094E1F5 /* Upload */,
 				7A5F876F1DE2976900E4130B /* Wallet */,
 				09222E761DEEC05D0064C0DF /* Order */,
+				0955A49E1DF8390A0019A57D /* Reservation */,
 				7A133EBC1DDC12BF00FCAB95 /* Goods */,
 				09AE0F6F1DED2A6200F307D8 /* Service */,
 				0930F3F51DF5024800769439 /* ShoppingCart */,
@@ -2001,6 +2024,7 @@
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
 				7A918AC51DC34104002BD529 /* TCBioEditViewController.m in Sources */,
+				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
 				092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */,
 				7A3C81C21DF00B26009ABCEC /* TCPaymentView.m in Sources */,
 				7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */,
@@ -2032,6 +2056,7 @@
 				099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */,
 				7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */,
 				7A1AC8321DF1A32E0052132F /* TCDatePickerView.m in Sources */,
+				0928B3351DF8F7090085A182 /* TCReservationDetail.m in Sources */,
 				092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
@@ -2060,6 +2085,7 @@
 				7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */,
 				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
 				7A918AD11DC366BE002BD529 /* TCBioEditGenderView.m in Sources */,
+				0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */,
 				0978DB111DE95D62006B6437 /* TCUserOrderDetailViewController.m in Sources */,
 				09222E291DEE98550064C0DF /* TCRestaurantLogoView.m in Sources */,
 				7A1F129E1DEC551400A9B58F /* TCCommunityDetailViewController.m in Sources */,

@@ -42,6 +42,11 @@
 #import "TCOrderItem.h"
 #import "TCOrder.h"
 
+/********** 预订相关 **********/
+#import "TCReservationWrapper.h"
+#import "TCReservation.h"
+#import "TCReservationDetail.h"
+
 /********** OSS上传相关 **********/
 
 #import "TCUploadInfo.h"

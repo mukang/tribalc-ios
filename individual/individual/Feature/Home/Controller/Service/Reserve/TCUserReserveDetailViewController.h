@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIImageView+WebCache.h"
 
-@interface TCUserReserveDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface TCUserReserveDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate>
 
 
-
+- (instancetype)initWithReservationId:(NSString *)reservationId;
 
 @end

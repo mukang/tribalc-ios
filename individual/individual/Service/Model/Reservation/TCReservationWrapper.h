@@ -1,14 +1,14 @@
 //
-//  TCOrderWrapper.h
+//  TCReservationWrapper.h
 //  individual
 //
-//  Created by WYH on 16/11/30.
+//  Created by WYH on 16/12/7.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface TCOrderWrapper : NSObject
+@interface TCReservationWrapper : NSObject
 
 /** 当前类别 */
 @property (copy, nonatomic) NSString *status;
@@ -18,8 +18,10 @@
 @property (copy, nonatomic) NSString *nextSkip;
 /** 是否还有条目待获取 */
 @property (nonatomic) BOOL hasMore;
-/** 订单列表，TCOrder对象数组 */
+/** 预订列表，TCReservation对象数组 */
 @property (copy, nonatomic) NSArray *content;
+
+
 
 
 @end

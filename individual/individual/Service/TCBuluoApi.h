@@ -340,6 +340,19 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 - (void)changeOrderStatus:(NSString *)statusStr OrderId:(NSString *)orderId result:(void(^)(BOOL, NSError *))resultBlock;
 
 
+#pragma mark - 服务预订资源
+- (void)fetchReservationWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCReservationWrapper *, NSError *))resultBlock;
+
+- (void)createReservationWithStoreSetMealId:(NSString *)storeSetMealId appintTime:(NSInteger)appintTime personNum:(NSInteger)personNum linkman:(NSString *)linkman phone:(NSString *)phone note:(NSString *)note vcode:(NSString *)vcode result:(void(^)(BOOL, NSError *))resultBlock;
+- (void)fetchReservationDetail:(NSString *)reserveID result:(void (^)(TCReservationDetail *, NSError *))resultBlock;
+
+
+#pragma mark - 购物车资源
+- (void)fetchShoppingCartWrapperWithSortSkip:(NSString *)sortSkip result:(void (^)(TCReservationWrapper *, NSError *))resultBlock;
+
+- (void)createShoppingCartWithAmount:(NSInteger)amount goodsId:(NSString *)goodsId result:(void(^)(BOOL, NSError *))resultBlock;
+
+
 #pragma mark - 上传图片资源
 
 /**

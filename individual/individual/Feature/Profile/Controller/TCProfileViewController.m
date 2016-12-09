@@ -5,7 +5,7 @@
 //  Created by 穆康 on 2016/10/26.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
-
+#import "TCUserOrderTabBarController.h"
 #import "TCProfileViewController.h"
 #import "TCLoginViewController.h"
 #import "TCBiographyViewController.h"
@@ -129,6 +129,9 @@ TCPhotoPickerDelegate>
     [tableView registerNib:nib forCellReuseIdentifier:@"TCProfileViewCell"];
     nib = [UINib nibWithNibName:@"TCProfileProcessViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"TCProfileProcessViewCell"];
+    
+
+
 }
 
 - (void)updateHeaderView {

@@ -9,11 +9,15 @@
 #import "TCUserReserveDetailViewController.h"
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
+#import "TCImageURLSynthesizer.h"
 #import "TCUserReserveTableViewCell.h"
+#import "TCBuluoApi.h"
 
 @interface TCUserReserveDetailViewController () {
 //    UITableView *reserveDetailTableView;
-    NSDictionary *reserveDetailDic;
+//    NSDictionary *reserveDetailDic;
+    NSString *mReservationId;
+    TCReservationDetail *reservationDetail;
 }
 
 @end
@@ -26,19 +30,39 @@
 
 }
 
+- (instancetype)initWithReservationId:(NSString *)reservationId {
+    self = [super init];
+    if (self) {
+        mReservationId = reservationId;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavigationBar];
+    
+    [self initReservationDetail];
+}
 
+
+- (void)initReservationDetail {
+    [[TCBuluoApi api] fetchReservationDetail:mReservationId result:^(TCReservationDetail *reservation, NSError *error) {
+        reservationDetail = reservation;
+        [self initUI];
+    }];
+}
+
+
+- (void)initUI {
     UIScrollView *mScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     mScrollView.backgroundColor = TCRGBColor(242, 242, 242);
     [self.view addSubview:mScrollView];
     
-    [self forgeData];
     
     UIView *statusView = [self getStatusViewWithStatus:@"订座处理中"];
     [mScrollView addSubview:statusView];
- 
+    
     UITableView *mTableView = [self getReserveDetailTableView];
     [mScrollView addSubview:mTableView];
     
@@ -47,7 +71,7 @@
     
     UIButton *cancelBtn =[self getCancelOrderBtnWithFrame:CGRectMake(self.view.width / 2 - 315 / 2, customerView.y + customerView.height, 315, 40)];
     [mScrollView addSubview:cancelBtn];
-    
+
 }
 
 - (void)initNavigationBar {
@@ -144,12 +168,12 @@
     TCUserReserveTableViewCell *cell = [[TCUserReserveTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
     cell.backgroundColor = [UIColor whiteColor];
     cell.storeImageView.frame = CGRectMake(cell.storeImageView.x + 8, 131 / 2 - 109.5 / 2, cell.storeImageView.width - 8, 109.5);
-    cell.storeImageView.image = [UIImage imageNamed:reserveDetailDic[@"imgName"]];
-    cell.timeLab.text = reserveDetailDic[@"time"];
-    cell.personNumberLab.text = @"2";
-    [cell setTitleLabText:reserveDetailDic[@"title"]];
-    [cell setBrandLabText:reserveDetailDic[@"brand"]];
-    [cell setPlaceLabText:reserveDetailDic[@"place"]];
+    [cell.storeImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:reservationDetail.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
+    cell.timeLab.text = @"2016";
+    cell.personNumberLab.text = [NSString stringWithFormat:@"%li", (long)reservationDetail.personNum];
+    [cell setTitleLabText:reservationDetail.storeName];
+    [cell setBrandLabText:@"西餐"];
+    [cell setPlaceLabText:reservationDetail.markPlace];
     UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.width, 0.5)];
     [cell addSubview:topLineView];
     UIView *bottomView = [self getTableBottomViewWithFrame:CGRectMake(0, 131, self.view.width, 11)];
@@ -209,12 +233,14 @@
 }
 
 - (NSArray *)getReserveArray {
-    NSDictionary *timeDic = @{ @"title":@"时间", @"detail":reserveDetailDic[@"time"] };
-    NSDictionary *numberDic = @{ @"title":@"人数", @"detail":@"3" };
-    NSDictionary *resDic = @{ @"title":@"餐厅", @"detail":reserveDetailDic[@"resName"] };
-    NSDictionary *addressDic = @{ @"title":@"地点", @"detail":reserveDetailDic[@"address"] };
-    NSDictionary *contactsDic = @{ @"title":@"联系人", @"detail":reserveDetailDic[@"person"] };
-    NSDictionary *phoneDic = @{ @"title":@"联系电话", @"detail":reserveDetailDic[@"phone"] };
+    NSString *personNumStr = [NSString stringWithFormat:@"%li", (long)reservationDetail.personNum];
+    NSString *addressStr = reservationDetail.address ? reservationDetail.address : @"";
+    NSDictionary *timeDic = @{ @"title":@"时间", @"detail":@"2014" };
+    NSDictionary *numberDic = @{ @"title":@"人数", @"detail":personNumStr };
+    NSDictionary *resDic = @{ @"title":@"餐厅", @"detail":reservationDetail.storeName };
+    NSDictionary *addressDic = @{ @"title":@"地点", @"detail":addressStr };
+    NSDictionary *contactsDic = @{ @"title":@"联系人", @"detail": reservationDetail.linkman};
+    NSDictionary *phoneDic = @{ @"title":@"联系电话", @"detail":reservationDetail.phone };
     return @[timeDic, numberDic, resDic, addressDic, contactsDic, phoneDic];
 }
 
@@ -271,20 +297,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-- (void)forgeData {
-    reserveDetailDic = @{
-                         @"imgName":@"good_placeholder",
-                         @"title":@"FNRON",
-                         @"brand":@"西餐",
-                         @"place":@"安定门",
-                         @"time":@"2016-11-12  16:50",
-                         @"personNumber":@2,
-                         @"resName":@"DHUEHFAU(798店)",
-                         @"address":@"北京市朝阳区酒仙桥4号的家哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈等我打我对哇的哈哈哈哈哈哈哈哈哈",
-                         @"person":@"蓝天",
-                         @"phone":@"15678909823"
-                         };
-}
+//
+//- (void)forgeData {
+//    reserveDetailDic = @{
+//                         @"imgName":@"good_placeholder",
+//                         @"title":@"FNRON",
+//                         @"brand":@"西餐",
+//                         @"place":@"安定门",
+//                         @"time":@"2016-11-12  16:50",
+//                         @"personNumber":@2,
+//                         @"resName":@"DHUEHFAU(798店)",
+//                         @"address":@"北京市朝阳区酒仙桥4号的家哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈等我打我对哇的哈哈哈哈哈哈哈哈哈",
+//                         @"person":@"蓝天",
+//                         @"phone":@"15678909823"
+//                         };
+//}
 
 @end
