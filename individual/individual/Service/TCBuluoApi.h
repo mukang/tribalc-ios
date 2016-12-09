@@ -237,6 +237,13 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)deleteBankCard:(NSString *)bankCardID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 查询公司绑定请求状态
+
+ @param resultBlock 结果回调，userCompanyInfo为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchCompanyBlindStatus:(void (^)(TCUserCompanyInfo *userCompanyInfo, NSError *error))resultBlock;
+
 #pragma mark - 验证码资源
 
 /**
@@ -360,5 +367,6 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  @param resultBlock 结果回调，communityDetailInfo为nil时表示获取失败，失败原因见error的code和userInfo
  */
 - (void)fetchCommunityDetailInfo:(NSString *)communityID result:(void (^)(TCCommunityDetailInfo *communityDetailInfo, NSError *error))resultBlock;
+
 
 @end

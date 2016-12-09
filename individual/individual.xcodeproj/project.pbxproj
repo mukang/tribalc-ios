@@ -178,6 +178,9 @@
 		7A68C7F51DB9EF6700027C6E /* TCDicToModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7F41DB9EF6700027C6E /* TCDicToModelTests.m */; };
 		7A68C7F81DB9F03600027C6E /* TCTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7F71DB9F03600027C6E /* TCTestModel.m */; };
 		7A68C7FB1DB9F37400027C6E /* TCTestBoss.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7FA1DB9F37400027C6E /* TCTestBoss.m */; };
+		7A74674B1DF90F8300ACD815 /* TCCompanyIntroViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A74674A1DF90F8300ACD815 /* TCCompanyIntroViewCell.m */; };
+		7A74674F1DF947EF00ACD815 /* TCCompanyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A74674E1DF947EF00ACD815 /* TCCompanyInfo.m */; };
+		7A7467521DF961AD00ACD815 /* TCUserCompanyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7467511DF961AD00ACD815 /* TCUserCompanyInfo.m */; };
 		7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7C19D91DCF29930092AEA1 /* TCProfileHeaderView.m */; };
 		7A7C19DC1DCF29B60092AEA1 /* TCProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A7C19DB1DCF29B60092AEA1 /* TCProfileHeaderView.xib */; };
 		7A7E93F41DF502E7006A47CE /* TCGenderPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7E93F31DF502E7006A47CE /* TCGenderPickerView.m */; };
@@ -557,6 +560,12 @@
 		7A68C7F71DB9F03600027C6E /* TCTestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTestModel.m; sourceTree = "<group>"; };
 		7A68C7F91DB9F37400027C6E /* TCTestBoss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCTestBoss.h; sourceTree = "<group>"; };
 		7A68C7FA1DB9F37400027C6E /* TCTestBoss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTestBoss.m; sourceTree = "<group>"; };
+		7A7467491DF90F8300ACD815 /* TCCompanyIntroViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyIntroViewCell.h; sourceTree = "<group>"; };
+		7A74674A1DF90F8300ACD815 /* TCCompanyIntroViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyIntroViewCell.m; sourceTree = "<group>"; };
+		7A74674D1DF947EF00ACD815 /* TCCompanyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyInfo.h; sourceTree = "<group>"; };
+		7A74674E1DF947EF00ACD815 /* TCCompanyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyInfo.m; sourceTree = "<group>"; };
+		7A7467501DF961AD00ACD815 /* TCUserCompanyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserCompanyInfo.h; sourceTree = "<group>"; };
+		7A7467511DF961AD00ACD815 /* TCUserCompanyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserCompanyInfo.m; sourceTree = "<group>"; };
 		7A7C19D81DCF29930092AEA1 /* TCProfileHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileHeaderView.h; sourceTree = "<group>"; };
 		7A7C19D91DCF29930092AEA1 /* TCProfileHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileHeaderView.m; sourceTree = "<group>"; };
 		7A7C19DB1DCF29B60092AEA1 /* TCProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileHeaderView.xib; sourceTree = "<group>"; };
@@ -1246,6 +1255,24 @@
 			path = CategoriesAndTools;
 			sourceTree = "<group>";
 		};
+		7A7467451DF8FC4C00ACD815 /* Company */ = {
+			isa = PBXGroup;
+			children = (
+				7A7467491DF90F8300ACD815 /* TCCompanyIntroViewCell.h */,
+				7A74674A1DF90F8300ACD815 /* TCCompanyIntroViewCell.m */,
+			);
+			path = Company;
+			sourceTree = "<group>";
+		};
+		7A74674C1DF947CE00ACD815 /* Company */ = {
+			isa = PBXGroup;
+			children = (
+				7A74674D1DF947EF00ACD815 /* TCCompanyInfo.h */,
+				7A74674E1DF947EF00ACD815 /* TCCompanyInfo.m */,
+			);
+			path = Company;
+			sourceTree = "<group>";
+		};
 		7A7E93F51DF515A2006A47CE /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -1498,6 +1525,7 @@
 			children = (
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
+				7A74674C1DF947CE00ACD815 /* Company */,
 				7A381BE81DED9304008BDBF7 /* Commercial */,
 				7A1F12971DEC28D200A9B58F /* Community */,
 				7A384E7F1DE84CAA0094E1F5 /* Upload */,
@@ -1526,6 +1554,8 @@
 				7ACA4FDC1DD57D79006634E8 /* TCUserAddress.m */,
 				7A34AF561DDB0E7400217161 /* TCUserShippingAddress.h */,
 				7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */,
+				7A7467501DF961AD00ACD815 /* TCUserCompanyInfo.h */,
+				7A7467511DF961AD00ACD815 /* TCUserCompanyInfo.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1607,6 +1637,7 @@
 		7AE32B8A1DC21CBA004E303D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7A7467451DF8FC4C00ACD815 /* Company */,
 				093D03161DE404AB007A053C /* Order */,
 				7A7C19D81DCF29930092AEA1 /* TCProfileHeaderView.h */,
 				7A7C19D91DCF29930092AEA1 /* TCProfileHeaderView.m */,
@@ -1943,6 +1974,7 @@
 				7A11F6FF1DE41F43005F3EAB /* TCRefreshHeader.m in Sources */,
 				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
 				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
+				7A7467521DF961AD00ACD815 /* TCUserCompanyInfo.m in Sources */,
 				7A918AC81DC34AA6002BD529 /* TCBioEditView.m in Sources */,
 				7A1F129A1DEC28F900A9B58F /* TCCommunity.m in Sources */,
 				7A3C81CF1DF04DD5009ABCEC /* TCExtendButton.m in Sources */,
@@ -2022,6 +2054,7 @@
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
 				7A7E94001DF51712006A47CE /* TCToolsViewController.m in Sources */,
+				7A74674F1DF947EF00ACD815 /* TCCompanyInfo.m in Sources */,
 				7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */,
 				7A7E93F41DF502E7006A47CE /* TCGenderPickerView.m in Sources */,
 				7AC292261DC8AA5700B2C7E8 /* TCCityPickerView.m in Sources */,
@@ -2038,6 +2071,7 @@
 				7A11F7061DE42356005F3EAB /* TCWalletPasswordViewController.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
 				09222E1A1DEE98490064C0DF /* TCRestaurantTableViewCell.m in Sources */,
+				7A74674B1DF90F8300ACD815 /* TCCompanyIntroViewCell.m in Sources */,
 				7A11F6F91DE3F1E6005F3EAB /* TCWalletBillDetailHeaderView.m in Sources */,
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
 				09275FB71DDEF94900502167 /* TCUserLocationAnnotationView.m in Sources */,
