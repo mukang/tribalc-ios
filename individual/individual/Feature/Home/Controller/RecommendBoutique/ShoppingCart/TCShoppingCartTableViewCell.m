@@ -19,9 +19,11 @@
     TCComputeView *computeView;
 }
 
-- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId{
+- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)tag AndGoodsId:(NSString *)goodsId{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _selectTag = tag;
+        
         self.backgroundColor = [UIColor whiteColor];
         float height = 139;
         float width = [UIScreen mainScreen].bounds.size.width;
@@ -34,7 +36,7 @@
         _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + 20, height / 2 - 94 / 2, 94, 94)];
         [self.contentView addSubview:_leftImgView];
 
-        _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initEditViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:selectTag AndGoodsId:goodsId];
+        _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initEditViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:tag AndGoodsId:goodsId];
         [self.contentView addSubview:_baseInfoView];
         
         
@@ -48,9 +50,11 @@
 }
 
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)tag AndGoodsId:(NSString *)goodsId {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _selectTag = tag;
+        
         self.backgroundColor = [UIColor whiteColor];
         float height = 139;
         float width = [UIScreen mainScreen].bounds.size.width;
@@ -63,9 +67,8 @@
         _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + 20, height / 2 - 94 / 2, 94, 94)];
         [self.contentView addSubview:_leftImgView];
         
-        _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initNormalViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:selectTag AndGoodsId:goodsId];
+        _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initNormalViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:_selectTag AndGoodsId:goodsId];
         [self.contentView addSubview:_baseInfoView];
-        
         
         UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, width - 40, 0.5)];
         [self.contentView addSubview:topLineView];
@@ -74,13 +77,24 @@
     return self;
 }
 
+- (UIView *)getSlideButtonViewWithFrame:(CGRect)frame {
+    UIView *slideView = [[UIView alloc] initWithFrame:frame];
+    UIButton *editBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height / 2)];
+    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [slideView addSubview:editBtn];
+    
+    UIButton *deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, editBtn.y + editBtn.height, frame.size.width, frame.size.height / 2)];
+    [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+    [slideView addSubview:deleteBtn];
+    
+    return slideView;
+}
 
 - (void)setCount:(NSInteger)count {
     NSString *countStr = [NSString stringWithFormat:@"X %li", (long)count];
     countLab.text = countStr;
     [countLab sizeToFit];
 }
-
 
 
 

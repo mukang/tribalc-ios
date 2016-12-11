@@ -202,17 +202,17 @@
 - (UIView *)createBottomViewWithFrame:(CGRect)frame AndTarget:(id)target AndAddCartAction:(SEL)cartAction AndBuyAction:(SEL)buyAction{
     UIView *view = [[UIView alloc] initWithFrame:frame];
     
-    UIButton *shopcarBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:17];
+    UIButton *shopcarBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) AndTitle:@"加入购物车" AndFontSize:17];
     [shopcarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     shopcarBtn.backgroundColor = [UIColor colorWithRed:112/255.0 green:206/255.0 blue:213/255.0 alpha:1];
     [shopcarBtn addTarget:target action:cartAction forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:shopcarBtn];
     
-    UIButton *buyBtn = [TCComponent createButtonWithFrame:CGRectMake(frame.size.width / 2, 0, frame.size.width / 2, frame.size.height) AndTitle:@"立即购买" AndFontSize:17];
-    [buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [buyBtn addTarget:target action:buyAction forControlEvents:UIControlEventTouchUpInside];
-    buyBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    [view addSubview:buyBtn];
+//    UIButton *buyBtn = [TCComponent createButtonWithFrame:CGRectMake(frame.size.width / 2, 0, frame.size.width / 2, frame.size.height) AndTitle:@"立即购买" AndFontSize:17];
+//    [buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [buyBtn addTarget:target action:buyAction forControlEvents:UIControlEventTouchUpInside];
+//    buyBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+//    [view addSubview:buyBtn];
 
     
     return view;

@@ -123,7 +123,7 @@
     UIView *bottomView;
     switch (status) {
         case TCOrderNoSettle:
-            bottomView = [self getNotSettleBottomView];
+//            bottomView = [self getNotSettleBottomView];
             break;
         case TCOrderSettle:
             bottomView = [self getSettleBottomView];
@@ -203,22 +203,6 @@
     delayTakeBtn.layer.borderColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1].CGColor;
     delayTakeBtn.layer.cornerRadius = 5;
     [bottomView addSubview:delayTakeBtn];
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
-    [bottomView addSubview:lineView];
-
-    return bottomView;
-}
-
-
-- (UIView *)getNotSettleBottomView {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
-
-    UIButton *payBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"去付款" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
-    [payBtn addTarget:self action:@selector(touchOrderPayBtn:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *cancelBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"取消订单" AndFontSize:16 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
-    [cancelBtn addTarget:self action:@selector(touchOrderCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [bottomView addSubview:cancelBtn];
-    [bottomView addSubview:payBtn];
     UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
     [bottomView addSubview:lineView];
 

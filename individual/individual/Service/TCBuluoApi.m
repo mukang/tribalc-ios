@@ -1209,7 +1209,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:newGoodsId forParam:@"newGoodsId"];
         [request setValue:[NSNumber numberWithInteger:amount] forParam:@"amount"];
         
-        [[TCClient client] send:request finish:^(TCClientResponse *respone) {
+        [[TCClient client   ] send:request finish:^(TCClientResponse *respone) {
             if (respone.statusCode == 200) {
                 TCOrderItem *result = [[TCOrderItem alloc] initWithObjectDictionary:respone.data];
                 if (resultBlock) {

@@ -69,11 +69,10 @@
 - (void)initUI {
     [self initScrollView];
 
-    
     UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, 394)];
     [mScrollView addSubview:titleImageView];
     
-    goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, 87) WithTitle:mGoodDetail.title AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
+    goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, 87) WithTitle:mGoodDetail.name AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
     [mScrollView addSubview:goodTitleView];
     
     UIButton *standardSelectBtn = [self createStandardSelectButtonWithFrame:CGRectMake(0, goodTitleView.y + goodTitleView.height + 7.5, self.view.width, 38)];

@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
+#import <MGSwipeTableCell/MGSwipeTableCell.h>
 #import "TCShoppingCartTableViewCell.h"
 
 
-@interface TCShoppingCartViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface TCShoppingCartViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate>
 
 
 

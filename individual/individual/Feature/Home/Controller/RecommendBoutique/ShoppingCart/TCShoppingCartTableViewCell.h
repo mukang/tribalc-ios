@@ -11,18 +11,21 @@
 #import "TCComputeView.h"
 #import "TCShoppingCartBaseInfoView.h"
 #import "UIImageView+WebCache.h"
+#import <MGSwipeTableCell/MGSwipeTableCell.h>
 
-@interface TCShoppingCartTableViewCell : UITableViewCell <SDWebImageManagerDelegate> {
+
+@interface TCShoppingCartTableViewCell : MGSwipeTableCell <SDWebImageManagerDelegate> {
     
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
 
 - (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
+
 @property (retain, nonatomic) UIButton *selectedBtn;
 @property (retain, nonatomic) UIImageView *leftImgView;
 @property (retain, nonatomic) TCShoppingCartBaseInfoView *baseInfoView;
-
+@property (copy, nonatomic) NSString *selectTag;
 
 - (void)setCount:(NSInteger)count;
 - (void)setPrice:(CGFloat)price;

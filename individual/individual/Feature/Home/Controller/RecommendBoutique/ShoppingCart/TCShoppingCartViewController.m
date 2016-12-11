@@ -10,6 +10,8 @@
 #import "TCBuluoApi.h"
 #import "TCImageURLSynthesizer.h"
 #import "TCShoppingCartWrapper.h"
+#import "TCPlaceOrderViewController.h"
+#import "TCSelectStandardView.h"
 
 
 @interface TCShoppingCartViewController () {
@@ -246,6 +248,7 @@
     } else {
         cell = [self getNormalTableViewCellWithIndexPath:indexPath AndTableView:tableView];
     }
+    cell.delegate = self;
     
     TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[indexPath.section];
     TCOrderItem *orderItem = listShoppingCart.goodsList[indexPath.row];
@@ -260,6 +263,33 @@
     return cell;
 }
 
+#pragma mark - MGSwipeTableCellDelegate
+- (NSArray<UIView *> *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
+    if (direction == MGSwipeDirectionRightToLeft) {
+        TCShoppingCartTableViewCell *selectCell = (TCShoppingCartTableViewCell *)cell;
+        return [self getCellLeftButtonWithSelectTag: selectCell.selectTag];
+        
+    }
+    
+    return nil;
+}
+
+
+- (NSArray *)getCellLeftButtonWithSelectTag:(NSString *)selectTag {
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, 139)];
+    UIButton *editBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, button.width, 139 / 2) AndTitle:@"编辑" AndFontSize:16 AndBackColor:[UIColor lightGrayColor] AndTextColor:[UIColor whiteColor]];
+    [editBtn addTarget:self action:@selector(touchGoodEditBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [button addSubview:editBtn];
+    UIButton *deleteBtn = [TCComponent createButtonWithFrame:CGRectMake(0, editBtn.y + editBtn.height, button.width, 139 / 2) AndTitle:@"删除" AndFontSize:16 AndBackColor:[UIColor redColor] AndTextColor:[UIColor whiteColor]];
+    [deleteBtn addTarget:self action:@selector(touchGoodDeleteBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [button addSubview:deleteBtn];
+    [editBtn setTitle:selectTag forState:UIControlStateSelected];
+    [deleteBtn setTitle:selectTag forState:UIControlStateSelected];
+    
+    return @[button];
+}
+
+
 - (TCShoppingCartTableViewCell *)getNormalTableViewCellWithIndexPath:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView{
     TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[indexPath.section];
     TCOrderItem *orderItem = listShoppingCart.goodsList[indexPath.row];
@@ -270,6 +300,10 @@
     if (!cell) {
         cell = [[TCShoppingCartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier AndSelectTag:tag AndGoodsId:orderItem.goods.ID];
     }
+    NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", tag];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellGoodStandardChange:) name:notifiName object:nil];
+
+    
     [cell.baseInfoView setupAmountLab:orderItem.amount];
     [cell.baseInfoView setupNormalPriceLab:orderItem.goods.salePrice];
 
@@ -328,13 +362,11 @@
             TCOrderItem *orderItem = [self getOrderItemWithSection:section AndRow:row];
             orderItem.goods = result.goods;
             orderItem.amount = result.amount;
-            
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-            [cartTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-            
             NSString *tag = [NSString stringWithFormat:@"%ld|%ld", (long)section, (long)row];
             [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"changeGoodAmount%@", tag] object:[NSNumber numberWithInteger:result.amount]];
         }
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+        [cartTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
     }];
 }
 
@@ -372,6 +404,16 @@
     return selectArr;
 }
 
+- (NSMutableArray *)getSelectListShoppingCartArr {
+    NSMutableArray *selectArr = [[NSMutableArray alloc] init];
+    for (int i = 0; i < shoppingCartWrapper.content.count; i++) {
+        TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[i];
+        [selectArr addObject:listShoppingCart];
+    }
+    
+    return selectArr;
+}
+
 # pragma mark - click
 
 - (void)touchBackBtn:(UIButton *)button {
@@ -388,6 +430,8 @@
 
 - (void)touchPayButton {
     NSLog(@"点击结算按钮");
+    TCPlaceOrderViewController *placeOrderViewController = [[TCPlaceOrderViewController alloc] initWithListShoppingCartArr:[self getSelectListShoppingCartArr]];
+    [self.navigationController pushViewController:placeOrderViewController animated:YES];
 }
 
 - (void)touchSelectGoodBtn:(UIButton *)button {
@@ -448,7 +492,20 @@
 }
 
 
+- (void)touchGoodEditBtn:(UIButton *)button {
+    NSString *selectTag = [button titleForState:UIControlStateSelected];
+    NSArray *selectArr = [selectTag componentsSeparatedByString:@"|"];
+    NSInteger section = [selectArr[0] integerValue];
+    NSInteger row = [selectArr[1] integerValue];
+    TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
+    TCOrderItem *orderItem = listShoppingCart.goodsList[row];
+    TCSelectStandardView *standardView = [[TCSelectStandardView alloc] initWithGoodsId:orderItem.goods.ID AndSelectTag:selectTag];
+    [[UIApplication sharedApplication].keyWindow addSubview:standardView];
+}
 
+- (void)touchGoodDeleteBtn:(UIButton *)button {
+    
+}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
