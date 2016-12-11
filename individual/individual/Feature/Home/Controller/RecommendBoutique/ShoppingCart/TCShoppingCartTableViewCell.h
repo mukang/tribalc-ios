@@ -9,22 +9,22 @@
 #import <UIKit/UIKit.h>
 #import "TCComponent.h"
 #import "TCComputeView.h"
+#import "TCShoppingCartBaseInfoView.h"
+#import "UIImageView+WebCache.h"
 
-@interface TCShoppingCartTableViewCell : UITableViewCell {
+@interface TCShoppingCartTableViewCell : UITableViewCell <SDWebImageManagerDelegate> {
     
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
 
-- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
-
+- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
 @property (retain, nonatomic) UIButton *selectedBtn;
 @property (retain, nonatomic) UIImageView *leftImgView;
-@property (retain, nonatomic) UILabel *titleLab;
+@property (retain, nonatomic) TCShoppingCartBaseInfoView *baseInfoView;
 
-- (void)setStandard:(NSDictionary *)standard;
+
 - (void)setCount:(NSInteger)count;
 - (void)setPrice:(CGFloat)price;
-- (void)setEditCount:(NSInteger)count AddAction:(SEL)addAction SubAction:(SEL)subAction Target:(id)target;
 
 @end

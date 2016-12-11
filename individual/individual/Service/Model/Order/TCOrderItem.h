@@ -16,5 +16,7 @@
 /** 产品信息 */
 @property (retain, nonatomic) TCGoods *goods;
 
+@property (nonatomic) BOOL select;
+
 
 @end

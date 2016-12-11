@@ -47,6 +47,10 @@
 #import "TCReservation.h"
 #import "TCReservationDetail.h"
 
+/********** 购物车相关 **********/
+#import "TCShoppingCartWrapper.h"
+#import "TCListShoppingCart.h"
+
 /********** OSS上传相关 **********/
 
 #import "TCUploadInfo.h"

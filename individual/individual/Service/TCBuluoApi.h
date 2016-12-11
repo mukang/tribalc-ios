@@ -341,10 +341,13 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 
 
 #pragma mark - 购物车资源
-- (void)fetchShoppingCartWrapperWithSortSkip:(NSString *)sortSkip result:(void (^)(TCReservationWrapper *, NSError *))resultBlock;
+- (void)fetchShoppingCartWrapperWithSortSkip:(NSString *)sortSkip result:(void (^)(TCShoppingCartWrapper *, NSError *))resultBlock;
 
 - (void)createShoppingCartWithAmount:(NSInteger)amount goodsId:(NSString *)goodsId result:(void(^)(BOOL, NSError *))resultBlock;
 
+- (void)changeShoppingCartWithShoppingCartId:(NSString *)shoppingCartId AndGoodsId:(NSString *)goodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCOrderItem *, NSError *))resultBlock;
+
+- (void)deleteShoppingCartWithShoppingCartArr:(NSArray *)cartArr result:(void(^)(BOOL, NSError *))resultBlock;
 
 #pragma mark - 上传图片资源
 

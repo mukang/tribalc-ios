@@ -29,4 +29,5 @@
 /** 规格文本信息 */
 @property (nonatomic, copy) NSString *standardSnapshot;
 
+
 @end

@@ -9,7 +9,6 @@
 #import "TCComputeView.h"
 
 @implementation TCComputeView {
-    UILabel *countLab;
     UIView *leftLine;
     UIView *rightLine;
 }
@@ -20,6 +19,7 @@
         self.backgroundColor = [UIColor whiteColor];
         self.layer.borderWidth = 0.5;
         self.layer.borderColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1].CGColor;
+        self.layer.cornerRadius = 3;
         
         _addBtn = [self getComputeBtnWithOrigin:CGPointMake(self.width - 26, 0) AndText:@"+"];
         [self addSubview:_addBtn];
@@ -27,17 +27,18 @@
         rightLine = [TCComponent createGrayLineWithFrame:CGRectMake(_addBtn.x - 0.5, 0, 0.5, _addBtn.height)];
         [self addSubview:rightLine];
         
-        countLab = [TCComponent createLabelWithFrame:CGRectMake(rightLine.x - 26, 0, 26, rightLine.height) AndFontSize:12 AndTitle:@"1"];
-        countLab.textColor = [UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:1];
-        [self addSubview:countLab];
+        _countLab = [TCComponent createLabelWithFrame:CGRectMake(rightLine.x - 26, 0, 26, rightLine.height) AndFontSize:12 AndTitle:@"1"];
+        _countLab.textColor = [UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:1];
+        _countLab.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_countLab];
         
-        leftLine = [TCComponent createGrayLineWithFrame:CGRectMake(countLab.x - 0.5, 0, 0.5, rightLine.height)];
+        leftLine = [TCComponent createGrayLineWithFrame:CGRectMake(_countLab.x - 0.5, 0, 0.5, rightLine.height)];
         [self addSubview:leftLine];
         
         _subBtn = [self getComputeBtnWithOrigin:CGPointMake(leftLine.x - 26, 0) AndText:@"-"];
         [self addSubview:_subBtn];
         
-        self.width = _addBtn.width + rightLine.width + countLab.width + leftLine.width + _subBtn.width;
+        self.width = _addBtn.width + rightLine.width + _countLab.width + leftLine.width + _subBtn.width;
     }
     
     return self;
@@ -45,12 +46,12 @@
 
 - (void)setCount:(NSInteger)count {
     NSString *countStr = [NSString stringWithFormat:@"%li", (long)count];
-    countLab.text = countStr;
+    _countLab.text = countStr;
     if (count > 99) {
-        [countLab sizeToFit];
-        leftLine.x = countLab.x - 0.5;
+        [_countLab sizeToFit];
+        leftLine.x = _countLab.x - 0.5;
         _subBtn.x = leftLine.x - 26;
-        self.width = _addBtn.width + rightLine.width + countLab.width + leftLine.width + _subBtn.width;
+        self.width = _addBtn.width + rightLine.width + _countLab.width + leftLine.width + _subBtn.width;
     }
 }
 

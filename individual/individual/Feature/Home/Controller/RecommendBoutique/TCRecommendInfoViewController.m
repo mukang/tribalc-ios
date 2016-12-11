@@ -658,6 +658,7 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [standardView removeFromSuperview];
 
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];

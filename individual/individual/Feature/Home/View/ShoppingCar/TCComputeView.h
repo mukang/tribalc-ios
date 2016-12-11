@@ -13,6 +13,7 @@
 
 @property (retain, nonatomic) UIButton *addBtn;
 @property (retain, nonatomic) UIButton *subBtn;
+@property (retain, nonatomic)  UILabel *countLab;
 
 - (void)setCount:(NSInteger)count;
 

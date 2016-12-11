@@ -1122,7 +1122,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 
 #pragma makr - 购物车资源
-- (void)fetchShoppingCartWrapperWithSortSkip:(NSString *)sortSkip result:(void (^)(TCReservationWrapper *, NSError *))resultBlock {
+- (void)fetchShoppingCartWrapperWithSortSkip:(NSString *)sortSkip result:(void (^)(TCShoppingCartWrapper *, NSError *))resultBlock {
     
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart", self.currentUserSession.assigned];
@@ -1133,9 +1133,9 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                     TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             } else {
-                TCReservationWrapper *orderWrapper = [[TCReservationWrapper alloc] initWithObjectDictionary:response.data];
+                TCShoppingCartWrapper *shoppingWrapper = [[TCShoppingCartWrapper alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(orderWrapper, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(shoppingWrapper, nil));
                 }
             }
         }];
@@ -1173,6 +1173,65 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
     }
 }
+
+- (void)changeShoppingCartWithShoppingCartId:(NSString *)shoppingCartId AndGoodsId:(NSString *)goodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCOrderItem *, NSError *))resultBlock{
+    if ([self isUserSessionValid]) {
+
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        
+        [request setValue:shoppingCartId forParam:@"shoppingCartId"];
+        [request setValue:goodsId forParam:@"goodsId"];
+        [request setValue:newGoodsId forParam:@"newGoodsId"];
+        [request setValue:[NSNumber numberWithInteger:amount] forParam:@"amount"];
+        
+        [[TCClient client] send:request finish:^(TCClientResponse *respone) {
+            if (respone.statusCode == 200) {
+                TCOrderItem *result = [[TCOrderItem alloc] initWithObjectDictionary:respone.data];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(result, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, respone.error));
+                }
+            }
+        }];
+    }  else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+
+}
+
+- (void)deleteShoppingCartWithShoppingCartArr:(NSArray *)cartArr result:(void(^)(BOOL, NSError *))resultBlock{
+    if ([self isUserSessionValid]) {
+        
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
+        
+        [[TCClient client] send:request finish:^(TCClientResponse *respone) {
+            if (respone.statusCode == 204) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, respone.error));
+                }
+            }
+        }];
+    }  else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+    
+}
+
 
 
 #pragma mark - 上传图片资源
