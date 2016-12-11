@@ -20,6 +20,8 @@
 
 @property (retain, nonatomic) UILabel *priceLab;
 
+@property (copy, nonatomic) NSString *goodsId;
+
 - (instancetype)initNormalViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
 - (instancetype)initEditViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
 

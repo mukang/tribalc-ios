@@ -290,7 +290,8 @@
     
     NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", tag];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellGoodStandardChange:) name:notifiName object:nil];
-
+    
+    cell.baseInfoView.goodsId = orderItem.goods.ID;
     [cell.baseInfoView setupEditAmount:orderItem.amount];
     [cell.baseInfoView setupEditPriceLab:orderItem.goods.salePrice];
     

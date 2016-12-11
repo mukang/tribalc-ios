@@ -16,9 +16,10 @@
 @implementation TCShoppingCartBaseInfoView {
     TCComputeView *computeView;
     NSString *tag;
-    NSString *goodsId;
     NSInteger repertory;
 }
+
+@synthesize goodsId;
 
 - (instancetype)initNormalViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodId{
     self = [super initWithFrame:frame];
