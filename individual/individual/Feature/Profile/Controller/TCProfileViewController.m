@@ -11,6 +11,7 @@
 #import "TCBiographyViewController.h"
 #import "TCWalletViewController.h"
 #import "TCIDAuthViewController.h"
+#import "TCCompanyViewController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
@@ -291,14 +292,16 @@ TCPhotoPickerDelegate>
             TCWalletViewController *vc = [[TCWalletViewController alloc] initWithNibName:@"TCWalletViewController" bundle:[NSBundle mainBundle]];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
-        } else if (indexPath.row == 1) {
+        } else if (indexPath.row == 1) { // 身份认证
             TCIDAuthViewController *vc = [[TCIDAuthViewController alloc] initWithNibName:@"TCIDAuthViewController" bundle:[NSBundle mainBundle]];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == 2) { // 我的预定
             TCUserReserveViewController *userReserveViewController = [[TCUserReserveViewController alloc] init];
             userReserveViewController.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:userReserveViewController animated:YES];
+        } else if (indexPath.row == 3) {
+            [self handleDidSelectedMyCompanyCell];
         }
     }
 }
@@ -447,6 +450,19 @@ TCPhotoPickerDelegate>
 
 - (void)handleUserInfoDidUpdate:(id)sender {
     [self updateHeaderView];
+}
+
+- (void)handleDidSelectedMyCompanyCell {
+    [[TCBuluoApi api] fetchCompanyBlindStatus:^(TCUserCompanyInfo *userCompanyInfo, NSError *error) {
+        if (userCompanyInfo) {
+            TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
+            vc.userCompanyInfo = userCompanyInfo;
+            vc.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        } else {
+            
+        }
+    }];
 }
 
 

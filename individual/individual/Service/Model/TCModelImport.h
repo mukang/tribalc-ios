@@ -19,7 +19,7 @@
 #import "TCWalletBill.h"
 #import "TCWalletBillWrapper.h"
 #import "TCBankCard.h"
-
+#import "TCUserCompanyInfo.h"
 
 /********** 商业相关 **********/
 
@@ -59,6 +59,10 @@
 
 #import "TCCommunity.h"
 #import "TCCommunityDetailInfo.h"
+
+/********** 公司相关 **********/
+
+#import "TCCompanyInfo.h"
 
 
 @interface TCModelImport : NSObject
