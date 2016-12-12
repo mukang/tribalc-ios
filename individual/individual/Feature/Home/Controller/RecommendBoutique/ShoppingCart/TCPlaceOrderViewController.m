@@ -308,10 +308,7 @@
 }
 
 - (void)touchOrderPayBtn:(UIButton *)button {
-//    for (int i = 0; i < 1; i++) {
-//        TCOrder *order = orderDetailList[i];
-//        [self createOrderWithAddressId:@"" AndItemList:[self getItemListWithAmount:order.itemList AndGoosId:<#(NSString *)#>]];
-//    }
+
     
     NSMutableArray *itemList = [[NSMutableArray alloc] init];
     for (int i = 0; i< orderDetailList.count; i++) {
@@ -345,7 +342,7 @@
     addressId = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.addressID;
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(BOOL result, NSError *error) {
         if (result) {
-
+            [MBProgressHUD showHUDWithMessage:@"创建订单成功"];
         }
     }];
 }
