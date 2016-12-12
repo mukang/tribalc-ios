@@ -18,8 +18,6 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
 @interface TCClientRequest ()
 
 @property (nonatomic, strong) NSMutableDictionary *requestParams;
-@property (nonatomic, strong) NSMutableArray *requestFiles;
-@property (strong, nonatomic) NSData *requestImageData;
 
 @end
 
@@ -45,16 +43,14 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
     return [self valueForParam:key];
 }
 
-- (NSDictionary *)params {
-    return [self.requestParams copy];
-}
-
-- (void)setImageData:(NSData *)imageData {
-    _requestImageData = imageData;
-}
-
-- (NSData *)imageData {
-    return _requestImageData;
+- (id)params {
+    if (_params) {
+        return _params;
+    }
+    if (_requestParams) {
+        return [_requestParams copy];
+    }
+    return nil;
 }
 
 #pragma mark - Public Methods
@@ -119,13 +115,6 @@ NSString *const TCClientHTTPMethodDelete = @"DELETE";
         _requestParams = [NSMutableDictionary dictionary];
     }
     return _requestParams;
-}
-
-- (NSMutableArray *)requestFiles {
-    if (_requestFiles == nil) {
-        _requestFiles = [NSMutableArray array];
-    }
-    return _requestFiles;
 }
 
 - (NSString *)description {

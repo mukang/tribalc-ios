@@ -166,6 +166,7 @@
 		7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E050C1DEEDC69002371B0 /* TCCommonInputViewCell.m */; };
 		7A4E050F1DEEDC69002371B0 /* TCCommonInputViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4E050D1DEEDC69002371B0 /* TCCommonInputViewCell.xib */; };
 		7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A510F9F1DB8624400471A88 /* NSObject+TCModel.m */; };
+		7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5238241DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m */; };
 		7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87711DE297A100E4130B /* TCWalletAccount.m */; };
 		7A5F87761DE2CED900E4130B /* TCWalletBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87741DE2CED900E4130B /* TCWalletBillViewController.m */; };
 		7A5F87771DE2CED900E4130B /* TCWalletBillViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A5F87751DE2CED900E4130B /* TCWalletBillViewController.xib */; };
@@ -554,6 +555,8 @@
 		7A4E050D1DEEDC69002371B0 /* TCCommonInputViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommonInputViewCell.xib; sourceTree = "<group>"; };
 		7A510F9E1DB8624400471A88 /* NSObject+TCModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TCModel.h"; sourceTree = "<group>"; };
 		7A510F9F1DB8624400471A88 /* NSObject+TCModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TCModel.m"; sourceTree = "<group>"; };
+		7A5238231DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyEmployeesViewCell.h; sourceTree = "<group>"; };
+		7A5238241DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyEmployeesViewCell.m; sourceTree = "<group>"; };
 		7A5F87701DE297A100E4130B /* TCWalletAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletAccount.h; sourceTree = "<group>"; };
 		7A5F87711DE297A100E4130B /* TCWalletAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletAccount.m; sourceTree = "<group>"; };
 		7A5F87731DE2CED900E4130B /* TCWalletBillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletBillViewController.h; sourceTree = "<group>"; };
@@ -1314,6 +1317,8 @@
 				7A74674A1DF90F8300ACD815 /* TCCompanyIntroViewCell.m */,
 				7A16665C1DFAC213007B5733 /* TCCompanyTitleViewCell.h */,
 				7A16665D1DFAC213007B5733 /* TCCompanyTitleViewCell.m */,
+				7A5238231DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.h */,
+				7A5238241DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m */,
 			);
 			path = Company;
 			sourceTree = "<group>";
@@ -2065,6 +2070,7 @@
 				7A6506F01DCA1F4F00B0EDBF /* TCBioEditAvatarViewController.m in Sources */,
 				7A11F6F51DE3F1C5005F3EAB /* TCWalletBillDetailViewCell.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
+				7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */,
 				7A4514771DD2D0C3009F170A /* TCProfileBgImageChangeView.m in Sources */,
 				7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */,
 				09AE0F751DED2AC600F307D8 /* TCServices.m in Sources */,

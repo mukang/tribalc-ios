@@ -21,16 +21,15 @@ extern NSString *const TCClientHTTPMethodDelete;
 
 - (id)valueForParam:(NSString *)name;
 
-- (NSDictionary *)params;
-
-- (void)setImageData:(NSData *)imageData;
-
-- (NSData *)imageData;
-
 @end
 
 
 @interface TCClientRequest : NSObject <TCClientRequest>
+
+/** 参数 */
+@property (strong, nonatomic) id params;
+/** 图片上传时的图片数据 */
+@property (strong, nonatomic) UIImage *imageData;
 
 @property (copy, nonatomic, readonly) NSString *apiName;
 @property (copy, nonatomic, readonly) NSString *uploadURLString;
