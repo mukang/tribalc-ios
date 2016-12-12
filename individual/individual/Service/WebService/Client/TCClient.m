@@ -56,7 +56,7 @@
     
     NSString *method = clientRequest.HTTPMethod;
     NSString *URLString = clientRequest.apiName;
-    NSDictionary *parameters = clientRequest.params;
+    id parameters = clientRequest.params;
     
     [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
