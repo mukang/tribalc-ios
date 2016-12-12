@@ -12,6 +12,7 @@
 #import "TCOrderAddressView.h"
 #import "TCClientConfig.h"
 #import "TCUserOrderTableViewCell.h"
+#import "TCPayMethodView.h"
 #import "TCImageURLSynthesizer.h"
 
 @interface TCPlaceOrderViewController () {
@@ -51,8 +52,12 @@
     
     UITableView *orderDetailTableView = [self getOrderDetailTableViewWithFrame:CGRectMake(0, userAddressView.y + userAddressView.height, self.view.width, [self getTableViewHeight])];
     [scrollView addSubview:orderDetailTableView];
+ 
+    TCPayMethodView *payMethodView = [[TCPayMethodView alloc] initWithFrame:CGRectMake(0, orderDetailTableView.y + orderDetailTableView.height + 4, TCScreenWidth, 170)];
+    [scrollView addSubview:payMethodView];
     
-    scrollView.contentSize = CGSizeMake(self.view.width, orderDetailTableView.y + orderDetailTableView.height);
+    
+    scrollView.contentSize = CGSizeMake(self.view.width, payMethodView.y + payMethodView.height);
  
     UIView *bottomView = [self getNotSettleBottomView];
     [self.view addSubview:bottomView];

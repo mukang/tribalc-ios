@@ -168,7 +168,10 @@
         return @"卖家已发货";
     } else if ([text isEqualToString:@"SETTLE"]) {
         return @"等待卖家发货";
-    } else{
+    } else if ([text isEqualToString:@"CANNEL"]) {
+        return @"订单已取消";
+    }
+    else{
         return text;
     }
 }
