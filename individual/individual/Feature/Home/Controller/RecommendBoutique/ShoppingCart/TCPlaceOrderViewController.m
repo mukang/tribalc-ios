@@ -12,6 +12,7 @@
 #import "TCOrderAddressView.h"
 #import "TCClientConfig.h"
 #import "TCUserOrderTableViewCell.h"
+#import "TCPayMethodView.h"
 #import "TCImageURLSynthesizer.h"
 
 @interface TCPlaceOrderViewController () {
@@ -51,8 +52,12 @@
     
     UITableView *orderDetailTableView = [self getOrderDetailTableViewWithFrame:CGRectMake(0, userAddressView.y + userAddressView.height, self.view.width, [self getTableViewHeight])];
     [scrollView addSubview:orderDetailTableView];
+ 
+    TCPayMethodView *payMethodView = [[TCPayMethodView alloc] initWithFrame:CGRectMake(0, orderDetailTableView.y + orderDetailTableView.height + 4, TCScreenWidth, 170)];
+    [scrollView addSubview:payMethodView];
     
-    scrollView.contentSize = CGSizeMake(self.view.width, orderDetailTableView.y + orderDetailTableView.height);
+    
+    scrollView.contentSize = CGSizeMake(self.view.width, payMethodView.y + payMethodView.height);
  
     UIView *bottomView = [self getNotSettleBottomView];
     [self.view addSubview:bottomView];
@@ -303,10 +308,7 @@
 }
 
 - (void)touchOrderPayBtn:(UIButton *)button {
-//    for (int i = 0; i < 1; i++) {
-//        TCOrder *order = orderDetailList[i];
-//        [self createOrderWithAddressId:@"" AndItemList:[self getItemListWithAmount:order.itemList AndGoosId:<#(NSString *)#>]];
-//    }
+
     
     NSMutableArray *itemList = [[NSMutableArray alloc] init];
     for (int i = 0; i< orderDetailList.count; i++) {
@@ -340,7 +342,7 @@
     addressId = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.addressID;
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(BOOL result, NSError *error) {
         if (result) {
-
+            [MBProgressHUD showHUDWithMessage:@"创建订单成功"];
         }
     }];
 }

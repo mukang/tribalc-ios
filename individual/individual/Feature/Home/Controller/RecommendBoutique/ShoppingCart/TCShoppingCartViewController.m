@@ -30,6 +30,11 @@
 
 @implementation TCShoppingCartViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [cartTableView reloadData];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -405,13 +410,38 @@
 }
 
 - (NSMutableArray *)getSelectListShoppingCartArr {
+    
     NSMutableArray *selectArr = [[NSMutableArray alloc] init];
     for (int i = 0; i < shoppingCartWrapper.content.count; i++) {
-        TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[i];
-        [selectArr addObject:listShoppingCart];
+        TCListShoppingCart *listShoppingCart = [[TCListShoppingCart alloc] init];
+        TCListShoppingCart *allListShoppingCart = shoppingCartWrapper.content[i];
+        listShoppingCart.store = allListShoppingCart.store;
+        listShoppingCart.ID = allListShoppingCart.ID;
+        if ([self judgeIsHasSelectedOrder:allListShoppingCart.goodsList]) {
+            NSMutableArray *goodList = [[NSMutableArray alloc] init];
+            for (int j = 0; j < allListShoppingCart.goodsList.count; j++) {
+                TCOrderItem *orderItem = allListShoppingCart.goodsList[j];
+                if (orderItem.select) {
+                    [goodList addObject:orderItem];
+                }
+            }
+            listShoppingCart.goodsList = goodList;
+            [selectArr addObject:listShoppingCart];
+        }
     }
     
     return selectArr;
+}
+
+- (BOOL)judgeIsHasSelectedOrder:(NSArray *)goodList {
+    for (int i = 0; i < goodList.count; i++) {
+        TCOrderItem *orderItem = goodList[i];
+        if (orderItem.select) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 # pragma mark - click
@@ -429,9 +459,15 @@
 }
 
 - (void)touchPayButton {
-    NSLog(@"点击结算按钮");
-    TCPlaceOrderViewController *placeOrderViewController = [[TCPlaceOrderViewController alloc] initWithListShoppingCartArr:[self getSelectListShoppingCartArr]];
-    [self.navigationController pushViewController:placeOrderViewController animated:YES];
+    
+    NSArray *selectArr = [self getSelectListShoppingCartArr];
+    if (selectArr.count != 0) {
+        TCPlaceOrderViewController *placeOrderViewController = [[TCPlaceOrderViewController alloc] initWithListShoppingCartArr:selectArr];
+        [self.navigationController pushViewController:placeOrderViewController animated:YES];
+    } else {
+        [MBProgressHUD showHUDWithMessage:@"您还未选择商品"];
+    }
+    
 }
 
 - (void)touchSelectGoodBtn:(UIButton *)button {

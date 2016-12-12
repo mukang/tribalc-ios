@@ -61,6 +61,8 @@
 		0978DB111DE95D62006B6437 /* TCUserOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0978DB101DE95D62006B6437 /* TCUserOrderDetailViewController.m */; };
 		0978DB141DE96E40006B6437 /* TCOrderAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0978DB131DE96E40006B6437 /* TCOrderAddressView.m */; };
 		098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435D81DFD118200B8CA63 /* TCPlaceOrderViewController.m */; };
+		098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */; };
+		098FDD5A1DFE392C00205663 /* TCPayMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098FDD591DFE392C00205663 /* TCPayMethodView.m */; };
 		099B38341DDDA926003F5972 /* TCRecommendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38331DDDA926003F5972 /* TCRecommendHeader.m */; };
 		099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38361DDDA944003F5972 /* TCRecommendFooter.m */; };
 		09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */; };
@@ -379,6 +381,10 @@
 		0978DB131DE96E40006B6437 /* TCOrderAddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOrderAddressView.m; sourceTree = "<group>"; };
 		098435D71DFD118200B8CA63 /* TCPlaceOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPlaceOrderViewController.h; sourceTree = "<group>"; };
 		098435D81DFD118200B8CA63 /* TCPlaceOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPlaceOrderViewController.m; sourceTree = "<group>"; };
+		098435DD1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCOrderDetailAlertView.h; sourceTree = "<group>"; };
+		098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOrderDetailAlertView.m; sourceTree = "<group>"; };
+		098FDD581DFE392C00205663 /* TCPayMethodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPayMethodView.h; sourceTree = "<group>"; };
+		098FDD591DFE392C00205663 /* TCPayMethodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPayMethodView.m; sourceTree = "<group>"; };
 		099B38321DDDA926003F5972 /* TCRecommendHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendHeader.h; sourceTree = "<group>"; };
 		099B38331DDDA926003F5972 /* TCRecommendHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendHeader.m; sourceTree = "<group>"; };
 		099B38351DDDA944003F5972 /* TCRecommendFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendFooter.h; sourceTree = "<group>"; };
@@ -935,6 +941,8 @@
 			children = (
 				0978DB121DE96E40006B6437 /* TCOrderAddressView.h */,
 				0978DB131DE96E40006B6437 /* TCOrderAddressView.m */,
+				098435DD1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.h */,
+				098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -980,6 +988,8 @@
 				0928B33D1DF92D960085A182 /* TCShoppingCartBaseInfoView.m */,
 				0928B33F1DF96F930085A182 /* TCSelectStandardView.h */,
 				0928B3401DF96F930085A182 /* TCSelectStandardView.m */,
+				098FDD581DFE392C00205663 /* TCPayMethodView.h */,
+				098FDD591DFE392C00205663 /* TCPayMethodView.m */,
 			);
 			path = ShoppingCar;
 			sourceTree = "<group>";
@@ -2029,6 +2039,7 @@
 				7A14FC581DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m in Sources */,
 				7A13EEAD1DF8140A00377869 /* TCCompanyApplyDetailViewController.m in Sources */,
 				0928B3381DF921AC0085A182 /* TCShoppingCartWrapper.m in Sources */,
+				098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */,
 				7A6506E61DCA130200B0EDBF /* TCShippingAddressEditViewCell.m in Sources */,
 				09222E321DEE99860064C0DF /* TCReserveOnlineViewController.m in Sources */,
 				7A11F6FF1DE41F43005F3EAB /* TCRefreshHeader.m in Sources */,
@@ -2149,6 +2160,7 @@
 				7A45146F1DE58D62007D7193 /* TCBankCardAddViewController.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,
 				7A1F12951DEC0DFA00A9B58F /* TCCommunityViewCell.m in Sources */,
+				098FDD5A1DFE392C00205663 /* TCPayMethodView.m in Sources */,
 				09275FBA1DDEFF5D00502167 /* TCDetailAnnotation.m in Sources */,
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
 				092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */,

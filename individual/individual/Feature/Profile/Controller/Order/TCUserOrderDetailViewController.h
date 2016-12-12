@@ -14,8 +14,10 @@
 #import "TCClientConfig.h"
 #import "TCModelImport.h"
 #import "TCImageURLSynthesizer.h"
+#import "TCOrderDetailAlertView.h"
 
-@interface TCUserOrderDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate>
+
+@interface TCUserOrderDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, TCOrderDetailAlertViewDelegate>
 
 - (instancetype)initWithItemList:(NSArray *)itemList;
 

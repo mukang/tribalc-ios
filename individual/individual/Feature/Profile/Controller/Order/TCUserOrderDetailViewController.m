@@ -76,10 +76,84 @@
     orderDetailTableView = [self getOrderDetailTableViewWithFrame:CGRectMake(0, userAddressView.y + userAddressView.height, self.view.width, 40 * 3 + 56 + 41 + orderList.count * 96.5)];
     [scrollView addSubview:orderDetailTableView];
     
-    scrollView.contentSize = CGSizeMake(self.view.width, self.view.height);
+    UIView *expressView = [self getExpressInfoWithStatus:orderDetail.orderStatus AndFrame:CGRectMake(orderDetailTableView.x, orderDetailTableView.y + orderDetailTableView.height + 4, TCScreenWidth, 175)];
+    [scrollView addSubview:expressView];
+    
+    scrollView.contentSize = CGSizeMake(self.view.width, expressView.y + expressView.height);
     
     [self initBottomViewWithStatus:orderDetail.orderStatus];
 
+}
+
+- (UIView *)getExpressInfoWithStatus:(TCOrderStatus)status AndFrame:(CGRect)frame{
+    switch (status) {
+        case TCOrderNoSettle:
+            return [self getExpressNoPayInfoViewWithFrame:frame];
+        case TCOrderDelivery:
+            return [self getExpressDeliveredAndReceivedInfoViewWithFrame:frame AndStatus:TCOrderDelivery];
+        case TCOrderReceived:
+            return [self getExpressDeliveredAndReceivedInfoViewWithFrame:frame AndStatus:TCOrderReceived];
+        default:
+            break;
+    }
+    return nil;
+}
+
+- (UIView *)getExpressDeliveredAndReceivedInfoViewWithFrame:(CGRect)frame AndStatus:(TCOrderStatus)status{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *deliverIdLab = [self getExpressInfoLabWithFrame:CGRectMake(20, 11, TCScreenWidth - 40, 11) AndText:@"物流编号" AndTitle:@"98321321321321"];
+    [view addSubview:deliverIdLab];
+    UILabel *orderNumLab = [self getExpressInfoLabWithFrame:CGRectMake(20, deliverIdLab.y + deliverIdLab.height + 8, TCScreenWidth - 40, 11) AndText:@"订单编号" AndTitle:orderDetail.orderNum];
+    [view addSubview:orderNumLab];
+    UILabel *balanceIdLab = [self getExpressInfoLabWithFrame:CGRectMake(20, orderNumLab.y + orderNumLab.height + 8, orderNumLab.width, 11) AndText:@"余额交易号" AndTitle:@"421421421421421421412"];
+    [view addSubview:balanceIdLab];
+    UILabel *createTimeLab = [self getExpressInfoLabWithFrame:CGRectMake(20, balanceIdLab.y + balanceIdLab.height + 8, balanceIdLab.width, 11) AndText:@"创建时间" AndTitle:[self timeStampTransToString:orderDetail.createTime]];
+    [view addSubview:createTimeLab];
+    UILabel *payTimeLab = [self getExpressInfoLabWithFrame:CGRectMake(20, createTimeLab.y + createTimeLab.height + 8, createTimeLab.width, 11) AndText:@"付款时间" AndTitle:[self timeStampTransToString:orderDetail.settleTime]];
+    [view addSubview:payTimeLab];
+    UILabel *deliverTimeLab = [self getExpressInfoLabWithFrame:CGRectMake(20, payTimeLab.y + payTimeLab.height + 8, payTimeLab.width, 11) AndText:@"发货时间" AndTitle:[self timeStampTransToString:orderDetail.deliveryTime]];
+    [view addSubview:deliverTimeLab];
+    if (status == TCOrderReceived) {
+        UILabel *receivedTimeLab = [self getExpressInfoLabWithFrame:CGRectMake(20, deliverTimeLab.y + deliverTimeLab.height + 8, deliverTimeLab.width, 11) AndText:@"收货时间" AndTitle:[self timeStampTransToString:orderDetail.receivedTime]];
+        [view addSubview:receivedTimeLab];
+    }
+    
+    return view;
+}
+
+- (UIView *)getExpressNoPayInfoViewWithFrame:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
+    UILabel *orderNumLab = [self getExpressInfoLabWithFrame:CGRectMake(20, 11, TCScreenWidth - 40, 11) AndText:orderDetail.orderNum AndTitle:@"订单编号"];
+    [view addSubview:orderNumLab];
+    
+    UILabel *createTimeLab = [self getExpressInfoLabWithFrame:CGRectMake(20, orderNumLab.y + orderNumLab.height + 8, orderNumLab.width, 11) AndText:[self timeStampTransToString:orderDetail.createTime] AndTitle:@"创建时间"];
+    [view addSubview:createTimeLab];
+    
+    return view;
+}
+
+- (UILabel *)getExpressInfoLabWithFrame:(CGRect)frame AndText:(NSString *)text AndTitle:(NSString *)title {
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.font = [UIFont systemFontOfSize:11];
+    label.textColor = TCRGBColor(154, 154, 154);
+    label.text = [NSString stringWithFormat:@"%@ : %@", text, title];
+    return label;
+}
+
+- (NSString *)timeStampTransToString:(NSInteger)timeStamp {
+    if (timeStamp) {
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp / 1000];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:MM:ss"];
+        
+        return [dateFormatter stringFromDate:date];
+    }
+    return @"";
 }
 
 - (NSArray *)getAddressArr {
@@ -123,12 +197,13 @@
     UIView *bottomView;
     switch (status) {
         case TCOrderNoSettle:
-//            bottomView = [self getNotSettleBottomView];
+            bottomView = [self getNoSettleBottomView];
             break;
         case TCOrderSettle:
             bottomView = [self getSettleBottomView];
             break;
         case TCOrderCannel:
+            
             break;
         case TCOrderDelivery:
             bottomView = [self getDeliveryBottomView];
@@ -159,6 +234,24 @@
     return bottomView;
 
 }
+
+- (UIView *)getNoSettleBottomView {
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
+    UIButton *waitTakeBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - 111, 0, 111, bottomView.height) AndTitle:@"待付款" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+    [waitTakeBtn addTarget:self action:@selector(touchOrderConfrimTake:) forControlEvents:UIControlEventTouchUpInside];
+    [bottomView addSubview:waitTakeBtn];
+    UIButton *cancelBtn = [TCComponent createButtonWithFrame:CGRectMake(waitTakeBtn.x - 101, bottomView.height / 2 - 27 / 2, 87, 27) AndTitle:@"取消订单" AndFontSize:16 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
+    [cancelBtn addTarget:self action:@selector(touchOrderCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
+    cancelBtn.layer.borderWidth = 0.5;
+    cancelBtn.layer.borderColor = TCRGBColor(42, 42, 42).CGColor;
+    cancelBtn.layer.cornerRadius = 5;
+    [bottomView addSubview:cancelBtn];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
+    [bottomView addSubview:lineView];
+    
+    return bottomView;
+}
+
 
 - (UIView *)getNotCreateBottomView {
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
@@ -360,6 +453,24 @@
     }
 }
 
+
+#pragma mark - TCOrderDetailAlertView
+- (void)alertView:(TCOrderDetailAlertView *)alertView didSelectOptionButtonWithTag:(NSInteger)tag
+{
+    if (tag == 0) {
+        [alertView removeFromSuperview];
+    } else {
+        [[TCBuluoApi api] changeOrderStatus:@"CANNEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
+            [self showHUDMessageWithResult:result AndTitle:@"取消订单"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [alertView removeFromSuperview];
+
+    }
+    
+}
+
+
 #pragma mark - click
 - (void)touchBackBtn {
     [self.navigationController popViewControllerAnimated:YES];
@@ -381,11 +492,15 @@
 }
 
 - (void)touchOrderCancelBtn:(UIButton *)btn {
-    [[TCBuluoApi api] changeOrderStatus:@"CANNEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-        [self showHUDMessageWithResult:result AndTitle:@"取消订单"];
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
+    TCOrderDetailAlertView *alertView = [[TCOrderDetailAlertView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [alertView show];
+    alertView.delegate = self;
+    
 }
+
+
+
+
 
 - (void)touchOrderPayBtn:(UIButton *)btn {
     [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
