@@ -448,6 +448,7 @@
         [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(BOOL result, NSError *error) {
             if (result) {
                 [MBProgressHUD showHUDWithMessage:@"预订成功"];
+                [self.navigationController popToRootViewControllerAnimated:YES];
             } else {
                 [MBProgressHUD showHUDWithMessage:@"预订失败"];
             }
