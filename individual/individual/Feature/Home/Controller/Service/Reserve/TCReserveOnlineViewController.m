@@ -50,9 +50,17 @@
     self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     [self initNavigationBar];
     
+    UITapGestureRecognizer *recoveryKeyboardRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(recoveryKeyboard)];
+    [self.view addGestureRecognizer:recoveryKeyboardRecognizer];
     
     [self initUI];
     
+}
+
+- (void)recoveryKeyboard {
+    [userInfoView.additionalTextField resignFirstResponder];
+    [userInfoView.phoneTextField resignFirstResponder];
+    [userInfoView.verificationCodeTextField resignFirstResponder];
 }
 
 - (void)initNavigationBar {
@@ -292,6 +300,7 @@
 }
 
 - (void)showSelectTimePickerView {
+    [self recoveryKeyboard];
     [UIView animateWithDuration:0.15 animations:^{
         timeSelectView.hidden = NO;
         timeSelectView.y = timeSelectView.y - 256 ;
@@ -299,6 +308,7 @@
 }
 
 - (void)showSelectPersonNumberView {
+    [self recoveryKeyboard];
     [UIView animateWithDuration:0.15 animations:^{
         personNumberSelectView.hidden = NO;
         personNumberSelectView.y = personNumberSelectView.y - 256;

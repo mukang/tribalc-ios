@@ -26,6 +26,8 @@
 @interface TCProfileProcessViewCell : UITableViewCell
 
 @property (weak, nonatomic) id<TCProfileProcessViewCellDelegate> delegate;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *buttons;
+
 
 @end
 

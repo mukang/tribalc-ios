@@ -10,6 +10,10 @@
 
 @interface TCUserOrderTabBarController () {
     UIView *selectUnderlineView;
+    UIButton *allOrderBtn;
+    UIButton *waitPayBtn;
+    UIButton *waitTakeBtn;
+    UIButton *completeBtn;
 }
 
 @end
@@ -19,26 +23,42 @@
 - (void)viewDidAppear:(BOOL)animated {
 }
 
+- (instancetype)initWithTitle:(NSString *)title {
+    self = [super init];
+    if (self) {
+        self.title = title;
+        [self selectIndexWithTitle];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavigationBar];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    NSLog(@"%@", self.title);
-    
     UIView *selectTabBarView = [self getSelectTabBarViewWithFrame:CGRectMake(0, 0, self.view.width, 40.5)];
     [self.view addSubview:selectTabBarView];
     
-    [self addChildController:[[TCUserOrderViewController alloc] initWithStatus:@""] AndTitle:@"全部"];
+    [self addChildController:[[TCUserOrderViewController alloc] initWithStatus:nil] AndTitle:@"全部"];
     [self addChildController:[self getControllerWithStatus:@"NO_SETTLE"] AndTitle:@"等代付款"];
     [self addChildController:[self getControllerWithStatus:@"DELIVERY"] AndTitle:@"等待收货"];
     [self addChildController:[self getControllerWithStatus:@"RECEIVED"] AndTitle:@"已完成"];
-    
     self.selectedIndex = 0;
     
 }
 
-
+- (void)selectIndexWithTitle {
+    if ([self.title isEqualToString:@"待付款"]) {
+        [self touchOrderSelectBtn:waitPayBtn];
+    } else if ([self.title isEqualToString:@"待收货"]) {
+        [self touchOrderSelectBtn:waitTakeBtn];
+    } else if ([self.title isEqualToString:@"已结束"]) {
+        [self touchOrderSelectBtn:completeBtn];
+    } else {
+        [self touchOrderSelectBtn:allOrderBtn];
+    }
+}
 
 
 - (void)addChildController:(UIViewController *)childController AndTitle:(NSString *)title {
@@ -59,19 +79,20 @@
     UIView *selectView = [[UIView alloc] initWithFrame:frame];
     selectView.backgroundColor = [UIColor whiteColor];
     
-    UIButton *allOrderBtn = [self getSelectButtonWithFrame:CGRectMake(20, 0, 0, frame.size.height) AndText:@"全部"];
+    CGFloat centerWidth = (TCScreenWidth - 154 - 40) / 3;
+    allOrderBtn = [self getSelectButtonWithFrame:CGRectMake(20, 0, 0, frame.size.height) AndText:@"全部"];
     allOrderBtn.tag = 0;
     [selectView addSubview:allOrderBtn];
     selectUnderlineView = [TCComponent createGrayLineWithFrame:CGRectMake(allOrderBtn.x - 5, allOrderBtn.y + allOrderBtn.height - 1, allOrderBtn.width + 10.5, 1)];
     selectUnderlineView.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     
-    UIButton *waitPayBtn = [self getSelectButtonWithFrame:CGRectMake(allOrderBtn.origin.x + allOrderBtn.width + 76, 0, 0, frame.size.height) AndText:@"待付款"];
+    waitPayBtn = [self getSelectButtonWithFrame:CGRectMake(allOrderBtn.origin.x + allOrderBtn.width + centerWidth, 0, 0, frame.size.height) AndText:@"待付款"];
     waitPayBtn.tag = 1;
     [selectView addSubview:waitPayBtn];
-    UIButton *waitTakeBtn = [self getSelectButtonWithFrame:CGRectMake(waitPayBtn.origin.x + waitPayBtn.width + 65, 0, 0, allOrderBtn.height) AndText:@"待收货"];
+    waitTakeBtn = [self getSelectButtonWithFrame:CGRectMake(waitPayBtn.origin.x + waitPayBtn.width + centerWidth, 0, 0, allOrderBtn.height) AndText:@"待收货"];
     waitTakeBtn.tag = 2;
     [selectView addSubview:waitTakeBtn];
-    UIButton *completeBtn = [self getSelectButtonWithFrame:CGRectMake(waitTakeBtn.x + waitTakeBtn.width + 61, 0, 0, allOrderBtn.height) AndText:@"已完成"];
+    completeBtn = [self getSelectButtonWithFrame:CGRectMake(waitTakeBtn.x + waitTakeBtn.width + centerWidth, 0, 0, allOrderBtn.height) AndText:@"已完成"];
     completeBtn.tag = 3;
     [selectView addSubview:completeBtn];
     
@@ -130,129 +151,6 @@
 }
 
 
-
-
-
-
-- (NSArray *)forgeData {
-    NSDictionary *dic1 = @{
-                           @"orderId":@"1350948", @"type":@"wait", @"price":@499.05, @"status":@"已完成",
-                           @"content":@[
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     }
-                                   ]
-                           };
-    NSDictionary *dic2 = @{
-                           @"orderId":@"1350948", @"type":@"wait", @"price":@499.05,@"status":@"等待付款",
-                           @"content":@[
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     }
-                                   ]
-                           };
-    NSDictionary *dic3 = @{
-                           @"orderId":@"1350948", @"type":@"wait", @"price":@499.05,@"status":@"等待收货",
-                           @"content":@[
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套", @"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"}
-                                             }
-                                     }
-                                   ]
-                           };
-    
-    NSDictionary *dic4 = @{
-                           @"orderId":@"1350948", @"type":@"wait", @"price":@499.05,@"status":@"等待收货",
-                           @"content":@[
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     }
-                                   ]
-                           };
-    
-    NSDictionary *dic5 = @{
-                           @"orderId":@"1350948", @"type":@"wait", @"price":@499.05,@"status":@"等待收货",
-                           @"content":@[
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
-                                     @"type":@{
-                                             
-                                             }
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"}
-                                             }
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔等我打我回到家哇靠恢复外套",@"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     },
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     }
-                                   ]
-                           };
-    
-    NSDictionary *dic6 = @{
-                           @"orderId":@"1350948", @"type":@"wait", @"price":@499.05,@"status":@"等待收货",
-                           @"content":@[
-                                   @{@"image": @"", @"name":@"New look时尚花朵刺绣牛仔外套",@"price":@488, @"count":@3,
-                                     @"type":@{
-                                             @"primary":@{@"label":@"口味", @"types":@"蓝色"},
-                                             @"secondary":@{@"label":@"颜色分类", @"types":@"巧克力"}
-                                             }
-                                     }
-                                   ]
-                           };
-    
-    
-    NSArray *arr = [NSArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, dic3, dic4, dic5, dic6, dic1, dic4, dic5, dic6, dic3, dic4, dic1, dic6, dic1, dic4, dic5, dic1, nil];
-    return arr;
-}
 
 
 - (void)didReceiveMemoryWarning {

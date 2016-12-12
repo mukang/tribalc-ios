@@ -1006,7 +1006,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)createOrderWithItemList:(NSArray *)itemList AddressId:(NSString *)addressId result:(void(^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"orders?me=%@", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"orders?me=%@&status=SETTLE", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
 
         [request setValue:addressId forParam:@"addressId"];
@@ -1235,6 +1235,8 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
+        
+        request.params = cartArr;
         
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
             if (respone.statusCode == 204) {

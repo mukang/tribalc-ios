@@ -63,6 +63,7 @@
 		098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435D81DFD118200B8CA63 /* TCPlaceOrderViewController.m */; };
 		098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */; };
 		098FDD5A1DFE392C00205663 /* TCPayMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098FDD591DFE392C00205663 /* TCPayMethodView.m */; };
+		098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098FDD5C1DFE7F0C00205663 /* TCBalancePayView.m */; };
 		099B38341DDDA926003F5972 /* TCRecommendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38331DDDA926003F5972 /* TCRecommendHeader.m */; };
 		099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38361DDDA944003F5972 /* TCRecommendFooter.m */; };
 		09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */; };
@@ -385,6 +386,8 @@
 		098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOrderDetailAlertView.m; sourceTree = "<group>"; };
 		098FDD581DFE392C00205663 /* TCPayMethodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPayMethodView.h; sourceTree = "<group>"; };
 		098FDD591DFE392C00205663 /* TCPayMethodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPayMethodView.m; sourceTree = "<group>"; };
+		098FDD5B1DFE7F0C00205663 /* TCBalancePayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBalancePayView.h; sourceTree = "<group>"; };
+		098FDD5C1DFE7F0C00205663 /* TCBalancePayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBalancePayView.m; sourceTree = "<group>"; };
 		099B38321DDDA926003F5972 /* TCRecommendHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendHeader.h; sourceTree = "<group>"; };
 		099B38331DDDA926003F5972 /* TCRecommendHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendHeader.m; sourceTree = "<group>"; };
 		099B38351DDDA944003F5972 /* TCRecommendFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendFooter.h; sourceTree = "<group>"; };
@@ -990,6 +993,8 @@
 				0928B3401DF96F930085A182 /* TCSelectStandardView.m */,
 				098FDD581DFE392C00205663 /* TCPayMethodView.h */,
 				098FDD591DFE392C00205663 /* TCPayMethodView.m */,
+				098FDD5B1DFE7F0C00205663 /* TCBalancePayView.h */,
+				098FDD5C1DFE7F0C00205663 /* TCBalancePayView.m */,
 			);
 			path = ShoppingCar;
 			sourceTree = "<group>";
@@ -2075,6 +2080,7 @@
 				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
 				092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */,
 				7A3C81C21DF00B26009ABCEC /* TCPaymentView.m in Sources */,
+				098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */,
 				7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */,
 				7A3C81CA1DF02C16009ABCEC /* TCPaymentPasswordView.m in Sources */,
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
