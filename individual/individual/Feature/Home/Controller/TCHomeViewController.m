@@ -38,7 +38,7 @@
     homeScrollView = [self getHomeScrollViewWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight - self.tabBarController.tabBar.size.height)];
     [self.view addSubview:homeScrollView];
     
-    [self setupTitleImageScrollViewWithFrame:CGRectMake(0, 0, self.view.width, 245)];
+    [self setupTitleImageScrollViewWithFrame:CGRectMake(0, 0, self.view.width, 260)];
     [homeScrollView addSubview:titleScrollView];
     
     UIView *expressView = [self getExpressViewWithFrame:CGRectMake(0, titleScrollView.y + titleScrollView.height, TCScreenWidth, 33)];
@@ -129,7 +129,7 @@
 
 - (UIButton *)getPropertyButtonWithFrame:(CGRect)frame AndImgName:(NSString *)imgName AndTitle:(NSString *)title AndAction:(SEL)action {
     UIButton *propertyBtn = [[UIButton alloc] initWithFrame:frame];
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width / 2 - 45 / 2, 0, 45, 45)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width / 2 - 35 / 2, 7, 35, 35)];
     imgView.image = [UIImage imageNamed:imgName];
     [propertyBtn addSubview:imgView];
     

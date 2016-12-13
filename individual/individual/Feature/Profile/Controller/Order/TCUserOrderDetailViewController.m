@@ -211,7 +211,7 @@
         case TCOrderReceived:
             break;
         default:
-            bottomView = [self getNotCreateBottomView];
+//            bottomView = [self getNotCreateBottomView];
             break;
     }
 //    UIView *bottomView = [self getWaitPayOrderBottomView];
@@ -253,21 +253,21 @@
 }
 
 
-- (UIView *)getNotCreateBottomView {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
-    UILabel *payMoneyLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, 35, bottomView.height) AndFontSize:14 AndTitle:@"合计:"];
-    [bottomView addSubview:payMoneyLab];
-    UIButton *confirmPayBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - 111, 0, 111, bottomView.height) AndTitle:@"确认下单" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
-    [confirmPayBtn addTarget:self action:@selector(touchOrderCreateBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [bottomView addSubview:confirmPayBtn];
-    NSString *totalStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", orderDetail.totalFee].floatValue)];
-    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(payMoneyLab.x + payMoneyLab.width, 0, confirmPayBtn.x - payMoneyLab.x - payMoneyLab.width, bottomView.height) AndFontSize:14 AndTitle:totalStr AndTextColor:confirmPayBtn.backgroundColor];
-    [bottomView addSubview:priceLab];
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
-    [bottomView addSubview:lineView];
-    
-    return bottomView;
-}
+//- (UIView *)getNotCreateBottomView {
+//    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
+//    UILabel *payMoneyLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, 35, bottomView.height) AndFontSize:14 AndTitle:@"合计:"];
+//    [bottomView addSubview:payMoneyLab];
+//    UIButton *confirmPayBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - 111, 0, 111, bottomView.height) AndTitle:@"确认下单" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+//    [confirmPayBtn addTarget:self action:@selector(touchOrderCreateBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [bottomView addSubview:confirmPayBtn];
+//    NSString *totalStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", orderDetail.totalFee].floatValue)];
+//    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(payMoneyLab.x + payMoneyLab.width, 0, confirmPayBtn.x - payMoneyLab.x - payMoneyLab.width, bottomView.height) AndFontSize:14 AndTitle:totalStr AndTextColor:confirmPayBtn.backgroundColor];
+//    [bottomView addSubview:priceLab];
+//    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
+//    [bottomView addSubview:lineView];
+//    
+//    return bottomView;
+//}
 
 
 - (UIView *)getWaitPayOrderBottomView {
@@ -476,20 +476,20 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)touchOrderCreateBtn:(UIButton *)btn {
-    NSMutableArray *itemList = [[NSMutableArray alloc] init];
-    NSArray *orderList = orderDetail.itemList;
-    for (int i = 0; i < orderList.count; i++) {
-        TCOrderItem *orderItem = orderList[i];
-        itemList[i] = @{ @"amount": [NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID };
-    }
-    [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:orderDetail.addressId result:^(BOOL result, NSError *error) {
-        [self showHUDMessageWithResult:result AndTitle:@"创建订单"];
-    }];
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-}
+//- (void)touchOrderCreateBtn:(UIButton *)btn {
+//    NSMutableArray *itemList = [[NSMutableArray alloc] init];
+//    NSArray *orderList = orderDetail.itemList;
+//    for (int i = 0; i < orderList.count; i++) {
+//        TCOrderItem *orderItem = orderList[i];
+//        itemList[i] = @{ @"amount": [NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID };
+//    }
+//    [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:orderDetail.addressId result:^(BOOL result, NSError *error) {
+//        [self showHUDMessageWithResult:result AndTitle:@"创建订单"];
+//    }];
+//    
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+//    
+//}
 
 - (void)touchOrderCancelBtn:(UIButton *)btn {
     TCOrderDetailAlertView *alertView = [[TCOrderDetailAlertView alloc] initWithFrame:[UIScreen mainScreen].bounds];

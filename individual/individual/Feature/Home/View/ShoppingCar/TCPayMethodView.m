@@ -29,20 +29,22 @@
         UIButton *balanceView = [self getPayViewWithImageName:@"car_balance_pay" AndTitle:@"余额支付" AndFrame:CGRectMake(0, payMethodLab.y + payMethodLab.height, payMethodLab.width, payMethodLab.height)];
         balanceView.tag = 0;
         [self addSubview:balanceView];
-        balanceBtn = [self getPaySelectBtnWithFrame:CGRectMake(TCScreenWidth - 20 - 18, payMethodLab.y + payMethodLab.height + balanceView.height / 2 - 18 / 2, 18, 18) AndTitle:@"余额支付" AndTag:0];
+        balanceBtn = [self getPaySelectBtnWithFrame:CGRectMake(TCScreenWidth - 20 - 16.5, payMethodLab.y + payMethodLab.height + balanceView.height / 2 - 16.5 / 2, 16.5, 16.5) AndTitle:@"余额支付" AndTag:0];
+        [balanceBtn setImage:[UIImage imageNamed:@"car_pay_selected"] forState:UIControlStateNormal];
+        _selectPayMethodStr = @"余额";
         [self addSubview:balanceBtn];
         
         
         UIButton *weChatView = [self getPayViewWithImageName:@"car_wechat_pay" AndTitle:@"微信支付" AndFrame:CGRectMake(0, balanceView.y + balanceView.height, balanceView.width, balanceView.height)];
         weChatView.tag = 1;
         [self addSubview:weChatView];
-        weChatPayBtn = [self getPaySelectBtnWithFrame:CGRectMake(TCScreenWidth - 20 - 18, balanceView.y + balanceView.height + payMethodLab.height / 2 - 18 / 2, 18, 18) AndTitle:@"微信支付" AndTag:1];
+        weChatPayBtn = [self getPaySelectBtnWithFrame:CGRectMake(TCScreenWidth - 20 - 16.5, balanceView.y + balanceView.height + payMethodLab.height / 2 - 16.5 / 2, 16.5, 16.5) AndTitle:@"微信支付" AndTag:1];
         [self addSubview:weChatPayBtn];
         
         UIButton *aliPayView = [self getPayViewWithImageName:@"car_ali_pay" AndTitle:@"支付宝支付" AndFrame:CGRectMake(0, weChatView.y + weChatView.height, weChatView.width, weChatView.height)];
         aliPayView.tag = 2;
         [self addSubview:aliPayView];
-        aliPayBtn = [self getPaySelectBtnWithFrame:CGRectMake(TCScreenWidth - 20 - 18, weChatView.y + weChatView.height + payMethodLab.height / 2 - 18 / 2, 18, 18) AndTitle:@"支付宝支付" AndTag:2];
+        aliPayBtn = [self getPaySelectBtnWithFrame:CGRectMake(TCScreenWidth - 20 - 16.5, weChatView.y + weChatView.height + payMethodLab.height / 2 - 16.5 / 2, 16.5, 16.5) AndTitle:@"支付宝支付" AndTag:2];
         [self addSubview:aliPayBtn];
         
         
@@ -74,16 +76,17 @@
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     button.tag = tag;
     button.userInteractionEnabled = YES;
-    [button setImage:[UIImage imageNamed:@"car_unselected"] forState:UIControlStateNormal];
+    
+    [button setImage:[UIImage imageNamed:@"car_unselected_pay"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(touchPaySelectButton:) forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
 
 - (void)touchPaySelectButton:(UIButton *)button {
     NSInteger tag = button.tag;
-    [balanceBtn setImage:[UIImage imageNamed:@"car_unselected"] forState:UIControlStateNormal];
-    [weChatPayBtn setImage:[UIImage imageNamed:@"car_unselected"] forState:UIControlStateNormal];
-    [aliPayBtn setImage:[UIImage imageNamed:@"car_unselected"] forState:UIControlStateNormal];
+    [balanceBtn setImage:[UIImage imageNamed:@"car_unselected_pay"] forState:UIControlStateNormal];
+    [weChatPayBtn setImage:[UIImage imageNamed:@"car_unselected_pay"] forState:UIControlStateNormal];
+    [aliPayBtn setImage:[UIImage imageNamed:@"car_unselected_pay"] forState:UIControlStateNormal];
 
     switch (tag) {
         case 0:

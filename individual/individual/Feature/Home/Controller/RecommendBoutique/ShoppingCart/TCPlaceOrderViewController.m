@@ -357,7 +357,7 @@
     [MBProgressHUD showHUDWithMessage:@"支付"];
     
     [payView removeFromSuperview];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 
@@ -388,11 +388,13 @@
         }
     }
     NSString *addressId = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.addressID;
-    [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(BOOL result, NSError *error) {
-        if (result) {
+    [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
+        if (orderList) {
             payView = [[TCBalancePayView alloc] initWithPayPrice:[self getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndTarget:self ] ;
             [payView showPayView];
             [MBProgressHUD showHUDWithMessage:@"创建订单成功"];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"创建订单失败"];
         }
     }];
 }

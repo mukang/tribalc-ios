@@ -208,12 +208,6 @@
     [shopcarBtn addTarget:target action:cartAction forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:shopcarBtn];
     
-//    UIButton *buyBtn = [TCComponent createButtonWithFrame:CGRectMake(frame.size.width / 2, 0, frame.size.width / 2, frame.size.height) AndTitle:@"立即购买" AndFontSize:17];
-//    [buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [buyBtn addTarget:target action:buyAction forControlEvents:UIControlEventTouchUpInside];
-//    buyBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-//    [view addSubview:buyBtn];
-
     
     return view;
 }
@@ -327,7 +321,7 @@
     if (![_selectedSecondLab.text isEqualToString:@""] || ![_selectedPrimaryLab.text isEqualToString:@""]) {
         NSString *key = [NSString stringWithFormat:@"%@^%@", primary, second];
         if (goodStandard.goodsIndexes[key] == NULL) {
-                [btn setTitleColor:[UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:195/255.0] forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor colorWithRed:195/255.0 green:195/255.0 blue:195/255.0 alpha:1] forState:UIControlStateNormal];
         }
     }
 }
@@ -465,14 +459,5 @@
 }
 
 
-
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

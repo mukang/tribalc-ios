@@ -39,9 +39,9 @@
 
 
 - (void)initReservationData {
+    
     [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:10 sortSkip:nil result:^(TCReservationWrapper *wrapper, NSError *error) {
         userReserveWrapper = wrapper;
-        
         [reserveTableView reloadData];
         [reserveTableView.mj_header endRefreshing];
         
