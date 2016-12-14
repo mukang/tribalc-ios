@@ -10,8 +10,12 @@
 
 #import "TCCompanyHeaderView.h"
 #import "TCCompanyIntroViewCell.h"
+#import "TCCompanyTitleViewCell.h"
+#import "TCCompanyEmployeesViewCell.h"
 
 #import "TCUserCompanyInfo.h"
+#import "TCCompanyInfo.h"
+#import "TCBuluoApi.h"
 
 #import "UIImage+Category.h"
 
@@ -69,6 +73,7 @@
 #pragma mark - Private Methods
 
 - (void)setupNavBar {
+    self.navigationItem.title = self.userCompanyInfo.company.name;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -83,6 +88,8 @@
     tableView.delegate = self;
     tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [tableView registerClass:[TCCompanyIntroViewCell class] forCellReuseIdentifier:@"TCCompanyIntroViewCell"];
+    [tableView registerClass:[TCCompanyTitleViewCell class] forCellReuseIdentifier:@"TCCompanyTitleViewCell"];
+    [tableView registerClass:[TCCompanyEmployeesViewCell class] forCellReuseIdentifier:@"TCCompanyEmployeesViewCell"];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
@@ -149,26 +156,89 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    if (section == 0) {
+        return 1;
+    } else {
+        return 6;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TCCompanyIntroViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCompanyIntroViewCell" forIndexPath:indexPath];
-    cell.fold = self.companyIntroFold;
-    cell.companyInfo = self.userCompanyInfo.company;
-    cell.delegate = self;
-    return cell;
+    if (indexPath.section == 0) {
+        TCCompanyIntroViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCompanyIntroViewCell" forIndexPath:indexPath];
+        cell.fold = self.companyIntroFold;
+        cell.companyInfo = self.userCompanyInfo.company;
+        cell.delegate = self;
+        return cell;
+    } else {
+        if (indexPath.row == 0) {
+            TCCompanyTitleViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCompanyTitleViewCell" forIndexPath:indexPath];
+            return cell;
+        } else {
+            TCCompanyEmployeesViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCompanyEmployeesViewCell" forIndexPath:indexPath];
+            switch (indexPath.row) {
+                case 1:
+                    cell.titleLabel.text = @"公司名称";
+                    cell.subtitleLabel.text = self.userCompanyInfo.company.name;
+                    break;
+                case 2:
+                    cell.titleLabel.text = @"姓名";
+                    cell.subtitleLabel.text = [[TCBuluoApi api] currentUserSession].userInfo.name;
+                    break;
+                case 3:
+                    cell.titleLabel.text = @"部门";
+                    cell.subtitleLabel.text = self.userCompanyInfo.department;
+                    break;
+                case 4:
+                    cell.titleLabel.text = @"职位";
+                    cell.subtitleLabel.text = self.userCompanyInfo.position;
+                    break;
+                case 5:
+                    cell.titleLabel.text = @"工号";
+                    cell.subtitleLabel.text = self.userCompanyInfo.personNum;
+                    break;
+                    
+                default:
+                    break;
+            }
+            return cell;
+        }
+    }
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView fd_heightForCellWithIdentifier:@"TCCompanyIntroViewCell" configuration:^(id cell) {
-        TCCompanyIntroViewCell *companyIntroViewCell = cell;
-        companyIntroViewCell.fold = self.companyIntroFold;
-        companyIntroViewCell.companyInfo = weakSelf.userCompanyInfo.company;
-    }];
+    if (indexPath.section == 0) {
+        return [tableView fd_heightForCellWithIdentifier:@"TCCompanyIntroViewCell" configuration:^(id cell) {
+            TCCompanyIntroViewCell *companyIntroViewCell = cell;
+            companyIntroViewCell.fold = self.companyIntroFold;
+            companyIntroViewCell.companyInfo = weakSelf.userCompanyInfo.company;
+        }];
+    } else {
+        if (indexPath.row == 0) {
+            return 42;
+        } else {
+            return 37;
+        }
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return 7;
+    } else {
+        return 0;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -181,8 +251,7 @@
 
 - (void)companyIntroViewCell:(TCCompanyIntroViewCell *)cell didClickUnfoldButtonWithFold:(BOOL)fold {
     self.companyIntroFold = !fold;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Actions

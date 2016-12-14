@@ -21,7 +21,6 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor blueColor];
         [self setupSubviewsWithFrame:frame];
         [self setupConstraints];
     }
@@ -31,6 +30,7 @@
 - (void)setupSubviewsWithFrame:(CGRect)frame {
     TCImagePlayerView *imagePalyerView = [[TCImagePlayerView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     [self addSubview:imagePalyerView];
+    self.imagePalyerView = imagePalyerView;
     
     UIView *logoBgView = [[UIView alloc] init];
     logoBgView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.19];

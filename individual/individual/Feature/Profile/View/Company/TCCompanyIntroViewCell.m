@@ -8,13 +8,14 @@
 
 #import "TCCompanyIntroViewCell.h"
 #import "TCCompanyInfo.h"
+#import "TCExtendButton.h"
 #import <Masonry.h>
 
 @interface TCCompanyIntroViewCell ()
 
 @property (weak, nonatomic) UILabel *nameLabel;
 @property (weak, nonatomic) UILabel *introLabel;
-@property (weak, nonatomic) UIButton *foldButton;
+@property (weak, nonatomic) TCExtendButton *foldButton;
 
 @end
 
@@ -47,9 +48,10 @@
     [self.contentView addSubview:introLabel];
     self.introLabel = introLabel;
     
-    UIButton *foldButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    TCExtendButton *foldButton = [TCExtendButton buttonWithType:UIButtonTypeCustom];
     [foldButton setImage:[UIImage imageNamed:@"company_intro_unfold_button"] forState:UIControlStateNormal];
     [foldButton addTarget:self action:@selector(handleClickUnfoldButton:) forControlEvents:UIControlEventTouchUpInside];
+    foldButton.hitTestSlop = UIEdgeInsetsMake(-15, -20, -10, -20);
     [self.contentView addSubview:foldButton];
     self.foldButton = foldButton;
 }

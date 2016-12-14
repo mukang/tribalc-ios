@@ -244,6 +244,14 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)fetchCompanyBlindStatus:(void (^)(TCUserCompanyInfo *userCompanyInfo, NSError *error))resultBlock;
 
+/**
+ 用户绑定公司
+
+ @param userCompanyInfo TCUserCompanyInfo对象
+ @param resultBlock 结果回调，success为NO时表示绑定失败，失败原因见error的code和userInfo
+ */
+- (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
+
 #pragma mark - 验证码资源
 
 /**
@@ -384,5 +392,21 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)fetchCommunityDetailInfo:(NSString *)communityID result:(void (^)(TCCommunityDetailInfo *communityDetailInfo, NSError *error))resultBlock;
 
+/**
+ 获取按城市分好组的社区列表
+
+ @param resultBlock 结果回调，communities为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchCommunityListGroupByCity:(void (^)(NSArray *communities, NSError *error))resultBlock;
+
+#pragma mark - 公司资源
+
+/**
+ 获取社区内的公司列表
+
+ @param communityID 所在社区的ID
+ @param resultBlock 结果回调，companyList为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchCompanyList:(NSString *)communityID result:(void (^)(NSArray *companyList, NSError *error))resultBlock;
 
 @end

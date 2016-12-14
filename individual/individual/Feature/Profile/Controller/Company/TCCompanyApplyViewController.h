@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, TCCompanyApplyStatus) {
+    TCCompanyApplyStatusNotApply,
+    TCCompanyApplyStatusProcess,
+    TCCompanyApplyStatusFailure
+};
+
 @interface TCCompanyApplyViewController : UIViewController
+
+@property (nonatomic, readonly) TCCompanyApplyStatus applyStatus;
+
+- (instancetype)initWithCompanyApplyStatus:(TCCompanyApplyStatus)applyStatus;
 
 @end

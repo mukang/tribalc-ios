@@ -782,7 +782,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)fetchCompanyBlindStatus:(void (^)(TCUserCompanyInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/company_bind_request", @"5824287f0cf210fc9cef5e42"];
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/company_bind_request", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.error) {
@@ -800,6 +800,33 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
             TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+- (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/company_bind_request", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        [request setValue:userCompanyInfo.company.ID forParam:@"companyId"];
+        [request setValue:userCompanyInfo.department forParam:@"department"];
+        [request setValue:userCompanyInfo.position forParam:@"position"];
+        [request setValue:userCompanyInfo.personNum forParam:@"personNum"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 201) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }
@@ -1363,5 +1390,57 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+- (void)fetchCommunityListGroupByCity:(void (^)(NSArray *, NSError *))resultBlock {
+    NSString *apiName = @"communities/property_management";
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            NSMutableArray *communities = [NSMutableArray array];
+            NSDictionary *dic = response.data;
+            for (NSString *key in dic.allKeys) {
+                NSMutableArray *communityList = [NSMutableArray array];
+                for (NSDictionary *communityDic in dic[key]) {
+                    TCCommunity *community = [[TCCommunity alloc] initWithObjectDictionary:communityDic];
+                    [communityList addObject:community];
+                }
+                TCCommunityListInCity *communityListInCity = [[TCCommunityListInCity alloc] init];
+                communityListInCity.city = key;
+                communityListInCity.communityList = [communityList copy];
+                [communities addObject:communityListInCity];
+            }
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock([communities copy], nil));
+            }
+        }
+    }];
+}
+
+#pragma mark - 公司资源
+
+- (void)fetchCompanyList:(NSString *)communityID result:(void (^)(NSArray *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"companies?communityId=%@", communityID];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            NSMutableArray *companyList = [NSMutableArray array];
+            NSArray *dicArray = response.data;
+            for (NSDictionary *dic in dicArray) {
+                TCCompanyInfo *companyInfo = [[TCCompanyInfo alloc] initWithObjectDictionary:dic];
+                [companyList addObject:companyInfo];
+            }
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock([companyList copy], nil));
+            }
+        }
+    }];
+}
 
 @end

@@ -60,6 +60,7 @@
 
 #import "TCCommunity.h"
 #import "TCCommunityDetailInfo.h"
+#import "TCCommunityListInCity.h"
 
 /********** 公司相关 **********/
 

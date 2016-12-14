@@ -10,4 +10,7 @@
 
 @interface TCCompanyEmployeesViewCell : UITableViewCell
 
+@property (weak, nonatomic) UILabel *titleLabel;
+@property (weak, nonatomic) UILabel *subtitleLabel;
+
 @end
