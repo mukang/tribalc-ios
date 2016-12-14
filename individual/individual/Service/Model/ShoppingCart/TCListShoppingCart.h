@@ -11,10 +11,11 @@
 
 @interface TCListShoppingCart : NSObject
 
+/** 购物车条目id */
 @property (copy, nonatomic) NSString *ID;
-
+/** 商品列表 TCCartItem对象 */
 @property (copy, nonatomic) NSArray *goodsList;
-
+/** 店铺信息 */
 @property (nonatomic) TCMarkStore *store;
 
 @end

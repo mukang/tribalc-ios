@@ -30,10 +30,10 @@
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
+        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(20), height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
         [self.contentView addSubview:_selectedBtn];
         
-        _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + 20, height / 2 - 94 / 2, 94, 94)];
+        _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + TCRealValue(20), height / 2 - TCRealValue(94) / 2, TCRealValue(94), TCRealValue(94))];
         [self.contentView addSubview:_leftImgView];
 
         _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initEditViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:tag AndGoodsId:goodsId];
@@ -64,7 +64,7 @@
         _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
         [self.contentView addSubview:_selectedBtn];
         
-        _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + 20, height / 2 - 94 / 2, 94, 94)];
+        _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + TCRealValue(20), height / 2 - TCRealValue(94) / 2, TCRealValue(94), TCRealValue(94))];
         [self.contentView addSubview:_leftImgView];
         
         _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initNormalViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:_selectTag AndGoodsId:goodsId];

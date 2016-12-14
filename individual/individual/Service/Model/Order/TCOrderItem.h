@@ -15,8 +15,8 @@
 @property (nonatomic) NSInteger amount;
 /** 产品信息 */
 @property (retain, nonatomic) TCGoods *goods;
-
-@property (nonatomic) BOOL select;
+/** 购物车商品ID */
+@property (retain, nonatomic) NSString *ID;
 
 
 @end

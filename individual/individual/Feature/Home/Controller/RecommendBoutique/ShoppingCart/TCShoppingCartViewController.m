@@ -42,7 +42,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"购物车";
     // Do any additional setup after loading the view.
-    
 
     
     [self initShoppingCartData];
@@ -51,6 +50,7 @@
     
 }
 
+#pragma mark - Init Data
 
 - (void)initShoppingCartData {
     [[TCBuluoApi api] fetchShoppingCartWrapperWithSortSkip:nil result:^(TCShoppingCartWrapper *wrapper, NSError *error) {
@@ -61,16 +61,7 @@
     }];
 }
 
-- (void)initialTableView {
-    cartTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 98 / 2) style:UITableViewStyleGrouped];
-    cartTableView.backgroundColor  =[UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
-    cartTableView.delegate = self;
-    cartTableView.dataSource = self;
-    cartTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    cartTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    [self.view addSubview:cartTableView];
-}
-
+#pragma mark - Setup NavigationBar
 
 - (void)initialNavigationBar {
     self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"购物车"];
@@ -94,9 +85,23 @@
     editBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     editBtn.titleLabel.textColor = [UIColor whiteColor];
     UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithCustomView:editBtn];
-
+    
     self.navigationItem.rightBarButtonItem = editItem;
 }
+
+
+#pragma mark - Setup UI
+
+- (void)initialTableView {
+    cartTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 98 / 2) style:UITableViewStyleGrouped];
+    cartTableView.backgroundColor  =[UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
+    cartTableView.delegate = self;
+    cartTableView.dataSource = self;
+    cartTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    cartTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    [self.view addSubview:cartTableView];
+}
+
 
 - (UIView *)getBottomViewWithText:(NSString *)text AndAction:(SEL)action AndFrame:(CGRect)frame{
     UIView *view = [[UIView alloc] initWithFrame:frame];
@@ -133,46 +138,6 @@
     return storeInfoView;
 }
 
-- (void)setuptotalPriceLab {
-    float price = 0;
-    
-    NSArray *contentArr = shoppingCartWrapper.content;
-    for (int i = 0; i < contentArr.count; i++) {
-        TCListShoppingCart *shoppingCart = contentArr[i];
-        NSArray *goodList = shoppingCart.goodsList;
-        for (int j = 0; j < goodList.count; j++) {
-            TCOrderItem *orderItem = goodList[j];
-            if (orderItem.select) {
-                TCGoods *good = orderItem.goods;
-                price += good.salePrice;
-            }
-        }
-    }
-    totalPriceLab.text = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", price].floatValue)];
-
-}
-
-- (void)setupOrderItemSelected:(BOOL)select {
-    NSArray *contentArr = shoppingCartWrapper.content;
-    for (int i = 0; i < contentArr.count; i++) {
-        TCListShoppingCart *shoppingCart = contentArr[i];
-        NSArray *goodList = shoppingCart.goodsList;
-        for (int j = 0; j < goodList.count; j++) {
-            TCOrderItem *orderItem = goodList[j];
-            orderItem.select = select;
-        }
-    }
-}
-
-- (void)setupOrderItemSelected:(BOOL)select Section:(NSInteger)section {
-    NSArray *contentArr = shoppingCartWrapper.content;
-    TCListShoppingCart *shoppingCart = contentArr[section];
-    NSArray *goodList = shoppingCart.goodsList;
-    for (int i = 0; i < goodList.count; i++) {
-        TCOrderItem *orderItem = goodList[i];
-        orderItem.select = select;
-    }
-}
 
 - (void)setupBottomViewWithFrame:(CGRect)frame {
     [bottomView removeFromSuperview];
@@ -196,7 +161,7 @@
 
 - (UIImage *)getSelectImageWithGoodsList:(NSArray *)goodsList {
     for (int i = 0; i < goodsList.count; i++) {
-        TCOrderItem *orderItem = goodsList[i];
+        TCCartItem *orderItem = goodsList[i];
         if (!orderItem.select) {
             return [UIImage imageNamed:@"car_unselected"];
         }
@@ -205,13 +170,57 @@
     return [UIImage imageNamed:@"car_selected"];
 }
 
-- (UIImage *)getSelectImageWithOrderItem:(TCOrderItem *)orderItem {
-    if (orderItem.select) {
+- (UIImage *)getSelectImageWithOrderItem:(TCCartItem *)cartItem {
+    if (cartItem.select) {
         return [UIImage imageNamed:@"car_selected"];
     } else {
         return [UIImage imageNamed:@"car_unselected"];
     }
     
+}
+
+
+- (void)setuptotalPriceLab {
+    float price = 0;
+    
+    NSArray *contentArr = shoppingCartWrapper.content;
+    for (int i = 0; i < contentArr.count; i++) {
+        TCListShoppingCart *shoppingCart = contentArr[i];
+        NSArray *goodList = shoppingCart.goodsList;
+        for (int j = 0; j < goodList.count; j++) {
+            TCCartItem *cartItem = goodList[j];
+            if (cartItem.select) {
+                TCGoods *good = cartItem.goods;
+                price += good.salePrice;
+            }
+        }
+    }
+    totalPriceLab.text = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", price].floatValue)];
+
+}
+
+#pragma mark - Setup GoodSelected
+
+- (void)setupOrderItemSelected:(BOOL)select {
+    NSArray *contentArr = shoppingCartWrapper.content;
+    for (int i = 0; i < contentArr.count; i++) {
+        TCListShoppingCart *shoppingCart = contentArr[i];
+        NSArray *goodList = shoppingCart.goodsList;
+        for (int j = 0; j < goodList.count; j++) {
+            TCCartItem *cartItem = goodList[j];
+            cartItem.select = select;
+        }
+    }
+}
+
+- (void)setupOrderItemSelected:(BOOL)select Section:(NSInteger)section {
+    NSArray *contentArr = shoppingCartWrapper.content;
+    TCListShoppingCart *shoppingCart = contentArr[section];
+    NSArray *goodList = shoppingCart.goodsList;
+    for (int i = 0; i < goodList.count; i++) {
+        TCCartItem *cartItem = goodList[i];
+        cartItem.select = select;
+    }
 }
 
 
@@ -227,7 +236,6 @@
     NSArray *goodsList = listShoppingCart.goodsList;
     return goodsList.count;
 }
-
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -256,123 +264,16 @@
     cell.delegate = self;
     
     TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[indexPath.section];
-    TCOrderItem *orderItem = listShoppingCart.goodsList[indexPath.row];
-    [cell.selectedBtn setImage:[self getSelectImageWithOrderItem:orderItem] forState:UIControlStateNormal];
+    TCCartItem *cartItem = listShoppingCart.goodsList[indexPath.row];
+    [cell.selectedBtn setImage:[self getSelectImageWithOrderItem:cartItem] forState:UIControlStateNormal];
     [cell.selectedBtn setTitle:[NSString stringWithFormat:@"%ld|%ld", (long)indexPath.section, (long)indexPath.row] forState:UIControlStateNormal];
     [cell.selectedBtn addTarget:self action:@selector(touchSelectGoodBtn:) forControlEvents:UIControlEventTouchUpInside];
-    TCGoods *goods = orderItem.goods;
+    TCGoods *goods = cartItem.goods;
     cell.baseInfoView.titleLab.text = goods.name;
     [cell.leftImgView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:goods.mainPicture] placeholderImage:[UIImage imageNamed:@"home_image_place"]];
     [cell.baseInfoView setupStandard:goods.standardSnapshot];
     
     return cell;
-}
-
-#pragma mark - MGSwipeTableCellDelegate
-- (NSArray<UIView *> *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
-    if (direction == MGSwipeDirectionRightToLeft) {
-        TCShoppingCartTableViewCell *selectCell = (TCShoppingCartTableViewCell *)cell;
-        return [self getCellLeftButtonWithSelectTag: selectCell.selectTag];
-        
-    }
-    
-    return nil;
-}
-
-
-- (NSArray *)getCellLeftButtonWithSelectTag:(NSString *)selectTag {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, 139)];
-    UIButton *editBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, button.width, 139 / 2) AndTitle:@"编辑" AndFontSize:16 AndBackColor:[UIColor lightGrayColor] AndTextColor:[UIColor whiteColor]];
-    [editBtn addTarget:self action:@selector(touchGoodEditBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [button addSubview:editBtn];
-    UIButton *deleteBtn = [TCComponent createButtonWithFrame:CGRectMake(0, editBtn.y + editBtn.height, button.width, 139 / 2) AndTitle:@"删除" AndFontSize:16 AndBackColor:[UIColor redColor] AndTextColor:[UIColor whiteColor]];
-    [deleteBtn addTarget:self action:@selector(touchGoodDeleteBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [button addSubview:deleteBtn];
-    [editBtn setTitle:selectTag forState:UIControlStateSelected];
-    [deleteBtn setTitle:selectTag forState:UIControlStateSelected];
-    
-    return @[button];
-}
-
-
-- (TCShoppingCartTableViewCell *)getNormalTableViewCellWithIndexPath:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView{
-    TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[indexPath.section];
-    TCOrderItem *orderItem = listShoppingCart.goodsList[indexPath.row];
-    NSString *tag = [NSString stringWithFormat:@"%ld|%ld", (long)indexPath.section, (long)indexPath.row];
-    
-    NSString *identifier = [NSString stringWithFormat:@"normal%li%li", indexPath.section, indexPath.row];
-    TCShoppingCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[TCShoppingCartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier AndSelectTag:tag AndGoodsId:orderItem.goods.ID];
-    }
-    NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", tag];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellGoodStandardChange:) name:notifiName object:nil];
-
-    
-    [cell.baseInfoView setupAmountLab:orderItem.amount];
-    [cell.baseInfoView setupNormalPriceLab:orderItem.goods.salePrice];
-
-    return cell;
-
-}
-
-- (TCShoppingCartTableViewCell *)getEditTableViewCellWithIndexPath:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView {
-    TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[indexPath.section];
-    TCOrderItem *orderItem = listShoppingCart.goodsList[indexPath.row];
-    NSString *tag = [NSString stringWithFormat:@"%ld|%ld", (long)indexPath.section, (long)indexPath.row];
-    
-    NSString *identifier = [NSString stringWithFormat:@"edit%li%li", indexPath.section, indexPath.row];
-    TCShoppingCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[TCShoppingCartTableViewCell alloc] initEditCellStyle:UITableViewCellStyleDefault reuseIdentifier:identifier AndSelectTag:tag AndGoodsId:orderItem.goods.ID];
-    }
-    
-    NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", tag];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellGoodStandardChange:) name:notifiName object:nil];
-    
-    cell.baseInfoView.goodsId = orderItem.goods.ID;
-    [cell.baseInfoView setupEditAmount:orderItem.amount];
-    [cell.baseInfoView setupEditPriceLab:orderItem.goods.salePrice];
-    
-    return cell;
-}
-
-
-
-- (void)cellGoodStandardChange:(NSNotification *)notification {
-    NSDictionary *changeDic = [notification object];
-    NSArray *selectTagArr = [changeDic[@"selectTag"] componentsSeparatedByString:@"|"];
-    NSInteger section = [selectTagArr[0] integerValue];;
-    NSInteger row = [selectTagArr[1] integerValue];
-    NSString *goodsId = changeDic[@"goodsId"];
-    NSInteger newNumber = [changeDic[@"number"] integerValue];
-    TCListShoppingCart *oldListShoppingCart = shoppingCartWrapper.content[section];
-    TCOrderItem *oldOrderItem = oldListShoppingCart.goodsList[row];
-    [self changeGoodStandardWithShoppingCartId:oldListShoppingCart.ID oldGoodId:oldOrderItem.goods.ID newGoodId:goodsId amount:newNumber AndSection:section AndRow:row];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:[NSString stringWithFormat:@"changeStandard%@", changeDic[@"selectTag"]] object:nil];
-    
-}
-
-
-- (TCOrderItem *)getOrderItemWithSection:(NSInteger)section AndRow:(NSInteger)row {
-    TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
-    TCOrderItem *orderItem = listShoppingCart.goodsList[row];
-    return orderItem;
-}
-
-- (void)changeGoodStandardWithShoppingCartId:(NSString *)shoppingCartID oldGoodId:(NSString *)oldGoodId newGoodId:(NSString *)newGoodId amount:(NSInteger)amount AndSection:(NSInteger)section AndRow:(NSInteger)row{
-    
-    [[TCBuluoApi api] changeShoppingCartWithShoppingCartId:shoppingCartID AndGoodsId:oldGoodId AndNewGoodsId:newGoodId AndAmount:amount result:^(TCOrderItem *result, NSError *error) {
-        if (result) {
-            TCOrderItem *orderItem = [self getOrderItemWithSection:section AndRow:row];
-            orderItem.goods = result.goods;
-            orderItem.amount = result.amount;
-            NSString *tag = [NSString stringWithFormat:@"%ld|%ld", (long)section, (long)row];
-            [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"changeGoodAmount%@", tag] object:[NSNumber numberWithInteger:result.amount]];
-        }
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-        [cartTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
-    }];
 }
 
 
@@ -394,14 +295,132 @@
 }
 
 
+#pragma mark - MGSwipeTableCellDelegate
+- (NSArray<UIView *> *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
+    if (direction == MGSwipeDirectionRightToLeft) {
+        TCShoppingCartTableViewCell *selectCell = (TCShoppingCartTableViewCell *)cell;
+        return [self getCellLeftButtonWithSelectTag: selectCell.selectTag];
+        
+    }
+    
+    return nil;
+}
+- (NSArray *)getCellLeftButtonWithSelectTag:(NSString *)selectTag {
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, TCRealValue(150), TCRealValue(139))];
+    UIButton *editBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, button.width, TCRealValue(139) / 2) AndTitle:@"编辑" AndFontSize:TCRealValue(16) AndBackColor:[UIColor lightGrayColor] AndTextColor:[UIColor whiteColor]];
+    [editBtn addTarget:self action:@selector(touchGoodEditBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [button addSubview:editBtn];
+    UIButton *deleteBtn = [TCComponent createButtonWithFrame:CGRectMake(0, editBtn.y + editBtn.height, button.width, TCRealValue(139) / 2) AndTitle:@"删除" AndFontSize:TCRealValue(16) AndBackColor:[UIColor redColor] AndTextColor:[UIColor whiteColor]];
+    [deleteBtn addTarget:self action:@selector(touchGoodDeleteBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [button addSubview:deleteBtn];
+    [editBtn setTitle:selectTag forState:UIControlStateSelected];
+    [deleteBtn setTitle:selectTag forState:UIControlStateSelected];
+    
+    return @[button];
+}
+
+
+
+#pragma mark - Setup UITableViewCell
+
+
+- (TCShoppingCartTableViewCell *)getNormalTableViewCellWithIndexPath:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView{
+    TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[indexPath.section];
+    TCCartItem *cartItem = listShoppingCart.goodsList[indexPath.row];
+    NSString *tag = [NSString stringWithFormat:@"%ld|%ld", (long)indexPath.section, (long)indexPath.row];
+    
+    NSString *identifier = [NSString stringWithFormat:@"normal%li%li", (long)indexPath.section, (long)indexPath.row];
+    TCShoppingCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[TCShoppingCartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier AndSelectTag:tag AndGoodsId:cartItem.goods.ID];
+    }
+    NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", tag];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellGoodStandardChange:) name:notifiName object:nil];
+
+    
+    [cell.baseInfoView setupAmountLab:cartItem.amount];
+    [cell.baseInfoView setupNormalPriceLab:cartItem.goods.salePrice];
+
+    return cell;
+
+}
+
+- (TCShoppingCartTableViewCell *)getEditTableViewCellWithIndexPath:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView {
+    TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[indexPath.section];
+    TCCartItem *cartItem = listShoppingCart.goodsList[indexPath.row];
+    NSString *tag = [NSString stringWithFormat:@"%ld|%ld", (long)indexPath.section, (long)indexPath.row];
+    
+    NSString *identifier = [NSString stringWithFormat:@"edit%li%li", (long)indexPath.section, (long)indexPath.row];
+    TCShoppingCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[TCShoppingCartTableViewCell alloc] initEditCellStyle:UITableViewCellStyleDefault reuseIdentifier:identifier AndSelectTag:tag AndGoodsId:cartItem.goods.ID];
+    }
+    cell.baseInfoView.shoppingCartGoodsId = cartItem.ID;
+    NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", tag];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellGoodStandardChange:) name:notifiName object:nil];
+    
+    cell.baseInfoView.goodsId = cartItem.goods.ID;
+    [cell.baseInfoView setupEditAmount:cartItem.amount];
+    [cell.baseInfoView setupEditPriceLab:cartItem.goods.salePrice];
+    
+    return cell;
+}
+
+
+
+- (void)cellGoodStandardChange:(NSNotification *)notification {
+    NSDictionary *changeDic = [notification object];
+    NSArray *selectTagArr = [changeDic[@"selectTag"] componentsSeparatedByString:@"|"];
+    NSInteger section = [selectTagArr[0] integerValue];;
+    NSInteger row = [selectTagArr[1] integerValue];
+    NSString *goodsId = changeDic[@"goodsId"];
+    NSInteger newNumber = [changeDic[@"number"] integerValue];
+    TCListShoppingCart *oldListShoppingCart = shoppingCartWrapper.content[section];
+    TCCartItem *oldCartItem = oldListShoppingCart.goodsList[row];
+    [self changeGoodStandardWithShoppingCartId:oldCartItem.ID newGoodId:goodsId amount:newNumber AndSection:section AndRow:row];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:[NSString stringWithFormat:@"changeStandard%@", changeDic[@"selectTag"]] object:nil];
+    
+}
+
+
+
+- (void)changeGoodStandardWithShoppingCartId:(NSString *)shoppingCartID newGoodId:(NSString *)newGoodId amount:(NSInteger)amount AndSection:(NSInteger)section AndRow:(NSInteger)row{
+    
+    [[TCBuluoApi api] changeShoppingCartWithShoppingCartGoodsId:shoppingCartID AndNewGoodsId:newGoodId AndAmount:amount result:^(TCCartItem *result, NSError *error) {
+        if (result) {
+            TCCartItem *cartItem = [self getOrderItemWithSection:section AndRow:row];
+            cartItem.ID = result.ID;
+            cartItem.goods = result.goods;
+            cartItem.amount = result.amount;
+            NSString *tag = [NSString stringWithFormat:@"%ld|%ld", (long)section, (long)row];
+            [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"changeGoodAmount%@", tag] object:[NSNumber numberWithInteger:result.amount]];
+        }
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+//        [cartTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
+        [cartTableView reloadData];
+    }];
+}
+
+
+
+#pragma mark - Get SelectedInfo
+
+- (TCCartItem *)getOrderItemWithSection:(NSInteger)section AndRow:(NSInteger)row {
+    TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
+    TCCartItem *orderItem = listShoppingCart.goodsList[row];
+    return orderItem;
+}
+
+
+
 - (NSMutableArray *)getSelectedGoodsInfo {
     NSMutableArray *selectArr = [[NSMutableArray alloc] init];
     for (int i = 0; i < shoppingCartWrapper.content.count; i++) {
         TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[i];
         for (int j = 0; j < listShoppingCart.goodsList.count; j++) {
-            TCOrderItem *orderItem = listShoppingCart.goodsList[j];
+            TCCartItem *orderItem = listShoppingCart.goodsList[j];
             if (orderItem.select) {
-                [selectArr addObject:@{ @"shoppingCartId":listShoppingCart.ID, @"goodsId":orderItem.goods.ID }];
+                [selectArr addObject:orderItem.ID];
             }
         }
     }
@@ -409,33 +428,34 @@
     return selectArr;
 }
 
-- (NSMutableArray *)getSelectListShoppingCartArr {
-    
+
+
+- (NSMutableArray *)getShoppingCartArrWithSelect:(BOOL)isSelect {
     NSMutableArray *selectArr = [[NSMutableArray alloc] init];
     for (int i = 0; i < shoppingCartWrapper.content.count; i++) {
         TCListShoppingCart *listShoppingCart = [[TCListShoppingCart alloc] init];
         TCListShoppingCart *allListShoppingCart = shoppingCartWrapper.content[i];
         listShoppingCart.store = allListShoppingCart.store;
         listShoppingCart.ID = allListShoppingCart.ID;
-        if ([self judgeIsHasSelectedOrder:allListShoppingCart.goodsList]) {
+        if ([self judgeIsHasSelectedOrder:allListShoppingCart.goodsList] == isSelect) {
             NSMutableArray *goodList = [[NSMutableArray alloc] init];
             for (int j = 0; j < allListShoppingCart.goodsList.count; j++) {
-                TCOrderItem *orderItem = allListShoppingCart.goodsList[j];
-                if (orderItem.select) {
-                    [goodList addObject:orderItem];
+                TCCartItem *cartItem = allListShoppingCart.goodsList[j];
+                if (cartItem.select == isSelect) {
+                    [goodList addObject:cartItem];
                 }
             }
             listShoppingCart.goodsList = goodList;
             [selectArr addObject:listShoppingCart];
         }
     }
-    
     return selectArr;
+
 }
 
 - (BOOL)judgeIsHasSelectedOrder:(NSArray *)goodList {
     for (int i = 0; i < goodList.count; i++) {
-        TCOrderItem *orderItem = goodList[i];
+        TCCartItem *orderItem = goodList[i];
         if (orderItem.select) {
             return YES;
         }
@@ -444,7 +464,7 @@
     return NO;
 }
 
-# pragma mark - click
+# pragma mark - Click Action
 
 - (void)touchBackBtn:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];
@@ -453,14 +473,20 @@
 - (void)touchDeleteButton {
     NSArray *goodsArr = [[NSArray alloc] initWithArray:[self getSelectedGoodsInfo]];
     [[TCBuluoApi api] deleteShoppingCartWithShoppingCartArr:goodsArr result:^(BOOL result, NSError *error) {
-        
+        if (result) {
+            
+            shoppingCartWrapper.content = [self getShoppingCartArrWithSelect:NO];
+            [cartTableView reloadData];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"删除失败"];
+        }
     }];
     
 }
 
 - (void)touchPayButton {
     
-    NSArray *selectArr = [self getSelectListShoppingCartArr];
+    NSArray *selectArr = [self getShoppingCartArrWithSelect:YES];
     if (selectArr.count != 0) {
         TCPlaceOrderViewController *placeOrderViewController = [[TCPlaceOrderViewController alloc] initWithListShoppingCartArr:selectArr];
         [self.navigationController pushViewController:placeOrderViewController animated:YES];
@@ -476,7 +502,7 @@
     NSInteger row = [tagArr[1] integerValue];
     NSInteger section = [tagArr[0] integerValue];
     TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
-    TCOrderItem *orderItem = listShoppingCart.goodsList[row];
+    TCCartItem *orderItem = listShoppingCart.goodsList[row];
     orderItem.select = !orderItem.select;
     [button setImage:[self getSelectImageWithOrderItem:orderItem] forState:UIControlStateNormal];
     [self refreshTableViewWithSection:section];
@@ -534,13 +560,29 @@
     NSInteger section = [selectArr[0] integerValue];
     NSInteger row = [selectArr[1] integerValue];
     TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
-    TCOrderItem *orderItem = listShoppingCart.goodsList[row];
+    TCCartItem *orderItem = listShoppingCart.goodsList[row];
     TCSelectStandardView *standardView = [[TCSelectStandardView alloc] initWithGoodsId:orderItem.goods.ID AndSelectTag:selectTag];
     [[UIApplication sharedApplication].keyWindow addSubview:standardView];
 }
 
 - (void)touchGoodDeleteBtn:(UIButton *)button {
     
+    NSString *selectTag = [button titleForState:UIControlStateSelected];
+    NSArray *selectArr = [selectTag componentsSeparatedByString:@"|"];
+    NSInteger section = [selectArr[0] integerValue];
+    NSInteger row = [selectArr[1] integerValue];
+    TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
+    TCCartItem *orderItem = listShoppingCart.goodsList[row];
+    orderItem.select = YES;
+    [[TCBuluoApi api] deleteShoppingCartWithShoppingCartArr:@[ orderItem.ID ] result:^(BOOL result, NSError *error) {
+        if (result) {
+            shoppingCartWrapper.content = [self getShoppingCartArrWithSelect:NO];
+            [cartTableView reloadData];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"删除失败"];
+        }
+    }];
+
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -569,7 +611,7 @@
         TCListShoppingCart *shoppingCart = contentArr[i];
         NSArray *goodList = shoppingCart.goodsList;
         for (int j = 0; j < goodList.count; j++) {
-            TCOrderItem *orderItem = goodList[j];
+            TCCartItem *orderItem = goodList[j];
             if (!orderItem.select) {
                 return false;
             }

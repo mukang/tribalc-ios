@@ -15,6 +15,7 @@
     NSDictionary *homeInfoDic;
     UIScrollView *titleScrollView;
     UIScrollView *homeScrollView;
+    UILabel *navigationTitleLab;
 }
 
 @end
@@ -26,6 +27,10 @@
     [self setupNavigationBarColor];
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self setupNavigationBarColor];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,16 +43,16 @@
     homeScrollView = [self getHomeScrollViewWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight - self.tabBarController.tabBar.size.height)];
     [self.view addSubview:homeScrollView];
     
-    [self setupTitleImageScrollViewWithFrame:CGRectMake(0, 0, self.view.width, 260)];
+    [self setupTitleImageScrollViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(260))];
     [homeScrollView addSubview:titleScrollView];
     
-    UIView *expressView = [self getExpressViewWithFrame:CGRectMake(0, titleScrollView.y + titleScrollView.height, TCScreenWidth, 33)];
+    UIView *expressView = [self getExpressViewWithFrame:CGRectMake(0, titleScrollView.y + titleScrollView.height, TCScreenWidth, TCRealValue(33))];
     [homeScrollView addSubview:expressView];
     
     UIView *propertyView = [self getPropertyFunctionViewWithFrame:CGRectMake(0, expressView.y + expressView.height + 5, TCScreenWidth, 88)];
     [homeScrollView addSubview:propertyView];
     
-    UITableView *commodityTableView = [self getHomeTableViewWithFrame:CGRectMake(0, propertyView.y + propertyView.height, TCScreenWidth, 943.5)];
+    UITableView *commodityTableView = [self getHomeTableViewWithFrame:CGRectMake(0, propertyView.y + propertyView.height, TCScreenWidth, TCRealValue(943.5))];
     [homeScrollView addSubview:commodityTableView];
     
     homeScrollView.contentSize = CGSizeMake(TCScreenWidth, commodityTableView.y + commodityTableView.height);
@@ -63,9 +68,7 @@
     UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
     barImageView.backgroundColor = TCRGBColor(42, 42, 42);
     barImageView.alpha = alpha;
-    homeScrollView.contentOffset = CGPointMake(0, homeScrollView.contentOffset.y);
-    
-//    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"首页"];
+    navigationTitleLab.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:alpha];
 }
 
 - (UIScrollView *)getHomeScrollViewWithFrame:(CGRect)frame {
@@ -174,14 +177,14 @@
 - (UIView *)getExpressViewWithFrame:(CGRect)frame {
     UIView *expressView = [[UIView alloc] initWithFrame:frame];
     expressView.backgroundColor = [UIColor whiteColor];
-    UIButton *expressImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(15, frame.size.height / 2 - 12 / 2, 10, 12) AndImageName:@""];
+    UIButton *expressImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(15), frame.size.height / 2 - TCRealValue(12) / 2, TCRealValue(10), TCRealValue(12)) AndImageName:@""];
     expressImgBtn.backgroundColor = [UIColor blackColor];
     [expressView addSubview:expressImgBtn];
     
-    UILabel *expressLab = [TCComponent createLabelWithFrame:CGRectMake(expressImgBtn.x + expressImgBtn.width + 5, 0, 50, frame.size.height) AndFontSize:12 AndTitle:@"部落快报" AndTextColor:TCRGBColor(42, 42, 42)];
+    UILabel *expressLab = [TCComponent createLabelWithFrame:CGRectMake(expressImgBtn.x + expressImgBtn.width + TCRealValue(5), 0, TCRealValue(50), frame.size.height) AndFontSize:TCRealValue(12) AndTitle:@"部落快报" AndTextColor:TCRGBColor(42, 42, 42)];
     [expressView addSubview:expressLab];
     
-    UIView *activityView = [self getExpressActivityViewWithFrame:CGRectMake(expressLab.x + expressLab.width + 3, 0, TCScreenWidth - expressLab.x - expressLab.width - 3, frame.size.height)];
+    UIView *activityView = [self getExpressActivityViewWithFrame:CGRectMake(expressLab.x + expressLab.width + TCRealValue(3), 0, TCScreenWidth - expressLab.x - expressLab.width - TCRealValue(3), frame.size.height)];
     [expressView addSubview:activityView];
     
     UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, expressView.height - 0.5, TCScreenWidth, 0.5)];
@@ -196,7 +199,7 @@
     lineView.backgroundColor = TCRGBColor(154, 154, 154);
     [activityView addSubview:lineView];
     
-    UILabel *activityLab = [TCComponent createLabelWithFrame:CGRectMake(lineView.x + lineView.width + 5, 0, frame.size.width - lineView.x - lineView.width - 5, frame.size.height) AndFontSize:12 AndTitle:@"活动 : 10月9日午餐新活动" AndTextColor:TCRGBColor(154, 154, 154)];
+    UILabel *activityLab = [TCComponent createLabelWithFrame:CGRectMake(lineView.x + lineView.width + TCRealValue(5), 0, frame.size.width - lineView.x - lineView.width - TCRealValue(5), frame.size.height) AndFontSize:12 AndTitle:@"活动 : 10月9日午餐新活动" AndTextColor:TCRGBColor(154, 154, 154)];
     [activityView addSubview:activityLab];
     
     return activityView;
@@ -204,15 +207,15 @@
 
 
 - (void)setupNavigationBar {
-    UILabel *titleLab = [TCGetNavigationItem getTitleItemWithText:@"首页"];
-    self.navigationItem.titleView = titleLab;
+    navigationTitleLab = [TCGetNavigationItem getTitleItemWithText:@"首页"];
+    self.navigationItem.titleView = navigationTitleLab;
     self.view.backgroundColor = TCRGBColor(1, 1, 1);
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
     UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
     barImageView.backgroundColor = TCRGBColor(42, 42, 42);
     barImageView.alpha = 0;
-    self.navigationItem.titleView.alpha = 0;
+    navigationTitleLab.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
 }
 
 
@@ -238,7 +241,6 @@
     
     CGFloat x = titleScrollView.contentOffset.x;
     NSInteger multipe = (x + TCScreenWidth) / TCScreenWidth;
-//    x = titleScrollView.contentOffset.x < (pictures.count - 1) * TCScreenWidth ? multipe * TCScreenWidth : 0;
     x = multipe * TCScreenWidth;
     [titleScrollView setContentOffset:CGPointMake(x, 0) animated:YES];
 }
@@ -248,16 +250,16 @@
 - (UIView *)getHeaderTitleViewWithImgName:(NSString *)imgName AndTitle:(NSString *)title {
     UIView *view = [[UIView alloc] init];
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
-    imgView.frame = CGRectMake(0, 34.5 / 2 - 14 / 2, 14, 14);
+    imgView.frame = CGRectMake(0, TCRealValue(34.5) / 2 - TCRealValue(14) / 2, TCRealValue(14), TCRealValue(14));
     [view addSubview:imgView];
     
-    UILabel *titleLabel = [TCComponent createLabelWithText:title AndFontSize:16];
-    titleLabel.font = [UIFont fontWithName:BOLD_FONT size:16];
-    titleLabel.origin = CGPointMake(imgView.x + imgView.width + 2, 0);
-    titleLabel.height = 34.5;
+    UILabel *titleLabel = [TCComponent createLabelWithText:title AndFontSize:TCRealValue(16)];
+    titleLabel.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(16)];
+    titleLabel.origin = CGPointMake(imgView.x + imgView.width + TCRealValue(2), 0);
+    titleLabel.height = TCRealValue(34.5);
     [view addSubview:titleLabel];
     
-    view.frame = CGRectMake(TCScreenWidth / 2 - titleLabel.x / 2 - titleLabel.width / 2, 0, titleLabel.x + titleLabel.width, 34.5);
+    view.frame = CGRectMake(TCScreenWidth / 2 - titleLabel.x / 2 - titleLabel.width / 2, 0, titleLabel.x + titleLabel.width, TCRealValue(34.5));
     
     return view;
 }
@@ -345,9 +347,9 @@
     UIView *titleView = [self getHeaderTitleViewWithImgName:arr[section][@"image"] AndTitle:arr[section][@"name"]];
     [headerView addSubview:titleView];
     
-    UIView *leftLineView = [self getHeaderLineViewWithFrame:CGRectMake(titleView.x - 6 - 41, 34.5 / 2 - 0.5 / 2, 41, 0.5)];
+    UIView *leftLineView = [self getHeaderLineViewWithFrame:CGRectMake(titleView.x - TCRealValue(6) - TCRealValue(42), TCRealValue(34.5) / 2 - TCRealValue(0.5) / 2, TCRealValue(41), TCRealValue(0.5))];
     [headerView addSubview:leftLineView];
-    UIView *rightLineView = [self getHeaderLineViewWithFrame:CGRectMake(titleView.x + titleView.width + 6, leftLineView.y, leftLineView.width, leftLineView.height)];
+    UIView *rightLineView = [self getHeaderLineViewWithFrame:CGRectMake(titleView.x + titleView.width + TCRealValue(6), leftLineView.y, leftLineView.width, leftLineView.height)];
     [headerView addSubview:rightLineView];
     
     return headerView;
@@ -359,7 +361,7 @@
     if (!footerView) {
         footerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:[NSString stringWithFormat:@"%li", (long)section]];
     }
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 130)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCRealValue(130))];
     imgView.image = [UIImage imageNamed:arr[section][@"footerImage"]];
     [footerView addSubview:imgView];
     
@@ -390,15 +392,15 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 150;
+    return TCRealValue(150);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 34.5;
+    return TCRealValue(34.5);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 130;
+    return TCRealValue(130);
 }
 
 
@@ -415,7 +417,7 @@
         barImageView.backgroundColor = TCRGBColor(42, 42, 42);
         barImageView.alpha = alpha;
         
-        self.navigationItem.titleView.alpha = alpha;
+        navigationTitleLab.textColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:alpha];
     }
     
     [self setNeedsStatusBarAppearanceUpdate];
@@ -496,9 +498,9 @@
 
 - (void)forgeData {
     homeInfoDic = @{
-                    @"pictures":@[ @"good_placeholder",
-                                   @"home_good_test3",
-                                   @"home_good_test"],
+                    @"pictures":@[ @"home_Carousel",
+                                   @"home_Carousel",
+                                   @"home_Carousel"],
                     @"activity":@[  ],
                     @"shopping":@{
                             @"name":@"购物", @"image":@"home_shopping_icon",
@@ -506,55 +508,55 @@
                             @"leftInfo":@{
                                     @"title":@"今日特惠",
                                     @"price":@"",
-                                    @"picture":@"home_good_test"
+                                    @"picture":@"home_shopping_left"
                                     },
                             @"rightTop":@{
                                     @"title":@"今日特惠",
                                     @"subTitle":@"休闲娱乐",
-                                    @"picture":@"home_good_test2"
+                                    @"picture":@"home_shopping_top"
                                     },
                             @"rightDown":@{
                                     @"title":@"今日特惠",
                                     @"subTitle":@"休闲娱乐",
-                                    @"picture":@"home_good_test2"
+                                    @"picture":@"home_shopping_down"
                                     }
                             },
                     @"food":@{
                             @"name":@"餐饮", @"image":@"home_food_icon",
-                            @"footerImage":@"home_good_test3",
+                            @"footerImage":@"home_food_footer",
                             @"leftInfo":@{
                                     @"title":@"今日特惠",
                                     @"price":@"",
-                                    @"picture":@"home_good_test"
+                                    @"picture":@"home_food_left"
                                     },
                             @"rightTop":@{
                                     @"title":@"今日特惠",
                                     @"subTitle":@"休闲娱乐",
-                                    @"picture":@"home_good_test2"
+                                    @"picture":@"home_food_top"
                                     },
                             @"rightDown":@{
                                     @"title":@"今日特惠",
                                     @"subTitle":@"休闲娱乐",
-                                    @"picture":@"home_good_test2"
+                                    @"picture":@"home_food_down"
                                     }
                             },
                     @"entertainment":@{
                             @"name":@"娱乐", @"image":@"home_entertainment_icon",
-                            @"footerImage":@"home_good_test3",
+                            @"footerImage":@"home_entertainment_footer",
                             @"leftInfo":@{
                                     @"title":@"今日特惠",
                                     @"price":@"",
-                                    @"picture":@"home_good_test"
+                                    @"picture":@"home_entertainment_left"
                                     },
                             @"rightTop":@{
                                     @"title":@"今日特惠",
                                     @"subTitle":@"休闲娱乐",
-                                    @"picture":@"home_good_test2"
+                                    @"picture":@"home_entertainment_top"
                                     },
                             @"rightDown":@{
                                     @"title":@"今日特惠",
                                     @"subTitle":@"休闲娱乐",
-                                    @"picture":@"home_good_test2"
+                                    @"picture":@"home_entertainment_down"
                                     }
                             }
                     };

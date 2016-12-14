@@ -50,6 +50,7 @@
 /********** 购物车相关 **********/
 #import "TCShoppingCartWrapper.h"
 #import "TCListShoppingCart.h"
+#import "TCCartItem.h"
 
 /********** OSS上传相关 **********/
 

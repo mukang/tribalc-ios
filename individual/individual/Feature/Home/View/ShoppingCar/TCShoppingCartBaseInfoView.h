@@ -22,6 +22,8 @@
 
 @property (copy, nonatomic) NSString *goodsId;
 
+@property (copy, nonatomic) NSString *shoppingCartGoodsId;
+
 - (instancetype)initNormalViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
 - (instancetype)initEditViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
 

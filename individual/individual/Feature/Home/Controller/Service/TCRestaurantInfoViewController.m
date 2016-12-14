@@ -316,12 +316,13 @@
     [imgView setOrigin:CGPointMake(53, frame.size.height / 2 - imgView.height / 2 + 1)];
     [button addSubview:imgView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(imgView.x + imgView.width + 2, 0, 100, frame.size.height)];
-    label.text = text;
+    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:17];
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:17];
     [button addSubview:label];
     
+    imgView.x = frame.size.width / 2 - (imgView.width + label.width) / 2;
+    label.x = imgView.x + imgView.width;
+    label.origin = CGPointMake(imgView.x + imgView.width, frame.size.height / 2 - label.height / 2);
     button.backgroundColor = backColor;
     
     return button;

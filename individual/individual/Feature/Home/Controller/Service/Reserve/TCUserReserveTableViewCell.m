@@ -14,6 +14,26 @@
     UILabel *placeLab;
     UILabel *titleLab;
     UIView *brandCenterPlaceView;
+    UIView *timeView;
+    UIView *personNumberView;
+}
+
+- (instancetype)initReserveDetail {
+    self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"detail"];
+    _storeImageView.frame = CGRectMake(TCRealValue(_storeImageView.x + 8), TCRealValue(131) / 2 - TCRealValue(109.5) / 2, TCRealValue(_storeImageView.width - 8), TCRealValue(109.5));
+    titleLab.frame = CGRectMake(_storeImageView.x + _storeImageView.width + TCRealValue(20), TCRealValue(17.5), TCScreenWidth - _storeImageView.x - _storeImageView.width - TCRealValue(20), 14);
+    brandLab.frame = CGRectMake(titleLab.x, titleLab.y + titleLab.height + TCRealValue(17.5), 0, 11);
+    brandCenterPlaceView.frame = CGRectMake(0, brandLab.y + 1, 0.5, 11);
+    placeLab.frame = CGRectMake(0, brandLab.y, 0, 0);
+    
+    timeView.frame = CGRectMake(titleLab.x, TCRealValue(131) - TCRealValue(44) - 11, TCScreenWidth - titleLab.x, 11);
+    personNumberView.frame = CGRectMake(titleLab.x, TCRealValue(131) - TCRealValue(25) - 11, timeView.width, 11);
+    
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, TCScreenWidth, 0.5)];
+    [self.contentView addSubview:topLineView];
+    UIView *bottomView = [self getTableBottomViewWithFrame:CGRectMake(0, TCRealValue(131), TCScreenWidth, 11)];
+    [self.contentView addSubview:bottomView];
+    return self;
 }
 
 
@@ -23,25 +43,25 @@
         self.backgroundColor = [UIColor whiteColor];
         
         
-        _storeImageView = [self getStoreImageViewWithFrame:CGRectMake(22.5, 14, 169, 115)];
+        _storeImageView = [self getStoreImageViewWithFrame:CGRectMake(TCRealValue(22.5), TCRealValue(143) / 2 - TCRealValue(115) / 2, TCRealValue(169), TCRealValue(115))];
         [self.contentView addSubview:_storeImageView];
         
-        titleLab = [self getTitleLabWithFrame:CGRectMake(_storeImageView.x + _storeImageView.width + 20, 22.5, TCScreenWidth - _storeImageView.x - _storeImageView.width - 20 - 20, 14)];
+        titleLab = [self getTitleLabWithFrame:CGRectMake(_storeImageView.x + _storeImageView.width + 20, TCRealValue(22.5), TCScreenWidth - _storeImageView.x - _storeImageView.width - 20 - 20, 14)];
         [self.contentView addSubview:titleLab];
         
-        brandLab = [TCComponent createLabelWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 10, 0, 0) AndFontSize:11 AndTitle:@""];
+        brandLab = [TCComponent createLabelWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + TCRealValue(10), 0, 0) AndFontSize:11 AndTitle:@""];
         [self.contentView addSubview:brandLab];
         
-        brandCenterPlaceView = [TCComponent createGrayLineWithFrame:CGRectMake(0, titleLab.y + titleLab.height + 10 + 12 - 11, 0.5, 11)];
+        brandCenterPlaceView = [TCComponent createGrayLineWithFrame:CGRectMake(0, titleLab.y + titleLab.height + TCRealValue(10) + 1, 0.5, 11)];
         [self.contentView addSubview:brandCenterPlaceView];
         
-        placeLab = [TCComponent createLabelWithFrame:CGRectMake(0, titleLab.y + titleLab.height + 10, 0, 0) AndFontSize:11 AndTitle:@""];
+        placeLab = [TCComponent createLabelWithFrame:CGRectMake(0, titleLab.y + titleLab.height + TCRealValue(10), 0, 0) AndFontSize:11 AndTitle:@""];
         [self.contentView addSubview:placeLab];
         
-        UIView *timeView = [self getTimeOrPersonNumberViewWtihFrame:CGRectMake(titleLab.x, 143 - 50 - 11, TCScreenWidth - titleLab.x, 11) AndTitle:@"时间" ];
+        timeView = [self getTimeOrPersonNumberViewWtihFrame:CGRectMake(titleLab.x, TCRealValue(143) - TCRealValue(50) - 11, TCScreenWidth - titleLab.x, 11) AndTitle:@"时间" ];
         [self.contentView addSubview:timeView];
         
-        UIView *personNumberView = [self getTimeOrPersonNumberViewWtihFrame:CGRectMake(titleLab.x, 143 - 30 - 11, timeView.width, 11) AndTitle:@"人数" ];
+        personNumberView = [self getTimeOrPersonNumberViewWtihFrame:CGRectMake(titleLab.x, TCRealValue(143) - TCRealValue(30) - 11, timeView.width, 11) AndTitle:@"人数" ];
         [self.contentView addSubview:personNumberView];
         
     }
@@ -49,16 +69,50 @@
     return self;
 }
 
+
+- (UIView *)getTableBottomViewWithFrame:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = TCRGBColor(242, 242, 242);
+    UIView *bottomLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, view.height - 0.5, view.width, 0.5)];
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, view.width, 0.5)];
+    [view addSubview:bottomLineView];
+    [view addSubview:topLineView];
+    
+    return view;
+}
+
+
+
+- (void)setDetailBrandLabText:(NSString *)text {
+    brandLab.text = text;
+    [brandLab sizeToFit];
+    brandLab.y = titleLab.y + titleLab.height + TCRealValue(17.5);
+    brandCenterPlaceView.y = brandLab.y + 1;
+    brandCenterPlaceView.x = brandLab.x + brandLab.width + 2;
+    placeLab.x = brandCenterPlaceView.x + brandCenterPlaceView.width + 2;
+    placeLab.y = brandLab.y;
+}
+
 - (void)setBrandLabText:(NSString *)text {
     brandLab.text = text;
     [brandLab sizeToFit];
+    brandLab.y = titleLab.y + titleLab.height + TCRealValue(10);
     brandCenterPlaceView.x = brandLab.x + brandLab.width + 2;
+    brandCenterPlaceView.y = brandLab.y + 1;
+    placeLab.x = brandCenterPlaceView.x + brandCenterPlaceView.width + 2;
+}
+
+- (void)setDetailPlaceLabText:(NSString *)text {
+    placeLab.text = text;
+    [placeLab sizeToFit];
+    placeLab.y = titleLab.y + titleLab.height + TCRealValue(17.5);
     placeLab.x = brandCenterPlaceView.x + brandCenterPlaceView.width + 2;
 }
 
 - (void)setPlaceLabText:(NSString *)text {
     placeLab.text = text;
     [placeLab sizeToFit];
+    placeLab.y = titleLab.y + titleLab.height + TCRealValue(10);
     placeLab.x = brandCenterPlaceView.x + brandCenterPlaceView.width + 2;
 }
 

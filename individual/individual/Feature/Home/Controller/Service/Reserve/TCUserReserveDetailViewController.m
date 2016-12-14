@@ -41,6 +41,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self initNavigationBar];
     
     [self initReservationDetail];
@@ -70,10 +72,14 @@
     UIView *customerView = [self getContactCustomerServiceViewWithFrame:CGRectMake(0, mTableView.y + mTableView.height, self.view.width, 44)];
     [mScrollView addSubview:customerView];
     
+    
     if (![reservationDetail.status isEqualToString:@"CANNEL"] && ![reservationDetail.status isEqualToString:@"FAILURE"]) {
-        UIButton *cancelBtn =[self getCancelOrderBtnWithFrame:CGRectMake(self.view.width / 2 - 315 / 2, customerView.y + customerView.height, 315, 40)];
+        UIButton *cancelBtn =[self getCancelOrderBtnWithFrame:CGRectMake(self.view.width / 2 - TCRealValue(315) / 2, customerView.y + customerView.height, TCRealValue(315), 40)];
         [mScrollView addSubview:cancelBtn];
     }
+    
+    mScrollView.contentSize = CGSizeMake(TCScreenWidth, mTableView.y + mTableView.height + TCRealValue(104));
+
 
 }
 
@@ -98,7 +104,7 @@
 
 - (UITableView *)getReserveDetailTableView {
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 71, self.view.width, 131 + 11 * 2 + 66 + 40 * 5) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 71, self.view.width, TCRealValue(131 + 11) + 11 + 66 + 40 * 5) style:UITableViewStylePlain];
     tableView.userInteractionEnabled = NO;
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -178,19 +184,17 @@
 
 
 - (UITableViewCell *)getTableViewCellForReserveDetail {
-    TCUserReserveTableViewCell *cell = [[TCUserReserveTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+//    TCUserReserveTableViewCell *cell = [[TCUserReserveTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+    TCUserReserveTableViewCell *cell = [[TCUserReserveTableViewCell alloc] initReserveDetail];
     cell.backgroundColor = [UIColor whiteColor];
-    cell.storeImageView.frame = CGRectMake(cell.storeImageView.x + 8, 131 / 2 - 109.5 / 2, cell.storeImageView.width - 8, 109.5);
+//    cell.storeImageView.frame = CGRectMake(cell.storeImageView.x + 8, 131 / 2 - 109.5 / 2, cell.storeImageView.width - 8, 109.5);
     [cell.storeImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:reservationDetail.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
     cell.timeLab.text = @"2016";
     cell.personNumberLab.text = [NSString stringWithFormat:@"%li", (long)reservationDetail.personNum];
     [cell setTitleLabText:reservationDetail.storeName];
-    [cell setBrandLabText:@"西餐"];
-    [cell setPlaceLabText:reservationDetail.markPlace];
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.width, 0.5)];
-    [cell addSubview:topLineView];
-    UIView *bottomView = [self getTableBottomViewWithFrame:CGRectMake(0, 131, self.view.width, 11)];
-    [cell addSubview:bottomView];
+    [cell setDetailBrandLabText:@"西餐"];
+    [cell setDetailPlaceLabText:reservationDetail.markPlace];
+
     
     return cell;
 }
@@ -248,13 +252,29 @@
 - (NSArray *)getReserveArray {
     NSString *personNumStr = [NSString stringWithFormat:@"%li", (long)reservationDetail.personNum];
     NSString *addressStr = reservationDetail.address ? reservationDetail.address : @"";
-    NSDictionary *timeDic = @{ @"title":@"时间", @"detail":@"2014" };
-    NSDictionary *numberDic = @{ @"title":@"人数", @"detail":personNumStr };
-    NSDictionary *resDic = @{ @"title":@"餐厅", @"detail":reservationDetail.storeName };
-    NSDictionary *addressDic = @{ @"title":@"地点", @"detail":addressStr };
-    NSDictionary *contactsDic = @{ @"title":@"联系人", @"detail": reservationDetail.linkman};
-    NSDictionary *phoneDic = @{ @"title":@"联系电话", @"detail":reservationDetail.phone };
+    NSDictionary *timeDic = [self getReserveDetailDicWithTitle:@"时间" AndDetail:[self getTimeStringWithTimeStamp:reservationDetail.appointTime]];
+    NSDictionary *numberDic = [self getReserveDetailDicWithTitle:@"人数" AndDetail:personNumStr];
+    NSDictionary *resDic = [self getReserveDetailDicWithTitle:@"餐厅" AndDetail:reservationDetail.storeName];
+    NSDictionary *addressDic = [self getReserveDetailDicWithTitle:@"地点" AndDetail:addressStr];
+    NSDictionary *contactsDic = [self getReserveDetailDicWithTitle:@"联系人" AndDetail:reservationDetail.linkman];
+    NSDictionary *phoneDic = [self getReserveDetailDicWithTitle:@"联系电话" AndDetail:reservationDetail.phone];
     return @[timeDic, numberDic, resDic, addressDic, contactsDic, phoneDic];
+}
+
+- (NSDictionary *)getReserveDetailDicWithTitle:(NSString *)title AndDetail:(NSString *)detail {
+    detail = detail ? detail : @"";
+    return @{ @"title":title, @"detail": detail };
+}
+
+- (NSString *)getTimeStringWithTimeStamp:(NSInteger)timeStamp {
+    if (!timeStamp) {
+        return @"";
+    }
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    return dateString;
 }
 
 - (UIView *)getTableBottomViewWithFrame:(CGRect)frame {
@@ -299,7 +319,7 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return 131 + 11;
+        return TCRealValue(131 + 11);
     } else if (indexPath.row == 4) {
         return 66 + 11;
     } else {

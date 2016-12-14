@@ -61,9 +61,12 @@
     [standardView addSubview:standardSelectView];
     
     UIView *selectNumberView = [self getSelectNumberViewWithFrame:CGRectMake(0, standardSelectView.y + standardSelectView.height, TCScreenWidth, 89)];
+    if (goodStandard.description == nil) {
+        selectNumberView.y = 118;
+    }
     [standardView addSubview:selectNumberView];
     
-    UIButton *confirmBtn = [self getBottomBtnWithFrame:CGRectMake(0, selectNumberView.y + selectNumberView.height, TCScreenWidth, 49)];
+    UIButton *confirmBtn = [self getBottomBtnWithFrame:CGRectMake(0, standardSelectView.y + standardSelectView.height + 89, TCScreenWidth, 49)];
     [standardView addSubview:confirmBtn];
     
     standardView.height = confirmBtn.y + confirmBtn.height;

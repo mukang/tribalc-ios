@@ -27,17 +27,17 @@
 }
 
 - (void)setupLeftView {
-    _leftImgBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth * 0.442, 150)];
+    _leftImgBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth * 0.442, TCRealValue(150))];
     _leftImgBtn.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_leftImgBtn];
     
-    _leftTitleLab = [TCComponent createLabelWithFrame:CGRectMake(20, 16.5, _leftImgBtn.width - 20, 12) AndFontSize:12 AndTitle:@""];
+    _leftTitleLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), TCRealValue(16.5), _leftImgBtn.width - TCRealValue(20), TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:@""];
     _leftTitleLab.textColor = TCRGBColor(42, 42, 42);
     [_leftImgBtn addSubview:_leftTitleLab];
 }
 
 - (void)setupRightTopView {
-    _rightTopImgBtn = [[UIButton alloc] initWithFrame:CGRectMake(_leftImgBtn.x + _leftImgBtn.width + TCScreenWidth * 0.005, 0, TCScreenWidth * 0.553, 74)];
+    _rightTopImgBtn = [[UIButton alloc] initWithFrame:CGRectMake(_leftImgBtn.x + _leftImgBtn.width + TCScreenWidth * 0.005, 0, TCScreenWidth * 0.553, TCRealValue(74))];
     _rightTopImgBtn.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_rightTopImgBtn];
     
@@ -49,7 +49,7 @@
 }
 
 - (void)setupRightDownView {
-    _rightDownImgBtn = [[UIButton alloc] initWithFrame:CGRectMake(_leftImgBtn.x + _leftImgBtn.width + TCScreenWidth * 0.005, _rightTopImgBtn.y + _rightTopImgBtn.height + 2, TCScreenWidth * 0.553, 74)];
+    _rightDownImgBtn = [[UIButton alloc] initWithFrame:CGRectMake(_leftImgBtn.x + _leftImgBtn.width + TCScreenWidth * 0.005, _rightTopImgBtn.y + _rightTopImgBtn.height + 2, TCScreenWidth * 0.553, TCRealValue(74))];
     _rightDownImgBtn.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_rightDownImgBtn];
     
@@ -61,14 +61,14 @@
 }
 
 - (UILabel *)getRightTitleLab {
-    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(26.5, 16.5, TCScreenWidth * 0.553 - 26.5, 12) AndFontSize:12 AndTitle:@""];
+    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(26.5), TCRealValue(16.5), TCScreenWidth * 0.553 - 26.5, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:@""];
     label.textColor = TCRGBColor(42, 42, 42);
     
     return label;
 }
 
 - (UILabel *)getRightSubTitleLab {
-    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(26.5, 31.5, TCScreenWidth * 0.553 - 26.5, 12) AndFontSize:12 AndTitle:@""];
+    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(26.5), TCRealValue(31.5), TCScreenWidth * 0.553 - TCRealValue(26.5), TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:@""];
     label.textColor = TCRGBColor(154, 154, 154);
     return label;
 }

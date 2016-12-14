@@ -29,7 +29,7 @@
         
         [self fetchGoodDetailWithGoodId:goodsId];
         
-        _titleLab = [self getTitleLabWithFrame:CGRectMake(13, 22.5 + 9, frame.size.width - 13 - 20, 14)];
+        _titleLab = [self getTitleLabWithFrame:CGRectMake(TCRealValue(13), 22.5 + 9, frame.size.width - 13 - 20, 14)];
         [self addSubview:_titleLab];
         
         _primaryStandardLab = [self getPrimaryStandardLabWithFrame:CGRectMake(_titleLab.x, _titleLab.y + _titleLab.height + 9, _titleLab.width, 12)];
@@ -59,7 +59,7 @@
     if (self) {
         [self fetchGoodDetailWithGoodId:goodsId];
         
-        _titleLab = [self getTitleLabWithFrame:CGRectMake(13, 22.5 + 9, frame.size.width - 13 - 20, 14)];
+        _titleLab = [self getTitleLabWithFrame:CGRectMake(TCRealValue(13), 22.5 + 9, frame.size.width - 13 - 20, 14)];
         [self addSubview:_titleLab];
         
         _primaryStandardLab = [self getPrimaryStandardLabWithFrame:CGRectMake(_titleLab.x, _titleLab.y + _titleLab.height + 9, _titleLab.width, 12)];
@@ -71,7 +71,7 @@
         UIButton *selectStandardBtn = [self getStandardSelectBtnWithFrame:CGRectMake(_sendondaryStandardLab.x + _sendondaryStandardLab.width, _sendondaryStandardLab.y, 22, _sendondaryStandardLab.height)];
         [self addSubview:selectStandardBtn];
         
-        computeView = [[TCComputeView alloc] initWithFrame:CGRectMake(self.width - 20 - 78, _sendondaryStandardLab.y + (_sendondaryStandardLab.height / 2 - 10), 78, 20)];
+        computeView = [[TCComputeView alloc] initWithFrame:CGRectMake(self.width - 20 - TCRealValue(78), _sendondaryStandardLab.y + (_sendondaryStandardLab.height / 2 - 10), TCRealValue(78), TCRealValue(20))];
         [self addSubview:computeView];
         
         [computeView.addBtn addTarget:self action:@selector(touchAddAmountBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -210,7 +210,7 @@
 
 - (void)touchAddAmountBtn:(UIButton *)btn {
     
-    NSString *addNumber = [NSString stringWithFormat:@"%ld", _amountLab.text.integerValue + 1];
+    NSString *addNumber = [NSString stringWithFormat:@"%ld", (_amountLab.text.integerValue + 1)];
     [self changeAmountWithNumber:addNumber];
 }
 
@@ -220,7 +220,7 @@
         [MBProgressHUD showHUDWithMessage:@"不能再减了"];
         return ;
     }
-    NSString *subNumber = [NSString stringWithFormat:@"%ld", amount - 1];
+    NSString *subNumber = [NSString stringWithFormat:@"%ld", (amount - 1)];
     [self changeAmountWithNumber:subNumber];
 
 }
