@@ -7,16 +7,105 @@
 //
 
 #import "TCCompanyListViewController.h"
+#import "TCCompanyNameViewCell.h"
+#import "TCBuluoApi.h"
+#import <Masonry.h>
 
-@interface TCCompanyListViewController ()
+@interface TCCompanyListViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) UITableView *tableView;
+@property (copy, nonatomic) NSArray *companyList;
 
 @end
 
-@implementation TCCompanyListViewController
+@implementation TCCompanyListViewController {
+    __weak TCCompanyListViewController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    weakSelf = self;
+    
+    [self setupNavBar];
+    [self setupSubviews];
+    [self loadNetData];
+}
+
+#pragma mark - Private Methods
+
+- (void)setupNavBar {
+    self.navigationItem.title = @"选择社区";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(handleClickBackButton:)];
+}
+
+- (void)setupSubviews {
+    UITableView *tableView = [[UITableView alloc] init];
+    tableView.backgroundColor = TCRGBColor(242, 242, 242);
+    tableView.separatorColor = TCRGBColor(221, 221, 221);
+    tableView.rowHeight = 42;
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    tableView.tableFooterView = [UIView new];
+    [tableView registerClass:[TCCompanyNameViewCell class] forCellReuseIdentifier:@"TCCompanyNameViewCell"];
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
+    
+    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.bottom.right.equalTo(weakSelf.view);
+    }];
+}
+
+- (void)loadNetData {
+    [[TCBuluoApi api] fetchCompanyList:self.communityID result:^(NSArray *companyList, NSError *error) {
+        if (companyList) {
+            weakSelf.companyList = companyList;
+            [weakSelf.tableView reloadData];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
+        }
+    }];
+}
+
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.companyList.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TCCompanyNameViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCompanyNameViewCell" forIndexPath:indexPath];
+    TCCompanyInfo *companyInfo = self.companyList[indexPath.row];
+    cell.titleLabel.text = companyInfo.name;
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    TCCompanyInfo *companyInfo = self.companyList[indexPath.row];
+    if (self.companyInfoBlock) {
+        self.companyInfoBlock(companyInfo);
+    }
+    [self.navigationController popToViewController:self.popToVC animated:YES];
+}
+
+#pragma mark - Actions
+
+- (void)handleClickBackButton:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

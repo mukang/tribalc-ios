@@ -12,6 +12,7 @@
 #import "TCWalletViewController.h"
 #import "TCIDAuthViewController.h"
 #import "TCCompanyViewController.h"
+#import "TCCompanyApplyViewController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
@@ -300,7 +301,7 @@ TCPhotoPickerDelegate>
             TCUserReserveViewController *userReserveViewController = [[TCUserReserveViewController alloc] init];
             userReserveViewController.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:userReserveViewController animated:YES];
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == 3) { // 我的公司
             [self handleDidSelectedMyCompanyCell];
         }
     }
@@ -453,14 +454,31 @@ TCPhotoPickerDelegate>
 }
 
 - (void)handleDidSelectedMyCompanyCell {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchCompanyBlindStatus:^(TCUserCompanyInfo *userCompanyInfo, NSError *error) {
         if (userCompanyInfo) {
-            TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
-            vc.userCompanyInfo = userCompanyInfo;
-            vc.hidesBottomBarWhenPushed = YES;
-            [weakSelf.navigationController pushViewController:vc animated:YES];
+            [MBProgressHUD hideHUD:YES];
+            if ([userCompanyInfo.comfirmed isEqualToString:@"SUCCEED"]) {
+                TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
+                vc.userCompanyInfo = userCompanyInfo;
+                vc.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:vc animated:YES];
+            } else {
+                TCCompanyApplyStatus applyStatus;
+                if ([userCompanyInfo.comfirmed isEqualToString:@"PROCESSING"]) {
+                    applyStatus = TCCompanyApplyStatusProcess;
+                } else if ([userCompanyInfo.comfirmed isEqualToString:@"FAILURE"]) {
+                    applyStatus = TCCompanyApplyStatusFailure;
+                } else {
+                    applyStatus = TCCompanyApplyStatusNotApply;
+                }
+                TCCompanyApplyViewController *vc = [[TCCompanyApplyViewController alloc] initWithCompanyApplyStatus:applyStatus];
+                vc.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:vc animated:YES];
+            }
         } else {
-            
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
         }
     }];
 }

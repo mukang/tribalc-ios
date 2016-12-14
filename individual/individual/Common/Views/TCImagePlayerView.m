@@ -9,6 +9,7 @@
 #import "TCImagePlayerView.h"
 #import "TCImageURLSynthesizer.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <Masonry.h>
 
 static NSInteger const plusNum = 2;  // 需要加上的数
 
@@ -79,6 +80,8 @@ static NSInteger const plusNum = 2;  // 需要加上的数
         
         UIImageView *imageView = [[UIImageView alloc] init];
         imageView.frame = CGRectMake(imageX, 0, imageW, imageH);
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
         [imageView setTag:imageIndex];
         [imageView setUserInteractionEnabled:YES];
         UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapImageView:)];
@@ -94,12 +97,16 @@ static NSInteger const plusNum = 2;  // 需要加上的数
 #pragma mark - Public Methods
 
 - (void)startPlaying {
+    if (!self.isAutoPlayEnabled) return;
+    
     if (!self.timer) {
         [self addTimer];
     }
 }
 
 - (void)stopPlaying {
+    if (!self.isAutoPlayEnabled) return;
+    
     [self removeTimer];
 }
 

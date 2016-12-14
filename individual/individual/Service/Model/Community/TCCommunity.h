@@ -20,5 +20,7 @@
 @property (copy, nonatomic) NSString *phone;
 /** 社区主图 */
 @property (copy, nonatomic) NSString *mainPicture;
+/** 城市 */
+@property (copy, nonatomic) NSString *city;
 
 @end

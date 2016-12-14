@@ -19,7 +19,7 @@
 @property (copy, nonatomic) NSString *position;
 /** 工号 */
 @property (copy, nonatomic) NSString *personNum;
-/** 请求状态（SETTLING, SUCCEED, FAILURE） */
+/** 请求状态（PROCESSING, SUCCEED, FAILURE, NOT_BIND） */
 @property (copy, nonatomic) NSString *comfirmed;
 
 @end
