@@ -28,6 +28,7 @@
     self = [super init];
     if (self) {
         mStatus = statusStr;
+        NSLog(@"%@", mStatus);
     }
     
     return self;
@@ -44,14 +45,14 @@
     self.tabBarController.tabBar.hidden = YES;
     
     [self initOrderItem];
-    
+
     [self initTableView];
     
 }
 
 - (void)initOrderItem {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchOrderWrapper:nil limiSize:10 sortSkip:nil result:^(TCOrderWrapper *orderWrapper, NSError *error) {
+    [api fetchOrderWrapper:mStatus limiSize:10 sortSkip:nil result:^(TCOrderWrapper *orderWrapper, NSError *error) {
         mOrderWrapper = orderWrapper;
         [orderTableView reloadData];
         [orderTableView.mj_header endRefreshing];
@@ -61,7 +62,7 @@
 
 - (void)setupOrderItem {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchOrderWrapper:nil limiSize:10 sortSkip:mOrderWrapper.nextSkip result:^(TCOrderWrapper *orderWrapper, NSError *error) {
+    [api fetchOrderWrapper:mStatus limiSize:10 sortSkip:mOrderWrapper.nextSkip result:^(TCOrderWrapper *orderWrapper, NSError *error) {
         if (mOrderWrapper.hasMore == YES) {
             NSArray *beforeContentArr = mOrderWrapper.content;
             mOrderWrapper = orderWrapper;

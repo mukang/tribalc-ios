@@ -11,7 +11,6 @@
 
 @interface TCProfileProcessViewCell ()
 
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *buttons;
 
 @end
 
@@ -40,7 +39,6 @@
     if ([self.delegate respondsToSelector:@selector(didClickPaymentButtonInProfileProcessViewCell:)]) {
         [self.delegate didClickPaymentButtonInProfileProcessViewCell:self];
     }
-    
 }
 
 - (IBAction)hadleClickReceivingButton:(UIButton *)sender {

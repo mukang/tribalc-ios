@@ -50,9 +50,17 @@
     self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     [self initNavigationBar];
     
+    UITapGestureRecognizer *recoveryKeyboardRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(recoveryKeyboard)];
+    [self.view addGestureRecognizer:recoveryKeyboardRecognizer];
     
     [self initUI];
     
+}
+
+- (void)recoveryKeyboard {
+    [userInfoView.additionalTextField resignFirstResponder];
+    [userInfoView.phoneTextField resignFirstResponder];
+    [userInfoView.verificationCodeTextField resignFirstResponder];
 }
 
 - (void)initNavigationBar {
@@ -183,8 +191,9 @@
 
 - (UIButton *)getTimeButtonWithFrame:(CGRect)frame {
     UIButton *timeButton = [self getTimeAndPersonNumberButtonWithFrame:frame AndText:@"时间" AndAction:@selector(touchTimeBtn:)];
-    
-    timeLab = [TCComponent createLabelWithText:[self getTimeString] AndFontSize:14];
+
+    timeLab = [TCComponent createLabelWithText:@"" AndFontSize:14];
+//    timeLab = [TCComponent createLabelWithText:[self getTimeString] AndFontSize:14];
     timeLab.frame = CGRectMake(20 + 35, 0, timeButton.width - 88, timeButton.height);
     timeLab.textAlignment = NSTextAlignmentRight;
     [timeButton addSubview:timeLab];
@@ -198,7 +207,8 @@
 - (UIButton *)getPersonNumberButtonWithFrame:(CGRect)frame {
     UIButton *personNumberButton = [self getTimeAndPersonNumberButtonWithFrame:frame AndText:@"人数" AndAction:@selector(touchPersonNumberBtn:)];
     
-    personNumberLab = [TCComponent createLabelWithText:[self getPersonNumberString:1] AndFontSize:14];
+    personNumberLab = [TCComponent createLabelWithText:@"" AndFontSize:14];
+//    personNumberLab = [TCComponent createLabelWithText:[self getPersonNumberString:1] AndFontSize:14];
     personNumberLab.frame = CGRectMake(20 + 35, 0, personNumberButton.width - 88, personNumberButton.height);
     personNumberLab.textAlignment = NSTextAlignmentRight;
     [personNumberButton addSubview:personNumberLab];
@@ -290,6 +300,7 @@
 }
 
 - (void)showSelectTimePickerView {
+    [self recoveryKeyboard];
     [UIView animateWithDuration:0.15 animations:^{
         timeSelectView.hidden = NO;
         timeSelectView.y = timeSelectView.y - 256 ;
@@ -297,6 +308,7 @@
 }
 
 - (void)showSelectPersonNumberView {
+    [self recoveryKeyboard];
     [UIView animateWithDuration:0.15 animations:^{
         personNumberSelectView.hidden = NO;
         personNumberSelectView.y = personNumberSelectView.y - 256;
@@ -426,18 +438,25 @@
     NSString *phoneStr = userInfoView.phoneTextField.text;
     NSString *noteStr = userInfoView.additionalTextField.text;
     NSString *vcodeStr;
-    if (userInfoView.isNeedVerification) {
-        vcodeStr = userInfoView.verificationCodeTextField.text;
-    } else {
-        vcodeStr = nil;
-    }
-    [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(BOOL result, NSError *error) {
-        if (result) {
-            [MBProgressHUD showHUDWithMessage:@"预订成功"];
+    if ([self isEffective]) {
+        if (userInfoView.isNeedVerification) {
+            vcodeStr = userInfoView.verificationCodeTextField.text;
         } else {
-            [MBProgressHUD showHUDWithMessage:@"预订失败"];
+            vcodeStr = nil;
         }
-    }];
+        
+        [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(BOOL result, NSError *error) {
+            if (result) {
+                [MBProgressHUD showHUDWithMessage:@"预订成功"];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            } else {
+                [MBProgressHUD showHUDWithMessage:@"预订失败"];
+            }
+        }];
+
+    } else {
+        [MBProgressHUD showHUDWithMessage:@"请填写完整信息"];
+    }
 }
 
 - (void)touchBackBtn {
@@ -451,6 +470,15 @@
     NSDate *date = [dateFormat dateFromString:time];
     NSInteger timeSp = [date timeIntervalSince1970];
     return timeSp * 1000;
+}
+
+
+- (BOOL)isEffective {
+    if ([timeLab.text isEqualToString:@""] || [personNumberLab.text isEqualToString:@""] || [userInfoView.senderView.selectStr isEqualToString:@""]) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -12,6 +12,7 @@
 #import "TCImageURLSynthesizer.h"
 #import "TCUserReserveTableViewCell.h"
 #import "TCBuluoApi.h"
+#import "TCOrderDetailAlertView.h"
 
 @interface TCUserReserveDetailViewController () {
 //    UITableView *reserveDetailTableView;
@@ -60,7 +61,7 @@
     [self.view addSubview:mScrollView];
     
     
-    UIView *statusView = [self getStatusViewWithStatus:@"订座处理中"];
+    UIView *statusView = [self getStatusViewWithStatus:[self getTitleStatusStr]];
     [mScrollView addSubview:statusView];
     
     UITableView *mTableView = [self getReserveDetailTableView];
@@ -69,8 +70,10 @@
     UIView *customerView = [self getContactCustomerServiceViewWithFrame:CGRectMake(0, mTableView.y + mTableView.height, self.view.width, 44)];
     [mScrollView addSubview:customerView];
     
-    UIButton *cancelBtn =[self getCancelOrderBtnWithFrame:CGRectMake(self.view.width / 2 - 315 / 2, customerView.y + customerView.height, 315, 40)];
-    [mScrollView addSubview:cancelBtn];
+    if (![reservationDetail.status isEqualToString:@"CANNEL"] && ![reservationDetail.status isEqualToString:@"FAILURE"]) {
+        UIButton *cancelBtn =[self getCancelOrderBtnWithFrame:CGRectMake(self.view.width / 2 - 315 / 2, customerView.y + customerView.height, 315, 40)];
+        [mScrollView addSubview:cancelBtn];
+    }
 
 }
 
@@ -83,6 +86,15 @@
     self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"我的预订"];
 }
 
+- (NSString *)getTitleStatusStr {
+    if ([reservationDetail.status isEqualToString:@"PROCESSING"]) {
+        return @"订座处理中";
+    } else if ([reservationDetail.status isEqualToString:@"SUCCEED"]) {
+        return @"订座完成";
+    } else {
+        return @"订座失败";
+    }
+}
 
 - (UITableView *)getReserveDetailTableView {
     
@@ -101,6 +113,7 @@
     [cancelBtn setTitle:@"取消订单" forState:UIControlStateNormal];
     cancelBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     cancelBtn.layer.cornerRadius = 5;
+    [cancelBtn addTarget:self action:@selector(touchCancelReserve:) forControlEvents:UIControlEventTouchUpInside];
     
     return cancelBtn;
 }
@@ -255,6 +268,16 @@
     return view;
 }
 
+- (void)changeReservationStatus:(NSString *)status {
+    [[TCBuluoApi api] changeReservationStatus:status ReservationId:reservationDetail.ID result:^(BOOL result, NSError *error) {
+        if (result) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            [MBProgressHUD showHUDWithMessage:@"取消订单成功"];
+            
+        }
+    }];
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 7;
@@ -284,8 +307,31 @@
     }
 }
 
+#pragma mark - TCOrderDetailAlertViewDelegate
+- (void)alertView:(TCOrderDetailAlertView *)alertView didSelectOptionButtonWithTag:(NSInteger)tag {
+    switch (tag) {
+        case 0:
+            [alertView removeFromSuperview];
+            break;
+        case 1:
+            [self changeReservationStatus:@"CANNEL"];
+            [alertView removeFromSuperview];
+            
+        default:
+            break;
+    }
+}
+
+
 - (void)touchBackBtn {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)touchCancelReserve:(UIButton *)button {
+    TCOrderDetailAlertView *orderDetailAlertView = [[TCOrderDetailAlertView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    orderDetailAlertView.delegate = self;
+    [orderDetailAlertView show];
+    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -296,21 +342,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-//
-//- (void)forgeData {
-//    reserveDetailDic = @{
-//                         @"imgName":@"good_placeholder",
-//                         @"title":@"FNRON",
-//                         @"brand":@"西餐",
-//                         @"place":@"安定门",
-//                         @"time":@"2016-11-12  16:50",
-//                         @"personNumber":@2,
-//                         @"resName":@"DHUEHFAU(798店)",
-//                         @"address":@"北京市朝阳区酒仙桥4号的家哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈等我打我对哇的哈哈哈哈哈哈哈哈哈",
-//                         @"person":@"蓝天",
-//                         @"phone":@"15678909823"
-//                         };
-//}
 
 @end

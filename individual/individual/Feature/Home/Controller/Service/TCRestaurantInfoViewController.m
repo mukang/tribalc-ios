@@ -194,10 +194,10 @@
     [view addSubview:downLine];
     
     TCDetailStore *storeDetail = serviceDetail.detailStore;
-    UILabel *addressLab = [TCComponent createLabelWithFrame:CGRectMake(20, 19, view.width - 20 - 16, 14) AndFontSize:14 AndTitle: storeDetail.address];
+    UILabel *addressLab = [TCComponent createLabelWithFrame:CGRectMake(20, 19, view.width - 20 - 16, 15) AndFontSize:15 AndTitle: storeDetail.address];
     [view addSubview:addressLab];
     
-    UILabel *phoneLab = [TCComponent createLabelWithFrame:CGRectMake(20, view.height - 19 - 14, addressLab.width, addressLab.height) AndFontSize:14 AndTitle:storeDetail.phone];
+    UILabel *phoneLab = [TCComponent createLabelWithFrame:CGRectMake(20, view.height - 19 - 14, addressLab.width, addressLab.height) AndFontSize:15 AndTitle:storeDetail.phone];
     [view addSubview:phoneLab];
     
     UIButton *phoneBtn = [TCComponent createImageBtnWithFrame:CGRectMake(view.width - 20 - 15, addressLab.y, 15, 15) AndImageName:@"res_phone"];
@@ -219,7 +219,7 @@
     
     UILabel *textLab = [[UILabel alloc] initWithFrame:CGRectMake(62, titleView.y + titleView.height + 8, view.width - 62 * 2, view.height - 96 + 15)];
     textLab.numberOfLines = 4;
-    textLab.font = [UIFont systemFontOfSize:14];
+    textLab.font = [UIFont systemFontOfSize:15];
     textLab.attributedText = [self getAttributedStringWithText:text];
    
     UIView *line = [TCComponent createGrayLineWithFrame:CGRectMake(20, view.size.height - 0.5, view.width - 40, 0.5)];
@@ -437,8 +437,12 @@
 }
 
 - (void)touchCollectionBtn:(UIButton *)button {
-    isCollection = !isCollection;
-    [button setImage:[UIImage imageNamed:[self getCollectionImageName]] forState:UIControlStateNormal];
+    if (mScrollView.contentOffset.y < 70) {
+        isCollection = !isCollection;
+        UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:[self getCollectionImageName]];
+        [rightBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    }
 }
 
 - (void)touchReserveRest {

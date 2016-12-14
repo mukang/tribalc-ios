@@ -13,6 +13,7 @@
 #import "TCIDAuthViewController.h"
 #import "TCCompanyViewController.h"
 #import "TCCompanyApplyViewController.h"
+#import "TCUserOrderTabBarController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
@@ -157,6 +158,14 @@ TCPhotoPickerDelegate>
     }
 }
 
+- (void)addOrderButtonAction:(NSArray *)buttons {
+    for (int i = 0; i < buttons.count; i++) {
+        UIButton *button = buttons[i];
+        button.tag = i;
+        [button addTarget:self action:@selector(touchOrderButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
 #pragma mark - Navigation Bar
 
 - (void)restoreNavigationBar {
@@ -240,7 +249,9 @@ TCPhotoPickerDelegate>
             currentCell = cell;
         } else {
             TCProfileProcessViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCProfileProcessViewCell" forIndexPath:indexPath];
+            [self addOrderButtonAction:cell.buttons];
             currentCell = cell;
+            
         }
     } else {
         TCProfileViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCProfileViewCell" forIndexPath:indexPath];
@@ -481,6 +492,26 @@ TCPhotoPickerDelegate>
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
         }
     }];
+}
+
+- (void)touchOrderButton:(UIButton *)button {
+    NSString *title;
+    switch (button.tag) {
+        case 1:
+            title = @"待付款";
+            break;
+        case 2:
+            title = @"待收货";
+            break;
+        case 3:
+            title = @"已结束";
+            break;
+        default:
+            break;
+    }
+    TCUserOrderTabBarController *userOrderTabBarController = [[TCUserOrderTabBarController alloc] initWithTitle:title];
+    userOrderTabBarController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:userOrderTabBarController animated:YES];
 }
 
 

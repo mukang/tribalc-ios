@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
+#import "TCOrderDetailAlertView.h"
 
-@interface TCUserReserveDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate>
+
+@interface TCUserReserveDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, TCOrderDetailAlertViewDelegate>
 
 
 - (instancetype)initWithReservationId:(NSString *)reservationId;

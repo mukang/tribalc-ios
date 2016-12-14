@@ -431,37 +431,6 @@
 }
 
 
-- (void)touchStyleSelectBtn:(UIButton *)btn {
-    if (goodStandard.descriptions[@"secondary"] == NULL){
-        NSString *styleInfo = goodStandard.descriptions[@"primary"][@"types"][btn.tag];
-        TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[styleInfo]];
-        if (selectStandardGoodDetail != NULL) {
-            [self changeStyleButtonWithBtn:btn];
-            [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
-            [standardView setSelectedPrimaryStandardWithText:styleInfo];
-        }
-    }
-    else if ([standardView.selectedSecondLab.text isEqualToString:@""]) {
-        [self changeStyleButtonWithBtn:btn];
-        [standardView setSelectedPrimaryStandardWithText:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
-        [standardView setSeconedViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
-    }
-    else {
-        if (btn.tag != -1) {
-            NSString *styleInfo = goodStandard.descriptions[@"primary"][@"types"][btn.tag];
-            NSString *standardKey = [NSString stringWithFormat:@"%@^%@", styleInfo, standardView.selectedSecondLab.text];
-            TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
-            if (selectStandardGoodDetail != NULL) {
-                [self changeStyleButtonWithBtn:btn];
-                [standardView setSeconedViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
-                [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
-                [standardView setSelectedPrimaryStandardWithText:styleInfo];
-            }
-        }
-    }
-
-}
-
 - (void)promptOutOfStock {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"无货" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
@@ -496,6 +465,39 @@
         }
     }
 }
+
+- (void)touchStyleSelectBtn:(UIButton *)btn {
+    if (goodStandard.descriptions[@"secondary"] == NULL){
+        NSString *styleInfo = goodStandard.descriptions[@"primary"][@"types"][btn.tag];
+        TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[styleInfo]];
+        if (selectStandardGoodDetail != NULL) {
+            [self changeStyleButtonWithBtn:btn];
+            [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
+            [standardView setSelectedPrimaryStandardWithText:styleInfo];
+        }
+    }
+    else if ([standardView.selectedSecondLab.text isEqualToString:@""]) {
+        [self changeStyleButtonWithBtn:btn];
+        [standardView setSelectedPrimaryStandardWithText:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
+        [standardView setSeconedViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
+    }
+    else {
+        if (btn.tag != -1) {
+            NSString *styleInfo = goodStandard.descriptions[@"primary"][@"types"][btn.tag];
+            NSString *standardKey = [NSString stringWithFormat:@"%@^%@", styleInfo, standardView.selectedSecondLab.text];
+            TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
+            if (selectStandardGoodDetail != NULL) {
+                [self changeStyleButtonWithBtn:btn];
+                [standardView setSeconedViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
+                [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
+                [standardView setSelectedPrimaryStandardWithText:styleInfo];
+            }
+        }
+    }
+    
+}
+
+
 
 - (void)touchSizeSelectBtn:(UIButton *)btn {
     
@@ -646,9 +648,12 @@
     for (int i = 0; i < subviews.count; i++) {
         if (i != tag && [subviews[i] isKindOfClass:[UIButton class]]) {
             UIButton *btn = subviews[i];
-            if (btn.tag != -1) {
-                [btn setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
-                btn.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
+            UIColor *color = TCRGBColor(195, 195, 195);
+            if (![[btn titleColorForState:UIControlStateNormal] isEqual:color]) {
+                if (btn.tag != -1) {
+                    [btn setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
+                    btn.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
+                }
             }
         }
     }

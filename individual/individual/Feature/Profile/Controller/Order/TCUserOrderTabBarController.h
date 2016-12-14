@@ -13,4 +13,6 @@
 
 @interface TCUserOrderTabBarController : UITabBarController
 
+- (instancetype)initWithTitle:(NSString *)title ;
+
 @end

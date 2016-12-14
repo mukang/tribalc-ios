@@ -17,13 +17,13 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        leftBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, frame.size.height / 2 - 15 / 2, 15, 15) AndImageName:@"car_selected"];
+        leftBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, frame.size.height / 2 - 15 / 2, 15, 15) AndImageName:@"car_unselected"];
         [leftBtn addTarget:self action:@selector(touchSelectLeftBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:leftBtn];
         
         UILabel *leftLab = [TCComponent createLabelWithFrame:CGRectMake(leftBtn.x + leftBtn.width + 3, 0, 30, self.height) AndFontSize:14 AndTitle:@"女士"];
         [self addSubview:leftLab];
-        _selectStr = @"女士";
+//        _selectStr = @"女士";
         
         rightBtn = [TCComponent createImageBtnWithFrame:CGRectMake(leftLab.x + leftLab.width + 13.5, leftBtn.y, leftBtn.width, leftBtn.height) AndImageName:@"car_unselected"];
         [rightBtn addTarget:self action:@selector(touchSelectRightBtn:) forControlEvents:UIControlEventTouchUpInside];

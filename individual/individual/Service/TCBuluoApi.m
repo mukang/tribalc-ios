@@ -1031,29 +1031,35 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)createOrderWithItemList:(NSArray *)itemList AddressId:(NSString *)addressId result:(void(^)(BOOL, NSError *))resultBlock {
+- (void)createOrderWithItemList:(NSArray *)itemList AddressId:(NSString *)addressId result:(void(^)(NSArray *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"orders?me=%@", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"orders?me=%@&status=SETTLE", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
 
         [request setValue:addressId forParam:@"addressId"];
         [request setValue:itemList forParam:@"itemList"];
         
-        [[TCClient client] send:request finish:^(TCClientResponse *respone) {
-            if (respone.statusCode == 201) {
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            NSArray *result = response.data;
+            NSMutableArray *orderList = [[NSMutableArray alloc] init];
+            for (int i = 0; i < result.count; i++) {
+                TCOrder *order = [[TCOrder alloc] initWithObjectDictionary:result[i]];
+                [orderList addObject:order];
+            }
+            if (response.statusCode == 200) {
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(orderList, nil));
                 }
             } else {
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(NO, respone.error));
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             }
         }];
     }  else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
         }
     }
 }
@@ -1137,6 +1143,32 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
     }
 }
+
+- (void)changeReservationStatus:(NSString *)statusStr ReservationId:(NSString *)reservationId result:(void(^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"reservations/%@/status?type=owner&me=%@", reservationId, self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        [request setValue:statusStr forParam:@"value"];
+        
+        [[TCClient client] send:request finish:^(TCClientResponse *respone) {
+            if (respone.statusCode == 200) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, respone.error));
+                }
+            }
+        }];
+    }  else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+}
+
 
 - (void)createReservationWithStoreSetMealId:(NSString *)storeSetMealId appintTime:(NSInteger)appintTime personNum:(NSInteger)personNum linkman:(NSString *)linkman phone:(NSString *)phone note:(NSString *)note vcode:(NSString *)vcode result:(void(^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
@@ -1262,6 +1294,8 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
+        
+        request.params = cartArr;
         
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
             if (respone.statusCode == 204) {

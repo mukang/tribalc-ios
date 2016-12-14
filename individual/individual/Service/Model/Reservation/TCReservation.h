@@ -8,13 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-
-
 @interface TCReservation : NSObject
+
+typedef NS_ENUM(NSInteger, TCReservationStatus) {
+    TCReservationCannel,
+    TCReservationProcessing,
+    TCReservationFailure,
+    TCReservationSuccess
+};
 
 @property (copy, nonatomic) NSString *ID;
 
 @property (copy, nonatomic) NSString *status;
+
+@property (nonatomic) TCReservationStatus reservationStatus;
 
 @property ( nonatomic) NSInteger personNum;
 

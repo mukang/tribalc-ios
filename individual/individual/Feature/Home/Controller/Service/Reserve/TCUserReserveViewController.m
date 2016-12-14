@@ -39,9 +39,9 @@
 
 
 - (void)initReservationData {
+    
     [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:10 sortSkip:nil result:^(TCReservationWrapper *wrapper, NSError *error) {
         userReserveWrapper = wrapper;
-        
         [reserveTableView reloadData];
         [reserveTableView.mj_header endRefreshing];
         
@@ -101,10 +101,22 @@
     reserveTableView.mj_footer = refreshFooter;
 }
 
+- (NSString *)getHeaderStatusText:(NSString *)text {
+    if ([text isEqualToString:@"PROCESSING"]) {
+        return @"预订处理中";
+    } else if ([text isEqualToString:@"CANNEL"]){
+        return @"订座取消";
+    } else if ([text isEqualToString:@"FAILURE"]) {
+        return @"订座失败";
+    } else {
+        return @"订座成功";
+    }
+}
+
 - (UIColor *)getHeaderStatusTextColor:(NSString *)text {
-    if ([text isEqualToString:@"订座处理中"]) {
+    if ([text isEqualToString:@"PROCESSING"]) {
         return TCRGBColor(242, 68, 69);
-    } else if ([text isEqualToString:@"订座失败"]) {
+    } else if ([text isEqualToString:@"FAILURE"] || [text isEqualToString:@"CANNEL"]) {
         return TCRGBColor(154, 154, 154);
     } else {
         return TCRGBColor(81, 199, 209);
@@ -129,8 +141,8 @@
     }
     NSArray *userReserveOrderArr = userReserveWrapper.content;
     TCReservation *reservation = userReserveOrderArr[section];
-    UILabel *statusLab = [TCComponent createLabelWithFrame:CGRectMake(22.5, 0, TCScreenWidth - 45, 42) AndFontSize:14 AndTitle:reservation.status];
-    statusLab.textColor = [self getHeaderStatusTextColor:statusLab.text];
+    UILabel *statusLab = [TCComponent createLabelWithFrame:CGRectMake(22.5, 0, TCScreenWidth - 45, 42) AndFontSize:14 AndTitle:[self getHeaderStatusText:reservation.status]];
+    statusLab.textColor = [self getHeaderStatusTextColor:reservation.status];
     [headerView addSubview:statusLab];
     UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 42 - 0.5, TCScreenWidth, 0.5)];
     [headerView addSubview:topLineView];

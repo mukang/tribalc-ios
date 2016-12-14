@@ -38,7 +38,7 @@
     homeScrollView = [self getHomeScrollViewWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight - self.tabBarController.tabBar.size.height)];
     [self.view addSubview:homeScrollView];
     
-    [self setupTitleImageScrollViewWithFrame:CGRectMake(0, 0, self.view.width, 245)];
+    [self setupTitleImageScrollViewWithFrame:CGRectMake(0, 0, self.view.width, 260)];
     [homeScrollView addSubview:titleScrollView];
     
     UIView *expressView = [self getExpressViewWithFrame:CGRectMake(0, titleScrollView.y + titleScrollView.height, TCScreenWidth, 33)];
@@ -95,7 +95,12 @@
         imgView.image = [UIImage imageNamed:picturesArr[i]];
         [titleScrollView addSubview:imgView];
     }
-    titleScrollView.contentSize = CGSizeMake(TCScreenWidth * picturesArr.count, titleScrollView.height);
+    if (picturesArr.count > 1) {
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCScreenWidth * picturesArr.count, 0, TCScreenWidth, titleScrollView.height)];
+        imgView.image = [UIImage imageNamed:picturesArr[0]];
+        [titleScrollView addSubview:imgView];
+    }
+    titleScrollView.contentSize = CGSizeMake(TCScreenWidth * (picturesArr.count + 1), titleScrollView.height);
     
     [self setupTitleScrollTimer];
 }
@@ -124,7 +129,7 @@
 
 - (UIButton *)getPropertyButtonWithFrame:(CGRect)frame AndImgName:(NSString *)imgName AndTitle:(NSString *)title AndAction:(SEL)action {
     UIButton *propertyBtn = [[UIButton alloc] initWithFrame:frame];
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width / 2 - 45 / 2, 0, 45, 45)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width / 2 - 35 / 2, 7, 35, 35)];
     imgView.image = [UIImage imageNamed:imgName];
     [propertyBtn addSubview:imgView];
     
@@ -227,9 +232,14 @@
 
 - (void)titleImageScroll {
     NSArray *pictures = homeInfoDic[@"pictures"];
+    if (titleScrollView.contentOffset.x == TCScreenWidth * (pictures.count)) {
+        [titleScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+    }
+    
     CGFloat x = titleScrollView.contentOffset.x;
     NSInteger multipe = (x + TCScreenWidth) / TCScreenWidth;
-    x = titleScrollView.contentOffset.x < (pictures.count - 1) * TCScreenWidth ? multipe * TCScreenWidth : 0;
+//    x = titleScrollView.contentOffset.x < (pictures.count - 1) * TCScreenWidth ? multipe * TCScreenWidth : 0;
+    x = multipe * TCScreenWidth;
     [titleScrollView setContentOffset:CGPointMake(x, 0) animated:YES];
 }
 

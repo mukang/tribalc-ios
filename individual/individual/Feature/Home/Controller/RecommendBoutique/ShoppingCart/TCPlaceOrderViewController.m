@@ -14,9 +14,13 @@
 #import "TCUserOrderTableViewCell.h"
 #import "TCPayMethodView.h"
 #import "TCImageURLSynthesizer.h"
+#import "TCBalancePayView.h"
 
 @interface TCPlaceOrderViewController () {
     NSMutableArray *orderDetailList;
+    UITextField *supplementField;
+    TCPayMethodView *payMethodView;
+    TCBalancePayView *payView;
 }
 
 @end
@@ -53,7 +57,7 @@
     UITableView *orderDetailTableView = [self getOrderDetailTableViewWithFrame:CGRectMake(0, userAddressView.y + userAddressView.height, self.view.width, [self getTableViewHeight])];
     [scrollView addSubview:orderDetailTableView];
  
-    TCPayMethodView *payMethodView = [[TCPayMethodView alloc] initWithFrame:CGRectMake(0, orderDetailTableView.y + orderDetailTableView.height + 4, TCScreenWidth, 170)];
+    payMethodView = [[TCPayMethodView alloc] initWithFrame:CGRectMake(0, orderDetailTableView.y + orderDetailTableView.height + 4, TCScreenWidth, 170)];
     [scrollView addSubview:payMethodView];
     
     
@@ -62,20 +66,34 @@
     UIView *bottomView = [self getNotSettleBottomView];
     [self.view addSubview:bottomView];
 
+    
+    [self initKeyboardRecovery];
+}
+
+- (void)initKeyboardRecovery {
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchKeyBoardRecovery)];
+    [self.view addGestureRecognizer:tapGesture];
+}
+
+- (void)touchKeyBoardRecovery {
+    [supplementField resignFirstResponder];
 }
 
 - (NSArray *)getDefaultAddressArr {
     TCUserSession *userSession = [[TCBuluoApi api] currentUserSession];
     TCUserShippingAddress *shippingAddress = userSession.userSensitiveInfo.shippingAddress;
-    NSArray *addressInfo = @[ shippingAddress.name, shippingAddress.phone, [NSString stringWithFormat:@"%@%@%@%@", shippingAddress.province, shippingAddress.city, shippingAddress.district, shippingAddress.address] ];
-    return addressInfo;
+    if (shippingAddress) {
+        return @[ shippingAddress.name, shippingAddress.phone, [NSString stringWithFormat:@"%@%@%@%@", shippingAddress.province, shippingAddress.city, shippingAddress.district, shippingAddress.address] ];
+    } else {
+        return @[@"", @"", @""];
+    }
 }
 
 - (CGFloat)getTableViewHeight {
-    CGFloat height;
+    CGFloat height = 0;
     for(int i = 0; i < orderDetailList.count; i++) {
         TCOrder *order = orderDetailList[i];
-        height += 40 * 3 + 56 + 41 + order.itemList.count * 96.5 + 4;
+        height += 40 * 3 + 56 + 41 + order.itemList.count * 96.5;
     }
     
     return height;
@@ -215,7 +233,7 @@
     backView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     TCOrder *orderDetail = orderDetailList[section];
     
-    UITextField *supplementField = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, backView.width - 7, backView.height)];
+    supplementField = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, backView.width - 7, backView.height)];
     supplementField.placeholder = @"订单补充说明:";
     supplementField.font = [UIFont systemFontOfSize:11];
     supplementField.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
@@ -301,6 +319,30 @@
     return orderInfoView;
 }
 
+- (NSString *)getAllOrderTotalPrice {
+    CGFloat totalPrice;
+    for (int i = 0; i < orderDetailList.count; i++) {
+        TCOrder *order = orderDetailList[i];
+        totalPrice += order.totalFee;
+    }
+    NSString *totalPriceStr = [NSString stringWithFormat:@"%@", @([NSString stringWithFormat:@"%f", totalPrice].floatValue)];
+    return totalPriceStr;
+}
+
+- (void)filterPayMethod {
+    NSString *selectPayStr = payMethodView.selectPayMethodStr;
+    if (!selectPayStr) {
+        [MBProgressHUD showHUDWithMessage:@"请选择支付方式"];
+    } else if ([selectPayStr isEqualToString:@"微信"]){
+        [MBProgressHUD showHUDWithMessage:@"请选择余额支付"];
+    } else if ([selectPayStr isEqualToString:@"支付宝"]) {
+        [MBProgressHUD showHUDWithMessage:@"请选择余额支付"];
+    } else {
+       
+        [self createOrder];
+    }
+
+}
 
 #pragma mark - Action
 - (void)touchBackBtn {
@@ -308,22 +350,20 @@
 }
 
 - (void)touchOrderPayBtn:(UIButton *)button {
+    [self filterPayMethod];
+}
 
+- (void)touchPayMoneyBtn:(UIButton *)button {
+    [MBProgressHUD showHUDWithMessage:@"支付"];
     
-    NSMutableArray *itemList = [[NSMutableArray alloc] init];
-    for (int i = 0; i< orderDetailList.count; i++) {
-        TCOrder *order = orderDetailList[i];
-        for (int j = 0; j < order.itemList.count; j++) {
-            TCOrderItem *orderItem = order.itemList[j];
-            [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID }];
-        }
-    }
-    [self createOrderWithAddressId:@"" AndItemList:itemList];
+    [payView removeFromSuperview];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 
+
 - (void)touchOrderCancelBtn:(UIButton *)button {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Status Bar
@@ -338,11 +378,23 @@
              };
 }
 
-- (void)createOrderWithAddressId:(NSString *)addressId AndItemList:(NSArray *)itemList {
-    addressId = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.addressID;
-    [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(BOOL result, NSError *error) {
-        if (result) {
+- (void)createOrder {
+    NSMutableArray *itemList = [[NSMutableArray alloc] init];
+    for (int i = 0; i< orderDetailList.count; i++) {
+        TCOrder *order = orderDetailList[i];
+        for (int j = 0; j < order.itemList.count; j++) {
+            TCOrderItem *orderItem = order.itemList[j];
+            [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID }];
+        }
+    }
+    NSString *addressId = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.addressID;
+    [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
+        if (orderList) {
+            payView = [[TCBalancePayView alloc] initWithPayPrice:[self getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndTarget:self ] ;
+            [payView showPayView];
             [MBProgressHUD showHUDWithMessage:@"创建订单成功"];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"创建订单失败"];
         }
     }];
 }
