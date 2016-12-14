@@ -1012,6 +1012,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:addressId forParam:@"addressId"];
         [request setValue:itemList forParam:@"itemList"];
         
+        
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             NSArray *result = response.data;
             NSMutableArray *orderList = [[NSMutableArray alloc] init];
@@ -1019,7 +1020,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 TCOrder *order = [[TCOrder alloc] initWithObjectDictionary:result[i]];
                 [orderList addObject:order];
             }
-            if (response.statusCode == 200) {
+            if (response.statusCode == 201) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(orderList, nil));
                 }
@@ -1230,20 +1231,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)changeShoppingCartWithShoppingCartId:(NSString *)shoppingCartId AndGoodsId:(NSString *)goodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCOrderItem *, NSError *))resultBlock{
+- (void)changeShoppingCartWithShoppingCartGoodsId:(NSString *)shoppingCartGoodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCCartItem *, NSError *))resultBlock{
     if ([self isUserSessionValid]) {
 
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-        
-        [request setValue:shoppingCartId forParam:@"shoppingCartId"];
-        [request setValue:goodsId forParam:@"goodsId"];
+        [request setValue:shoppingCartGoodsId forParam:@"shoppingCartGoodsId"];
         [request setValue:newGoodsId forParam:@"newGoodsId"];
         [request setValue:[NSNumber numberWithInteger:amount] forParam:@"amount"];
         
-        [[TCClient client   ] send:request finish:^(TCClientResponse *respone) {
+        [[TCClient client ] send:request finish:^(TCClientResponse *respone) {
             if (respone.statusCode == 200) {
-                TCOrderItem *result = [[TCOrderItem alloc] initWithObjectDictionary:respone.data];
+                TCCartItem *result = [[TCCartItem alloc] initWithObjectDictionary:respone.data];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(result, nil));
                 }
@@ -1265,10 +1264,13 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 - (void)deleteShoppingCartWithShoppingCartArr:(NSArray *)cartArr result:(void(^)(BOOL, NSError *))resultBlock{
     if ([self isUserSessionValid]) {
         
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart", self.currentUserSession.assigned];
-        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
+        NSString *shoppingCartGoodIdStr = @"";
+        for (int i = 0; i < cartArr.count; i++) {
+            shoppingCartGoodIdStr = (i == 0) ? [NSString stringWithFormat:@"/%@", cartArr[i]] : [NSString stringWithFormat:@"%@,%@", shoppingCartGoodIdStr, cartArr[i]];
+        }
         
-        request.params = cartArr;
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart%@", self.currentUserSession.assigned, shoppingCartGoodIdStr];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
         
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
             if (respone.statusCode == 204) {

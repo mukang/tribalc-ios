@@ -78,11 +78,11 @@
     [self initHiddenBackView];
     
     
-    sortView = [[TCRestaurantSortView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, 169 + 10)];
+    sortView = [[TCRestaurantSortView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, TCRealValue(169 + 10))];
     sortView.hidden = YES;
     [self.view addSubview:sortView];
     
-    filterView = [[TCRestaurantFilterView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, 105)];
+    filterView = [[TCRestaurantFilterView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, TCRealValue(105))];
     filterView.hidden = YES;
     [self.view addSubview:filterView];
     
@@ -242,7 +242,7 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 160;
+    return TCRealValue(160);
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

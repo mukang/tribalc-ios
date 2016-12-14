@@ -14,14 +14,17 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
+        UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 0.5)];
+        topLine.backgroundColor = TCRGBColor(154, 154, 154);
+        [self addSubview:topLine];
         
-        UIView *firstVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(24 + 105, (frame.size.height - 169) / 2, 0.5, 169)];
+        UIView *firstVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(TCRealValue(24) + TCRealValue(105), (frame.size.height - TCRealValue(169)) / 2, 0.5, TCRealValue(169))];
         firstVerticalLine.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
         
-        UIView *secondVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - 24 - 119 + 13, firstVerticalLine.y, firstVerticalLine.width, firstVerticalLine.height)];
+        UIView *secondVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - TCRealValue(24) - TCRealValue(119) + TCRealValue(13), firstVerticalLine.y, firstVerticalLine.width, firstVerticalLine.height)];
         secondVerticalLine.backgroundColor = firstVerticalLine.backgroundColor;
         
-        UIView *horizontalLine = [[UIView alloc] initWithFrame:CGRectMake(24, frame.size.height / 2 - 0.5, frame.size.width - 48, 0.5)];
+        UIView *horizontalLine = [[UIView alloc] initWithFrame:CGRectMake(TCRealValue(24), frame.size.height / 2 - 0.5, frame.size.width - TCRealValue(48), 0.5)];
         horizontalLine.backgroundColor = secondVerticalLine.backgroundColor;
         [self addSubview:firstVerticalLine];
         [self addSubview:secondVerticalLine];
@@ -29,7 +32,7 @@
         
         
         
-        _averageMinBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(24, 0, firstVerticalLine.x - 24, horizontalLine.y) AndImgName:@"res_average_min" AndText:@"人均最低"];
+        _averageMinBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(TCRealValue(24), 0, firstVerticalLine.x - TCRealValue(24), horizontalLine.y) AndImgName:@"res_average_min" AndText:@"人均最低"];
         [self addSubview:_averageMinBtn];
 
         _averageMaxBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(firstVerticalLine.x + firstVerticalLine.width, 0, secondVerticalLine.x - firstVerticalLine.x + firstVerticalLine.width, _averageMinBtn.height) AndImgName:@"res_average_max" AndText:@"人均最高"];

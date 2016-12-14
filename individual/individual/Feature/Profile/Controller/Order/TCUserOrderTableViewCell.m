@@ -17,21 +17,23 @@
 
 - (instancetype)initOrderDetailCellWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [self initWithStyle:style reuseIdentifier:reuseIdentifier];
-    CGRect screenRect = [UIScreen mainScreen].bounds;
-    CGFloat height = 96.5;
-    backView.frame = CGRectMake(20, height / 2 - 79 / 2, screenRect.size.width - 40, height);
-    backView.backgroundColor = [UIColor whiteColor];
-    
-    _leftImgView.frame = CGRectMake(8, 0, 79, 79);
-    titleLab.frame = CGRectMake(_leftImgView.x + _leftImgView.width + 9, _leftImgView.y + 7, screenRect.size.width - _leftImgView.x - _leftImgView.width - 13 - 54, 12);
-    
-    priceLab.font = [UIFont fontWithName:BOLD_FONT size:14];
-    
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, screenRect.size.width - 40, 0.5)];
-    [self addSubview:topLineView];
-    
-    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, height - 0.5, screenRect.size.width - 40, 0.5)];
-    [self addSubview:downLineView];
+    if (self) {
+        CGRect screenRect = [UIScreen mainScreen].bounds;
+        CGFloat height = 96.5;
+        backView.frame = CGRectMake(20, height / 2 - 79 / 2, screenRect.size.width - 40, height);
+        backView.backgroundColor = [UIColor whiteColor];
+        
+        _leftImgView.frame = CGRectMake(8, 0, 79, 79);
+        titleLab.frame = CGRectMake(_leftImgView.x + _leftImgView.width + 9, _leftImgView.y + 7, screenRect.size.width - _leftImgView.x - _leftImgView.width - 13 - 54, 12);
+        
+        priceLab.font = [UIFont fontWithName:BOLD_FONT size:14];
+        
+        UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, screenRect.size.width - 40, 0.5)];
+        [self addSubview:topLineView];
+        
+        UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, height - 0.5, screenRect.size.width - 40, 0.5)];
+        [self addSubview:downLineView];
+    }
     
     return self;
 }
@@ -51,7 +53,7 @@
         _leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(backView.height / 2 - 71.5 / 2, backView.height / 2 - 71.5 / 2, 71.5, 71.5)];
         [backView addSubview:_leftImgView];
         
-        titleLab = [TCComponent createLabelWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width + 9, 12, screenRect.size.width / 2, 12) AndFontSize:12 AndTitle:@""];
+        titleLab = [TCComponent createLabelWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width + 9, 12, TCRealValue(337 / 2), 12) AndFontSize:12 AndTitle:@""];
         [backView addSubview:titleLab];
         
         priceLab = [self getNumberOrPriceLabelWithFrame:CGRectMake(titleLab.x + titleLab.width + 1, titleLab.y, screenRect.size.width - 20 - 11 - titleLab.x - titleLab.width - 1 - 20, 13)];
@@ -141,7 +143,7 @@
 - (void)setBoldPriceLabel:(float)price {
     NSString *priceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", price].floatValue)];
     priceLab.text = priceStr;
-    priceLab.frame = CGRectMake(_leftImgView.x + _leftImgView.width + 1, titleLab.y + titleLab.height, [UIScreen mainScreen].bounds.size.width - 40 - _leftImgView.x - _leftImgView.width - 1, 14);
+    priceLab.frame = CGRectMake(_leftImgView.x + _leftImgView.width + 1, titleLab.y + titleLab.height + 2, [UIScreen mainScreen].bounds.size.width - 40 - _leftImgView.x - _leftImgView.width - 1, 14);
 }
 
 - (void)setTitleLabWithText:(NSString *)text {

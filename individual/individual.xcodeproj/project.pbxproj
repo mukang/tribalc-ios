@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		091AABA41DE7CE1B003A4192 /* TCGoodTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 091AABA31DE7CE1B003A4192 /* TCGoodTitleView.m */; };
 		091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */; };
+		091D30461DFFC02E00112417 /* TCCartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 091D30451DFFC02E00112417 /* TCCartItem.m */; };
 		09222E0E1DEE72550064C0DF /* TCServiceDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 09222E0D1DEE72550064C0DF /* TCServiceDetail.m */; };
 		09222E111DEE732D0064C0DF /* TCDetailStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 09222E101DEE732D0064C0DF /* TCDetailStore.m */; };
 		09222E191DEE98490064C0DF /* TCRestaurantInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09222E141DEE98490064C0DF /* TCRestaurantInfoViewController.m */; };
@@ -278,6 +279,8 @@
 		091AABA31DE7CE1B003A4192 /* TCGoodTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodTitleView.m; sourceTree = "<group>"; };
 		091BC6E01DD0968300EB5FBD /* TCGetNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetNavigationItem.h; sourceTree = "<group>"; };
 		091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetNavigationItem.m; sourceTree = "<group>"; };
+		091D30441DFFC02E00112417 /* TCCartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCartItem.h; sourceTree = "<group>"; };
+		091D30451DFFC02E00112417 /* TCCartItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCartItem.m; sourceTree = "<group>"; };
 		09222E0C1DEE72550064C0DF /* TCServiceDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceDetail.h; sourceTree = "<group>"; };
 		09222E0D1DEE72550064C0DF /* TCServiceDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceDetail.m; sourceTree = "<group>"; };
 		09222E0F1DEE732D0064C0DF /* TCDetailStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCDetailStore.h; sourceTree = "<group>"; };
@@ -920,6 +923,8 @@
 				0928B3371DF921AC0085A182 /* TCShoppingCartWrapper.m */,
 				0928B3391DF921B70085A182 /* TCListShoppingCart.h */,
 				0928B33A1DF921B80085A182 /* TCListShoppingCart.m */,
+				091D30441DFFC02E00112417 /* TCCartItem.h */,
+				091D30451DFFC02E00112417 /* TCCartItem.m */,
 			);
 			path = ShoppingCart;
 			sourceTree = "<group>";
@@ -1841,7 +1846,7 @@
 					7A9CCECB1DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 452XNHBVYZ;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					7A9CCEE41DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
@@ -2111,6 +2116,7 @@
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
 				099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */,
 				0928B33B1DF921B80085A182 /* TCListShoppingCart.m in Sources */,
+				091D30461DFFC02E00112417 /* TCCartItem.m in Sources */,
 				7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */,
 				7A1AC8321DF1A32E0052132F /* TCDatePickerView.m in Sources */,
 				7A16665E1DFAC213007B5733 /* TCCompanyTitleViewCell.m in Sources */,
@@ -2380,8 +2386,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d96c6612-0253-4c4b-8515-5677c092b652";
-				PROVISIONING_PROFILE_SPECIFIER = "Individual Development By mukang";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -2391,7 +2397,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
@@ -2427,8 +2433,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2959f294-421f-4202-ac78-c1b20fa8fc0f";
-				PROVISIONING_PROFILE_SPECIFIER = "Individual Distribution";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

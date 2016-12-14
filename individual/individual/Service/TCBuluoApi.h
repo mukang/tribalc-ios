@@ -352,7 +352,7 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 
 - (void)createShoppingCartWithAmount:(NSInteger)amount goodsId:(NSString *)goodsId result:(void(^)(BOOL, NSError *))resultBlock;
 
-- (void)changeShoppingCartWithShoppingCartId:(NSString *)shoppingCartId AndGoodsId:(NSString *)goodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCOrderItem *, NSError *))resultBlock;
+- (void)changeShoppingCartWithShoppingCartGoodsId:(NSString *)shoppingCartGoodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCCartItem *, NSError *))resultBlock;
 
 - (void)deleteShoppingCartWithShoppingCartArr:(NSArray *)cartArr result:(void(^)(BOOL, NSError *))resultBlock;
 

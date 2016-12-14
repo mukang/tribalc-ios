@@ -19,6 +19,8 @@
  
     UIView *goodStyleButtonView;
     UIView *goodSizeButtonView;
+    
+    UIView *computeView;
 }
 
 
@@ -32,13 +34,14 @@
         
         standardView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 0)];
         UIView *selectedInfoView = [self createSelectedInfoViewWithFrame:CGRectMake(0, 0, self.width, 118) AndTarget:target AndCloseAction:closeAction];
+        standardView.backgroundColor = [UIColor whiteColor];
         [standardView addSubview:selectedInfoView];
         
         standardSelectView = [[UIView alloc] initWithFrame:CGRectMake(0, selectedInfoView.y + selectedInfoView.height, self.width, 193)];
         standardSelectView.backgroundColor = [UIColor whiteColor];
         [standardView addSubview:standardSelectView];
         
-        UIView *computeView = [self createNumberSelectViewWithFrame:CGRectMake(0, standardSelectView.y + standardSelectView.height, self.width, 84) AndAddAction:addAction AndSubAction:subAction AndTarget:target];
+        computeView = [self createNumberSelectViewWithFrame:CGRectMake(0, standardSelectView.y + standardSelectView.height, self.width, 84) AndAddAction:addAction AndSubAction:subAction AndTarget:target];
         [standardView addSubview:computeView];
         
         UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, computeView.y + computeView.height, self.width, 49) AndTarget:target AndAddCartAction:addCartAction AndBuyAction:buyAction];
@@ -82,7 +85,7 @@
     [self createSelectedStandardWithOrigin:CGPointMake(selectStamp.x + selectStamp.width + 8, selectStamp.y - 1) AndView:view];
     
     
-    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - 23, 15, 23, 23)];
+    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - TCRealValue(30), 15, TCRealValue(30), TCRealValue(30))];
     [closeBtn addTarget:target action:closeAction forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:closeBtn];
     
@@ -122,6 +125,8 @@
             [standardSelectView addSubview:seconedView];
         }
         [standardSelectView addSubview:primaryView];
+    } else {
+        computeView.y = 118;
     }
 
 

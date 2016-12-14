@@ -9,7 +9,9 @@
 #import "TCRecommendInfoViewController.h"
 #import "TCUserOrderDetailViewController.h"
 #import "TCBuluoApi.h"
+#import "TCClientRequestError.h"
 #import "TCImgPageControl.h"
+#import "TCShoppingCartViewController.h"
 
 @interface TCRecommendInfoViewController () {
     TCGoodDetail *mGoodDetail;
@@ -69,7 +71,7 @@
 - (void)initUI {
     [self initScrollView];
 
-    UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, 394)];
+    UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(394))];
     [mScrollView addSubview:titleImageView];
     
     goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, 87) WithTitle:mGoodDetail.name AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
@@ -501,11 +503,21 @@
 
 - (void)touchSizeSelectBtn:(UIButton *)btn {
     
-    if ([standardView.selectedSecondLab.text isEqualToString:@""]) {
+    if ([standardView.selectedSecondLab.text isEqualToString:@""] && [standardView.selectedPrimaryLab.text isEqualToString:@""]) {
         [self changeSizeButtonWithBtn:btn];
         [standardView setSelectedSeconedStandardWithText:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
         [standardView setPrimaryViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
-    } else {
+    } else if (![standardView.selectedPrimaryLab.text isEqualToString:@""] && [standardView.selectedSecondLab.text isEqualToString:@""]) {
+        [self changeSizeButtonWithBtn:btn];
+        [standardView setSelectedSeconedStandardWithText:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
+        [standardView setPrimaryViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
+        NSString *sizeInfo = goodStandard.descriptions[@"secondary"][@"types"][btn.tag];
+        NSString *standardKey = [NSString stringWithFormat:@"%@^%@", standardView.selectedPrimaryLab.text, sizeInfo];
+        TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
+        [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
+        
+    }
+    else {
         if (btn.tag != -1) {
             NSString *sizeInfo = goodStandard.descriptions[@"secondary"][@"types"][btn.tag];
             NSString *standardKey = [NSString stringWithFormat:@"%@^%@", standardView.selectedPrimaryLab.text, sizeInfo];
@@ -550,7 +562,8 @@
 
 
 - (void)touchShopCarBtn:(id)sender {
-
+    TCShoppingCartViewController *shoppingCartViewController = [[TCShoppingCartViewController alloc] init];
+    [self.navigationController pushViewController:shoppingCartViewController animated:YES];
 }
 
 - (void)touchSelectStandardBtn:(UIButton *)btn {
@@ -576,6 +589,10 @@
         if (result) {
             [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
         } else {
+            TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+            if ([error isEqual:sessionError]) {
+                [MBProgressHUD showHUDWithMessage:@"请登录"];
+            }
             [MBProgressHUD showHUDWithMessage:@"加入购物车失败"];
         }
         [standardView endSelectStandard];

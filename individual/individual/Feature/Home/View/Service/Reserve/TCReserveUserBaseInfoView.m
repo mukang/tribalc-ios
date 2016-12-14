@@ -123,10 +123,12 @@
     UIView *nameAndSenderView = [[UIView alloc] initWithFrame:frame];
     nameAndSenderView.backgroundColor = [UIColor whiteColor];
     
-    _nameLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, 247, frame.size.height) AndFontSize:14 AndTitle:[self getUserInfo].nickname];
+    _nameLab = [TCComponent createLabelWithText:[self getUserInfo].nickname AndFontSize:14];
+    _nameLab.height = frame.size.height;
+    _nameLab.x = 20;
     [nameAndSenderView addSubview:_nameLab];
     
-    _senderView = [[TCReserveRadioBtnView alloc] initWithFrame:CGRectMake(_nameLab.x + _nameLab.width, 0, nameAndSenderView.width - 20 - _nameLab.x - _nameLab.width, nameAndSenderView.height)];
+    _senderView = [[TCReserveRadioBtnView alloc] initWithFrame:CGRectMake(TCScreenWidth - 20 - 109.5, 0, 109.5, nameAndSenderView.height)];
     [nameAndSenderView addSubview:_senderView];
     
     return nameAndSenderView;

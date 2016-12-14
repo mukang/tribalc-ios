@@ -10,13 +10,19 @@
 
 @interface TCUserReserveTableViewCell : UITableViewCell
 
+- (instancetype)initReserveDetail;
+
 @property (retain, nonatomic) UIImageView *storeImageView;
 
 @property (retain, nonatomic) UILabel *timeLab;
 
 @property (retain, nonatomic) UILabel *personNumberLab;
 
+- (void)setDetailPlaceLabText:(NSString *)text;
+
 - (void)setPlaceLabText:(NSString *)text;
+
+- (void)setDetailBrandLabText:(NSString *)text ;
 
 - (void)setBrandLabText:(NSString *)text;
 

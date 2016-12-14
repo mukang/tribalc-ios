@@ -363,7 +363,7 @@
 
 
 - (void)touchOrderCancelBtn:(UIButton *)button {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Status Bar
@@ -384,7 +384,9 @@
         TCOrder *order = orderDetailList[i];
         for (int j = 0; j < order.itemList.count; j++) {
             TCOrderItem *orderItem = order.itemList[j];
-            [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID }];
+            [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID, @"shoppingCartGoodsId":orderItem.ID }];
+//            [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID }];
+
         }
     }
     NSString *addressId = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.addressID;

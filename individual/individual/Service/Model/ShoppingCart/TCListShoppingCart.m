@@ -7,11 +7,12 @@
 //
 
 #import "TCListShoppingCart.h"
+#import "TCCartItem.h"
 
 @implementation TCListShoppingCart
 
 + (NSDictionary *)objectClassInArray {
-    return @{@"goodsList": [TCOrderItem class]};
+    return @{@"goodsList": [TCCartItem class]};
 }
 
 + (NSDictionary *)objectClassInDictionary {
