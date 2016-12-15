@@ -13,8 +13,6 @@
 
 #import "TCBuluoApi.h"
 
-#import "TCPaymentView.h"
-
 @interface TCWalletViewController ()
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *functionButtons;
@@ -96,8 +94,7 @@
 #pragma mark - Actions
 
 - (IBAction)handleClickRechargeButton:(UIButton *)sender {
-    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:10 fromController:self];
-    [paymentView show:YES];
+    
 }
 
 - (IBAction)handleClickWithdrawButton:(UIButton *)sender {

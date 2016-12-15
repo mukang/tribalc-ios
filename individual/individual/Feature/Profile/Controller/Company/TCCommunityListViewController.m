@@ -36,7 +36,7 @@
 #pragma mark - Private Methods
 
 - (void)setupNavBar {
-    self.navigationItem.title = @"选择公司";
+    self.navigationItem.title = @"选择社区";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self

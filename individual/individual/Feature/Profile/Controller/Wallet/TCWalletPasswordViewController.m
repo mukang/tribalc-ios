@@ -12,6 +12,7 @@
 
 #import "TCFunctions.h"
 #import "TCBuluoApi.h"
+#import "UIImage+Category.h"
 
 NSString *const TCWalletPasswordKey = @"TCWalletPasswordKey";
 NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidChangeNotification";
@@ -98,6 +99,10 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     
     self.doneButton.layer.cornerRadius = 2.5;
     self.doneButton.layer.masksToBounds = YES;
+    UIImage *normalImage = [UIImage imageWithColor:TCRGBColor(81, 199, 209)];
+    UIImage *highlightedImage = [UIImage imageWithColor:TCRGBColor(10, 164, 177)];
+    [self.doneButton setBackgroundImage:normalImage forState:UIControlStateNormal];
+    [self.doneButton setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
     
     MLBPasswordTextField *textField = [[MLBPasswordTextField alloc] init];
     textField.mlb_numberOfDigit = 6;

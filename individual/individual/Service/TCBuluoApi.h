@@ -61,6 +61,13 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 - (void)login:(TCUserPhoneInfo *)phoneInfo result:(void (^)(TCUserSession *userSession, NSError *error))resultBlock;
 
 /**
+ 用户注销，会检查登录状态，已登录的会撤销登录状态，未登录的情况下直接返回成功
+
+ @param resultBlock 结果回调，success为NO时表示登出失败，失败原因见error的code和userInfo
+ */
+- (void)logout:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
  获取用户基本信息
 
  @param userID 用户ID
