@@ -631,7 +631,6 @@
 		7AC346D91E01433E00E28EC9 /* TCWalletBillDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC346D71E01433E00E28EC9 /* TCWalletBillDetailViewController.m */; };
 		7AC346DA1E01433E00E28EC9 /* TCWalletBillDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC346D81E01433E00E28EC9 /* TCWalletBillDetailViewController.xib */; };
 		7AC346DE1E01434B00E28EC9 /* TCWalletPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC346DC1E01434B00E28EC9 /* TCWalletPasswordViewController.m */; };
-		7AC346DF1E01434B00E28EC9 /* TCWalletPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC346DD1E01434B00E28EC9 /* TCWalletPasswordViewController.xib */; };
 		7AC346EA1E0144B500E28EC9 /* TCWalletBillDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC346E21E0144B500E28EC9 /* TCWalletBillDetailHeaderView.m */; };
 		7AC346EB1E0144B500E28EC9 /* TCWalletBillDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC346E31E0144B500E28EC9 /* TCWalletBillDetailHeaderView.xib */; };
 		7AC346EC1E0144B500E28EC9 /* TCWalletBillDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC346E51E0144B500E28EC9 /* TCWalletBillDetailViewCell.m */; };
@@ -2879,7 +2878,6 @@
 		7AC346D81E01433E00E28EC9 /* TCWalletBillDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCWalletBillDetailViewController.xib; sourceTree = "<group>"; };
 		7AC346DB1E01434B00E28EC9 /* TCWalletPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletPasswordViewController.h; sourceTree = "<group>"; };
 		7AC346DC1E01434B00E28EC9 /* TCWalletPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletPasswordViewController.m; sourceTree = "<group>"; };
-		7AC346DD1E01434B00E28EC9 /* TCWalletPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCWalletPasswordViewController.xib; sourceTree = "<group>"; };
 		7AC346E11E0144B500E28EC9 /* TCWalletBillDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletBillDetailHeaderView.h; sourceTree = "<group>"; };
 		7AC346E21E0144B500E28EC9 /* TCWalletBillDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletBillDetailHeaderView.m; sourceTree = "<group>"; };
 		7AC346E31E0144B500E28EC9 /* TCWalletBillDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCWalletBillDetailHeaderView.xib; sourceTree = "<group>"; };
@@ -7694,7 +7692,6 @@
 				7AC346D81E01433E00E28EC9 /* TCWalletBillDetailViewController.xib */,
 				7AC346DB1E01434B00E28EC9 /* TCWalletPasswordViewController.h */,
 				7AC346DC1E01434B00E28EC9 /* TCWalletPasswordViewController.m */,
-				7AC346DD1E01434B00E28EC9 /* TCWalletPasswordViewController.xib */,
 				7AC346FA1E01454100E28EC9 /* TCBankCardAddViewController.h */,
 				7AC346FB1E01454100E28EC9 /* TCBankCardAddViewController.m */,
 				7AC346FC1E01454100E28EC9 /* TCBankCardAddViewController.xib */,
@@ -7958,7 +7955,6 @@
 				553DC8AA1DFFE22F0018783E /* oldphone-mono.wav in Resources */,
 				553DC87B1DFFE22F0018783E /* speexdsp.pc in Resources */,
 				553DC94E1DFFE2300018783E /* BelcardTargets-release.cmake in Resources */,
-				7AC346DF1E01434B00E28EC9 /* TCWalletPasswordViewController.xib in Resources */,
 				553DC8AF1DFFE22F0018783E /* Matroska2ConfigVersion.cmake in Resources */,
 				553DC9021DFFE2300018783E /* ORTPConfigVersion.cmake in Resources */,
 				553DC8EF1DFFE2300018783E /* BelrTargets-release.cmake in Resources */,

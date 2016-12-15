@@ -8,8 +8,9 @@
 
 #import "TCBioEditSMSViewController.h"
 #import "TCBiographyViewController.h"
+#import "TCWalletPasswordViewController.h"
 
-#import "MBProgressHUD+Category.h"
+#import "UIImage+Category.h"
 
 #import "TCBuluoApi.h"
 
@@ -29,15 +30,25 @@
     __weak TCBioEditSMSViewController *weakSelf;
 }
 
+- (instancetype)initWithMessageCodeType:(TCMessageCodeType)messageCodeType {
+    self = [super initWithNibName:@"TCBioEditSMSViewController" bundle:[NSBundle mainBundle]];
+    if (self) {
+        weakSelf = self;
+        _messageCodeType = messageCodeType;
+    }
+    return self;
+}
+
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    weakSelf = self;
     self.noticeLabel.text = [NSString stringWithFormat:@"请输入%@收到的短信校验码", self.phone];
     [self setupNavBar];
     [self setupSubviews];
-    [self startCountDown];
+    [self handleClickResendButton:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -51,8 +62,9 @@
     [self removeGetSMSTimer];
 }
 
+#pragma mark - Private Methods
+
 - (void)setupNavBar {
-    self.navigationItem.title = @"手机绑定";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -60,6 +72,27 @@
 }
 
 - (void)setupSubviews {
+    NSString *buttonTitle;
+    NSString *navBarTitle;
+    if (self.messageCodeType == TCMessageCodeTypeFindPassword) {
+        buttonTitle = @"下一步";
+        navBarTitle = @"安全校验";
+    } else {
+        buttonTitle = @"提交";
+        navBarTitle = @"手机绑定";
+    }
+    
+    NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:buttonTitle
+                                                                 attributes:@{
+                                                                              NSFontAttributeName: [UIFont systemFontOfSize:16],
+                                                                              NSForegroundColorAttributeName: [UIColor whiteColor]
+                                                                              }];
+    [self.commitButton setAttributedTitle:attStr forState:UIControlStateNormal];
+    UIImage *normalImage = [UIImage imageWithColor:TCRGBColor(81, 199, 209)];
+    UIImage *highlightedImage = [UIImage imageWithColor:TCRGBColor(10, 164, 177)];
+    [self.commitButton setBackgroundImage:normalImage forState:UIControlStateNormal];
+    [self.commitButton setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
+    
     self.commitButton.layer.cornerRadius = 2.5;
     self.commitButton.layer.masksToBounds = YES;
 }
@@ -86,7 +119,8 @@
     
     [[TCBuluoApi api] fetchVerificationCodeWithPhone:self.phone result:^(BOOL success, NSError *error) {
         if (!success) {
-            [MBProgressHUD showHUDWithMessage:@"手机号格式错误！"];
+            NSString *reason = error.localizedDescription ?: @"请重试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"验证码发送失败，%@", reason]];
             [weakSelf stopCountDown];
         }
     }];
@@ -99,6 +133,16 @@
         return;
     }
     
+    if (self.messageCodeType == TCMessageCodeTypeFindPassword) {
+        TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFindInputNewPassword];
+        vc.messageCode = code;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        [self handleChangeUserPhoneWithCode:code];
+    }
+}
+
+- (void)handleChangeUserPhoneWithCode:(NSString *)code {
     TCUserPhoneInfo *phoneInfo = [[TCUserPhoneInfo alloc] init];
     phoneInfo.phone = self.phone;
     phoneInfo.verificationCode = code;
@@ -112,7 +156,8 @@
             TCBiographyViewController *bioVC = self.navigationController.viewControllers[1];
             [self.navigationController popToViewController:bioVC animated:YES];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"手机号修改失败！"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"手机号修改失败，%@", reason]];
         }
     }];
 }
@@ -121,6 +166,8 @@
     TCBiographyViewController *bioVC = self.navigationController.viewControllers[1];
     [self.navigationController popToViewController:bioVC animated:YES];
 }
+
+#pragma mark - Count Down
 
 - (void)startCountDown {
     self.timeCount = 60;
