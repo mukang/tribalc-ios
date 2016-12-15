@@ -76,29 +76,29 @@
     [self createBottomButton];
     
     
-    baseInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, restaurantInfoLogoImageView.y + restaurantInfoLogoImageView.height + 35, TCScreenWidth, 0)];
+    baseInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, restaurantInfoLogoImageView.y + restaurantInfoLogoImageView.height + TCRealValue(35), TCScreenWidth, 0)];
     baseInfoView.backgroundColor =  [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1];
-    UIView *resBaseInfoView = [self createResBaseInfoViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 125)];
+    UIView *resBaseInfoView = [self createResBaseInfoViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, TCRealValue(125))];
     resBaseInfoView.backgroundColor = [UIColor whiteColor];
     [baseInfoView addSubview:resBaseInfoView];
     
-    UIView *addressAndPhoneView = [self createAddressAndPhoneViewWithFrame:CGRectMake(0, resBaseInfoView.y + resBaseInfoView.height, self.view.width, 82)];
+    UIView *addressAndPhoneView = [self createAddressAndPhoneViewWithFrame:CGRectMake(0, resBaseInfoView.y + resBaseInfoView.height, self.view.width, TCRealValue(82))];
     [baseInfoView addSubview:addressAndPhoneView];
     
-    UIView *recommendedReasonView = [self createTextViewWithFrame:CGRectMake(0, addressAndPhoneView.y + addressAndPhoneView.height, self.view.width, 175) AndTitle:@"推荐理由" AndText:serviceDetail.recommendedReason AndimgName:@"res_recommend"];
+    UIView *recommendedReasonView = [self createTextViewWithFrame:CGRectMake(0, addressAndPhoneView.y + addressAndPhoneView.height, self.view.width, TCRealValue(175)) AndTitle:@"推荐理由" AndText:serviceDetail.recommendedReason AndimgName:@"res_recommend"];
     [baseInfoView addSubview:recommendedReasonView];
     
-    UIView *restTopicView = [self createTextViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, 175) AndTitle:@"餐厅话题" AndText:serviceDetail.topics AndimgName:@"res_topic"];
+    UIView *restTopicView = [self createTextViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, TCRealValue(175)) AndTitle:@"餐厅话题" AndText:serviceDetail.topics AndimgName:@"res_topic"];
     [baseInfoView addSubview:restTopicView];
     
     
-    UIView *promptView = [self createPromptViewWithFrame:CGRectMake(0, restTopicView.y + restTopicView.height, self.view.frame.size.width, 145)];
+    UIView *promptView = [self createPromptViewWithFrame:CGRectMake(0, restTopicView.y + restTopicView.height, self.view.frame.size.width, TCRealValue(145))];
     [baseInfoView addSubview:promptView];
     
-    UIButton *phoneBtn = [self createPhoneCustomViewWithFrame:CGRectMake(0, promptView.y + promptView.height + 7, self.view.frame.size.width, 45)];
+    UIButton *phoneBtn = [self createPhoneCustomViewWithFrame:CGRectMake(0, promptView.y + promptView.height + TCRealValue(7), self.view.frame.size.width, TCRealValue(45))];
     [phoneBtn addTarget:self action:@selector(touchCallCustomerService) forControlEvents:UIControlEventTouchUpInside];
     [baseInfoView addSubview:phoneBtn];
-    baseInfoView.height = phoneBtn.y + phoneBtn.height + 8;
+    baseInfoView.height = phoneBtn.y + phoneBtn.height + TCRealValue(8);
     [mScrollView addSubview:baseInfoView];
     
     mScrollView.contentSize = CGSizeMake(self.view.width, baseInfoView.y + baseInfoView.height);
@@ -131,13 +131,13 @@
 
 - (void)initBaseData {
     
-    mScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 45)];
+    mScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - TCRealValue(45))];
     
     [self.view addSubview:mScrollView];
     
     NSURL *logoImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, serviceDetail.mainPicture]];
     
-    restaurantInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 270)];
+    restaurantInfoLogoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, TCRealValue(270))];
     [restaurantInfoLogoImageView sd_setImageWithURL:logoImageUrl placeholderImage:[UIImage imageNamed:@"home_image_place"]];
     restaurantInfoLogoImageView.clipsToBounds = NO;
     
@@ -156,16 +156,16 @@
 
 - (UIView *)createResBaseInfoViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UILabel *titleLab = [TCComponent createCenterLabWithFrame:CGRectMake(0, 22.5, frame.size.width, 22.5) AndFontSize:22.5 AndTitle:serviceDetail.name];
+    UILabel *titleLab = [TCComponent createCenterLabWithFrame:CGRectMake(0, TCRealValue(22.5), frame.size.width, TCRealValue(22.5)) AndFontSize:TCRealValue(22.5) AndTitle:serviceDetail.name];
     [view addSubview:titleLab];
     
-    UIView *typeAndAdressView = [self getRestTypeAndAddressInfoWithFrame:CGRectMake(0, titleLab.y + titleLab.height + 16, frame.size.width, 14)];
+    UIView *typeAndAdressView = [self getRestTypeAndAddressInfoWithFrame:CGRectMake(0, titleLab.y + titleLab.height + TCRealValue(16), frame.size.width, TCRealValue(14))];
     [view addSubview:typeAndAdressView];
 
-    UIView *priceView = [self createPriceViewWithFrame:CGRectMake(0, typeAndAdressView.y + typeAndAdressView.height + 14, frame.size.width / 2 - 20, 15)];
+    UIView *priceView = [self createPriceViewWithFrame:CGRectMake(0, typeAndAdressView.y + typeAndAdressView.height + TCRealValue(14), frame.size.width / 2 - TCRealValue(20), TCRealValue(15))];
     [view addSubview:priceView];
     
-    UIView *collectionView = [self getCollectionViewWithFrame:CGRectMake(frame.size.width / 2, priceView.y + 4, frame.size.width / 2, 11) AndNumber:serviceDetail.collectionNum];
+    UIView *collectionView = [self getCollectionViewWithFrame:CGRectMake(frame.size.width / 2, priceView.y + TCRealValue(4), frame.size.width / 2, TCRealValue(11)) AndNumber:serviceDetail.collectionNum];
     [view addSubview:collectionView];
     
     return view;
@@ -173,12 +173,12 @@
 
 - (UIView *)createPriceViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UILabel *unitLabel = [TCComponent createLabelWithFrame:CGRectMake(frame.size.width - 28, frame.size.height - 11, 28, 12) AndFontSize:11 AndTitle:@"元/人" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    UILabel *unitLabel = [TCComponent createLabelWithFrame:CGRectMake(frame.size.width - TCRealValue(28), frame.size.height - TCRealValue(11), TCRealValue(28), TCRealValue(12)) AndFontSize:TCRealValue(11) AndTitle:@"元/人" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     [view addSubview:unitLabel];
 
     NSString *priceStr = [NSString stringWithFormat:@"%f", serviceDetail.personExpense];
     priceStr = [NSString stringWithFormat:@"%@", @(priceStr.floatValue)];
-    UILabel *priceLabel = [TCComponent createLabelWithFrame:CGRectMake(0, 0, view.width - 28, frame.size.height) AndFontSize:frame.size.height AndTitle:priceStr AndTextColor:[UIColor blackColor]];
+    UILabel *priceLabel = [TCComponent createLabelWithFrame:CGRectMake(0, 0, view.width - TCRealValue(28), frame.size.height) AndFontSize:frame.size.height AndTitle:priceStr AndTextColor:[UIColor blackColor]];
     priceLabel.textAlignment = NSTextAlignmentRight;
     [view addSubview:priceLabel];
     
@@ -188,19 +188,19 @@
 - (UIView *)createAddressAndPhoneViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
-    UIView *topLine = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, frame.size.width - 40, 0.5)];
-    UIView *downLine = [TCComponent createGrayLineWithFrame:CGRectMake(20, frame.size.height - 0.5, topLine.width, 0.5)];
+    UIView *topLine = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, frame.size.width - TCRealValue(40), TCRealValue(0.5))];
+    UIView *downLine = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), frame.size.height - TCRealValue(0.5), topLine.width, TCRealValue(0.5))];
     [view addSubview:topLine];
     [view addSubview:downLine];
     
     TCDetailStore *storeDetail = serviceDetail.detailStore;
-    UILabel *addressLab = [TCComponent createLabelWithFrame:CGRectMake(20, 19, view.width - 20 - 16, 15) AndFontSize:15 AndTitle: storeDetail.address];
+    UILabel *addressLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), TCRealValue(19), view.width - TCRealValue(20) - TCRealValue(16), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle: storeDetail.address];
     [view addSubview:addressLab];
     
-    UILabel *phoneLab = [TCComponent createLabelWithFrame:CGRectMake(20, view.height - 19 - 14, addressLab.width, addressLab.height) AndFontSize:15 AndTitle:storeDetail.phone];
+    UILabel *phoneLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), view.height - TCRealValue(19) - TCRealValue(14), addressLab.width, addressLab.height) AndFontSize:TCRealValue(14) AndTitle:storeDetail.phone];
     [view addSubview:phoneLab];
     
-    UIButton *phoneBtn = [TCComponent createImageBtnWithFrame:CGRectMake(view.width - 20 - 15, addressLab.y, 15, 15) AndImageName:@"res_phone"];
+    UIButton *phoneBtn = [TCComponent createImageBtnWithFrame:CGRectMake(view.width - TCRealValue(20) - TCRealValue(15), addressLab.y, TCRealValue(15), TCRealValue(15)) AndImageName:@"res_phone"];
     [phoneBtn addTarget:self action:@selector(touchPhoneBtn) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:phoneBtn];
     UIButton *addressBtn = [TCComponent createImageBtnWithFrame:CGRectMake(phoneBtn.x, phoneLab.y, phoneBtn.width, phoneBtn.height) AndImageName:@"res_location2"];
@@ -215,17 +215,17 @@
     view.backgroundColor = [UIColor whiteColor];
 
     
-    UIView *titleView = [self getImageTitleViewWithFrame:CGRectMake(0, 22.5, frame.size.width, 23) AndImgName:imgName AndTitle:title];
+    UIView *titleView = [self getImageTitleViewWithFrame:CGRectMake(0, TCRealValue(22.5), frame.size.width, TCRealValue(23)) AndImgName:imgName AndTitle:title];
     
-    UILabel *textLab = [[UILabel alloc] initWithFrame:CGRectMake(62, titleView.y + titleView.height + 8, view.width - 62 * 2, view.height - 96 + 15)];
-    textLab.numberOfLines = 4;
-    textLab.font = [UIFont systemFontOfSize:15];
+    UILabel *textLab = [[UILabel alloc] initWithFrame:CGRectMake(TCRealValue(62), titleView.y + titleView.height + TCRealValue(8), view.width - TCRealValue(62) * 2, view.height - TCRealValue(96) + TCRealValue(15))];
+    textLab.numberOfLines = TCRealValue(4);
+    textLab.font = [UIFont systemFontOfSize:TCRealValue(14)];
     textLab.attributedText = [self getAttributedStringWithText:text];
    
-    UIView *line = [TCComponent createGrayLineWithFrame:CGRectMake(20, view.size.height - 0.5, view.width - 40, 0.5)];
+    UIView *line = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), view.size.height - TCRealValue(0.5), view.width - TCRealValue(20), TCRealValue(0.5))];
 
-    if (text.length > 80) {
-        UIButton *moreInfoBtn = [self getMoreInfoButtonWithFrame:CGRectMake(0, frame.size.height - 10 - 12, frame.size.width, 12)];
+    if (text.length > TCRealValue(80)) {
+        UIButton *moreInfoBtn = [self getMoreInfoButtonWithFrame:CGRectMake(0, frame.size.height - TCRealValue(10) - TCRealValue(12), frame.size.width, TCRealValue(12))];
         [view addSubview:moreInfoBtn];
         if ([title isEqualToString:@"推荐理由"]) {
             [moreInfoBtn addTarget:self action:@selector(touchMoreRecommendInfo) forControlEvents:UIControlEventTouchUpInside];
@@ -245,17 +245,17 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
-    UIView *titleView = [self getImageTitleViewWithFrame:CGRectMake(0, 21, self.view.frame.size.width, 23) AndImgName:@"res_prompt" AndTitle:@"温馨提示"];
+    UIView *titleView = [self getImageTitleViewWithFrame:CGRectMake(0, TCRealValue(21), self.view.frame.size.width, TCRealValue(23)) AndImgName:@"res_prompt" AndTitle:@"温馨提示"];
     [view addSubview:titleView];
     
     
     UIView *allImgView = [self getPromptImageView];
-    [allImgView setOrigin:CGPointMake(self.view.frame.size.width / 2 - allImgView.width / 2, titleView.y + titleView.height + 13)];
+    [allImgView setOrigin:CGPointMake(self.view.frame.size.width / 2 - allImgView.width / 2, titleView.y + titleView.height + TCRealValue(13))];
     [view addSubview:allImgView];
     
     TCDetailStore *storeDetail = serviceDetail.detailStore;
     NSString *time = [NSString stringWithFormat:@"每天 %@",storeDetail.businessHours];
-    UILabel *timeLab = [TCComponent createLabelWithFrame:CGRectMake(0, allImgView.y + allImgView.height + 12, self.view.frame.size.width, 13) AndFontSize:13 AndTitle:time AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    UILabel *timeLab = [TCComponent createLabelWithFrame:CGRectMake(0, allImgView.y + allImgView.height + TCRealValue(12), self.view.frame.size.width, TCRealValue(13)) AndFontSize:TCRealValue(13) AndTitle:time AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     timeLab.textAlignment = NSTextAlignmentCenter;
     [view addSubview:timeLab];
     
@@ -267,17 +267,17 @@
     button.backgroundColor = [UIColor whiteColor];
     
     UIImageView *phoneImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"res_phone-1"]];
-    [phoneImgView setFrame:CGRectMake(0, (frame.size.height - 18) / 2 + 1 , 18, 18)];
+    [phoneImgView setFrame:CGRectMake(0, (frame.size.height - TCRealValue(18)) / 2 + 1 , TCRealValue(18), TCRealValue(18))];
     
-    UILabel *phoneLab = [TCComponent createLabelWithText:@"电话客服" AndFontSize:14];
+    UILabel *phoneLab = [TCComponent createLabelWithText:@"电话客服" AndFontSize:TCRealValue(14)];
     phoneLab.textColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     
     UIImageView *arrowImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"res_phone_mark"]];
-    [arrowImgView setFrame:CGRectMake(0, frame.size.height / 2 - 7 + 1.7, 10, 14)];
+    [arrowImgView setFrame:CGRectMake(0, frame.size.height / 2 - TCRealValue(7) + TCRealValue(1.7), TCRealValue(10), TCRealValue(14))];
     
-    [phoneImgView setX:frame.size.width / 2 - (phoneImgView.width + phoneLab.width + arrowImgView.width + 3 + 3) / 2];
-    [phoneLab setOrigin:CGPointMake(phoneImgView.x + phoneImgView.width + 3, frame.size.height / 2 - 7)];
-    [arrowImgView setX:phoneLab.x + phoneLab.width + 3];
+    [phoneImgView setX:frame.size.width / 2 - (phoneImgView.width + phoneLab.width + arrowImgView.width + TCRealValue(6)) / 2];
+    [phoneLab setOrigin:CGPointMake(phoneImgView.x + phoneImgView.width + TCRealValue(3), frame.size.height / 2 - TCRealValue(7))];
+    [arrowImgView setX:phoneLab.x + phoneLab.width + TCRealValue(3)];
     
     [button addSubview:phoneImgView];
     [button addSubview:phoneLab];
@@ -290,7 +290,7 @@
 
 
 - (void)createBottomButton {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 45, self.view.frame.size.width, 45)];
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - TCRealValue(45), self.view.frame.size.width, TCRealValue(45))];
     UIColor *backColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     UIButton *orderBtn = [self createBottomBtnWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndText:@"优惠买单" AndImgName:@"res_discount" AndBackColor: [UIColor colorWithRed:112/255.0 green:206/255.0 blue:213/255.0 alpha:1]];
     [orderBtn addTarget:self action:@selector(touchOrderRest) forControlEvents:UIControlEventTouchUpInside];
@@ -313,10 +313,10 @@
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
     [imgView sizeToFit];
-    [imgView setOrigin:CGPointMake(53, frame.size.height / 2 - imgView.height / 2 + 1)];
+    [imgView setOrigin:CGPointMake(TCRealValue(53), frame.size.height / 2 - imgView.height / 2 + 1)];
     [button addSubview:imgView];
     
-    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:17];
+    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:TCRealValue(17)];
     label.textColor = [UIColor whiteColor];
     [button addSubview:label];
     
@@ -333,7 +333,7 @@
     NSArray *promptArr = serviceDetail.detailStore.tags;
 //    NSArray *promptImageArr = serviceDetail.pictures;
     for (int i = 0; i < promptArr.count; i++) {
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * 27 + 35, 0, 27, 27)];
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(27) + TCRealValue(35), 0, TCRealValue(27), TCRealValue(27))];
         if (i == 0) {
             [imgView setX:0];
         }
@@ -342,15 +342,15 @@
         imgView.image = [UIImage imageNamed:@"res_phone"];
         UILabel *titleLab = [[UILabel alloc] init];
         titleLab.text = promptArr[i];
-        titleLab.font = [UIFont systemFontOfSize:13];
+        titleLab.font = [UIFont systemFontOfSize:TCRealValue(13)];
         titleLab.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
         [titleLab sizeToFit];
-        [titleLab setOrigin:CGPointMake(imgView.x + imgView.width / 2 - titleLab.width / 2, imgView.y + imgView.height + 5)];
+        [titleLab setOrigin:CGPointMake(imgView.x + imgView.width / 2 - titleLab.width / 2, imgView.y + imgView.height + TCRealValue(5))];
         
         [view addSubview:imgView];
         [view addSubview:titleLab];
     }
-    [view setSize:CGSizeMake(27 * promptArr.count + (promptArr.count - 1) * 35, 27 + 5 + 13)];
+    [view setSize:CGSizeMake(TCRealValue(27) * promptArr.count + (promptArr.count - 1) * TCRealValue(35), TCRealValue(27 + 5 + 13))];
     
     return view;
 }
@@ -360,9 +360,9 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     UIImage *image = [UIImage imageNamed:imgName];
     UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
-    UILabel *titleLab = [TCComponent createLabelWithText:title AndFontSize:22];
-    [imgView setOrigin:CGPointMake(view.width / 2 - (titleLab.width + image.size.width) / 2, 4)];
-    [titleLab setOrigin:CGPointMake(imgView.x + imgView.width + 2, 0)];
+    UILabel *titleLab = [TCComponent createLabelWithText:title AndFontSize:TCRealValue(22)];
+    [imgView setOrigin:CGPointMake(view.width / 2 - (titleLab.width + image.size.width) / 2, TCRealValue(4))];
+    [titleLab setOrigin:CGPointMake(imgView.x + imgView.width + TCRealValue(2), 0)];
     
     [view addSubview:imgView];
     [view addSubview:titleLab];
@@ -373,7 +373,7 @@
 - (NSMutableAttributedString *)getAttributedStringWithText:(NSString *)text {
     NSMutableAttributedString *attrText = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing = 5;
+    paragraphStyle.lineSpacing = TCRealValue(5);
     paragraphStyle.alignment = NSTextAlignmentJustified;
 //    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
     [attrText addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, text.length)];
@@ -389,17 +389,17 @@
     [locationLab setOrigin:CGPointMake(frame.size.width / 2 - locationLab.width / 2, 0)];
     [view addSubview:locationLab];
     
-    UIView *leftLine = [TCComponent createGrayLineWithFrame:CGRectMake(locationLab.x - 8 - 0.25, locationLab.y, 0.5, locationLab.height)];
+    UIView *leftLine = [TCComponent createGrayLineWithFrame:CGRectMake(locationLab.x - TCRealValue(8) - TCRealValue(0.25), locationLab.y, TCRealValue(0.5), locationLab.height)];
     [view addSubview:leftLine];
     
-    UIView *rightLine = [TCComponent createGrayLineWithFrame:CGRectMake(locationLab.x + locationLab.width + 8, locationLab.y, 0.5, locationLab.height)];
+    UIView *rightLine = [TCComponent createGrayLineWithFrame:CGRectMake(locationLab.x + locationLab.width + TCRealValue(8), locationLab.y, TCRealValue(0.5), locationLab.height)];
     [view addSubview:rightLine];
     
-    UILabel *typeLab = [TCComponent createLabelWithFrame:CGRectMake(0, locationLab.y, leftLine.x - 8, locationLab.height) AndFontSize:14 AndTitle:detailStore.brand];
+    UILabel *typeLab = [TCComponent createLabelWithFrame:CGRectMake(0, locationLab.y, leftLine.x - TCRealValue(8), locationLab.height) AndFontSize:TCRealValue(14) AndTitle:detailStore.brand];
     typeLab.textAlignment = NSTextAlignmentRight;
     [view addSubview:typeLab];
     
-    UILabel *rangeLab = [TCComponent createLabelWithFrame:CGRectMake(rightLine.x + 0.5 + 8, locationLab.y, frame.size.width - rightLine.x + 0.5 + 8, locationLab.height) AndFontSize:14 AndTitle:@"2222m"];
+    UILabel *rangeLab = [TCComponent createLabelWithFrame:CGRectMake(rightLine.x + TCRealValue(0.5) + TCRealValue(8), locationLab.y, frame.size.width - rightLine.x + TCRealValue(0.5) + TCRealValue(8), locationLab.height) AndFontSize:TCRealValue(14) AndTitle:@"2222m"];
     rangeLab.textAlignment = NSTextAlignmentLeft;
     [view addSubview:rangeLab];
 
@@ -409,12 +409,12 @@
 - (UIView *)getCollectionViewWithFrame:(CGRect)frame AndNumber:(NSInteger)number{
     UIView *view = [[UIView alloc] initWithFrame:frame];
     UIImage *collectionImg = [UIImage imageNamed:@"res_collection_gray"];
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 1, 11, 9)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, TCRealValue(1), TCRealValue(11), TCRealValue(9))];
     imgView.image = collectionImg;
     [view addSubview:imgView];
     
     NSString *numberStr = [NSString stringWithFormat:@"%li", (long)number];
-    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(imgView.x + imgView.width + 1, 0, frame.size.width - imgView.x - imgView.width, frame.size.height) AndFontSize:frame.size.height AndTitle:[NSString stringWithFormat:@"%@已收藏", numberStr] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(imgView.x + imgView.width + TCRealValue(1), 0, frame.size.width - imgView.x - imgView.width, frame.size.height) AndFontSize:frame.size.height AndTitle:[NSString stringWithFormat:@"%@已收藏", numberStr] AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     [view addSubview:label];
     
     
@@ -426,7 +426,7 @@
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     [button setTitle:@"更多详情>" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:12];
+    button.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
     
     return button;
 }
@@ -499,7 +499,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGFloat minAlphaOffset = 0;
-    CGFloat maxAlphaOffset = 270;
+    CGFloat maxAlphaOffset = TCRealValue(270);
     CGFloat offset = scrollView.contentOffset.y;
     CGFloat alpha = (offset - minAlphaOffset) / (maxAlphaOffset - minAlphaOffset);
     barImageView.alpha = alpha;
@@ -518,8 +518,8 @@
     }
     
     if (point.y < 0) {
-        double height = -point.y + 270;
-        double number = height / 270;
+        double height = -point.y + TCRealValue(270);
+        double number = height / TCRealValue(270);
         double width = self.view.frame.size.width * number;
         double logoRadius = height * 0.12;
         double addHeight = logoRadius * 2 - logoView.height;

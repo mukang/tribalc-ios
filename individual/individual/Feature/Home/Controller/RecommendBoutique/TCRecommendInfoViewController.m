@@ -43,14 +43,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self initNavigationBar];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     
     [self initGoodDetailInfoWithGoodId:mGoodId];
@@ -74,16 +73,16 @@
     UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(394))];
     [mScrollView addSubview:titleImageView];
     
-    goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, 87) WithTitle:mGoodDetail.name AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
+    goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, TCRealValue(87)) WithTitle:mGoodDetail.name AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
     [mScrollView addSubview:goodTitleView];
     
-    UIButton *standardSelectBtn = [self createStandardSelectButtonWithFrame:CGRectMake(0, goodTitleView.y + goodTitleView.height + 7.5, self.view.width, 38)];
+    UIButton *standardSelectBtn = [self createStandardSelectButtonWithFrame:CGRectMake(0, goodTitleView.y + goodTitleView.height + TCRealValue(7.5), self.view.width, TCRealValue(38))];
     [mScrollView addSubview:standardSelectBtn];
     
-    UIView *shopView = [self createShopInfoViewWithFrame:CGRectMake(0, standardSelectBtn.y + standardSelectBtn.height + 7.5, self.view.width, 64)];
+    UIView *shopView = [self createShopInfoViewWithFrame:CGRectMake(0, standardSelectBtn.y + standardSelectBtn.height + TCRealValue(7.5), self.view.width, TCRealValue(64))];
     [mScrollView addSubview:shopView];
     
-    UISegmentedControl *selectGoodInfoSegment = [self createSelectGoodGraphicAndParameterView:CGRectMake(0, shopView.y + shopView.height, self.view.width, 39)];
+    UISegmentedControl *selectGoodInfoSegment = [self createSelectGoodGraphicAndParameterView:CGRectMake(0, shopView.y + shopView.height, self.view.width, TCRealValue(39))];
     [mScrollView addSubview:selectGoodInfoSegment];
     
     NSString *webUrlStr = [NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, mGoodDetail.detailURL];
@@ -92,10 +91,12 @@
     tempView.scrollEnabled = NO;
     [mScrollView addSubview:textAndImageView];
 
-    UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, self.view.height - 49, self.view.width, 49)];
+    UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
     [self.view addSubview:bottomView];
 
     [self initSelectSizeView];
+    
+    [self initBackButton];
 
 }
 
@@ -112,28 +113,22 @@
 
 
 - (void)initScrollView {
-    mScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 49)];
-    mScrollView.contentSize = CGSizeMake(self.view.width, 1500);
+    mScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -20, self.view.width, self.view.height + 20 - TCRealValue(49))];
+    mScrollView.contentSize = CGSizeMake(self.view.width, TCRealValue(1500));
     mScrollView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     [self.view addSubview:mScrollView];
 }
 
-- (void)initNavigationBar {
-    self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
-    barImageView.backgroundColor = [UIColor whiteColor];
-    barImageView.alpha = 0;
 
+- (void)initBackButton {
     UIButton *backBtn = [self getBackButton];
     [backBtn addTarget:self action:@selector(touchBackButton) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    
+    [self.view addSubview:backBtn];
 }
 
 - (UIButton *)getBackButton {
-    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 30, 30)];
-    backBtn.layer.cornerRadius = 15;
+    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(TCRealValue(13), TCRealValue(30), TCRealValue(27.5), TCRealValue(27.5))];
+    backBtn.layer.cornerRadius = TCRealValue(27.5 / 2);
     backBtn.backgroundColor = [UIColor colorWithRed:57/255.0 green:57/255.0 blue:57/255.0 alpha:1];
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back"]];
@@ -155,7 +150,7 @@
     [view addSubview:imageCollectionView];
     
     NSArray *imgArr = mGoodDetail.pictures;
-    imgPageControl = [[TCImgPageControl alloc] initWithFrame:CGRectMake(0, view.height - 20, self.view.width, 20)];
+    imgPageControl = [[TCImgPageControl alloc] initWithFrame:CGRectMake(0, view.height - TCRealValue(20), self.view.width, TCRealValue(20))];
     imgPageControl.numberOfPages = imgArr.count;
     imgPageControl.userInteractionEnabled = NO;
     imgPageControl.currentPage = 0;
@@ -167,12 +162,12 @@
 - (UIButton *)createStandardSelectButtonWithFrame:(CGRect)frame {
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     button.backgroundColor = [UIColor whiteColor];
-    UILabel *selectLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, frame.size.width - 20, frame.size.height) AndFontSize:15 AndTitle:@"请选择规格"];
+    UILabel *selectLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), 0, frame.size.width - TCRealValue(20), frame.size.height) AndFontSize:TCRealValue(15) AndTitle:@"请选择规格"];
     [button addSubview:selectLab];
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"goods_select_standard"]];
     [imgView sizeToFit];
-    [imgView setOrigin:CGPointMake(frame.size.width - 20 - imgView.width, frame.size.height / 2 - imgView.height / 2)];
+    [imgView setOrigin:CGPointMake(frame.size.width - TCRealValue(20) - imgView.width, frame.size.height / 2 - imgView.height / 2)];
     [button addSubview:imgView];
     
     [button addTarget:self action:@selector(touchSelectStandardBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -184,24 +179,24 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
-    UIImageView *logoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 8, 48, 48)];
+    UIImageView *logoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCRealValue(20), TCRealValue(8), TCRealValue(48), TCRealValue(48))];
     [logoImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, mGoodDetail.thumbnail]]];
     [view addSubview:logoImgView];
     
     NSString *brandStr = [NSString stringWithFormat:@"品牌 : %@", mGoodDetail.brand];
-    UILabel *brandLab = [TCComponent createLabelWithFrame:CGRectMake(logoImgView.x + logoImgView.width + 12, 8, frame.size.width - logoImgView.x + logoImgView.width + 12, 14) AndFontSize:14 AndTitle:brandStr AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
-    brandLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+    UILabel *brandLab = [TCComponent createLabelWithFrame:CGRectMake(logoImgView.x + logoImgView.width + TCRealValue(12), TCRealValue(8), frame.size.width - logoImgView.x + logoImgView.width + TCRealValue(12), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:brandStr AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
+    brandLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(14)];
     [view addSubview:brandLab];
     
-    UIView *evaluateView = [self getEvaluateViewWithFrame:CGRectMake(brandLab.x, brandLab.y + brandLab.height + 4, brandLab.width, 13)];
+    UIView *evaluateView = [self getEvaluateViewWithFrame:CGRectMake(brandLab.x, brandLab.y + brandLab.height + TCRealValue(4), brandLab.width, TCRealValue(13))];
     [view addSubview:evaluateView];
     
     NSString *salesStr = [NSString stringWithFormat:@"总销量 : %li", (long)mGoodDetail.saleQuantity];
-    UILabel *salesLab = [self getLabelWithText:salesStr AndOrigin:CGPointMake(brandLab.x, evaluateView.y + evaluateView.height + 5)];
+    UILabel *salesLab = [self getLabelWithText:salesStr AndOrigin:CGPointMake(brandLab.x, evaluateView.y + evaluateView.height + TCRealValue(5))];
     [view addSubview:salesLab];
     
     NSString *profitStr = [NSString stringWithFormat:@"电话 : %@",  @"65573"];
-    UILabel *profitLab = [self getLabelWithText:profitStr AndOrigin:CGPointMake(salesLab.x + salesLab.width + 15, salesLab.y)];
+    UILabel *profitLab = [self getLabelWithText:profitStr AndOrigin:CGPointMake(salesLab.x + salesLab.width + TCRealValue(15), salesLab.y)];
     [view addSubview:profitLab];
 
     return view;
@@ -211,7 +206,7 @@
     UIView *view=  [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, frame.size.width, 0.5)];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, frame.size.width, TCRealValue(0.5))];
     [view addSubview:lineView];
     
     UIButton *collectionView = [self createCollectionAndShopViewWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_collection_gray" AndText:@"收藏" AndAction:@selector(touchCollectionBtn:)];
@@ -221,7 +216,7 @@
     [view addSubview:shopCarImgBtn];
     
     
-    UIButton *shopCarBtn = [TCComponent createButtonWithFrame:CGRectMake(shopCarImgBtn.x + shopCarImgBtn.width, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:18];
+    UIButton *shopCarBtn = [TCComponent createButtonWithFrame:CGRectMake(shopCarImgBtn.x + shopCarImgBtn.width, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:TCRealValue(18)];
     [shopCarBtn addTarget:self action:@selector(touchAddShopCartBtnInDetailView:) forControlEvents:UIControlEventTouchUpInside];
     shopCarBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -234,11 +229,12 @@
     UIButton *view = [[UIButton alloc] initWithFrame:frame];
     
     UIImage *img = [UIImage imageNamed:imageName];
-    UIButton *button = [TCComponent createButtonWithFrame:CGRectMake((frame.size.width - img.size.width) / 2, 10, img.size.width, img.size.height) AndTitle:@"" AndFontSize:0];
+    UIButton *button = [TCComponent createButtonWithFrame:CGRectMake((frame.size.width - img.size.width) / 2, TCRealValue(10), img.size.width, img.size.height) AndTitle:@"" AndFontSize:0];
     [button setImage:img forState:UIControlStateNormal];
+    button.userInteractionEnabled = NO;
     [view addSubview:button];
     
-    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(0, button.y + button.height + 3, frame.size.width, 12) AndFontSize:12 AndTitle:text AndTextColor:[UIColor colorWithRed:130/255.0 green:130/255.0 blue:130/255.0 alpha:1]];
+    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(0, button.y + button.height + TCRealValue(3), frame.size.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:text AndTextColor:[UIColor colorWithRed:130/255.0 green:130/255.0 blue:130/255.0 alpha:1]];
     label.textAlignment = NSTextAlignmentCenter;
     [view addSubview:label];
     
@@ -251,12 +247,12 @@
     
     UISegmentedControl *selectSegment = [self getSegmentControlWithFrame:frame];
     
-    UIView *topLine = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, frame.size.width, 1)];
-    UIView *downLine = [TCComponent createGrayLineWithFrame:CGRectMake(0, frame.size.height - 1, frame.size.width, 1)];
+    UIView *topLine = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, frame.size.width, TCRealValue(1))];
+    UIView *downLine = [TCComponent createGrayLineWithFrame:CGRectMake(0, frame.size.height - TCRealValue(1), frame.size.width, TCRealValue(1))];
     [selectSegment addSubview:topLine];
     [selectSegment addSubview:downLine];
     
-    UIView *centerLine = [TCComponent createGrayLineWithFrame:CGRectMake(frame.size.width / 2 - 0.25, frame.size.height / 2 - 13, 0.5, 26)];
+    UIView *centerLine = [TCComponent createGrayLineWithFrame:CGRectMake(frame.size.width / 2 - TCRealValue(0.25), frame.size.height / 2 - TCRealValue(13), TCRealValue(0.5), TCRealValue(26))];
     [selectSegment addSubview:centerLine];
     
     
@@ -307,9 +303,9 @@
     UISegmentedControl *selectSegment = [[UISegmentedControl alloc] initWithItems:segmentArr];
     [selectSegment setFrame:frame];
     selectSegment.tintColor = [UIColor clearColor];
-    NSDictionary *normal = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:14], NSFontAttributeName, nil];
+    NSDictionary *normal = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:TCRealValue(14)], NSFontAttributeName, nil];
     [selectSegment setTitleTextAttributes:normal forState:UIControlStateNormal];
-    NSDictionary *select = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:14], NSFontAttributeName, nil];
+    NSDictionary *select = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:TCRealValue(14)], NSFontAttributeName, nil];
     [selectSegment setTitleTextAttributes:normal forState:UIControlStateNormal];
     [selectSegment setTitleTextAttributes:select forState:UIControlStateSelected];
     selectSegment.selectedSegmentIndex = 0;
@@ -318,7 +314,7 @@
 }
 
 - (UILabel *)getLabelWithText:(NSString *)text AndOrigin:(CGPoint)point {
-    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:11 AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:TCRealValue(11) AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     [label setOrigin:point];
     
     return label;
@@ -330,11 +326,11 @@
     int number = numberStr.intValue;
     for (int i = 0; i < number; i++) {
         UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"good_collection_yes"]];
-        [imgView setSize:CGSizeMake(13, 13)];
+        [imgView setSize:CGSizeMake(TCRealValue(13), TCRealValue(13))];
         if (i == 0) {
             [imgView setOrigin:CGPointMake(0, 0)];
         } else {
-            [imgView setOrigin:CGPointMake(i * 13 + i * 3, 0)];
+            [imgView setOrigin:CGPointMake(i * TCRealValue(13) + i * TCRealValue(3), 0)];
         }
         [view addSubview:imgView];
     }
@@ -679,16 +675,14 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [standardView removeFromSuperview];
+    [super viewWillDisappear:animated];
 
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
-    barImageView.backgroundColor =[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    barImageView.alpha = 1;
+    self.navigationController.navigationBarHidden = NO;
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

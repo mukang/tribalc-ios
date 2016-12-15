@@ -168,12 +168,12 @@
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake((self.view.frame.size.width - 37) / 2, (self.view.frame.size.width - 37) / 2 * 1.73);
+    return CGSizeMake((self.view.frame.size.width - TCRealValue(37)) / 2, (self.view.frame.size.width - TCRealValue(37)) / 2 * 1.73);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     
-    return UIEdgeInsetsMake(7, 12.5, 7, 12);
+    return UIEdgeInsetsMake(TCRealValue(7), TCRealValue(12.5), TCRealValue(7), TCRealValue(12));
 
 }
 
@@ -182,19 +182,7 @@
 - (void)touchCollectionButton:(UIButton *)button {
     NSInteger index = button.tag;
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@""]];
-    request.HTTPMethod = @"post";
-    NSDictionary *body = @{};
-    NSData *data = [NSJSONSerialization dataWithJSONObject:body options:0 error:nil];
-    request.HTTPBody = data;
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            
-        }
-    }];
-    [dataTask resume];
+  
     
     
     UIImageView *imgView = collectionImgArr[index];

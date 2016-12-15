@@ -17,6 +17,10 @@
 @property (nonatomic) NSInteger amount;
 /** 购物车商品id */
 @property (retain, nonatomic) TCGoods *goods;
+/** 规格id */
+@property (copy, nonatomic) NSString *standardId;
+/** 库存剩余量 */
+@property (assign, nonatomic) NSInteger repertory;
 
 @property (nonatomic) BOOL select;
 

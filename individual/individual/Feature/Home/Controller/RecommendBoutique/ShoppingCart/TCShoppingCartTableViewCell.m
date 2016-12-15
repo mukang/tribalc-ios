@@ -25,12 +25,12 @@
         _selectTag = tag;
         
         self.backgroundColor = [UIColor whiteColor];
-        float height = 139;
+        float height = TCRealValue(139);
         float width = [UIScreen mainScreen].bounds.size.width;
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(20), height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
+        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(20), height / 2 - TCRealValue(8), TCRealValue(16), TCRealValue(16)) AndImageName:@"car_unselected"];
         [self.contentView addSubview:_selectedBtn];
         
         _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + TCRealValue(20), height / 2 - TCRealValue(94) / 2, TCRealValue(94), TCRealValue(94))];
@@ -40,7 +40,7 @@
         [self.contentView addSubview:_baseInfoView];
         
         
-        UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, width - 40, 0.5)];
+        UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(10), 0, width - TCRealValue(20), TCRealValue(0.5))];
         [self.contentView addSubview:topLineView];
 
 
@@ -56,12 +56,12 @@
         _selectTag = tag;
         
         self.backgroundColor = [UIColor whiteColor];
-        float height = 139;
+        float height = TCRealValue(139);
         float width = [UIScreen mainScreen].bounds.size.width;
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
+        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(20), height / 2 - TCRealValue(8), TCRealValue(16), TCRealValue(16)) AndImageName:@"car_unselected"];
         [self.contentView addSubview:_selectedBtn];
         
         _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + TCRealValue(20), height / 2 - TCRealValue(94) / 2, TCRealValue(94), TCRealValue(94))];
@@ -70,7 +70,7 @@
         _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initNormalViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:_selectTag AndGoodsId:goodsId];
         [self.contentView addSubview:_baseInfoView];
         
-        UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, width - 40, 0.5)];
+        UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, width - TCRealValue(40), TCRealValue(0.5))];
         [self.contentView addSubview:topLineView];
     }
     
@@ -103,13 +103,13 @@
     priceStr = [NSString stringWithFormat:@"￥%@", @(priceStr.floatValue)];
     priceLab.text = priceStr;
     [priceLab sizeToFit];
-    priceLab.x = [UIScreen mainScreen].bounds.size.width - 20 - priceLab.width;
+    priceLab.x = [UIScreen mainScreen].bounds.size.width - TCRealValue(20) - priceLab.width;
     
 }
 
 - (UIImageView *)getLeftImageViewWithFrame:(CGRect)frame {
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
-    imgView.layer.borderWidth = 1;
+    imgView.layer.borderWidth = TCRealValue(1);
     imgView.layer.borderColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1].CGColor;
     
     return imgView;

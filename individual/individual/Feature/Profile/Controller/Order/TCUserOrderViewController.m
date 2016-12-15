@@ -79,7 +79,7 @@
 }
 
 - (void)initTableView {
-    orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40.5, self.view.width, self.view.height- 40.5) style:UITableViewStyleGrouped];
+    orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, TCRealValue(40.5), self.view.width, self.view.height- TCRealValue(40.5)) style:UITableViewStyleGrouped];
     orderTableView.showsHorizontalScrollIndicator = NO;
     orderTableView.delegate = self;
     orderTableView.dataSource = self;
@@ -105,31 +105,31 @@
 }
 
 - (UIView *)getTableViewFooterViewWithTotalprice:(NSString *)totalPrice {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 51)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(51))];
     UILabel *totalLab = [self getOrderTotalPriceLabelWithPrice:totalPrice];
     [view addSubview:totalLab];
     
-    UILabel *totalMarkLab = [TCComponent createLabelWithFrame:CGRectMake(self.view.width - totalLab.width - 47, 2, 30, view.height - 3) AndFontSize:12 AndTitle:@"总计:" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    UILabel *totalMarkLab = [TCComponent createLabelWithFrame:CGRectMake(self.view.width - totalLab.width - TCRealValue(47), TCRealValue(2), TCRealValue(30), view.height - TCRealValue(3)) AndFontSize:TCRealValue(12) AndTitle:@"总计:" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     [view addSubview:totalMarkLab];
     
     return view;
 }
 
 - (UILabel *)getOrderTotalPriceLabelWithPrice:(NSString *)totalPrice  {
-    UILabel *totalLab = [TCComponent createLabelWithText:[NSString stringWithFormat:@"￥%@", totalPrice] AndFontSize:18];
-    totalLab.font = [UIFont fontWithName:BOLD_FONT size:18];
+    UILabel *totalLab = [TCComponent createLabelWithText:[NSString stringWithFormat:@"￥%@", totalPrice] AndFontSize:TCRealValue(18)];
+    totalLab.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(18)];
     totalLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
     [totalLab sizeToFit];
-    totalLab.frame = CGRectMake(self.view.width - 20 - totalLab.width, 0, totalLab.width, 51);
+    totalLab.frame = CGRectMake(self.view.width - TCRealValue(20) - totalLab.width, 0, totalLab.width, TCRealValue(51));
     
     return totalLab;
 }
 
 - (UIView *)getTableViewHeightViewWithOrderId:(NSString *)orderIdStr AndStatus:(NSString *)statusStr{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40.5 + 15)];
-    UIView *orderInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 15, self.view.width, view.frame.size.height - 15)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(40.5) + TCRealValue(15))];
+    UIView *orderInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, TCRealValue(15), self.view.width, view.frame.size.height - TCRealValue(15))];
     orderInfoView.backgroundColor = [UIColor whiteColor];
-    UILabel *orderIdLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, self.view.width - 79, orderInfoView.height) AndFontSize:14 AndTitle:[NSString stringWithFormat:@"订单号:%@", orderIdStr] AndTextColor:[UIColor blackColor]];
+    UILabel *orderIdLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), 0, self.view.width - TCRealValue(79), orderInfoView.height) AndFontSize:TCRealValue(14) AndTitle:[NSString stringWithFormat:@"订单号:%@", orderIdStr] AndTextColor:[UIColor blackColor]];
     [orderInfoView addSubview:orderIdLab];
     
     if (![self.title isEqualToString:@"全部"]) {
@@ -178,14 +178,14 @@
 }
 
 - (UIView *)getOrderStatusViewWithStatus:(NSString *)statusStr {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.view.width - 79, 0, 79, 40.5)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.view.width - TCRealValue(79), 0, TCRealValue(79), TCRealValue(40.5))];
     if ([statusStr isEqualToString:@"RECEIVED"]) {
         UIImage *completeImg = [UIImage imageNamed:@"order_complete"];
         UIImageView *statusImgView = [[UIImageView alloc] initWithImage:completeImg];
         statusImgView.frame = CGRectMake((view.width - completeImg.size.width) / 2, (view.height - completeImg.size.height) / 2, completeImg.size.width, completeImg.size.height);
         [view addSubview:statusImgView];
     } else {
-        UILabel *statusLabel = [TCComponent createLabelWithFrame:CGRectMake(-60, 0, view.width + 40, view.height) AndFontSize:14 AndTitle:statusStr AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
+        UILabel *statusLabel = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(-60), 0, view.width + TCRealValue(40), view.height) AndFontSize:TCRealValue(14) AndTitle:statusStr AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
         statusLabel.textAlignment = NSTextAlignmentRight;
         [view addSubview:statusLabel];
     }
@@ -195,15 +195,15 @@
 
 #pragma mark - UITableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 77;
+    return TCRealValue(77);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40.5 + 15;
+    return TCRealValue(40.5 + 15);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 51;
+    return TCRealValue(51);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

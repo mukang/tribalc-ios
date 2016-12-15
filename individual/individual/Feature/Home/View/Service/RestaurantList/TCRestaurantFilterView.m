@@ -15,14 +15,14 @@
     if (self) {
         self.backgroundColor = [UIColor colorWithRed:251/255.0 green:251/255.0 blue:251/255.0 alpha:1];
         
-        UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width / 3, 8, 0.5, frame.size.height - 8 * 2)];
-        UIView *secondLine = [[UIView alloc] initWithFrame:CGRectMake(firstLine.x + firstLine.width + frame.size.width - firstLine.x * 2, firstLine.y, 0.5, firstLine.height)];
+        UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width / 3, TCRealValue(8), TCRealValue(0.5), frame.size.height - TCRealValue(8) * 2)];
+        UIView *secondLine = [[UIView alloc] initWithFrame:CGRectMake(firstLine.x + firstLine.width + frame.size.width - firstLine.x * 2, firstLine.y, TCRealValue(0.5), firstLine.height)];
         firstLine.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
         secondLine.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
         [self addSubview:firstLine];
         [self addSubview:secondLine];
         
-        _reserveBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(12, 0, firstLine.x - 12, frame.size.height) AndImgName:@"res_reserve2" AndText:@"可预订"];
+        _reserveBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(TCRealValue(12), 0, firstLine.x - TCRealValue(12), frame.size.height) AndImgName:@"res_reserve2" AndText:@"可预订"];
         [self addSubview:_reserveBtn];
         
         _deliverBtn = [[TCSelectSortButton alloc] initWithFrame:CGRectMake(firstLine.x + firstLine.width, 0, secondLine.x - firstLine.x + firstLine.width, frame.size.height) AndImgName:@"res_deliver" AndText:@"有包间"];

@@ -141,10 +141,10 @@
     }
     NSArray *userReserveOrderArr = userReserveWrapper.content;
     TCReservation *reservation = userReserveOrderArr[section];
-    UILabel *statusLab = [TCComponent createLabelWithFrame:CGRectMake(22.5, 0, TCScreenWidth - 45, 42) AndFontSize:14 AndTitle:[self getHeaderStatusText:reservation.status]];
+    UILabel *statusLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(22.5), 0, TCScreenWidth - TCRealValue(45), TCRealValue(42)) AndFontSize:TCRealValue(14) AndTitle:[self getHeaderStatusText:reservation.status]];
     statusLab.textColor = [self getHeaderStatusTextColor:reservation.status];
     [headerView addSubview:statusLab];
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 42 - 0.5, TCScreenWidth, 0.5)];
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, TCRealValue(42 - 0.5), TCScreenWidth, TCRealValue(0.5))];
     [headerView addSubview:topLineView];
     
     return headerView;
@@ -157,7 +157,7 @@
         footerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:identifier];
     }
     
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 7)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCRealValue(7))];
     backView.backgroundColor = TCRGBColor(242, 242, 242);
     [footerView addSubview:backView];
     
@@ -189,11 +189,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 42;
+    return TCRealValue(42);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 7;
+    return TCRealValue(7);
 }
 
 

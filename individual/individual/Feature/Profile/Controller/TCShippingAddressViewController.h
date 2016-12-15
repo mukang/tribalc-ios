@@ -14,4 +14,7 @@ typedef void(^TCDefaultShippingAddressChangeBlock)(BOOL isChange);
 
 @property (copy, nonatomic) TCDefaultShippingAddressChangeBlock defaultShippingAddressChangeBlock;
 
+- (instancetype)initPlaceOrderAddressSelect;
+
+
 @end

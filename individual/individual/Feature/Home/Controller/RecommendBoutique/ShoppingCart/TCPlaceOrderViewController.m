@@ -15,12 +15,14 @@
 #import "TCPayMethodView.h"
 #import "TCImageURLSynthesizer.h"
 #import "TCBalancePayView.h"
+#import "TCShippingAddressViewController.h"
 
 @interface TCPlaceOrderViewController () {
     NSMutableArray *orderDetailList;
     UITextField *supplementField;
     TCPayMethodView *payMethodView;
     TCBalancePayView *payView;
+    TCOrderAddressView *userAddressView;
 }
 
 @end
@@ -48,16 +50,19 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self initNavigationBar];
     
-    UIScrollView *scrollView = [self getScrollViewWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - 49)];
+    UIScrollView *scrollView = [self getScrollViewWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - TCRealValue(49))];
     
-    NSArray *addressArr = [self getDefaultAddressArr];
-    UIView *userAddressView = [[TCOrderAddressView alloc] initWithOrigin:CGPointMake(0, 0) WithName:addressArr[0] AndPhone:addressArr[1] AndAddress:addressArr[2]];
+    TCUserSession *userSession = [[TCBuluoApi api] currentUserSession];
+    TCUserShippingAddress *shippingAddress = userSession.userSensitiveInfo.shippingAddress;
+    userAddressView = [[TCOrderAddressView alloc] initWithOrigin:CGPointMake(0, 0) WithShippingAddress:shippingAddress];
+    UITapGestureRecognizer *selectAddressRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchAddressSelect:)];
+    [userAddressView addGestureRecognizer:selectAddressRecognizer];
     [scrollView addSubview:userAddressView];
     
     UITableView *orderDetailTableView = [self getOrderDetailTableViewWithFrame:CGRectMake(0, userAddressView.y + userAddressView.height, self.view.width, [self getTableViewHeight])];
     [scrollView addSubview:orderDetailTableView];
  
-    payMethodView = [[TCPayMethodView alloc] initWithFrame:CGRectMake(0, orderDetailTableView.y + orderDetailTableView.height + 4, TCScreenWidth, 170)];
+    payMethodView = [[TCPayMethodView alloc] initWithFrame:CGRectMake(0, orderDetailTableView.y + orderDetailTableView.height + TCRealValue(4), TCScreenWidth, TCRealValue(170))];
     [scrollView addSubview:payMethodView];
     
     
@@ -65,6 +70,8 @@
  
     UIView *bottomView = [self getNotSettleBottomView];
     [self.view addSubview:bottomView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenAddressChange:) name:@"addressSelect" object:nil];
 
     
     [self initKeyboardRecovery];
@@ -79,21 +86,13 @@
     [supplementField resignFirstResponder];
 }
 
-- (NSArray *)getDefaultAddressArr {
-    TCUserSession *userSession = [[TCBuluoApi api] currentUserSession];
-    TCUserShippingAddress *shippingAddress = userSession.userSensitiveInfo.shippingAddress;
-    if (shippingAddress) {
-        return @[ shippingAddress.name, shippingAddress.phone, [NSString stringWithFormat:@"%@%@%@%@", shippingAddress.province, shippingAddress.city, shippingAddress.district, shippingAddress.address] ];
-    } else {
-        return @[@"", @"", @""];
-    }
-}
+
 
 - (CGFloat)getTableViewHeight {
     CGFloat height = 0;
     for(int i = 0; i < orderDetailList.count; i++) {
         TCOrder *order = orderDetailList[i];
-        height += 40 * 3 + 56 + 41 + order.itemList.count * 96.5;
+        height += TCRealValue(40) * 3 + TCRealValue(56) + TCRealValue(41) + order.itemList.count * TCRealValue(96.5);
     }
     
     return height;
@@ -109,22 +108,49 @@
     self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"确认下单"];
 }
 
-
-
 - (UIView *)getNotSettleBottomView {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - 49, self.view.width, 49)];
-    
-    UIButton *payBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"去付款" AndFontSize:16 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
-    [payBtn addTarget:self action:@selector(touchOrderPayBtn:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *cancelBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"取消订单" AndFontSize:16 AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
-    [cancelBtn addTarget:self action:@selector(touchOrderCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [bottomView addSubview:cancelBtn];
-    [bottomView addSubview:payBtn];
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, 0.5)];
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - TCRealValue(49), self.view.width, TCRealValue(49))];
+    UILabel *payMoneyLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), 0, TCRealValue(35), bottomView.height) AndFontSize:TCRealValue(14) AndTitle:@"合计:"];
+    [bottomView addSubview:payMoneyLab];
+    UIButton *confirmPayBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - TCScreenWidth / 2, 0, TCScreenWidth / 2, bottomView.height) AndTitle:@"去付款" AndFontSize:TCRealValue(16) AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+    [confirmPayBtn addTarget:self action:@selector(touchOrderPayBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [bottomView addSubview:confirmPayBtn];
+    UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(payMoneyLab.x + payMoneyLab.width, 0, confirmPayBtn.x - payMoneyLab.x - payMoneyLab.width, bottomView.height) AndFontSize:TCRealValue(14) AndTitle:[self getAllTotalFeeStr] AndTextColor:confirmPayBtn.backgroundColor];
+    [bottomView addSubview:priceLab];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, TCRealValue(0.5))];
     [bottomView addSubview:lineView];
-    
+
     return bottomView;
 }
+
+
+
+//- (UIView *)getNotSettleBottomView {
+//    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - TCRealValue(49), self.view.width, TCRealValue(49))];
+//    
+//    UIButton *payBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndTitle:@"去付款" AndFontSize:TCRealValue(16) AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+//    [payBtn addTarget:self action:@selector(touchOrderPayBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *cancelBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndTitle:@"取消订单" AndFontSize:TCRealValue(16) AndBackColor:[UIColor whiteColor] AndTextColor:[UIColor blackColor]];
+//    [cancelBtn addTarget:self action:@selector(touchOrderCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [bottomView addSubview:cancelBtn];
+//    [bottomView addSubview:payBtn];
+//    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, TCRealValue(0.5))];
+//    [bottomView addSubview:lineView];
+//    
+//    return bottomView;
+//}
+
+- (NSString *)getAllTotalFeeStr {
+    
+    CGFloat totalFee;
+    for (int i = 0; i < orderDetailList.count; i++) {
+        TCOrder *order = orderDetailList[i];
+        totalFee += order.totalFee;
+    }
+    NSString *totalStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", totalFee].floatValue)];
+    return totalStr;
+}
+
 
 
 
@@ -193,33 +219,33 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 41;
+    return TCRealValue(41);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 56;
+    return TCRealValue(56);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCOrder *order = orderDetailList[indexPath.section];
     NSArray *orderList = order.itemList;
     if (indexPath.row >= orderList.count) {
-        return 40;
+        return TCRealValue(40);
     }
     else {
-        return 96.5;
+        return TCRealValue(96.5);
     }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 41)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(41))];
     TCOrder *orderDetail = orderDetailList[section];
     TCMarkStore *markStore = orderDetail.store;
-    UIImageView *storeLogoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(20, headerView.height / 2 - 17 / 2, 17, 17)];
+    UIImageView *storeLogoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCRealValue(20), headerView.height / 2 - TCRealValue(17) / 2, TCRealValue(17), TCRealValue(17))];
     NSURL *logoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, markStore.logo]];
     [storeLogoImgView sd_setImageWithURL:logoUrl placeholderImage:[UIImage imageNamed:@"map_bar"]];
     
-    UILabel *storeLabel = [TCComponent createLabelWithFrame:CGRectMake(storeLogoImgView.x + storeLogoImgView.width + 5, 0, self.view.width - storeLogoImgView.x - storeLogoImgView.width - 5, headerView.height) AndFontSize:12 AndTitle:markStore.name AndTextColor:[UIColor blackColor]];
-    storeLabel.font = [UIFont fontWithName:BOLD_FONT size:12];
+    UILabel *storeLabel = [TCComponent createLabelWithFrame:CGRectMake(storeLogoImgView.x + storeLogoImgView.width + TCRealValue(5), 0, self.view.width - storeLogoImgView.x - storeLogoImgView.width - TCRealValue(5), headerView.height) AndFontSize:TCRealValue(12) AndTitle:markStore.name AndTextColor:[UIColor blackColor]];
+    storeLabel.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(12)];
     
     [headerView addSubview:storeLogoImgView];
     [headerView addSubview:storeLabel];
@@ -228,24 +254,24 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 60)];
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(20, 7.5, self.view.width - 40, 31.5)];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(60))];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(TCRealValue(20), TCRealValue(7.5), self.view.width - TCRealValue(40), TCRealValue(31.5))];
     backView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     TCOrder *orderDetail = orderDetailList[section];
     
-    supplementField = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, backView.width - 7, backView.height)];
+    supplementField = [[UITextField alloc] initWithFrame:CGRectMake(TCRealValue(5), 0, backView.width - TCRealValue(7), backView.height)];
     supplementField.placeholder = @"订单补充说明:";
-    supplementField.font = [UIFont systemFontOfSize:11];
+    supplementField.font = [UIFont systemFontOfSize:TCRealValue(11)];
     supplementField.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
     supplementField.text = orderDetail.note;
     
     
     [backView addSubview:supplementField];
     
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, self.view.width - 40, 0.5)];
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, self.view.width - TCRealValue(40), TCRealValue(0.5))];
     [footerView addSubview:topLineView];
     
-    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, footerView.height - 4, self.view.width, 4)];
+    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, footerView.height - TCRealValue(4), self.view.width, TCRealValue(4))];
     downLineView.backgroundColor = TCRGBColor(242, 242, 242);
     [footerView addSubview:downLineView];
     
@@ -298,8 +324,8 @@
     }
     [cell.contentView addSubview:orderInfoView];
     
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, self.view.width - 40, 0.5)];
-    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 40 - 0.5, self.view.width - 40, 0.5)];
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, self.view.width - TCRealValue(40), TCRealValue(0.5))];
+    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), TCRealValue(40 - 0.5), self.view.width - TCRealValue(40), TCRealValue(0.5))];
     [cell.contentView addSubview:topLineView];
     [cell.contentView addSubview:downLineView];
     
@@ -307,10 +333,10 @@
 }
 
 - (UIView *)getOrderInfoViewWithTitle:(NSString *)title AndText:(NSString *)text {
-    UIView *orderInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40)];
+    UIView *orderInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(40))];
     
-    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, 55, orderInfoView.height) AndFontSize:12 AndTitle:title AndTextColor:[UIColor blackColor]];
-    UILabel *textLab = [TCComponent createLabelWithFrame:CGRectMake(titleLab.x + titleLab.width, 0, self.view.width - titleLab.x - titleLab.width - 20, orderInfoView.height) AndFontSize:12 AndTitle:text AndTextColor:[UIColor blackColor]];
+    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), 0, TCRealValue(55), orderInfoView.height) AndFontSize:TCRealValue(12) AndTitle:title AndTextColor:[UIColor blackColor]];
+    UILabel *textLab = [TCComponent createLabelWithFrame:CGRectMake(titleLab.x + titleLab.width, 0, self.view.width - titleLab.x - titleLab.width - TCRealValue(20), orderInfoView.height) AndFontSize:TCRealValue(12) AndTitle:text AndTextColor:[UIColor blackColor]];
     textLab.textAlignment = NSTextAlignmentRight;
     
     [orderInfoView addSubview:titleLab];
@@ -366,6 +392,16 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)touchAddressSelect:(id)sender {
+    TCShippingAddressViewController *shippingAddressViewController = [[TCShippingAddressViewController alloc] initPlaceOrderAddressSelect];
+    [self.navigationController pushViewController:shippingAddressViewController animated:YES];
+}
+
+- (void)listenAddressChange:(NSNotification *)notification {
+    TCUserShippingAddress *shippingAddress = [notification object];
+    [userAddressView setAddress:shippingAddress];
+}
+
 #pragma mark - Status Bar
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
@@ -385,11 +421,10 @@
         for (int j = 0; j < order.itemList.count; j++) {
             TCOrderItem *orderItem = order.itemList[j];
             [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID, @"shoppingCartGoodsId":orderItem.ID }];
-//            [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID }];
 
         }
     }
-    NSString *addressId = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.addressID;
+    NSString *addressId = userAddressView.shippingAddress.ID;
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
             payView = [[TCBalancePayView alloc] initWithPayPrice:[self getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndTarget:self ] ;

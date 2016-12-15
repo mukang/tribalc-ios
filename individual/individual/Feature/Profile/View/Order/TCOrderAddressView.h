@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "TCComponent.h"
+#import "TCModelImport.h"
 
 
 @interface TCOrderAddressView : UIView
 
-- (instancetype)initWithOrigin:(CGPoint)point WithName:(NSString *)name AndPhone:(NSString *)phone AndAddress:(NSString *)address;
+- (instancetype)initWithOrigin:(CGPoint)point AndName:(NSString *)name AndPhone:(NSString *)phone AndAddress:(NSString *)address;
+
+- (instancetype)initWithOrigin:(CGPoint)point WithShippingAddress:(TCUserShippingAddress *)shippingAddress;
+
+- (void)setAddress:(TCUserShippingAddress *)shippingAddress;
+
+@property (retain, nonatomic) TCUserShippingAddress *shippingAddress;
 
 @end

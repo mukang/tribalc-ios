@@ -37,7 +37,7 @@
     [self initNavigationBar];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIView *selectTabBarView = [self getSelectTabBarViewWithFrame:CGRectMake(0, 0, self.view.width, 40.5)];
+    UIView *selectTabBarView = [self getSelectTabBarViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(40.5))];
     [self.view addSubview:selectTabBarView];
     
     [self addChildController:[[TCUserOrderViewController alloc] initWithStatus:nil] AndTitle:@"全部"];
@@ -79,11 +79,11 @@
     UIView *selectView = [[UIView alloc] initWithFrame:frame];
     selectView.backgroundColor = [UIColor whiteColor];
     
-    CGFloat centerWidth = (TCScreenWidth - 154 - 40) / 3;
-    allOrderBtn = [self getSelectButtonWithFrame:CGRectMake(20, 0, 0, frame.size.height) AndText:@"全部"];
+    CGFloat centerWidth = (TCScreenWidth - TCRealValue(154) - TCRealValue(40)) / 3;
+    allOrderBtn = [self getSelectButtonWithFrame:CGRectMake(TCRealValue(20), 0, 0, frame.size.height) AndText:@"全部"];
     allOrderBtn.tag = 0;
     [selectView addSubview:allOrderBtn];
-    selectUnderlineView = [TCComponent createGrayLineWithFrame:CGRectMake(allOrderBtn.x - 5, allOrderBtn.y + allOrderBtn.height - 1, allOrderBtn.width + 10.5, 1)];
+    selectUnderlineView = [TCComponent createGrayLineWithFrame:CGRectMake(allOrderBtn.x - TCRealValue(5), allOrderBtn.y + allOrderBtn.height - TCRealValue(1), allOrderBtn.width + TCRealValue(10.5), TCRealValue(1))];
     selectUnderlineView.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
     
     waitPayBtn = [self getSelectButtonWithFrame:CGRectMake(allOrderBtn.origin.x + allOrderBtn.width + centerWidth, 0, 0, frame.size.height) AndText:@"待付款"];
@@ -104,7 +104,7 @@
 - (UIButton *)getSelectButtonWithFrame:(CGRect)frame AndText:(NSString *)text{
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     [button setTitle:text forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont fontWithName:BOLD_FONT size:14];
+    button.titleLabel.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
     if ([text isEqualToString:@"全部"]) {
         [button setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
     } else {
@@ -149,8 +149,6 @@
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
-
-
 
 
 - (void)didReceiveMemoryWarning {

@@ -43,13 +43,13 @@
     homeScrollView = [self getHomeScrollViewWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight - self.tabBarController.tabBar.size.height)];
     [self.view addSubview:homeScrollView];
     
-    [self setupTitleImageScrollViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(260))];
+    [self setupTitleImageScrollViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(265))];
     [homeScrollView addSubview:titleScrollView];
     
     UIView *expressView = [self getExpressViewWithFrame:CGRectMake(0, titleScrollView.y + titleScrollView.height, TCScreenWidth, TCRealValue(33))];
     [homeScrollView addSubview:expressView];
     
-    UIView *propertyView = [self getPropertyFunctionViewWithFrame:CGRectMake(0, expressView.y + expressView.height + 5, TCScreenWidth, 88)];
+    UIView *propertyView = [self getPropertyFunctionViewWithFrame:CGRectMake(0, expressView.y + expressView.height + TCRealValue(5), TCScreenWidth, TCRealValue(88))];
     [homeScrollView addSubview:propertyView];
     
     UITableView *commodityTableView = [self getHomeTableViewWithFrame:CGRectMake(0, propertyView.y + propertyView.height, TCScreenWidth, TCRealValue(943.5))];
@@ -111,13 +111,13 @@
 - (UIView *)getPropertyFunctionViewWithFrame:(CGRect)frame {
     UIView *propertyView = [self getGrayBorderViewWithFrame:frame];
     propertyView.backgroundColor = [UIColor whiteColor];
-    UIButton *unclockBtn = [self getPropertyButtonWithFrame:CGRectMake((TCScreenWidth - (50 * 4)) / 5, 11, 50, 64) AndImgName:@"home_unlock" AndTitle:@"社区开门" AndAction:@selector(touchCommunityUnlockBtn:)];
+    UIButton *unclockBtn = [self getPropertyButtonWithFrame:CGRectMake((TCScreenWidth - (TCRealValue(50 * 4))) / 5, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_unlock" AndTitle:@"社区开门" AndAction:@selector(touchCommunityUnlockBtn:)];
     [propertyView addSubview:unclockBtn];
-    UIButton *repairBtn = [self getPropertyButtonWithFrame:CGRectMake(unclockBtn.x * 2 + unclockBtn.width, 11, 50, 64) AndImgName:@"home_ estate_repair" AndTitle:@"物业报修" AndAction:@selector(touchEstateRepair:)];
+    UIButton *repairBtn = [self getPropertyButtonWithFrame:CGRectMake(unclockBtn.x * 2 + unclockBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_ estate_repair" AndTitle:@"物业报修" AndAction:@selector(touchEstateRepair:)];
     [propertyView addSubview:repairBtn];
-    UIButton *scanPayBtn = [self getPropertyButtonWithFrame:CGRectMake(repairBtn.x + unclockBtn.x + repairBtn.width, 11, 50, 64) AndImgName:@"home_scan_pay" AndTitle:@"扫码支付" AndAction:@selector(touchScanPayBtn:)];
+    UIButton *scanPayBtn = [self getPropertyButtonWithFrame:CGRectMake(repairBtn.x + unclockBtn.x + repairBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_scan_pay" AndTitle:@"扫码支付" AndAction:@selector(touchScanPayBtn:)];
     [propertyView addSubview:scanPayBtn];
-    UIButton *officeReserveBtn = [self getPropertyButtonWithFrame:CGRectMake(scanPayBtn.x + unclockBtn.x + scanPayBtn.width, 11, 50, 64) AndImgName:@"home_office_reservation" AndTitle:@"办公预订" AndAction:@selector(touchOfficeReserveBtn:)];
+    UIButton *officeReserveBtn = [self getPropertyButtonWithFrame:CGRectMake(scanPayBtn.x + unclockBtn.x + scanPayBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_office_reservation" AndTitle:@"办公预订" AndAction:@selector(touchOfficeReserveBtn:)];
     [propertyView addSubview:officeReserveBtn];
     return propertyView;
 }
@@ -125,18 +125,18 @@
 - (UIView *)getGrayBorderViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.layer.borderColor = TCRGBColor(221, 221, 221).CGColor;
-    view.layer.borderWidth = 0.5;
-    view.frame = CGRectMake(frame.origin.x - 0.5, frame.origin.y, frame.size.width + 1, frame.size.height);
+    view.layer.borderWidth = TCRealValue(0.5);
+    view.frame = CGRectMake(frame.origin.x - TCRealValue(0.5), frame.origin.y, frame.size.width + TCRealValue(1), frame.size.height);
     return view;
 }
 
 - (UIButton *)getPropertyButtonWithFrame:(CGRect)frame AndImgName:(NSString *)imgName AndTitle:(NSString *)title AndAction:(SEL)action {
     UIButton *propertyBtn = [[UIButton alloc] initWithFrame:frame];
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width / 2 - 35 / 2, 7, 35, 35)];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width / 2 - TCRealValue(35) / 2, TCRealValue(7), TCRealValue(35), TCRealValue(35))];
     imgView.image = [UIImage imageNamed:imgName];
     [propertyBtn addSubview:imgView];
     
-    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(0, imgView.y + imgView.height + 6, frame.size.width, 12) AndFontSize:12 AndTitle:title];
+    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(0, imgView.y + imgView.height + TCRealValue(6), frame.size.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:title];
     titleLab.textAlignment = NSTextAlignmentCenter;
     [propertyBtn addSubview:titleLab];
     
@@ -187,7 +187,7 @@
     UIView *activityView = [self getExpressActivityViewWithFrame:CGRectMake(expressLab.x + expressLab.width + TCRealValue(3), 0, TCScreenWidth - expressLab.x - expressLab.width - TCRealValue(3), frame.size.height)];
     [expressView addSubview:activityView];
     
-    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, expressView.height - 0.5, TCScreenWidth, 0.5)];
+    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, expressView.height - TCRealValue(0.5), TCScreenWidth, TCRealValue(0.5))];
     [expressView addSubview:downLineView];
     
     return expressView;
@@ -195,7 +195,7 @@
 
 - (UIView *)getExpressActivityViewWithFrame:(CGRect)frame {
     UIView *activityView = [[UIView alloc] initWithFrame:frame];
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height / 2 - 17.5 / 2, 0.5, 17.5)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height / 2 - TCRealValue(17.5) / 2, TCRealValue(0.5), TCRealValue(17.5))];
     lineView.backgroundColor = TCRGBColor(154, 154, 154);
     [activityView addSubview:lineView];
     

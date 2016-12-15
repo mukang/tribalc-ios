@@ -78,11 +78,11 @@
     [self initHiddenBackView];
     
     
-    sortView = [[TCRestaurantSortView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, TCRealValue(169 + 10))];
+    sortView = [[TCRestaurantSortView alloc] initWithFrame:CGRectMake(0, TCRealValue(42), self.view.width, TCRealValue(169 + 10))];
     sortView.hidden = YES;
     [self.view addSubview:sortView];
     
-    filterView = [[TCRestaurantFilterView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, TCRealValue(105))];
+    filterView = [[TCRestaurantFilterView alloc] initWithFrame:CGRectMake(0, TCRealValue(42), self.view.width, TCRealValue(105))];
     filterView.hidden = YES;
     [self.view addSubview:filterView];
     
@@ -90,7 +90,7 @@
 }
 
 - (void)initHiddenBackView {
-    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 42, self.view.width, self.view.height - 42)];
+    backView = [[UIView alloc] initWithFrame:CGRectMake(0, TCRealValue(42), self.view.width, self.view.height - TCRealValue(42))];
     backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchHiddenSelectView)];
     [backView addGestureRecognizer:recognizer];
@@ -121,7 +121,7 @@
     mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStyleGrouped];
     mResaurantTableView.delegate = self;
     mResaurantTableView.dataSource = self;
-    mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, 22, 0);
+    mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, TCRealValue(22), 0);
     [self.view addSubview:mResaurantTableView];
     
     TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^{
@@ -168,17 +168,17 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
-    sortButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(0, 0, self.view.width / 2, 42) AndText:@"智能排序" AndImgName:@"res_select_down"];
+    sortButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(0, 0, self.view.width / 2, TCRealValue(42)) AndText:@"智能排序" AndImgName:@"res_select_down"];
     [view addSubview:sortButton];
     [sortButton addTarget:self action:@selector(touchSortBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    filterButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(self.view.width / 2, 0, self.view.width / 2, 42) AndText:@"筛选" AndImgName:@"res_select_down"];
+    filterButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(self.view.width / 2, 0, self.view.width / 2, TCRealValue(42)) AndText:@"筛选" AndImgName:@"res_select_down"];
     [filterButton addTarget:self action:@selector(touchFilterBtn:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:filterButton];
     
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width / 2 - 0.5, 14, 1, 46 - 16 * 2)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width / 2 - TCRealValue(0.5), TCRealValue(14), TCRealValue(1), TCRealValue(46 - 16 * 2))];
     lineView.backgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1];
     [view addSubview:lineView];
     
@@ -254,11 +254,11 @@
     [self.navigationController pushViewController:restaurantInfo animated:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 42;
+    return TCRealValue(42);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [self getTopViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 42)];
+    return [self getTopViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, TCRealValue(42))];
     
 }
 
@@ -315,7 +315,7 @@
     filterView.hidden = YES;
     filterButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
     filterButton.imgeView.image = [UIImage imageNamed:@"res_select_down"];
-    [filterButton.imgeView setSize:CGSizeMake(13, 6)];
+    [filterButton.imgeView setSize:CGSizeMake(TCRealValue(13), TCRealValue(6))];
     
     
     sortView.hidden = YES;

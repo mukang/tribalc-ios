@@ -29,18 +29,18 @@
         
         [self fetchGoodDetailWithGoodId:goodsId];
         
-        _titleLab = [self getTitleLabWithFrame:CGRectMake(TCRealValue(13), 22.5 + 9, frame.size.width - 13 - 20, 14)];
+        _titleLab = [self getTitleLabWithFrame:CGRectMake(TCRealValue(13), TCRealValue(22.5 + 9), frame.size.width - TCRealValue(13) - TCRealValue(20), TCRealValue(14))];
         [self addSubview:_titleLab];
         
-        _primaryStandardLab = [self getPrimaryStandardLabWithFrame:CGRectMake(_titleLab.x, _titleLab.y + _titleLab.height + 9, _titleLab.width, 12)];
+        _primaryStandardLab = [self getPrimaryStandardLabWithFrame:CGRectMake(_titleLab.x, _titleLab.y + _titleLab.height + TCRealValue(9), _titleLab.width, TCRealValue(12))];
         [self addSubview:_primaryStandardLab];
         
-        _sendondaryStandardLab = [self getSecondaryStandardLabWithFrame:CGRectMake(_titleLab.x, _primaryStandardLab.y + _primaryStandardLab.height + 15.5, 47, 27)];
+        _sendondaryStandardLab = [self getSecondaryStandardLabWithFrame:CGRectMake(_titleLab.x, _primaryStandardLab.y + _primaryStandardLab.height + TCRealValue(15.5), TCRealValue(47), TCRealValue(27))];
         
-        _amountLab = [self getAmountLabWithFrame:CGRectMake(_sendondaryStandardLab.x + _sendondaryStandardLab.width + 8, _sendondaryStandardLab.y, 0, _sendondaryStandardLab.height)];
+        _amountLab = [self getAmountLabWithFrame:CGRectMake(_sendondaryStandardLab.x + _sendondaryStandardLab.width + TCRealValue(8), _sendondaryStandardLab.y, 0, _sendondaryStandardLab.height)];
         [self addSubview:_amountLab];
         
-        _priceLab = [self getPriceLabWithFrame:CGRectMake(self.width - 20, self.height - 28 - 12, 0, 14)];
+        _priceLab = [self getPriceLabWithFrame:CGRectMake(self.width - TCRealValue(20), self.height - TCRealValue(28) - TCRealValue(12), 0, TCRealValue(14))];
         [self addSubview:_priceLab];
         
         
@@ -59,19 +59,19 @@
     if (self) {
         [self fetchGoodDetailWithGoodId:goodsId];
         
-        _titleLab = [self getTitleLabWithFrame:CGRectMake(TCRealValue(13), 22.5 + 9, frame.size.width - 13 - 20, 14)];
+        _titleLab = [self getTitleLabWithFrame:CGRectMake(TCRealValue(13), TCRealValue(22.5 + 9), frame.size.width - TCRealValue(13) - TCRealValue(20), TCRealValue(14))];
         [self addSubview:_titleLab];
         
-        _primaryStandardLab = [self getPrimaryStandardLabWithFrame:CGRectMake(_titleLab.x, _titleLab.y + _titleLab.height + 9, _titleLab.width, 12)];
+        _primaryStandardLab = [self getPrimaryStandardLabWithFrame:CGRectMake(_titleLab.x, _titleLab.y + _titleLab.height + TCRealValue(9), _titleLab.width, TCRealValue(12))];
         [self addSubview:_primaryStandardLab];
         
         
-        _sendondaryStandardLab = [self getSecondaryStandardLabWithFrame:CGRectMake(_titleLab.x, _primaryStandardLab.y + _primaryStandardLab.height + 15.5, 47, 27)];
+        _sendondaryStandardLab = [self getSecondaryStandardLabWithFrame:CGRectMake(_titleLab.x, _primaryStandardLab.y + _primaryStandardLab.height + TCRealValue(15.5), TCRealValue(47), TCRealValue(27))];
         
-        UIButton *selectStandardBtn = [self getStandardSelectBtnWithFrame:CGRectMake(_sendondaryStandardLab.x + _sendondaryStandardLab.width, _sendondaryStandardLab.y, 22, _sendondaryStandardLab.height)];
+        UIButton *selectStandardBtn = [self getStandardSelectBtnWithFrame:CGRectMake(_sendondaryStandardLab.x + _sendondaryStandardLab.width, _sendondaryStandardLab.y, TCRealValue(22), _sendondaryStandardLab.height)];
         [self addSubview:selectStandardBtn];
         
-        computeView = [[TCComputeView alloc] initWithFrame:CGRectMake(self.width - 20 - TCRealValue(78), _sendondaryStandardLab.y + (_sendondaryStandardLab.height / 2 - 10), TCRealValue(78), TCRealValue(20))];
+        computeView = [[TCComputeView alloc] initWithFrame:CGRectMake(self.width - TCRealValue(20) - TCRealValue(78), _sendondaryStandardLab.y + (_sendondaryStandardLab.height / 2 - TCRealValue(10)), TCRealValue(78), TCRealValue(20))];
         [self addSubview:computeView];
         
         [computeView.addBtn addTarget:self action:@selector(touchAddAmountBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -79,7 +79,7 @@
         
         _amountLab = computeView.countLab;
         
-        _priceLab = [self getPriceLabWithFrame:CGRectMake(self.width - 20, self.height - 28 - 12, 0, 14)];
+        _priceLab = [self getPriceLabWithFrame:CGRectMake(self.width - TCRealValue(20), self.height - TCRealValue(28) - TCRealValue(12), 0, TCRealValue(14))];
         [self addSubview:_priceLab];
         
 
@@ -99,7 +99,7 @@
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     
     UIImage *image = [UIImage imageNamed:@"car_select_standard"];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width / 2 - 6, frame.size.height / 2 - 3, 12, 6)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width / 2 - TCRealValue(6), frame.size.height / 2 - TCRealValue(3), TCRealValue(12), TCRealValue(6))];
     imageView.image = image;
     
     [button addSubview:imageView];
@@ -143,14 +143,14 @@
     [computeView setCount:amount];
     float height = _amountLab.height;
     [_amountLab sizeToFit];
-    _amountLab.size = CGSizeMake(26, height);
+    _amountLab.size = CGSizeMake(TCRealValue(26), height);
 }
 
 - (void)setupNormalPriceLab:(CGFloat)price {
     NSString *priceStr = [NSString stringWithFormat:@"￥ %@", @([NSString stringWithFormat:@"%f", price].floatValue)];
     _priceLab.text = priceStr;
     [_priceLab sizeToFit];
-    _priceLab.frame = CGRectMake(self.width - _priceLab.width - 20, self.height - 28 - 14, _priceLab.width, 14);
+    _priceLab.frame = CGRectMake(self.width - _priceLab.width - TCRealValue(20), self.height - TCRealValue(28) - TCRealValue(14), _priceLab.width, TCRealValue(14));
     
 }
 
@@ -158,20 +158,20 @@
     NSString *priceStr = [NSString stringWithFormat:@"￥ %@", @([NSString stringWithFormat:@"%f", price].floatValue)];
     _priceLab.text = priceStr;
     [_priceLab sizeToFit];
-    _priceLab.frame = CGRectMake(self.width - _priceLab.width - 20, _primaryStandardLab.y - 4, _priceLab.width, 14);
+    _priceLab.frame = CGRectMake(self.width - _priceLab.width - TCRealValue(20), _primaryStandardLab.y - TCRealValue(4), _priceLab.width, TCRealValue(14));
 
 }
 
 - (UILabel *)getTitleLabWithFrame:(CGRect)frame {
-    UILabel *label = [TCComponent createLabelWithFrame:frame AndFontSize:14 AndTitle:@""];
-    label.font = [UIFont fontWithName:BOLD_FONT size:14];
+    UILabel *label = [TCComponent createLabelWithFrame:frame AndFontSize:TCRealValue(14) AndTitle:@""];
+    label.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
     
     return label;
 }
 
 
 - (UILabel *)getPrimaryStandardLabWithFrame:(CGRect)frame {
-    UILabel *label = [TCComponent createLabelWithFrame:frame AndFontSize:12 AndTitle:@""];
+    UILabel *label = [TCComponent createLabelWithFrame:frame AndFontSize:TCRealValue(12) AndTitle:@""];
     label.textColor = TCRGBColor(154, 154, 154);
     
     return label;
@@ -179,7 +179,7 @@
 
 - (UILabel *)getSecondaryStandardLabWithFrame:(CGRect)frame {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.font = [UIFont systemFontOfSize:12];
+    label.font = [UIFont systemFontOfSize:TCRealValue(12)];
     label.textAlignment = NSTextAlignmentCenter;
     return label;
 }
@@ -195,14 +195,14 @@
 - (UILabel *)getAmountLabWithFrame:(CGRect)frame {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.textColor = TCRGBColor(154, 154, 154);
-    label.font = [UIFont fontWithName:BOLD_FONT size:12];
+    label.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(12)];
     
     return label;
 }
 
 - (UILabel *)getPriceLabWithFrame:(CGRect)frame {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.font = [UIFont fontWithName:BOLD_FONT size:14];
+    label.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
     label.textColor = TCRGBColor(42, 42, 42);
     
     return label;
@@ -210,7 +210,7 @@
 
 - (void)touchAddAmountBtn:(UIButton *)btn {
     
-    NSString *addNumber = [NSString stringWithFormat:@"%ld", (_amountLab.text.integerValue + 1)];
+    NSString *addNumber = [NSString stringWithFormat:@"%ld", (long)(_amountLab.text.integerValue + 1)];
     [self changeAmountWithNumber:addNumber];
 }
 
@@ -220,7 +220,7 @@
         [MBProgressHUD showHUDWithMessage:@"不能再减了"];
         return ;
     }
-    NSString *subNumber = [NSString stringWithFormat:@"%ld", (amount - 1)];
+    NSString *subNumber = [NSString stringWithFormat:@"%ld", (long)(amount - 1)];
     [self changeAmountWithNumber:subNumber];
 
 }

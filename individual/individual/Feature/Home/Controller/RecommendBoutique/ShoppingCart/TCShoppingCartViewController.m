@@ -56,7 +56,7 @@
     [[TCBuluoApi api] fetchShoppingCartWrapperWithSortSkip:nil result:^(TCShoppingCartWrapper *wrapper, NSError *error) {
         shoppingCartWrapper = wrapper;
         [self initialTableView];
-        [self setupBottomViewWithFrame:CGRectMake(0, self.view.height - 48, self.view.width, 49)];
+        [self setupBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
         [self setupNavigationRightBarButton];
     }];
 }
@@ -93,7 +93,7 @@
 #pragma mark - Setup UI
 
 - (void)initialTableView {
-    cartTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 98 / 2) style:UITableViewStyleGrouped];
+    cartTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - TCRealValue(49)) style:UITableViewStyleGrouped];
     cartTableView.backgroundColor  =[UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     cartTableView.delegate = self;
     cartTableView.dataSource = self;
@@ -105,17 +105,17 @@
 
 - (UIView *)getBottomViewWithText:(NSString *)text AndAction:(SEL)action AndFrame:(CGRect)frame{
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.width, 0.5)];
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(0.5))];
     [view addSubview:topLineView];
     
-    selectAllBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, view.height / 2 - 8, 16, 16) AndImageName:@"car_unselected"];
+    selectAllBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(20), view.height / 2 - TCRealValue(8), TCRealValue(16), TCRealValue(16)) AndImageName:@"car_unselected"];
     [selectAllBtn addTarget:self action:@selector(touchSelectAllBtn:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:selectAllBtn];
     
-    UILabel *selectAllLab = [TCComponent createLabelWithFrame:CGRectMake(selectAllBtn.x + selectAllBtn.width + 20, 0, 30, view.height) AndFontSize:14 AndTitle:@"全选"];
+    UILabel *selectAllLab = [TCComponent createLabelWithFrame:CGRectMake(selectAllBtn.x + selectAllBtn.width + TCRealValue(20), 0, TCRealValue(30), view.height) AndFontSize:TCRealValue(14) AndTitle:@"全选"];
     [view addSubview:selectAllLab];
     
-    UIButton *titleBtn = [TCComponent createButtonWithFrame:CGRectMake(self.view.width - 111, 0, 111, view.height) AndTitle:text AndFontSize:14 AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+    UIButton *titleBtn = [TCComponent createButtonWithFrame:CGRectMake(self.view.width - TCRealValue(111), 0, TCRealValue(111), view.height) AndTitle:text AndFontSize:TCRealValue(14) AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
     [view addSubview:titleBtn];
     [titleBtn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     return view;
@@ -126,13 +126,13 @@
     TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
     TCMarkStore *storeInfo = listShoppingCart.store;
     storeInfoView.backgroundColor = [UIColor whiteColor];
-    UIButton *selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(20, storeInfoView.height / 2 - 8, 16, 16) AndImageName:@""];
+    UIButton *selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(20), storeInfoView.height / 2 - TCRealValue(8), TCRealValue(16), TCRealValue(16)) AndImageName:@""];
     [selectedBtn setImage:[self getSelectImageWithGoodsList:listShoppingCart.goodsList] forState:UIControlStateNormal];
     selectedBtn.tag = section;
     [selectedBtn addTarget:self action:@selector(touchSelectStoreBtn:) forControlEvents:UIControlEventTouchUpInside];
     [storeInfoView addSubview:selectedBtn];
     
-    UILabel *storeTitleLab = [TCComponent createLabelWithFrame:CGRectMake(selectedBtn.x + selectedBtn.width + 20, 0, self.view.width - selectedBtn.x - selectedBtn.width - 20, storeInfoView.height) AndFontSize:12 AndTitle:storeInfo.name AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    UILabel *storeTitleLab = [TCComponent createLabelWithFrame:CGRectMake(selectedBtn.x + selectedBtn.width + TCRealValue(20), 0, self.view.width - selectedBtn.x - selectedBtn.width - TCRealValue(20), storeInfoView.height) AndFontSize:TCRealValue(12) AndTitle:storeInfo.name AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     [storeInfoView addSubview:storeTitleLab];
     
     return storeInfoView;
@@ -142,8 +142,8 @@
 - (void)setupBottomViewWithFrame:(CGRect)frame {
     [bottomView removeFromSuperview];
     bottomView = [self getBottomViewWithText:@"结算" AndAction:@selector(touchPayButton) AndFrame:frame];
-    UILabel *totalLab = [TCComponent createLabelWithFrame:CGRectMake(99, bottomView.height / 2 - 14 / 2 - 2, 45, 16) AndFontSize:16 AndTitle:@"合计 :"];
-    totalPriceLab = [TCComponent createLabelWithFrame:CGRectMake(totalLab.x + totalLab.width, 0, self.view.width - 111 - totalLab.x - totalLab.width, bottomView.height) AndFontSize:14 AndTitle:@"￥0" AndTextColor:[UIColor redColor]];
+    UILabel *totalLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(99), bottomView.height / 2 - TCRealValue(14) / 2 - TCRealValue(2), TCRealValue(45), TCRealValue(16)) AndFontSize:TCRealValue(16) AndTitle:@"合计 :"];
+    totalPriceLab = [TCComponent createLabelWithFrame:CGRectMake(totalLab.x + totalLab.width, 0, self.view.width - TCRealValue(111) - totalLab.x - totalLab.width, bottomView.height) AndFontSize:TCRealValue(14) AndTitle:@"￥0" AndTextColor:[UIColor redColor]];
     [bottomView addSubview:totalLab];
     [bottomView addSubview:totalPriceLab];
     [self.view addSubview:bottomView];
@@ -243,9 +243,9 @@
     UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:identifier];
     if (!headerView) {
         headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:identifier];
-        headerView.frame = CGRectMake(0, 0, self.view.width, 39);
+        headerView.frame = CGRectMake(0, 0, self.view.width, TCRealValue(39));
     }
-    UIView *storeView = [self getStoreViewWithFrame:CGRectMake(0, 8, self.view.width, 39 - 8) AndSection:section];
+    UIView *storeView = [self getStoreViewWithFrame:CGRectMake(0, TCRealValue(8), self.view.width, TCRealValue(39 - 8)) AndSection:section];
     [headerView addSubview:storeView];
     
     return headerView;
@@ -279,11 +279,11 @@
 
 # pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 139;
+    return TCRealValue(139);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 39;
+    return TCRealValue(39);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -541,7 +541,7 @@
 
 - (void)touchEditBar:(UIButton *)btn {
     isEdit = !isEdit;
-    CGRect bottomFrame = CGRectMake(0, self.view.height - 48, self.view.width, 49);
+    CGRect bottomFrame = CGRectMake(0, self.view.height - TCRealValue(48), self.view.width, TCRealValue(49));
     if (isEdit) {
         [self setupEditBottomViewWithFrame:bottomFrame];
     } else {

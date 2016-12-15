@@ -17,21 +17,21 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         
-        _titleLab = [self createTitleLabelWithText:title WithFrame:CGRectMake(20, 15, frame.size.width - 40, 16)];
+        _titleLab = [self createTitleLabelWithText:title WithFrame:CGRectMake(TCRealValue(20), TCRealValue(15), frame.size.width - TCRealValue(40), TCRealValue(16))];
         [self addSubview:_titleLab];
         
         [self initSalePriceLabelWithPrice:price];
         
-        _originPriceLab = [self getOriginPriceLabelWithFrame:CGRectMake(_priceDecimalLab.x + _priceDecimalLab.width + 14, _priceDecimalLab.y, 0, 14) AndOriginPrice:originPrice];
+        _originPriceLab = [self getOriginPriceLabelWithFrame:CGRectMake(_priceDecimalLab.x + _priceDecimalLab.width + TCRealValue(16), _priceDecimalLab.y, 0, TCRealValue(12)) AndOriginPrice:originPrice];
         [self addSubview:_originPriceLab];
 
-        [self setHeight:_priceIntegerLab.y + _priceIntegerLab.height + 20];
+        [self setHeight:_priceIntegerLab.y + _priceIntegerLab.height + TCRealValue(20)];
         
         _tagLab = [self createTagLabelWithTag:tags];
-        [_tagLab setOrigin:CGPointMake(self.width - 20 - _tagLab.width, _priceDecimalLab.y)];
+        [_tagLab setOrigin:CGPointMake(self.width - TCRealValue(20) - _tagLab.width, _priceDecimalLab.y)];
         [self addSubview:_tagLab];
         
-        tagImgView = [[UIImageView alloc] initWithFrame:CGRectMake(_tagLab.x - 11, _tagLab.y + 2.5, 11, 12)];
+        tagImgView = [[UIImageView alloc] initWithFrame:CGRectMake(_tagLab.x - TCRealValue(11), _tagLab.y + TCRealValue(2.5), TCRealValue(11), TCRealValue(12))];
         tagImgView.image = [UIImage imageNamed:@"good_tag"];
         [self addSubview:tagImgView];
         
@@ -63,10 +63,10 @@
 - (void)setOriginPriceLabWithOriginPrice:(float)originPrice {
     NSString *originStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", originPrice].floatValue)];
     
-    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:originStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14], NSForegroundColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1], NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle|NSUnderlinePatternSolid), NSStrikethroughColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1]}];
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:originStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:TCRealValue(12)], NSForegroundColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1], NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle|NSUnderlinePatternSolid), NSStrikethroughColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1]}];
     
     _originPriceLab.attributedText = attrStr;
-    _originPriceLab.x = _priceDecimalLab.x + _priceDecimalLab.width + 14;
+    _originPriceLab.x = _priceDecimalLab.x + _priceDecimalLab.width + TCRealValue(12);
     [_originPriceLab sizeToFit];
 }
 
@@ -77,8 +77,8 @@
     }
     _tagLab.text = tagStr;
     [_tagLab sizeToFit];
-    [_tagLab setOrigin:CGPointMake(self.width - 20 - _tagLab.width, _priceDecimalLab.y)];
-    tagImgView.origin = CGPointMake(_tagLab.x - 11, _tagLab.y);
+    [_tagLab setOrigin:CGPointMake(self.width - TCRealValue(20) - _tagLab.width, _priceDecimalLab.y)];
+    tagImgView.origin = CGPointMake(_tagLab.x - TCRealValue(11), _tagLab.y);
 }
 
 - (UILabel *)createTagLabelWithTag:(NSArray *)tags {
@@ -89,7 +89,7 @@
     }
     UILabel *label = [TCComponent createLabelWithText:tagStr AndFontSize:11];
     label.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
-    [label setHeight:17];
+    [label setHeight:TCRealValue(17)];
     return label;
 }
 
@@ -100,15 +100,15 @@
     NSString *accuratePriceStr = [NSString stringWithFormat:@"%@", @(floatPriceStr.floatValue)];
     
     NSString *priceIntegerStr = [NSString stringWithFormat:@"￥%i", (int)price];
-    _priceIntegerLab = [self createPriceLabelWithOrigin:CGPointMake(20, _titleLab.y + _titleLab.height + 20) AndFontSize:19 AndText:priceIntegerStr];
+    _priceIntegerLab = [self createPriceLabelWithOrigin:CGPointMake(TCRealValue(20), _titleLab.y + _titleLab.height + TCRealValue(20)) AndFontSize:TCRealValue(17) AndText:priceIntegerStr];
     [self addSubview:_priceIntegerLab];
     
     if ([accuratePriceStr rangeOfString:@"."].location != NSNotFound) {
         NSString *priceDecimalStr = [accuratePriceStr componentsSeparatedByString:@"."][1];
         priceDecimalStr = [NSString stringWithFormat:@".%@", priceDecimalStr];
-        _priceDecimalLab = [self createPriceLabelWithOrigin:CGPointMake(_priceIntegerLab.x + _priceIntegerLab.width, _priceIntegerLab.y + 19 - 14 - 1) AndFontSize:14 AndText:priceDecimalStr];
+        _priceDecimalLab = [self createPriceLabelWithOrigin:CGPointMake(_priceIntegerLab.x + _priceIntegerLab.width, _priceIntegerLab.y + TCRealValue(17) - TCRealValue(12)) AndFontSize:TCRealValue(12) AndText:priceDecimalStr];
     } else {
-        _priceDecimalLab = [[UILabel alloc] initWithFrame:CGRectMake(_priceIntegerLab.x + _priceIntegerLab.width, _priceIntegerLab.y + 19 - 14 - 1, 0, 0)];
+        _priceDecimalLab = [[UILabel alloc] initWithFrame:CGRectMake(_priceIntegerLab.x + _priceIntegerLab.width, _priceIntegerLab.y + TCRealValue(17) - TCRealValue(12), 0, 0)];
     }
     [self addSubview:_priceDecimalLab];
 
@@ -118,7 +118,7 @@
     NSString *accuratePriceStr = [NSString stringWithFormat:@"%@", @([NSString stringWithFormat:@"%f", originalPrice].floatValue)];
     NSString *originalPriceStr = [NSString stringWithFormat:@"￥%@", accuratePriceStr];
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.font = [UIFont systemFontOfSize:14];
+    label.font = [UIFont systemFontOfSize:TCRealValue(12)];
     
     NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:originalPriceStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:frame.size.height], NSForegroundColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1], NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle|NSUnderlinePatternSolid), NSStrikethroughColorAttributeName:[UIColor colorWithRed:186/255.0 green:186/255.0 blue:186/255.0 alpha:1]}];
     ;
@@ -129,25 +129,26 @@
 }
 
 - (UILabel *)createTitleLabelWithText:(NSString *)text WithFrame:(CGRect)frame{
+    
+    
     CGSize labelSize = {0, 0};
-    labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16]}];
-    UILabel *label =  [TCComponent createLabelWithFrame:frame AndFontSize:16 AndTitle:text AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
+    labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(16)]}];
+    
+    UILabel *label =  [TCComponent createLabelWithFrame:frame AndFontSize:TCRealValue(16) AndTitle:text AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
+    if (labelSize.width > label.width) {
+        [label setHeight:2 * label.height + TCRealValue(17)];
+    }
     label.text = text;
-    label.numberOfLines = 2;
+    label.numberOfLines = TCRealValue(2);
     
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-    style.lineSpacing = 7.0f;
+    style.lineSpacing = TCRealValue(7.0);
     NSRange range = NSMakeRange(0, text.length);
-    
-    NSLog(@"%@", text);
+    text = text ? text : @"";
     NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];
     [textAttr addAttribute:NSParagraphStyleAttributeName value:style range:range];
     label.attributedText = textAttr;
     
-    if (labelSize.width > label.width) {
-        [label setHeight:2 * label.height + 17];
-    }
-    [label sizeToFit];
     
     label.lineBreakMode = NSLineBreakByCharWrapping;
     

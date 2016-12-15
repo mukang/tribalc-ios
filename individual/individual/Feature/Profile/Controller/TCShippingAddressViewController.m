@@ -8,6 +8,7 @@
 
 #import "TCShippingAddressViewController.h"
 #import "TCShippingAddressEditViewController.h"
+#import "TCGetNavigationItem.h"
 
 #import "TCShippingAddressViewCell.h"
 
@@ -28,6 +29,17 @@
 
 @implementation TCShippingAddressViewController {
     __weak TCShippingAddressViewController *weakSelf;
+    BOOL isAddressSelect;
+}
+
+- (instancetype)initPlaceOrderAddressSelect {
+    self = [super init];
+    if (self) {
+        isAddressSelect = YES;
+        self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"收货地址"];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"] style:UIBarButtonItemStylePlain target:self action:@selector(handleCickBackButton:)];
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -42,10 +54,10 @@
 
 - (void)setupNavBar {
     self.navigationItem.title = @"收货地址";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleCickBackButton:)];
+    UIButton *backbtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backbtn];
+    [backbtn addTarget:self action:@selector(handleCickBackButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = backItem;
 }
 
 - (void)setupSubviews {
@@ -95,6 +107,15 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (isAddressSelect) {
+        TCUserShippingAddress *shippingAddress = self.dataList[indexPath.row];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addressSelect" object:shippingAddress];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+}
 
 #pragma mark - TCShippingAddressViewCellDelegate
 

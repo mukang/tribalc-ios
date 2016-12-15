@@ -17,19 +17,19 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        leftBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, frame.size.height / 2 - 15 / 2, 15, 15) AndImageName:@"car_unselected"];
+        leftBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, frame.size.height / 2 - TCRealValue(15) / 2, TCRealValue(15), TCRealValue(15)) AndImageName:@"car_unselected"];
         [leftBtn addTarget:self action:@selector(touchSelectLeftBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:leftBtn];
         
-        UILabel *leftLab = [TCComponent createLabelWithFrame:CGRectMake(leftBtn.x + leftBtn.width + 3, 0, 30, self.height) AndFontSize:14 AndTitle:@"女士"];
+        UILabel *leftLab = [TCComponent createLabelWithFrame:CGRectMake(leftBtn.x + leftBtn.width + TCRealValue(3), 0, TCRealValue(30), self.height) AndFontSize:TCRealValue(14) AndTitle:@"女士"];
         [self addSubview:leftLab];
 //        _selectStr = @"女士";
         
-        rightBtn = [TCComponent createImageBtnWithFrame:CGRectMake(leftLab.x + leftLab.width + 13.5, leftBtn.y, leftBtn.width, leftBtn.height) AndImageName:@"car_unselected"];
+        rightBtn = [TCComponent createImageBtnWithFrame:CGRectMake(leftLab.x + leftLab.width + TCRealValue(13.5), leftBtn.y, leftBtn.width, leftBtn.height) AndImageName:@"car_unselected"];
         [rightBtn addTarget:self action:@selector(touchSelectRightBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:rightBtn];
         
-        UILabel *rightLab = [TCComponent createLabelWithFrame:CGRectMake(rightBtn.x + rightBtn.width + 3, 0, 30, self.height) AndFontSize:14 AndTitle:@"男士"];
+        UILabel *rightLab = [TCComponent createLabelWithFrame:CGRectMake(rightBtn.x + rightBtn.width + TCRealValue(3), 0, TCRealValue(30), self.height) AndFontSize:TCRealValue(14) AndTitle:@"男士"];
         [self addSubview:rightLab];
         
     }

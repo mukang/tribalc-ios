@@ -33,18 +33,18 @@
         self.hidden = YES;
         
         standardView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 0)];
-        UIView *selectedInfoView = [self createSelectedInfoViewWithFrame:CGRectMake(0, 0, self.width, 118) AndTarget:target AndCloseAction:closeAction];
+        UIView *selectedInfoView = [self createSelectedInfoViewWithFrame:CGRectMake(0, 0, self.width, TCRealValue(118)) AndTarget:target AndCloseAction:closeAction];
         standardView.backgroundColor = [UIColor whiteColor];
         [standardView addSubview:selectedInfoView];
         
-        standardSelectView = [[UIView alloc] initWithFrame:CGRectMake(0, selectedInfoView.y + selectedInfoView.height, self.width, 193)];
+        standardSelectView = [[UIView alloc] initWithFrame:CGRectMake(0, selectedInfoView.y + selectedInfoView.height, self.width, TCRealValue(193))];
         standardSelectView.backgroundColor = [UIColor whiteColor];
         [standardView addSubview:standardSelectView];
         
-        computeView = [self createNumberSelectViewWithFrame:CGRectMake(0, standardSelectView.y + standardSelectView.height, self.width, 84) AndAddAction:addAction AndSubAction:subAction AndTarget:target];
+        computeView = [self createNumberSelectViewWithFrame:CGRectMake(0, standardSelectView.y + standardSelectView.height, self.width, TCRealValue(84)) AndAddAction:addAction AndSubAction:subAction AndTarget:target];
         [standardView addSubview:computeView];
         
-        UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, computeView.y + computeView.height, self.width, 49) AndTarget:target AndAddCartAction:addCartAction AndBuyAction:buyAction];
+        UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, computeView.y + computeView.height, self.width, TCRealValue(49)) AndTarget:target AndAddCartAction:addCartAction AndBuyAction:buyAction];
         [standardView addSubview:bottomView];
         
         [standardView setHeight:bottomView.height + bottomView.y];
@@ -66,26 +66,26 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
-    _selectedImgView = [self createSelectGoodImgViewWithFrame:CGRectMake(20, -9, 115, 115)];
+    _selectedImgView = [self createSelectGoodImgViewWithFrame:CGRectMake(TCRealValue(20), TCRealValue(-9), TCRealValue(115), TCRealValue(115))];
     [view addSubview:_selectedImgView];
     
-    UILabel *rmbStamp = [TCComponent createLabelWithFrame:CGRectMake(_selectedImgView.x + _selectedImgView.width + 12, 20, 20, 20) AndFontSize:20 AndTitle:@"￥" AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
+    UILabel *rmbStamp = [TCComponent createLabelWithFrame:CGRectMake(_selectedImgView.x + _selectedImgView.width + TCRealValue(12), TCRealValue(20), TCRealValue(20), TCRealValue(20)) AndFontSize:TCRealValue(20) AndTitle:@"￥" AndTextColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1]];
     [view addSubview:rmbStamp];
     
-    priceLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x + rmbStamp.width, rmbStamp.y, self.width - rmbStamp.x - rmbStamp.width, rmbStamp.height) AndFontSize:20 AndTitle:@"" AndTextColor:rmbStamp.textColor];
+    priceLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x + rmbStamp.width, rmbStamp.y, self.width - rmbStamp.x - rmbStamp.width, rmbStamp.height) AndFontSize:TCRealValue(20) AndTitle:@"" AndTextColor:rmbStamp.textColor];
     [view addSubview:priceLab];
     
-    inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, rmbStamp.y + rmbStamp.height + 12, self.width - rmbStamp.x, 12) AndFontSize:12 AndTitle:@"(剩余:(null)件)" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
+    inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, rmbStamp.y + rmbStamp.height + TCRealValue(12), self.width - rmbStamp.x, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:@"(剩余:(null)件)" AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     [self correctInventoryLabelValue];
     [view addSubview:inventoryLab];
     
-    UILabel *selectStamp = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, inventoryLab.y + inventoryLab.height + 13, 50, 14) AndFontSize:14 AndTitle:@"已选择" AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
+    UILabel *selectStamp = [TCComponent createLabelWithFrame:CGRectMake(rmbStamp.x, inventoryLab.y + inventoryLab.height + TCRealValue(13), TCRealValue(50), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:@"已选择" AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
     [view addSubview:selectStamp];
     
-    [self createSelectedStandardWithOrigin:CGPointMake(selectStamp.x + selectStamp.width + 8, selectStamp.y - 1) AndView:view];
+    [self createSelectedStandardWithOrigin:CGPointMake(selectStamp.x + selectStamp.width + TCRealValue(8), selectStamp.y - TCRealValue(1)) AndView:view];
     
     
-    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - 20 - TCRealValue(30), 15, TCRealValue(30), TCRealValue(30))];
+    UIButton *closeBtn = [self createColseBtnWithFrame:CGRectMake(self.width - TCRealValue(20) - TCRealValue(22.5), TCRealValue(15), TCRealValue(22.5), TCRealValue(22.5))];
     [closeBtn addTarget:target action:closeAction forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:closeBtn];
     
@@ -108,25 +108,25 @@
 - (void)setSelectedPrimaryStandardWithText:(NSString *)text {
     _selectedPrimaryLab.text = text;
     [_selectedPrimaryLab sizeToFit];
-    _selectedSecondLab.x = _selectedPrimaryLab.x + _selectedPrimaryLab.width + 9;
+    _selectedSecondLab.x = _selectedPrimaryLab.x + _selectedPrimaryLab.width + TCRealValue(9);
 }
 
 - (void)setSelectedSeconedStandardWithText:(NSString *)text {
     _selectedSecondLab.text = text;
-    _selectedSecondLab.x = _selectedPrimaryLab.x + _selectedPrimaryLab.width + 9;
+    _selectedSecondLab.x = _selectedPrimaryLab.x + _selectedPrimaryLab.width + TCRealValue(9);
     [_selectedSecondLab sizeToFit];
 }
 
 - (void)setStandardSelectViewWithStandard:(TCGoodStandards *)standard AndPrimaryAction:(SEL)primaryAction AndSeconedAction:(SEL)seconedAction AndTarget:(id)target {
     if (standard.descriptions != NULL) {
-        UIView *primaryView = [self createGoodStyleSelectViewWithFrame:CGRectMake(0, 0, self.width, 96) AndStandard:standard AndStyleAction:primaryAction AndTarget:target];
+        UIView *primaryView = [self createGoodStyleSelectViewWithFrame:CGRectMake(0, 0, self.width, TCRealValue(96)) AndStandard:standard AndStyleAction:primaryAction AndTarget:target];
         if (standard.descriptions[@"secondary"] != NULL) {
-            UIView *seconedView = [self createGoodSizeSelectViewWithFrame:CGRectMake(0, primaryView.y + primaryView.height, self.width, 96) AndStandard:standard AndAction:seconedAction AndTarget:target];
+            UIView *seconedView = [self createGoodSizeSelectViewWithFrame:CGRectMake(0, primaryView.y + primaryView.height, self.width, TCRealValue(96)) AndStandard:standard AndAction:seconedAction AndTarget:target];
             [standardSelectView addSubview:seconedView];
         }
         [standardSelectView addSubview:primaryView];
     } else {
-        computeView.y = 118;
+        computeView.y = TCRealValue(118);
     }
 
 
@@ -207,7 +207,7 @@
 - (UIView *)createBottomViewWithFrame:(CGRect)frame AndTarget:(id)target AndAddCartAction:(SEL)cartAction AndBuyAction:(SEL)buyAction{
     UIView *view = [[UIView alloc] initWithFrame:frame];
     
-    UIButton *shopcarBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) AndTitle:@"加入购物车" AndFontSize:17];
+    UIButton *shopcarBtn = [TCComponent createButtonWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) AndTitle:@"加入购物车" AndFontSize:TCRealValue(17)];
     [shopcarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     shopcarBtn.backgroundColor = [UIColor colorWithRed:112/255.0 green:206/255.0 blue:213/255.0 alpha:1];
     [shopcarBtn addTarget:target action:cartAction forControlEvents:UIControlEventTouchUpInside];
@@ -228,12 +228,12 @@
 
 - (void)createSelectedStandardWithOrigin:(CGPoint)point AndView:(UIView *)view {
 
-    _selectedPrimaryLab = [TCComponent createLabelWithText:@"" AndFontSize:14 AndTextColor:priceLab.textColor];
+    _selectedPrimaryLab = [TCComponent createLabelWithText:@"" AndFontSize:TCRealValue(14) AndTextColor:priceLab.textColor];
     [_selectedPrimaryLab setOrigin:point];
     [view addSubview:_selectedPrimaryLab];
     
-    _selectedSecondLab = [TCComponent createLabelWithText:@"" AndFontSize:14 AndTextColor:_selectedPrimaryLab.textColor];
-    [_selectedSecondLab setOrigin:CGPointMake(_selectedPrimaryLab.x + _selectedPrimaryLab.width + 9, _selectedPrimaryLab.y)];
+    _selectedSecondLab = [TCComponent createLabelWithText:@"" AndFontSize:TCRealValue(14) AndTextColor:_selectedPrimaryLab.textColor];
+    [_selectedSecondLab setOrigin:CGPointMake(_selectedPrimaryLab.x + _selectedPrimaryLab.width + TCRealValue(9), _selectedPrimaryLab.y)];
     [view addSubview:_selectedSecondLab];
     
 }
@@ -251,18 +251,18 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, frame.size.width - 40, 0.5)];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, frame.size.width - TCRealValue(40), TCRealValue(0.5))];
     [view addSubview:lineView];
     
-    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(20, 20, frame.size.width - 40, 14) AndFontSize:14 AndTitle:infoDic[@"label"] AndTextColor:[UIColor blackColor]];
-    titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), TCRealValue(20), frame.size.width - TCRealValue(40), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:infoDic[@"label"] AndTextColor:[UIColor blackColor]];
+    titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(14)];
     [view addSubview:titleLab];
     
-    goodStyleButtonView =[self createGoodStyleButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 20, titleLab.width, 22.5) AndStandard:goodStandard AndAction:(SEL)action AndTarget:target];
+    goodStyleButtonView =[self createGoodStyleButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + TCRealValue(20), titleLab.width, TCRealValue(22.5)) AndStandard:goodStandard AndAction:(SEL)action AndTarget:target];
 
     [view addSubview:goodStyleButtonView];
 
-    [view setHeight:goodStyleButtonView.height + 52 + 25];
+    [view setHeight:goodStyleButtonView.height + TCRealValue(52) + TCRealValue(25)];
 
     return view;
 }
@@ -273,18 +273,18 @@
     
     NSDictionary *infoDic = goodStandard.descriptions[@"secondary"];
     
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, frame.size.width - 40, 0.5)];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, frame.size.width - TCRealValue(40), TCRealValue(0.5))];
     [view addSubview:lineView];
     
-    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(20, 20, frame.size.width - 40, 14) AndFontSize:14 AndTitle:infoDic[@"label"] AndTextColor:[UIColor blackColor]];
-    titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), TCRealValue(20), frame.size.width - TCRealValue(40), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:infoDic[@"label"] AndTextColor:[UIColor blackColor]];
+    titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(14)];
     [view addSubview:titleLab];
     
-    goodSizeButtonView = [self createGoodSizeButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + 20, titleLab.width, 30) AndStandard:goodStandard AndTarget:target AndAction:action];
+    goodSizeButtonView = [self createGoodSizeButtonViewWithFrame:CGRectMake(titleLab.x, titleLab.y + titleLab.height + TCRealValue(20), titleLab.width, TCRealValue(30)) AndStandard:goodStandard AndTarget:target AndAction:action];
     
     [view addSubview:goodSizeButtonView];
     
-    [view setHeight:goodSizeButtonView.height + 52 + 25];
+    [view setHeight:goodSizeButtonView.height + TCRealValue(52) + TCRealValue(25)];
     
 
     
@@ -299,15 +299,15 @@
     int height = 0;
     for (int i = 0; i < infoArr.count; i++) {
         UIButton *button = [self createGoodStyleButtonWithOrigin:CGPointMake(width, height) AndText:infoArr[i]];
-        if (width + button.width > self.width - 40) {
+        if (width + button.width > self.width - TCRealValue(40)) {
             width = 0;
-            height += 22.5 + 13;
-            [buttonView setHeight:height + 22.5];
+            height += TCRealValue(22.5 + 13);
+            [buttonView setHeight:height + TCRealValue(22.5)];
         }
         [button setOrigin:CGPointMake(width, height)];
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         button.tag = i;
-        width += button.width + 13;
+        width += button.width + TCRealValue(13);
         [buttonView addSubview:button];
         [self initEmptyButtonWithStandard:standard AndButton:button AndPrimary:infoArr[i] AndSecond:_selectedSecondLab.text];
         
@@ -349,16 +349,16 @@
     int height = 0;
     for (int i = 0; i < infoArr.count; i++) {
         UIButton *button = [self createGoodSizeButtonWithOrigin:CGPointMake(width, height) AndTitle:infoArr[i]];
-        if (width + button.width > self.width - 40) {
+        if (width + button.width > self.width - TCRealValue(40)) {
             width = 0;
-            height += 30 + 13;
-            [buttonView setHeight:height + 30];
+            height += TCRealValue(30 + 13);
+            [buttonView setHeight:height + TCRealValue(30)];
         }
         [button setOrigin:CGPointMake(width, height)];
         [buttonView addSubview:button];
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         button.tag = i;
-        width += button.width + 11;
+        width += button.width + TCRealValue(11);
         [self initEmptyButtonWithStandard:standard AndButton:button AndPrimary:_selectedPrimaryLab.text AndSecond:infoArr[i]];
         if ([_selectedSecondLab.text isEqualToString:infoArr[i]]) {
             button.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
@@ -373,21 +373,21 @@
 - (UIView *)createNumberSelectViewWithFrame:(CGRect)frame AndAddAction:(SEL)addAction AndSubAction:(SEL)subAction AndTarget:(id)target{
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
-    UILabel *numberLab = [[UILabel alloc] initWithFrame:CGRectMake(20, 29, 50, 14)];
+    UILabel *numberLab = [[UILabel alloc] initWithFrame:CGRectMake(TCRealValue(20), TCRealValue(29), TCRealValue(50), TCRealValue(14))];
     numberLab.text = @"数量";
     [view addSubview:numberLab];
 
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, frame.size.width - 40, 0.5)];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, frame.size.width - TCRealValue(40), TCRealValue(0.5))];
     [view addSubview:lineView];
     
-    UIButton *addBtn = [self createComputeBtnWithFrame:CGRectMake(frame.size.width - 20 - 38, 20, 38, 35) AndText:@"+"];
+    UIButton *addBtn = [self createComputeBtnWithFrame:CGRectMake(frame.size.width - TCRealValue(20) - TCRealValue(38), TCRealValue(20), TCRealValue(38), TCRealValue(35)) AndText:@"+"];
     [addBtn addTarget:target action:addAction forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:addBtn];
     
     _numberLab = [self createBuyNumberLabelWithText:@"1"];
     [view addSubview:_numberLab];
     
-    subBtn = [self createComputeBtnWithFrame:CGRectMake(_numberLab.x - 38, addBtn.y, 38, 35) AndText:@"-"];
+    subBtn = [self createComputeBtnWithFrame:CGRectMake(_numberLab.x - TCRealValue(38), addBtn.y, TCRealValue(38), TCRealValue(35)) AndText:@"-"];
     [subBtn addTarget:target action:subAction forControlEvents:UIControlEventTouchDown];
     [view addSubview:subBtn];
     
@@ -395,9 +395,9 @@
 }
 
 - (UILabel *)createBuyNumberLabelWithText:(NSString *)text {
-    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:16 AndTextColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1]];
+    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:TCRealValue(16) AndTextColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1]];
     label.textAlignment = NSTextAlignmentCenter;
-    [label setFrame:CGRectMake(self.width - 20 - 38 - 58, 20, 58, 35)];
+    [label setFrame:CGRectMake(self.width - TCRealValue(20) - TCRealValue(38) - TCRealValue(58), TCRealValue(20), TCRealValue(58), TCRealValue(35))];
     
     return label;
 }
@@ -406,8 +406,8 @@
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     button.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1];
     [button setTitleColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1] forState:UIControlStateNormal];
-    button.layer.cornerRadius = 3;
-    button.titleLabel.font = [UIFont systemFontOfSize:16];
+    button.layer.cornerRadius = TCRealValue(3);
+    button.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(16)];
     [button setTitle:text forState:UIControlStateNormal];
     return button;
 }
@@ -416,23 +416,23 @@
 
 - (UIButton *)createGoodStyleButtonWithOrigin:(CGPoint)point AndText:(NSString *)text {
     UIButton *button = [self createGoodSelectButtonWithFrame:CGRectMake(point.x, point.y, 0, 0) AndText:text];
-    button.layer.cornerRadius = 5;
-    button.titleLabel.font = [UIFont systemFontOfSize:12];
+    button.layer.cornerRadius = TCRealValue(5);
+    button.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
     [button sizeToFit];
-    [button setWidth:button.width + 20];
+    [button setWidth:button.width + TCRealValue(20)];
     
     return button;
 }
 
 - (UIButton *)createGoodSizeButtonWithOrigin:(CGPoint)origin AndTitle:(NSString *)title{
     UIButton *button = [self createGoodSelectButtonWithFrame:CGRectMake(origin.x, origin.y, 0, 0) AndText:title];
-    button.layer.cornerRadius = 13;
-    button.titleLabel.font = [UIFont systemFontOfSize:12];
+    button.layer.cornerRadius = TCRealValue(13);
+    button.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
     [button sizeToFit];
     button.layer.borderWidth = 0;
     button.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     [button setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
-    [button setWidth:button.width + 20];
+    [button setWidth:button.width + TCRealValue(20)];
     
     return button;
 }
@@ -440,7 +440,7 @@
 - (UIButton *)createGoodSelectButtonWithFrame:(CGRect)frame AndText:(NSString *)text{
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     [button setTitle:text forState:UIControlStateNormal];
-    button.layer.borderWidth = 1;
+    button.layer.borderWidth = TCRealValue(1);
     button.layer.borderColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1].CGColor;
     [button setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
 
@@ -451,9 +451,9 @@
 
 - (UIImageView *)createSelectGoodImgViewWithFrame:(CGRect)frame{
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
-    imageView.layer.cornerRadius = 5;
+    imageView.layer.cornerRadius = TCRealValue(5);
     imageView.clipsToBounds = YES;
-    imageView.layer.borderWidth = 1.5;
+    imageView.layer.borderWidth = TCRealValue(1.5);
     imageView.layer.borderColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1].CGColor;
     imageView.backgroundColor = [UIColor whiteColor];
 //    

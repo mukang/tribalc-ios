@@ -15,7 +15,7 @@
     if (self) {
         _titleLab = [[UILabel alloc] init];
         _titleLab.text = text;
-        _titleLab.font = [UIFont fontWithName:@"Arial" size:14];
+        _titleLab.font = [UIFont fontWithName:@"Arial" size:TCRealValue(14)];
         _titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
         [_titleLab sizeToFit];
         
@@ -25,7 +25,7 @@
         [_imgeView sizeToFit];
         
         [_titleLab setOrigin:CGPointMake(frame.size.width / 2 - (_titleLab.size.width + _imgeView.size.width) / 2, (frame.size.height - _titleLab.height) / 2)];
-        [_imgeView setOrigin:CGPointMake(_titleLab.x + _titleLab.width + 3, (frame.size.height - _imgeView.height) / 2)];
+        [_imgeView setOrigin:CGPointMake(_titleLab.x + _titleLab.width + TCRealValue(3), (frame.size.height - _imgeView.height) / 2)];
         
         [self addSubview:_titleLab];
         [self addSubview:_imgeView];

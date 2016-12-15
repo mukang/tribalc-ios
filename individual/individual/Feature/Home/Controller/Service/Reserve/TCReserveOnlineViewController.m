@@ -81,10 +81,10 @@
     
     [self initPickerView];
     
-    userInfoView = [[TCReserveUserBaseInfoView alloc] initWithFrame:CGRectMake(0, timeAndPersonNumberView.y + timeAndPersonNumberView.height + 11, self.view.width, self.view.height - timeAndPersonNumberView.y - timeAndPersonNumberView.height)];
+    userInfoView = [[TCReserveUserBaseInfoView alloc] initWithFrame:CGRectMake(0, timeAndPersonNumberView.y + timeAndPersonNumberView.height + TCRealValue(11), self.view.width, self.view.height - timeAndPersonNumberView.y - timeAndPersonNumberView.height)];
     [self.view addSubview:userInfoView];
     
-    UIButton *reserveBtn = [self getReserveButtonWithFrame:CGRectMake(33, self.view.height - 15 - 43 - 64, self.view.width - 66, 43)];
+    UIButton *reserveBtn = [self getReserveButtonWithFrame:CGRectMake(TCRealValue(33), self.view.height - TCRealValue(15) - TCRealValue(43) - 64, self.view.width - TCRealValue(66), TCRealValue(43))];
     [reserveBtn bringSubviewToFront:self.view];
     [self.view addSubview:reserveBtn];
     
@@ -97,7 +97,7 @@
     [reserveBtn setTitle:@"预订餐位" forState:UIControlStateNormal];
     reserveBtn.backgroundColor = TCRGBColor(81, 199, 209);
     [reserveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    reserveBtn.layer.cornerRadius = 5;
+    reserveBtn.layer.cornerRadius = TCRealValue(5);
     [reserveBtn addTarget:self action:@selector(touchReserveBtn:) forControlEvents:UIControlEventTouchUpInside];
     return reserveBtn;
 }
@@ -114,21 +114,21 @@
 
 - (UIView *)getSelectViewWithTitle:(NSString *)title AndTpye:(NSString *)type{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height + 216 + 40)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height + 216 + TCRealValue(40))];
     view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7];
-    UIView *titleView = [self getSelectTitleViewWithFrame:CGRectMake(0, self.view.height, self.view.width, 40) AndTitle:title];
+    UIButton *titleBtn = [self getSelectTitleViewWithFrame:CGRectMake(0, self.view.height, self.view.width, TCRealValue(40)) AndTitle:title];
     view.hidden = YES;
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchCancelSelectBtn:)];
     [view addGestureRecognizer:recognizer];
     
-    titleView.backgroundColor = [UIColor whiteColor];
-    [view addSubview:titleView];
+    titleBtn.backgroundColor = [UIColor whiteColor];
+    [view addSubview:titleBtn];
     
     if ([type isEqualToString:@"time"]) {
-        timePickerView = [self getPickerViewWithFrame:CGRectMake(0, titleView.y + titleView.height, self.view.width, 216)];
+        timePickerView = [self getPickerViewWithFrame:CGRectMake(0, titleBtn.y + titleBtn.height, self.view.width, 216)];
         [view addSubview:timePickerView];
     } else {
-        personNumberPickerView =[self getPickerViewWithFrame:CGRectMake(0, titleView.y + titleView.height, self.view.width, 216)];
+        personNumberPickerView =[self getPickerViewWithFrame:CGRectMake(0, titleBtn.y + titleBtn.height, self.view.width, 216)];
         [view addSubview:personNumberPickerView];
     }
     
@@ -146,16 +146,16 @@
     
 }
 
-- (UIView *)getSelectTitleViewWithFrame:(CGRect)frame AndTitle:(NSString *)title {
-    UIView *titleView = [[UIView alloc] initWithFrame:frame];
-    UIButton *cancelBtn = [TCComponent createButtonWithFrame:CGRectMake(20, 0, 30, titleView.height) AndTitle:@"取消" AndFontSize:14 AndBackColor:nil AndTextColor:[UIColor blackColor]];
+- (UIButton *)getSelectTitleViewWithFrame:(CGRect)frame AndTitle:(NSString *)title {
+    UIButton *titleView = [[UIButton alloc] initWithFrame:frame];
+    UIButton *cancelBtn = [TCComponent createButtonWithFrame:CGRectMake(TCRealValue(20), 0, TCRealValue(30), titleView.height) AndTitle:@"取消" AndFontSize:TCRealValue(14) AndBackColor:nil AndTextColor:[UIColor blackColor]];
     [cancelBtn addTarget:self action:@selector(touchCancelSelectBtn:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *confirmBtn = [TCComponent createButtonWithFrame:CGRectMake(titleView.width - 20 - 30, 0, 30, titleView.height) AndTitle:@"确定" AndFontSize:14 AndBackColor:nil AndTextColor:[UIColor blackColor]];
+    UIButton *confirmBtn = [TCComponent createButtonWithFrame:CGRectMake(titleView.width - TCRealValue(20) - TCRealValue(30), 0, TCRealValue(30), titleView.height) AndTitle:@"确定" AndFontSize:TCRealValue(14) AndBackColor:nil AndTextColor:[UIColor blackColor]];
     [confirmBtn addTarget:self action:[self getSelectTitleViewConfirmBtnActionWithTitle:title] forControlEvents:UIControlEventTouchUpInside];
     UILabel *titleLab = [TCComponent createLabelWithText:title AndFontSize:14];
-    titleLab.frame = CGRectMake(50, 0, titleView.width - 50 * 2, titleView.height);
+    titleLab.frame = CGRectMake(TCRealValue(50), 0, titleView.width - TCRealValue(50) * 2, titleView.height);
     titleLab.textAlignment = NSTextAlignmentCenter;
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, titleView.height - 0.5, self.view.width, 0.5)];
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, titleView.height - TCRealValue(0.5), self.view.width, TCRealValue(0.5))];
     [titleView addSubview:lineView];
     [titleView addSubview:cancelBtn];
     [titleView addSubview:confirmBtn];
@@ -175,14 +175,14 @@
 - (UIView *)getTimeAndPersonNumberView {
     UIView *timeAndPersonNumberView = [[UIView alloc] init];
     timeAndPersonNumberView.backgroundColor = [UIColor whiteColor];
-    UIView *timeButton = [self getTimeButtonWithFrame:CGRectMake(1, 0, self.view.width, 40)];
+    UIView *timeButton = [self getTimeButtonWithFrame:CGRectMake(TCRealValue(1), 0, self.view.width, TCRealValue(40))];
     [timeAndPersonNumberView addSubview:timeButton];
     
-    UIView *personNumberBtn = [self getPersonNumberButtonWithFrame:CGRectMake(1, timeButton.y + timeButton.height, timeButton.width, timeButton.height)];
+    UIView *personNumberBtn = [self getPersonNumberButtonWithFrame:CGRectMake(TCRealValue(1), timeButton.y + timeButton.height, timeButton.width, timeButton.height)];
     [timeAndPersonNumberView addSubview:personNumberBtn];
     
-    timeAndPersonNumberView.frame = CGRectMake(-1, 2, self.view.width + 2, 40 * 2 + 1);
-    timeAndPersonNumberView.layer.borderWidth = 1;
+    timeAndPersonNumberView.frame = CGRectMake(TCRealValue(-1), TCRealValue(2), self.view.width + TCRealValue(2), TCRealValue(40) * 2 + TCRealValue(1));
+    timeAndPersonNumberView.layer.borderWidth = TCRealValue(1);
     timeAndPersonNumberView.layer.borderColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1].CGColor;
     
     return timeAndPersonNumberView;
@@ -192,13 +192,13 @@
 - (UIButton *)getTimeButtonWithFrame:(CGRect)frame {
     UIButton *timeButton = [self getTimeAndPersonNumberButtonWithFrame:frame AndText:@"时间" AndAction:@selector(touchTimeBtn:)];
 
-    timeLab = [TCComponent createLabelWithText:@"" AndFontSize:14];
+    timeLab = [TCComponent createLabelWithText:@"" AndFontSize:TCRealValue(14)];
 //    timeLab = [TCComponent createLabelWithText:[self getTimeString] AndFontSize:14];
-    timeLab.frame = CGRectMake(20 + 35, 0, timeButton.width - 88, timeButton.height);
+    timeLab.frame = CGRectMake(TCRealValue(55), 0, timeButton.width - TCRealValue(88), timeButton.height);
     timeLab.textAlignment = NSTextAlignmentRight;
     [timeButton addSubview:timeLab];
     
-    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, timeButton.height - 0.5, self.view.width - 40, 0.5)];
+    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), timeButton.height - TCRealValue(0.5), self.view.width - TCRealValue(40), TCRealValue(0.5))];
     [timeButton addSubview:downLineView];
     
     return timeButton;
@@ -207,13 +207,13 @@
 - (UIButton *)getPersonNumberButtonWithFrame:(CGRect)frame {
     UIButton *personNumberButton = [self getTimeAndPersonNumberButtonWithFrame:frame AndText:@"人数" AndAction:@selector(touchPersonNumberBtn:)];
     
-    personNumberLab = [TCComponent createLabelWithText:@"" AndFontSize:14];
+    personNumberLab = [TCComponent createLabelWithText:@"" AndFontSize:TCRealValue(14)];
 //    personNumberLab = [TCComponent createLabelWithText:[self getPersonNumberString:1] AndFontSize:14];
-    personNumberLab.frame = CGRectMake(20 + 35, 0, personNumberButton.width - 88, personNumberButton.height);
+    personNumberLab.frame = CGRectMake(TCRealValue(55), 0, personNumberButton.width - TCRealValue(88), personNumberButton.height);
     personNumberLab.textAlignment = NSTextAlignmentRight;
     [personNumberButton addSubview:personNumberLab];
     
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 0, personNumberButton.width - 40, 0.5)];
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, personNumberButton.width - TCRealValue(40), TCRealValue(0.5))];
     [personNumberButton addSubview:topLineView];
     
     return personNumberButton;
@@ -222,9 +222,9 @@
 - (UIButton *)getTimeAndPersonNumberButtonWithFrame:(CGRect)frame AndText:(NSString *)text AndAction:(SEL)action {
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     button.backgroundColor = [UIColor whiteColor];
-    UILabel *tagLab = [TCComponent createLabelWithFrame:CGRectMake(20, 0, 30, button.height) AndFontSize:14 AndTitle:text];
+    UILabel *tagLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), 0, TCRealValue(30), button.height) AndFontSize:TCRealValue(14) AndTitle:text];
     [button addSubview:tagLab];
-    UIImageView *rightImgView = [[UIImageView alloc] initWithFrame:CGRectMake(button.width - 20 - 9, button.height / 2 - 18 / 2, 9, 18)];
+    UIImageView *rightImgView = [[UIImageView alloc] initWithFrame:CGRectMake(button.width - TCRealValue(20) - TCRealValue(9), button.height / 2 - TCRealValue(18) / 2, TCRealValue(9), TCRealValue(18))];
     rightImgView.image = [UIImage imageNamed:@"goods_select_standard"];
     [button addSubview:rightImgView];
     
@@ -355,7 +355,7 @@
             return [self getTimeString:[NSDate dateWithTimeIntervalSinceNow:30 * 60 * row]];
         }
     } else {
-        return [NSString stringWithFormat:@"%li", row + 1];
+        return [NSString stringWithFormat:@"%li", (long)row + 1];
     }
 }
 
@@ -367,7 +367,7 @@
                 for (int j = 0; j < titleView.subviews.count; j++) {
                     if ([titleView.subviews[j] isKindOfClass:[UILabel class]]) {
                         UILabel *titleLab = titleView.subviews[j];
-                        titleLab.text = [NSString stringWithFormat:@"%li人", row + 1];
+                        titleLab.text = [NSString stringWithFormat:@"%li人", (long)row + 1];
                     }
                 }
             }
@@ -423,7 +423,7 @@
 
 - (void)touchAmountConfirmSelectBtn:(UIButton *)button {
     NSInteger personNumberRow = [personNumberPickerView selectedRowInComponent:0];
-    NSString *personNumberStr = [NSString stringWithFormat:@"%li", personNumberRow + 1];
+    NSString *personNumberStr = [NSString stringWithFormat:@"%li", (long)personNumberRow + 1];
     personNumberLab.text = [NSString stringWithFormat:@"%@人", personNumberStr];
     
     [self cancelShowSelectView];

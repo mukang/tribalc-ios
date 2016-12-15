@@ -24,7 +24,7 @@
     centerLab.text = text;
     [centerLab sizeToFit];
     centerLab.textColor = [UIColor whiteColor];
-    centerLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+    centerLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(16)];
     return centerLab;
 }
 

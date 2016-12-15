@@ -1047,7 +1047,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 TCOrder *order = [[TCOrder alloc] initWithObjectDictionary:result[i]];
                 [orderList addObject:order];
             }
-            if (response.statusCode == 201) {
+            if (response.statusCode == 200) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(orderList, nil));
                 }

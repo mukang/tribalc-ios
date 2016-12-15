@@ -69,12 +69,12 @@
     UITableView *mTableView = [self getReserveDetailTableView];
     [mScrollView addSubview:mTableView];
     
-    UIView *customerView = [self getContactCustomerServiceViewWithFrame:CGRectMake(0, mTableView.y + mTableView.height, self.view.width, 44)];
+    UIView *customerView = [self getContactCustomerServiceViewWithFrame:CGRectMake(0, mTableView.y + mTableView.height, self.view.width, TCRealValue(44))];
     [mScrollView addSubview:customerView];
     
     
     if (![reservationDetail.status isEqualToString:@"CANNEL"] && ![reservationDetail.status isEqualToString:@"FAILURE"]) {
-        UIButton *cancelBtn =[self getCancelOrderBtnWithFrame:CGRectMake(self.view.width / 2 - TCRealValue(315) / 2, customerView.y + customerView.height, TCRealValue(315), 40)];
+        UIButton *cancelBtn =[self getCancelOrderBtnWithFrame:CGRectMake(self.view.width / 2 - TCRealValue(315) / 2, customerView.y + customerView.height, TCRealValue(315), TCRealValue(40))];
         [mScrollView addSubview:cancelBtn];
     }
     
@@ -104,7 +104,7 @@
 
 - (UITableView *)getReserveDetailTableView {
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 71, self.view.width, TCRealValue(131 + 11) + 11 + 66 + 40 * 5) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, TCRealValue(71), self.view.width, TCRealValue(131 + 11) + TCRealValue(11 + 66 + 40 * 5)) style:UITableViewStylePlain];
     tableView.userInteractionEnabled = NO;
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -117,8 +117,8 @@
     cancelBtn.backgroundColor = TCRGBColor(81, 199, 209);
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cancelBtn setTitle:@"取消订单" forState:UIControlStateNormal];
-    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    cancelBtn.layer.cornerRadius = 5;
+    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(16)];
+    cancelBtn.layer.cornerRadius = TCRealValue(5);
     [cancelBtn addTarget:self action:@selector(touchCancelReserve:) forControlEvents:UIControlEventTouchUpInside];
     
     return cancelBtn;
@@ -126,12 +126,12 @@
 
 - (UIView *)getContactCustomerServiceViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UILabel *tagLab = [TCComponent createLabelWithText:@"有问题请联系客服 : " AndFontSize:12];
+    UILabel *tagLab = [TCComponent createLabelWithText:@"有问题请联系客服 : " AndFontSize:TCRealValue(12)];
     tagLab.textColor = TCRGBColor(154, 154, 154);
     UIButton *phoneBtn = [[UIButton alloc] init];
     [phoneBtn setTitle:@"4008-252-987" forState:UIControlStateNormal];
     [phoneBtn setTitleColor:TCRGBColor(81, 199, 209) forState:UIControlStateNormal];
-    phoneBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    phoneBtn.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
     [phoneBtn sizeToFit];
     
     tagLab.frame = CGRectMake(self.view.width / 2 - (tagLab.width + phoneBtn.width) / 2, 0, tagLab.width, view.height);
@@ -144,17 +144,17 @@
 
 
 - (UIView *)getStatusViewWithStatus:(NSString *)status {
-    UIView *statusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 71)];
+    UIView *statusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(71))];
     statusView.backgroundColor = TCRGBColor(242, 242, 242);
-    UILabel *statusLab = [TCComponent createLabelWithText:status AndFontSize:14];
-    statusLab.frame = CGRectMake(self.view.width / 2 - (statusLab.width + 17) / 2, 20, statusLab.width, 14);
+    UILabel *statusLab = [TCComponent createLabelWithText:status AndFontSize:TCRealValue(14)];
+    statusLab.frame = CGRectMake(self.view.width / 2 - (statusLab.width + TCRealValue(17)) / 2, TCRealValue(20), statusLab.width, TCRealValue(14));
     [statusView addSubview:statusLab];
     
-    UIImageView *statusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(statusLab.x - 17, statusLab.y, 14, 14)];
+    UIImageView *statusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(statusLab.x - TCRealValue(17), statusLab.y, TCRealValue(14), TCRealValue(14))];
     statusImgView.image = [UIImage imageNamed:[self getStatusImgName:status]];
     [statusView addSubview:statusImgView];
     
-    UILabel *statusPromptLab = [TCComponent createLabelWithFrame:CGRectMake(0, statusView.height - 15 - 12, self.view.width, 12) AndFontSize:12 AndTitle:[self getStatusPrompt:status] AndTextColor:TCRGBColor(125, 125, 125)];
+    UILabel *statusPromptLab = [TCComponent createLabelWithFrame:CGRectMake(0, statusView.height - TCRealValue(15) - TCRealValue(12), self.view.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:[self getStatusPrompt:status] AndTextColor:TCRGBColor(125, 125, 125)];
     statusPromptLab.textAlignment = NSTextAlignmentCenter;
     [statusView addSubview:statusPromptLab];
     
@@ -202,19 +202,19 @@
 - (UITableViewCell *)getTableViewCellForBaseInfo:(NSDictionary *)infoDic {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
     cell.backgroundColor = [UIColor whiteColor];
-    UILabel *titleLab = [TCComponent createLabelWithText:infoDic[@"title"] AndFontSize:12];
-    titleLab.frame = CGRectMake(20, 0, titleLab.width, 40);
+    UILabel *titleLab = [TCComponent createLabelWithText:infoDic[@"title"] AndFontSize:TCRealValue(12)];
+    titleLab.frame = CGRectMake(TCRealValue(20), 0, titleLab.width, TCRealValue(40));
     [cell addSubview:titleLab];
     
-    UILabel *detailLab = [TCComponent createLabelWithText:infoDic[@"detail"] AndFontSize:12];
-    detailLab.frame = CGRectMake(titleLab.x + titleLab.width + 20, 0, self.view.width - titleLab.x - titleLab.width - 40, 40);
+    UILabel *detailLab = [TCComponent createLabelWithText:infoDic[@"detail"] AndFontSize:TCRealValue(12)];
+    detailLab.frame = CGRectMake(titleLab.x + titleLab.width + TCRealValue(20), 0, self.view.width - titleLab.x - titleLab.width - TCRealValue(40), TCRealValue(40));
     detailLab.textAlignment = NSTextAlignmentRight;
     [cell addSubview:detailLab];
     
-    UIView *bottomLineView = [TCComponent createGrayLineWithFrame:CGRectMake(20, 40 - 0.5, self.view.width - 40, 0.5)];
+    UIView *bottomLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), TCRealValue(40 - 0.5), self.view.width - TCRealValue(40), TCRealValue(0.5))];
     [cell addSubview:bottomLineView];
     if ([infoDic[@"title"] isEqualToString:@"联系电话"]) {
-        bottomLineView.frame = CGRectMake(0, 40 - 0.5, self.view.width, 0.5);
+        bottomLineView.frame = CGRectMake(0, TCRealValue(40 - 0.5), self.view.width, TCRealValue(0.5));
     }
     
     return cell;
@@ -223,27 +223,27 @@
 - (UITableViewCell *)getTableViewCellForAddressInfo:(NSDictionary *)infoDic {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
     cell.backgroundColor = [UIColor whiteColor];
-    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(20, 13, 25, 12) AndFontSize:12 AndTitle:infoDic[@"title"]];
+    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), TCRealValue(13), TCRealValue(25), TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:infoDic[@"title"]];
     [cell addSubview:titleLab];
     UILabel *addressLab = [self getAddressLabelWithText:infoDic[@"detail"]];
     [cell addSubview:addressLab];
     
-    UIView *bottomView = [self getTableBottomViewWithFrame:CGRectMake(0, 66, self.view.width, 11)];
+    UIView *bottomView = [self getTableBottomViewWithFrame:CGRectMake(0, TCRealValue(66), self.view.width, TCRealValue(11))];
     [cell addSubview:bottomView];
     
     return cell;
 }
 
 - (UILabel *)getAddressLabelWithText:(NSString *)text {
-    UILabel *addressLab = [[UILabel alloc] initWithFrame:CGRectMake(20 + 28 + 25, 10, self.view.width - 45 - 28 - 20, 40)];
+    UILabel *addressLab = [[UILabel alloc] initWithFrame:CGRectMake(TCRealValue(20 + 28 + 25), TCRealValue(10), self.view.width - TCRealValue(45) - TCRealValue(28) - TCRealValue(20), TCRealValue(40))];
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-    style.lineSpacing = 9;
+    style.lineSpacing = TCRealValue(9);
     NSRange range = NSMakeRange(0, text.length);
     [attrStr addAttribute:NSParagraphStyleAttributeName value:style range:range];
-    addressLab.numberOfLines = 2;
+    addressLab.numberOfLines = TCRealValue(2);
     addressLab.lineBreakMode = NSLineBreakByWordWrapping;
-    addressLab.font = [UIFont systemFontOfSize:12];
+    addressLab.font = [UIFont systemFontOfSize:TCRealValue(12)];
     addressLab.attributedText = attrStr;
     
     return addressLab;
@@ -280,8 +280,8 @@
 - (UIView *)getTableBottomViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = TCRGBColor(242, 242, 242);
-    UIView *bottomLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, view.height - 0.5, view.width, 0.5)];
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, view.width, 0.5)];
+    UIView *bottomLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, view.height - TCRealValue(0.5), view.width, TCRealValue(0.5))];
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, view.width, TCRealValue(0.5))];
     [view addSubview:bottomLineView];
     [view addSubview:topLineView];
     
@@ -321,9 +321,9 @@
     if (indexPath.row == 0) {
         return TCRealValue(131 + 11);
     } else if (indexPath.row == 4) {
-        return 66 + 11;
+        return TCRealValue(66 + 11);
     } else {
-        return 40;
+        return TCRealValue(40);
     }
 }
 

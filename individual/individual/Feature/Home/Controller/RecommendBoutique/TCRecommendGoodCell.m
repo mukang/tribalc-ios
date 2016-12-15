@@ -23,25 +23,25 @@
         
         [self.contentView addSubview:_goodImageView];
         
-        _typeAndNameLab = [self initialWithFrame:CGRectMake(_goodImageView.frame.origin.x + 8, _goodImageView.frame.origin.y + _goodImageView.frame.size.height + self.height * 0.034, _goodImageView.frame.size.width - 16, 14)];
+        _typeAndNameLab = [self initialWithFrame:CGRectMake(_goodImageView.frame.origin.x + TCRealValue(8), _goodImageView.frame.origin.y + _goodImageView.frame.size.height + TCRealValue(11), _goodImageView.frame.size.width - TCRealValue(16), TCRealValue(14))];
         
-        _typeAndNameLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+        _typeAndNameLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(14)];
         [self.contentView addSubview:_typeAndNameLab];
         
-        _shopNameLab = [self initialWithFrame:CGRectMake(_typeAndNameLab.frame.origin.x + 1, _typeAndNameLab.frame.origin.y + _typeAndNameLab.frame.size.height + self.height * 0.034, _goodImageView.frame.size.width, 12)];
-        _shopNameLab.font = [UIFont systemFontOfSize:12];
+        _shopNameLab = [self initialWithFrame:CGRectMake(_typeAndNameLab.frame.origin.x + TCRealValue(1), _typeAndNameLab.frame.origin.y + _typeAndNameLab.frame.size.height + TCRealValue(11), _goodImageView.frame.size.width, TCRealValue(12))];
+        _shopNameLab.font = [UIFont systemFontOfSize:TCRealValue(12)];
         [self.contentView addSubview:_shopNameLab];
         
-        _priceLab = [self initialWithFrame:CGRectMake(_shopNameLab.frame.origin.x - 1, self.height - self.height * 0.021 - 16, _goodImageView.frame.size.width, 16)];
-        _priceLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+        _priceLab = [self initialWithFrame:CGRectMake(_shopNameLab.frame.origin.x - TCRealValue(1), _shopNameLab.y + _shopNameLab.height + TCRealValue(7), _goodImageView.frame.size.width, TCRealValue(16))];
+        _priceLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(16)];
         [self.contentView addSubview:_priceLab];
         
-        _collectionImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 8 - 20, self.height - 8 - 20, 20, 20)];
+        _collectionImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - TCRealValue(8) - TCRealValue(16), self.height - TCRealValue(8) - TCRealValue(16), TCRealValue(16), TCRealValue(16))];
         UIImage *collectionImg = [UIImage imageNamed:@"good_collection_no"];
         _collectionImgView.image = collectionImg;
         [_goodImageView addSubview:_collectionImgView];
         
-        _collectionBtn = [[UIButton alloc] initWithFrame:_collectionImgView.frame];
+        _collectionBtn = [[UIButton alloc] initWithFrame:CGRectMake(_collectionImgView.x - TCRealValue(5), _collectionImgView.y - TCRealValue(5), _collectionImgView.width + TCRealValue(10), _collectionImgView.width + TCRealValue(10))];
         [self.contentView addSubview:_collectionBtn];
         
         
@@ -53,7 +53,7 @@
 
 - (UILabel *)initialWithFrame:(CGRect)frame{
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.font = [UIFont fontWithName:@"Arial" size:12];
+    label.font = [UIFont fontWithName:@"Arial" size:TCRealValue(12)];
     label.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
     return label;
 }
