@@ -37,7 +37,7 @@ NSString *const TCVicinityButtonDidClickNotification = @"TCVicinityButtonDidClic
     self.vicinityButton = vicinityButton;
     
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"发布";
+    titleLabel.text = @"附近";
     titleLabel.font = [UIFont systemFontOfSize:10];
     titleLabel.textColor = TCRGBColor(112, 112, 112);
     [titleLabel sizeToFit];

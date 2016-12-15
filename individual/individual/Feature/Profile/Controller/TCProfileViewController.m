@@ -14,6 +14,7 @@
 #import "TCCompanyViewController.h"
 #import "TCCompanyApplyViewController.h"
 #import "TCUserOrderTabBarController.h"
+#import "TCSettingViewController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
@@ -105,11 +106,12 @@ TCPhotoPickerDelegate>
                                                                     style:UIBarButtonItemStylePlain
                                                                    target:self
                                                                    action:@selector(handleClickSettingButton:)];
-    UIBarButtonItem *messageItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile_nav_message_item"]
-                                                                    style:UIBarButtonItemStylePlain
-                                                                   target:self
-                                                                   action:@selector(handleClickMessageButton:)];
-    self.navigationItem.rightBarButtonItems = @[messageItem, settingItem];
+//    UIBarButtonItem *messageItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile_nav_message_item"]
+//                                                                    style:UIBarButtonItemStylePlain
+//                                                                   target:self
+//                                                                   action:@selector(handleClickMessageButton:)];
+//    self.navigationItem.rightBarButtonItems = @[messageItem, settingItem];
+    self.navigationItem.rightBarButtonItem = settingItem;
 }
 
 - (void)setupSubviews {
@@ -294,6 +296,8 @@ TCPhotoPickerDelegate>
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([self checkUserNeedLogin]) return;
+    
     if (indexPath.section == 0) {
         TCUserOrderTabBarController *orderMainViewController = [[TCUserOrderTabBarController alloc] init];
         orderMainViewController.hidesBottomBarWhenPushed = YES;
@@ -338,17 +342,21 @@ TCPhotoPickerDelegate>
 
 - (void)didClickCardButtonInProfileHeaderView:(TCProfileHeaderView *)view {
     TCLog(@"点击了名片按钮");
+    if ([self checkUserNeedLogin]) return;
 }
 
 - (void)didClickCollectButtonInProfileHeaderView:(TCProfileHeaderView *)view {
     TCLog(@"点击了收藏按钮");
+    if ([self checkUserNeedLogin]) return;
 }
 
 - (void)didClickGradeButtonInProfileHeaderView:(TCProfileHeaderView *)view {
     TCLog(@"点击了等级按钮");
+    if ([self checkUserNeedLogin]) return;
 }
 
 - (void)didClickPhotographButtonInProfileHeaderView:(TCProfileHeaderView *)view {
+    if ([self checkUserNeedLogin]) return;
     [self showBgImageChangeView];
 }
 
@@ -421,6 +429,13 @@ TCPhotoPickerDelegate>
 
 #pragma mark - Show Login View Controller
 
+- (BOOL)checkUserNeedLogin {
+    if ([[TCBuluoApi api] needLogin]) {
+        [self showLoginViewController];
+    }
+    return [[TCBuluoApi api] needLogin];
+}
+
 - (void)showLoginViewController {
     TCLoginViewController *vc = [[TCLoginViewController alloc] initWithNibName:@"TCLoginViewController" bundle:[NSBundle mainBundle]];
     [self presentViewController:vc animated:YES completion:nil];
@@ -442,22 +457,27 @@ TCPhotoPickerDelegate>
 
 - (void)handleClickQRCodeButton:(UIBarButtonItem *)sender {
     TCLog(@"点击了扫码按钮");
+    if ([self checkUserNeedLogin]) return;
 }
 
 - (void)handleClickSettingButton:(UIBarButtonItem *)sender {
-    TCLog(@"点击了设置按钮");
+    if ([self checkUserNeedLogin]) return;
+    
+    TCSettingViewController *vc = [[TCSettingViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)handleClickMessageButton:(UIBarButtonItem *)sender {
-    TCLog(@"点击了消息按钮");
-}
+//- (void)handleClickMessageButton:(UIBarButtonItem *)sender {
+//    TCLog(@"点击了消息按钮");
+//}
 
 - (void)handleUserDidLogin:(id)sender {
-    
+    [self updateHeaderView];
 }
 
 - (void)handleUserDidLogout:(id)sender {
-    
+    [self updateHeaderView];
 }
 
 - (void)handleUserInfoDidUpdate:(id)sender {
@@ -495,6 +515,8 @@ TCPhotoPickerDelegate>
 }
 
 - (void)touchOrderButton:(UIButton *)button {
+    if ([self checkUserNeedLogin]) return;
+    
     NSString *title;
     switch (button.tag) {
         case 1:
