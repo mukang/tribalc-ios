@@ -179,8 +179,7 @@
 - (UIView *)getExpressViewWithFrame:(CGRect)frame {
     UIView *expressView = [[UIView alloc] initWithFrame:frame];
     expressView.backgroundColor = [UIColor whiteColor];
-    UIButton *expressImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(15), frame.size.height / 2 - TCRealValue(12) / 2, TCRealValue(10), TCRealValue(12)) AndImageName:@""];
-    expressImgBtn.backgroundColor = [UIColor blackColor];
+    UIButton *expressImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(15), frame.size.height / 2 - TCRealValue(12) / 2, TCRealValue(10), TCRealValue(12)) AndImageName:@"home_express"];
     [expressView addSubview:expressImgBtn];
     
     UILabel *expressLab = [TCComponent createLabelWithFrame:CGRectMake(expressImgBtn.x + expressImgBtn.width + TCRealValue(5), 0, TCRealValue(50), frame.size.height) AndFontSize:TCRealValue(12) AndTitle:@"部落快报" AndTextColor:TCRGBColor(42, 42, 42)];
@@ -211,7 +210,7 @@
 - (void)setupNavigationBar {
     
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,nil]];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, [UIFont systemFontOfSize:TCRealValue(16)],NSFontAttributeName,nil]];
 
     navigationTitleLab = [TCGetNavigationItem getTitleItemWithText:@"首页"];
     self.navigationItem.titleView = navigationTitleLab;
@@ -513,6 +512,8 @@
 - (void)forgeData {
     homeInfoDic = @{
                     @"pictures":@[ @"home_Carousel",
+                                   @"home_Carousel",
+                                   @"home_Carousel",
                                    @"home_Carousel",
                                    @"home_Carousel"],
                     @"activity":@[  ],
