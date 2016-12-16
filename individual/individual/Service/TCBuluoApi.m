@@ -690,9 +690,14 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)changeWalletPassword:(NSString *)anOldPassword aNewPassword:(NSString *)aNewPassword result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)changeWalletPassword:(NSString *)messageCode anOldPassword:(NSString *)anOldPassword aNewPassword:(NSString *)aNewPassword result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/wallet/password", self.currentUserSession.assigned];
+        NSString *apiName;
+        if (messageCode) {
+            apiName = [NSString stringWithFormat:@"persons/%@/wallet/password?vcode=%@", self.currentUserSession.assigned, messageCode];
+        } else {
+            apiName = [NSString stringWithFormat:@"persons/%@/wallet/password", self.currentUserSession.assigned];
+        }
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
         [request setValue:anOldPassword forParam:@"oldPassword"];
         [request setValue:aNewPassword forParam:@"newPassword"];

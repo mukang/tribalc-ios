@@ -212,13 +212,14 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 - (void)fetchWalletBillWrapper:(NSString *)tradingType count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCWalletBillWrapper *walletBillWrapper, NSError *error))resultBlock;
 
 /**
- 修改用户钱包支付密码
- 
- @param anOldPassword 旧密码
+ 修改用户钱包支付密码（首次设置：messageCode和anOldPassword传nil，重置密码：messageCode传nil，找回密码：anOldPassword传nil）
+
+ @param messageCode 短信验证码，找回密码时使用
+ @param anOldPassword 旧密码，重置密码时使用
  @param aNewPassword 新密码
  @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
  */
-- (void)changeWalletPassword:(NSString *)anOldPassword aNewPassword:(NSString *)aNewPassword result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)changeWalletPassword:(NSString *)messageCode anOldPassword:(NSString *)anOldPassword aNewPassword:(NSString *)aNewPassword result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
  获取银行卡列表

@@ -73,19 +73,10 @@
         return;
     }
     
-    __weak typeof(self) weakSelf = self;
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchVerificationCodeWithPhone:phone result:^(BOOL success, NSError *error) {
-        if (success) {
-            [MBProgressHUD hideHUD:YES];
-            TCBioEditSMSViewController *vc = [[TCBioEditSMSViewController alloc] initWithNibName:@"TCBioEditSMSViewController" bundle:[NSBundle mainBundle]];
-            vc.phone = phone;
-            vc.editPhoneBlock = self.editPhoneBlock;
-            [weakSelf.navigationController pushViewController:vc animated:YES];
-        } else {
-            [MBProgressHUD showHUDWithMessage:@"手机号格式错误！"];
-        }
-    }];
+    TCBioEditSMSViewController *vc = [[TCBioEditSMSViewController alloc] initWithMessageCodeType:TCMessageCodeTypeBindPhone];
+    vc.phone = phone;
+    vc.editPhoneBlock = self.editPhoneBlock;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleCickBackButton:(UIBarButtonItem *)sender {

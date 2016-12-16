@@ -128,12 +128,12 @@
         return;
     }
     TCWalletPasswordType passwordType;
-    NSString *oldPassword = nil;
+    NSString *oldPassword;
     if (self.walletAccount.password) {
-        passwordType = TCWalletPasswordTypeOldPassword;
+        passwordType = TCWalletPasswordTypeResetInputOldPassword;
         oldPassword = self.walletAccount.password;
     } else {
-        passwordType = TCWalletPasswordTypeNewPassword;
+        passwordType = TCWalletPasswordTypeFirstTimeInputPassword;
     }
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:passwordType];
     vc.oldPassword = oldPassword;
