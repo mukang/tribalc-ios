@@ -250,21 +250,22 @@
 }
 
 - (NSString *)getTimeStringWithSelectDateStr:(NSString *)dateStr AndTimeStr:(NSString *)timeStr{
-    NSDate *date = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM"];
-    NSString *monthStr = [dateFormatter stringFromDate:date];
+//    NSDate *date = [NSDate date];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"MM"];
+//    NSString *monthStr = [dateFormatter stringFromDate:date];
     
-    NSString *selectMonth = [dateStr componentsSeparatedByString:@"-"][0];
-    [dateFormatter setDateFormat:@"YYYY"];
-    NSString *yearStr;
-    if (selectMonth.integerValue >= monthStr.integerValue) {
-        yearStr = [dateFormatter stringFromDate:date];
-    } else {
-        yearStr = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * 30 * 12]];
-    }
+//    NSString *selectMonth = [dateStr componentsSeparatedByString:@"-"][0];
+//    [dateFormatter setDateFormat:@"YYYY"];
+//    NSString *yearStr;
+//    if (selectMonth.integerValue >= monthStr.integerValue) {
+//        yearStr = [dateFormatter stringFromDate:date];
+//    } else {
+//        yearStr = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * 30 * 12]];
+//    }
     
-    return [NSString stringWithFormat:@"%@-%@ %@", yearStr, [dateStr componentsSeparatedByString:@" "][0], timeStr];
+    
+    return [NSString stringWithFormat:@"%@ %@ %@", [dateStr componentsSeparatedByString:@" "][0],[dateStr componentsSeparatedByString:@" "][1], timeStr];
 }
 
 - (NSString *)getTimeString:(NSDate *)date {
@@ -297,9 +298,22 @@
     [dateFormatter setDateFormat:@"MM-dd"];
     
     return [NSString stringWithFormat:@"%@ %@", [dateFormatter stringFromDate:date], [self getWeekStr:week]];
-    
-    
 }
+
+- (NSString *)getChinaTimeAndWeek:(NSDate *)date {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    components = [calendar components:unitFlags fromDate:date];
+    NSInteger week = [components weekday];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM月dd日"];
+    
+    return [NSString stringWithFormat:@"%@ %@", [dateFormatter stringFromDate:date], [self getWeekStr:week]];
+
+}
+
+
 
 - (void)showSelectTimePickerView {
     [self recoveryKeyboard];
@@ -417,7 +431,7 @@
 - (void)touchTimeConfirmSelectBtn:(UIButton *)button {
     NSInteger dateRow = [timePickerView selectedRowInComponent:0];
     NSInteger timeRow = [timePickerView selectedRowInComponent:1];
-    NSString *dateString = [self getTimeAndWeek:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * dateRow]];
+    NSString *dateString = [self getChinaTimeAndWeek:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * dateRow]];
     NSString *timeString = [self getTimeString:[NSDate dateWithTimeIntervalSinceNow:30 * 60 * timeRow]];
     timeLab.text = [self getTimeStringWithSelectDateStr:dateString AndTimeStr:timeString];
     [self cancelShowSelectView];

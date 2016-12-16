@@ -53,11 +53,17 @@
 #pragma mark - Init Data
 
 - (void)initShoppingCartData {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchShoppingCartWrapperWithSortSkip:nil result:^(TCShoppingCartWrapper *wrapper, NSError *error) {
-        shoppingCartWrapper = wrapper;
-        [self initialTableView];
-        [self setupBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
-        [self setupNavigationRightBarButton];
+        if (wrapper) {
+            [MBProgressHUD hideHUD:YES];
+            shoppingCartWrapper = wrapper;
+            [self initialTableView];
+            [self setupBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
+            [self setupNavigationRightBarButton];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"获取购物车列表失败"];
+        }
     }];
 }
 
