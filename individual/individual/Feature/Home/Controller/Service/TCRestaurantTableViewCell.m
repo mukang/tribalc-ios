@@ -37,6 +37,7 @@
         typeLab = [self createLabWithFrame:locationLab.frame AndFontSize:TCRealValue(12)];
         [self.contentView addSubview:typeLab];
         
+        
         locationLineType = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCRealValue(1), TCRealValue(11))];
         locationLineType.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
         [self.contentView addSubview:locationLineType];
@@ -57,6 +58,9 @@
 }
 
 - (void)setLocation:(NSString *)location {
+    if (!location) {
+        locationLineType.hidden = YES;
+    }
     locationLab.text = location;
     [locationLab sizeToFit];
     [locationLineType setOrigin:CGPointMake(locationLab.x + locationLab.width + TCRealValue(2), locationLab.y + TCRealValue(1))];
@@ -64,6 +68,9 @@
 }
 
 - (void)setType:(NSString *)type {
+    if (!type) {
+        locationLineType.hidden = YES;
+    }
     typeLab.text = type;
     [typeLab sizeToFit];
 }
@@ -107,16 +114,17 @@
 }
 
 - (void)createPrice {
-    UILabel *markLab = [self createLabWithFrame:CGRectMake(_nameLab.x, TCRealValue(160) - TCRealValue(55), TCRealValue(19), TCRealValue(19)) AndFontSize:TCRealValue(19)];
+    UILabel *markLab = [self createLabWithFrame:CGRectMake(_nameLab.x, TCRealValue(160) - TCRealValue(55) + 1, TCRealValue(19), TCRealValue(19)) AndFontSize:TCRealValue(19)];
     markLab.text = @"￥";
-    markLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(19)];
+    markLab.font = [UIFont systemFontOfSize:TCRealValue(19)];
     [self.contentView addSubview:markLab];
     
     priceLab = [[UILabel alloc] init];
-    priceLab.frame = CGRectMake(markLab.x + markLab.width, markLab.y, 0, markLab.height);
+    priceLab.frame = CGRectMake(markLab.x + markLab.width, markLab.y - 1, 0, markLab.height);
+    priceLab.font = markLab.font;
     [self.contentView addSubview:priceLab];
     
-    unitLab = [self createLabWithFrame:CGRectMake(priceLab.x, priceLab.y + TCRealValue(5), TCRealValue(80), TCRealValue(12)) AndFontSize:TCRealValue(12)];
+    unitLab = [self createLabWithFrame:CGRectMake(priceLab.x, priceLab.y + TCRealValue(19 - 12), TCRealValue(80), TCRealValue(12)) AndFontSize:TCRealValue(12)];
     unitLab.text = @"元/人";
     [self.contentView addSubview:unitLab];
     

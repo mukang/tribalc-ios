@@ -371,6 +371,7 @@
 }
 
 - (NSMutableAttributedString *)getAttributedStringWithText:(NSString *)text {
+    text = text ? text : @"" ;
     NSMutableAttributedString *attrText = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = TCRealValue(5);
