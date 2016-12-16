@@ -11,6 +11,7 @@
 #import "TCGetNavigationItem.h"
 #import "TCImageURLSynthesizer.h"
 #import "TCUserReserveTableViewCell.h"
+#import "TCReserveOnlineViewController.h"
 #import "TCBuluoApi.h"
 #import "TCOrderDetailAlertView.h"
 
@@ -343,6 +344,14 @@
 
 
 - (void)touchBackBtn {
+    NSArray *navigationArr = self.navigationController.viewControllers;
+    if ([navigationArr[navigationArr.count - 2] isKindOfClass:[TCReserveOnlineViewController class]]) {
+        UIViewController *viewController = navigationArr[navigationArr.count - 3];
+        [self.navigationController popToViewController:viewController animated:YES];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 

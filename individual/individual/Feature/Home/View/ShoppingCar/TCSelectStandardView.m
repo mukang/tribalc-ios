@@ -563,6 +563,10 @@
 }
 
 - (void)touchConfirmBtn:(UIButton *)button {
+    if (mGood.ID == nil) {
+        [MBProgressHUD showHUDWithMessage:@"您选择的商品不存在"];
+        return ;
+    }
     NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", selectTag];
     NSDictionary *changeDic = @{ @"goodsId":mGood.ID , @"number":_numberLab.text, @"selectTag": selectTag };
     [[NSNotificationCenter defaultCenter] postNotificationName:notifiName object:changeDic];

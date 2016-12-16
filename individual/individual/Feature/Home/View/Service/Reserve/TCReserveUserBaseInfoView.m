@@ -98,7 +98,7 @@
 - (UIView *)getAdditionalViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
-    _additionalTextField = [[UITextField alloc] initWithFrame:CGRectMake(TCRealValue(20), 0, self.width - TCRealValue(40), TCRealValue(30))];
+    _additionalTextField = [[UITextField alloc] initWithFrame:CGRectMake(TCRealValue(20), 0, self.width - TCRealValue(40), TCRealValue(40))];
     _additionalTextField.backgroundColor = [UIColor whiteColor];
     _additionalTextField.font = [UIFont systemFontOfSize:TCRealValue(11)];
     _additionalTextField.placeholder = @"可填写附加要求，我们会尽量安排，不超过20字";
@@ -130,7 +130,7 @@
     UIView *nameAndSenderView = [[UIView alloc] initWithFrame:frame];
     nameAndSenderView.backgroundColor = [UIColor whiteColor];
     
-    _nameLab = [TCComponent createLabelWithText:[self getUserInfo].nickname AndFontSize:14];
+    _nameLab = [TCComponent createLabelWithText:[self getUserInfo].nickname AndFontSize:TCRealValue(14)];
     _nameLab.height = frame.size.height;
     _nameLab.x = TCRealValue(20);
     [nameAndSenderView addSubview:_nameLab];
@@ -154,7 +154,7 @@
     [phoneView addSubview:_phoneTextField];
     
     
-    modifyBtn = [TCComponent createImageBtnWithFrame:CGRectMake(self.width - TCRealValue(20) - TCRealValue(18), phoneView.height / 2 - TCRealValue(18) / 2, TCRealValue(18), TCRealValue(18)) AndImageName:@"order_write"];
+    modifyBtn = [TCComponent createImageBtnWithFrame:CGRectMake(self.width - TCRealValue(20) - TCRealValue(21), phoneView.height / 2 - TCRealValue(21) / 2, TCRealValue(21), TCRealValue(21)) AndImageName:@"profile_address_edit_button"];
     [modifyBtn addTarget:self action:@selector(touchModifyBtn:) forControlEvents:UIControlEventTouchUpInside];
     [phoneView addSubview:modifyBtn];
     
