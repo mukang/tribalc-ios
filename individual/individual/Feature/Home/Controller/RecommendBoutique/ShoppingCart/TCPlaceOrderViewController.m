@@ -455,7 +455,6 @@
             payView.order = orderList.count == 1 ? order : nil;
             [payView showPayView];
             
-            [MBProgressHUD showHUDWithMessage:@"创建订单成功"];
         } else {
             [MBProgressHUD showHUDWithMessage:@"创建订单失败"];
         }

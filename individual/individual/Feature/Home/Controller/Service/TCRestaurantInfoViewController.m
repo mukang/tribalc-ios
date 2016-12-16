@@ -333,7 +333,7 @@
     NSArray *promptArr = serviceDetail.detailStore.tags;
 //    NSArray *promptImageArr = serviceDetail.pictures;
     for (int i = 0; i < promptArr.count; i++) {
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(27) + TCRealValue(35), 0, TCRealValue(27), TCRealValue(27))];
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(24) + TCRealValue(35), 0, TCRealValue(24), TCRealValue(24))];
         if (i == 0) {
             [imgView setX:0];
         }
@@ -350,7 +350,7 @@
         [view addSubview:imgView];
         [view addSubview:titleLab];
     }
-    [view setSize:CGSizeMake(TCRealValue(27) * promptArr.count + (promptArr.count - 1) * TCRealValue(35), TCRealValue(27 + 5 + 13))];
+    [view setSize:CGSizeMake(TCRealValue(24) * promptArr.count + (promptArr.count - 1) * TCRealValue(35), TCRealValue(24 + 5 + 13))];
     
     return view;
 }

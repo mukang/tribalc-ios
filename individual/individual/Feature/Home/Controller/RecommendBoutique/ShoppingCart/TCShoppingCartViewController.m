@@ -111,8 +111,8 @@
 
 - (UIView *)getBottomViewWithText:(NSString *)text AndAction:(SEL)action AndFrame:(CGRect)frame{
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(0.5))];
-    [view addSubview:topLineView];
+//    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(0.5))];
+//    [view addSubview:topLineView];
     
     selectAllBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, TCRealValue(56), view.height) AndImageName:@"car_unselected"];
     [selectAllBtn addTarget:self action:@selector(touchSelectAllBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -147,11 +147,16 @@
 
 - (void)setupBottomViewWithFrame:(CGRect)frame {
     [bottomView removeFromSuperview];
+    
     bottomView = [self getBottomViewWithText:@"结算" AndAction:@selector(touchPayButton) AndFrame:frame];
     UILabel *totalLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(99), bottomView.height / 2 - TCRealValue(14) / 2 - TCRealValue(2), TCRealValue(45), TCRealValue(16)) AndFontSize:TCRealValue(16) AndTitle:@"合计 :"];
     totalPriceLab = [TCComponent createLabelWithFrame:CGRectMake(totalLab.x + totalLab.width, 0, self.view.width - TCRealValue(111) - totalLab.x - totalLab.width, bottomView.height) AndFontSize:TCRealValue(14) AndTitle:@"￥0" AndTextColor:[UIColor redColor]];
     [bottomView addSubview:totalLab];
     [bottomView addSubview:totalPriceLab];
+    
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, bottomView.y, bottomView.width, 0.5)];
+    [self.view addSubview:topLineView];
+    
     [self.view addSubview:bottomView];
 }
 
