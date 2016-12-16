@@ -58,12 +58,16 @@
 }
 
 - (void)initGoodDetailInfoWithGoodId:(NSString *)goodId {
-    TCBuluoApi *buluoApi = [TCBuluoApi api];
-    [buluoApi fetchGoodDetail:goodId result:^(TCGoodDetail *goodDetail, NSError *error) {
-        mGoodDetail = goodDetail;
-        
-        [self performSelectorOnMainThread:@selector(initUI) withObject:nil waitUntilDone:NO];
-        
+    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchGoodDetail:goodId result:^(TCGoodDetail *goodDetail, NSError *error) {
+        if (goodDetail) {
+            [MBProgressHUD hideHUD:YES];
+            mGoodDetail = goodDetail;
+            [self performSelectorOnMainThread:@selector(initUI) withObject:nil waitUntilDone:NO];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"获取商品信息失败"];
+        }
     }];
 }
 
@@ -446,6 +450,7 @@
     [imageCollectionView reloadData];
 
     [standardView setSalePriceAndInventoryWithSalePrice:goodDetail.salePrice AndInventory:goodDetail.repertory AndImgUrlStr:goodDetail.thumbnail];
+//    [goodTitleView setupTitleWithText:goodDetail.title];
     goodTitleView.titleLab.text = goodDetail.title;
     [goodTitleView setSalePriceWithPrice:goodDetail.salePrice];
     [goodTitleView setOriginPriceLabWithOriginPrice:goodDetail.originPrice];

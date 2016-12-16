@@ -8,6 +8,8 @@
 
 #import "TCUserOrderDetailViewController.h"
 #import "TCUserOrderTabBarController.h"
+#import "TCPlaceOrderViewController.h"
+#import "TCShoppingCartViewController.h"
 #import "TCBuluoApi.h"
 
 @interface TCUserOrderDetailViewController () {
@@ -483,7 +485,7 @@
     } else {
         [[TCBuluoApi api] changeOrderStatus:@"CANNEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
             [self showHUDMessageWithResult:result AndTitle:@"取消订单"];
-            [self.navigationController popViewControllerAnimated:YES];
+            [self touchBackBtn];
         }];
         [alertView removeFromSuperview];
 
@@ -494,7 +496,13 @@
 
 #pragma mark - click
 - (void)touchBackBtn {
-    [self.navigationController popViewControllerAnimated:YES];
+    NSArray *navigationArr = self.navigationController.viewControllers;
+    if ([navigationArr[navigationArr.count - 2] isKindOfClass:[TCPlaceOrderViewController class]]) {
+        TCShoppingCartViewController *shoppingCartViewController = navigationArr[navigationArr.count - 3];
+        [self.navigationController popToViewController:shoppingCartViewController animated:YES];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 //- (void)touchOrderCreateBtn:(UIButton *)btn {

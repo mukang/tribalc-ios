@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
+#import "TCModelImport.h"
 
 @interface TCSelectStandardView : UIView <SDWebImageManagerDelegate>
 
-- (instancetype)initWithGoodsId:(NSString *)goodsId AndSelectTag:(NSString *)tag;
+- (instancetype)initWithGood:(TCGoods *)goods AndStandardId:(NSString *)standardId AndRepertory:(NSInteger)repertory AndSelectTag:(NSString *)tag;
 
 @property (retain, nonatomic) UILabel *numberLab;
 

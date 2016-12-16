@@ -923,7 +923,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 - (void)fetchGoodsWrapper:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCGoodsWrapper *, NSError *))resultBlock {
     NSString *limitSizePart = [NSString stringWithFormat:@"limitSize=%zd&", limitSize];
     NSString *sortSkipPart = sortSkip ? [NSString stringWithFormat:@"sortSkip=%@&", sortSkip] : @"";
-    NSString *apiName = [NSString stringWithFormat:@"goods?%@%@sort=saleQuantity,desc", limitSizePart, sortSkipPart];
+    NSString *apiName = [NSString stringWithFormat:@"goods?%@%@", limitSizePart, sortSkipPart];
     TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
         if (response.error) {

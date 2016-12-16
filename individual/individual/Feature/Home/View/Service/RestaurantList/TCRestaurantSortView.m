@@ -15,11 +15,11 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCRealValue(0.5))];
-        topLine.backgroundColor = TCRGBColor(154, 154, 154);
+        topLine.backgroundColor = TCRGBColor(242, 242, 242);
         [self addSubview:topLine];
         
         UIView *firstVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(TCRealValue(24) + TCRealValue(105), (frame.size.height - TCRealValue(169)) / 2, TCRealValue(0.5), TCRealValue(169))];
-        firstVerticalLine.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
+        firstVerticalLine.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
         
         UIView *secondVerticalLine = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - TCRealValue(24) - TCRealValue(119) + TCRealValue(13), firstVerticalLine.y, firstVerticalLine.width, firstVerticalLine.height)];
         secondVerticalLine.backgroundColor = firstVerticalLine.backgroundColor;

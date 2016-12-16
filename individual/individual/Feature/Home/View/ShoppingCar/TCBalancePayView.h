@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCOrder.h"
 
 @interface TCBalancePayView : UIView
 
-- (instancetype)initWithPayPrice:(NSString *)priceStr AndPayAction:(SEL)payAction AndTarget:(id)target;
+- (instancetype)initWithPayPrice:(NSString *)priceStr AndPayAction:(SEL)payAction AndCloseAction:(SEL)closeAction AndTarget:(id)target;
 
 - (void)showPayView;
+
+@property (retain, nonatomic) TCOrder *order;
 
 @end

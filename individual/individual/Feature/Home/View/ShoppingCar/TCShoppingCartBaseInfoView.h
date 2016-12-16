@@ -5,7 +5,7 @@
 //  Created by WYH on 16/12/8.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
-
+#import "TCModelImport.h"
 #import <UIKit/UIKit.h>
 
 @interface TCShoppingCartBaseInfoView : UIView
@@ -20,12 +20,12 @@
 
 @property (retain, nonatomic) UILabel *priceLab;
 
-@property (copy, nonatomic) NSString *goodsId;
+@property (retain, nonatomic) TCCartItem *mCartItem;
 
 @property (copy, nonatomic) NSString *shoppingCartGoodsId;
 
-- (instancetype)initNormalViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
-- (instancetype)initEditViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
+- (instancetype)initNormalViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndCartItem:(TCCartItem *)cartItem;
+- (instancetype)initEditViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndCartItem:(TCCartItem *)cartItem;
 
 - (void)setupAmountLab:(NSInteger)amount;
 - (void)setupEditPriceLab:(CGFloat)price;

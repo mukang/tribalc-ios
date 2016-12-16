@@ -25,13 +25,13 @@
         _originPriceLab = [self getOriginPriceLabelWithFrame:CGRectMake(_priceDecimalLab.x + _priceDecimalLab.width + TCRealValue(16), _priceDecimalLab.y, 0, TCRealValue(12)) AndOriginPrice:originPrice];
         [self addSubview:_originPriceLab];
 
-        [self setHeight:_priceIntegerLab.y + _priceIntegerLab.height + TCRealValue(20)];
+        [self setHeight:_priceIntegerLab.y + _priceIntegerLab.height + TCRealValue(16)];
         
         _tagLab = [self createTagLabelWithTag:tags];
         [_tagLab setOrigin:CGPointMake(self.width - TCRealValue(20) - _tagLab.width, _priceDecimalLab.y)];
         [self addSubview:_tagLab];
         
-        tagImgView = [[UIImageView alloc] initWithFrame:CGRectMake(_tagLab.x - TCRealValue(11), _tagLab.y + TCRealValue(2.5), TCRealValue(11), TCRealValue(12))];
+        tagImgView = [[UIImageView alloc] initWithFrame:CGRectMake(_tagLab.x - TCRealValue(12), _tagLab.y + TCRealValue(2.5), TCRealValue(11), TCRealValue(12))];
         tagImgView.image = [UIImage imageNamed:@"good_tag"];
         [self addSubview:tagImgView];
         
@@ -78,7 +78,7 @@
     _tagLab.text = tagStr;
     [_tagLab sizeToFit];
     [_tagLab setOrigin:CGPointMake(self.width - TCRealValue(20) - _tagLab.width, _priceDecimalLab.y)];
-    tagImgView.origin = CGPointMake(_tagLab.x - TCRealValue(11), _tagLab.y);
+    tagImgView.origin = CGPointMake(_tagLab.x - TCRealValue(12), _tagLab.y);
 }
 
 - (UILabel *)createTagLabelWithTag:(NSArray *)tags {
@@ -100,7 +100,7 @@
     NSString *accuratePriceStr = [NSString stringWithFormat:@"%@", @(floatPriceStr.floatValue)];
     
     NSString *priceIntegerStr = [NSString stringWithFormat:@"￥%i", (int)price];
-    _priceIntegerLab = [self createPriceLabelWithOrigin:CGPointMake(TCRealValue(20), _titleLab.y + _titleLab.height + TCRealValue(20)) AndFontSize:TCRealValue(17) AndText:priceIntegerStr];
+    _priceIntegerLab = [self createPriceLabelWithOrigin:CGPointMake(TCRealValue(20), _titleLab.y + _titleLab.height + TCRealValue(16)) AndFontSize:TCRealValue(17) AndText:priceIntegerStr];
     [self addSubview:_priceIntegerLab];
     
     if ([accuratePriceStr rangeOfString:@"."].location != NSNotFound) {
@@ -128,21 +128,44 @@
     return label;
 }
 
+- (void)setupTitleWithText:(NSString *)text {
+    CGSize labelSize = {0, 0};
+    labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(15)]}];
+
+    _titleLab.frame = CGRectMake(TCRealValue(20), TCRealValue(15), self.size.width - TCRealValue(40), TCRealValue(16));
+    if (labelSize.width > _titleLab.width) {
+        [_titleLab setHeight:2 * _titleLab.height + TCRealValue(13)];
+    }
+    _titleLab.text = text;
+    _titleLab.numberOfLines = TCRealValue(2);
+    
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+    style.lineSpacing = TCRealValue(3);
+    NSRange range = NSMakeRange(0, text.length);
+    text = text ? text : @"";
+    NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];
+    [textAttr addAttribute:NSParagraphStyleAttributeName value:style range:range];
+    _titleLab.attributedText = textAttr;
+    _titleLab.lineBreakMode = NSLineBreakByCharWrapping;
+
+
+}
+
 - (UILabel *)createTitleLabelWithText:(NSString *)text WithFrame:(CGRect)frame{
     
     
     CGSize labelSize = {0, 0};
-    labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(16)]}];
+    labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(15)]}];
     
-    UILabel *label =  [TCComponent createLabelWithFrame:frame AndFontSize:TCRealValue(16) AndTitle:text AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
+    UILabel *label =  [TCComponent createLabelWithFrame:frame AndFontSize:TCRealValue(15) AndTitle:text AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
     if (labelSize.width > label.width) {
-        [label setHeight:2 * label.height + TCRealValue(17)];
+        [label setHeight:2 * label.height + TCRealValue(8)];
     }
     label.text = text;
     label.numberOfLines = TCRealValue(2);
     
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-    style.lineSpacing = TCRealValue(7.0);
+    style.lineSpacing = TCRealValue(3);
     NSRange range = NSMakeRange(0, text.length);
     text = text ? text : @"";
     NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];

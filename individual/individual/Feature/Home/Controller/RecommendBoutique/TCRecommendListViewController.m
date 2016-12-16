@@ -41,13 +41,17 @@
 
 # pragma mark - 初始化数据
 - (void)initialGoodsData {
+    [MBProgressHUD showHUD:YES];
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchGoodsWrapper:8 sortSkip:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
-        
-        goodsInfoWrapper = goodsWrapper;
-        [recommendCollectionView reloadData];
-        [recommendCollectionView.mj_header endRefreshing];
-
+        if (goodsWrapper) {
+            [MBProgressHUD hideHUD:YES];
+            goodsInfoWrapper = goodsWrapper;
+            [recommendCollectionView reloadData];
+            [recommendCollectionView.mj_header endRefreshing];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"获取商品列表失败"];
+        }
     }];
 
 }

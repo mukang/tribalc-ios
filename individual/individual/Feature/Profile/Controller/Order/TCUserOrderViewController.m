@@ -36,17 +36,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [self initTableView];
+
+    [self initOrderItem];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.tabBarController.tabBar.hidden = YES;
-    
-    [self initOrderItem];
-
-    [self initTableView];
     
 }
 

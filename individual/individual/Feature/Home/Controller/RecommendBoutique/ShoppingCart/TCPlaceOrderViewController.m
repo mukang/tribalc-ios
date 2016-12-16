@@ -15,6 +15,8 @@
 #import "TCPayMethodView.h"
 #import "TCImageURLSynthesizer.h"
 #import "TCBalancePayView.h"
+#import "TCUserOrderTabBarController.h"
+#import "TCUserOrderDetailViewController.h"
 #import "TCShippingAddressViewController.h"
 
 @interface TCPlaceOrderViewController () {
@@ -382,11 +384,27 @@
 - (void)touchPayMoneyBtn:(UIButton *)button {
     [MBProgressHUD showHUDWithMessage:@"支付"];
     
+
+
+    
     [payView removeFromSuperview];
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 
+- (void)touchClosePayMoneyBtn:(id)sender {
+    [MBProgressHUD showHUDWithMessage:@"取消支付"];
+    UIViewController *orderViewController;
+    if (!payView.order) {
+        orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"待付款"];
+    } else {
+        orderViewController = [[TCUserOrderDetailViewController alloc] initWithOrder:payView.order];
+    }
+    [payView removeFromSuperview];
+    [self.navigationController pushViewController:orderViewController animated:YES];
+    
+
+}
 
 - (void)touchOrderCancelBtn:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];
@@ -427,14 +445,18 @@
     NSString *addressId = userAddressView.shippingAddress.ID;
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
-            payView = [[TCBalancePayView alloc] initWithPayPrice:[self getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndTarget:self ] ;
+            payView = [[TCBalancePayView alloc] initWithPayPrice:[self getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
+            TCOrder *order = orderList[0];
+            payView.order = orderList.count == 1 ? order : nil;
             [payView showPayView];
+            
             [MBProgressHUD showHUDWithMessage:@"创建订单成功"];
         } else {
             [MBProgressHUD showHUDWithMessage:@"创建订单失败"];
         }
     }];
 }
+
 
 
 - (void)didReceiveMemoryWarning {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TCComponent.h"
 #import "TCComputeView.h"
+#import "TCModelImport.h"
 #import "TCShoppingCartBaseInfoView.h"
 #import "UIImageView+WebCache.h"
 #import <MGSwipeTableCell/MGSwipeTableCell.h>
@@ -18,9 +19,9 @@
     
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndCartItem:(TCCartItem *)cartItem;
 
-- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodsId;
+- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)selectTag AndCartItem:(TCCartItem *)cartItem;
 
 @property (retain, nonatomic) UIButton *selectedBtn;
 @property (retain, nonatomic) UIImageView *leftImgView;

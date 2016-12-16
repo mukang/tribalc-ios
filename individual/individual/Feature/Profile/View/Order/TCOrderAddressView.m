@@ -112,6 +112,7 @@
 
 
 - (void)setAddressLabel:(UILabel *)label Text:(NSString *)text {
+    label.frame = CGRectMake(receiverLab.x + TCRealValue(4),  TCRealValue(96) / 2 - TCRealValue(4), self.width - receiverLab.x - TCRealValue(4) - (self.width - phoneLab.x - phoneLab.width), TCRealValue(13));
     label.lineBreakMode = NSLineBreakByWordWrapping;
     label.numberOfLines = TCRealValue(2);
     

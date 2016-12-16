@@ -19,15 +19,16 @@
     NSInteger repertory;
 }
 
-@synthesize goodsId;
+@synthesize mCartItem;
 
-- (instancetype)initNormalViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodId{
+- (instancetype)initNormalViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndCartItem:(TCCartItem *)cartItem{
     self = [super initWithFrame:frame];
     if (self) {
         tag = selectTag;
-        goodsId = goodId;
+        mCartItem = cartItem;
         
-        [self fetchGoodDetailWithGoodId:goodsId];
+        repertory = cartItem.repertory;
+        
         
         _titleLab = [self getTitleLabWithFrame:CGRectMake(TCRealValue(13), TCRealValue(22.5 + 9), frame.size.width - TCRealValue(13) - TCRealValue(20), TCRealValue(14))];
         [self addSubview:_titleLab];
@@ -52,12 +53,12 @@
 
 
 
-- (instancetype)initEditViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndGoodsId:(NSString *)goodId{
-    goodsId = goodId;
+- (instancetype)initEditViewWithFrame:(CGRect)frame AndSelectTag:(NSString *)selectTag AndCartItem:(TCCartItem *)cartItem{
+    mCartItem = cartItem;
     tag = selectTag;
     self = [super initWithFrame:frame];
     if (self) {
-        [self fetchGoodDetailWithGoodId:goodsId];
+        
         
         _titleLab = [self getTitleLabWithFrame:CGRectMake(TCRealValue(13), TCRealValue(22.5 + 9), frame.size.width - TCRealValue(13) - TCRealValue(20), TCRealValue(14))];
         [self addSubview:_titleLab];
@@ -89,11 +90,6 @@
 }
 
 
-- (void)fetchGoodDetailWithGoodId:(NSString *)goodId {
-    [[TCBuluoApi api] fetchGoodDetail:goodsId result:^(TCGoodDetail *goodDetail, NSError *error) {
-        repertory = goodDetail.repertory;
-    }];
-}
 
 - (UIButton *)getStandardSelectBtnWithFrame:(CGRect)frame {
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
@@ -226,13 +222,15 @@
 }
 
 - (void)touchSelectStandardBtn:(UIButton *)button {
-    TCSelectStandardView *selectStandardView = [[TCSelectStandardView alloc] initWithGoodsId:goodsId AndSelectTag:tag];
+    TCSelectStandardView *selectStandardView = [[TCSelectStandardView alloc] initWithGood:mCartItem.goods AndStandardId:mCartItem.standardId AndRepertory:mCartItem.repertory AndSelectTag:tag];
+    
+    
     [[UIApplication sharedApplication].keyWindow addSubview:selectStandardView];
 }
 
 - (void)changeAmountWithNumber:(NSString *)number {
     NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", tag];
-    NSDictionary *changeDic = @{ @"goodsId":goodsId , @"number":number, @"selectTag": tag };
+    NSDictionary *changeDic = @{ @"goodsId":mCartItem.goods.ID , @"number":number, @"selectTag": tag };
     [[NSNotificationCenter defaultCenter] postNotificationName:notifiName object:changeDic];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellChangeAmount:) name:[NSString stringWithFormat:@"changeGoodAmount%@", tag] object:nil];
 }

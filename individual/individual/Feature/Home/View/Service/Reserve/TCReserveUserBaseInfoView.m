@@ -41,10 +41,10 @@
         [self addSubview:sendVerficationCodeView];
         sendVerficationCodeView.hidden = YES;
         
-        UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.width, TCRealValue(0.5))];
+        UIView *topLineView = [self getLineViewWithFrame:CGRectMake(0, 0, self.width, TCRealValue(0.5))];
         [self addSubview:topLineView];
         
-        downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, baseInfoView.y + baseInfoView.height + TCRealValue(40) - TCRealValue(1), self.width, TCRealValue(1))];
+        downLineView = [self getLineViewWithFrame:CGRectMake(0, baseInfoView.y + baseInfoView.height + TCRealValue(40) - TCRealValue(1), self.width, TCRealValue(1))];
         [self addSubview:downLineView];
         
         
@@ -54,6 +54,13 @@
     }
     
     return self;
+}
+
+- (UIView *)getLineViewWithFrame:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = TCRGBColor(242, 242, 242);
+    
+    return view;
 }
 
 - (UIView *)getSendVerficationCodeViewWithFrame:(CGRect)frame {
@@ -81,7 +88,7 @@
     [_verificationCodeTextField setValue:[UIFont systemFontOfSize:TCRealValue(14)] forKeyPath:@"_placeholderLabel.font"];
     [view addSubview:_verificationCodeTextField];
     
-    UIView *topLine = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, self.width - TCRealValue(40), TCRealValue(1))];
+    UIView *topLine = [self getLineViewWithFrame:CGRectMake(TCRealValue(20), 0, self.width - TCRealValue(40), TCRealValue(1))];
     [view addSubview:topLine];
     
     return view;
@@ -99,7 +106,7 @@
     [_additionalTextField setValue:[UIFont systemFontOfSize:TCRealValue(11)] forKeyPath:@"_placeholderLabel.font"];
     [view addSubview:_additionalTextField];
     
-    UIView *line = [TCComponent createGrayLineWithFrame:CGRectMake(0, _additionalTextField.y + _additionalTextField.height, self.width, TCRealValue(1.5))];
+    UIView *line = [self getLineViewWithFrame:CGRectMake(0, _additionalTextField.y + _additionalTextField.height, self.width, TCRealValue(1.5))];
     [view addSubview:line];
     
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, _additionalTextField.y + _additionalTextField.height + TCRealValue(2), self.width, frame.size.height - _additionalTextField.y - _additionalTextField.height)];
@@ -154,7 +161,7 @@
     cancelModifyBtn = [self getCancelModifyBtnWithFrame:CGRectMake(self.width - TCRealValue(25) - TCRealValue(60), phoneView.height / 2 - TCRealValue(22) / 2, TCRealValue(60) , TCRealValue(22))];
     [phoneView addSubview:cancelModifyBtn];
     
-    UIView *topLine = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, self.width - TCRealValue(40), TCRealValue(1))];
+    UIView *topLine = [self getLineViewWithFrame:CGRectMake(TCRealValue(20), 0, self.width - TCRealValue(40), TCRealValue(1))];
     [phoneView addSubview:topLine];
     
     return phoneView;

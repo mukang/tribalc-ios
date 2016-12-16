@@ -7,6 +7,8 @@
 //
 
 #import "TCUserOrderTabBarController.h"
+#import "TCPlaceOrderViewController.h"
+#import "TCShoppingCartViewController.h"
 
 @interface TCUserOrderTabBarController () {
     UIView *selectUnderlineView;
@@ -143,7 +145,13 @@
 }
 
 - (void)touchBackButton {
-    [self.navigationController popViewControllerAnimated:YES];
+    NSArray *navigationArr = self.navigationController.viewControllers;
+    if ([navigationArr[navigationArr.count - 2] isKindOfClass:[TCPlaceOrderViewController class]]) {
+        TCShoppingCartViewController *shoppingCartViewController = navigationArr[navigationArr.count - 3];
+        [self.navigationController popToViewController:shoppingCartViewController animated:YES];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

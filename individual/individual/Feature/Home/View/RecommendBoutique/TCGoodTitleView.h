@@ -29,4 +29,6 @@
 
 - (void)setOriginPriceLabWithOriginPrice:(float)originPrice;
 
+- (void)setupTitleWithText:(NSString *)text;
+
 @end

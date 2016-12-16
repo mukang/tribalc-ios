@@ -14,7 +14,8 @@
 #import "NSObject+TCModel.h"
 
 @implementation TCSelectStandardView {
-    TCGoodDetail *mGoodDetail;
+    NSInteger mRepertory;
+    TCGoods *mGood;
     TCGoodStandards *mGoodStandards;
     UIImageView *titleImageView;
     UILabel *priceLab;
@@ -26,20 +27,16 @@
     NSString *selectTag;
 }
 
-- (instancetype)initWithGoodsId:(NSString *)goodsId AndSelectTag:(NSString *)tag{
+- (instancetype)initWithGood:(TCGoods *)goods AndStandardId:(NSString *)standardId AndRepertory:(NSInteger)repertory AndSelectTag:(NSString *)tag {
+    mRepertory = repertory;
     selectTag = tag;
+    mGood = goods;
     self = [super initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight)];
     if (self) {
-        [self fetchGoodDetailWithGoodsId:goodsId];
+        [self fetchGoodStandardWithStandardId:standardId];
     }
     return self;
-}
 
-- (void)fetchGoodDetailWithGoodsId:(NSString *)goodsId {
-    [[TCBuluoApi api] fetchGoodDetail:goodsId result:^(TCGoodDetail *goodDetail, NSError *error) {
-        mGoodDetail = goodDetail;
-        [self fetchGoodStandardWithStandardId:goodDetail.standardId];
-    }];
 }
 
 - (void)fetchGoodStandardWithStandardId:(NSString *)standardId {
@@ -134,11 +131,11 @@
     [closeBtn addTarget:self action:@selector(touchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:closeBtn];
     
-    NSString *priceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", mGoodDetail.salePrice].floatValue)];
+    NSString *priceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", mGood.salePrice].floatValue)];
     priceLab = [TCComponent createLabelWithFrame:CGRectMake(titleImageView.x + titleImageView.width + TCRealValue(12), TCRealValue(20), TCScreenWidth - titleImageView.x - TCRealValue(12) , TCRealValue(20)) AndFontSize:TCRealValue(20) AndTitle:priceStr AndTextColor:TCRGBColor(81, 199, 209)];
     [titleView addSubview:priceLab];
     
-    inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, priceLab.y + priceLab.height + TCRealValue(10), priceLab.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:[NSString stringWithFormat:@"(剩余:%li件)", (long)mGoodDetail.repertory] AndTextColor:TCRGBColor(154, 154, 154)];
+    inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, priceLab.y + priceLab.height + TCRealValue(10), priceLab.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:[NSString stringWithFormat:@"(剩余:%li件)", (long)mRepertory] AndTextColor:TCRGBColor(154, 154, 154)];
     [titleView addSubview:inventoryLab];
     
     UILabel *selectTagLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, inventoryLab.y + inventoryLab.height + TCRealValue(12), TCRealValue(45), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:@"已选择" AndTextColor:TCRGBColor(42, 42, 42)];
@@ -251,7 +248,7 @@
     } else {
         button.size = CGSizeMake(TCRealValue(47.5), TCRealValue(22));
     }
-    NSString *secondaryStr = [mGoodDetail.standardSnapshot componentsSeparatedByString:@"|"][1];
+    NSString *secondaryStr = [mGood.standardSnapshot componentsSeparatedByString:@"|"][1];
     NSString *secondaryType = [secondaryStr componentsSeparatedByString:@":"][1];
     if ([title isEqualToString:secondaryType]) {
         [self setupSecondarySelectedButton:button AndStandard:goodStandard];
@@ -279,11 +276,11 @@
         button.size = CGSizeMake(TCRealValue(51), TCRealValue(24));
     }
     NSString *type;
-    if ([mGoodDetail.standardSnapshot containsString:@"|"]) {
-        type = [mGoodDetail.standardSnapshot componentsSeparatedByString:@"|"][0];
+    if ([mGood.standardSnapshot containsString:@"|"]) {
+        type = [mGood.standardSnapshot componentsSeparatedByString:@"|"][0];
         type = [type componentsSeparatedByString:@":"][1];
     } else {
-        type = [mGoodDetail.standardSnapshot componentsSeparatedByString:@":"][1];
+        type = [mGood.standardSnapshot componentsSeparatedByString:@":"][1];
     }
     if ([type isEqualToString:title]) {
         [self setupPrimarySelectedButton:button AndStandard:goodStandards];
@@ -482,7 +479,7 @@
     imageView.layer.borderWidth = TCRealValue(1.5);
     imageView.layer.borderColor = TCRGBColor(242, 242, 242).CGColor;
     imageView.layer.cornerRadius = TCRealValue(5);
-    [imageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:mGoodDetail.mainPicture] ];
+    [imageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:mGood.mainPicture] ];
     imageView.backgroundColor = [UIColor whiteColor];
     imageView.layer.masksToBounds = YES;
     return imageView;
@@ -505,9 +502,24 @@
             goodsIndexes = [NSString stringWithFormat:@"%@", _primaryStandardLab.text];
         }
         TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:mGoodStandards.goodsIndexes[goodsIndexes]];
-        mGoodDetail = goodDetail;
+        mGood = [self transGoodDetailToGoods:goodDetail];
+        mRepertory = goodDetail.repertory;
         [self setupBaseInfoWithGoodDetailDic:goodDetail];
     }
+}
+
+- (TCGoods *)transGoodDetailToGoods:(TCGoodDetail *)goodDetail {
+    TCGoods *good = [[TCGoods alloc] init];
+    good.ID = goodDetail.ID;
+    good.storeId = goodDetail.storeId;
+    good.name = goodDetail.name;
+    good.brand = goodDetail.brand;
+    good.mainPicture = goodDetail.mainPicture;
+    good.originPrice = goodDetail.originPrice;
+    good.salePrice = goodDetail.salePrice;
+    good.saleQuantity = goodDetail.saleQuantity;
+    good.standardSnapshot = goodDetail.standardSnapshot;
+    return good;
 }
 
 - (void)touchSecondaryStandardBtn:(UIButton *)button {
@@ -515,7 +527,8 @@
         [self setupSecondarySelectedButton:button AndStandard:mGoodStandards];
         NSString *goodsIndexes = [NSString stringWithFormat:@"%@^%@", _primaryStandardLab.text, _secondaryStandardLab.text];
         TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:mGoodStandards.goodsIndexes[goodsIndexes]];
-        mGoodDetail = goodDetail;
+        mGood = [self transGoodDetailToGoods:goodDetail];
+        mRepertory = goodDetail.repertory;
         [self setupBaseInfoWithGoodDetailDic:goodDetail];
     }
 }
@@ -551,7 +564,7 @@
 
 - (void)touchConfirmBtn:(UIButton *)button {
     NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", selectTag];
-    NSDictionary *changeDic = @{ @"goodsId":mGoodDetail.ID , @"number":_numberLab.text, @"selectTag": selectTag };
+    NSDictionary *changeDic = @{ @"goodsId":mGood.ID , @"number":_numberLab.text, @"selectTag": selectTag };
     [[NSNotificationCenter defaultCenter] postNotificationName:notifiName object:changeDic];
     [self removeFromSuperview];
 }

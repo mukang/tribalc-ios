@@ -16,9 +16,9 @@
         self.backgroundColor = [UIColor colorWithRed:251/255.0 green:251/255.0 blue:251/255.0 alpha:1];
         
         UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width / 3, TCRealValue(8), TCRealValue(0.5), frame.size.height - TCRealValue(8) * 2)];
+        firstLine.backgroundColor = TCRGBColor(242, 242, 242);
         UIView *secondLine = [[UIView alloc] initWithFrame:CGRectMake(firstLine.x + firstLine.width + frame.size.width - firstLine.x * 2, firstLine.y, TCRealValue(0.5), firstLine.height)];
-        firstLine.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
-        secondLine.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
+        secondLine.backgroundColor = TCRGBColor(242, 242, 242);
         [self addSubview:firstLine];
         [self addSubview:secondLine];
         

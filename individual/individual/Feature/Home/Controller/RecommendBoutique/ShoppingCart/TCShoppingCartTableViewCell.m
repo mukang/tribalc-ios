@@ -19,7 +19,7 @@
     TCComputeView *computeView;
 }
 
-- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)tag AndGoodsId:(NSString *)goodsId{
+- (instancetype)initEditCellStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)tag AndCartItem:(TCCartItem *)cartItem{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _selectTag = tag;
@@ -30,13 +30,14 @@
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(20), height / 2 - TCRealValue(8), TCRealValue(16), TCRealValue(16)) AndImageName:@"car_unselected"];
+//        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(20), height / 2 - TCRealValue(8), TCRealValue(16), TCRealValue(16)) AndImageName:@"car_unselected"];
+        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, TCRealValue(56), height) AndImageName:@"car_unselected"];
         [self.contentView addSubview:_selectedBtn];
         
-        _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + TCRealValue(20), height / 2 - TCRealValue(94) / 2, TCRealValue(94), TCRealValue(94))];
+        _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width, height / 2 - TCRealValue(94) / 2, TCRealValue(94), TCRealValue(94))];
         [self.contentView addSubview:_leftImgView];
 
-        _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initEditViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:tag AndGoodsId:goodsId];
+        _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initEditViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:tag AndCartItem:cartItem];
         [self.contentView addSubview:_baseInfoView];
         
         
@@ -50,7 +51,7 @@
 }
 
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)tag AndGoodsId:(NSString *)goodsId {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier AndSelectTag:(NSString *)tag AndCartItem:(TCCartItem *)cartItem {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _selectTag = tag;
@@ -61,13 +62,13 @@
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(20), height / 2 - TCRealValue(8), TCRealValue(16), TCRealValue(16)) AndImageName:@"car_unselected"];
+        _selectedBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, TCRealValue(56), height) AndImageName:@"car_unselected"];
         [self.contentView addSubview:_selectedBtn];
         
-        _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width + TCRealValue(20), height / 2 - TCRealValue(94) / 2, TCRealValue(94), TCRealValue(94))];
+        _leftImgView = [self getLeftImageViewWithFrame:CGRectMake(_selectedBtn.x + _selectedBtn.width, height / 2 - TCRealValue(94) / 2, TCRealValue(94), TCRealValue(94))];
         [self.contentView addSubview:_leftImgView];
         
-        _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initNormalViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:_selectTag AndGoodsId:goodsId];
+        _baseInfoView = [[TCShoppingCartBaseInfoView alloc] initNormalViewWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width, 0, width - _leftImgView.x - _leftImgView.width, height) AndSelectTag:_selectTag AndCartItem:cartItem];
         [self.contentView addSubview:_baseInfoView];
         
         UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, width - TCRealValue(40), TCRealValue(0.5))];

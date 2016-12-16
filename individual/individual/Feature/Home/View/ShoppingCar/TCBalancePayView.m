@@ -13,27 +13,25 @@
     UIView *payView;
 }
 
-- (instancetype)initWithPayPrice:(NSString *)priceStr AndPayAction:(SEL)payAction AndTarget:(id)target{
+- (instancetype)initWithPayPrice:(NSString *)priceStr AndPayAction:(SEL)payAction AndCloseAction:(SEL)closeAction AndTarget:(id)target{
     self = [super initWithFrame:[UIScreen mainScreen].bounds];
     if (self) {
         UIView *backView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
         backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7];
-        UITapGestureRecognizer *closeGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchCloseBtn)];
-        [backView addGestureRecognizer:closeGesture];
         [self addSubview:backView];
         
-        [self initPayViewWithPrice:priceStr AndPayAction:payAction AndTarget:target ];
+        [self initPayViewWithPrice:priceStr AndPayAction:payAction AndCloseAction:closeAction AndTarget:target ];
     }
     
     return self;
 }
 
-- (void)initPayViewWithPrice:(NSString *)priceStr AndPayAction:(SEL)payAction AndTarget:(id)target {
+- (void)initPayViewWithPrice:(NSString *)priceStr AndPayAction:(SEL)payAction AndCloseAction:(SEL)closeAction AndTarget:(id)target {
     payView = [[UIView alloc] initWithFrame:CGRectMake(0, TCScreenHeight, TCScreenWidth, 398)];
     payView.backgroundColor = [UIColor whiteColor];
     [self addSubview:payView];
     
-    UIView *titleView = [self getTitleViewWithFrame:CGRectMake(0, 0, TCScreenWidth, 62)  AndTarget:target];
+    UIView *titleView = [self getTitleViewWithFrame:CGRectMake(0, 0, TCScreenWidth, 62) AndCloseAction:closeAction  AndTarget:target];
     [payView addSubview:titleView];
     
     UIView *payMethodView = [self getPayMethodViewWithFrame:CGRectMake(0, titleView.y + titleView.height, TCScreenWidth, 62)];
@@ -110,7 +108,7 @@
     return label;
 }
 
-- (UIView *)getTitleViewWithFrame:(CGRect)frame  AndTarget:(id)target{
+- (UIView *)getTitleViewWithFrame:(CGRect)frame AndCloseAction:(SEL)closeAction AndTarget:(id)target{
     UIView *titleView = [[UIView alloc] initWithFrame:frame];
     UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(25, 0, frame.size.width - 50, frame.size.height) AndFontSize:17 AndTitle:@"付款详情"];
     titleLab.textAlignment = NSTextAlignmentCenter;
@@ -118,7 +116,7 @@
     
     UIButton *closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, frame.size.height / 2 - 19 / 2, 19, 19)];
     [closeBtn setImage:[UIImage imageNamed:@"car_close_btn"] forState:UIControlStateNormal];
-    [closeBtn addTarget:self action:@selector(touchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
+    [closeBtn addTarget:target action:closeAction forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:closeBtn];
     
     UIButton *questionBtn = [[UIButton alloc] initWithFrame:CGRectMake(TCScreenWidth - 20 - 19, closeBtn.y, 19, 19)];
