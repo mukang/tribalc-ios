@@ -7,10 +7,12 @@
 //
 
 #import "TCBiographyViewController.h"
-#import "TCBioEditViewController.h"
 #import "TCBioEditPhoneViewController.h"
 #import "TCShippingAddressViewController.h"
 #import "TCBioEditAvatarViewController.h"
+#import "TCBioEditNickViewController.h"
+#import "TCBioEditGenderViewController.h"
+#import "TCBioEditEmotionViewController.h"
 
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
@@ -188,22 +190,45 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            TCBioEditAvatarViewController *vc = [[TCBioEditAvatarViewController alloc] initWithNibName:@"TCBioEditAvatarViewController" bundle:[NSBundle mainBundle]];
-            [self.navigationController pushViewController:vc animated:YES];
-        } else {
-            TCBioEditViewController *bioEditVC = [[TCBioEditViewController alloc] initWithNibName:@"TCBioEditViewController" bundle:[NSBundle mainBundle]];
-            self.definesPresentationContext = YES;
-            bioEditVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
-            bioEditVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            bioEditVC.bioEditType = indexPath.row - 1;
-            bioEditVC.bioEditBlock = ^(BOOL isEdit, TCBioEditType bioEditType) {
-                if (isEdit) {
-                    [weakSelf fetchUserInfo];
-                }
-            };
-            [self presentViewController:bioEditVC animated:NO completion:nil];
+        switch (indexPath.row) {
+            case 0: // 头像
+            {
+                TCBioEditAvatarViewController *vc = [[TCBioEditAvatarViewController alloc] initWithNibName:@"TCBioEditAvatarViewController" bundle:[NSBundle mainBundle]];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case 1: // 昵称
+                [self handleSelectNickCellWithIndexPath:indexPath];
+                break;
+            case 2: // 性别
+                [self handleSelectGenderCell];
+                break;
+            case 3: // 出生日期
+                
+                break;
+            case 4: // 情感状况
+                [self handleSelectEmotionCell];
+                break;
+                
+            default:
+                break;
         }
+//        if (indexPath.row == 0) { // 头像
+//            TCBioEditAvatarViewController *vc = [[TCBioEditAvatarViewController alloc] initWithNibName:@"TCBioEditAvatarViewController" bundle:[NSBundle mainBundle]];
+//            [self.navigationController pushViewController:vc animated:YES];
+//        } else {
+//            TCBioEditViewController *bioEditVC = [[TCBioEditViewController alloc] initWithNibName:@"TCBioEditViewController" bundle:[NSBundle mainBundle]];
+//            self.definesPresentationContext = YES;
+//            bioEditVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+//            bioEditVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//            bioEditVC.bioEditType = indexPath.row - 1;
+//            bioEditVC.bioEditBlock = ^(BOOL isEdit, TCBioEditType bioEditType) {
+//                if (isEdit) {
+//                    [weakSelf fetchUserInfo];
+//                }
+//            };
+//            [self presentViewController:bioEditVC animated:NO completion:nil];
+//        }
     } else {
         if (indexPath.row == 0) {
             TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
@@ -297,13 +322,40 @@
 
 #pragma mark - Actions
 
+- (void)handleCickBackButton:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)handleUserInfoDidUpdate:(id)sender {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-- (void)handleCickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)handleSelectNickCellWithIndexPath:(NSIndexPath *)indexPath {
+    TCBioEditNickViewController *vc = [[TCBioEditNickViewController alloc] init];
+    vc.nickname = self.bioDetailsTitles[indexPath.section][indexPath.row];
+    vc.editNickBlock = ^(NSString *nickname) {
+        [weakSelf fetchUserInfo];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleSelectGenderCell {
+    TCBioEditGenderViewController *vc = [[TCBioEditGenderViewController alloc] init];
+    vc.gender = [[TCBuluoApi api] currentUserSession].userInfo.gender;
+    vc.editGenderBlock = ^() {
+        [weakSelf fetchUserInfo];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleSelectEmotionCell {
+    TCBioEditEmotionViewController *vc = [[TCBioEditEmotionViewController alloc] init];
+    vc.emotionState = [[TCBuluoApi api] currentUserSession].userInfo.emotionState;
+    vc.editEmotionBlock = ^() {
+        [weakSelf fetchUserInfo];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Override Methods
