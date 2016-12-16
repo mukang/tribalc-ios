@@ -14,6 +14,8 @@
 #import "TCShoppingCartViewController.h"
 
 @interface TCRecommendInfoViewController () {
+    CGFloat titleViewHeight;
+    
     TCGoodDetail *mGoodDetail;
     UIScrollView *mScrollView;
     TCImgPageControl *imgPageControl;
@@ -40,9 +42,12 @@
     return self;
 }
 
+
 - (void)viewWillAppear:(BOOL)animated {
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    if (mScrollView == nil) {
+        [self initScrollView];
+    }
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     
@@ -72,7 +77,6 @@
 }
 
 - (void)initUI {
-    [self initScrollView];
 
     UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(394))];
     [mScrollView addSubview:titleImageView];
@@ -451,10 +455,12 @@
 
     [standardView setSalePriceAndInventoryWithSalePrice:goodDetail.salePrice AndInventory:goodDetail.repertory AndImgUrlStr:goodDetail.thumbnail];
 //    [goodTitleView setupTitleWithText:goodDetail.title];
-    goodTitleView.titleLab.text = goodDetail.title;
+    titleViewHeight = goodTitleView.height;
+    [goodTitleView setupTitleWithText:goodDetail.title];
     [goodTitleView setSalePriceWithPrice:goodDetail.salePrice];
     [goodTitleView setOriginPriceLabWithOriginPrice:goodDetail.originPrice];
     [goodTitleView setTagLabWithTagArr:goodDetail.tags];
+    [self changeViewCoordinates];
     imgPageControl.numberOfPages = goodDetail.pictures.count;
     [self reloadWebViewWithUrlStr:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, goodDetail.detailURL]];
     
@@ -676,6 +682,21 @@
         }
     }
     
+}
+
+- (void)changeViewCoordinates {
+    NSArray *views = mScrollView.subviews;
+    CGFloat changeHeight = 0;
+    for (int i = 0; i < views.count; i++) {
+        UIView *view = views[i];
+        if (changeHeight != 0) {
+            view.y += changeHeight;
+        }
+        if ([views[i] isEqual:goodTitleView]) {
+            changeHeight = goodTitleView.height - titleViewHeight;
+        }
+
+    }
 }
 
 

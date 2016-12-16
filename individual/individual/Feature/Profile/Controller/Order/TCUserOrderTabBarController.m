@@ -135,13 +135,11 @@
 }
 
 - (void)initNavigationBar {
-    UILabel *titleLab = [TCGetNavigationItem getTitleItemWithText:@"我的订单"];
-    self.navigationItem.titleView = titleLab;
-    
-    UIButton *backBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
-    [backBtn addTarget:self action:@selector(touchBackButton) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backItem;
+    self.title = @"我的订单";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(touchBackButton)];
 }
 
 - (void)touchBackButton {

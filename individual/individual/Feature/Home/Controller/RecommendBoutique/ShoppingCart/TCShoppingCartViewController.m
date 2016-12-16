@@ -53,23 +53,29 @@
 #pragma mark - Init Data
 
 - (void)initShoppingCartData {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchShoppingCartWrapperWithSortSkip:nil result:^(TCShoppingCartWrapper *wrapper, NSError *error) {
-        shoppingCartWrapper = wrapper;
-        [self initialTableView];
-        [self setupBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
-        [self setupNavigationRightBarButton];
+        if (wrapper) {
+            [MBProgressHUD hideHUD:YES];
+            shoppingCartWrapper = wrapper;
+            [self initialTableView];
+            [self setupBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
+            [self setupNavigationRightBarButton];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"获取购物车列表失败"];
+        }
     }];
 }
 
 #pragma mark - Setup NavigationBar
 
 - (void)initialNavigationBar {
-    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"购物车"];
-    
-    UIButton *backBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    [backBtn addTarget:self action:@selector(touchBackBtn:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = backItem;
+    self.title = @"购物车";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(touchBackBtn:)];
+
     
 }
 

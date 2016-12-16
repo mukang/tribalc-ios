@@ -8,6 +8,7 @@
 
 #import "TCHomeViewController.h"
 #import "TCHomeCommodityTableViewCell.h"
+#import "TCRepairsViewController.h"
 #import "TCGetNavigationItem.h"
 
 
@@ -34,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.frame = [UIScreen mainScreen].bounds;
     
     [self setupNavigationBar];
@@ -177,8 +179,7 @@
 - (UIView *)getExpressViewWithFrame:(CGRect)frame {
     UIView *expressView = [[UIView alloc] initWithFrame:frame];
     expressView.backgroundColor = [UIColor whiteColor];
-    UIButton *expressImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(15), frame.size.height / 2 - TCRealValue(12) / 2, TCRealValue(10), TCRealValue(12)) AndImageName:@""];
-    expressImgBtn.backgroundColor = [UIColor blackColor];
+    UIButton *expressImgBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCRealValue(15), frame.size.height / 2 - TCRealValue(12) / 2, TCRealValue(10), TCRealValue(12)) AndImageName:@"home_express"];
     [expressView addSubview:expressImgBtn];
     
     UILabel *expressLab = [TCComponent createLabelWithFrame:CGRectMake(expressImgBtn.x + expressImgBtn.width + TCRealValue(5), 0, TCRealValue(50), frame.size.height) AndFontSize:TCRealValue(12) AndTitle:@"部落快报" AndTextColor:TCRGBColor(42, 42, 42)];
@@ -207,6 +208,10 @@
 
 
 - (void)setupNavigationBar {
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, [UIFont systemFontOfSize:TCRealValue(16)],NSFontAttributeName,nil]];
+
     navigationTitleLab = [TCGetNavigationItem getTitleItemWithText:@"首页"];
     self.navigationItem.titleView = navigationTitleLab;
     self.view.backgroundColor = TCRGBColor(1, 1, 1);
@@ -275,10 +280,16 @@
 - (void)setCommodityTargetWithLeftBtn:(UIButton *)leftBtn AndRightTopBtn:(UIButton *)rightTopBtn AndRightDownBtn:(UIButton *)rightDownBtn AndIndex:(NSInteger)index {
     if (index == 0) {
         [leftBtn addTarget:self action:@selector(touchShoppingBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [rightTopBtn addTarget:self action:@selector(touchShoppingBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [rightDownBtn addTarget:self action:@selector(touchShoppingBtn:) forControlEvents:UIControlEventTouchUpInside];
     } else if (index == 1) {
         [leftBtn addTarget:self action:@selector(touchRestaurantBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [rightTopBtn addTarget:self action:@selector(touchRestaurantBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [rightDownBtn addTarget:self action:@selector(touchRestaurantBtn:) forControlEvents:UIControlEventTouchUpInside];
     } else {
         [leftBtn addTarget:self action:@selector(touchEntertainmentBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [rightTopBtn addTarget:self action:@selector(touchEntertainmentBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [rightDownBtn addTarget:self action:@selector(touchEntertainmentBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
@@ -431,7 +442,9 @@
 }
 
 - (void)touchEstateRepair:(UIButton *)button {
-    NSLog(@"点击物业报修");
+    TCRepairsViewController *repairsViewController = [[TCRepairsViewController alloc] init];
+    repairsViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:repairsViewController animated:YES];
 }
 
 
@@ -482,8 +495,8 @@
     
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setTranslucent:NO];
     UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
     barImageView.backgroundColor = TCRGBColor(42, 42, 42);
@@ -499,6 +512,8 @@
 - (void)forgeData {
     homeInfoDic = @{
                     @"pictures":@[ @"home_Carousel",
+                                   @"home_Carousel",
+                                   @"home_Carousel",
                                    @"home_Carousel",
                                    @"home_Carousel"],
                     @"activity":@[  ],

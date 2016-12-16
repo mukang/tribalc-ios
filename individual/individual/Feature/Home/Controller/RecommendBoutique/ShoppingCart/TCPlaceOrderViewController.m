@@ -21,7 +21,7 @@
 
 @interface TCPlaceOrderViewController () {
     NSMutableArray *orderDetailList;
-    UITextField *supplementField;
+    NSMutableArray *supplementFieldArr;
     TCPayMethodView *payMethodView;
     TCBalancePayView *payView;
     TCOrderAddressView *userAddressView;
@@ -51,6 +51,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     [self initNavigationBar];
+    
+    supplementFieldArr = [[NSMutableArray alloc] init];
     
     UIScrollView *scrollView = [self getScrollViewWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - TCRealValue(49))];
     
@@ -85,7 +87,11 @@
 }
 
 - (void)touchKeyBoardRecovery {
-    [supplementField resignFirstResponder];
+    
+    for (int i = 0; i < supplementFieldArr.count; i++) {
+        UITextField *textField = supplementFieldArr[i];
+        [textField resignFirstResponder];
+    }
 }
 
 
@@ -102,12 +108,11 @@
 
 
 - (void)initNavigationBar {
-    UIButton *backbtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backbtn];
-    [backbtn addTarget:self action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = backItem;
-    
-    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"确认下单"];
+    self.title = @"确认下单";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(touchBackBtn)];
 }
 
 - (UIView *)getNotSettleBottomView {
@@ -261,12 +266,12 @@
     backView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     TCOrder *orderDetail = orderDetailList[section];
     
-    supplementField = [[UITextField alloc] initWithFrame:CGRectMake(TCRealValue(5), 0, backView.width - TCRealValue(7), backView.height)];
+    UITextField *supplementField = [[UITextField alloc] initWithFrame:CGRectMake(TCRealValue(5), 0, backView.width - TCRealValue(7), backView.height)];
     supplementField.placeholder = @"订单补充说明:";
     supplementField.font = [UIFont systemFontOfSize:TCRealValue(11)];
     supplementField.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
     supplementField.text = orderDetail.note;
-    
+    [supplementFieldArr addObject:supplementField];
     
     [backView addSubview:supplementField];
     

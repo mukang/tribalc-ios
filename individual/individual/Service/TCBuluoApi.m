@@ -953,6 +953,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
             }
         } else {
+            
             TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:response.data];
             if (resultBlock) {
                 TC_CALL_ASYNC_MQ(resultBlock(goodDetail, nil));
@@ -1224,7 +1225,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 }
 
 
-#pragma makr - 购物车资源
+#pragma mark - 购物车资源
 - (void)fetchShoppingCartWrapperWithSortSkip:(NSString *)sortSkip result:(void (^)(TCShoppingCartWrapper *, NSError *))resultBlock {
     
     if ([self isUserSessionValid]) {

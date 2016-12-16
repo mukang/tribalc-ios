@@ -107,10 +107,10 @@
 }
 
 - (void)initialNavLeftBarWithImgName:(NSString *)leftName AndRightBarImgName:(NSString *)rightName {
-    UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:leftName];
+    UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 0, 30, 17) AndImageName:leftName];
     [leftBtn addTarget:self action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
-    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:rightName];
+    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(20, 0, 20, 17) AndImageName:rightName];
     [rightBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
 
@@ -441,7 +441,7 @@
 - (void)touchCollectionBtn:(UIButton *)button {
     if (mScrollView.contentOffset.y < 70) {
         isCollection = !isCollection;
-        UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:[self getCollectionImageName]];
+        UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(20, 10, 20, 17) AndImageName:[self getCollectionImageName]];
         [rightBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     }
