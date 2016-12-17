@@ -66,6 +66,9 @@
 
 #import "TCCompanyInfo.h"
 
+/********** 物业报修 **********/
+#import "TCPropertyManageWrapper.h"
+
 
 @interface TCModelImport : NSObject
 

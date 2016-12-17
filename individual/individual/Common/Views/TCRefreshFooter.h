@@ -8,6 +8,6 @@
 
 #import <MJRefresh/MJRefresh.h>
 
-@interface TCRefreshFooter : MJRefreshAutoFooter
+@interface TCRefreshFooter : MJRefreshBackNormalFooter
 
 @end

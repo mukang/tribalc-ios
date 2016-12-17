@@ -470,6 +470,13 @@
 		553DC9761DFFE2310018783E /* oldphone-mono.wav in Resources */ = {isa = PBXBuildFile; fileRef = 553DC7E61DFFE22E0018783E /* oldphone-mono.wav */; };
 		553DC9771DFFE2310018783E /* soft_as_snow.mkv in Resources */ = {isa = PBXBuildFile; fileRef = 553DC7E71DFFE22E0018783E /* soft_as_snow.mkv */; };
 		553DC9781DFFE2310018783E /* toy-mono.wav in Resources */ = {isa = PBXBuildFile; fileRef = 553DC7E81DFFE22E0018783E /* toy-mono.wav */; };
+		55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */; };
+		55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */; };
+		55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */; };
+		55F06EF81E03BF5E00A849D7 /* TCPropertyManageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF71E03BF5E00A849D7 /* TCPropertyManageCell.m */; };
+		55F06EFC1E03C19500A849D7 /* TCPropertyManageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F06EFB1E03C19500A849D7 /* TCPropertyManageCell.xib */; };
+		55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F031E040B2500A849D7 /* TCPropertyDetailController.m */; };
+		55F06F061E040B2500A849D7 /* TCPropertyDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */; };
 		7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */; };
 		7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C341E001BFF00224677 /* TCCompanyApplyNameViewCell.m */; };
 		7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C371E002CF000224677 /* TCCompanyNameViewCell.m */; };
@@ -2605,6 +2612,18 @@
 		553DC7E61DFFE22E0018783E /* oldphone-mono.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "oldphone-mono.wav"; sourceTree = "<group>"; };
 		553DC7E71DFFE22E0018783E /* soft_as_snow.mkv */ = {isa = PBXFileReference; lastKnownFileType = file; path = soft_as_snow.mkv; sourceTree = "<group>"; };
 		553DC7E81DFFE22E0018783E /* toy-mono.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "toy-mono.wav"; sourceTree = "<group>"; };
+		55F06EEC1E03911400A849D7 /* TCPropertyManageListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageListController.h; sourceTree = "<group>"; };
+		55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageListController.m; sourceTree = "<group>"; };
+		55F06EF01E03977000A849D7 /* TCPropertyManageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageWrapper.h; sourceTree = "<group>"; };
+		55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageWrapper.m; sourceTree = "<group>"; };
+		55F06EF31E0398BB00A849D7 /* TCPropertyManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManage.h; sourceTree = "<group>"; };
+		55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManage.m; sourceTree = "<group>"; };
+		55F06EF61E03BF5E00A849D7 /* TCPropertyManageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageCell.h; sourceTree = "<group>"; };
+		55F06EF71E03BF5E00A849D7 /* TCPropertyManageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageCell.m; sourceTree = "<group>"; };
+		55F06EFB1E03C19500A849D7 /* TCPropertyManageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPropertyManageCell.xib; sourceTree = "<group>"; };
+		55F06F021E040B2500A849D7 /* TCPropertyDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyDetailController.h; sourceTree = "<group>"; };
+		55F06F031E040B2500A849D7 /* TCPropertyDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyDetailController.m; sourceTree = "<group>"; };
+		55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPropertyDetailController.xib; sourceTree = "<group>"; };
 		7A084C301E000D3B00224677 /* TCCompanyApplyTitleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyTitleViewCell.h; sourceTree = "<group>"; };
 		7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyApplyTitleViewCell.m; sourceTree = "<group>"; };
 		7A084C331E001BFF00224677 /* TCCompanyApplyNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyNameViewCell.h; sourceTree = "<group>"; };
@@ -7049,6 +7068,39 @@
 			path = rings;
 			sourceTree = "<group>";
 		};
+		55F06EEA1E03902000A849D7 /* Property */ = {
+			isa = PBXGroup;
+			children = (
+				55F06EEC1E03911400A849D7 /* TCPropertyManageListController.h */,
+				55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */,
+				55F06F021E040B2500A849D7 /* TCPropertyDetailController.h */,
+				55F06F031E040B2500A849D7 /* TCPropertyDetailController.m */,
+				55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */,
+			);
+			path = Property;
+			sourceTree = "<group>";
+		};
+		55F06EEB1E03906B00A849D7 /* Property */ = {
+			isa = PBXGroup;
+			children = (
+				55F06EF61E03BF5E00A849D7 /* TCPropertyManageCell.h */,
+				55F06EFB1E03C19500A849D7 /* TCPropertyManageCell.xib */,
+				55F06EF71E03BF5E00A849D7 /* TCPropertyManageCell.m */,
+			);
+			path = Property;
+			sourceTree = "<group>";
+		};
+		55F06EEF1E0396C500A849D7 /* Property */ = {
+			isa = PBXGroup;
+			children = (
+				55F06EF01E03977000A849D7 /* TCPropertyManageWrapper.h */,
+				55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */,
+				55F06EF31E0398BB00A849D7 /* TCPropertyManage.h */,
+				55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */,
+			);
+			path = Property;
+			sourceTree = "<group>";
+		};
 		78C4E9954E04995E8CED7C6E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -7191,6 +7243,7 @@
 		7A190B0D1DC0CC7800651905 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				55F06EEA1E03902000A849D7 /* Property */,
 				7AC346CB1E0142FA00E28EC9 /* Wallet */,
 				7A13EE9F1DF80C9700377869 /* Company */,
 				093D03151DE40498007A053C /* Order */,
@@ -7631,6 +7684,7 @@
 		7AAF23781DCB5B10002B81A5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				55F06EEF1E0396C500A849D7 /* Property */,
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
 				7A74674C1DF947CE00ACD815 /* Company */,
@@ -7792,6 +7846,7 @@
 		7AE32B8A1DC21CBA004E303D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				55F06EEB1E03906B00A849D7 /* Property */,
 				7AC346E01E0144B500E28EC9 /* Wallet */,
 				7A7467451DF8FC4C00ACD815 /* Company */,
 				093D03161DE404AB007A053C /* Order */,
@@ -7957,6 +8012,7 @@
 				553DC94E1DFFE2300018783E /* BelcardTargets-release.cmake in Resources */,
 				553DC8AF1DFFE22F0018783E /* Matroska2ConfigVersion.cmake in Resources */,
 				553DC9021DFFE2300018783E /* ORTPConfigVersion.cmake in Resources */,
+				55F06EFC1E03C19500A849D7 /* TCPropertyManageCell.xib in Resources */,
 				553DC8EF1DFFE2300018783E /* BelrTargets-release.cmake in Resources */,
 				7A7E941A1DF56C80006A47CE /* TCRepairsDescViewCell.xib in Resources */,
 				7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */,
@@ -8033,6 +8089,7 @@
 				553DC8DF1DFFE2300018783E /* ortp.pc in Resources */,
 				553DC9771DFFE2310018783E /* soft_as_snow.mkv in Resources */,
 				553DC9031DFFE2300018783E /* ORTPTargets-release.cmake in Resources */,
+				55F06F061E040B2500A849D7 /* TCPropertyDetailController.xib in Resources */,
 				7A3C81CC1DF02FDA009ABCEC /* TCPaymentPasswordView.xib in Resources */,
 				553DC8A21DFFE22F0018783E /* incoming_chat.wav in Resources */,
 				553DC8EA1DFFE2300018783E /* BelleSIPConfig.cmake in Resources */,
@@ -8320,6 +8377,7 @@
 				553DC7E91DFFE22E0018783E /* parser-impl.cc in Sources */,
 				09222E7F1DEEC2C70064C0DF /* TCOrderItem.m in Sources */,
 				7AE32B891DC21CA2004E303D /* TCBiographyViewController.m in Sources */,
+				55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */,
 				09222E2D1DEE98550064C0DF /* TCSelectSortButton.m in Sources */,
 				7A14FC581DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m in Sources */,
 				7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */,
@@ -8335,6 +8393,7 @@
 				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
 				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
 				7A7467521DF961AD00ACD815 /* TCUserCompanyInfo.m in Sources */,
+				55F06EF81E03BF5E00A849D7 /* TCPropertyManageCell.m in Sources */,
 				7A918AC81DC34AA6002BD529 /* TCBioEditView.m in Sources */,
 				7A1F129A1DEC28F900A9B58F /* TCCommunity.m in Sources */,
 				7A3C81CF1DF04DD5009ABCEC /* TCExtendButton.m in Sources */,
@@ -8355,12 +8414,14 @@
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
 				7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */,
 				7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */,
+				55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */,
 				093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */,
 				553DC8471DFFE22F0018783E /* parser-impl.cc in Sources */,
 				092C697D1DF0378600FE2FD8 /* TCUserReserveViewController.m in Sources */,
 				7A381BE61DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.m in Sources */,
 				7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */,
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
+				55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
 				7A918AC51DC34104002BD529 /* TCBioEditViewController.m in Sources */,
 				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
@@ -8406,6 +8467,7 @@
 				092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
 				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
+				55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */,
 				7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */,
 				09222E191DEE98490064C0DF /* TCRestaurantInfoViewController.m in Sources */,
 				092C69731DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m in Sources */,

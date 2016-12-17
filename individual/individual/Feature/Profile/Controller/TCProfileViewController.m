@@ -31,6 +31,8 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
+#import "TCPropertyManageListController.h"
+
 @interface TCProfileViewController ()
 <UITableViewDelegate,
 UITableViewDataSource,
@@ -318,6 +320,10 @@ TCPhotoPickerDelegate>
             [self.navigationController pushViewController:userReserveViewController animated:YES];
         } else if (indexPath.row == 3) { // 我的公司
             [self handleDidSelectedMyCompanyCell];
+        }else if (indexPath.row == 4) {
+            TCPropertyManageListController *propertyListVc = [[TCPropertyManageListController alloc] init];
+            propertyListVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:propertyListVc animated:YES];
         }
     }
 }

@@ -62,6 +62,7 @@
     
     __block NSError *serializationError = nil;
     NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[self.sessionManager.baseURL absoluteString] stringByAppendingString:URLString] parameters:parameters error:&serializationError];
+    NSLog(@"%@",request.URL.absoluteString);
     if (serializationError) {
         TCClientRequestError *error = [TCClientRequestError errorWithCode:TCClientRequestErrorRequestSerializationError
                                                            andDescription:serializationError.localizedDescription];
