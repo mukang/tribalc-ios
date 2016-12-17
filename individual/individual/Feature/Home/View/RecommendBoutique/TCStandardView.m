@@ -275,8 +275,13 @@
     
     UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, frame.size.width - TCRealValue(40), TCRealValue(0.5))];
     [view addSubview:lineView];
-    
-    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), TCRealValue(20), frame.size.width - TCRealValue(40), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:infoDic[@"label"] AndTextColor:[UIColor blackColor]];
+    NSString *labelStr;
+    if (![infoDic isEqual:[NSNull null]]) {
+        labelStr = infoDic[@"label"];
+    } else {
+        labelStr = @"";
+    }
+    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), TCRealValue(20), frame.size.width - TCRealValue(40), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:labelStr AndTextColor:[UIColor blackColor]];
     titleLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(14)];
     [view addSubview:titleLab];
     
@@ -343,7 +348,12 @@
 
 - (UIView *)createGoodSizeButtonViewWithFrame:(CGRect)frame AndStandard:(TCGoodStandards *)standard AndTarget:(id)target AndAction:(SEL)action{
     UIView *buttonView = [[UIView alloc] initWithFrame:frame];
-    NSArray *infoArr = standard.descriptions[@"secondary"][@"types"];
+    NSArray *infoArr;
+    if (![standard.descriptions[@"secondary"] isEqual:[NSNull null]]) {
+        infoArr = standard.descriptions[@"secondary"][@"types"];
+    } else {
+        infoArr = @[];
+    }
     
     int width = 0;
     int height = 0;
