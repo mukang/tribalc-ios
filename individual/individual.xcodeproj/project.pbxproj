@@ -653,6 +653,9 @@
 		7AEB4CFC1E03AC5400F83A7C /* TCBioEditGenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4CFB1E03AC5400F83A7C /* TCBioEditGenderViewController.m */; };
 		7AEB4CFF1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4CFE1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m */; };
 		7AEB4D021E03E83800F83A7C /* TCBioEditEmotionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D011E03E83800F83A7C /* TCBioEditEmotionViewController.m */; };
+		7AEB4D051E03F02F00F83A7C /* TCBioEditBirthdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D041E03F02F00F83A7C /* TCBioEditBirthdateViewController.m */; };
+		7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D071E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m */; };
+		7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D0A1E0413CD00F83A7C /* TCBioEditLocationViewController.m */; };
 		D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */; };
 /* End PBXBuildFile section */
 
@@ -2915,6 +2918,12 @@
 		7AEB4CFE1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditSelectViewCell.m; sourceTree = "<group>"; };
 		7AEB4D001E03E83800F83A7C /* TCBioEditEmotionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditEmotionViewController.h; sourceTree = "<group>"; };
 		7AEB4D011E03E83800F83A7C /* TCBioEditEmotionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditEmotionViewController.m; sourceTree = "<group>"; };
+		7AEB4D031E03F02F00F83A7C /* TCBioEditBirthdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditBirthdateViewController.h; sourceTree = "<group>"; };
+		7AEB4D041E03F02F00F83A7C /* TCBioEditBirthdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditBirthdateViewController.m; sourceTree = "<group>"; };
+		7AEB4D061E03F06B00F83A7C /* TCBioEditBirthdateViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditBirthdateViewCell.h; sourceTree = "<group>"; };
+		7AEB4D071E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditBirthdateViewCell.m; sourceTree = "<group>"; };
+		7AEB4D091E0413CD00F83A7C /* TCBioEditLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditLocationViewController.h; sourceTree = "<group>"; };
+		7AEB4D0A1E0413CD00F83A7C /* TCBioEditLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditLocationViewController.m; sourceTree = "<group>"; };
 		CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-individual.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -7806,6 +7815,10 @@
 				7AEB4CFB1E03AC5400F83A7C /* TCBioEditGenderViewController.m */,
 				7AEB4D001E03E83800F83A7C /* TCBioEditEmotionViewController.h */,
 				7AEB4D011E03E83800F83A7C /* TCBioEditEmotionViewController.m */,
+				7AEB4D031E03F02F00F83A7C /* TCBioEditBirthdateViewController.h */,
+				7AEB4D041E03F02F00F83A7C /* TCBioEditBirthdateViewController.m */,
+				7AEB4D091E0413CD00F83A7C /* TCBioEditLocationViewController.h */,
+				7AEB4D0A1E0413CD00F83A7C /* TCBioEditLocationViewController.m */,
 				7AEB4CAF1E03936300F83A7C /* TCBioEditPhoneViewController.h */,
 				7AEB4CB01E03936300F83A7C /* TCBioEditPhoneViewController.m */,
 				7AEB4CB11E03936300F83A7C /* TCBioEditPhoneViewController.xib */,
@@ -7835,6 +7848,8 @@
 				7AEB4CF81E03955A00F83A7C /* TCBioEditNickViewCell.m */,
 				7AEB4CFD1E03ADEB00F83A7C /* TCBioEditSelectViewCell.h */,
 				7AEB4CFE1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m */,
+				7AEB4D061E03F06B00F83A7C /* TCBioEditBirthdateViewCell.h */,
+				7AEB4D071E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m */,
 				7AEB4CDE1E03944400F83A7C /* TCCityPickerView.h */,
 				7AEB4CDF1E03944400F83A7C /* TCCityPickerView.m */,
 				7AEB4CE01E03944400F83A7C /* TCCityPickerView.xib */,
@@ -8312,6 +8327,7 @@
 				7A7E94231DF5723A006A47CE /* TCRepairsCommitViewCell.m in Sources */,
 				7AC346CF1E01432000E28EC9 /* TCWalletViewController.m in Sources */,
 				7A11F7151DE43195005F3EAB /* MLBPasswordTextField.m in Sources */,
+				7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */,
 				553DC8AD1DFFE22F0018783E /* parser-impl.cc in Sources */,
 				09222E7C1DEEC0D60064C0DF /* TCOrder.m in Sources */,
 				7A381BE11DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.m in Sources */,
@@ -8395,6 +8411,7 @@
 				09222E791DEEC0920064C0DF /* TCOrderWrapper.m in Sources */,
 				09222E2C1DEE98550064C0DF /* TCRestaurantSortView.m in Sources */,
 				7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */,
+				7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */,
 				0928B3411DF96F930085A182 /* TCSelectStandardView.m in Sources */,
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
 				099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */,
@@ -8461,6 +8478,7 @@
 				7AC347061E016A3800E28EC9 /* TCSettingViewController.m in Sources */,
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
 				092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */,
+				7AEB4D051E03F02F00F83A7C /* TCBioEditBirthdateViewController.m in Sources */,
 				09275FBD1DDEFF6E00502167 /* TCDetailAnnotationView.m in Sources */,
 				7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */,
 				7A13EEA31DF8114E00377869 /* TCCompanyViewController.m in Sources */,
