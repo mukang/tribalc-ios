@@ -13,6 +13,8 @@
 #import "TCBioEditNickViewController.h"
 #import "TCBioEditGenderViewController.h"
 #import "TCBioEditEmotionViewController.h"
+#import "TCBioEditBirthdateViewController.h"
+#import "TCBioEditLocationViewController.h"
 
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
@@ -192,19 +194,16 @@
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0: // 头像
-            {
-                TCBioEditAvatarViewController *vc = [[TCBioEditAvatarViewController alloc] initWithNibName:@"TCBioEditAvatarViewController" bundle:[NSBundle mainBundle]];
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+                [self handleSelectAvatarCell];
                 break;
             case 1: // 昵称
-                [self handleSelectNickCellWithIndexPath:indexPath];
+                [self handleSelectNickCell];
                 break;
             case 2: // 性别
                 [self handleSelectGenderCell];
                 break;
             case 3: // 出生日期
-                
+                [self handleSelectBirthdateCell];
                 break;
             case 4: // 情感状况
                 [self handleSelectEmotionCell];
@@ -213,101 +212,22 @@
             default:
                 break;
         }
-//        if (indexPath.row == 0) { // 头像
-//            TCBioEditAvatarViewController *vc = [[TCBioEditAvatarViewController alloc] initWithNibName:@"TCBioEditAvatarViewController" bundle:[NSBundle mainBundle]];
-//            [self.navigationController pushViewController:vc animated:YES];
-//        } else {
-//            TCBioEditViewController *bioEditVC = [[TCBioEditViewController alloc] initWithNibName:@"TCBioEditViewController" bundle:[NSBundle mainBundle]];
-//            self.definesPresentationContext = YES;
-//            bioEditVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
-//            bioEditVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//            bioEditVC.bioEditType = indexPath.row - 1;
-//            bioEditVC.bioEditBlock = ^(BOOL isEdit, TCBioEditType bioEditType) {
-//                if (isEdit) {
-//                    [weakSelf fetchUserInfo];
-//                }
-//            };
-//            [self presentViewController:bioEditVC animated:NO completion:nil];
-//        }
     } else {
-        if (indexPath.row == 0) {
-            TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
-            editPhoneVC.editPhoneBlock = ^(BOOL isEdit) {
-                if (isEdit) {
-                    [weakSelf fetchUserInfo];
-                }
-            };
-            [self.navigationController pushViewController:editPhoneVC animated:YES];
-        } else if (indexPath.row == 1) {
-            [self showPickerView];
-        } else {
-            TCShippingAddressViewController *vc = [[TCShippingAddressViewController alloc] initWithNibName:@"TCShippingAddressViewController" bundle:[NSBundle mainBundle]];
-            vc.defaultShippingAddressChangeBlock = ^(BOOL isChange) {
-                if (isChange) {
-                    [weakSelf fetchUserInfo];
-                }
-            };
-            [self.navigationController pushViewController:vc animated:YES];
+        switch (indexPath.row) {
+            case 0: // 手机号
+                [self handleSelectPhoneCell];
+                break;
+            case 1: // 所在地
+                [self handleSelectLocationCell];
+                break;
+            case 2: // 收货地址
+                [self handleSelectShippingAddressCell];
+                break;
+                
+            default:
+                break;
         }
     }
-}
-
-#pragma mark - TCCityPickerViewDelegate
-
-- (void)cityPickerView:(TCCityPickerView *)view didClickConfirmButtonWithCityInfo:(NSDictionary *)cityInfo {
-    
-    TCUserAddress *address = [[TCUserAddress alloc] init];
-    address.province = cityInfo[TCCityPickierViewProvinceKey];
-    address.city = cityInfo[TCCityPickierViewCityKey];
-    address.district = cityInfo[TCCityPickierViewCountryKey];
-    
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] changeUserAddress:address result:^(BOOL success, NSError *error) {
-        if (success) {
-            [MBProgressHUD hideHUD:YES];
-            [weakSelf fetchUserInfo];
-        } else {
-            [MBProgressHUD showHUDWithMessage:@"所在地修改失败！"];
-        }
-    }];
-    
-    [self dismissPickerView];
-}
-
-- (void)didClickCancelButtonInCityPickerView:(TCCityPickerView *)view {
-    [self dismissPickerView];
-}
-
-#pragma mark - picker view
-
-- (void)showPickerView {
-    
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    UIView *pickerBgView = [[UIView alloc] initWithFrame:keyWindow.bounds];
-    pickerBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
-    [keyWindow addSubview:pickerBgView];
-    self.pickerBgView = pickerBgView;
-    
-    TCCityPickerView *cityPickerView = [[[NSBundle mainBundle] loadNibNamed:@"TCCityPickerView" owner:nil options:nil] firstObject];
-    cityPickerView.delegate = self;
-    cityPickerView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, 240);
-    [keyWindow addSubview:cityPickerView];
-    self.cityPickerView = cityPickerView;
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        pickerBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.82];
-        cityPickerView.y = TCScreenHeight - cityPickerView.height;
-    }];
-}
-
-- (void)dismissPickerView {
-    [UIView animateWithDuration:0.25 animations:^{
-        self.pickerBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
-        self.cityPickerView.y = TCScreenHeight;
-    } completion:^(BOOL finished) {
-        [self.pickerBgView removeFromSuperview];
-        [self.cityPickerView removeFromSuperview];
-    }];
 }
 
 #pragma mark - Notifications
@@ -331,9 +251,14 @@
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-- (void)handleSelectNickCellWithIndexPath:(NSIndexPath *)indexPath {
+- (void)handleSelectAvatarCell {
+    TCBioEditAvatarViewController *vc = [[TCBioEditAvatarViewController alloc] initWithNibName:@"TCBioEditAvatarViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleSelectNickCell {
     TCBioEditNickViewController *vc = [[TCBioEditNickViewController alloc] init];
-    vc.nickname = self.bioDetailsTitles[indexPath.section][indexPath.row];
+    vc.nickname = [[TCBuluoApi api] currentUserSession].userInfo.nickname;
     vc.editNickBlock = ^(NSString *nickname) {
         [weakSelf fetchUserInfo];
     };
@@ -354,6 +279,54 @@
     vc.emotionState = [[TCBuluoApi api] currentUserSession].userInfo.emotionState;
     vc.editEmotionBlock = ^() {
         [weakSelf fetchUserInfo];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleSelectBirthdateCell {
+    TCBioEditBirthdateViewController *vc = [[TCBioEditBirthdateViewController alloc] init];
+    NSInteger birthday = [[TCBuluoApi api] currentUserSession].userInfo.birthday;
+    if (birthday) {
+        vc.birthdate = [NSDate dateWithTimeIntervalSince1970:birthday / 1000];
+    }
+    vc.editBirthdateBlock = ^() {
+        [weakSelf fetchUserInfo];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleSelectPhoneCell {
+    TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
+    editPhoneVC.editPhoneBlock = ^(BOOL isEdit) {
+        if (isEdit) {
+            [weakSelf fetchUserInfo];
+        }
+    };
+    [self.navigationController pushViewController:editPhoneVC animated:YES];
+}
+
+- (void)handleSelectLocationCell {
+    TCBioEditLocationViewController *vc = [[TCBioEditLocationViewController alloc] init];
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+    if (userInfo.province || userInfo.city || userInfo.district) {
+        TCUserAddress *address = [[TCUserAddress alloc] init];
+        address.province = userInfo.province;
+        address.city = userInfo.city;
+        address.district = userInfo.district;
+        vc.address = address;
+    }
+    vc.editLocationBlock = ^() {
+        [weakSelf fetchUserInfo];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleSelectShippingAddressCell {
+    TCShippingAddressViewController *vc = [[TCShippingAddressViewController alloc] initWithNibName:@"TCShippingAddressViewController" bundle:[NSBundle mainBundle]];
+    vc.defaultShippingAddressChangeBlock = ^(BOOL isChange) {
+        if (isChange) {
+            [weakSelf fetchUserInfo];
+        }
     };
     [self.navigationController pushViewController:vc animated:YES];
 }
