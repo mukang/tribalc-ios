@@ -477,6 +477,7 @@
 		55F06EFC1E03C19500A849D7 /* TCPropertyManageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F06EFB1E03C19500A849D7 /* TCPropertyManageCell.xib */; };
 		55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F031E040B2500A849D7 /* TCPropertyDetailController.m */; };
 		55F06F061E040B2500A849D7 /* TCPropertyDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */; };
+		55F06F081E053A1000A849D7 /* downImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 55F06F071E053A1000A849D7 /* downImage.jpg */; };
 		7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */; };
 		7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C341E001BFF00224677 /* TCCompanyApplyNameViewCell.m */; };
 		7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C371E002CF000224677 /* TCCompanyNameViewCell.m */; };
@@ -2624,6 +2625,7 @@
 		55F06F021E040B2500A849D7 /* TCPropertyDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyDetailController.h; sourceTree = "<group>"; };
 		55F06F031E040B2500A849D7 /* TCPropertyDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyDetailController.m; sourceTree = "<group>"; };
 		55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPropertyDetailController.xib; sourceTree = "<group>"; };
+		55F06F071E053A1000A849D7 /* downImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = downImage.jpg; sourceTree = "<group>"; };
 		7A084C301E000D3B00224677 /* TCCompanyApplyTitleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyTitleViewCell.h; sourceTree = "<group>"; };
 		7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyApplyTitleViewCell.m; sourceTree = "<group>"; };
 		7A084C331E001BFF00224677 /* TCCompanyApplyNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyNameViewCell.h; sourceTree = "<group>"; };
@@ -7551,6 +7553,7 @@
 		7A9CCF051DB62782003D90C6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				55F06F071E053A1000A849D7 /* downImage.jpg */,
 				7AC292291DC8BEA900B2C7E8 /* BinaryFiles */,
 			);
 			path = Resource;
@@ -8064,6 +8067,7 @@
 				553DC82D1DFFE22E0018783E /* LinphoneConfigVersion.cmake in Resources */,
 				7AC346EB1E0144B500E28EC9 /* TCWalletBillDetailHeaderView.xib in Resources */,
 				553DC8191DFFE22E0018783E /* BcToolboxTargets-release.cmake in Resources */,
+				55F06F081E053A1000A849D7 /* downImage.jpg in Resources */,
 				553DC8951DFFE22F0018783E /* LinphoneTargets.cmake in Resources */,
 				553DC8DE1DFFE2300018783E /* belle-sip.pc in Resources */,
 				553DC82C1DFFE22E0018783E /* LinphoneConfig.cmake in Resources */,

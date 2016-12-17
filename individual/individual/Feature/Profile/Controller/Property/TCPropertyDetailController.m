@@ -80,22 +80,25 @@
     _problemDescBtn.titleLabel.numberOfLines = 0;
     [_problemDescBtn setTitle:problemDesc forState:UIControlStateNormal];
     
-    CGFloat height = [UIScreen mainScreen].bounds.size.width/375.0*102.5;
+    CGFloat height = 0.0;
     
     if ([_propertyManage.pictures isKindOfClass:[NSArray class]]) {
         NSArray *arr = _propertyManage.pictures;
         if (arr.count > 0) {
-            _imgView.hidden = NO;
             for (int i =0; i < arr.count; i++) {
                 NSString *imgStr = arr[i];
                 if ([imgStr isKindOfClass:[NSString class]]) {
-                    NSURL *imageURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:imgStr];
-                    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5+(height + 5) * i, 0, height, height)];
-                    [_imgView addSubview:imageView];
-                    imageView.layer.cornerRadius = 3.0;
-                    imageView.clipsToBounds = YES;
-                    imageView.backgroundColor = [UIColor blueColor];
-                    [imageView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageRetryFailed];
+                    if (![imgStr isEqualToString:@""]) {
+                        _imgView.hidden = NO;
+                        height = [UIScreen mainScreen].bounds.size.width/375.0*102.5;
+                        NSURL *imageURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:imgStr];
+                        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5+(height + 5) * i, 0, height, height)];
+                        [_imgView addSubview:imageView];
+                        imageView.layer.cornerRadius = 3.0;
+                        imageView.clipsToBounds = YES;
+                        imageView.backgroundColor = [UIColor blueColor];
+                        [imageView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageRetryFailed];
+                    }
                 }
                 
             }
@@ -154,30 +157,32 @@
     _payBtn.clipsToBounds = YES;
     _problemDescBtn.contentEdgeInsets = UIEdgeInsetsMake(10, 20, 10, 20);
     
-    //NSString *problemDesc = _propertyManage.problemDesc ? _propertyManage.problemDesc : @"";
-    NSString *problemDesc = @"吾问无为谓吾问无为谓吾问无为谓吾问无为谓吾问无为谓吾问无为谓吾问无为谓呜呜呜呜呜呜";
+    NSString *problemDesc = _propertyManage.problemDesc ? _propertyManage.problemDesc : @"";
+//    NSString *problemDesc = @"吾问无为谓吾问无为谓吾问无为谓吾问无为谓吾问无为谓吾问无为谓吾问无为谓呜呜呜呜呜呜";
     NSDictionary *attribute1 = @{NSFontAttributeName: [UIFont systemFontOfSize:11]};
     CGSize size1 = [problemDesc boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width-80, 9999.0) options:NSStringDrawingTruncatesLastVisibleLine attributes:attribute1 context:nil].size;
-    _problemDescHeightConstraint.constant = size1.height+20.0;
+    _problemDescHeightConstraint.constant = size1.height+40.0;
     _problemDescBtn.titleLabel.numberOfLines = 0;
     [_problemDescBtn setTitle:problemDesc forState:UIControlStateNormal];
     
-    CGFloat height = [UIScreen mainScreen].bounds.size.width/375.0*102.5;
+    CGFloat height = 0.0;
     
     if ([_propertyManage.pictures isKindOfClass:[NSArray class]]) {
         NSArray *arr = _propertyManage.pictures;
         if (arr.count > 0) {
-            _imgView.hidden = NO;
             for (int i =0; i < arr.count; i++) {
                 NSString *imgStr = arr[i];
                 if ([imgStr isKindOfClass:[NSString class]]) {
-                    NSURL *imageURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:imgStr];
-                    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5+(height + 5) * i, 0, height, height)];
-                    [_imgView addSubview:imageView];
-                    imageView.layer.cornerRadius = 3.0;
-                    imageView.clipsToBounds = YES;
-                    imageView.backgroundColor = [UIColor blueColor];
-                    [imageView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageRetryFailed];
+                    if (![imgStr isEqualToString:@""]) {
+                        _imgView.hidden = NO;
+                        height = [UIScreen mainScreen].bounds.size.width/375.0*102.5;
+                        NSURL *imageURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:imgStr];
+                        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5+(height + 5) * i, 0, height, height)];
+                        [_imgView addSubview:imageView];
+                        imageView.layer.cornerRadius = 3.0;
+                        imageView.clipsToBounds = YES;
+                        [imageView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageRetryFailed];
+                    }
                 }
                 
             }
@@ -213,9 +218,12 @@
         _masterView.hidden = YES;
         _payBtn.hidden = YES;
     }
+     [self.view setNeedsUpdateConstraints];
+     [self.view updateConstraintsIfNeeded];
+    
 
 //    [self.view setNeedsLayout];
-//    [self.view layoutIfNeeded];
+    [self.view layoutIfNeeded];
 }
 
 - (IBAction)payBtnClick:(id)sender {
