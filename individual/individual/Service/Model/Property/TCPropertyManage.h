@@ -31,5 +31,9 @@
 @property (assign, nonatomic) NSInteger doorTime;
 /** 订单状态 */
 @property (copy, nonatomic) NSString *status;
+/** 问题描述 */
+@property (copy, nonatomic) NSString *problemDesc;
+/** 图片列表 */
+@property (copy, nonatomic) NSArray *pictures;
 
 @end

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TCPropertyManage;
 
 @interface TCPropertyDetailController : UIViewController
+
+- (instancetype)initWithPropertyManage:(TCPropertyManage *)property;
 
 @end

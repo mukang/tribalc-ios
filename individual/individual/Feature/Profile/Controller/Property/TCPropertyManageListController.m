@@ -101,7 +101,8 @@
 #pragma UITableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TCPropertyDetailController *propertyDetailVC = [[TCPropertyDetailController alloc] init];
+    TCPropertyManage *propertyManage = self.currentList[indexPath.section];
+    TCPropertyDetailController *propertyDetailVC = [[TCPropertyDetailController alloc] initWithPropertyManage:propertyManage];
     [self.navigationController pushViewController:propertyDetailVC animated:YES];
 }
 
