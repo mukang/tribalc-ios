@@ -532,7 +532,7 @@
 - (void)touchOrderPayBtn:(UIButton *)btn {
     [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
         [self showHUDMessageWithResult:result AndTitle:@"付款"];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self touchBackBtn];
     }];
 }
 

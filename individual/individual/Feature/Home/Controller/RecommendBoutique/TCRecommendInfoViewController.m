@@ -512,7 +512,7 @@
     if (btn.tag < 0) {
         return;
     }
-    if ([standardView.selectedSecondLab.text isEqualToString:@""] && [standardView.selectedPrimaryLab.text isEqualToString:@""]) {
+    if (([standardView.selectedSecondLab.text isEqualToString:@""] && [standardView.selectedPrimaryLab.text isEqualToString:@""]) || (![standardView.selectedSecondLab.text isEqualToString:@""] && [standardView.selectedPrimaryLab.text isEqualToString:@""])) {
         [self changeSizeButtonWithBtn:btn];
         [standardView setSelectedSeconedStandardWithText:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
         [standardView setPrimaryViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];

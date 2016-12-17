@@ -389,7 +389,6 @@
 - (void)touchPayMoneyBtn:(UIButton *)button {
     [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:payView.order.ID result:^(BOOL result, NSError *error) {
         if (result) {
-            [MBProgressHUD showHUDWithMessage:@"支付成功"];
             UIViewController *orderViewController;
 //            if (!payView.order) {
                 orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
