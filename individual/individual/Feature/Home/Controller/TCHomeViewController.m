@@ -9,6 +9,8 @@
 #import "TCHomeViewController.h"
 #import "TCHomeCommodityTableViewCell.h"
 #import "TCGetNavigationItem.h"
+#import "TCPropertyManageListController.h"
+#import "TCLoginViewController.h"
 
 
 @interface TCHomeViewController () {
@@ -264,6 +266,18 @@
     return view;
 }
 
+- (BOOL)checkUserNeedLogin {
+    if ([[TCBuluoApi api] needLogin]) {
+        [self showLoginViewController];
+    }
+    return [[TCBuluoApi api] needLogin];
+}
+
+- (void)showLoginViewController {
+    TCLoginViewController *vc = [[TCLoginViewController alloc] initWithNibName:@"TCLoginViewController" bundle:[NSBundle mainBundle]];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
 - (UIView *)getHeaderLineViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor blackColor];
@@ -432,6 +446,11 @@
 
 - (void)touchEstateRepair:(UIButton *)button {
     NSLog(@"点击物业报修");
+    if ([self checkUserNeedLogin]) return;
+    TCPropertyManageListController *propertyListVc = [[TCPropertyManageListController alloc] init];
+    propertyListVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:propertyListVc animated:YES];
+
 }
 
 
