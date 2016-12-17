@@ -387,13 +387,23 @@
 }
 
 - (void)touchPayMoneyBtn:(UIButton *)button {
-    [MBProgressHUD showHUDWithMessage:@"支付"];
+    [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:payView.order.ID result:^(BOOL result, NSError *error) {
+        if (result) {
+            [MBProgressHUD showHUDWithMessage:@"支付成功"];
+            UIViewController *orderViewController;
+//            if (!payView.order) {
+                orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
+//            } else {
+//                orderViewController = [[TCUserOrderDetailViewController alloc] initWithOrder:payView.order];
+            
+            [payView removeFromSuperview];
+            [self.navigationController pushViewController:orderViewController animated:YES];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"支付失败"];
+        }
+    }];
     
-
-
-    
-    [payView removeFromSuperview];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+   
     
 }
 
@@ -455,7 +465,6 @@
             payView.order = orderList.count == 1 ? order : nil;
             [payView showPayView];
             
-            [MBProgressHUD showHUDWithMessage:@"创建订单成功"];
         } else {
             [MBProgressHUD showHUDWithMessage:@"创建订单失败"];
         }

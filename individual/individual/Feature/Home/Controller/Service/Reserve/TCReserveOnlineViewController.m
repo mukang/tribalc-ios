@@ -10,6 +10,7 @@
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
 #import "TCReserveUserBaseInfoView.h"
+#import "TCUserReserveDetailViewController.h"
 #import "TCBuluoApi.h"
 
 @interface TCReserveOnlineViewController () {
@@ -461,10 +462,12 @@
             vcodeStr = nil;
         }
         
-        [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(BOOL result, NSError *error) {
+        [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(TCReservationDetail *result, NSError *error) {
             if (result) {
                 [MBProgressHUD showHUDWithMessage:@"预订成功"];
-                [self.navigationController popToRootViewControllerAnimated:YES];
+                TCUserReserveDetailViewController *userReserveDetailViewController = [[TCUserReserveDetailViewController alloc] initWithReservationId:result.ID];
+                [self.navigationController pushViewController:userReserveDetailViewController animated:YES];
+                
             } else {
                 [MBProgressHUD showHUDWithMessage:@"预订失败"];
             }
@@ -480,9 +483,14 @@
 }
 
 - (NSInteger)transToTimeSp:(NSString *)time {
+//    NSArray *timeArr = [time componentsSeparatedByString:@" "];
+//    NSString *monthStr = timeArr[0];
+//    timeArr = [time componentsSeparatedByString:@":"];
+//    
+//    time = [NSString stringWithFormat:@"%@ %@", monthStr, timeStr];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
-    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm"];
+    [dateFormat setDateFormat:@"MM月dd日 HH:mm"];
     NSDate *date = [dateFormat dateFromString:time];
     NSInteger timeSp = [date timeIntervalSince1970];
     return timeSp * 1000;
