@@ -392,7 +392,7 @@
             [MBProgressHUD showHUDWithMessage:@"支付成功"];
             UIViewController *orderViewController;
 //            if (!payView.order) {
-                orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@""];
+                orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
 //            } else {
 //                orderViewController = [[TCUserOrderDetailViewController alloc] initWithOrder:payView.order];
             

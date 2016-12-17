@@ -1195,7 +1195,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     if ([self isUserSessionValid]) {
         
         NSString *vcodeStr = vcode ? [NSString stringWithFormat:@"&vcode=%@", vcode] : @"";
-        NSString *apiName = [NSString stringWithFormat:@"reservations?type=owner&me=%@%@", self.currentUserSession.assigned, vcodeStr];
+        NSString *apiName = [NSString stringWithFormat:@"reservations?me=%@%@", self.currentUserSession.assigned, vcodeStr];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         
         [request setValue:storeSetMealId forParam:@"storeSetMealId"];
