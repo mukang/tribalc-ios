@@ -1490,5 +1490,33 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
     }];
 }
+#pragma mark - 公司资源
 
+- (void)fetchPropertyWrapper:(NSString *)status count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCPropertyManageWrapper *propertyManageWrapper, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *s = status ? [NSString stringWithFormat:@"status=%@&", status] : @"";
+        NSString *limitSizePart = [NSString stringWithFormat:@"limitSize=%zd", count];
+        NSString *sortSkipPart = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%@", sortSkip] : @"";
+        //NSString *apiName = [NSString stringWithFormat:@"persons/%@/property_management?%@%@%@", self.currentUserSession.assigned, s, limitSizePart, sortSkipPart];
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/property_management?%@%@%@", @"5824287f0cf210fc9cef5e42", s, limitSizePart, sortSkipPart];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.error) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            } else {
+                TCPropertyManageWrapper *propertyManageWrapper = [[TCPropertyManageWrapper alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(propertyManageWrapper, nil));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
 @end

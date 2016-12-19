@@ -10,6 +10,7 @@
 #import "TCRepairsDetailViewController.h"
 
 #import "TCRepairsViewCell.h"
+#import "TCPropertyManageListController.h"
 
 @interface TCRepairsViewController () <UITableViewDataSource, UITableViewDelegate, TCRepairsViewCellDelegate>
 
@@ -90,6 +91,9 @@
 
 - (void)handleClickOrderButton:(UIBarButtonItem *)sender {
     TCLog(@"点击了订单按钮");
+    TCPropertyManageListController *propertyList = [[TCPropertyManageListController alloc] init];
+    propertyList.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:propertyList animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -11,6 +11,13 @@
 #import "TCRepairsViewController.h"
 #import "TCGetNavigationItem.h"
 
+#import "TCGoodSelectView.h"
+
+
+#import "TCPropertyManageListController.h"
+#import "TCLoginViewController.h"
+#import "TCRepairsViewController.h"
+
 
 @interface TCHomeViewController () {
     NSDictionary *homeInfoDic;
@@ -269,6 +276,18 @@
     return view;
 }
 
+- (BOOL)checkUserNeedLogin {
+    if ([[TCBuluoApi api] needLogin]) {
+        [self showLoginViewController];
+    }
+    return [[TCBuluoApi api] needLogin];
+}
+
+- (void)showLoginViewController {
+    TCLoginViewController *vc = [[TCLoginViewController alloc] initWithNibName:@"TCLoginViewController" bundle:[NSBundle mainBundle]];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
 - (UIView *)getHeaderLineViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor blackColor];
@@ -442,9 +461,15 @@
 }
 
 - (void)touchEstateRepair:(UIButton *)button {
-    TCRepairsViewController *repairsViewController = [[TCRepairsViewController alloc] init];
-    repairsViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:repairsViewController animated:YES];
+    NSLog(@"点击物业报修");
+    if ([self checkUserNeedLogin]) return;
+    TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+
+//    TCRepairsViewController *repairsViewController = [[TCRepairsViewController alloc] init];
+//    repairsViewController.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:repairsViewController animated:YES];
 }
 
 

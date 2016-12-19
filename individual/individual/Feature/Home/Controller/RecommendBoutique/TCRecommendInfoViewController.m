@@ -12,15 +12,19 @@
 #import "TCClientRequestError.h"
 #import "TCImgPageControl.h"
 #import "TCShoppingCartViewController.h"
+#import "TCGoodSelectView.h"
 
 @interface TCRecommendInfoViewController () {
+    
+    TCGoodSelectView *goodSelectView;
+    
+    
     CGFloat titleViewHeight;
     
     TCGoodDetail *mGoodDetail;
     UIScrollView *mScrollView;
     TCImgPageControl *imgPageControl;
     TCGoodStandards *goodStandard;
-    TCStandardView *standardView;
     NSString *mGoodId;
     UICollectionView *imageCollectionView;
     
@@ -112,11 +116,15 @@
 
 
 - (void)initSelectSizeView {
-
-    standardView = [[TCStandardView alloc] initWithTarget:self AndNumberAddAction:@selector(touchBuyNumberAddBtn:) AndNumberSubAction:@selector(touchBuyNumberSubBtn:) AndAddShopCarAction:@selector(touchAddShopCartBtn:) AndBuyAction:@selector(touchBuyBtn:) AndCloseAction:@selector(touchCloseBtn)];
-    [standardView setSalePriceAndInventoryWithSalePrice:mGoodDetail.salePrice AndInventory:mGoodDetail.repertory AndImgUrlStr:mGoodDetail.thumbnail];
-    [self.view addSubview:standardView];
-    [[UIApplication sharedApplication].keyWindow addSubview:standardView];
+    goodSelectView = [[TCGoodSelectView alloc] initWithGoodDetail:mGoodDetail];
+    goodSelectView.delegate = self;
+    [[UIApplication sharedApplication].keyWindow addSubview:goodSelectView];
+    
+//
+//    standardView = [[TCStandardView alloc] initWithTarget:self AndNumberAddAction:@selector(touchBuyNumberAddBtn:) AndNumberSubAction:@selector(touchBuyNumberSubBtn:) AndAddShopCarAction:@selector(touchAddShopCartBtn:) AndBuyAction:@selector(touchBuyBtn:) AndCloseAction:@selector(touchCloseBtn)];
+//    [standardView setSalePriceAndInventoryWithSalePrice:mGoodDetail.salePrice AndInventory:mGoodDetail.repertory AndImgUrlStr:mGoodDetail.thumbnail];
+//    [self.view addSubview:standardView];
+//    [[UIApplication sharedApplication].keyWindow addSubview:standardView];
 }
 
 
@@ -384,12 +392,35 @@
     
     NSURL *imgUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, mGoodDetail.pictures[indexPath.row]]];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, collectionView.width, collectionView.height)];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
     [imageView sd_setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"home_image_place"]];
     imageView.backgroundColor = [UIColor whiteColor];
     
     [cell.contentView addSubview:imageView];
     return cell;
 }
+
+#pragma mark - TCGoodSelectViewDelegate
+- (void)selectView:(TCGoodSelectView *)goodSelectView didAddShoppingCartWithGoodDetail:(TCGoodDetail *)goodDetail Amount:(NSInteger)amount {
+    
+        [[TCBuluoApi api] createShoppingCartWithAmount:amount goodsId:goodDetail.ID result:^(BOOL result, NSError *error) {
+            if (result) {
+                [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
+            } else {
+                TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+                if ([error isEqual:sessionError]) {
+                    [MBProgressHUD showHUDWithMessage:@"请登录"];
+                }
+                [MBProgressHUD showHUDWithMessage:@"加入购物车失败"];
+            }
+        }];
+    
+}
+
+- (void)selectView:(TCGoodSelectView *)goodSelectView didChangeStandardButtonWithGoodDetail:(TCGoodDetail *)goodDetail {
+    [self reloadDetailViewWithTouchGoodDetail:goodDetail];
+}
+
 
 #pragma mark - UIScrollView
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -404,56 +435,12 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)touchCloseBtn {
-    [standardView endSelectStandard];
-}
-
-
-- (void)touchBuyNumberAddBtn:(UIButton *)btn {
-    int number = standardView.numberLab.text.intValue;
-    NSString *inventorStr = [[standardView.getInventoryLab.text componentsSeparatedByString:@":"][1] componentsSeparatedByString:@"件"][0];
-    
-    int inventorNumber = inventorStr.intValue;
-    if (number >= inventorNumber) {
-        
-    } else if (number == 9999) {
-        
-    }
-    else {
-        standardView.numberLab.text = [NSString stringWithFormat:@"%i", number+1];
-    }
-
-    
-}
-//
-- (void)touchBuyNumberSubBtn:(UIButton *)btn {
-    int number = standardView.numberLab.text.intValue;
-    if (number <= 1) {
-        
-    } else {
-        standardView.numberLab.text = [NSString stringWithFormat:@"%i", number-1];
-    }
-    
-}
-
-
-- (void)promptOutOfStock {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"无货" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        [standardView startSelectStandard];
-    }]];
-    [standardView endSelectStandard];
-    [self presentViewController:alertController animated:YES completion:nil];
-    
-}
-
 
 - (void)reloadDetailViewWithTouchGoodDetail:(TCGoodDetail *)goodDetail {
    
     mGoodDetail = goodDetail;
     [imageCollectionView reloadData];
 
-    [standardView setSalePriceAndInventoryWithSalePrice:goodDetail.salePrice AndInventory:goodDetail.repertory AndImgUrlStr:goodDetail.thumbnail];
 //    [goodTitleView setupTitleWithText:goodDetail.title];
     titleViewHeight = goodTitleView.height;
     [goodTitleView setupTitleWithText:goodDetail.title];
@@ -472,73 +459,6 @@
             UISegmentedControl *seg = mScrollView.subviews[i];
             textAndImageView = [self createURLInfoViewWithOrigin:CGPointMake(seg.x, seg.y + seg.height) AndURLStr:urlStr];
         }
-    }
-}
-
-- (void)touchStyleSelectBtn:(UIButton *)btn {
-    if (goodStandard.descriptions[@"secondary"] == NULL){
-        NSString *styleInfo = goodStandard.descriptions[@"primary"][@"types"][btn.tag];
-        TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[styleInfo]];
-        if (selectStandardGoodDetail != NULL) {
-            [self changeStyleButtonWithBtn:btn];
-            [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
-            [standardView setSelectedPrimaryStandardWithText:styleInfo];
-        }
-    }
-    else if ([standardView.selectedSecondLab.text isEqualToString:@""]) {
-        [self changeStyleButtonWithBtn:btn];
-        [standardView setSelectedPrimaryStandardWithText:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
-        [standardView setSeconedViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
-    }
-    else {
-        if (btn.tag != -1) {
-            NSString *styleInfo = goodStandard.descriptions[@"primary"][@"types"][btn.tag];
-            NSString *standardKey = [NSString stringWithFormat:@"%@^%@", styleInfo, standardView.selectedSecondLab.text];
-            TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
-            if (selectStandardGoodDetail != NULL) {
-                [self changeStyleButtonWithBtn:btn];
-                [standardView setSeconedViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"primary"][@"types"][btn.tag]];
-                [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
-                [standardView setSelectedPrimaryStandardWithText:styleInfo];
-            }
-        }
-    }
-    
-}
-
-
-
-- (void)touchSizeSelectBtn:(UIButton *)btn {
-    if (btn.tag < 0) {
-        return;
-    }
-    if (([standardView.selectedSecondLab.text isEqualToString:@""] && [standardView.selectedPrimaryLab.text isEqualToString:@""]) || (![standardView.selectedSecondLab.text isEqualToString:@""] && [standardView.selectedPrimaryLab.text isEqualToString:@""])) {
-        [self changeSizeButtonWithBtn:btn];
-        [standardView setSelectedSeconedStandardWithText:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
-        [standardView setPrimaryViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
-    } else if (![standardView.selectedPrimaryLab.text isEqualToString:@""] && [standardView.selectedSecondLab.text isEqualToString:@""]) {
-        [self changeSizeButtonWithBtn:btn];
-        [standardView setSelectedSeconedStandardWithText:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
-        [standardView setPrimaryViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
-        NSString *sizeInfo = goodStandard.descriptions[@"secondary"][@"types"][btn.tag];
-        NSString *standardKey = [NSString stringWithFormat:@"%@^%@", standardView.selectedPrimaryLab.text, sizeInfo];
-        TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
-        [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
-        
-    }
-    else {
-        if (btn.tag != -1) {
-            NSString *sizeInfo = goodStandard.descriptions[@"secondary"][@"types"][btn.tag];
-            NSString *standardKey = [NSString stringWithFormat:@"%@^%@", standardView.selectedPrimaryLab.text, sizeInfo];
-            TCGoodDetail *selectStandardGoodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:goodStandard.goodsIndexes[standardKey]];
-            if (selectStandardGoodDetail != NULL) {
-                [self changeSizeButtonWithBtn:btn];
-                [standardView setPrimaryViewWithStandard:goodStandard AndTitle:goodStandard.descriptions[@"secondary"][@"types"][btn.tag]];
-                [standardView setSelectedSeconedStandardWithText:sizeInfo];
-                [self reloadDetailViewWithTouchGoodDetail:selectStandardGoodDetail];
-            }
-        }
-       
     }
 }
 
@@ -587,42 +507,32 @@
 
 - (void)showStandardView:(TCGoodStandards *)result {
     goodStandard = result;
-    [standardView setStandardSelectViewWithStandard:goodStandard AndPrimaryAction:@selector(touchStyleSelectBtn:) AndSeconedAction:@selector(touchSizeSelectBtn:) AndTarget:self];
-    [standardView startSelectStandard];
-}
-
-
-- (void)touchAddShopCartBtn:(UIButton *)btn {
     
-    [[TCBuluoApi api] createShoppingCartWithAmount:[standardView.numberLab.text  integerValue] goodsId:mGoodDetail.ID result:^(BOOL result, NSError *error) {
-        if (result) {
-            [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
-        } else {
-            TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
-            if ([error isEqual:sessionError]) {
-                [MBProgressHUD showHUDWithMessage:@"请登录"];
-            }
-            [MBProgressHUD showHUDWithMessage:@"加入购物车失败"];
-        }
-        [standardView endSelectStandard];
-    }];
-
-}
-
-- (void)touchBuyBtn:(UIButton *)btn {
-
-    TCGoods *good = [self getListGoods];
-    TCOrderItem *orderItem = [[TCOrderItem alloc] init];
-    orderItem.amount = standardView.numberLab.text.integerValue;
-    orderItem.goods = good;
-    TCUserOrderDetailViewController *confirmOrderViewController = [[TCUserOrderDetailViewController alloc] initWithItemList:@[ orderItem ]];
-    confirmOrderViewController.title = @"确认下单";
-    [self.navigationController pushViewController:confirmOrderViewController animated:YES];
-    
-    [standardView endSelectStandard];
+    if (!goodSelectView.goodStandard) {
+        [goodSelectView setupGoodStandard:goodStandard];
+        
+    }
+    [goodSelectView show];
 }
 
 
+//- (void)touchAddShopCartBtn:(UIButton *)btn {
+//    
+//    [[TCBuluoApi api] createShoppingCartWithAmount:[standardView.numberLab.text  integerValue] goodsId:mGoodDetail.ID result:^(BOOL result, NSError *error) {
+//        if (result) {
+//            [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
+//        } else {
+//            TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+//            if ([error isEqual:sessionError]) {
+//                [MBProgressHUD showHUDWithMessage:@"请登录"];
+//            }
+//            [MBProgressHUD showHUDWithMessage:@"加入购物车失败"];
+//        }
+//        [standardView endSelectStandard];
+//    }];
+//
+//}
+//
 
 
 - (void)touchCollectionBtn:(id)sender {
@@ -632,59 +542,6 @@
 }
 
 #pragma mark - other
-- (TCGoods *)getListGoods {
-    TCGoods *good = [[TCGoods alloc] init];
-    good.ID = mGoodDetail.ID;
-    good.storeId = mGoodDetail.storeId;
-    good.name = mGoodDetail.name;
-    good.brand = mGoodDetail.brand;
-    good.mainPicture = mGoodDetail.mainPicture;
-    good.originPrice = mGoodDetail.originPrice;
-    good.salePrice = mGoodDetail.salePrice;
-    good.saleQuantity = mGoodDetail.saleQuantity;
-    good.standardSnapshot = mGoodDetail.standardSnapshot;
-    return good;
-}
-
-- (void)changeStyleButtonWithBtn:(UIButton *)btn {
-    btn.layer.borderColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1].CGColor;
-    [btn setTitleColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] forState:UIControlStateNormal];
-    
-    NSInteger tag = btn.tag;
-    NSArray *subviews = btn.superview.subviews;
-    for (int i = 0; i < subviews.count; i++) {
-        if (i != tag && [subviews[i] isKindOfClass:[UIButton class]]) {
-            UIButton *btn = subviews[i];
-            if (btn.tag != -1) {
-                btn.layer.borderColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1].CGColor;
-                [btn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
-            }
-        }
-    }
-
-}
-
-- (void)changeSizeButtonWithBtn:(UIButton *)btn {
-
-    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    btn.backgroundColor = [UIColor colorWithRed:82/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    
-    NSInteger tag = btn.tag;
-    NSArray *subviews = btn.superview.subviews;
-    for (int i = 0; i < subviews.count; i++) {
-        if (i != tag && [subviews[i] isKindOfClass:[UIButton class]]) {
-            UIButton *btn = subviews[i];
-            UIColor *color = TCRGBColor(195, 195, 195);
-            if (![[btn titleColorForState:UIControlStateNormal] isEqual:color]) {
-                if (btn.tag != -1) {
-                    [btn setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
-                    btn.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
-                }
-            }
-        }
-    }
-    
-}
 
 - (void)changeViewCoordinates {
     NSArray *views = mScrollView.subviews;
