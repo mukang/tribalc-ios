@@ -19,8 +19,8 @@
         
         self.backgroundColor = [UIColor whiteColor];
         
-        _goodImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height * (1 - 0.26))];
-        
+        _goodImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, TCRealValue(428 / 2))];
+        _goodImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:_goodImageView];
         
         _typeAndNameLab = [self initialWithFrame:CGRectMake(_goodImageView.frame.origin.x + TCRealValue(8), _goodImageView.frame.origin.y + _goodImageView.frame.size.height + TCRealValue(11), _goodImageView.frame.size.width - TCRealValue(16), TCRealValue(14))];

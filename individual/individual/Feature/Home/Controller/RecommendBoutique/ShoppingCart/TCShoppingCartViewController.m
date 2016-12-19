@@ -53,23 +53,29 @@
 #pragma mark - Init Data
 
 - (void)initShoppingCartData {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchShoppingCartWrapperWithSortSkip:nil result:^(TCShoppingCartWrapper *wrapper, NSError *error) {
-        shoppingCartWrapper = wrapper;
-        [self initialTableView];
-        [self setupBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
-        [self setupNavigationRightBarButton];
+        if (wrapper) {
+            [MBProgressHUD hideHUD:YES];
+            shoppingCartWrapper = wrapper;
+            [self initialTableView];
+            [self setupBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
+            [self setupNavigationRightBarButton];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"获取购物车列表失败"];
+        }
     }];
 }
 
 #pragma mark - Setup NavigationBar
 
 - (void)initialNavigationBar {
-    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"购物车"];
-    
-    UIButton *backBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    [backBtn addTarget:self action:@selector(touchBackBtn:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = backItem;
+    self.title = @"购物车";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(touchBackBtn:)];
+
     
 }
 
@@ -105,8 +111,8 @@
 
 - (UIView *)getBottomViewWithText:(NSString *)text AndAction:(SEL)action AndFrame:(CGRect)frame{
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(0.5))];
-    [view addSubview:topLineView];
+//    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(0.5))];
+//    [view addSubview:topLineView];
     
     selectAllBtn = [TCComponent createImageBtnWithFrame:CGRectMake(0, 0, TCRealValue(56), view.height) AndImageName:@"car_unselected"];
     [selectAllBtn addTarget:self action:@selector(touchSelectAllBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -141,11 +147,16 @@
 
 - (void)setupBottomViewWithFrame:(CGRect)frame {
     [bottomView removeFromSuperview];
+    
     bottomView = [self getBottomViewWithText:@"结算" AndAction:@selector(touchPayButton) AndFrame:frame];
     UILabel *totalLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(99), bottomView.height / 2 - TCRealValue(14) / 2 - TCRealValue(2), TCRealValue(45), TCRealValue(16)) AndFontSize:TCRealValue(16) AndTitle:@"合计 :"];
     totalPriceLab = [TCComponent createLabelWithFrame:CGRectMake(totalLab.x + totalLab.width, 0, self.view.width - TCRealValue(111) - totalLab.x - totalLab.width, bottomView.height) AndFontSize:TCRealValue(14) AndTitle:@"￥0" AndTextColor:[UIColor redColor]];
     [bottomView addSubview:totalLab];
     [bottomView addSubview:totalPriceLab];
+    
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, bottomView.y, bottomView.width, 0.5)];
+    [self.view addSubview:topLineView];
+    
     [self.view addSubview:bottomView];
 }
 

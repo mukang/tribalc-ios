@@ -10,6 +10,7 @@
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
 #import "TCReserveUserBaseInfoView.h"
+#import "TCUserReserveDetailViewController.h"
 #import "TCBuluoApi.h"
 
 @interface TCReserveOnlineViewController () {
@@ -64,12 +65,12 @@
 }
 
 - (void)initNavigationBar {
-    UIButton *backBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    [backBtn addTarget:self  action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = backItem;
     
-    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:@"在线订座"];
+    self.title = @"在线订座";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(touchBackBtn)];
 }
 
 
@@ -250,21 +251,22 @@
 }
 
 - (NSString *)getTimeStringWithSelectDateStr:(NSString *)dateStr AndTimeStr:(NSString *)timeStr{
-    NSDate *date = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM"];
-    NSString *monthStr = [dateFormatter stringFromDate:date];
+//    NSDate *date = [NSDate date];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"MM"];
+//    NSString *monthStr = [dateFormatter stringFromDate:date];
     
-    NSString *selectMonth = [dateStr componentsSeparatedByString:@"-"][0];
-    [dateFormatter setDateFormat:@"YYYY"];
-    NSString *yearStr;
-    if (selectMonth.integerValue >= monthStr.integerValue) {
-        yearStr = [dateFormatter stringFromDate:date];
-    } else {
-        yearStr = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * 30 * 12]];
-    }
+//    NSString *selectMonth = [dateStr componentsSeparatedByString:@"-"][0];
+//    [dateFormatter setDateFormat:@"YYYY"];
+//    NSString *yearStr;
+//    if (selectMonth.integerValue >= monthStr.integerValue) {
+//        yearStr = [dateFormatter stringFromDate:date];
+//    } else {
+//        yearStr = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * 30 * 12]];
+//    }
     
-    return [NSString stringWithFormat:@"%@-%@ %@", yearStr, [dateStr componentsSeparatedByString:@" "][0], timeStr];
+    
+    return [NSString stringWithFormat:@"%@ %@ %@", [dateStr componentsSeparatedByString:@" "][0],[dateStr componentsSeparatedByString:@" "][1], timeStr];
 }
 
 - (NSString *)getTimeString:(NSDate *)date {
@@ -297,9 +299,22 @@
     [dateFormatter setDateFormat:@"MM-dd"];
     
     return [NSString stringWithFormat:@"%@ %@", [dateFormatter stringFromDate:date], [self getWeekStr:week]];
-    
-    
 }
+
+- (NSString *)getChinaTimeAndWeek:(NSDate *)date {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    components = [calendar components:unitFlags fromDate:date];
+    NSInteger week = [components weekday];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM月dd日"];
+    
+    return [NSString stringWithFormat:@"%@ %@", [dateFormatter stringFromDate:date], [self getWeekStr:week]];
+
+}
+
+
 
 - (void)showSelectTimePickerView {
     [self recoveryKeyboard];
@@ -417,7 +432,7 @@
 - (void)touchTimeConfirmSelectBtn:(UIButton *)button {
     NSInteger dateRow = [timePickerView selectedRowInComponent:0];
     NSInteger timeRow = [timePickerView selectedRowInComponent:1];
-    NSString *dateString = [self getTimeAndWeek:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * dateRow]];
+    NSString *dateString = [self getChinaTimeAndWeek:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60 * dateRow]];
     NSString *timeString = [self getTimeString:[NSDate dateWithTimeIntervalSinceNow:30 * 60 * timeRow]];
     timeLab.text = [self getTimeStringWithSelectDateStr:dateString AndTimeStr:timeString];
     [self cancelShowSelectView];
@@ -447,10 +462,12 @@
             vcodeStr = nil;
         }
         
-        [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(BOOL result, NSError *error) {
+        [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(TCReservationDetail *result, NSError *error) {
             if (result) {
                 [MBProgressHUD showHUDWithMessage:@"预订成功"];
-                [self.navigationController popToRootViewControllerAnimated:YES];
+                TCUserReserveDetailViewController *userReserveDetailViewController = [[TCUserReserveDetailViewController alloc] initWithReservationId:result.ID];
+                [self.navigationController pushViewController:userReserveDetailViewController animated:YES];
+                
             } else {
                 [MBProgressHUD showHUDWithMessage:@"预订失败"];
             }
@@ -466,9 +483,14 @@
 }
 
 - (NSInteger)transToTimeSp:(NSString *)time {
+//    NSArray *timeArr = [time componentsSeparatedByString:@" "];
+//    NSString *monthStr = timeArr[0];
+//    timeArr = [time componentsSeparatedByString:@":"];
+//    
+//    time = [NSString stringWithFormat:@"%@ %@", monthStr, timeStr];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
-    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm"];
+    [dateFormat setDateFormat:@"MM月dd日 HH:mm"];
     NSDate *date = [dateFormat dateFromString:time];
     NSInteger timeSp = [date timeIntervalSince1970];
     return timeSp * 1000;

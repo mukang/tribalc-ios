@@ -187,12 +187,10 @@
 }
 
 - (void)initNavigationBar {
-    UIButton *backbtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backbtn];
-    [backbtn addTarget:self action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = backItem;
-    
-    self.navigationItem.titleView = [TCGetNavigationItem getTitleItemWithText:self.title];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(touchBackBtn)];
 }
 
 - (void)initBottomViewWithStatus:(TCOrderStatus)status {
@@ -534,7 +532,7 @@
 - (void)touchOrderPayBtn:(UIButton *)btn {
     [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
         [self showHUDMessageWithResult:result AndTitle:@"付款"];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self touchBackBtn];
     }];
 }
 

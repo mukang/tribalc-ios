@@ -46,7 +46,7 @@
     
     NSString *priceIntegerStr = [NSString stringWithFormat:@"￥%i", (int)price];
     _priceIntegerLab.text = priceIntegerStr;
-    
+    _priceIntegerLab.origin = CGPointMake(TCRealValue(20), _titleLab.y + _titleLab.height + TCRealValue(16));
     [_priceDecimalLab setX:_priceIntegerLab.x + _priceIntegerLab.width];
     
     if ([accuratePriceStr rangeOfString:@"."].location != NSNotFound) {
@@ -55,9 +55,10 @@
     } else {
         _priceDecimalLab.text = [NSString stringWithFormat:@""];
     }
-    
+    _priceDecimalLab.y = _priceIntegerLab.y + TCRealValue(17) - TCRealValue(12);
     [_priceDecimalLab sizeToFit];
-
+    
+    [self setHeight:_priceIntegerLab.y + _priceIntegerLab.height + TCRealValue(16)];
 }
 
 - (void)setOriginPriceLabWithOriginPrice:(float)originPrice {
@@ -67,6 +68,7 @@
     
     _originPriceLab.attributedText = attrStr;
     _originPriceLab.x = _priceDecimalLab.x + _priceDecimalLab.width + TCRealValue(12);
+    _originPriceLab.y = _priceDecimalLab.y;
     [_originPriceLab sizeToFit];
 }
 
@@ -131,28 +133,18 @@
 - (void)setupTitleWithText:(NSString *)text {
     CGSize labelSize = {0, 0};
     labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(15)]}];
-
     _titleLab.frame = CGRectMake(TCRealValue(20), TCRealValue(15), self.size.width - TCRealValue(40), TCRealValue(16));
     if (labelSize.width > _titleLab.width) {
         [_titleLab setHeight:2 * _titleLab.height + TCRealValue(13)];
     }
-    _titleLab.text = text;
-    _titleLab.numberOfLines = TCRealValue(2);
-    
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-    style.lineSpacing = TCRealValue(3);
-    NSRange range = NSMakeRange(0, text.length);
-    text = text ? text : @"";
-    NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];
-    [textAttr addAttribute:NSParagraphStyleAttributeName value:style range:range];
-    _titleLab.attributedText = textAttr;
+    _titleLab.numberOfLines = 2;
+    _titleLab.attributedText = [self getTitleLabelAttributedStringWithText:text];
     _titleLab.lineBreakMode = NSLineBreakByCharWrapping;
-
+    
 
 }
 
 - (UILabel *)createTitleLabelWithText:(NSString *)text WithFrame:(CGRect)frame{
-    
     
     CGSize labelSize = {0, 0};
     labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(15)]}];
@@ -162,20 +154,24 @@
         [label setHeight:2 * label.height + TCRealValue(8)];
     }
     label.text = text;
-    label.numberOfLines = TCRealValue(2);
+    label.numberOfLines = 2;
     
+    label.attributedText = [self getTitleLabelAttributedStringWithText:text];
+    label.lineBreakMode = NSLineBreakByCharWrapping;
+    
+    return label;
+}
+
+- (NSMutableAttributedString *)getTitleLabelAttributedStringWithText:(NSString *)text {
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     style.lineSpacing = TCRealValue(3);
     NSRange range = NSMakeRange(0, text.length);
     text = text ? text : @"";
     NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];
     [textAttr addAttribute:NSParagraphStyleAttributeName value:style range:range];
-    label.attributedText = textAttr;
-    
-    
-    label.lineBreakMode = NSLineBreakByCharWrapping;
-    
-    return label;
+
+
+    return textAttr;
 }
 
 

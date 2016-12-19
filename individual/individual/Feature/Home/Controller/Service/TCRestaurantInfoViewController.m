@@ -107,10 +107,10 @@
 }
 
 - (void)initialNavLeftBarWithImgName:(NSString *)leftName AndRightBarImgName:(NSString *)rightName {
-    UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:leftName];
+    UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 0, 30, 17) AndImageName:leftName];
     [leftBtn addTarget:self action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
-    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:rightName];
+    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(20, 0, 20, 17) AndImageName:rightName];
     [rightBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
 
@@ -333,7 +333,7 @@
     NSArray *promptArr = serviceDetail.detailStore.tags;
 //    NSArray *promptImageArr = serviceDetail.pictures;
     for (int i = 0; i < promptArr.count; i++) {
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(27) + TCRealValue(35), 0, TCRealValue(27), TCRealValue(27))];
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(24) + TCRealValue(35), 0, TCRealValue(24), TCRealValue(24))];
         if (i == 0) {
             [imgView setX:0];
         }
@@ -350,7 +350,7 @@
         [view addSubview:imgView];
         [view addSubview:titleLab];
     }
-    [view setSize:CGSizeMake(TCRealValue(27) * promptArr.count + (promptArr.count - 1) * TCRealValue(35), TCRealValue(27 + 5 + 13))];
+    [view setSize:CGSizeMake(TCRealValue(24) * promptArr.count + (promptArr.count - 1) * TCRealValue(35), TCRealValue(24 + 5 + 13))];
     
     return view;
 }
@@ -441,7 +441,7 @@
 - (void)touchCollectionBtn:(UIButton *)button {
     if (mScrollView.contentOffset.y < 70) {
         isCollection = !isCollection;
-        UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 20, 17) AndImageName:[self getCollectionImageName]];
+        UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(20, 10, 20, 17) AndImageName:[self getCollectionImageName]];
         [rightBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     }
