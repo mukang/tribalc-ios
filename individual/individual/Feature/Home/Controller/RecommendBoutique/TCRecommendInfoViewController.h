@@ -9,17 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
-#import "TCStandardView.h"
 #import "TCGoods.h"
 #import "UIImageView+WebCache.h"
 #import "TCBuluoApi.h"
 #import "TCModelImport.h"
+#import "TCGoodSelectView.h"
 #import "TCClientConfig.h"
 #import "TCGoodTitleView.h"
 #import "NSObject+TCModel.h"
 
 
-@interface TCRecommendInfoViewController : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, SDWebImageManagerDelegate>
+@interface TCRecommendInfoViewController : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, SDWebImageManagerDelegate, TCGoodSelectViewDelegate>
 
 
 - (instancetype)initWithGoodId:(NSString *)goodID;

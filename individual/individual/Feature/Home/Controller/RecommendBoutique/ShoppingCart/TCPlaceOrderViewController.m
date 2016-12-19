@@ -371,11 +371,10 @@
     } else if ([selectPayStr isEqualToString:@"支付宝"]) {
         [MBProgressHUD showHUDWithMessage:@"请选择余额支付"];
     } else {
-       
         [self createOrder];
     }
-
 }
+
 
 #pragma mark - Action
 - (void)touchBackBtn {

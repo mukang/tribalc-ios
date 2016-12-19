@@ -10,6 +10,7 @@
 #import "TCHomeCommodityTableViewCell.h"
 #import "TCRepairsViewController.h"
 #import "TCGetNavigationItem.h"
+#import "TCGoodSelectView.h"
 
 
 @interface TCHomeViewController () {

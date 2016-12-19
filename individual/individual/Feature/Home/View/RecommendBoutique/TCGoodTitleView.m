@@ -132,7 +132,7 @@
 
 - (void)setupTitleWithText:(NSString *)text {
     CGSize labelSize = {0, 0};
-    labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(15)]}];
+    labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(17)]}];
     _titleLab.frame = CGRectMake(TCRealValue(20), TCRealValue(15), self.size.width - TCRealValue(40), TCRealValue(16));
     if (labelSize.width > _titleLab.width) {
         [_titleLab setHeight:2 * _titleLab.height + TCRealValue(13)];
@@ -147,9 +147,9 @@
 - (UILabel *)createTitleLabelWithText:(NSString *)text WithFrame:(CGRect)frame{
     
     CGSize labelSize = {0, 0};
-    labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(15)]}];
+    labelSize = [text sizeWithAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(17)]}];
     
-    UILabel *label =  [TCComponent createLabelWithFrame:frame AndFontSize:TCRealValue(15) AndTitle:text AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
+    UILabel *label =  [TCComponent createLabelWithFrame:frame AndFontSize:TCRealValue(17) AndTitle:text AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
     if (labelSize.width > label.width) {
         [label setHeight:2 * label.height + TCRealValue(8)];
     }
@@ -185,13 +185,5 @@
     return label;
 }
 
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

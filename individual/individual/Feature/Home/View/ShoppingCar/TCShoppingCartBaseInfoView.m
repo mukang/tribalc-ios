@@ -11,7 +11,7 @@
 #import "TCComputeView.h"
 #import "TCSelectStandardView.h"
 #import "TCBuluoApi.h"
-#import "TCStandardView.h"
+
 
 @implementation TCShoppingCartBaseInfoView {
     TCComputeView *computeView;
