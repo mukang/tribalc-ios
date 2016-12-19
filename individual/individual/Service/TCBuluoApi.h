@@ -100,6 +100,14 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 - (void)changeUserAvatar:(NSString *)avatar result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
+ 修改用户背景图
+
+ @param cover 用户背景图地址
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserCover:(NSString *)cover result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
  修改用户性别
 
  @param gender 性别枚举值（只能传入TCUserGenderMale和TCUserGenderFemale）

@@ -145,7 +145,7 @@ TCPhotoPickerDelegate>
         self.headerView.loginButton.hidden = NO;
         self.headerView.nickBgView.hidden = YES;
         [self.headerView.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
-//        [self.headerView.bgImageView setImage:[UIImage imageNamed:@""]];
+        [self.headerView.bgImageView setImage:[UIImage imageNamed:@"profile_default_cover"]];
     } else {
         self.headerView.loginButton.hidden = YES;
         self.headerView.nickBgView.hidden = NO;
@@ -153,12 +153,17 @@ TCPhotoPickerDelegate>
         self.headerView.nickLabel.text = userInfo.nickname;
         if (userInfo.picture) {
             NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:userInfo.picture];
-            [self.headerView.avatarImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
+            [self.headerView.avatarImageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
         } else {
             [self.headerView.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
         }
         
-        // TODO: 背景图片
+        if (userInfo.cover) {
+            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:userInfo.cover];
+            [self.headerView.bgImageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
+        } else {
+            [self.headerView.bgImageView setImage:[UIImage imageNamed:@"profile_default_cover"]];
+        }
     }
 }
 
@@ -391,13 +396,28 @@ TCPhotoPickerDelegate>
 #pragma mark - TCPhotoPickerDelegate
 
 - (void)photoPicker:(TCPhotoPicker *)photoPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    TCLog(@"do something...");
     [photoPicker dismissPhotoPicker];
     self.photoPicker = nil;
+    
+    UIImage *coverImage;
+    if (info[UIImagePickerControllerEditedImage]) {
+        coverImage = info[UIImagePickerControllerEditedImage];
+    } else {
+        coverImage = info[UIImagePickerControllerOriginalImage];
+    }
+    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] uploadImage:coverImage progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
+        if (success) {
+            [weakSelf changeUserCoverWithName:uploadInfo.objectKey];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"保存失败，%@", reason]];
+        }
+    }];
 }
 
 - (void)photoPickerDidCancel:(TCPhotoPicker *)photoPicker {
-    TCLog(@"photoPickerDidCancel");
     [photoPicker dismissPhotoPicker];
     self.photoPicker = nil;
 }
@@ -460,6 +480,19 @@ TCPhotoPickerDelegate>
 }
 
 #pragma mark - Actions
+
+- (void)changeUserCoverWithName:(NSString *)name {
+    NSString *imagePath = [TCImageURLSynthesizer synthesizeImagePathWithName:name source:kTCImageSourceOSS];
+    [[TCBuluoApi api] changeUserCover:imagePath result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf updateHeaderView];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"保存失败，%@", reason]];
+        }
+    }];
+}
 
 - (void)handleClickQRCodeButton:(UIBarButtonItem *)sender {
     TCLog(@"点击了扫码按钮");
