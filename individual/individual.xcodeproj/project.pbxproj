@@ -656,6 +656,7 @@
 		7AEB4D051E03F02F00F83A7C /* TCBioEditBirthdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D041E03F02F00F83A7C /* TCBioEditBirthdateViewController.m */; };
 		7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D071E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m */; };
 		7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D0A1E0413CD00F83A7C /* TCBioEditLocationViewController.m */; };
+		7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */; };
 		D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */; };
 /* End PBXBuildFile section */
 
@@ -2924,6 +2925,8 @@
 		7AEB4D071E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditBirthdateViewCell.m; sourceTree = "<group>"; };
 		7AEB4D091E0413CD00F83A7C /* TCBioEditLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditLocationViewController.h; sourceTree = "<group>"; };
 		7AEB4D0A1E0413CD00F83A7C /* TCBioEditLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditLocationViewController.m; sourceTree = "<group>"; };
+		7AF972D01E064BC9009D26A3 /* TCCommunityReservationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityReservationInfo.h; sourceTree = "<group>"; };
+		7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityReservationInfo.m; sourceTree = "<group>"; };
 		CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-individual.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -7270,6 +7273,8 @@
 				7A381BC31DED5DC4008BDBF7 /* TCCommunityDetailInfo.m */,
 				7A0EA7321E00F0F700823505 /* TCCommunityListInCity.h */,
 				7A0EA7331E00F0F700823505 /* TCCommunityListInCity.m */,
+				7AF972D01E064BC9009D26A3 /* TCCommunityReservationInfo.h */,
+				7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -8336,6 +8341,7 @@
 				09222E2A1DEE98550064C0DF /* TCRestaurantFilterView.m in Sources */,
 				7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */,
 				553DC9131DFFE2300018783E /* parser-impl.cc in Sources */,
+				7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */,
 				092C69801DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
 				7AAF23821DCB5C04002B81A5 /* TCUserSession.m in Sources */,

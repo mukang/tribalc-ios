@@ -260,6 +260,14 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 社区参观预约
+
+ @param communityReservationInfo TCCommunityReservationInfo对象
+ @param resultBlock 结果回调，success为NO时表示预约失败，失败原因见error的code和userInfo
+ */
+- (void)reserveCommunity:(TCCommunityReservationInfo *)communityReservationInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
+
 #pragma mark - 验证码资源
 
 /**

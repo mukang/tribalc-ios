@@ -9,8 +9,15 @@
 #import "TCCommunityVisitViewController.h"
 
 #import "TCCommonInputViewCell.h"
+#import "TCCommonButton.h"
 
 #import "TCCommunityDetailInfo.h"
+#import "TCCommunityReservationInfo.h"
+
+#import "UIImage+Category.h"
+#import "TCBuluoApi.h"
+
+#import <Masonry.h>
 
 typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeCommunity = 0,
@@ -25,16 +32,20 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 @interface TCCommunityVisitViewController () <UITableViewDataSource, UITableViewDelegate, TCCommonInputViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) UIButton *commitButton;
 
 @property (copy, nonatomic) NSArray *titleArray;
 @property (copy, nonatomic) NSArray *placeholderArray;
+
+@property (strong, nonatomic) NSIndexPath *currentIndexPath;
+@property (strong, nonatomic) TCCommunityReservationInfo *reservationInfo;
 
 @end
 
 @implementation TCCommunityVisitViewController {
     __weak TCCommunityVisitViewController *weakSelf;
 }
+
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,8 +57,27 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     [self setupSubviews];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self registerNotifications];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self removeNotifications];
+}
+
+- (void)dealloc {
+    self.tableView.dataSource = nil;
+    self.tableView.delegate = nil;
+}
+
+#pragma mark - Private Method
+
 - (void)setupNavBar {
-    self.navigationItem.title = @"社区详情";
+    self.navigationItem.title = @"我要参观";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -57,22 +87,15 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 - (void)setupSubviews {
     self.tableView.tableFooterView = [UIView new];
     
-    UIButton *commitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    NSAttributedString *title = [[NSAttributedString alloc] initWithString:@"立即预约"
-                                                                attributes:@{
-                                                                             NSFontAttributeName: [UIFont systemFontOfSize:16],
-                                                                             NSForegroundColorAttributeName: [UIColor whiteColor]
-                                                                             }];
-    [commitButton setAttributedTitle:title forState:UIControlStateNormal];
-    [commitButton setBackgroundColor:TCRGBColor(81, 199, 209)];
-    [commitButton addTarget:self action:@selector(handleClickCommitButton:) forControlEvents:UIControlEventTouchUpInside];
-    commitButton.layer.cornerRadius = 2.5;
-    commitButton.layer.masksToBounds = YES;
-    commitButton.size = CGSizeMake(TCRealValue(315), 40);
-    commitButton.centerX = self.tableView.width * 0.5;
-    commitButton.y = self.tableView.height - commitButton.height - TCRealValue(70) - 64;
-    [self.tableView addSubview:commitButton];
-    self.commitButton = commitButton;
+    TCCommonButton *commitButton = [TCCommonButton buttonWithTitle:@"立即预约" target:self action:@selector(handleClickCommitButton:)];
+    [self.view addSubview:commitButton];
+    
+    [commitButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.view.mas_left).with.offset(30);
+        make.right.equalTo(weakSelf.view.mas_right).with.offset(-30);
+        make.height.mas_equalTo(40);
+        make.bottom.equalTo(weakSelf.view.mas_bottom).with.offset(-45);
+    }];
     
     UINib *nib = [UINib nibWithNibName:@"TCCommonInputViewCell" bundle:[NSBundle mainBundle]];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"TCCommonInputViewCell"];
@@ -123,6 +146,11 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 
 #pragma mark - TCCommonInputViewCellDelegate
 
+- (BOOL)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldShouldBeginEditing:(UITextField *)textField {
+    self.currentIndexPath = [self.tableView indexPathForCell:cell];
+    return YES;
+}
+
 - (BOOL)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldShouldReturn:(UITextField *)textField {
     if ([textField isFirstResponder]) {
         [textField resignFirstResponder];
@@ -138,6 +166,17 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     
 }
 
+#pragma mark - Notifications
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillShowNotification:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillHideNotification:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
@@ -146,6 +185,26 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 
 - (void)handleClickCommitButton:(UIButton *)sender {
     
+}
+
+- (void)handleKeyboardWillShowNotification:(NSNotification *)notification {
+    
+    NSDictionary *info = notification.userInfo;
+    
+    CGFloat height = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+    CGFloat duration = [info[UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, height, 0);
+    
+    [UIView animateWithDuration:duration animations:^{
+        [weakSelf.tableView scrollToRowAtIndexPath:weakSelf.currentIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }];
+}
+
+- (void)handleKeyboardWillHideNotification:(NSNotification *)notification {
+    self.tableView.contentInset = UIEdgeInsetsZero;
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
 #pragma mark - Override Methods
@@ -162,6 +221,14 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
         _placeholderArray = @[@"", @"请选择预约日期", @"请输入公司名称", @"请输入预约人姓名", @"请输入手机号码", @"请选择参观人数", @"请输入备注说明"];
     }
     return _placeholderArray;
+}
+
+- (TCCommunityReservationInfo *)reservationInfo {
+    if (_reservationInfo == nil) {
+        _reservationInfo = [[TCCommunityReservationInfo alloc] init];
+        _reservationInfo.communityId = self.communityDetailInfo.ID;
+    }
+    return _reservationInfo;
 }
 
 - (void)didReceiveMemoryWarning {
