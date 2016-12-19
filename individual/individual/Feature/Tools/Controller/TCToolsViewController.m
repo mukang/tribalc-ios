@@ -89,6 +89,7 @@
     UILabel *openLabel = [[UILabel alloc] initWithFrame:CGRectMake(openDoor.frame.origin.x, CGRectGetMaxY(openDoor.frame), openDoor.frame.size.width, 30)];
     openLabel.text = @"手机开门";
     openLabel.textColor = [UIColor whiteColor];
+    openLabel.textAlignment = NSTextAlignmentCenter;
     [downImageView addSubview:openLabel];
     
     UIView *middleView = [[UIView alloc] initWithFrame:CGRectMake(screenW/2, 20, 0.5, 185.0*scale)];
@@ -103,6 +104,7 @@
     UILabel *propertyLabel = [[UILabel alloc] initWithFrame:CGRectMake(property.frame.origin.x, CGRectGetMaxY(property.frame), property.frame.size.width, 30)];
     propertyLabel.text = @"物业报修";
     propertyLabel.textColor = [UIColor whiteColor];
+    propertyLabel.textAlignment = NSTextAlignmentCenter;
     [downImageView addSubview:propertyLabel];
     
     UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(propertyTap)];
@@ -111,9 +113,12 @@
 
 - (void)propertyTap {
     if ([self checkUserNeedLogin]) return;
-    TCPropertyManageListController *propertyList = [[TCPropertyManageListController alloc] init];
-    propertyList.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:propertyList animated:YES];
+    TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+//    TCPropertyManageListController *propertyList = [[TCPropertyManageListController alloc] init];
+//    propertyList.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:propertyList animated:YES];
 }
 
 - (BOOL)checkUserNeedLogin {

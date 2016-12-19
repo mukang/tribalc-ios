@@ -11,7 +11,7 @@
 #import "TCGetNavigationItem.h"
 #import "TCPropertyManageListController.h"
 #import "TCLoginViewController.h"
-
+#import "TCRepairsViewController.h"
 
 @interface TCHomeViewController () {
     NSDictionary *homeInfoDic;
@@ -447,9 +447,9 @@
 - (void)touchEstateRepair:(UIButton *)button {
     NSLog(@"点击物业报修");
     if ([self checkUserNeedLogin]) return;
-    TCPropertyManageListController *propertyListVc = [[TCPropertyManageListController alloc] init];
-    propertyListVc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:propertyListVc animated:YES];
+    TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 
 }
 
