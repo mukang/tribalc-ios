@@ -417,4 +417,16 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)fetchCompanyList:(NSString *)communityID result:(void (^)(NSArray *companyList, NSError *error))resultBlock;
 
+#pragma mark - 物业报修
+
+/**
+ 获取物业报修列表
+ 
+ @param status 报修订单状态，传nil表示获取全部类型的订单
+ @param count  获取数量
+ @param sortSkip 默认查询止步的时间和跳过条数，以逗号分隔，如“1478513563773,3”表示查询早于时间1478513563773并跳过后3条记录，首次获取数据和下拉刷新数据时该参数传nil，上拉获取更多数据时该参数传上一次从服务器获取到的TCPropertyManageWrapper对象中属性nextSkip的值
+ @param resultBlock 结果回调，propertyManageWrapper为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchPropertyWrapper:(NSString *)status count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCPropertyManageWrapper *propertyManageWrapper, NSError *error))resultBlock;
+
 @end
