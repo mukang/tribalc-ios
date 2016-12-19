@@ -13,6 +13,8 @@
             <connections>
                 <outlet property="applyPersonNameLabel" destination="8FC-GZ-FJM" id="kwX-Sj-NWi"/>
                 <outlet property="appointTimeLabel" destination="nXU-4X-Kqc" id="a0E-d5-o6k"/>
+                <outlet property="btnBottomConstraint" destination="zGp-YA-Ut6" id="AFH-iE-yjT"/>
+                <outlet property="btnHeightConstraint" destination="qtT-XT-z1h" id="XCN-z8-wfq"/>
                 <outlet property="communityNameLabel" destination="63A-Pw-A2k" id="vzK-io-wkf"/>
                 <outlet property="companyNameLabel" destination="dNQ-r6-ffD" id="awI-U6-mKF"/>
                 <outlet property="doorTimeLabel" destination="mNl-oD-Fgd" id="k1P-Ut-Rty"/>

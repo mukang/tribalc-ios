@@ -456,18 +456,15 @@
 }
 
 - (void)touchEstateRepair:(UIButton *)button {
-<<<<<<< HEAD
     NSLog(@"点击物业报修");
     if ([self checkUserNeedLogin]) return;
     TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 
-=======
-    TCRepairsViewController *repairsViewController = [[TCRepairsViewController alloc] init];
-    repairsViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:repairsViewController animated:YES];
->>>>>>> b4607a4f578a0571b0d2d174be37a7b1ef3add8f
+//    TCRepairsViewController *repairsViewController = [[TCRepairsViewController alloc] init];
+//    repairsViewController.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:repairsViewController animated:YES];
 }
 
 
