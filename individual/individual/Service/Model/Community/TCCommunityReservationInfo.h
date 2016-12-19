@@ -21,7 +21,7 @@
 /** 预约人电话 */
 @property (copy, nonatomic) NSString *phone;
 /** 参观人数 */
-@property (copy, nonatomic) NSString *reservationPersonNum;
+@property (nonatomic) NSInteger reservationPersonNum;
 /** 备注 */
 @property (copy, nonatomic) NSString *note;
 

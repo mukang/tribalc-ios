@@ -10,6 +10,7 @@
 
 #import "TCCommonInputViewCell.h"
 #import "TCCommonButton.h"
+#import "TCDatePickerView.h"
 
 #import "TCCommunityDetailInfo.h"
 #import "TCCommunityReservationInfo.h"
@@ -29,7 +30,12 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeNotes
 };
 
-@interface TCCommunityVisitViewController () <UITableViewDataSource, UITableViewDelegate, TCCommonInputViewCellDelegate>
+@interface TCCommunityVisitViewController ()
+<UITableViewDataSource,
+UITableViewDelegate,
+TCCommonInputViewCellDelegate,
+UIScrollViewDelegate,
+TCDatePickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -38,6 +44,8 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 
 @property (strong, nonatomic) NSIndexPath *currentIndexPath;
 @property (strong, nonatomic) TCCommunityReservationInfo *reservationInfo;
+
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -124,11 +132,45 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
             cell.inputEnabled = NO;
             break;
         case TCInputCellTypeDate:
-        case TCInputCellTypeCount:
+            if (self.reservationInfo.reservationDate) {
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.reservationInfo.reservationDate / 1000];
+                cell.content = [self.dateFormatter stringFromDate:date];
+            } else {
+                cell.content = nil;
+            }
             cell.inputEnabled = NO;
             break;
-        default:
+        case TCInputCellTypeCompany:
+            cell.content = self.reservationInfo.companyName;
             cell.inputEnabled = YES;
+            cell.keyboardType = UIKeyboardTypeDefault;
+            break;
+        case TCInputCellTypeName:
+            cell.content = self.reservationInfo.reservationPerson;
+            cell.inputEnabled = YES;
+            cell.keyboardType = UIKeyboardTypeDefault;
+            break;
+        case TCInputCellTypePhone:
+            cell.content = self.reservationInfo.phone;
+            cell.inputEnabled = YES;
+            cell.keyboardType = UIKeyboardTypeNumberPad;
+            break;
+        case TCInputCellTypeCount:
+            if (self.reservationInfo.reservationPersonNum) {
+                cell.content = [NSString stringWithFormat:@"%zd", self.reservationInfo.reservationPersonNum];
+            } else {
+                cell.content = nil;
+            }
+            cell.inputEnabled = YES;
+            cell.keyboardType = UIKeyboardTypeNumberPad;
+            break;
+        case TCInputCellTypeNotes:
+            cell.content = self.reservationInfo.note;
+            cell.inputEnabled = YES;
+            cell.keyboardType = UIKeyboardTypeDefault;
+            break;
+            
+        default:
             break;
     }
     return cell;
@@ -159,11 +201,54 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 }
 
 - (void)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldDidEndEditing:(UITextField *)textField {
-    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    switch (indexPath.row) {
+        case TCInputCellTypeCompany:
+            self.reservationInfo.companyName = textField.text;
+            break;
+        case TCInputCellTypeName:
+            self.reservationInfo.reservationPerson = textField.text;
+            break;
+        case TCInputCellTypePhone:
+            self.reservationInfo.phone = textField.text;
+            break;
+        case TCInputCellTypeCount:
+            self.reservationInfo.reservationPersonNum = [textField.text integerValue];
+            break;
+        case TCInputCellTypeNotes:
+            self.reservationInfo.note = textField.text;
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)didTapContainerViewInCommonInputViewCell:(TCCommonInputViewCell *)cell {
-    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    if (indexPath.row == TCInputCellTypeDate) {
+        TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithController:self];
+        datePickerView.datePicker.date = [NSDate date];
+        datePickerView.datePicker.minimumDate = [NSDate date];
+        datePickerView.delegate = self;
+        [datePickerView show];
+        
+        [self.tableView endEditing:YES];
+    }
+}
+
+#pragma mark - TCDatePickerViewDelegate
+
+- (void)didClickConfirmButtonInDatePickerView:(TCDatePickerView *)view {
+    NSTimeInterval timestamp = [view.datePicker.date timeIntervalSince1970];
+    self.reservationInfo.reservationDate = (NSInteger)(timestamp * 1000);
+    [self.tableView reloadData];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [scrollView endEditing:YES];
 }
 
 #pragma mark - Notifications
@@ -184,7 +269,39 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 }
 
 - (void)handleClickCommitButton:(UIButton *)sender {
+    if (!self.reservationInfo.reservationDate) {
+        [MBProgressHUD showHUDWithMessage:@"请您输入预约日期"];
+        return;
+    }
+    if (!self.reservationInfo.companyName.length) {
+        [MBProgressHUD showHUDWithMessage:@"请您输入公司名称"];
+        return;
+    }
+    if (!self.reservationInfo.reservationPerson.length) {
+        [MBProgressHUD showHUDWithMessage:@"请您输入姓名"];
+        return;
+    }
+    if (!self.reservationInfo.phone.length) {
+        [MBProgressHUD showHUDWithMessage:@"请您输入联系电话"];
+        return;
+    }
+    if (!self.reservationInfo.reservationPersonNum) {
+        [MBProgressHUD showHUDWithMessage:@"请您输入参观人数"];
+        return;
+    }
     
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] reserveCommunity:self.reservationInfo result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD showHUDWithMessage:@"预约成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"预约失败，%@", reason]];
+        }
+    }];
 }
 
 - (void)handleKeyboardWillShowNotification:(NSNotification *)notification {
@@ -218,7 +335,7 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 
 - (NSArray *)placeholderArray {
     if (_placeholderArray == nil) {
-        _placeholderArray = @[@"", @"请选择预约日期", @"请输入公司名称", @"请输入预约人姓名", @"请输入手机号码", @"请选择参观人数", @"请输入备注说明"];
+        _placeholderArray = @[@"", @"请选择预约日期", @"请输入公司名称", @"请输入预约人姓名", @"请输入手机号码", @"请输入参观人数", @"请输入备注说明"];
     }
     return _placeholderArray;
 }
@@ -229,6 +346,16 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
         _reservationInfo.communityId = self.communityDetailInfo.ID;
     }
     return _reservationInfo;
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+        _dateFormatter.dateStyle = kCFDateFormatterShortStyle;
+        _dateFormatter.timeStyle = kCFDateFormatterShortStyle;
+    }
+    return _dateFormatter;
 }
 
 - (void)didReceiveMemoryWarning {
