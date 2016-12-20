@@ -24,6 +24,7 @@
         backView.backgroundColor = [UIColor whiteColor];
         
         _leftImgView.frame = CGRectMake(TCRealValue(8), 0, TCRealValue(79), TCRealValue(79));
+        _leftImgView.contentMode = UIViewContentModeScaleAspectFit;
         titleLab.frame = CGRectMake(_leftImgView.x + _leftImgView.width + TCRealValue(9), _leftImgView.y + TCRealValue(7), screenRect.size.width - _leftImgView.x - _leftImgView.width - TCRealValue(13) - TCRealValue(54), TCRealValue(12));
         
         priceLab.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
@@ -51,6 +52,7 @@
         [self.contentView addSubview:backView];
         
         _leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(backView.height / 2 - TCRealValue(71.5) / 2, backView.height / 2 - TCRealValue(71.5) / 2, TCRealValue(71.5), TCRealValue(71.5))];
+        _leftImgView.contentMode = UIViewContentModeScaleAspectFit;
         [backView addSubview:_leftImgView];
         
         titleLab = [TCComponent createLabelWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width + TCRealValue(9), 12, TCRealValue(337 / 2), TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:@""];

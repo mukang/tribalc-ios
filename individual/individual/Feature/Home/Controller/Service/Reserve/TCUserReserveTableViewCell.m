@@ -44,6 +44,7 @@
         
         
         _storeImageView = [self getStoreImageViewWithFrame:CGRectMake(TCRealValue(22.5), TCRealValue(143) / 2 - TCRealValue(115) / 2, TCRealValue(169), TCRealValue(115))];
+        
         [self.contentView addSubview:_storeImageView];
         
         titleLab = [self getTitleLabWithFrame:CGRectMake(_storeImageView.x + _storeImageView.width + TCRealValue(20), TCRealValue(22.5), TCScreenWidth - _storeImageView.x - _storeImageView.width - TCRealValue(20) - TCRealValue(20), TCRealValue(14))];
@@ -159,7 +160,8 @@
 - (UIImageView *)getStoreImageViewWithFrame:(CGRect)frame {
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
     imgView.layer.cornerRadius = TCRealValue(30);
-    
+    imgView.contentMode = UIViewContentModeScaleAspectFit;
+
     
     return imgView;
 }

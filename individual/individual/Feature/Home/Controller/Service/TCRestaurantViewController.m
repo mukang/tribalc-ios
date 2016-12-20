@@ -24,7 +24,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.view.backgroundColor = [UIColor whiteColor];
-    [self initialNavigationBar];
+    [self setupNavigationBar];
 
 }
 
@@ -33,7 +33,7 @@
     // Do any additional setup after loading the view.
     
 
-    [self initRestaurantDataWithSortType:nil];
+    [self loadRestaurantDataWithSortType:nil];
     
     [self initialTableView];
     
@@ -42,9 +42,21 @@
     
 }
 
+#pragma mark - Navigation Bar
+- (void)setupNavigationBar {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(touchBackBtn:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"res_location"]
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(touchLocationBtn:)];
+}
 
 
-- (void)initRestaurantDataWithSortType:(NSString *)sortType {
+#pragma mark - Get Data
+- (void)loadRestaurantDataWithSortType:(NSString *)sortType {
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchServiceWrapper:nil limiSize:20 sortSkip:nil sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
         mServiceWrapper = serviceWrapper;
@@ -54,8 +66,7 @@
     
 }
 
-- (void)initResturantDataWithSortSkip:(NSString *)nextSkip AndSort:(NSString *)sortType {
-    
+- (void)loadResturantDataWithSortSkip:(NSString *)nextSkip AndSort:(NSString *)sortType {
     if (mServiceWrapper.hasMore == YES) {
         TCBuluoApi *api = [TCBuluoApi api];
         [api fetchServiceWrapper:nil limiSize:20 sortSkip:nextSkip sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
@@ -73,10 +84,7 @@
 }
 
 - (void)initUI {
-    
-    
     [self initHiddenBackView];
-    
     
     sortView = [[TCRestaurantSortView alloc] initWithFrame:CGRectMake(0, TCRealValue(42), self.view.width, TCRealValue(169 + 10))];
     sortView.hidden = YES;
@@ -85,8 +93,6 @@
     filterView = [[TCRestaurantFilterView alloc] initWithFrame:CGRectMake(0, TCRealValue(42), self.view.width, TCRealValue(105))];
     filterView.hidden = YES;
     [self.view addSubview:filterView];
-    
-
 }
 
 - (void)initHiddenBackView {
@@ -96,20 +102,6 @@
     [backView addGestureRecognizer:recognizer];
     [self.view addSubview:backView];
     backView.hidden = YES;
-
-}
-
-- (void)initialNavigationBar {
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(touchBackBtn:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"res_location"]
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(touchLocationBtn:)];
-
 
 }
 
@@ -124,12 +116,12 @@
     [self.view addSubview:mResaurantTableView];
     
     TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^{
-        [self initRestaurantDataWithSortType:mServiceWrapper.sort];
+        [self loadRestaurantDataWithSortType:mServiceWrapper.sort];
     }];
     mResaurantTableView.mj_header = refreshHeader;
     
     TCRecommendFooter *refreshFooter = [TCRecommendFooter footerWithRefreshingBlock:^{
-        [self initResturantDataWithSortSkip:mServiceWrapper.nextSkip AndSort:mServiceWrapper.sort];
+        [self loadResturantDataWithSortSkip:mServiceWrapper.nextSkip AndSort:mServiceWrapper.sort];
     }];
     mResaurantTableView.mj_footer = refreshFooter;
     
@@ -417,7 +409,7 @@
     } else if ([info isEqualToString:@"人气最高"]) {
         type = @"popularValue,desc";
     }
-    [self initRestaurantDataWithSortType:type];
+    [self loadRestaurantDataWithSortType:type];
 
 }
 

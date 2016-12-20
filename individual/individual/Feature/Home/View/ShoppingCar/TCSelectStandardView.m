@@ -518,6 +518,7 @@
 - (void)touchPrimaryWhenIsSelected:(UIButton *)button {
     [button setTitleColor:TCRGBColor(154, 154, 154) forState:UIControlStateNormal];
     button.layer.borderColor = TCRGBColor(154, 154, 154).CGColor;
+    _primaryStandardLab.text = @"";
     for (int i = 0; i < secondarySelectBtnView.subviews.count; i++) {
         UIButton *btn = secondarySelectBtnView.subviews[i];
         if (![[btn titleColorForState:UIControlStateNormal] isEqual:[UIColor whiteColor]]) {
@@ -530,7 +531,7 @@
 - (void)touchSecondaryWhenIsSelected:(UIButton *)button {
     button.backgroundColor = TCRGBColor(242, 242, 242);
     [button setTitleColor:TCRGBColor(42, 42, 42) forState:UIControlStateNormal];
-
+    _secondaryStandardLab.text = @"";
     for (int i = 0; i < primarySelectButtonView.subviews.count; i++) {
         UIButton *btn = primarySelectButtonView.subviews[i];
         if (![[btn titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(81, 199, 209)]) {
@@ -538,7 +539,6 @@
             btn.layer.borderColor = TCRGBColor(154, 154, 154).CGColor;
         }
     }
-
 }
 
 - (TCGoods *)transGoodDetailToGoods:(TCGoodDetail *)goodDetail {
@@ -600,14 +600,32 @@
 }
 
 - (void)touchConfirmBtn:(UIButton *)button {
+
+    if (mGoodStandards.descriptions.allKeys.count == 1) {
+        if ([_primaryStandardLab.text isEqualToString:@""] || _primaryStandardLab.text == nil) {
+            [MBProgressHUD showHUDWithMessage:@"请选择完整规格"];
+            return;
+        }
+    }
+    if (mGoodStandards.descriptions.allKeys.count == 2) {
+        if ([_primaryStandardLab.text isEqualToString:@""] || [_secondaryStandardLab.text isEqualToString:@""] || _primaryStandardLab.text == nil || _secondaryStandardLab.text == nil) {
+            [MBProgressHUD showHUDWithMessage:@"请选择完整规格"];
+            return;
+        }
+    }
     if (mGood.ID == nil) {
         [MBProgressHUD showHUDWithMessage:@"您选择的商品不存在"];
         return ;
     }
+    [self postConfirmStandardChange];
+}
+
+- (void)postConfirmStandardChange {
     NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", selectTag];
     NSDictionary *changeDic = @{ @"goodsId":mGood.ID , @"number":_numberLab.text, @"selectTag": selectTag };
     [[NSNotificationCenter defaultCenter] postNotificationName:notifiName object:changeDic];
     [self removeFromSuperview];
+
 }
 
 - (void)touchHideSelect:(id)sender {

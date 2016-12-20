@@ -112,7 +112,7 @@
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
     imgView.layer.borderWidth = TCRealValue(1);
     imgView.layer.borderColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1].CGColor;
-    
+    imgView.contentMode = UIViewContentModeScaleAspectFit;
     return imgView;
 }
 

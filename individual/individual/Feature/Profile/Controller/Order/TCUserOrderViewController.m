@@ -28,7 +28,6 @@
     self = [super init];
     if (self) {
         mStatus = statusStr;
-        NSLog(@"%@", mStatus);
     }
     
     return self;
@@ -254,6 +253,7 @@
     [cell setPriceLabel:goods.salePrice];
     [cell setNumberLabel:orderItem.amount];
     [cell setSelectedStandard:goods.standardSnapshot];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }

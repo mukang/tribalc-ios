@@ -7,6 +7,7 @@
 //
 
 #import "TCRecommendListViewController.h"
+#import "TCImageURLSynthesizer.h"
 
 @interface TCRecommendListViewController () {
     TCGoodsWrapper *goodsInfoWrapper;
@@ -19,28 +20,41 @@
 
 @implementation TCRecommendListViewController
 
-- (void)viewDidAppear:(BOOL)animated {
-    [self initialNavigationBar];
+- (void)viewWillAppear:(BOOL)animated {
+    [self setupNavigationBar];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initialNavigationBar];
+
 
     collectionImgArr = [[NSMutableArray alloc] init];
-    
     self.view.backgroundColor = [UIColor whiteColor];
-
     
-    [self initialCollectionView];
-    
+    [self createCollectionView];
 
-    [self initialGoodsData];
+    [self loadGoodsData];
 
 }
 
-# pragma mark - 初始化数据
-- (void)initialGoodsData {
+
+# pragma mark - Navigation Bar
+- (void)setupNavigationBar {
+    
+    self.navigationItem.title = @"精品推荐";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(touchBackBtn:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"good_shopping_white"]
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(touchShopCar:)];
+}
+
+
+# pragma mark - GetData
+- (void)loadGoodsData {
     [MBProgressHUD showHUD:YES];
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchGoodsWrapper:8 sortSkip:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
@@ -56,11 +70,10 @@
 
 }
 
-- (void)initialGoodsDataWithSortSkip:(NSString *)sortSkip {
+- (void)loadGoodsDataWithSortSkip:(NSString *)sortSkip {
     if (goodsInfoWrapper.hasMore == YES) {
         TCBuluoApi *api = [TCBuluoApi api];
         [api fetchGoodsWrapper:8 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
-            
             NSArray *infoArr = goodsInfoWrapper.content;
             goodsInfoWrapper = goodsWrapper;
             goodsInfoWrapper.content = [infoArr arrayByAddingObjectsFromArray:goodsWrapper.content];
@@ -74,52 +87,37 @@
     }
 }
 
-- (void)initialNavigationBar {
+#pragma mark - UI
 
-    self.navigationItem.title = @"精品推荐";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(touchBackBtn:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"good_shopping_white"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(touchShopCar:)];
-}
-
-
-- (void)initialCollectionView {
+- (void)createCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    
     recommendCollectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     recommendCollectionView.delegate = self;
     recommendCollectionView.dataSource = self;
     recommendCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 64, 0);
-
     recommendCollectionView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1];
     [self.view addSubview:recommendCollectionView];
-    
     [recommendCollectionView registerClass:[TCRecommendGoodCell class] forCellWithReuseIdentifier:@"cellId"];
     [recommendCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"reusableView"];
     
-    [self setCollectionPullToRefresh];
+    [self setupCollectionPullToRefresh];
 }
 
-- (void)setCollectionPullToRefresh {
+- (void)setupCollectionPullToRefresh {
     
     TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^{
-        [self initialGoodsData];
+        [self loadGoodsData];
     }];
     recommendCollectionView.mj_header = refreshHeader;
     
     TCRecommendFooter *refreshFooter = [TCRecommendFooter footerWithRefreshingBlock:^{
-        [self initialGoodsDataWithSortSkip:goodsInfoWrapper.nextSkip];
+        [self loadGoodsDataWithSortSkip:goodsInfoWrapper.nextSkip];
     }];
     recommendCollectionView.mj_footer = refreshFooter;
 }
 
 
-# pragma mark - collectionView
+# pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
@@ -132,17 +130,12 @@
     TCGoods *info = goodsInfoWrapper.content[indexPath.row];
     TCRecommendGoodCell *cell = (TCRecommendGoodCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     
-    NSString *imgUrlStr = [NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, info.mainPicture];
-    NSURL *imgURL = [NSURL URLWithString:imgUrlStr];
-    [cell.goodImageView sd_setImageWithURL:imgURL];
-    
+    [cell.goodImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:info.mainPicture]];
     cell.shopNameLab.text = info.brand;
-//    cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@ %@", info.category, info.name];
     cell.typeAndNameLab.text = [NSString stringWithFormat:@"%@", info.name];
     NSString *salePriceStr = [NSString stringWithFormat:@"%f", info.salePrice];
     cell.priceLab.text = [NSString stringWithFormat:@"￥%@", @(salePriceStr.floatValue)];
     collectionImgArr[indexPath.row] = cell.collectionImgView;
-    
     [cell.collectionBtn addTarget:self action:@selector(touchCollectionButton:) forControlEvents:UIControlEventTouchUpInside];
     cell.collectionBtn.tag = indexPath.row;
     
@@ -150,16 +143,14 @@
 }
 
 
-
+#pragma mark - UICollectionDelegate
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     return 8;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     TCGoods *goodInfo = goodsInfoWrapper.content[indexPath.row];
-    
     TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodId:goodInfo.ID];
     [self.navigationController pushViewController:recommendInfoViewController animated:YES];
     
@@ -171,18 +162,13 @@
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    
     return UIEdgeInsetsMake(TCRealValue(7), TCRealValue(12.5), TCRealValue(7), TCRealValue(12));
-
 }
 
 
-# pragma mark - touch 
+# pragma mark - Touch Action
 - (void)touchCollectionButton:(UIButton *)button {
     NSInteger index = button.tag;
-    
-  
-    
     
     UIImageView *imgView = collectionImgArr[index];
     UIImage *image = [UIImage imageNamed:@"good_collection_no"];
@@ -195,15 +181,6 @@
 
 }
 
-
-- (void)setTranslucentNavigationBar {
-    [self.navigationController.navigationBar setTranslucent:YES];
-    UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
-    barImageView.backgroundColor = TCRGBColor(42, 42, 42);
-    barImageView.alpha = 0;
-}
-
-
 - (void)touchBackBtn:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -214,15 +191,17 @@
     [self.navigationController pushViewController:shoppingCartViewController animated:YES];
 }
 
+#pragma mark - Status Bar
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
 
 
 /*
