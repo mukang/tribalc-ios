@@ -10,9 +10,14 @@
 #import "TCHomeCommodityTableViewCell.h"
 #import "TCRepairsViewController.h"
 #import "TCGetNavigationItem.h"
+
+#import "TCGoodSelectView.h"
+
+
 #import "TCPropertyManageListController.h"
 #import "TCLoginViewController.h"
 #import "TCRepairsViewController.h"
+
 
 @interface TCHomeViewController () {
     NSDictionary *homeInfoDic;

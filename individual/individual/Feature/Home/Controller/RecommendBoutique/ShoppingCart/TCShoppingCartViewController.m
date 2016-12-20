@@ -202,7 +202,7 @@
             TCCartItem *cartItem = goodList[j];
             if (cartItem.select) {
                 TCGoods *good = cartItem.goods;
-                price += good.salePrice;
+                price += good.salePrice * cartItem.amount;
             }
         }
     }

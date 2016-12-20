@@ -42,6 +42,9 @@
 - (void)fetchGoodStandardWithStandardId:(NSString *)standardId {
     [[TCBuluoApi api] fetchGoodStandards:standardId result:^(TCGoodStandards *goodStandard, NSError *error) {
         mGoodStandards = goodStandard;
+        if (goodStandard.descriptions.allKeys.count == 2 && [goodStandard.descriptions[@"secondary"] isEqual:[NSNull null]]) {
+            mGoodStandards.descriptions = @{ @"primary":mGoodStandards.descriptions[@"primary"] };
+        }
         [self initUIWithGoodStandard:goodStandard];
     }];
 }
@@ -248,7 +251,7 @@
     } else {
         button.size = CGSizeMake(TCRealValue(47.5), TCRealValue(22));
     }
-    NSString *secondaryStr = [mGood.standardSnapshot componentsSeparatedByString:@"|"][1];
+    NSString *secondaryStr = [mGood.standardSnapshot containsString:@"|"] ? [mGood.standardSnapshot componentsSeparatedByString:@"|"][1] : mGood.standardSnapshot;
     NSString *secondaryType = [secondaryStr componentsSeparatedByString:@":"][1];
     if ([title isEqualToString:secondaryType]) {
         [self setupSecondarySelectedButton:button AndStandard:goodStandard];
@@ -493,18 +496,48 @@
 
 
 - (void)touchPrimaryStandardBtn:(UIButton *)button {
-    if (![[button titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(221, 221, 221)]) {
-        [self setupPrimarySelectedButton:button AndStandard:mGoodStandards];
-        NSString *goodsIndexes;
-        if (mGoodStandards.descriptions.allKeys.count == 2) {
-            goodsIndexes = [NSString stringWithFormat:@"%@^%@", _primaryStandardLab.text, _secondaryStandardLab.text];
-        } else {
-            goodsIndexes = [NSString stringWithFormat:@"%@", _primaryStandardLab.text];
+    if ([[button titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(81, 199, 209)]) {
+        [self touchPrimaryWhenIsSelected:button];
+    } else {
+        if (![[button titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(221, 221, 221)]) {
+            [self setupPrimarySelectedButton:button AndStandard:mGoodStandards];
+            NSString *goodsIndexes;
+            if (mGoodStandards.descriptions.allKeys.count == 2) {
+                goodsIndexes = [NSString stringWithFormat:@"%@^%@", _primaryStandardLab.text, _secondaryStandardLab.text];
+            } else {
+                goodsIndexes = [NSString stringWithFormat:@"%@", _primaryStandardLab.text];
+            }
+            TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:mGoodStandards.goodsIndexes[goodsIndexes]];
+            mGood = [self transGoodDetailToGoods:goodDetail];
+            mRepertory = goodDetail.repertory;
+            [self setupBaseInfoWithGoodDetailDic:goodDetail];
         }
-        TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:mGoodStandards.goodsIndexes[goodsIndexes]];
-        mGood = [self transGoodDetailToGoods:goodDetail];
-        mRepertory = goodDetail.repertory;
-        [self setupBaseInfoWithGoodDetailDic:goodDetail];
+    }
+}
+
+- (void)touchPrimaryWhenIsSelected:(UIButton *)button {
+    [button setTitleColor:TCRGBColor(154, 154, 154) forState:UIControlStateNormal];
+    button.layer.borderColor = TCRGBColor(154, 154, 154).CGColor;
+    _primaryStandardLab.text = @"";
+    for (int i = 0; i < secondarySelectBtnView.subviews.count; i++) {
+        UIButton *btn = secondarySelectBtnView.subviews[i];
+        if (![[btn titleColorForState:UIControlStateNormal] isEqual:[UIColor whiteColor]]) {
+            btn.backgroundColor = TCRGBColor(242, 242, 242);
+            [btn setTitleColor:TCRGBColor(42, 42, 42) forState:UIControlStateNormal];
+        }
+    }
+}
+
+- (void)touchSecondaryWhenIsSelected:(UIButton *)button {
+    button.backgroundColor = TCRGBColor(242, 242, 242);
+    [button setTitleColor:TCRGBColor(42, 42, 42) forState:UIControlStateNormal];
+    _secondaryStandardLab.text = @"";
+    for (int i = 0; i < primarySelectButtonView.subviews.count; i++) {
+        UIButton *btn = primarySelectButtonView.subviews[i];
+        if (![[btn titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(81, 199, 209)]) {
+            [btn setTitleColor:TCRGBColor(154, 154, 154) forState:UIControlStateNormal];
+            btn.layer.borderColor = TCRGBColor(154, 154, 154).CGColor;
+        }
     }
 }
 
@@ -523,19 +556,23 @@
 }
 
 - (void)touchSecondaryStandardBtn:(UIButton *)button {
-    if (![[button titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(221, 221, 221)]) {
-        [self setupSecondarySelectedButton:button AndStandard:mGoodStandards];
-        NSString *goodsIndexes = [NSString stringWithFormat:@"%@^%@", _primaryStandardLab.text, _secondaryStandardLab.text];
-        TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:mGoodStandards.goodsIndexes[goodsIndexes]];
-        mGood = [self transGoodDetailToGoods:goodDetail];
-        mRepertory = goodDetail.repertory;
-        [self setupBaseInfoWithGoodDetailDic:goodDetail];
+    if ([[button titleColorForState:UIControlStateNormal] isEqual:[UIColor whiteColor]]) {
+        [self touchSecondaryWhenIsSelected:button];
+    } else {
+        if (![[button titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(221, 221, 221)]) {
+            [self setupSecondarySelectedButton:button AndStandard:mGoodStandards];
+            NSString *goodsIndexes = [NSString stringWithFormat:@"%@^%@", _primaryStandardLab.text, _secondaryStandardLab.text];
+            TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:mGoodStandards.goodsIndexes[goodsIndexes]];
+            mGood = [self transGoodDetailToGoods:goodDetail];
+            mRepertory = goodDetail.repertory;
+            [self setupBaseInfoWithGoodDetailDic:goodDetail];
+        }
     }
 }
 
 - (void)setupBaseInfoWithGoodDetailDic:(TCGoodDetail *)goodDetail {
     priceLab.text = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", goodDetail.salePrice].floatValue)];
-    inventoryLab.text = [NSString stringWithFormat:@"剩余:%ld件", (long)goodDetail.repertory];
+    inventoryLab.text = [NSString stringWithFormat:@"(剩余:%ld件)", (long)goodDetail.repertory];
     [titleImageView sd_setImageWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, goodDetail.mainPicture]]];
     _numberLab.text = @"1";
 
@@ -563,14 +600,32 @@
 }
 
 - (void)touchConfirmBtn:(UIButton *)button {
+
+    if (mGoodStandards.descriptions.allKeys.count == 1) {
+        if ([_primaryStandardLab.text isEqualToString:@""] || _primaryStandardLab.text == nil) {
+            [MBProgressHUD showHUDWithMessage:@"请选择完整规格"];
+            return;
+        }
+    }
+    if (mGoodStandards.descriptions.allKeys.count == 2) {
+        if ([_primaryStandardLab.text isEqualToString:@""] || [_secondaryStandardLab.text isEqualToString:@""] || _primaryStandardLab.text == nil || _secondaryStandardLab.text == nil) {
+            [MBProgressHUD showHUDWithMessage:@"请选择完整规格"];
+            return;
+        }
+    }
     if (mGood.ID == nil) {
         [MBProgressHUD showHUDWithMessage:@"您选择的商品不存在"];
         return ;
     }
+    [self postConfirmStandardChange];
+}
+
+- (void)postConfirmStandardChange {
     NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", selectTag];
     NSDictionary *changeDic = @{ @"goodsId":mGood.ID , @"number":_numberLab.text, @"selectTag": selectTag };
     [[NSNotificationCenter defaultCenter] postNotificationName:notifiName object:changeDic];
     [self removeFromSuperview];
+
 }
 
 - (void)touchHideSelect:(id)sender {

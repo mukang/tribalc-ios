@@ -24,6 +24,7 @@
 @property (copy, nonatomic) NSString *title;
 @property (copy, nonatomic) NSString *content;
 @property (copy, nonatomic) NSString *placeholder;
+@property (nonatomic) UIKeyboardType keyboardType;
 @property (nonatomic, getter=isInputEnabled) BOOL inputEnabled;
 @property (nonatomic) BOOL hideSeparatorView; // default is YES.
 @property (weak, nonatomic) id<TCCommonInputViewCellDelegate> delegate;

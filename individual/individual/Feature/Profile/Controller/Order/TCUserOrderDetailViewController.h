@@ -19,7 +19,7 @@
 
 @interface TCUserOrderDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, TCOrderDetailAlertViewDelegate>
 
-- (instancetype)initWithItemList:(NSArray *)itemList;
+
 
 - (instancetype)initWithOrder:(TCOrder *)order;
 

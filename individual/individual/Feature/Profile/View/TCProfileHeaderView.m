@@ -28,6 +28,7 @@
     self.wantGradeButton.layer.masksToBounds = YES;
     
     self.bgImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.bgImageView.clipsToBounds = YES;
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBio:)];
     self.bgImageView.userInteractionEnabled = YES;

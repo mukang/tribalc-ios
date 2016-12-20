@@ -35,12 +35,10 @@
     self = [super init];
     if (self) {
         orderDetailList = [[NSMutableArray alloc] init];
-        
         for (int i = 0; i < listShoppingCartArr.count; i++) {
             TCListShoppingCart *listShoppingCart = listShoppingCartArr[i];
             [orderDetailList addObject:[self getOrderBaseInfoWithListShoppingCart:listShoppingCart]];
         }
-        
     }
     
     return self;
@@ -363,6 +361,8 @@
 }
 
 - (void)filterPayMethod {
+    
+    
     NSString *selectPayStr = payMethodView.selectPayMethodStr;
     if (!selectPayStr) {
         [MBProgressHUD showHUDWithMessage:@"请选择支付方式"];
@@ -371,11 +371,10 @@
     } else if ([selectPayStr isEqualToString:@"支付宝"]) {
         [MBProgressHUD showHUDWithMessage:@"请选择余额支付"];
     } else {
-       
         [self createOrder];
     }
-
 }
+
 
 #pragma mark - Action
 - (void)touchBackBtn {
@@ -383,36 +382,41 @@
 }
 
 - (void)touchOrderPayBtn:(UIButton *)button {
+    if (userAddressView.shippingAddress == nil) {
+        [MBProgressHUD showHUDWithMessage:@"请选择地址"];
+        return;
+    }
     [self filterPayMethod];
 }
 
+- (void)jumpToOrderDetailViewController {
+    UIViewController *orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
+    [payView removeFromSuperview];
+    [self.navigationController pushViewController:orderViewController animated:YES];
+}
+
 - (void)touchPayMoneyBtn:(UIButton *)button {
-    [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:payView.order.ID result:^(BOOL result, NSError *error) {
-        if (result) {
-            UIViewController *orderViewController;
-//            if (!payView.order) {
-                orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
+    for (int i = 0; i < payView.orderArr.count; i++) {
+        TCOrder *order = payView.orderArr[i];
+        [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:order.ID result:^(BOOL result, NSError *error) {
+//            if (result) {
+                if (i == payView.orderArr.count - 1)
+                    [self jumpToOrderDetailViewController];
 //            } else {
-//                orderViewController = [[TCUserOrderDetailViewController alloc] initWithOrder:payView.order];
-            
-            [payView removeFromSuperview];
-            [self.navigationController pushViewController:orderViewController animated:YES];
-        } else {
-            [MBProgressHUD showHUDWithMessage:@"支付失败"];
-        }
-    }];
-    
-   
-    
+//                [MBProgressHUD showHUDWithMessage:@"支付失败"];
+//                return;
+//            }
+        }];
+    }
 }
 
 - (void)touchClosePayMoneyBtn:(id)sender {
     [MBProgressHUD showHUDWithMessage:@"取消支付"];
     UIViewController *orderViewController;
-    if (!payView.order) {
+    if (!(payView.orderArr.count == 1)) {
         orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"待付款"];
     } else {
-        orderViewController = [[TCUserOrderDetailViewController alloc] initWithOrder:payView.order];
+        orderViewController = [[TCUserOrderDetailViewController alloc] initWithOrder:payView.orderArr[0]];
     }
     [payView removeFromSuperview];
     [self.navigationController pushViewController:orderViewController animated:YES];
@@ -460,8 +464,7 @@
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
             payView = [[TCBalancePayView alloc] initWithPayPrice:[self getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
-            TCOrder *order = orderList[0];
-            payView.order = orderList.count == 1 ? order : nil;
+            payView.orderArr = orderList;
             [payView showPayView];
             
         } else {

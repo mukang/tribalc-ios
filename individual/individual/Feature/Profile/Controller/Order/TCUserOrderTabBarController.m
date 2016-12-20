@@ -131,6 +131,7 @@
     [button setTitleColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1] forState:UIControlStateNormal];
     [selectUnderlineView setFrame:CGRectMake(button.x - 5, button.y + button.height - 1, button.width + 10.5, 1)];
     self.selectedIndex = button.tag;
+    self.title = @"我的订单";
     
 }
 
