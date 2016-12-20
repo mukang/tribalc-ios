@@ -13,6 +13,7 @@
 #import "TCBuluoApi.h"
 #import "TCPropertyManageListController.h"
 #import "TCLoginViewController.h"
+#import "TCQRCodeViewController.h"
 
 @interface TCToolsViewController ()
 
@@ -48,6 +49,9 @@
 
 - (void)handleClickQRCodeButton:(UIBarButtonItem *)sender {
     TCLog(@"点击了扫码按钮");
+    TCQRCodeViewController *qrVc = [[TCQRCodeViewController  alloc] init];
+    qrVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:qrVc animated:YES];
 }
 
 - (void)setUpViews {
