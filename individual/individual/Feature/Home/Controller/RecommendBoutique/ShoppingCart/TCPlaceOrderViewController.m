@@ -389,22 +389,25 @@
     [self filterPayMethod];
 }
 
+- (void)jumpToOrderDetailViewController {
+    UIViewController *orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
+    [payView removeFromSuperview];
+    [self.navigationController pushViewController:orderViewController animated:YES];
+}
+
 - (void)touchPayMoneyBtn:(UIButton *)button {
-    TCOrder *order = payView.orderArr[0];
-    [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:order.ID result:^(BOOL result, NSError *error) {
-        if (result) {
-            UIViewController *orderViewController;
-//            if (!payView.order) {
-                orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
+    for (int i = 0; i < payView.orderArr.count; i++) {
+        TCOrder *order = payView.orderArr[i];
+        [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:order.ID result:^(BOOL result, NSError *error) {
+//            if (result) {
+                if (i == payView.orderArr.count - 1)
+                    [self jumpToOrderDetailViewController];
 //            } else {
-//                orderViewController = [[TCUserOrderDetailViewController alloc] initWithOrder:payView.order];
-            
-            [payView removeFromSuperview];
-            [self.navigationController pushViewController:orderViewController animated:YES];
-        } else {
-            [MBProgressHUD showHUDWithMessage:@"支付失败"];
-        }
-    }];
+//                [MBProgressHUD showHUDWithMessage:@"支付失败"];
+//                return;
+//            }
+        }];
+    }
 }
 
 - (void)touchClosePayMoneyBtn:(id)sender {
