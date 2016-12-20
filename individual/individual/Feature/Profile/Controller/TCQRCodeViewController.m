@@ -12,18 +12,21 @@
 #import "TCScannerBorder.h"
 #import "TCScannerMaskView.h"
 #import "TCScanner.h"
+#import "TCPhotoPicker.h"
 
 /// 控件间距
 #define kControlMargin  20.0
 /// 相册图片最大尺寸
 #define kImageMaxSize   CGSizeMake(1000, 1000)
 
-@interface TCQRCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface TCQRCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate,TCPhotoPickerDelegate>
 @property (strong,nonatomic)AVCaptureDevice * device;
 @property (strong,nonatomic)AVCaptureDeviceInput * input;
 @property (strong,nonatomic)AVCaptureMetadataOutput * output;
 @property (strong,nonatomic)AVCaptureSession * session;
 @property (strong,nonatomic)AVCaptureVideoPreviewLayer * preview;
+
+@property (strong, nonatomic) TCPhotoPicker *photoPicker;
 @end
 
 @implementation TCQRCodeViewController
@@ -59,6 +62,7 @@
    
 }
 
+
 - (void)prepareNav {
     
     UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0,0,80,20)];
@@ -81,11 +85,6 @@
     [rightView addSubview:moreBtn];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightView];
-    
-//    UIBarButtonItem *photoItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"qrPhotos"] style:UIBarButtonItemStyleDone target:self action:@selector(toPhotos)];
-//    UIBarButtonItem *flashLightItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"qrFlashLight"]  style:UIBarButtonItemStyleDone target:self action:@selector(openFlashLight)];
-//    UIBarButtonItem *moreItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"qrMore"] style:UIBarButtonItemStyleDone target:self action:@selector(more)];
-    
     
 }
 
@@ -124,26 +123,28 @@
         return;
     }
     
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
+    photoPicker.delegate = self;
+    _photoPicker = photoPicker;
+    [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     
-    picker.view.backgroundColor = [UIColor whiteColor];
-    picker.delegate = self;
-    
-    [self showDetailViewController:picker sender:nil];
 }
 
-#pragma mark - UIImagePickerControllerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    
+#pragma mark - TCPhotoPickerDelegate
+- (void)photoPickerDidCancel:(TCPhotoPicker *)photoPicker {
+    [_photoPicker dismissPhotoPicker];
+}
+
+- (void)photoPicker:(TCPhotoPicker *)photoPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [self resizeImage:info[UIImagePickerControllerOriginalImage]];
     
     // 扫描图像
     [TCScanner scaneImage:image completion:^(NSArray *values) {
         
         if (values.count > 0) {
-//            self.completionCallBack(values.firstObject);
+            //            self.completionCallBack(values.firstObject);
             [self dismissViewControllerAnimated:NO completion:^{
-//                [self clickCloseButton];
+                //                [self clickCloseButton];
             }];
         } else {
             tipLabel.text = @"没有识别到二维码，请选择其他照片";
@@ -152,6 +153,8 @@
         }
     }];
 }
+
+
 
 - (UIImage *)resizeImage:(UIImage *)image {
     
@@ -175,10 +178,6 @@
     return result;
 }
 
-- (void)openFlashLight {
-
-}
-
 - (void)more {
     
 }
@@ -191,7 +190,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+    self.navigationController.navigationBar.translucent = NO;
+
     [scannerBorder stopScannerAnimating];
     [scanner stopScan];
 }
@@ -228,7 +228,6 @@
     
     [self.view addSubview:cardButton];
     
-//    [cardButton addTarget:self action:@selector(clickCardButton) forControlEvents:UIControlEventTouchUpInside];
 }
 
 /// 准备扫描框
@@ -237,9 +236,6 @@
     CGFloat scale = [UIScreen mainScreen].bounds.size.width/375.0;
     CGFloat width = self.view.bounds.size.width - 53*scale*2;
     scannerBorder = [[TCScannerBorder alloc] initWithFrame:CGRectMake(53*scale, 170*scale, width, width)];
-    
-//    scannerBorder.center = self.view.center;
-//    scannerBorder.tintColor = self.navigationController.navigationBar.tintColor;
     
     [self.view addSubview:scannerBorder];
     

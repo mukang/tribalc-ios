@@ -29,6 +29,10 @@
     [self setUpViews];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
 - (void)setupNavBar {
     self.navigationItem.title = @"常用";
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
