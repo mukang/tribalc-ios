@@ -526,8 +526,6 @@
 		7A1AC8321DF1A32E0052132F /* TCDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1AC8311DF1A32E0052132F /* TCDatePickerView.m */; };
 		7A1F12901DEC0BDD00A9B58F /* TCCommunitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F128E1DEC0BDD00A9B58F /* TCCommunitiesViewController.m */; };
 		7A1F12911DEC0BDD00A9B58F /* TCCommunitiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F128F1DEC0BDD00A9B58F /* TCCommunitiesViewController.xib */; };
-		7A1F12951DEC0DFA00A9B58F /* TCCommunityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F12931DEC0DFA00A9B58F /* TCCommunityViewCell.m */; };
-		7A1F12961DEC0DFA00A9B58F /* TCCommunityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F12941DEC0DFA00A9B58F /* TCCommunityViewCell.xib */; };
 		7A1F129A1DEC28F900A9B58F /* TCCommunity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F12991DEC28F900A9B58F /* TCCommunity.m */; };
 		7A1F129E1DEC551400A9B58F /* TCCommunityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F129C1DEC551400A9B58F /* TCCommunityDetailViewController.m */; };
 		7A1F129F1DEC551400A9B58F /* TCCommunityDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F129D1DEC551400A9B58F /* TCCommunityDetailViewController.xib */; };
@@ -669,6 +667,7 @@
 		7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D071E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m */; };
 		7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D0A1E0413CD00F83A7C /* TCBioEditLocationViewController.m */; };
 		7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */; };
+		7AF972D71E08CC72009D26A3 /* TCCommunityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972D51E08CC72009D26A3 /* TCCommunityViewCell.m */; };
 		D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */; };
 /* End PBXBuildFile section */
 
@@ -2719,9 +2718,6 @@
 		7A1F128D1DEC0BDD00A9B58F /* TCCommunitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunitiesViewController.h; sourceTree = "<group>"; };
 		7A1F128E1DEC0BDD00A9B58F /* TCCommunitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunitiesViewController.m; sourceTree = "<group>"; };
 		7A1F128F1DEC0BDD00A9B58F /* TCCommunitiesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunitiesViewController.xib; sourceTree = "<group>"; };
-		7A1F12921DEC0DFA00A9B58F /* TCCommunityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityViewCell.h; sourceTree = "<group>"; };
-		7A1F12931DEC0DFA00A9B58F /* TCCommunityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityViewCell.m; sourceTree = "<group>"; };
-		7A1F12941DEC0DFA00A9B58F /* TCCommunityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunityViewCell.xib; sourceTree = "<group>"; };
 		7A1F12981DEC28F900A9B58F /* TCCommunity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunity.h; sourceTree = "<group>"; };
 		7A1F12991DEC28F900A9B58F /* TCCommunity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunity.m; sourceTree = "<group>"; };
 		7A1F129B1DEC551400A9B58F /* TCCommunityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityDetailViewController.h; sourceTree = "<group>"; };
@@ -2961,6 +2957,8 @@
 		7AF972D01E064BC9009D26A3 /* TCCommunityReservationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityReservationInfo.h; sourceTree = "<group>"; };
 		7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityReservationInfo.m; sourceTree = "<group>"; };
 		7AF972D31E07ECEB009D26A3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		7AF972D41E08CC72009D26A3 /* TCCommunityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityViewCell.h; sourceTree = "<group>"; };
+		7AF972D51E08CC72009D26A3 /* TCCommunityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityViewCell.m; sourceTree = "<group>"; };
 		CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-individual.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -7326,9 +7324,8 @@
 		7A1F128C1DEC0BB700A9B58F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7A1F12921DEC0DFA00A9B58F /* TCCommunityViewCell.h */,
-				7A1F12931DEC0DFA00A9B58F /* TCCommunityViewCell.m */,
-				7A1F12941DEC0DFA00A9B58F /* TCCommunityViewCell.xib */,
+				7AF972D41E08CC72009D26A3 /* TCCommunityViewCell.h */,
+				7AF972D51E08CC72009D26A3 /* TCCommunityViewCell.m */,
 				7A381BCA1DED6969008BDBF7 /* TCCommunityIntroViewCell.h */,
 				7A381BCB1DED6969008BDBF7 /* TCCommunityIntroViewCell.m */,
 				7A381BCC1DED6969008BDBF7 /* TCCommunityIntroViewCell.xib */,
@@ -8336,7 +8333,6 @@
 				553DC8AE1DFFE22F0018783E /* Matroska2Config.cmake in Resources */,
 				553DC8ED1DFFE2300018783E /* BelleSIPTargets.cmake in Resources */,
 				553DC96A1DFFE2310018783E /* ORTPTargets.cmake in Resources */,
-				7A1F12961DEC0DFA00A9B58F /* TCCommunityViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8482,6 +8478,7 @@
 				553DC8471DFFE22F0018783E /* parser-impl.cc in Sources */,
 				092C697D1DF0378600FE2FD8 /* TCUserReserveViewController.m in Sources */,
 				7A381BE61DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.m in Sources */,
+				7AF972D71E08CC72009D26A3 /* TCCommunityViewCell.m in Sources */,
 				7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */,
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
 				55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */,
@@ -8575,7 +8572,6 @@
 				7AC346D91E01433E00E28EC9 /* TCWalletBillDetailViewController.m in Sources */,
 				0990F1961E077909002692F6 /* TCSelectBtn.m in Sources */,
 				7AEB4CF51E03944500F83A7C /* TCShippingAddressViewCell.m in Sources */,
-				7A1F12951DEC0DFA00A9B58F /* TCCommunityViewCell.m in Sources */,
 				098FDD5A1DFE392C00205663 /* TCPayMethodView.m in Sources */,
 				09275FBA1DDEFF5D00502167 /* TCDetailAnnotation.m in Sources */,
 				7AEB4CFF1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m in Sources */,
