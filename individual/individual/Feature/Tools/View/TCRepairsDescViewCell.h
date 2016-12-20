@@ -7,18 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@class TCRepairsDescViewCell;
-
-@protocol TCRepairsDescViewCellDelegate <NSObject>
-
-@optional
-- (BOOL)textViewShouldBeginEditingInRepairsDescViewCell:(TCRepairsDescViewCell *)cell;
-- (BOOL)repairsDescViewCell:(TCRepairsDescViewCell *)cell textViewShouldReturn:(UITextView *)textView;
-
-@end
 
 @interface TCRepairsDescViewCell : UITableViewCell
 
-@property (weak, nonatomic) id<TCRepairsDescViewCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @end

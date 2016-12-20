@@ -10,7 +10,7 @@
 
 @interface TCRepairsDescViewCell () <UITextViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextView *textView;
+
 
 @end
 
@@ -20,21 +20,6 @@
     [super awakeFromNib];
     // Initialization code
     
-    self.textView.delegate = self;
-}
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    if ([self.delegate respondsToSelector:@selector(textViewShouldBeginEditingInRepairsDescViewCell:)]) {
-        return [self.delegate textViewShouldBeginEditingInRepairsDescViewCell:self];
-    }
-    return YES;
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    if ([text isEqualToString:@"\n"] && [self.delegate respondsToSelector:@selector(repairsDescViewCell:textViewShouldReturn:)]) {
-        return ![self.delegate repairsDescViewCell:self textViewShouldReturn:self.textView];
-    }
-    return YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

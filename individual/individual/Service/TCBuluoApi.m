@@ -1544,7 +1544,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
     }];
 }
-#pragma mark - 公司资源
+#pragma mark - 物业报修
 
 - (void)fetchPropertyWrapper:(NSString *)status count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCPropertyManageWrapper *propertyManageWrapper, NSError *error))resultBlock {
     if ([self isUserSessionValid]) {
@@ -1573,4 +1573,33 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
     }
 }
+
+- (void)commitPropertyRepairsInfo:(TCPropertyRepairsInfo *)repairsInfo result:(void (^)(BOOL, TCPropertyManage *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/property_management", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        NSDictionary *dic = [repairsInfo toObjectDictionary];
+        for (NSString *key in dic.allKeys) {
+            [request setValue:dic[key] forParam:key];
+        }
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCPropertyManage *propertyManage = [[TCPropertyManage alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, propertyManage, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, nil, sessionError));
+        }
+    }
+}
+
 @end

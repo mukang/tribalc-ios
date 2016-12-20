@@ -92,7 +92,8 @@
                 NSNumber *code = responseData[@"code"];
                 codeInResponse = code.integerValue;
                 if (codeInResponse >= 400) {
-                    error = [TCClientRequestError errorWithCode:codeInResponse andDescription:responseData[@"message"]];
+                    NSString *description = (responseData[@"message"] == [NSNull null]) ? nil : responseData[@"message"];
+                    error = [TCClientRequestError errorWithCode:codeInResponse andDescription:description];
                 } else {
                     dataInResponse = responseData[@"data"];
                 }

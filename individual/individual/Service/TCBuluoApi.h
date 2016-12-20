@@ -453,4 +453,12 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)fetchPropertyWrapper:(NSString *)status count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCPropertyManageWrapper *propertyManageWrapper, NSError *error))resultBlock;
 
+/**
+ 提交物业报修信息
+
+ @param repairsInfo TCPropertyRepairsInfo对象
+ @param resultBlock 结果回调，success为NO时表示提交失败，失败原因见error的code和userInfo
+ */
+- (void)commitPropertyRepairsInfo:(TCPropertyRepairsInfo *)repairsInfo result:(void (^)(BOOL success, TCPropertyManage *propertyManage, NSError *error))resultBlock;
+
 @end

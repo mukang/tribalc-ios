@@ -8,6 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, TCPropertyRepairsType) {
+    TCPropertyRepairsTypePipe = 0,    // 管件维修
+    TCPropertyRepairsTypeLighting,    // 公共照明
+    TCPropertyRepairsTypeWaterPipe,   // 水管维修
+    TCPropertyRepairsTypeElectric,    // 电器维修
+    TCPropertyRepairsTypeOther        // 其他
+};
+
 @interface TCRepairsDetailViewController : UIViewController
+
+@property (nonatomic, readonly) TCPropertyRepairsType repairsType;
+
+/**
+ 指定初始化方法
+
+ @param repairsType 维修类型
+ @return TCRepairsDetailViewController对象
+ */
+- (instancetype)initWithPropertyRepairsType:(TCPropertyRepairsType)repairsType;
 
 @end

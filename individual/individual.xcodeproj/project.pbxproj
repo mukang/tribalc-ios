@@ -677,6 +677,7 @@
 		7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */; };
 		7AF972D71E08CC72009D26A3 /* TCCommunityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972D51E08CC72009D26A3 /* TCCommunityViewCell.m */; };
 		7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972DA1E08E0FA009D26A3 /* TCUserIDAuthInfo.m */; };
+		7AF972DE1E09174B009D26A3 /* TCPropertyRepairsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972DD1E09174B009D26A3 /* TCPropertyRepairsInfo.m */; };
 		D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */; };
 /* End PBXBuildFile section */
 
@@ -2985,6 +2986,8 @@
 		7AF972D51E08CC72009D26A3 /* TCCommunityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityViewCell.m; sourceTree = "<group>"; };
 		7AF972D91E08E0FA009D26A3 /* TCUserIDAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserIDAuthInfo.h; sourceTree = "<group>"; };
 		7AF972DA1E08E0FA009D26A3 /* TCUserIDAuthInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserIDAuthInfo.m; sourceTree = "<group>"; };
+		7AF972DC1E09174B009D26A3 /* TCPropertyRepairsInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyRepairsInfo.h; sourceTree = "<group>"; };
+		7AF972DD1E09174B009D26A3 /* TCPropertyRepairsInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyRepairsInfo.m; sourceTree = "<group>"; };
 		CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-individual.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -7169,6 +7172,8 @@
 				55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */,
 				55F06EF31E0398BB00A849D7 /* TCPropertyManage.h */,
 				55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */,
+				7AF972DC1E09174B009D26A3 /* TCPropertyRepairsInfo.h */,
+				7AF972DD1E09174B009D26A3 /* TCPropertyRepairsInfo.m */,
 			);
 			path = Property;
 			sourceTree = "<group>";
@@ -7753,9 +7758,9 @@
 		7AAF23781DCB5B10002B81A5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				55F06EEF1E0396C500A849D7 /* Property */,
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
+				55F06EEF1E0396C500A849D7 /* Property */,
 				7A74674C1DF947CE00ACD815 /* Company */,
 				7A381BE81DED9304008BDBF7 /* Commercial */,
 				7A1F12971DEC28D200A9B58F /* Community */,
@@ -8589,6 +8594,7 @@
 				0928B3351DF8F7090085A182 /* TCReservationDetail.m in Sources */,
 				092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
+				7AF972DE1E09174B009D26A3 /* TCPropertyRepairsInfo.m in Sources */,
 				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
 				55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */,
 				7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */,

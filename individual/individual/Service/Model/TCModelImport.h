@@ -70,6 +70,8 @@
 
 /********** 物业报修 **********/
 #import "TCPropertyManageWrapper.h"
+#import "TCPropertyManage.h"
+#import "TCPropertyRepairsInfo.h"
 
 
 @interface TCModelImport : NSObject
