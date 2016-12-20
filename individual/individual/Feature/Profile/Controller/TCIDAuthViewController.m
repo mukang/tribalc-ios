@@ -14,6 +14,8 @@
 #import "TCDatePickerView.h"
 #import "TCGenderPickerView.h"
 
+#import "TCBuluoApi.h"
+
 typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeName = 0,
     TCInputCellTypeBirthdate,
@@ -24,6 +26,7 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 @interface TCIDAuthViewController ()
 <UITableViewDataSource,
 UITableViewDelegate,
+UIScrollViewDelegate,
 TCCommonInputViewCellDelegate,
 TCDatePickerViewDelegate,
 TCGenderPickerViewDelegate>
@@ -35,6 +38,7 @@ TCGenderPickerViewDelegate>
 @property (copy, nonatomic) NSArray *placeholderArray;
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) TCUserIDAuthInfo *authInfo;
 
 @end
 
@@ -89,10 +93,41 @@ TCGenderPickerViewDelegate>
     cell.title = self.titleArray[indexPath.row];
     cell.placeholder = self.placeholderArray[indexPath.row];
     cell.delegate = self;
-    if (indexPath.row == TCInputCellTypeBirthdate || indexPath.row == TCInputCellTypeGender) {
-        cell.inputEnabled = NO;
-    } else {
-        cell.inputEnabled = YES;
+    switch (indexPath.row) {
+        case TCInputCellTypeName:
+            cell.content = self.authInfo.name;
+            cell.keyboardType = UIKeyboardTypeDefault;
+            cell.inputEnabled = YES;
+            cell.autocorrectionType = UITextAutocorrectionTypeDefault;
+            break;
+        case TCInputCellTypeBirthdate:
+            if (self.authInfo.birthday) {
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.authInfo.birthday / 1000];
+                cell.content = [self.dateFormatter stringFromDate:date];
+            } else {
+                cell.content = nil;
+            }
+            cell.inputEnabled = NO;
+            break;
+        case TCInputCellTypeGender:
+            if ([self.authInfo.personSex isEqualToString:@"MALE"]) {
+                cell.content = @"男";
+            } else if ([self.authInfo.personSex isEqualToString:@"FEMALE"]) {
+                cell.content = @"女";
+            } else {
+                cell.content = nil;
+            }
+            cell.inputEnabled = NO;
+            break;
+        case TCInputCellTypeIDNumber:
+            cell.content = self.authInfo.idNo;
+            cell.keyboardType = UIKeyboardTypeASCIICapable;
+            cell.inputEnabled = YES;
+            cell.autocorrectionType = UITextAutocorrectionTypeNo;
+            break;
+            
+        default:
+            break;
     }
     return cell;
 }
@@ -115,6 +150,12 @@ TCGenderPickerViewDelegate>
     return 0.1;
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [scrollView endEditing:YES];
+}
+
 #pragma mark - TCCommonInputViewCellDelegate
 
 - (BOOL)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldShouldReturn:(UITextField *)textField {
@@ -125,13 +166,25 @@ TCGenderPickerViewDelegate>
 }
 
 - (void)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldDidEndEditing:(UITextField *)textField {
-    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    switch (indexPath.row) {
+        case TCInputCellTypeName:
+            self.authInfo.name = textField.text;
+            break;
+        case TCInputCellTypeIDNumber:
+            self.authInfo.idNo = textField.text;
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)didTapContainerViewInCommonInputViewCell:(TCCommonInputViewCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if (indexPath.row == TCInputCellTypeBirthdate) {
         TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithController:self];
+        datePickerView.datePicker.datePickerMode = UIDatePickerModeDate;
         datePickerView.datePicker.date = [self.dateFormatter dateFromString:@"1990年01月01日"];
         datePickerView.datePicker.maximumDate = [NSDate date];
         datePickerView.delegate = self;
@@ -141,18 +194,27 @@ TCGenderPickerViewDelegate>
         genderPickerView.delegate = self;
         [genderPickerView show];
     }
+    
+    [self.tableView endEditing:YES];
 }
 
 #pragma mark - TCDatePickerViewDelegate
 
 - (void)didClickConfirmButtonInDatePickerView:(TCDatePickerView *)view {
-    TCLog(@"%@", view.datePicker.date);
+    NSTimeInterval timestamp = [view.datePicker.date timeIntervalSince1970];
+    self.authInfo.birthday = (NSInteger)(timestamp * 1000);
+    [self.tableView reloadData];
 }
 
 #pragma mark - TCGenderPickerViewDelegate
 
 - (void)genderPickerView:(TCGenderPickerView *)view didClickConfirmButtonWithGender:(NSString *)gender {
-    
+    if ([gender isEqualToString:@"男"]) {
+        self.authInfo.personSex = @"MALE";
+    } else {
+        self.authInfo.personSex = @"FEMALE";
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - Actions
@@ -162,7 +224,35 @@ TCGenderPickerViewDelegate>
 }
 
 - (void)handleClickCommitButton:(TCCommonButton *)sender {
+    if (!self.authInfo.name.length) {
+        [MBProgressHUD showHUDWithMessage:@"请您输入真实姓名"];
+        return;
+    }
+    if (!self.authInfo.birthday) {
+        [MBProgressHUD showHUDWithMessage:@"请您选择出生日期"];
+        return;
+    }
+    if (!self.authInfo.personSex.length) {
+        [MBProgressHUD showHUDWithMessage:@"请您选择性别"];
+        return;
+    }
+    if (!self.authInfo.idNo.length) {
+        [MBProgressHUD showHUDWithMessage:@"请您输入身份证号"];
+        return;
+    }
     
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] authorizeUserIdentity:self.authInfo result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD showHUDWithMessage:@"认证成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"认证失败，%@", reason]];
+        }
+    }];
 }
 
 #pragma mark - Override Methods
@@ -187,6 +277,13 @@ TCGenderPickerViewDelegate>
         _dateFormatter.dateFormat = @"yyyy年MM月dd日";
     }
     return _dateFormatter;
+}
+
+- (TCUserIDAuthInfo *)authInfo {
+    if (_authInfo == nil) {
+        _authInfo = [[TCUserIDAuthInfo alloc] init];
+    }
+    return _authInfo;
 }
 
 - (void)didReceiveMemoryWarning {

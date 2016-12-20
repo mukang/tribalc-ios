@@ -669,6 +669,7 @@
 		7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D0A1E0413CD00F83A7C /* TCBioEditLocationViewController.m */; };
 		7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */; };
 		7AF972D71E08CC72009D26A3 /* TCCommunityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972D51E08CC72009D26A3 /* TCCommunityViewCell.m */; };
+		7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972DA1E08E0FA009D26A3 /* TCUserIDAuthInfo.m */; };
 		D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */; };
 /* End PBXBuildFile section */
 
@@ -2962,6 +2963,8 @@
 		7AF972D31E07ECEB009D26A3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		7AF972D41E08CC72009D26A3 /* TCCommunityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityViewCell.h; sourceTree = "<group>"; };
 		7AF972D51E08CC72009D26A3 /* TCCommunityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityViewCell.m; sourceTree = "<group>"; };
+		7AF972D91E08E0FA009D26A3 /* TCUserIDAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserIDAuthInfo.h; sourceTree = "<group>"; };
+		7AF972DA1E08E0FA009D26A3 /* TCUserIDAuthInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserIDAuthInfo.m; sourceTree = "<group>"; };
 		CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-individual.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -7751,6 +7754,8 @@
 				7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */,
 				7A7467501DF961AD00ACD815 /* TCUserCompanyInfo.h */,
 				7A7467511DF961AD00ACD815 /* TCUserCompanyInfo.m */,
+				7AF972D91E08E0FA009D26A3 /* TCUserIDAuthInfo.h */,
+				7AF972DA1E08E0FA009D26A3 /* TCUserIDAuthInfo.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -8614,6 +8619,7 @@
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
 				7AEB4CC01E03936300F83A7C /* TCBioEditAvatarViewController.m in Sources */,
 				096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */,
+				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,
 				7A4E05051DEE86D0002371B0 /* TCImageURLSynthesizer.m in Sources */,
 				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.mm in Sources */,

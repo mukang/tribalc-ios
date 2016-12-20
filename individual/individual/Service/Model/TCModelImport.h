@@ -20,6 +20,7 @@
 #import "TCWalletBillWrapper.h"
 #import "TCBankCard.h"
 #import "TCUserCompanyInfo.h"
+#import "TCUserIDAuthInfo.h"
 
 /********** 商业相关 **********/
 
