@@ -67,6 +67,7 @@
 		0990F18C1E076CB0002692F6 /* TCSelectPrimaryBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 0990F18B1E076CB0002692F6 /* TCSelectPrimaryBtn.m */; };
 		0990F18F1E076E5D002692F6 /* TCSelectSecondaryBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 0990F18E1E076E5D002692F6 /* TCSelectSecondaryBtn.m */; };
 		0990F1961E077909002692F6 /* TCSelectBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 0990F1951E077909002692F6 /* TCSelectBtn.m */; };
+		0990F19A1E07CA11002692F6 /* TCGoodShopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0990F1991E07CA11002692F6 /* TCGoodShopView.m */; };
 		099B38341DDDA926003F5972 /* TCRecommendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38331DDDA926003F5972 /* TCRecommendHeader.m */; };
 		099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 099B38361DDDA944003F5972 /* TCRecommendFooter.m */; };
 		09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */; };
@@ -810,10 +811,12 @@
 		0990F18E1E076E5D002692F6 /* TCSelectSecondaryBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCSelectSecondaryBtn.m; path = ../TCSelectSecondaryBtn.m; sourceTree = "<group>"; };
 		0990F1941E077909002692F6 /* TCSelectBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectBtn.h; sourceTree = "<group>"; };
 		0990F1951E077909002692F6 /* TCSelectBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectBtn.m; sourceTree = "<group>"; };
-		099B38321DDDA926003F5972 /* TCRecommendHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendHeader.h; sourceTree = "<group>"; };
-		099B38331DDDA926003F5972 /* TCRecommendHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendHeader.m; sourceTree = "<group>"; };
-		099B38351DDDA944003F5972 /* TCRecommendFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendFooter.h; sourceTree = "<group>"; };
-		099B38361DDDA944003F5972 /* TCRecommendFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendFooter.m; sourceTree = "<group>"; };
+		0990F1981E07CA11002692F6 /* TCGoodShopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodShopView.h; sourceTree = "<group>"; };
+		0990F1991E07CA11002692F6 /* TCGoodShopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodShopView.m; sourceTree = "<group>"; };
+		099B38321DDDA926003F5972 /* TCRecommendHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCRecommendHeader.h; path = ../TCRecommendHeader.h; sourceTree = "<group>"; };
+		099B38331DDDA926003F5972 /* TCRecommendHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCRecommendHeader.m; path = ../TCRecommendHeader.m; sourceTree = "<group>"; };
+		099B38351DDDA944003F5972 /* TCRecommendFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCRecommendFooter.h; path = ../TCRecommendFooter.h; sourceTree = "<group>"; };
+		099B38361DDDA944003F5972 /* TCRecommendFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCRecommendFooter.m; path = ../TCRecommendFooter.m; sourceTree = "<group>"; };
 		09AE0F701DED2A7E00F307D8 /* TCServiceWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceWrapper.h; sourceTree = "<group>"; };
 		09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceWrapper.m; sourceTree = "<group>"; };
 		09AE0F731DED2AC600F307D8 /* TCServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServices.h; sourceTree = "<group>"; };
@@ -3339,15 +3342,14 @@
 		092CD4121DD9A07C0073A9C1 /* RecommendBoutique */ = {
 			isa = PBXGroup;
 			children = (
+				0990F1971E07C9AE002692F6 /* Refresh */,
 				0990F1931E0778E9002692F6 /* SelectStandard */,
 				092CD4131DD9A07C0073A9C1 /* TCImgPageControl.h */,
 				092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */,
-				099B38321DDDA926003F5972 /* TCRecommendHeader.h */,
-				099B38331DDDA926003F5972 /* TCRecommendHeader.m */,
-				099B38351DDDA944003F5972 /* TCRecommendFooter.h */,
-				099B38361DDDA944003F5972 /* TCRecommendFooter.m */,
 				091AABA21DE7CE1B003A4192 /* TCGoodTitleView.h */,
 				091AABA31DE7CE1B003A4192 /* TCGoodTitleView.m */,
+				0990F1981E07CA11002692F6 /* TCGoodShopView.h */,
+				0990F1991E07CA11002692F6 /* TCGoodShopView.m */,
 			);
 			path = RecommendBoutique;
 			sourceTree = "<group>";
@@ -3419,6 +3421,17 @@
 				0990F18E1E076E5D002692F6 /* TCSelectSecondaryBtn.m */,
 			);
 			path = SelectStandard;
+			sourceTree = "<group>";
+		};
+		0990F1971E07C9AE002692F6 /* Refresh */ = {
+			isa = PBXGroup;
+			children = (
+				099B38321DDDA926003F5972 /* TCRecommendHeader.h */,
+				099B38331DDDA926003F5972 /* TCRecommendHeader.m */,
+				099B38351DDDA944003F5972 /* TCRecommendFooter.h */,
+				099B38361DDDA944003F5972 /* TCRecommendFooter.m */,
+			);
+			path = Refresh;
 			sourceTree = "<group>";
 		};
 		09AE0F6F1DED2A6200F307D8 /* Service */ = {
@@ -8589,6 +8602,7 @@
 				098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */,
 				7AB29F311DD46C7D00564D93 /* TCUserSensitiveInfo.m in Sources */,
 				7A7E941E1DF57136006A47CE /* TCRepairsPhotosViewCell.m in Sources */,
+				0990F19A1E07CA11002692F6 /* TCGoodShopView.m in Sources */,
 				7AEB4CF31E03944500F83A7C /* TCShippingAddressEditViewCell.m in Sources */,
 				7AEB4CC91E03936300F83A7C /* TCBiographyViewController.m in Sources */,
 				7A1A47CC1DB720DE00E39207 /* UIView+Category.m in Sources */,

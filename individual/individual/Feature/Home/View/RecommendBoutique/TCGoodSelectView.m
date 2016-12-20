@@ -54,7 +54,7 @@
 }
 
 - (void)setupGoodStandard:(TCGoodStandards *)standards {
-    _goodStandard = standards;
+    _goodStandard = standards == nil ? [[TCGoodStandards alloc] init] : standards;
     if (standards.descriptions.allKeys.count == 2 && [standards.descriptions[@"secondary"] isEqual:[NSNull null]]) {
         standards.descriptions = @{ @"primary": standards.descriptions[@"primary"] };
     }

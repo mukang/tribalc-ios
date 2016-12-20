@@ -10,27 +10,24 @@
 #import "TCUserOrderDetailViewController.h"
 #import "TCBuluoApi.h"
 #import "TCClientRequestError.h"
+#import "TCGoodShopView.h"
 #import "TCImgPageControl.h"
 #import "TCShoppingCartViewController.h"
 #import "TCGoodSelectView.h"
 
 @interface TCRecommendInfoViewController () {
-    
-    TCGoodSelectView *goodSelectView;
-    
-    
-    CGFloat titleViewHeight;
-    
     TCGoodDetail *mGoodDetail;
-    UIScrollView *mScrollView;
-    TCImgPageControl *imgPageControl;
+    CGFloat titleViewHeight;
     TCGoodStandards *goodStandard;
     NSString *mGoodId;
-    UICollectionView *imageCollectionView;
+
     
+    TCGoodSelectView *goodSelectView;
+    UIScrollView *mScrollView;
+    TCImgPageControl *imgPageControl;
+    UICollectionView *imageCollectionView;
     TCGoodTitleView *goodTitleView;
     UIWebView *textAndImageView;
-    
 }
 
 @end
@@ -50,7 +47,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     self.view.backgroundColor = [UIColor whiteColor];
     if (mScrollView == nil) {
-        [self initScrollView];
+        [self createEntiretyScrollView];
     }
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
@@ -60,27 +57,67 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    [self initGoodDetailInfoWithGoodId:mGoodId];
-    
-    
+    [self loadGoodDetailInfoWithGoodId:mGoodId];
 }
 
-- (void)initGoodDetailInfoWithGoodId:(NSString *)goodId {
-    
+
+#pragma mark - GetData
+- (void)loadGoodDetailInfoWithGoodId:(NSString *)goodId {
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchGoodDetail:goodId result:^(TCGoodDetail *goodDetail, NSError *error) {
         if (goodDetail) {
             [MBProgressHUD hideHUD:YES];
             mGoodDetail = goodDetail;
-            [self performSelectorOnMainThread:@selector(initUI) withObject:nil waitUntilDone:NO];
+            [self performSelectorOnMainThread:@selector(initMainView) withObject:nil waitUntilDone:NO];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取商品信息失败"];
         }
     }];
 }
 
-- (void)initUI {
+- (void)reloadDetailViewWithTouchGoodDetail:(TCGoodDetail *)goodDetail {
+    
+    mGoodDetail = goodDetail;
+    [imageCollectionView reloadData];
+    //    [goodTitleView setupTitleWithText:goodDetail.title];
+    titleViewHeight = goodTitleView.height;
+    [goodTitleView setupTitleWithText:goodDetail.title];
+    [goodTitleView setSalePriceWithPrice:goodDetail.salePrice];
+    [goodTitleView setOriginPriceLabWithOriginPrice:goodDetail.originPrice];
+    [goodTitleView setTagLabWithTagArr:goodDetail.tags];
+    [self changeViewCoordinates];
+    imgPageControl.numberOfPages = goodDetail.pictures.count;
+    [self reloadWebViewWithUrlStr:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, goodDetail.detailURL]];
+    
+}
+
+- (void)changeViewCoordinates {
+    NSArray *views = mScrollView.subviews;
+    CGFloat changeHeight = 0;
+    for (int i = 0; i < views.count; i++) {
+        UIView *view = views[i];
+        if (changeHeight != 0) {
+            view.y += changeHeight;
+        }
+        if ([views[i] isEqual:goodTitleView]) {
+            changeHeight = goodTitleView.height - titleViewHeight;
+        }
+        
+    }
+}
+
+
+
+
+#pragma mark - UI
+- (void)createEntiretyScrollView {
+    mScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -20, self.view.width, self.view.height + 20 - TCRealValue(49))];
+    mScrollView.contentSize = CGSizeMake(self.view.width, TCRealValue(1500));
+    mScrollView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
+    [self.view addSubview:mScrollView];
+}
+
+- (void)initMainView {
 
     UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(394))];
     [mScrollView addSubview:titleImageView];
@@ -91,52 +128,28 @@
     UIButton *standardSelectBtn = [self createStandardSelectButtonWithFrame:CGRectMake(0, goodTitleView.y + goodTitleView.height + TCRealValue(7.5), self.view.width, TCRealValue(38))];
     [mScrollView addSubview:standardSelectBtn];
     
-    UIView *shopView = [self createShopInfoViewWithFrame:CGRectMake(0, standardSelectBtn.y + standardSelectBtn.height + TCRealValue(7.5), self.view.width, TCRealValue(64))];
+    UIView *shopView = [[TCGoodShopView alloc] initWithFrame:CGRectMake(0, standardSelectBtn.y + standardSelectBtn.height + TCRealValue(7.5), self.view.width, TCRealValue(64)) AndShopDetail:mGoodDetail];
     [mScrollView addSubview:shopView];
     
     UISegmentedControl *selectGoodInfoSegment = [self createSelectGoodGraphicAndParameterView:CGRectMake(0, shopView.y + shopView.height, self.view.width, TCRealValue(39))];
     [mScrollView addSubview:selectGoodInfoSegment];
     
-    NSString *webUrlStr = [NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, mGoodDetail.detailURL];
-    textAndImageView = [self createURLInfoViewWithOrigin:CGPointMake(0, selectGoodInfoSegment.y + selectGoodInfoSegment.height) AndURLStr:webUrlStr];
-    UIScrollView *tempView = (UIScrollView *)[textAndImageView.subviews objectAtIndex:0];
-    tempView.scrollEnabled = NO;
+    textAndImageView = [self createURLInfoViewWithOrigin:CGPointMake(0, selectGoodInfoSegment.y + selectGoodInfoSegment.height) AndURLStr:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, mGoodDetail.detailURL]];
     [mScrollView addSubview:textAndImageView];
 
     UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
     [self.view addSubview:bottomView];
 
-    [self initSelectSizeView];
+    [self createSelectSizeView];
     
-    [self initBackButton];
+    [self createBackButton];
 
 }
 
 
 
-
-- (void)initSelectSizeView {
-    goodSelectView = [[TCGoodSelectView alloc] initWithGoodDetail:mGoodDetail];
-    goodSelectView.delegate = self;
-    [[UIApplication sharedApplication].keyWindow addSubview:goodSelectView];
-    
-//
-//    standardView = [[TCStandardView alloc] initWithTarget:self AndNumberAddAction:@selector(touchBuyNumberAddBtn:) AndNumberSubAction:@selector(touchBuyNumberSubBtn:) AndAddShopCarAction:@selector(touchAddShopCartBtn:) AndBuyAction:@selector(touchBuyBtn:) AndCloseAction:@selector(touchCloseBtn)];
-//    [standardView setSalePriceAndInventoryWithSalePrice:mGoodDetail.salePrice AndInventory:mGoodDetail.repertory AndImgUrlStr:mGoodDetail.thumbnail];
-//    [self.view addSubview:standardView];
-//    [[UIApplication sharedApplication].keyWindow addSubview:standardView];
-}
-
-
-- (void)initScrollView {
-    mScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -20, self.view.width, self.view.height + 20 - TCRealValue(49))];
-    mScrollView.contentSize = CGSizeMake(self.view.width, TCRealValue(1500));
-    mScrollView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
-    [self.view addSubview:mScrollView];
-}
-
-
-- (void)initBackButton {
+#pragma mark - Back Button
+- (void)createBackButton {
     UIButton *backBtn = [self getBackButton];
     [backBtn addTarget:self action:@selector(touchBackButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backBtn];
@@ -155,8 +168,8 @@
     return backBtn;
 }
 
-#pragma mark - Main UI
 
+#pragma mark - Carousel ImageView
 - (UIView *)createTitleImageViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
@@ -174,7 +187,26 @@
     
     return view;
 }
+- (UICollectionView *)getTitleImageViewWithFrame:(CGRect)frame {
+    
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    layout.itemSize = CGSizeMake(TCScreenWidth, frame.size.height);
+    layout.minimumLineSpacing = 0.0f;
+    
+    UICollectionView *imgCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) collectionViewLayout:layout];
+    imgCollectionView.delegate = self;
+    imgCollectionView.dataSource = self;
+    imgCollectionView.pagingEnabled = YES;
+    imgCollectionView.showsHorizontalScrollIndicator = NO;
+    imgCollectionView.showsVerticalScrollIndicator = NO;
+    [imgCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    imgCollectionView.contentSize = CGSizeMake(mGoodDetail.pictures.count * frame.size.width, frame.size.height);
+    
+    return imgCollectionView;
+}
 
+#pragma mark - Standard Select
 - (UIButton *)createStandardSelectButtonWithFrame:(CGRect)frame {
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     button.backgroundColor = [UIColor whiteColor];
@@ -191,33 +223,15 @@
     return button;
 }
 
-- (UIView *)createShopInfoViewWithFrame:(CGRect)frame {
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = [UIColor whiteColor];
-    
-    UIImageView *logoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCRealValue(20), TCRealValue(8), TCRealValue(48), TCRealValue(48))];
-    [logoImgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, mGoodDetail.thumbnail]]];
-    [view addSubview:logoImgView];
-    
-    NSString *brandStr = [NSString stringWithFormat:@"品牌 : %@", mGoodDetail.brand];
-    UILabel *brandLab = [TCComponent createLabelWithFrame:CGRectMake(logoImgView.x + logoImgView.width + TCRealValue(12), TCRealValue(8), frame.size.width - logoImgView.x + logoImgView.width + TCRealValue(12), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:brandStr AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
-    brandLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(14)];
-    [view addSubview:brandLab];
-    
-    UIView *evaluateView = [self getEvaluateViewWithFrame:CGRectMake(brandLab.x, brandLab.y + brandLab.height + TCRealValue(4), brandLab.width, TCRealValue(13))];
-    [view addSubview:evaluateView];
-    
-    NSString *salesStr = [NSString stringWithFormat:@"总销量 : %li", (long)mGoodDetail.saleQuantity];
-    UILabel *salesLab = [self getLabelWithText:salesStr AndOrigin:CGPointMake(brandLab.x, evaluateView.y + evaluateView.height + TCRealValue(5))];
-    [view addSubview:salesLab];
-    
-    NSString *profitStr = [NSString stringWithFormat:@"电话 : %@",  @"65573"];
-    UILabel *profitLab = [self getLabelWithText:profitStr AndOrigin:CGPointMake(salesLab.x + salesLab.width + TCRealValue(15), salesLab.y)];
-    [view addSubview:profitLab];
 
-    return view;
+- (void)createSelectSizeView {
+    goodSelectView = [[TCGoodSelectView alloc] initWithGoodDetail:mGoodDetail];
+    goodSelectView.delegate = self;
+    [[UIApplication sharedApplication].keyWindow addSubview:goodSelectView];
+    
 }
 
+#pragma mark - Bottom Button
 - (UIView *)createBottomViewWithFrame:(CGRect)frame {
     UIView *view=  [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
@@ -225,25 +239,22 @@
     UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, frame.size.width, TCRealValue(0.5))];
     [view addSubview:lineView];
     
-    UIButton *collectionView = [self createCollectionAndShopViewWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_collection_gray" AndText:@"收藏" AndAction:@selector(touchCollectionBtn:)];
+    UIButton *collectionView = [self createBottomLogoBtnWithFrame:CGRectMake(0, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_collection_gray" AndText:@"收藏" AndAction:@selector(touchCollectionBtn:)];
     [view addSubview:collectionView];
-    
-    UIButton *shopCarImgBtn = [self createCollectionAndShopViewWithFrame:CGRectMake(collectionView.width, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_shoppingcar_gray" AndText:@"购物车" AndAction:@selector(touchShopCarBtn:)];
+    UIButton *shopCarImgBtn = [self createBottomLogoBtnWithFrame:CGRectMake(collectionView.width, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_shoppingcar_gray" AndText:@"购物车" AndAction:@selector(touchShopCarBtn:)];
     [view addSubview:shopCarImgBtn];
-    
     
     UIButton *shopCarBtn = [TCComponent createButtonWithFrame:CGRectMake(shopCarImgBtn.x + shopCarImgBtn.width, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:TCRealValue(18)];
     [shopCarBtn addTarget:self action:@selector(touchAddShopCartBtnInDetailView:) forControlEvents:UIControlEventTouchUpInside];
-    shopCarBtn.backgroundColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+    shopCarBtn.backgroundColor = TCRGBColor(81, 199, 209);
     [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [view addSubview:shopCarBtn];
     
     return view;
 }
 
-- (UIButton *)createCollectionAndShopViewWithFrame:(CGRect)frame AndImageName:(NSString *)imageName AndText:(NSString *)text AndAction:(SEL)action{
+- (UIButton *)createBottomLogoBtnWithFrame:(CGRect)frame AndImageName:(NSString *)imageName AndText:(NSString *)text AndAction:(SEL)action{
     UIButton *view = [[UIButton alloc] initWithFrame:frame];
-    
     UIImage *img = [UIImage imageNamed:imageName];
     UIButton *button = [TCComponent createButtonWithFrame:CGRectMake((frame.size.width - img.size.width) / 2, TCRealValue(10), img.size.width, img.size.height) AndTitle:@"" AndFontSize:0];
     [button setImage:img forState:UIControlStateNormal];
@@ -259,10 +270,11 @@
     return view;
 }
 
+
+#pragma mark - SegmentControl
 - (UISegmentedControl *)createSelectGoodGraphicAndParameterView:(CGRect)frame {
     
     UISegmentedControl *selectSegment = [self getSegmentControlWithFrame:frame];
-    
     UIView *topLine = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, frame.size.width, TCRealValue(1))];
     UIView *downLine = [TCComponent createGrayLineWithFrame:CGRectMake(0, frame.size.height - TCRealValue(1), frame.size.width, TCRealValue(1))];
     [selectSegment addSubview:topLine];
@@ -273,45 +285,6 @@
     
     
     return selectSegment;
-}
-
-- (UIWebView *)createURLInfoViewWithOrigin:(CGPoint)point AndURLStr:(NSString *)urlstr{
-    
-    UIWebView *webView = [[UIWebView alloc] init];
-    [webView setOrigin:point];
-    NSURL *url = [NSURL URLWithString:urlstr];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    webView.delegate = self;
-    [webView loadRequest:request];
-    [webView sizeToFit];
-
-    return webView;
-}
-
-
-
-#pragma mark - Component UI
-
-- (UICollectionView *)getTitleImageViewWithFrame:(CGRect)frame {
-    NSArray *imageArr = mGoodDetail.pictures;
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.itemSize = CGSizeMake(self.view.width, frame.size.height);
-    layout.minimumLineSpacing = 0.0f;
-    
-    UICollectionView *imgCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) collectionViewLayout:layout];
-    imgCollectionView.delegate = self;
-    imgCollectionView.dataSource = self;
-    imgCollectionView.pagingEnabled = YES;
-    imgCollectionView.showsHorizontalScrollIndicator = NO;
-    imgCollectionView.showsVerticalScrollIndicator = NO;
-    [imgCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
-    imgCollectionView.contentSize = CGSizeMake(imageArr.count * frame.size.width, frame.size.height);
-    imgCollectionView.contentOffset = CGPointMake(0, 0);
-    
-    imgCollectionView.backgroundColor = [UIColor whiteColor];
-
-    return imgCollectionView;
 }
 
 - (UISegmentedControl *)getSegmentControlWithFrame:(CGRect)frame {
@@ -329,37 +302,29 @@
     return selectSegment;
 }
 
-- (UILabel *)getLabelWithText:(NSString *)text AndOrigin:(CGPoint)point {
-    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:TCRealValue(11) AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
-    [label setOrigin:point];
+
+- (UIWebView *)createURLInfoViewWithOrigin:(CGPoint)point AndURLStr:(NSString *)urlStr{
     
-    return label;
+    UIWebView *webView = [[UIWebView alloc] init];
+    [webView setOrigin:point];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    webView.delegate = self;
+    [webView loadRequest:request];
+    [webView sizeToFit];
+    UIScrollView *tempView = (UIScrollView *)[webView.subviews objectAtIndex:0];
+    tempView.scrollEnabled = NO;
+
+    return webView;
 }
 
-- (UIView *)getEvaluateViewWithFrame:(CGRect)frame {
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    NSString *numberStr = @"3";
-    int number = numberStr.intValue;
-    for (int i = 0; i < number; i++) {
-        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"good_collection_yes"]];
-        [imgView setSize:CGSizeMake(TCRealValue(13), TCRealValue(13))];
-        if (i == 0) {
-            [imgView setOrigin:CGPointMake(0, 0)];
-        } else {
-            [imgView setOrigin:CGPointMake(i * TCRealValue(13) + i * TCRealValue(3), 0)];
+- (void)reloadWebViewWithUrlStr:(NSString *)urlStr {
+    for (int i = 0; i < mScrollView.subviews.count; i++) {
+        if ([mScrollView.subviews[i] isKindOfClass:[UISegmentedControl class]]) {
+            UISegmentedControl *seg = mScrollView.subviews[i];
+            textAndImageView = [self createURLInfoViewWithOrigin:CGPointMake(seg.x, seg.y + seg.height) AndURLStr:urlStr];
         }
-        [view addSubview:imgView];
     }
-    return view;
-}
-
-
-- (UIButton *)createSelectImgButtonWithFrame:(CGRect)frame {
-    UIButton *button = [[UIButton alloc] initWithFrame:frame];
-    button.layer.cornerRadius = frame.size.height / 2;
-    button.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
-    
-    return button;
 }
 
 
@@ -370,7 +335,7 @@
     mScrollView.contentSize = CGSizeMake(self.view.width, webView.y + webView.height);
 }
 
-#pragma mark - UICollectionView
+#pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 1;
@@ -385,11 +350,9 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    
     for (UIView *view in cell.contentView.subviews) {
         [view removeFromSuperview];
     }
-    
     NSURL *imgUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, mGoodDetail.pictures[indexPath.row]]];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, collectionView.width, collectionView.height)];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -402,7 +365,6 @@
 
 #pragma mark - TCGoodSelectViewDelegate
 - (void)selectView:(TCGoodSelectView *)goodSelectView didAddShoppingCartWithGoodDetail:(TCGoodDetail *)goodDetail Amount:(NSInteger)amount {
-    
         [[TCBuluoApi api] createShoppingCartWithAmount:amount goodsId:goodDetail.ID result:^(BOOL result, NSError *error) {
             if (result) {
                 [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
@@ -422,7 +384,7 @@
 }
 
 
-#pragma mark - UIScrollView
+#pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     int index = scrollView.contentOffset.x / self.view.width;
@@ -430,36 +392,9 @@
     
 }
 
-#pragma mark - click
+#pragma mark - Touch Action
 - (void)touchBackButton {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-
-- (void)reloadDetailViewWithTouchGoodDetail:(TCGoodDetail *)goodDetail {
-   
-    mGoodDetail = goodDetail;
-    [imageCollectionView reloadData];
-
-//    [goodTitleView setupTitleWithText:goodDetail.title];
-    titleViewHeight = goodTitleView.height;
-    [goodTitleView setupTitleWithText:goodDetail.title];
-    [goodTitleView setSalePriceWithPrice:goodDetail.salePrice];
-    [goodTitleView setOriginPriceLabWithOriginPrice:goodDetail.originPrice];
-    [goodTitleView setTagLabWithTagArr:goodDetail.tags];
-    [self changeViewCoordinates];
-    imgPageControl.numberOfPages = goodDetail.pictures.count;
-    [self reloadWebViewWithUrlStr:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, goodDetail.detailURL]];
-    
-}
-
-- (void)reloadWebViewWithUrlStr:(NSString *)urlStr {
-    for (int i = 0; i < mScrollView.subviews.count; i++) {
-        if ([mScrollView.subviews[i] isKindOfClass:[UISegmentedControl class]]) {
-            UISegmentedControl *seg = mScrollView.subviews[i];
-            textAndImageView = [self createURLInfoViewWithOrigin:CGPointMake(seg.x, seg.y + seg.height) AndURLStr:urlStr];
-        }
-    }
 }
 
 
@@ -516,47 +451,11 @@
 }
 
 
-//- (void)touchAddShopCartBtn:(UIButton *)btn {
-//    
-//    [[TCBuluoApi api] createShoppingCartWithAmount:[standardView.numberLab.text  integerValue] goodsId:mGoodDetail.ID result:^(BOOL result, NSError *error) {
-//        if (result) {
-//            [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
-//        } else {
-//            TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
-//            if ([error isEqual:sessionError]) {
-//                [MBProgressHUD showHUDWithMessage:@"请登录"];
-//            }
-//            [MBProgressHUD showHUDWithMessage:@"加入购物车失败"];
-//        }
-//        [standardView endSelectStandard];
-//    }];
-//
-//}
-//
-
-
 - (void)touchCollectionBtn:(id)sender {
-    //    goodInfoDic
-    
     
 }
 
-#pragma mark - other
 
-- (void)changeViewCoordinates {
-    NSArray *views = mScrollView.subviews;
-    CGFloat changeHeight = 0;
-    for (int i = 0; i < views.count; i++) {
-        UIView *view = views[i];
-        if (changeHeight != 0) {
-            view.y += changeHeight;
-        }
-        if ([views[i] isEqual:goodTitleView]) {
-            changeHeight = goodTitleView.height - titleViewHeight;
-        }
-
-    }
-}
 
 
 - (void)viewWillDisappear:(BOOL)animated {

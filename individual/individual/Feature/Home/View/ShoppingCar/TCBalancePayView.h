@@ -15,6 +15,6 @@
 
 - (void)showPayView;
 
-@property (retain, nonatomic) TCOrder *order;
+@property (retain, nonatomic) NSArray *orderArr;
 
 @end

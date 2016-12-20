@@ -140,7 +140,6 @@
 }
 
 - (void)initialImgView {
-    
     _resImgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCRealValue(20), TCRealValue(160) / 2 - TCRealValue(130) / 2, TCRealValue(175), TCRealValue(130))];
     [self.contentView addSubview:_resImgView];
 }

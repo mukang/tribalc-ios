@@ -33,30 +33,6 @@
     return self;
 }
 
-- (instancetype)initWithItemList:(NSArray *)itemList {
-    self = [super init];
-    if (self) {
-        TCUserSession *userSession = [[TCBuluoApi api] currentUserSession];
-        orderDetail = [[TCOrder alloc] init];
-        orderDetail.itemList = itemList;
-        orderDetail.ownerId = userSession.userInfo.ID;
-        TCUserShippingAddress *shippingAddress = userSession.userSensitiveInfo.shippingAddress;
-        orderDetail.address = [NSString stringWithFormat:@"%@|%@|%@%@%@%@", shippingAddress.name, shippingAddress.phone, shippingAddress.province, shippingAddress.city, shippingAddress.district, shippingAddress.address];
-        TCMarkStore *store = [[TCMarkStore alloc] init];
-        store.name = @"三只松鼠";
-        store.logo = @"";
-        orderDetail.store = store;
-        orderDetail.addressId = userSession.userSensitiveInfo.addressID;
-        orderDetail.expressType = @"NOT_PAYPOSTAGE";
-        orderDetail.expressFee = 7.0;
-        orderDetail.status = @"";
-        orderDetail.totalFee = [self getConfirmOrderViewTotalPrice];
-        
-    }
-    
-    return self;
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
