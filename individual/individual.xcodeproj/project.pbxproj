@@ -483,6 +483,13 @@
 		55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F031E040B2500A849D7 /* TCPropertyDetailController.m */; };
 		55F06F061E040B2500A849D7 /* TCPropertyDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */; };
 		55F06F081E053A1000A849D7 /* downImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 55F06F071E053A1000A849D7 /* downImage.jpg */; };
+		55F06F0C1E078C2900A849D7 /* TCPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F0A1E078C2900A849D7 /* TCPaymentViewController.m */; };
+		55F06F0D1E078C2900A849D7 /* TCPaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F06F0B1E078C2900A849D7 /* TCPaymentViewController.xib */; };
+		55F06F101E07D0AA00A849D7 /* TCQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F0F1E07D0AA00A849D7 /* TCQRCodeViewController.m */; };
+		55F06F141E07D15500A849D7 /* TCBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F131E07D15500A849D7 /* TCBaseViewController.m */; };
+		55F06F1A1E07E9FA00A849D7 /* TCScannerBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F191E07E9FA00A849D7 /* TCScannerBorder.m */; };
+		55F06F1D1E07EA2100A849D7 /* TCScannerMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F1C1E07EA2100A849D7 /* TCScannerMaskView.m */; };
+		55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F1F1E07EC6500A849D7 /* TCScanner.m */; };
 		7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */; };
 		7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C341E001BFF00224677 /* TCCompanyApplyNameViewCell.m */; };
 		7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C371E002CF000224677 /* TCCompanyNameViewCell.m */; };
@@ -2642,6 +2649,19 @@
 		55F06F031E040B2500A849D7 /* TCPropertyDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyDetailController.m; sourceTree = "<group>"; };
 		55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPropertyDetailController.xib; sourceTree = "<group>"; };
 		55F06F071E053A1000A849D7 /* downImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = downImage.jpg; sourceTree = "<group>"; };
+		55F06F091E078C2900A849D7 /* TCPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentViewController.h; sourceTree = "<group>"; };
+		55F06F0A1E078C2900A849D7 /* TCPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentViewController.m; sourceTree = "<group>"; };
+		55F06F0B1E078C2900A849D7 /* TCPaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentViewController.xib; sourceTree = "<group>"; };
+		55F06F0E1E07D0AA00A849D7 /* TCQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCQRCodeViewController.h; sourceTree = "<group>"; };
+		55F06F0F1E07D0AA00A849D7 /* TCQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCQRCodeViewController.m; sourceTree = "<group>"; };
+		55F06F121E07D15500A849D7 /* TCBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBaseViewController.h; sourceTree = "<group>"; };
+		55F06F131E07D15500A849D7 /* TCBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBaseViewController.m; sourceTree = "<group>"; };
+		55F06F181E07E9FA00A849D7 /* TCScannerBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCScannerBorder.h; sourceTree = "<group>"; };
+		55F06F191E07E9FA00A849D7 /* TCScannerBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCScannerBorder.m; sourceTree = "<group>"; };
+		55F06F1B1E07EA2100A849D7 /* TCScannerMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCScannerMaskView.h; sourceTree = "<group>"; };
+		55F06F1C1E07EA2100A849D7 /* TCScannerMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCScannerMaskView.m; sourceTree = "<group>"; };
+		55F06F1E1E07EC6500A849D7 /* TCScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCScanner.h; sourceTree = "<group>"; };
+		55F06F1F1E07EC6500A849D7 /* TCScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCScanner.m; sourceTree = "<group>"; };
 		7A084C301E000D3B00224677 /* TCCompanyApplyTitleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyTitleViewCell.h; sourceTree = "<group>"; };
 		7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyApplyTitleViewCell.m; sourceTree = "<group>"; };
 		7A084C331E001BFF00224677 /* TCCompanyApplyNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyNameViewCell.h; sourceTree = "<group>"; };
@@ -7153,6 +7173,15 @@
 			path = Property;
 			sourceTree = "<group>";
 		};
+		55F06F111E07D13C00A849D7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				55F06F121E07D15500A849D7 /* TCBaseViewController.h */,
+				55F06F131E07D15500A849D7 /* TCBaseViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		78C4E9954E04995E8CED7C6E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -7308,6 +7337,8 @@
 				7A1AC8241DF122C80052132F /* TCIDAuthViewController.xib */,
 				7AC347041E016A3800E28EC9 /* TCSettingViewController.h */,
 				7AC347051E016A3800E28EC9 /* TCSettingViewController.m */,
+				55F06F0E1E07D0AA00A849D7 /* TCQRCodeViewController.h */,
+				55F06F0F1E07D0AA00A849D7 /* TCQRCodeViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -7622,6 +7653,7 @@
 		7A9CCF081DB627A5003D90C6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				55F06F111E07D13C00A849D7 /* Controllers */,
 				7A11F6FC1DE41E93005F3EAB /* Views */,
 				7A9CCF091DB627A5003D90C6 /* Categories */,
 				7A9CCF0A1DB627A5003D90C6 /* Libs */,
@@ -7665,6 +7697,8 @@
 				7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */,
 				7A4E05031DEE86D0002371B0 /* TCImageURLSynthesizer.h */,
 				7A4E05041DEE86D0002371B0 /* TCImageURLSynthesizer.m */,
+				55F06F1E1E07EC6500A849D7 /* TCScanner.h */,
+				55F06F1F1E07EC6500A849D7 /* TCScanner.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -7789,6 +7823,9 @@
 				7AC346FD1E01454100E28EC9 /* TCBankCardViewController.h */,
 				7AC346FE1E01454100E28EC9 /* TCBankCardViewController.m */,
 				7AC346FF1E01454100E28EC9 /* TCBankCardViewController.xib */,
+				55F06F091E078C2900A849D7 /* TCPaymentViewController.h */,
+				55F06F0A1E078C2900A849D7 /* TCPaymentViewController.m */,
+				55F06F0B1E078C2900A849D7 /* TCPaymentViewController.xib */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -7904,6 +7941,10 @@
 				7AC3470B1E01717C00E28EC9 /* TCSettingNotificationViewCell.m */,
 				7AC3470D1E0171B000E28EC9 /* TCSettingCacheViewCell.h */,
 				7AC3470E1E0171B000E28EC9 /* TCSettingCacheViewCell.m */,
+				55F06F181E07E9FA00A849D7 /* TCScannerBorder.h */,
+				55F06F191E07E9FA00A849D7 /* TCScannerBorder.m */,
+				55F06F1B1E07EA2100A849D7 /* TCScannerMaskView.h */,
+				55F06F1C1E07EA2100A849D7 /* TCScannerMaskView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -8279,6 +8320,7 @@
 				7A14FC591DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib in Resources */,
 				553DC8491DFFE22F0018783E /* Matroska2ConfigVersion.cmake in Resources */,
 				7AEB4CEE1E03944500F83A7C /* TCBiographyAvatarViewCell.xib in Resources */,
+				55F06F0D1E078C2900A849D7 /* TCPaymentViewController.xib in Resources */,
 				553DC9641DFFE2310018783E /* Mediastreamer2ConfigVersion.cmake in Resources */,
 				7AEB4CF41E03944500F83A7C /* TCShippingAddressEditViewCell.xib in Resources */,
 				553DC90D1DFFE2300018783E /* leaving_dreams.mkv in Resources */,
@@ -8430,7 +8472,9 @@
 				7AEB4CCC1E03936300F83A7C /* TCShippingAddressViewController.m in Sources */,
 				7A11F6EB1DE3E304005F3EAB /* TCClient.m in Sources */,
 				091AABA41DE7CE1B003A4192 /* TCGoodTitleView.m in Sources */,
+				55F06F101E07D0AA00A849D7 /* TCQRCodeViewController.m in Sources */,
 				7A133ECC1DDC7AEE00FCAB95 /* TCClientRequest.m in Sources */,
+				55F06F1A1E07E9FA00A849D7 /* TCScannerBorder.m in Sources */,
 				7AEB4CC31E03936300F83A7C /* TCBioEditPhoneViewController.m in Sources */,
 				7AC346EE1E0144B500E28EC9 /* TCWalletBillViewCell.m in Sources */,
 				7A7E94231DF5723A006A47CE /* TCRepairsCommitViewCell.m in Sources */,
@@ -8438,6 +8482,7 @@
 				7A11F7151DE43195005F3EAB /* MLBPasswordTextField.m in Sources */,
 				7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */,
 				553DC8AD1DFFE22F0018783E /* parser-impl.cc in Sources */,
+				55F06F1D1E07EA2100A849D7 /* TCScannerMaskView.m in Sources */,
 				09222E7C1DEEC0D60064C0DF /* TCOrder.m in Sources */,
 				7A381BE11DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.m in Sources */,
 				092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */,
@@ -8453,6 +8498,7 @@
 				09222E7F1DEEC2C70064C0DF /* TCOrderItem.m in Sources */,
 				55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */,
 				09222E2D1DEE98550064C0DF /* TCSelectSortButton.m in Sources */,
+				55F06F0C1E078C2900A849D7 /* TCPaymentViewController.m in Sources */,
 				7AEB4CED1E03944400F83A7C /* TCBiographyAvatarViewCell.m in Sources */,
 				7A14FC581DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m in Sources */,
 				7AEB4CEF1E03944500F83A7C /* TCBiographyViewCell.m in Sources */,
@@ -8532,6 +8578,7 @@
 				7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */,
 				0928B3411DF96F930085A182 /* TCSelectStandardView.m in Sources */,
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
+				55F06F141E07D15500A849D7 /* TCBaseViewController.m in Sources */,
 				099B38371DDDA944003F5972 /* TCRecommendFooter.m in Sources */,
 				0928B33B1DF921B80085A182 /* TCListShoppingCart.m in Sources */,
 				091D30461DFFC02E00112417 /* TCCartItem.m in Sources */,
@@ -8620,6 +8667,7 @@
 				7AEB4CC01E03936300F83A7C /* TCBioEditAvatarViewController.m in Sources */,
 				096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */,
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,
+				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
 				7A4E05051DEE86D0002371B0 /* TCImageURLSynthesizer.m in Sources */,
 				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.mm in Sources */,
