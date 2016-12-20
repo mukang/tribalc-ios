@@ -12,16 +12,16 @@
 @protocol TCDatePickerViewDelegate <NSObject>
 
 @optional
-- (void)datePickerView:(TCDatePickerView *)view didClickConfirmButtonWithDate:(NSDate *)date;
+- (void)didClickConfirmButtonInDatePickerView:(TCDatePickerView *)view;
 
 @end
 
 @interface TCDatePickerView : UIView
 
-@property (nonatomic, readonly) UIDatePickerMode datePickerMode;
+@property (weak, nonatomic) UIDatePicker *datePicker;
 @property (weak, nonatomic) id<TCDatePickerViewDelegate> delegate;
 
-- (instancetype)initWithDatePickerMode:(UIDatePickerMode)mode fromController:(UIViewController *)controller;
+- (instancetype)initWithController:(UIViewController *)controller;
 - (void)show;
 
 @end

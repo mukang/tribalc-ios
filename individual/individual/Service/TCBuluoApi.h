@@ -100,6 +100,14 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 - (void)changeUserAvatar:(NSString *)avatar result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
+ 修改用户背景图
+
+ @param cover 用户背景图地址
+ @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
+ */
+- (void)changeUserCover:(NSString *)cover result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
  修改用户性别
 
  @param gender 性别枚举值（只能传入TCUserGenderMale和TCUserGenderFemale）
@@ -259,6 +267,14 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  @param resultBlock 结果回调，success为NO时表示绑定失败，失败原因见error的code和userInfo
  */
 - (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 社区参观预约
+
+ @param communityReservationInfo TCCommunityReservationInfo对象
+ @param resultBlock 结果回调，success为NO时表示预约失败，失败原因见error的code和userInfo
+ */
+- (void)reserveCommunity:(TCCommunityReservationInfo *)communityReservationInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 

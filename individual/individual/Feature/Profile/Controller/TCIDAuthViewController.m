@@ -34,6 +34,8 @@ TCGenderPickerViewDelegate>
 @property (copy, nonatomic) NSArray *titleArray;
 @property (copy, nonatomic) NSArray *placeholderArray;
 
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation TCIDAuthViewController {
@@ -129,7 +131,9 @@ TCGenderPickerViewDelegate>
 - (void)didTapContainerViewInCommonInputViewCell:(TCCommonInputViewCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if (indexPath.row == TCInputCellTypeBirthdate) {
-        TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithDatePickerMode:UIDatePickerModeDate fromController:self];
+        TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithController:self];
+        datePickerView.datePicker.date = [self.dateFormatter dateFromString:@"1990年01月01日"];
+        datePickerView.datePicker.maximumDate = [NSDate date];
         datePickerView.delegate = self;
         [datePickerView show];
     } else if (indexPath.row == TCInputCellTypeGender) {
@@ -141,8 +145,8 @@ TCGenderPickerViewDelegate>
 
 #pragma mark - TCDatePickerViewDelegate
 
-- (void)datePickerView:(TCDatePickerView *)view didClickConfirmButtonWithDate:(NSDate *)date {
-    TCLog(@"--%@", date);
+- (void)didClickConfirmButtonInDatePickerView:(TCDatePickerView *)view {
+    TCLog(@"%@", view.datePicker.date);
 }
 
 #pragma mark - TCGenderPickerViewDelegate
@@ -175,6 +179,14 @@ TCGenderPickerViewDelegate>
         _placeholderArray = @[@"请输入真实姓名", @"请选择出生日期", @"请选择性别", @"请输入身份证号码"];
     }
     return _placeholderArray;
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.dateFormat = @"yyyy年MM月dd日";
+    }
+    return _dateFormatter;
 }
 
 - (void)didReceiveMemoryWarning {

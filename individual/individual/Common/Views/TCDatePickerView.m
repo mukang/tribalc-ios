@@ -13,7 +13,6 @@ static CGFloat const duration = 0.25;
 @interface TCDatePickerView ()
 
 @property (weak, nonatomic) UIView *containerView;
-@property (weak, nonatomic) UIDatePicker *datePicker;
 
 @end
 
@@ -22,12 +21,11 @@ static CGFloat const duration = 0.25;
     __weak UIViewController *sourceController;
 }
 
-- (instancetype)initWithDatePickerMode:(UIDatePickerMode)mode fromController:(UIViewController *)controller {
+- (instancetype)initWithController:(UIViewController *)controller {
     self = [super initWithFrame:[UIScreen mainScreen].bounds];
     if (self) {
         weakSelf = self;
         sourceController = controller;
-        _datePickerMode = mode;
         [self initPrivate];
     }
     return self;
@@ -65,7 +63,7 @@ static CGFloat const duration = 0.25;
 - (void)initPrivate {
     self.backgroundColor = TCARGBColor(0, 0, 0, 0);
     
-    CGFloat containerViewH = 236;
+    CGFloat containerViewH = 256;
     CGFloat buttonW = 60;
     CGFloat buttonH = 40;
     
@@ -112,16 +110,6 @@ static CGFloat const duration = 0.25;
     
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
     datePicker.backgroundColor = TCRGBColor(242, 242, 242);
-    datePicker.datePickerMode = _datePickerMode;
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    components.year = 1990;
-    components.month = 1;
-    components.day = 1;
-    datePicker.date = [[NSCalendar currentCalendar] dateFromComponents:components];
-    components.year = 2016;
-    components.month = 1;
-    components.day = 1;
-    datePicker.maximumDate = [[NSCalendar currentCalendar] dateFromComponents:components];
     datePicker.frame = CGRectMake(0, 40, containerView.width, containerView.height - 40);
     [containerView addSubview:datePicker];
     self.datePicker = datePicker;
@@ -134,8 +122,8 @@ static CGFloat const duration = 0.25;
 }
 
 - (void)handleClickConfirmButton:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(datePickerView:didClickConfirmButtonWithDate:)]) {
-        [self.delegate datePickerView:self didClickConfirmButtonWithDate:self.datePicker.date];
+    if ([self.delegate respondsToSelector:@selector(didClickConfirmButtonInDatePickerView:)]) {
+        [self.delegate didClickConfirmButtonInDatePickerView:self];
     }
     [self dismiss];
 }

@@ -33,6 +33,8 @@ typedef NS_ENUM(NSInteger, TCUserEmotionState) {
 @property (copy, nonatomic) NSString *nickname;
 /** 头像路径 */
 @property (copy, nonatomic) NSString *picture;
+/** 用户背景图 */
+@property (copy, nonatomic) NSString *cover;
 /** 姓名 */
 @property (copy, nonatomic) NSString *name;
 /** 性别(UNKNOWN, MALE, FEMALE) */
@@ -55,7 +57,7 @@ typedef NS_ENUM(NSInteger, TCUserEmotionState) {
 @property (copy, nonatomic) NSArray *coordinate;
 /** 所在社区ID */
 @property (copy, nonatomic) NSString *communityID;
-/** 所在公司ID */
-@property (copy, nonatomic) NSString *enterpriseID;
+/** 所在社区名称 */
+@property (copy, nonatomic) NSString *communityName;
 
 @end

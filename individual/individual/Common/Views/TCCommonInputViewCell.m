@@ -51,6 +51,12 @@
     self.textField.attributedPlaceholder = attStr;
 }
 
+- (void)setKeyboardType:(UIKeyboardType)keyboardType {
+    _keyboardType = keyboardType;
+    
+    self.textField.keyboardType = keyboardType;
+}
+
 - (void)setInputEnabled:(BOOL)inputEnabled {
     _inputEnabled = inputEnabled;
     
