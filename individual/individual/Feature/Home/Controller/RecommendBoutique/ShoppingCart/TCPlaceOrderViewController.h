@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
 
-@interface TCPlaceOrderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate>
+@interface TCPlaceOrderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, UITextFieldDelegate>
 
 - (instancetype)initWithListShoppingCartArr:(NSArray *)listShoppingCart;
 
