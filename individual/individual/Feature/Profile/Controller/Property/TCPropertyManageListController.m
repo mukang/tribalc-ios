@@ -118,7 +118,16 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCPropertyManage *propertyManage = self.currentList[indexPath.section];
     NSString *status = propertyManage.status;
-    CGFloat height = [status isEqualToString:@"ORDER_ACCEPT"] ? 211.00 : 301.00;
+    CGFloat height = 0.0;
+    if ([status isEqualToString:@"ORDER_ACCEPT"]) {
+         height = 225.00;
+    }else {
+        if ([status isEqualToString:@"PAYED"] && propertyManage.totalFee) {
+            height = 342;
+        }else {
+            height = 320.0;
+        }
+    }
     return height;
 }
 
