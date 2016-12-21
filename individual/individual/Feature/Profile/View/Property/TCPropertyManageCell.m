@@ -21,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UIView *masterView;
 @property (weak, nonatomic) IBOutlet UIButton *statusBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *finishedImage;
+@property (weak, nonatomic) IBOutlet UILabel *orderNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *projectTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 
 @end
 
@@ -37,6 +40,7 @@
         [formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
         NSTimeInterval doorTime = propertyManage.doorTime/1000;
         NSDate *doorDate = [NSDate dateWithTimeIntervalSince1970:doorTime];
+        _orderNumLabel.text = propertyManage.propertyNum ? [NSString stringWithFormat:@"订单号:%@",propertyManage.propertyNum] : @"";
         _communityNameLabel.text = propertyManage.communityName ? propertyManage.communityName : @"";
         _companyNameLabel.text =  propertyManage.companyName ? propertyManage.companyName : @"";
         _applyPersonNameLabel.text = propertyManage.applyPersonName ? propertyManage.applyPersonName : @"";
@@ -46,6 +50,24 @@
         _masterPersonNameLabel.text = propertyManage.masterPersonName ? propertyManage.masterPersonName : @"";
         _doorTimeLabel.text = [formatter stringFromDate:doorDate];
         _masterView.hidden = [propertyManage.status isEqualToString:@"ORDER_ACCEPT"];
+        
+        if (propertyManage.fixProject) {
+            if ([propertyManage.fixProject isEqualToString:@"PIPE_FIX"]) {
+                _projectTypeLabel.text = @"管件维修";
+            }else if ([propertyManage.fixProject isEqualToString:@"PUBLIC_LIGHTING"]) {
+                _projectTypeLabel.text = @"公共照明";
+            }else if ([propertyManage.fixProject isEqualToString:@"WATER_PIPE_FIX"]) {
+                _projectTypeLabel.text = @"水管维修";
+            }else if ([propertyManage.fixProject isEqualToString:@"ELECTRICAL_FIX"]) {
+                _projectTypeLabel.text = @"电器维修";
+            }else {
+                _projectTypeLabel.text = @"其他";
+            }
+        }else {
+            _projectTypeLabel.text = @"";
+        }
+        
+        
         if (propertyManage.status) {
             if ([propertyManage.status isEqualToString:@"ORDER_ACCEPT"]) {
                 [_statusBtn setTitle:@"系统接单" forState:UIControlStateNormal];
@@ -67,6 +89,20 @@
             [_statusBtn setTitle:@"" forState:UIControlStateNormal];
             _finishedImage.hidden = YES;
         }
+        
+        NSString *money = propertyManage.totalFee;
+        if (money) {
+           NSString *s = [NSString stringWithFormat:@"维修金额¥%@",propertyManage.totalFee];
+           NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:s];
+            
+            [attStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:227.0/255 green:19/255.0 blue:19/255.0 alpha:1.0] range:NSMakeRange(5, s.length-5)];
+            _moneyLabel.attributedText = attStr;
+        }else {
+            _moneyLabel.attributedText = [[NSAttributedString alloc] initWithString:@"" attributes:nil];
+        }
+        
+        
+        
         
     }
 }

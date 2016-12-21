@@ -445,4 +445,9 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  */
 - (void)fetchPropertyWrapper:(NSString *)status count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCPropertyManageWrapper *propertyManageWrapper, NSError *error))resultBlock;
 
+/**
+ 手机开门
+*/
+- (void)openDoorWithResult:(void (^)(BOOL, NSError *))resultBlock;
+
 @end

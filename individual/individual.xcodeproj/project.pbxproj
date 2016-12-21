@@ -490,6 +490,7 @@
 		55F06F1A1E07E9FA00A849D7 /* TCScannerBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F191E07E9FA00A849D7 /* TCScannerBorder.m */; };
 		55F06F1D1E07EA2100A849D7 /* TCScannerMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F1C1E07EA2100A849D7 /* TCScannerMaskView.m */; };
 		55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F1F1E07EC6500A849D7 /* TCScanner.m */; };
+		55F06F241E09259400A849D7 /* TCOpenDoorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F231E09259400A849D7 /* TCOpenDoorController.m */; };
 		7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */; };
 		7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C341E001BFF00224677 /* TCCompanyApplyNameViewCell.m */; };
 		7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C371E002CF000224677 /* TCCompanyNameViewCell.m */; };
@@ -2661,6 +2662,8 @@
 		55F06F1C1E07EA2100A849D7 /* TCScannerMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCScannerMaskView.m; sourceTree = "<group>"; };
 		55F06F1E1E07EC6500A849D7 /* TCScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCScanner.h; sourceTree = "<group>"; };
 		55F06F1F1E07EC6500A849D7 /* TCScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCScanner.m; sourceTree = "<group>"; };
+		55F06F221E09259400A849D7 /* TCOpenDoorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCOpenDoorController.h; sourceTree = "<group>"; };
+		55F06F231E09259400A849D7 /* TCOpenDoorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOpenDoorController.m; sourceTree = "<group>"; };
 		7A084C301E000D3B00224677 /* TCCompanyApplyTitleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyTitleViewCell.h; sourceTree = "<group>"; };
 		7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyApplyTitleViewCell.m; sourceTree = "<group>"; };
 		7A084C331E001BFF00224677 /* TCCompanyApplyNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyNameViewCell.h; sourceTree = "<group>"; };
@@ -7743,6 +7746,8 @@
 				7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */,
 				0960B3501DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.h */,
 				0960B3511DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m */,
+				55F06F221E09259400A849D7 /* TCOpenDoorController.h */,
+				55F06F231E09259400A849D7 /* TCOpenDoorController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -8632,6 +8637,7 @@
 				7AC346D91E01433E00E28EC9 /* TCWalletBillDetailViewController.m in Sources */,
 				0990F1961E077909002692F6 /* TCSelectBtn.m in Sources */,
 				7AEB4CF51E03944500F83A7C /* TCShippingAddressViewCell.m in Sources */,
+				55F06F241E09259400A849D7 /* TCOpenDoorController.m in Sources */,
 				098FDD5A1DFE392C00205663 /* TCPayMethodView.m in Sources */,
 				09275FBA1DDEFF5D00502167 /* TCDetailAnnotation.m in Sources */,
 				7AEB4CFF1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m in Sources */,
