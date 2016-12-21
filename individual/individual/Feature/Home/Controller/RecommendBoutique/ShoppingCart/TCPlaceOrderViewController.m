@@ -20,16 +20,21 @@
 #import "TCShippingAddressViewController.h"
 
 @interface TCPlaceOrderViewController () {
+    UIScrollView *mScrollView;
     NSMutableArray *orderDetailList;
     NSMutableArray *supplementFieldArr;
     TCPayMethodView *payMethodView;
     TCBalancePayView *payView;
     TCOrderAddressView *userAddressView;
+    CGFloat cursorHeight;
+    
 }
 
 @end
 
-@implementation TCPlaceOrderViewController
+@implementation TCPlaceOrderViewController {
+    __weak TCPlaceOrderViewController *weakSelf;
+}
 
 - (instancetype)initWithListShoppingCartArr:(NSArray *)listShoppingCartArr {
     self = [super init];
@@ -47,28 +52,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    weakSelf = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self initNavigationBar];
     
     supplementFieldArr = [[NSMutableArray alloc] init];
     
-    UIScrollView *scrollView = [self getScrollViewWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - TCRealValue(49))];
+    mScrollView = [self getScrollViewWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - TCRealValue(49))];
     
     TCUserSession *userSession = [[TCBuluoApi api] currentUserSession];
     TCUserShippingAddress *shippingAddress = userSession.userSensitiveInfo.shippingAddress;
     userAddressView = [[TCOrderAddressView alloc] initWithOrigin:CGPointMake(0, 0) WithShippingAddress:shippingAddress];
     UITapGestureRecognizer *selectAddressRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchAddressSelect:)];
     [userAddressView addGestureRecognizer:selectAddressRecognizer];
-    [scrollView addSubview:userAddressView];
+    [mScrollView addSubview:userAddressView];
     
     UITableView *orderDetailTableView = [self getOrderDetailTableViewWithFrame:CGRectMake(0, userAddressView.y + userAddressView.height, self.view.width, [self getTableViewHeight])];
-    [scrollView addSubview:orderDetailTableView];
+    [mScrollView addSubview:orderDetailTableView];
  
     payMethodView = [[TCPayMethodView alloc] initWithFrame:CGRectMake(0, orderDetailTableView.y + orderDetailTableView.height + TCRealValue(4), TCScreenWidth, TCRealValue(170))];
-    [scrollView addSubview:payMethodView];
+    [mScrollView addSubview:payMethodView];
     
     
-    scrollView.contentSize = CGSizeMake(self.view.width, payMethodView.y + payMethodView.height);
+    mScrollView.contentSize = CGSizeMake(self.view.width, payMethodView.y + payMethodView.height);
  
     UIView *bottomView = [self getNotSettleBottomView];
     [self.view addSubview:bottomView];
@@ -269,6 +277,7 @@
     supplementField.font = [UIFont systemFontOfSize:TCRealValue(11)];
     supplementField.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
     supplementField.text = orderDetail.note;
+    supplementField.delegate = self;
     [supplementFieldArr addObject:supplementField];
     
     [backView addSubview:supplementField];
@@ -308,6 +317,35 @@
         
     }
 }
+
+#pragma mark - UITextFieldDelegate 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    CGRect rect = [textField convertRect:textField.bounds toView:self.view];
+    cursorHeight = rect.origin.y + rect.size.height;
+    mScrollView.scrollEnabled = NO;
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    CGSize keyBoardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat keyBoardHeight = keyBoardSize.height;
+    CGFloat beyondHeight = keyBoardHeight - (TCScreenHeight - cursorHeight - 64);
+    if (beyondHeight > 0) {
+        [UIView animateWithDuration:0.15 animations:^(void) {
+            self.view.frame = CGRectMake(0, -beyondHeight + TCRealValue(64) - TCRealValue(10) , TCScreenWidth, TCScreenHeight);
+        }completion:nil];
+    }
+    
+}
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [UIView animateWithDuration:0.15 animations:^(void) {
+        self.view.frame = CGRectMake(0, 64, TCScreenWidth, TCScreenHeight);
+    }completion:nil];
+    mScrollView.scrollEnabled = YES;
+}
+
 
 - (UITableViewCell *)getOrderInfoTableViewCellWithIndexPath:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView{
     NSString *identifier = [NSString stringWithFormat:@"%li", (long)indexPath.row];
@@ -401,7 +439,7 @@
         [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:order.ID result:^(BOOL result, NSError *error) {
 //            if (result) {
                 if (i == payView.orderArr.count - 1)
-                    [self jumpToOrderDetailViewController];
+                    [weakSelf jumpToOrderDetailViewController];
 //            } else {
 //                [MBProgressHUD showHUDWithMessage:@"支付失败"];
 //                return;
@@ -463,7 +501,7 @@
     NSString *addressId = userAddressView.shippingAddress.ID;
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
-            payView = [[TCBalancePayView alloc] initWithPayPrice:[self getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
+            payView = [[TCBalancePayView alloc] initWithPayPrice:[weakSelf getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
             payView.orderArr = orderList;
             [payView showPayView];
             
@@ -477,7 +515,7 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

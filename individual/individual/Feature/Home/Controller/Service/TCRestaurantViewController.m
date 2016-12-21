@@ -23,6 +23,8 @@
 @implementation TCRestaurantViewController
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupNavigationBar];
 
@@ -58,7 +60,8 @@
 #pragma mark - Get Data
 - (void)loadRestaurantDataWithSortType:(NSString *)sortType {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchServiceWrapper:nil limiSize:20 sortSkip:nil sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
+    NSString *categoryStr = [self.title isEqualToString:@"餐饮"] ? @"REPAST" : @"ENTERTAINMENT";
+    [api fetchServiceWrapper:categoryStr limiSize:20 sortSkip:nil sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
         mServiceWrapper = serviceWrapper;
         [mResaurantTableView reloadData];
         [mResaurantTableView.mj_header endRefreshing];
@@ -69,7 +72,8 @@
 - (void)loadResturantDataWithSortSkip:(NSString *)nextSkip AndSort:(NSString *)sortType {
     if (mServiceWrapper.hasMore == YES) {
         TCBuluoApi *api = [TCBuluoApi api];
-        [api fetchServiceWrapper:nil limiSize:20 sortSkip:nextSkip sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
+        NSString *categoryStr = [self.title isEqualToString:@"餐饮"] ? @"REPAST" : @"ENTERTAINMENT";
+        [api fetchServiceWrapper:categoryStr limiSize:20 sortSkip:nextSkip sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
             NSArray *contentArr = mServiceWrapper.content;
             mServiceWrapper = serviceWrapper;
             mServiceWrapper.content = [contentArr arrayByAddingObjectsFromArray:serviceWrapper.content];
@@ -186,7 +190,6 @@
     NSURL *imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, resInfo.mainPicture]];
     [cell.resImgView sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"home_image_place"]];
     cell.nameLab.text = resInfo.name;
-    
     TCListStore *storeInfo = resInfo.store;
     [cell setLocation:storeInfo.markPlace];
     [cell setType:storeInfo.brand];
@@ -286,7 +289,6 @@
     if (sortView.hidden == YES) {
         
         [self showSortView];
-        
         
         [sortView.averageMinBtn addTarget:self action:@selector(touchSortByAverageMin) forControlEvents:UIControlEventTouchUpInside];
         [sortView.averageMaxBtn addTarget:self action:@selector(touchSortByAverageMax) forControlEvents:UIControlEventTouchUpInside];

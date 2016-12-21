@@ -343,7 +343,7 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param goodsID 商品的ID
  @param resultBlock 结果回调，TCGoodDetail为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchGoodDetail:(NSString *)goodsID result:(void (^)(TCGoodDetail *, NSError *))resultBlock;
+- (void)fetchGoodDetail:(NSString *)goodsID result:(void (^)(TCGoodDetail *goodDetail, NSError *error))resultBlock;
 
 /**
  获取商品规格
@@ -351,7 +351,7 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param goodStandardId 商品规格的ID
  @param resultBlock 结果回调，TCGoodStandards为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchGoodStandards:(NSString *)goodStandardId result:(void (^)(TCGoodStandards *, NSError *))resultBlock;
+- (void)fetchGoodStandards:(NSString *)goodStandardId result:(void (^)(TCGoodStandards *goodStandard, NSError *error))resultBlock;
 
 
 #pragma mark - 服务类资源
@@ -365,7 +365,7 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param sort 排序类型
  @param resultBlock 结果回调，goodsWrapper为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchServiceWrapper:(NSString *)category limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip sort:(NSString *)sort result:(void (^)(TCServiceWrapper *, NSError *))resultBlock;
+- (void)fetchServiceWrapper:(NSString *)category limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip sort:(NSString *)sort result:(void (^)(TCServiceWrapper *serviceWrapper, NSError *error))resultBlock;
 
 /**
  获取商品详情
@@ -373,7 +373,7 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param serviceID 服务的ID
  @param resultBlock 结果回调，TCGoodDetail为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchServiceDetail:(NSString *)serviceID result:(void (^)(TCServiceDetail *, NSError *))resultBlock;
+- (void)fetchServiceDetail:(NSString *)serviceID result:(void (^)(TCServiceDetail *serviceDetail, NSError *error))resultBlock;
 
 
 #pragma mark - 订单类资源
@@ -385,7 +385,7 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param sortSkip 默认查询止步的时间和跳过条数，以逗号分隔，如“1478513563773,3”表示查询早于时间1478513563773并跳过后3条记录，首次获取数据和下拉刷新数据时该参数传nil，上拉获取更多数据时该参数传上一次从服务器获取到的TCOrderWrapper对象中属性nextSkip的值
  @param resultBlock 结果回调，TCOrderWrapper为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchOrderWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCOrderWrapper *, NSError *))resultBlock;
+- (void)fetchOrderWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCOrderWrapper *orderWrapper, NSError *error))resultBlock;
 
 /**
  创建商品订单
@@ -393,7 +393,7 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param itemList 数组，包含多个字典，字典格式为 @{ amount:2, goodsId:@"xxxxx" }
  @param addressId 收货地址id
  */
-- (void)createOrderWithItemList:(NSArray *)itemList AddressId:(NSString *)addressId result:(void(^)(NSArray *, NSError *))resultBlock;
+- (void)createOrderWithItemList:(NSArray *)itemList AddressId:(NSString *)addressId result:(void(^)(NSArray *orderList, NSError *error))resultBlock;
 
 /**
  更改订单状态
@@ -401,24 +401,24 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param statusStr 更改后的状态
  @param orderId  订单id
  */
-- (void)changeOrderStatus:(NSString *)statusStr OrderId:(NSString *)orderId result:(void(^)(BOOL, NSError *))resultBlock;
+- (void)changeOrderStatus:(NSString *)statusStr OrderId:(NSString *)orderId result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 
 #pragma mark - 服务预订资源
-- (void)fetchReservationWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCReservationWrapper *, NSError *))resultBlock;
+- (void)fetchReservationWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCReservationWrapper *reservationWrapper, NSError *error))resultBlock;
 
-- (void)createReservationWithStoreSetMealId:(NSString *)storeSetMealId appintTime:(NSInteger)appintTime personNum:(NSInteger)personNum linkman:(NSString *)linkman phone:(NSString *)phone note:(NSString *)note vcode:(NSString *)vcode result:(void(^)(TCReservationDetail *, NSError *))resultBlock;
-- (void)fetchReservationDetail:(NSString *)reserveID result:(void (^)(TCReservationDetail *, NSError *))resultBlock;
-- (void)changeReservationStatus:(NSString *)statusStr ReservationId:(NSString *)reservationId result:(void(^)(BOOL, NSError *))resultBlock;
+- (void)createReservationWithStoreSetMealId:(NSString *)storeSetMealId appintTime:(NSInteger)appintTime personNum:(NSInteger)personNum linkman:(NSString *)linkman phone:(NSString *)phone note:(NSString *)note vcode:(NSString *)vcode result:(void(^)(TCReservationDetail *reservationDetail, NSError *error))resultBlock;
+- (void)fetchReservationDetail:(NSString *)reserveID result:(void (^)(TCReservationDetail *reservationDetail, NSError *error))resultBlock;
+- (void)changeReservationStatus:(NSString *)statusStr ReservationId:(NSString *)reservationId result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 #pragma mark - 购物车资源
-- (void)fetchShoppingCartWrapperWithSortSkip:(NSString *)sortSkip result:(void (^)(TCShoppingCartWrapper *, NSError *))resultBlock;
+- (void)fetchShoppingCartWrapperWithSortSkip:(NSString *)sortSkip result:(void (^)(TCShoppingCartWrapper *shoppingCartWrapper, NSError *error))resultBlock;
 
-- (void)createShoppingCartWithAmount:(NSInteger)amount goodsId:(NSString *)goodsId result:(void(^)(BOOL, NSError *))resultBlock;
+- (void)createShoppingCartWithAmount:(NSInteger)amount goodsId:(NSString *)goodsId result:(void(^)(BOOL success, NSError *error))resultBlock;
 
-- (void)changeShoppingCartWithShoppingCartGoodsId:(NSString *)shoppingCartGoodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCCartItem *, NSError *))resultBlock;
+- (void)changeShoppingCartWithShoppingCartGoodsId:(NSString *)shoppingCartGoodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCCartItem *cartItem, NSError *error))resultBlock;
 
-- (void)deleteShoppingCartWithShoppingCartArr:(NSArray *)cartArr result:(void(^)(BOOL, NSError *))resultBlock;
+- (void)deleteShoppingCartWithShoppingCartArr:(NSArray *)cartArr result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 #pragma mark - 上传图片资源
 
@@ -481,6 +481,9 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  手机开门
 */
 - (void)openDoorWithResult:(void (^)(BOOL, NSError *))resultBlock;
+
+
+
 /**
  提交物业报修信息
 
@@ -489,5 +492,7 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  */
 
 - (void)commitPropertyRepairsInfo:(TCPropertyRepairsInfo *)repairsInfo result:(void (^)(BOOL success, TCPropertyManage *propertyManage, NSError *error))resultBlock;
+
+
 
 @end

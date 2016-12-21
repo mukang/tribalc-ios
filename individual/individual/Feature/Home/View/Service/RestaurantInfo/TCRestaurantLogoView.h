@@ -11,7 +11,7 @@
 
 @interface TCRestaurantLogoView : UIImageView<SDWebImageManagerDelegate>
 
-- (instancetype)initWithFrame:(CGRect)frame AndUrlStr:(NSString *)urlStr;
-- (void)setNewFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame AndUrl:(NSURL *)url ;
+- (void)setLogoFrame:(CGRect)frame;
 
 @end

@@ -25,6 +25,7 @@
     UIScrollView *titleScrollView;
     UIScrollView *homeScrollView;
     UILabel *navigationTitleLab;
+    NSTimer *titleScrollTimer;
 }
 
 @property (nonatomic, strong) TCBlurImageView *blurImageView;
@@ -117,7 +118,7 @@
     }
     titleScrollView.contentSize = CGSizeMake(TCScreenWidth * (picturesArr.count + 1), titleScrollView.height);
     
-    [self setupTitleScrollTimer];
+    [self startTitleScrollTimer];
 }
 
 - (UIView *)getPropertyFunctionViewWithFrame:(CGRect)frame {
@@ -242,10 +243,14 @@
     return button;
 }
 
-- (void)setupTitleScrollTimer {
-    NSTimer *titleScrollTimer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(titleImageScroll) userInfo:nil repeats:YES];
+- (void)startTitleScrollTimer {
+    titleScrollTimer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(titleImageScroll) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:titleScrollTimer forMode:NSRunLoopCommonModes];
-    
+}
+
+- (void)endTitleScrollTimer {
+    [titleScrollTimer invalidate];
+    titleScrollTimer = nil;
 }
 
 - (void)titleImageScroll {
@@ -460,6 +465,9 @@
 
 #pragma mark - click
 - (void)touchCommunityUnlockBtn:(UIButton *)button {
+    
+    [self endTitleScrollTimer];   //计时器停止
+    [self startTitleScrollTimer];   //计时器开始
     NSLog(@"点击社区开门");
     if (_blurImageView == nil) {
         _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController];

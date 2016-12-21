@@ -461,12 +461,12 @@
         } else {
             vcodeStr = nil;
         }
-        
+        __weak TCReserveOnlineViewController *weakSelf = self;
         [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(TCReservationDetail *result, NSError *error) {
             if (result) {
                 [MBProgressHUD showHUDWithMessage:@"预订成功"];
                 TCUserReserveDetailViewController *userReserveDetailViewController = [[TCUserReserveDetailViewController alloc] initWithReservationId:result.ID];
-                [self.navigationController pushViewController:userReserveDetailViewController animated:YES];
+                [weakSelf.navigationController pushViewController:userReserveDetailViewController animated:YES];
                 
             } else {
                 [MBProgressHUD showHUDWithMessage:@"预订失败"];

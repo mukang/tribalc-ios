@@ -22,8 +22,6 @@
 
 @implementation TCUserOrderTabBarController
 
-- (void)viewDidAppear:(BOOL)animated {
-}
 
 - (instancetype)initWithTitle:(NSString *)title {
     self = [super init];
@@ -36,6 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self initNavigationBar];
     self.view.backgroundColor = [UIColor whiteColor];
     

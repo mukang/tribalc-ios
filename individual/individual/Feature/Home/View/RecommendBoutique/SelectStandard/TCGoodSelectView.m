@@ -13,7 +13,7 @@
 #import "NSObject+TCModel.h"
 #import "TCSelectPrimaryBtn.h"
 #import "TCSelectSecondaryBtn.h"
-#import "TCSelectBtn.h"
+#import "TCSelectButton.h"
 #import "TCComponent.h"
 
 @implementation TCGoodSelectView {
@@ -210,7 +210,7 @@
     int width = 0;
     int height = 0;
     for (int i = 0; i < types.count; i++) {
-        TCSelectBtn *button = [type isEqualToString:@"primary"] ? [self getPrimaryButtonWithOrigin:CGPointMake(width, height) AndText:types[i]] : [self getSecondaryButtonWithOrigin:CGPointMake(width, height) AndText:types[i]];
+        TCSelectButton *button = [type isEqualToString:@"primary"] ? [self getPrimaryButtonWithOrigin:CGPointMake(width, height) AndText:types[i]] : [self getSecondaryButtonWithOrigin:CGPointMake(width, height) AndText:types[i]];
         if (width + button.width > btnView.width) {
             width = 0;
             height += TCRealValue(button.height + TCRealValue(7));
@@ -263,9 +263,9 @@
     return label;
 }
 
-- (void)changeSelectBtn:(TCSelectBtn *)btn {
+- (void)changeSelectBtn:(TCSelectButton *)btn {
     for (int i = 0; i < btn.superview.subviews.count; i++) {
-        TCSelectBtn *button = btn.superview.subviews[i];
+        TCSelectButton *button = btn.superview.subviews[i];
         if (button.isEffective) {
             button.isSelected = NO;
         }
@@ -275,8 +275,8 @@
 
 - (void)changeEffectiveBtnWithSuperView:(UIView *)superView IsPrimary:(BOOL)isPrimary{
     for (int i = 0; i < superView.subviews.count; i++) {
-        if ([superView.subviews[i] isKindOfClass:[TCSelectBtn class]]) {
-            TCSelectBtn *button = superView.subviews[i];
+        if ([superView.subviews[i] isKindOfClass:[TCSelectButton class]]) {
+            TCSelectButton *button = superView.subviews[i];
             NSString *index = isPrimary ? [NSString stringWithFormat:@"%@^%@", [button titleForState:UIControlStateNormal], selectTitleView.selectSecondaryLab.text] : [NSString stringWithFormat:@"%@^%@", selectTitleView.selectPrimaryLab.text, [button titleForState:UIControlStateNormal]];
             if (![_goodStandard.goodsIndexes.allKeys containsObject:index]) {
                 button.isEffective = NO;
@@ -303,7 +303,7 @@
     [self close];
 }
 
-- (void)touchPrimaryBtnWhenNotSelected:(TCSelectBtn *)btn {
+- (void)touchPrimaryBtnWhenNotSelected:(TCSelectButton *)btn {
     if (_goodStandard.descriptions.allKeys.count == 1) {
         [self changeGoodDetailWithIndex:[btn titleForState:UIControlStateNormal]];
         [self changeSelectBtn:btn];
@@ -318,7 +318,7 @@
     }
 }
 
-- (void)touchSecondaryBtnWhenNotSelected:(TCSelectBtn *)btn {
+- (void)touchSecondaryBtnWhenNotSelected:(TCSelectButton *)btn {
     if (![selectTitleView.selectPrimaryLab.text isEqualToString:@""]) {
         [self changeGoodDetailWithIndex:[NSString stringWithFormat:@"%@^%@", selectTitleView.selectPrimaryLab.text, [btn titleForState:UIControlStateNormal]]];
     }
@@ -327,20 +327,20 @@
     [self changeSelectBtn:btn];
 }
 
-- (void)touchPrimaryBtnWhenIsSelected:(TCSelectBtn *)btn {
+- (void)touchPrimaryBtnWhenIsSelected:(TCSelectButton *)btn {
     btn.isSelected = NO;
     [selectTitleView setupPrimary:@""];
     for (int i = 0; i < secondaryBtnView.subviews.count; i++) {
-        TCSelectBtn *selectBtn = secondaryBtnView.subviews[i];
+        TCSelectButton *selectBtn = secondaryBtnView.subviews[i];
         selectBtn.isEffective = YES;
     }
 }
 
-- (void)touchSecondaryBtnWhenIsSelected:(TCSelectBtn *)btn {
+- (void)touchSecondaryBtnWhenIsSelected:(TCSelectButton *)btn {
     btn.isSelected = NO;
     [selectTitleView setupSecondary:@""];
     for (int i = 0; i < primaryBtnView.subviews.count; i++) {
-        TCSelectBtn *selectBtn = primaryBtnView.subviews[i];
+        TCSelectButton *selectBtn = primaryBtnView.subviews[i];
         selectBtn.isEffective = YES;
     }
 }
