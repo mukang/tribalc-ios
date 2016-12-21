@@ -491,7 +491,7 @@
     }
 }
 
-#pragma mark - scrollView delegate
+#pragma mark - ScrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGFloat minAlphaOffset = 0;
