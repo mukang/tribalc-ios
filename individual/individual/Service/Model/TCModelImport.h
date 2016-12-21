@@ -20,6 +20,8 @@
 #import "TCWalletBillWrapper.h"
 #import "TCBankCard.h"
 #import "TCUserCompanyInfo.h"
+#import "TCUserIDAuthInfo.h"
+#import "TCUserPayment.h"
 
 /********** 商业相关 **********/
 
@@ -69,6 +71,8 @@
 
 /********** 物业报修 **********/
 #import "TCPropertyManageWrapper.h"
+#import "TCPropertyManage.h"
+#import "TCPropertyRepairsInfo.h"
 
 
 @interface TCModelImport : NSObject

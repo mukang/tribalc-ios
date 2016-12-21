@@ -23,7 +23,9 @@
     
     CGFloat originSpace = 1, space = 13;
     CGSize imageViewSize, labelSize;
-    for (UIButton *button in self.repairsButtons) {
+    for (int i=0; i<self.repairsButtons.count; i++) {
+        UIButton *button = self.repairsButtons[i];
+        button.tag = 1000 + i;
         imageViewSize = button.imageView.size;
         labelSize = button.titleLabel.size;
         button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, labelSize.height + space, -labelSize.width + originSpace);
@@ -32,8 +34,8 @@
 }
 
 - (IBAction)handleClickRepairsButton:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(didClickRepairsButtonInRepairsViewCell:)]) {
-        [self.delegate didClickRepairsButtonInRepairsViewCell:self];
+    if ([self.delegate respondsToSelector:@selector(repairsViewCell:didClickRepairsButtonWithIndex:)]) {
+        [self.delegate repairsViewCell:self didClickRepairsButtonWithIndex:sender.tag - 1000];
     }
 }
 

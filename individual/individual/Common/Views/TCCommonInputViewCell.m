@@ -57,6 +57,12 @@
     self.textField.keyboardType = keyboardType;
 }
 
+- (void)setAutocorrectionType:(UITextAutocorrectionType)autocorrectionType {
+    _autocorrectionType = autocorrectionType;
+    
+    self.textField.autocorrectionType = autocorrectionType;
+}
+
 - (void)setInputEnabled:(BOOL)inputEnabled {
     _inputEnabled = inputEnabled;
     

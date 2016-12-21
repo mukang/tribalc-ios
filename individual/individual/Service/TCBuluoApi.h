@@ -14,6 +14,13 @@ extern NSString *const TCBuluoApiNotificationUserDidLogin;
 extern NSString *const TCBuluoApiNotificationUserDidLogout;
 extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 
+typedef NS_ENUM(NSInteger, TCPayChannel) {
+    TCPayChannelBalance = 0,  // 余额
+    TCPayChannelAlipay,       // 支付宝
+    TCPayChannelWechat,       // 微信
+    TCPayChannelBankCard      // 银行卡
+};
+
 @interface TCBuluoApi : NSObject
 
 /**
@@ -269,12 +276,37 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 - (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
+ 认证用户身份
+
+ @param userIDAuthInfo TCUserIDAuthInfo对象
+ @param resultBlock 结果回调，success为NO时表示认证失败，失败原因见error的code和userInfo
+ */
+- (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
  社区参观预约
 
  @param communityReservationInfo TCCommunityReservationInfo对象
  @param resultBlock 结果回调，success为NO时表示预约失败，失败原因见error的code和userInfo
  */
 - (void)reserveCommunity:(TCCommunityReservationInfo *)communityReservationInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 提交付款申请
+
+ @param payChannel 支付方式
+ @param orderIDs 订单ID列表
+ @param resultBlock 结果回调，userPayment为nil时表示提交失败，失败原因见error的code和userInfo
+ */
+- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
+
+/**
+ 查询付款申请
+
+ @param paymentID 付款ID
+ @param resultBlock 结果回调，userPayment为nil时表示查询失败，失败原因见error的code和userInfo
+ */
+- (void)fetchUserPayment:(NSString *)paymentID result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 
@@ -446,8 +478,17 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 - (void)fetchPropertyWrapper:(NSString *)status count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCPropertyManageWrapper *propertyManageWrapper, NSError *error))resultBlock;
 
 /**
+<<<<<<< HEAD
  手机开门
 */
 - (void)openDoorWithResult:(void (^)(BOOL, NSError *))resultBlock;
+=======
+ 提交物业报修信息
+
+ @param repairsInfo TCPropertyRepairsInfo对象
+ @param resultBlock 结果回调，success为NO时表示提交失败，失败原因见error的code和userInfo
+ */
+- (void)commitPropertyRepairsInfo:(TCPropertyRepairsInfo *)repairsInfo result:(void (^)(BOOL success, TCPropertyManage *propertyManage, NSError *error))resultBlock;
+>>>>>>> e79a549f35fb477dcf1e9f690f19c07399ee1f9a
 
 @end

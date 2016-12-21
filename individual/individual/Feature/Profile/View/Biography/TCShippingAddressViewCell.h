@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCExtendButton.h"
 @class TCUserShippingAddress;
 @class TCShippingAddressViewCell;
 
@@ -21,7 +22,7 @@
 
 @interface TCShippingAddressViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton *defaultAddressButton;
+@property (weak, nonatomic) IBOutlet TCExtendButton *defaultAddressButton;
 
 @property (strong, nonatomic) TCUserShippingAddress *shippingAddress;
 

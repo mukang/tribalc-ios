@@ -78,8 +78,9 @@
 
 #pragma mark - TCRepairsViewCellDelegate
 
-- (void)didClickRepairsButtonInRepairsViewCell:(TCRepairsViewCell *)cell {
-    TCRepairsDetailViewController *vc = [[TCRepairsDetailViewController alloc] initWithNibName:@"TCRepairsDetailViewController" bundle:[NSBundle mainBundle]];
+- (void)repairsViewCell:(TCRepairsViewCell *)cell didClickRepairsButtonWithIndex:(NSInteger)index {
+    TCPropertyRepairsType repairsType = index;
+    TCRepairsDetailViewController *vc = [[TCRepairsDetailViewController alloc] initWithPropertyRepairsType:repairsType];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -90,7 +91,6 @@
 }
 
 - (void)handleClickOrderButton:(UIBarButtonItem *)sender {
-    TCLog(@"点击了订单按钮");
     TCPropertyManageListController *propertyList = [[TCPropertyManageListController alloc] init];
     propertyList.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:propertyList animated:YES];

@@ -64,7 +64,7 @@ static CGFloat const duration = 0.25;
 - (void)initPrivate {
     self.backgroundColor = TCARGBColor(0, 0, 0, 0);
     
-    CGFloat containerViewH = 236;
+    CGFloat containerViewH = 256;
     CGFloat buttonW = 60;
     CGFloat buttonH = 40;
     

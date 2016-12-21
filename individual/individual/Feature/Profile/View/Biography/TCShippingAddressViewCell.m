@@ -13,6 +13,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *wholeAddressLabel;
+@property (weak, nonatomic) IBOutlet TCExtendButton *editButton;
+@property (weak, nonatomic) IBOutlet TCExtendButton *deleteButton;
 
 @end
 
@@ -21,6 +23,14 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    [self setupSubviews];
+}
+
+- (void)setupSubviews {
+    self.defaultAddressButton.hitTestSlop = UIEdgeInsetsMake(-6.5, -20, -6.5, -20);
+    self.editButton.hitTestSlop = UIEdgeInsetsMake(-6.5, -20, -6.5, -6);
+    self.deleteButton.hitTestSlop = UIEdgeInsetsMake(-6.5, -6, -6.5, -20);
 }
 
 - (void)setShippingAddress:(TCUserShippingAddress *)shippingAddress {
