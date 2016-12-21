@@ -55,12 +55,11 @@
 
 - (void)setupSubviews {
     self.collectionView.backgroundColor = TCRGBColor(242, 242, 242);
-    self.flowLayout.minimumLineSpacing = 5;
-    self.flowLayout.itemSize = CGSizeMake(TCScreenWidth, 272);
-    self.flowLayout.sectionInset = UIEdgeInsetsMake(5, 0, 0, 0);
+    self.flowLayout.minimumLineSpacing = 9;
+    self.flowLayout.itemSize = CGSizeMake(TCScreenWidth - 23, 293);
+    self.flowLayout.sectionInset = UIEdgeInsetsMake(9, 11.5, 0, 11.5);
     
-    UINib *nib = [UINib nibWithNibName:@"TCCommunityViewCell" bundle:[NSBundle mainBundle]];
-    [self.collectionView registerNib:nib forCellWithReuseIdentifier:@"TCCommunityViewCell"];
+    [self.collectionView registerClass:[TCCommunityViewCell class] forCellWithReuseIdentifier:@"TCCommunityViewCell"];
     
     self.collectionView.mj_header = [TCRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNetData)];
 }

@@ -62,7 +62,7 @@
     
     __block NSError *serializationError = nil;
     NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[self.sessionManager.baseURL absoluteString] stringByAppendingString:URLString] parameters:parameters error:&serializationError];
-    NSLog(@"%@",request.URL.absoluteString);
+    TCLog(@"%@",request.URL.absoluteString);
     if (serializationError) {
         TCClientRequestError *error = [TCClientRequestError errorWithCode:TCClientRequestErrorRequestSerializationError
                                                            andDescription:serializationError.localizedDescription];
@@ -92,7 +92,8 @@
                 NSNumber *code = responseData[@"code"];
                 codeInResponse = code.integerValue;
                 if (codeInResponse >= 400) {
-                    error = [TCClientRequestError errorWithCode:codeInResponse andDescription:responseData[@"message"]];
+                    NSString *description = (responseData[@"message"] == [NSNull null]) ? nil : responseData[@"message"];
+                    error = [TCClientRequestError errorWithCode:codeInResponse andDescription:description];
                 } else {
                     dataInResponse = responseData[@"data"];
                 }

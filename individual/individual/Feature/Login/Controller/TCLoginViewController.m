@@ -193,11 +193,12 @@
     phoneInfo.verificationCode = self.passwordTextField.text;
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] login:phoneInfo result:^(TCUserSession *userSession, NSError *error) {
-        [MBProgressHUD hideHUD:YES];
         if (userSession) {
+            [MBProgressHUD hideHUD:YES];
             [weakSelf dismissViewControllerAnimated:YES completion:nil];
         } else {
-            [MBProgressHUD showHUDWithMessage:error.localizedDescription];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"登录失败，%@", reason]];
         }
     }];
 }

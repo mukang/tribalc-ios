@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -44,7 +44,7 @@
                                     <constraint firstAttribute="height" constant="0.5" id="oLw-DK-gCk"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Gl-ZB-WEc">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Gl-ZB-WEc" customClass="TCExtendButton">
                                 <rect key="frame" x="20" y="114" width="75" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="6Iz-Tj-MPS"/>
@@ -60,7 +60,7 @@
                                     <action selector="handleClickDefaultAddressButton:" destination="KGk-i7-Jjw" eventType="touchDown" id="23F-CR-2D8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hW-Iy-Fub">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hW-Iy-Fub" customClass="TCExtendButton">
                                 <rect key="frame" x="254" y="114" width="17" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="t9D-PJ-2cI"/>
@@ -71,7 +71,7 @@
                                     <action selector="handleClickEditButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="KYl-i8-tuB"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YkH-U0-oJs">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YkH-U0-oJs" customClass="TCExtendButton">
                                 <rect key="frame" x="283" y="114" width="17" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="17" id="1AL-ya-w78"/>
@@ -113,6 +113,8 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="defaultAddressButton" destination="8Gl-ZB-WEc" id="A8a-Wk-tNo"/>
+                <outlet property="deleteButton" destination="YkH-U0-oJs" id="LPO-Qc-Vz4"/>
+                <outlet property="editButton" destination="9hW-Iy-Fub" id="A5H-e9-eGj"/>
                 <outlet property="nameLabel" destination="mfT-nG-QAf" id="zYt-Qa-Yc2"/>
                 <outlet property="wholeAddressLabel" destination="aq6-oH-kTm" id="WR7-4v-3Jh"/>
             </connections>

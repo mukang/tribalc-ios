@@ -31,7 +31,9 @@
 }
 
 - (IBAction)handleClickCommitButton:(UIButton *)sender {
-    
+    if ([self.delegate respondsToSelector:@selector(didClickCommitButtonInRepairsCommitViewCell:)]) {
+        [self.delegate didClickCommitButtonInRepairsCommitViewCell:self];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

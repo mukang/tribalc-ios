@@ -12,7 +12,7 @@
 @protocol TCRepairsViewCellDelegate <NSObject>
 
 @optional
-- (void)didClickRepairsButtonInRepairsViewCell:(TCRepairsViewCell *)cell;
+- (void)repairsViewCell:(TCRepairsViewCell *)cell didClickRepairsButtonWithIndex:(NSInteger)index;
 
 @end
 

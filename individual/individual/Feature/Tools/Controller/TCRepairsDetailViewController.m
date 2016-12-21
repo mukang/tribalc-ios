@@ -13,7 +13,11 @@
 #import "TCRepairsPhotosViewCell.h"
 #import "TCRepairsCommitViewCell.h"
 
+#import "TCDatePickerView.h"
 #import "TCPhotoPicker.h"
+
+#import "TCImageURLSynthesizer.h"
+#import "TCBuluoApi.h"
 
 typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeCommunity = 0,
@@ -26,10 +30,13 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 @interface TCRepairsDetailViewController ()
 <UITableViewDataSource,
 UITableViewDelegate,
+UITextViewDelegate,
+UIScrollViewDelegate,
 TCCommonInputViewCellDelegate,
-TCRepairsDescViewCellDelegate,
 TCRepairsPhotosViewCellDelegate,
-TCPhotoPickerDelegate>
+TCRepairsCommitViewCellDelegate,
+TCPhotoPickerDelegate,
+TCDatePickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSIndexPath *currentEditIndex;
@@ -37,17 +44,27 @@ TCPhotoPickerDelegate>
 @property (strong, nonatomic) TCPhotoPicker *photoPicker;
 @property (strong, nonatomic) NSMutableArray *selectedPhotos;
 
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) TCPropertyRepairsInfo *repairsInfo;
+
 @end
 
 @implementation TCRepairsDetailViewController {
     __weak TCRepairsDetailViewController *weakSelf;
 }
 
+- (instancetype)initWithPropertyRepairsType:(TCPropertyRepairsType)repairsType {
+    self = [super initWithNibName:@"TCRepairsDetailViewController" bundle:[NSBundle mainBundle]];
+    if (self) {
+        weakSelf = self;
+        _repairsType = repairsType;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    weakSelf = self;
     
     [self setupNavBar];
     [self setupSubviews];
@@ -117,30 +134,39 @@ TCPhotoPickerDelegate>
         TCCommonInputViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCommonInputViewCell" forIndexPath:indexPath];
         cell.hideSeparatorView = NO;
         cell.delegate = self;
+        TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+        TCUserSensitiveInfo *userSensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
         switch (indexPath.row) {
             case TCInputCellTypeCommunity:
                 cell.title = @"社区";
-                cell.content = @"北京天安门广场社区";
+                cell.content = userInfo.communityName;
                 cell.inputEnabled = NO;
                 break;
             case TCInputCellTypeCompany:
                 cell.title = @"公司";
-                cell.content = @"杭州部落公社科技有限公司";
+                cell.content = userSensitiveInfo.companyName;
                 cell.inputEnabled = NO;
                 break;
             case TCInputCellTypeName:
                 cell.title = @"申请人";
-                cell.content = @"唐纳德·特朗普";
+                cell.content = userInfo.name;
                 cell.inputEnabled = NO;
                 break;
             case TCInputCellTypefloor:
                 cell.title = @"楼层";
                 cell.placeholder = @"请输入：楼层-门牌号";
+                cell.content = self.repairsInfo.floor;
                 cell.inputEnabled = YES;
                 break;
             case TCInputCellTypeAppointTime:
                 cell.title = @"约定时间";
                 cell.placeholder = @"请选择约定时间";
+                if (self.repairsInfo.appointTime) {
+                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.repairsInfo.appointTime / 1000];
+                    cell.content = [self.dateFormatter stringFromDate:date];
+                } else {
+                    cell.content = nil;
+                }
                 cell.inputEnabled = NO;
                 break;
                 
@@ -151,7 +177,8 @@ TCPhotoPickerDelegate>
     } else {
         if (indexPath.row == 0) {
             TCRepairsDescViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRepairsDescViewCell" forIndexPath:indexPath];
-            cell.delegate = self;
+            cell.textView.delegate = self;
+            cell.textView.returnKeyType = UIReturnKeyDone;
             currentCell = cell;
         } else if (indexPath.row == 1) {
             TCRepairsPhotosViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRepairsPhotosViewCell" forIndexPath:indexPath];
@@ -160,6 +187,7 @@ TCPhotoPickerDelegate>
             currentCell = cell;
         } else {
             TCRepairsCommitViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRepairsCommitViewCell" forIndexPath:indexPath];
+            cell.delegate = self;
             currentCell = cell;
         }
     }
@@ -194,7 +222,10 @@ TCPhotoPickerDelegate>
 }
 
 - (void)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldDidEndEditing:(UITextField *)textField {
-    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    if (indexPath.row == TCInputCellTypefloor) {
+        self.repairsInfo.floor = textField.text;
+    }
 }
 
 - (BOOL)commonInputViewCell:(TCCommonInputViewCell *)cell textFieldShouldReturn:(UITextField *)textField {
@@ -205,21 +236,49 @@ TCPhotoPickerDelegate>
 }
 
 - (void)didTapContainerViewInCommonInputViewCell:(TCCommonInputViewCell *)cell {
-    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    if (indexPath.row == TCInputCellTypeAppointTime) {
+        TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithController:self];
+        datePickerView.datePicker.date = [NSDate date];
+        datePickerView.datePicker.minimumDate = [NSDate date];
+        datePickerView.delegate = self;
+        [datePickerView show];
+        
+        [self.tableView endEditing:YES];
+    }
 }
 
-#pragma mark - TCRepairsDescViewCellDelegate
+#pragma mark - TCDatePickerViewDelegate
 
-- (BOOL)textViewShouldBeginEditingInRepairsDescViewCell:(TCRepairsDescViewCell *)cell {
-    self.currentEditIndex = [self.tableView indexPathForCell:cell];
+- (void)didClickConfirmButtonInDatePickerView:(TCDatePickerView *)view {
+    NSTimeInterval timestamp = [view.datePicker.date timeIntervalSince1970];
+    self.repairsInfo.appointTime = (NSInteger)(timestamp * 1000);
+    [self.tableView reloadData];
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    self.currentEditIndex = [NSIndexPath indexPathForRow:0 inSection:1];
     return YES;
 }
 
-- (BOOL)repairsDescViewCell:(TCRepairsDescViewCell *)cell textViewShouldReturn:(UITextView *)textView {
-    if ([textView isFirstResponder]) {
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
+        return NO;
     }
     return YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    self.repairsInfo.problemDesc = textView.text;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [scrollView endEditing:YES];
 }
 
 #pragma mark - TCRepairsPhotosViewCellDelegate
@@ -271,6 +330,12 @@ TCPhotoPickerDelegate>
     self.photoPicker = nil;
 }
 
+#pragma mark - TCRepairsCommitViewCellDelegate
+
+- (void)didClickCommitButtonInRepairsCommitViewCell:(TCRepairsCommitViewCell *)cell {
+    [self handleClickCommitButton];
+}
+
 #pragma mark - Notifications
 
 - (void)registerNotifications {
@@ -316,6 +381,77 @@ TCPhotoPickerDelegate>
     self.photoPicker = photoPicker;
 }
 
+- (void)handleClickCommitButton {
+    if (!self.repairsInfo.floor.length) {
+        [MBProgressHUD showHUDWithMessage:@"请您填写楼层信息"];
+        return;
+    }
+    if (!self.repairsInfo.appointTime) {
+        [MBProgressHUD showHUDWithMessage:@"请您选择约定时间"];
+        return;
+    }
+    
+    switch (self.repairsType) {
+        case TCPropertyRepairsTypePipe:
+            self.repairsInfo.fixProject = @"PIPE_FIX";
+            break;
+        case TCPropertyRepairsTypeLighting:
+            self.repairsInfo.fixProject = @"PUBLIC_LIGHTING";
+            break;
+        case TCPropertyRepairsTypeWaterPipe:
+            self.repairsInfo.fixProject = @"WATER_PIPE_FIX";
+            break;
+        case TCPropertyRepairsTypeElectric:
+            self.repairsInfo.fixProject = @"ELECTRICAL_FIX";
+            break;
+        case TCPropertyRepairsTypeOther:
+            self.repairsInfo.fixProject = @"OTHERS";
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSInteger totalCount = self.selectedPhotos.count;
+    __block NSInteger uploadCount = 0;
+    NSMutableArray *pictures = [NSMutableArray array];
+    
+    [MBProgressHUD showHUD:YES];
+    if (!totalCount) {
+        [self handleCommitRepairsInfo];
+    } else {
+        for (UIImage *image in self.selectedPhotos) {
+            [[TCBuluoApi api] uploadImage:image progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
+                if (success) {
+                    uploadCount ++;
+                    [pictures addObject:[TCImageURLSynthesizer synthesizeImagePathWithName:uploadInfo.objectKey source:kTCImageSourceOSS]];
+                    if (uploadCount == totalCount) {
+                        weakSelf.repairsInfo.pictures = [pictures copy];
+                        [weakSelf handleCommitRepairsInfo];
+                    }
+                } else {
+                    NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                    [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交失败，%@", reason]];
+                }
+            }];
+        }
+    }
+}
+
+- (void)handleCommitRepairsInfo {
+    [[TCBuluoApi api] commitPropertyRepairsInfo:self.repairsInfo result:^(BOOL success, TCPropertyManage *propertyManage, NSError *error) {
+        if (success) {
+            [MBProgressHUD showHUDWithMessage:@"提交成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交失败，%@", reason]];
+        }
+    }];
+}
+
 #pragma mark - Override Methods
 
 - (NSMutableArray *)selectedPhotos {
@@ -323,6 +459,23 @@ TCPhotoPickerDelegate>
         _selectedPhotos = [NSMutableArray array];
     }
     return _selectedPhotos;
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+        _dateFormatter.dateStyle = kCFDateFormatterShortStyle;
+        _dateFormatter.timeStyle = kCFDateFormatterShortStyle;
+    }
+    return _dateFormatter;
+}
+
+- (TCPropertyRepairsInfo *)repairsInfo {
+    if (_repairsInfo == nil) {
+        _repairsInfo = [[TCPropertyRepairsInfo alloc] init];
+    }
+    return _repairsInfo;
 }
 
 - (void)didReceiveMemoryWarning {
