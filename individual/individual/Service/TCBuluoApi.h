@@ -14,6 +14,13 @@ extern NSString *const TCBuluoApiNotificationUserDidLogin;
 extern NSString *const TCBuluoApiNotificationUserDidLogout;
 extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 
+typedef NS_ENUM(NSInteger, TCPayChannel) {
+    TCPayChannelBalance = 0,  // 余额
+    TCPayChannelAlipay,       // 支付宝
+    TCPayChannelWechat,       // 微信
+    TCPayChannelBankCard      // 银行卡
+};
+
 @interface TCBuluoApi : NSObject
 
 /**
@@ -283,6 +290,23 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
  @param resultBlock 结果回调，success为NO时表示预约失败，失败原因见error的code和userInfo
  */
 - (void)reserveCommunity:(TCCommunityReservationInfo *)communityReservationInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 提交付款申请
+
+ @param payChannel 支付方式
+ @param orderIDs 订单ID列表
+ @param resultBlock 结果回调，userPayment为nil时表示提交失败，失败原因见error的code和userInfo
+ */
+- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
+
+/**
+ 查询付款申请
+
+ @param paymentID 付款ID
+ @param resultBlock 结果回调，userPayment为nil时表示查询失败，失败原因见error的code和userInfo
+ */
+- (void)fetchUserPayment:(NSString *)paymentID result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 

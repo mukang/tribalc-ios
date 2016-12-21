@@ -21,6 +21,7 @@
 #import "TCBankCard.h"
 #import "TCUserCompanyInfo.h"
 #import "TCUserIDAuthInfo.h"
+#import "TCUserPayment.h"
 
 /********** 商业相关 **********/
 

@@ -678,6 +678,7 @@
 		7AF972D71E08CC72009D26A3 /* TCCommunityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972D51E08CC72009D26A3 /* TCCommunityViewCell.m */; };
 		7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972DA1E08E0FA009D26A3 /* TCUserIDAuthInfo.m */; };
 		7AF972DE1E09174B009D26A3 /* TCPropertyRepairsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972DD1E09174B009D26A3 /* TCPropertyRepairsInfo.m */; };
+		7AF972E11E095ED4009D26A3 /* TCUserPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972E01E095ED4009D26A3 /* TCUserPayment.m */; };
 		D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */; };
 /* End PBXBuildFile section */
 
@@ -2988,6 +2989,8 @@
 		7AF972DA1E08E0FA009D26A3 /* TCUserIDAuthInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserIDAuthInfo.m; sourceTree = "<group>"; };
 		7AF972DC1E09174B009D26A3 /* TCPropertyRepairsInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyRepairsInfo.h; sourceTree = "<group>"; };
 		7AF972DD1E09174B009D26A3 /* TCPropertyRepairsInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyRepairsInfo.m; sourceTree = "<group>"; };
+		7AF972DF1E095ED4009D26A3 /* TCUserPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserPayment.h; sourceTree = "<group>"; };
+		7AF972E01E095ED4009D26A3 /* TCUserPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserPayment.m; sourceTree = "<group>"; };
 		CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-individual.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -7795,6 +7798,8 @@
 				7A7467511DF961AD00ACD815 /* TCUserCompanyInfo.m */,
 				7AF972D91E08E0FA009D26A3 /* TCUserIDAuthInfo.h */,
 				7AF972DA1E08E0FA009D26A3 /* TCUserIDAuthInfo.m */,
+				7AF972DF1E095ED4009D26A3 /* TCUserPayment.h */,
+				7AF972E01E095ED4009D26A3 /* TCUserPayment.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -8594,6 +8599,7 @@
 				0928B3351DF8F7090085A182 /* TCReservationDetail.m in Sources */,
 				092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */,
 				7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */,
+				7AF972E11E095ED4009D26A3 /* TCUserPayment.m in Sources */,
 				7AF972DE1E09174B009D26A3 /* TCPropertyRepairsInfo.m in Sources */,
 				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
 				55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */,
