@@ -14,6 +14,8 @@
 #import "TCPropertyManageListController.h"
 #import "TCLoginViewController.h"
 #import "TCQRCodeViewController.h"
+#import "TCOpenDoorController.h"
+
 
 @interface TCToolsViewController ()
 
@@ -61,7 +63,7 @@
 - (void)setUpViews {
     CGFloat screenW =[UIScreen mainScreen].bounds.size.width;
     CGFloat scale = screenW/375.0;
-    UIImageView *topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenW, scale*251.5)];
+    UIImageView *topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenW, scale*253)];
     [self.view addSubview:topImageView];
     topImageView.image = [UIImage imageNamed:@"downImage.jpg"];
     
@@ -92,7 +94,11 @@
     UIImage *propertyImage = [UIImage imageNamed:@"property"];
     UIImageView *openDoor = [[UIImageView alloc] initWithFrame:CGRectMake(45*scale, 45*scale, openImage.size.width, openImage.size.height)];
     openDoor.image = openImage;
+    openDoor.userInteractionEnabled = YES;
     [downImageView addSubview:openDoor];
+    
+    UITapGestureRecognizer *openDoorG = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openDoor)];
+    [openDoor addGestureRecognizer:openDoorG];
     
     UILabel *openLabel = [[UILabel alloc] initWithFrame:CGRectMake(openDoor.frame.origin.x, CGRectGetMaxY(openDoor.frame), openDoor.frame.size.width, 30)];
     openLabel.text = @"手机开门";
@@ -117,6 +123,15 @@
     
     UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(propertyTap)];
     [property addGestureRecognizer:tapG];
+}
+
+- (void)openDoor {
+    TCOpenDoorController *openDoorVC = [[TCOpenDoorController alloc] init];
+    
+    openDoorVC.modalPresentationStyle = UIModalPresentationOverCurrentContext | UIModalPresentationFullScreen;
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:openDoorVC animated:YES completion:^{
+        openDoorVC.view.backgroundColor = [UIColor clearColor];
+    }];
 }
 
 - (void)propertyTap {

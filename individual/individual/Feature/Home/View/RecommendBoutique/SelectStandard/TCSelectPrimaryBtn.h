@@ -1,5 +1,5 @@
 //
-//  TCSelectSecondaryBtn.h
+//  TCSelectPrimaryBtn.h
 //  individual
 //
 //  Created by WYH on 16/12/19.
@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TCSelectBtn.h"
+#import "TCSelectButton.h"
 
-@interface TCSelectSecondaryBtn : TCSelectBtn
+@interface TCSelectPrimaryBtn : TCSelectButton
 
 - (instancetype)initWithFrame:(CGRect)frame AndTitle:(NSString *)title;
-
 
 
 @end
