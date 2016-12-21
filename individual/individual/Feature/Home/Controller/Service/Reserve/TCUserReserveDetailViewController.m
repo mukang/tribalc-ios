@@ -24,7 +24,9 @@
 
 @end
 
-@implementation TCUserReserveDetailViewController
+@implementation TCUserReserveDetailViewController {
+    __weak TCUserReserveDetailViewController *weakSelf;
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear: animated];
@@ -44,6 +46,8 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    weakSelf = self;
+    
     [self initNavigationBar];
     
     [self initReservationDetail];
@@ -53,7 +57,7 @@
 - (void)initReservationDetail {
     [[TCBuluoApi api] fetchReservationDetail:mReservationId result:^(TCReservationDetail *reservation, NSError *error) {
         reservationDetail = reservation;
-        [self initUI];
+        [weakSelf initUI];
     }];
 }
 
@@ -291,7 +295,7 @@
 - (void)changeReservationStatus:(NSString *)status {
     [[TCBuluoApi api] changeReservationStatus:status ReservationId:reservationDetail.ID result:^(BOOL result, NSError *error) {
         if (result) {
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
             [MBProgressHUD showHUDWithMessage:@"取消订单成功"];
             
         }
@@ -352,7 +356,6 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)touchCancelReserve:(UIButton *)button {

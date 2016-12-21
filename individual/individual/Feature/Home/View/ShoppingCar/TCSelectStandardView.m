@@ -40,12 +40,13 @@
 }
 
 - (void)fetchGoodStandardWithStandardId:(NSString *)standardId {
+    __weak TCSelectStandardView *weakSelf = self;
     [[TCBuluoApi api] fetchGoodStandards:standardId result:^(TCGoodStandards *goodStandard, NSError *error) {
         mGoodStandards = goodStandard;
         if (goodStandard.descriptions.allKeys.count == 2 && [goodStandard.descriptions[@"secondary"] isEqual:[NSNull null]]) {
             mGoodStandards.descriptions = @{ @"primary":mGoodStandards.descriptions[@"primary"] };
         }
-        [self initUIWithGoodStandard:goodStandard];
+        [weakSelf initUIWithGoodStandard:goodStandard];
     }];
 }
 

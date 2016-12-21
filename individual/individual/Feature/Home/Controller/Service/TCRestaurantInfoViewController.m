@@ -80,14 +80,17 @@
 
 #pragma mark - Get Data
 - (void)loadServiceDetail {
+    __weak TCRestaurantInfoViewController *weakSelf = self;
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchServiceDetail:mServiceId result:^(TCServiceDetail *service, NSError *error) {
         serviceDetail = service;
-        [self createWholeView];
+        [weakSelf createWholeView];
     }];
 }
 
 
+
+#pragma mark - UI
 - (void)createWholeScrollView {
     mScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, TCScreenWidth, self.view.frame.size.height - TCRealValue(45))];
     [self.view addSubview:mScrollView];
@@ -112,6 +115,58 @@
     [mScrollView bringSubviewToFront:serviceTitleImageView];
 }
 
+
+- (void)createTitleImageView {
+    serviceTitleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, TCRealValue(270))];
+    [serviceTitleImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:serviceDetail.mainPicture] placeholderImage:[UIImage imageNamed:@"home_image_place"]];
+    serviceTitleImageView.clipsToBounds = NO;
+    
+    float logoViewRadius = serviceTitleImageView.height * 0.12;
+    logoView = [[TCRestaurantLogoView alloc] initWithFrame:CGRectMake(serviceTitleImageView.width / 2 - logoViewRadius, serviceTitleImageView.height - logoViewRadius, logoViewRadius * 2, logoViewRadius * 2) AndUrl:[TCImageURLSynthesizer synthesizeImageURLWithPath:serviceDetail.detailStore.logo]];
+    
+    [mScrollView addSubview:serviceTitleImageView];
+    [serviceTitleImageView addSubview:logoView];
+}
+
+- (void)createBottomButton {
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - TCRealValue(45), self.view.frame.size.width, TCRealValue(45))];
+    UIColor *backColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+    UIButton *orderBtn = [self createBottomBtnWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndText:@"优惠买单" AndImgName:@"res_discount" AndBackColor: [UIColor colorWithRed:112/255.0 green:206/255.0 blue:213/255.0 alpha:1]];
+    [orderBtn addTarget:self action:@selector(touchPreferentialPay) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *reserveBtn = [self createBottomBtnWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndText:@"预订餐位" AndImgName:@"res_ordering" AndBackColor:backColor];
+    [reserveBtn addTarget:self action:@selector(touchReserveRest) forControlEvents:UIControlEventTouchUpInside];
+    
+    [bottomView addSubview:reserveBtn];
+    [bottomView addSubview:orderBtn];
+    
+    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0.5)];
+    [bottomView addSubview:lineView];
+    
+    [self.view addSubview:bottomView];
+    
+}
+
+- (UIButton *)createBottomBtnWithFrame:(CGRect)frame AndText:(NSString *)text AndImgName:(NSString *)imgName AndBackColor:(UIColor *)backColor{
+    UIButton *button = [[UIButton alloc] initWithFrame:frame];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
+    [imgView sizeToFit];
+    [imgView setOrigin:CGPointMake(TCRealValue(53), frame.size.height / 2 - imgView.height / 2 + 1)];
+    [button addSubview:imgView];
+    
+    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:TCRealValue(17)];
+    label.textColor = [UIColor whiteColor];
+    [button addSubview:label];
+    
+    imgView.x = frame.size.width / 2 - (imgView.width + label.width) / 2;
+    label.x = imgView.x + imgView.width;
+    label.origin = CGPointMake(imgView.x + imgView.width, frame.size.height / 2 - label.height / 2);
+    button.backgroundColor = backColor;
+    
+    return button;
+}
+
 - (void)createServiceInfoView {
     serviceInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, serviceTitleImageView.y + serviceTitleImageView.height + TCRealValue(35), TCScreenWidth, 0)];
     serviceInfoView.backgroundColor =  TCRGBColor(239, 239, 239);
@@ -128,7 +183,7 @@
     UIView *restTopicView = [self getParagraphViewWithFrame:CGRectMake(0, recommendedReasonView.y + recommendedReasonView.height, self.view.width, TCRealValue(175)) AndTitle:@"餐厅话题" AndText:serviceDetail.topics AndimgName:@"res_topic"];
     [serviceInfoView addSubview:restTopicView];
     
-    UIView *promptView = [self createKindlyReminderViewWithFrame:CGRectMake(0, restTopicView.y + restTopicView.height, self.view.frame.size.width, TCRealValue(145))];
+    UIView *promptView = [self getKindlyReminderViewWithFrame:CGRectMake(0, restTopicView.y + restTopicView.height, self.view.frame.size.width, TCRealValue(145))];
     [serviceInfoView addSubview:promptView];
     
     UIButton *phoneBtn = [self getPhoneCustomButtonWithFrame:CGRectMake(0, promptView.y + promptView.height + TCRealValue(7), self.view.frame.size.width, TCRealValue(45))];
@@ -139,19 +194,7 @@
 }
 
 
-- (void)createTitleImageView {
-    serviceTitleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, TCRealValue(270))];
-    [serviceTitleImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:serviceDetail.mainPicture] placeholderImage:[UIImage imageNamed:@"home_image_place"]];
-    serviceTitleImageView.clipsToBounds = NO;
-    
-    float logoViewRadius = serviceTitleImageView.height * 0.12;
-    logoView = [[TCRestaurantLogoView alloc] initWithFrame:CGRectMake(serviceTitleImageView.width / 2 - logoViewRadius, serviceTitleImageView.height - logoViewRadius, logoViewRadius * 2, logoViewRadius * 2) AndUrl:[TCImageURLSynthesizer synthesizeImageURLWithPath:serviceDetail.detailStore.logo]];
-    
-    [mScrollView addSubview:serviceTitleImageView];
-    [serviceTitleImageView addSubview:logoView];
-}
-
-
+#pragma mark - Title Base Info
 - (UIView *)getServiceBaseInfoViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
@@ -222,7 +265,7 @@
     return view;
 }
 
-
+#pragma mark - Address And Phone
 - (UIView *)getContactWayViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
@@ -249,8 +292,7 @@
     return view;
 }
 
-
-
+#pragma mark - Recommend Boutique And Topic
 - (UIView *)getParagraphViewWithFrame:(CGRect)frame AndTitle:(NSString *)title AndText:(NSString *)text AndimgName:(NSString *)imgName{
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
@@ -275,7 +317,47 @@
     return view;
 }
 
-- (UIView *)createKindlyReminderViewWithFrame:(CGRect)frame {
+- (UIView *)getParagraphTitleViewWithFrame:(CGRect)frame AndImgName:(NSString *)imgName AndTitle:(NSString *)title {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    UIImage *image = [UIImage imageNamed:imgName];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
+    UILabel *titleLab = [TCComponent createLabelWithText:title AndFontSize:TCRealValue(22)];
+    [imgView setOrigin:CGPointMake(view.width / 2 - (titleLab.width + image.size.width) / 2, TCRealValue(4))];
+    [titleLab setOrigin:CGPointMake(imgView.x + imgView.width + TCRealValue(2), 0)];
+    
+    [view addSubview:imgView];
+    [view addSubview:titleLab];
+    
+    return view;
+}
+
+- (UIButton *)getMoreInfoButtonWithFrame:(CGRect)frame AndTitle:(NSString *)title{
+    UIButton *moreInfoButton = [[UIButton alloc] initWithFrame:frame];
+    [moreInfoButton setTitle:@"更多详情>" forState:UIControlStateNormal];
+    [moreInfoButton setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
+    moreInfoButton.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
+    if ([title isEqualToString:@"推荐理由"]) {
+        [moreInfoButton addTarget:self action:@selector(touchMoreRecommendInfo) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [moreInfoButton addTarget:self action:@selector(touchMoreTopicInfo) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return moreInfoButton;
+}
+
+- (NSMutableAttributedString *)getAttributedStringWithText:(NSString *)text {
+    text = text ? text : @"" ;
+    NSMutableAttributedString *attrText = [[NSMutableAttributedString alloc] initWithString:text];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = TCRealValue(5);
+    paragraphStyle.alignment = NSTextAlignmentJustified;
+    //    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    [attrText addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, text.length)];
+    
+    return attrText;
+}
+
+#pragma mark - Kindly Reminder
+- (UIView *)getKindlyReminderViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     view.backgroundColor = [UIColor whiteColor];
     
@@ -285,7 +367,7 @@
     UIView *storeTagsView = [self getStoreTagsView];
     [storeTagsView setOrigin:CGPointMake(self.view.frame.size.width / 2 - storeTagsView.width / 2, titleView.y + titleView.height + TCRealValue(13))];
     [view addSubview:storeTagsView];
-    
+    serviceDetail.detailStore.businessHours = serviceDetail.detailStore.businessHours == nil ? @"0:00" :serviceDetail.detailStore.businessHours;
     NSString *time = [NSString stringWithFormat:@"每天 %@",serviceDetail.detailStore.businessHours];
     UILabel *timeLab = [TCComponent createLabelWithFrame:CGRectMake(0, storeTagsView.y + storeTagsView.height + TCRealValue(12), self.view.frame.size.width, TCRealValue(13)) AndFontSize:TCRealValue(13) AndTitle:time AndTextColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1]];
     timeLab.textAlignment = NSTextAlignmentCenter;
@@ -294,6 +376,36 @@
     return view;
 }
 
+- (UIView *)getStoreTagsView {
+    UIView *view = [[UIView alloc] init];
+    NSArray *tagArr = serviceDetail.detailStore.tags;
+    NSArray *tagLogoArr = serviceDetail.detailStore.faclities;
+    for (int i = 0; i < tagArr.count; i++) {
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(24) + TCRealValue(35), 0, TCRealValue(24), TCRealValue(24))];
+        if (i == 0) {
+            [imgView setX:0];
+        }
+        imgView.image = [UIImage imageNamed:tagLogoArr[i]];
+        UILabel *titleLab = [self getStoreTagsTitleLabelWithImgFrame:imgView.frame AndTitle:tagArr[i]];
+        
+        [view addSubview:imgView];
+        [view addSubview:titleLab];
+    }
+    [view setSize:CGSizeMake(TCRealValue(24) * tagArr.count + (tagArr.count - 1) * TCRealValue(35), TCRealValue(24 + 5 + 13))];
+    return view;
+}
+
+- (UILabel *)getStoreTagsTitleLabelWithImgFrame:(CGRect)imgFrame AndTitle:(NSString *)title{
+    UILabel *titleLab = [[UILabel alloc] init];
+    titleLab.text = title;
+    titleLab.font = [UIFont systemFontOfSize:TCRealValue(13)];
+    titleLab.textColor = TCRGBColor(154, 154, 154);
+    [titleLab sizeToFit];
+    [titleLab setOrigin:CGPointMake(imgFrame.origin.x + imgFrame.size.width / 2 - titleLab.width / 2, imgFrame.origin.y + imgFrame.size.height + TCRealValue(5))];
+    return titleLab;
+}
+
+#pragma mark - Customer Phone
 - (UIButton *)getPhoneCustomButtonWithFrame:(CGRect)frame {
     UIButton *button = [[UIButton alloc] initWithFrame:frame];
     button.backgroundColor = [UIColor whiteColor];
@@ -319,115 +431,7 @@
 }
 
 
-
-- (void)createBottomButton {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - TCRealValue(45), self.view.frame.size.width, TCRealValue(45))];
-    UIColor *backColor = [UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    UIButton *orderBtn = [self createBottomBtnWithFrame:CGRectMake(0, 0, bottomView.width / 2, bottomView.height) AndText:@"优惠买单" AndImgName:@"res_discount" AndBackColor: [UIColor colorWithRed:112/255.0 green:206/255.0 blue:213/255.0 alpha:1]];
-    [orderBtn addTarget:self action:@selector(touchOrderRest) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *reserveBtn = [self createBottomBtnWithFrame:CGRectMake(bottomView.width / 2, 0, bottomView.width / 2, bottomView.height) AndText:@"预订餐位" AndImgName:@"res_ordering" AndBackColor:backColor];
-    [reserveBtn addTarget:self action:@selector(touchReserveRest) forControlEvents:UIControlEventTouchUpInside];
-    
-    [bottomView addSubview:reserveBtn];
-    [bottomView addSubview:orderBtn];
-    
-    UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0.5)];
-    [bottomView addSubview:lineView];
-    
-    [self.view addSubview:bottomView];
-    
-}
-
-- (UIButton *)createBottomBtnWithFrame:(CGRect)frame AndText:(NSString *)text AndImgName:(NSString *)imgName AndBackColor:(UIColor *)backColor{
-    UIButton *button = [[UIButton alloc] initWithFrame:frame];
-    
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imgName]];
-    [imgView sizeToFit];
-    [imgView setOrigin:CGPointMake(TCRealValue(53), frame.size.height / 2 - imgView.height / 2 + 1)];
-    [button addSubview:imgView];
-    
-    UILabel *label = [TCComponent createLabelWithText:text AndFontSize:TCRealValue(17)];
-    label.textColor = [UIColor whiteColor];
-    [button addSubview:label];
-    
-    imgView.x = frame.size.width / 2 - (imgView.width + label.width) / 2;
-    label.x = imgView.x + imgView.width;
-    label.origin = CGPointMake(imgView.x + imgView.width, frame.size.height / 2 - label.height / 2);
-    button.backgroundColor = backColor;
-    
-    return button;
-}
-
-- (UIView *)getStoreTagsView {
-    UIView *view = [[UIView alloc] init];
-    NSArray *tagArr = serviceDetail.detailStore.tags;
-    NSArray *tagLogoArr = serviceDetail.detailStore.faclities;
-    for (int i = 0; i < tagArr.count; i++) {
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(24) + TCRealValue(35), 0, TCRealValue(24), TCRealValue(24))];
-        if (i == 0) {
-            [imgView setX:0];
-        }
-        imgView.image = [UIImage imageNamed:tagLogoArr[i]];
-        UILabel *titleLab = [[UILabel alloc] init];
-        titleLab.text = tagArr[i];
-        titleLab.font = [UIFont systemFontOfSize:TCRealValue(13)];
-        titleLab.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
-        [titleLab sizeToFit];
-        [titleLab setOrigin:CGPointMake(imgView.x + imgView.width / 2 - titleLab.width / 2, imgView.y + imgView.height + TCRealValue(5))];
-        
-        [view addSubview:imgView];
-        [view addSubview:titleLab];
-    }
-    [view setSize:CGSizeMake(TCRealValue(24) * tagArr.count + (tagArr.count - 1) * TCRealValue(35), TCRealValue(24 + 5 + 13))];
-    
-    return view;
-}
-
-
-- (UIView *)getParagraphTitleViewWithFrame:(CGRect)frame AndImgName:(NSString *)imgName AndTitle:(NSString *)title {
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    UIImage *image = [UIImage imageNamed:imgName];
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
-    UILabel *titleLab = [TCComponent createLabelWithText:title AndFontSize:TCRealValue(22)];
-    [imgView setOrigin:CGPointMake(view.width / 2 - (titleLab.width + image.size.width) / 2, TCRealValue(4))];
-    [titleLab setOrigin:CGPointMake(imgView.x + imgView.width + TCRealValue(2), 0)];
-    
-    [view addSubview:imgView];
-    [view addSubview:titleLab];
-
-    return view;
-}
-
-- (NSMutableAttributedString *)getAttributedStringWithText:(NSString *)text {
-    text = text ? text : @"" ;
-    NSMutableAttributedString *attrText = [[NSMutableAttributedString alloc] initWithString:text];
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing = TCRealValue(5);
-    paragraphStyle.alignment = NSTextAlignmentJustified;
-//    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
-    [attrText addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, text.length)];
-
-    return attrText;
-}
-
-
-
-- (UIButton *)getMoreInfoButtonWithFrame:(CGRect)frame AndTitle:(NSString *)title{
-    UIButton *moreInfoButton = [[UIButton alloc] initWithFrame:frame];
-    [moreInfoButton setTitle:@"更多详情>" forState:UIControlStateNormal];
-    [moreInfoButton setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1] forState:UIControlStateNormal];
-    moreInfoButton.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
-    if ([title isEqualToString:@"推荐理由"]) {
-        [moreInfoButton addTarget:self action:@selector(touchMoreRecommendInfo) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        [moreInfoButton addTarget:self action:@selector(touchMoreTopicInfo) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return moreInfoButton;
-}
-
-
-#pragma mark - click
+#pragma mark - Touch Action
 - (void)touchBackBtn {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -447,12 +451,9 @@
     [self.navigationController pushViewController:reserveOnlineViewController animated:YES];
 }
 
-- (void)touchOrderRest {
-//    restaurantInfoDic[@""]    data
-//    
-//    UIViewController *viewController = [[UIViewController alloc] init];
-//    viewController.title = @"外卖订餐";
-//    [self.navigationController pushViewController:viewController animated:YES];
+- (void)touchPreferentialPay
+{
+    NSLog(@"点击优惠买单");
 }
 
 -(void)touchPhoneBtn {
@@ -469,7 +470,6 @@
 }
 
 - (void)touchLocationBtn {
-    //    restaurantInfoDic[@"position"]
     
     TCLocationViewController *locationViewController = [[TCLocationViewController alloc] init];
     [self.navigationController pushViewController:locationViewController animated:YES];

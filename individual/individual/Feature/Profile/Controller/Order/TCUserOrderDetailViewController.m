@@ -7,10 +7,6 @@
 //
 
 #import "TCUserOrderDetailViewController.h"
-#import "TCUserOrderTabBarController.h"
-#import "TCPlaceOrderViewController.h"
-#import "TCShoppingCartViewController.h"
-#import "TCBuluoApi.h"
 
 @interface TCUserOrderDetailViewController () {
     TCOrder *orderDetail;
@@ -19,7 +15,9 @@
 
 @end
 
-@implementation TCUserOrderDetailViewController
+@implementation TCUserOrderDetailViewController {
+    __weak TCUserOrderDetailViewController *weakSelf;
+}
 
 
 
@@ -40,6 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    weakSelf = self;
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self initNavigationBar];
     
@@ -458,8 +458,8 @@
         [alertView removeFromSuperview];
     } else {
         [[TCBuluoApi api] changeOrderStatus:@"CANNEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-            [self showHUDMessageWithResult:result AndTitle:@"取消订单"];
-            [self touchBackBtn];
+            [weakSelf showHUDMessageWithResult:result AndTitle:@"取消订单"];
+            [weakSelf touchBackBtn];
         }];
         [alertView removeFromSuperview];
 
@@ -507,22 +507,22 @@
 
 - (void)touchOrderPayBtn:(UIButton *)btn {
     [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-        [self showHUDMessageWithResult:result AndTitle:@"付款"];
-        [self touchBackBtn];
+        [weakSelf showHUDMessageWithResult:result AndTitle:@"付款"];
+        [weakSelf touchBackBtn];
     }];
 }
 
 - (void)touchOrderRemindBtn:(UIButton *)btn {
     [[TCBuluoApi api] changeOrderStatus:@"DELIVERY" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-        [self showHUDMessageWithResult:result AndTitle:@"无权限，发货"];
-        [self.navigationController popViewControllerAnimated:YES];
+        [weakSelf showHUDMessageWithResult:result AndTitle:@"无权限，发货"];
+        [weakSelf.navigationController popViewControllerAnimated:YES];
     }];
 }
 
 - (void)touchOrderConfrimTake:(UIButton *)btn {
     [[TCBuluoApi api] changeOrderStatus:@"RECEIVED" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-        [self showHUDMessageWithResult:result AndTitle:@"确认收货"];
-        [self.navigationController popViewControllerAnimated:YES];
+        [weakSelf showHUDMessageWithResult:result AndTitle:@"确认收货"];
+        [weakSelf.navigationController popViewControllerAnimated:YES];
     }];
 }
 

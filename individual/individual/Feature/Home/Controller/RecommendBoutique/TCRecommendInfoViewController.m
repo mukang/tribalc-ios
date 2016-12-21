@@ -7,13 +7,6 @@
 //
 
 #import "TCRecommendInfoViewController.h"
-#import "TCUserOrderDetailViewController.h"
-#import "TCBuluoApi.h"
-#import "TCClientRequestError.h"
-#import "TCGoodShopView.h"
-#import "TCImgPageControl.h"
-#import "TCShoppingCartViewController.h"
-#import "TCGoodSelectView.h"
 
 @interface TCRecommendInfoViewController () {
     TCGoodDetail *mGoodDetail;
@@ -21,7 +14,6 @@
     TCGoodStandards *goodStandard;
     NSString *mGoodId;
 
-    
     TCGoodSelectView *goodSelectView;
     UIScrollView *mScrollView;
     TCImgPageControl *imgPageControl;
@@ -32,7 +24,9 @@
 
 @end
 
-@implementation TCRecommendInfoViewController
+@implementation TCRecommendInfoViewController {
+    __weak TCRecommendInfoViewController *weakSelf;
+}
 
 - (instancetype)initWithGoodId:(NSString *)goodID {
     self = [super init];
@@ -45,6 +39,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
     if (mScrollView == nil) {
         [self createEntiretyScrollView];
@@ -57,6 +52,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    weakSelf = self;
+
     [self loadGoodDetailInfoWithGoodId:mGoodId];
 }
 
@@ -68,7 +65,7 @@
         if (goodDetail) {
             [MBProgressHUD hideHUD:YES];
             mGoodDetail = goodDetail;
-            [self performSelectorOnMainThread:@selector(initMainView) withObject:nil waitUntilDone:NO];
+            [weakSelf initMainView];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取商品信息失败"];
         }
@@ -419,8 +416,7 @@
 - (void)touchAddShopCartBtnInDetailView:(UIButton *) btn {
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchGoodStandards:mGoodDetail.standardId result:^(TCGoodStandards *result, NSError *error) {
-        
-        [self performSelectorOnMainThread:@selector(showStandardView:) withObject:result waitUntilDone:NO];
+        [weakSelf showStandardView:result];
     }];
 }
 
@@ -435,7 +431,7 @@
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchGoodStandards:mGoodDetail.standardId result:^(TCGoodStandards *result, NSError *error) {
         
-        [self performSelectorOnMainThread:@selector(showStandardView:) withObject:result waitUntilDone:NO];
+        [weakSelf showStandardView:result];
     }];
     
 }
