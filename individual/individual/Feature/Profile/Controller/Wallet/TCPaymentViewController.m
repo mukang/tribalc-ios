@@ -7,6 +7,7 @@
 //
 
 #import "TCPaymentViewController.h"
+#import "YYText.h"
 
 @interface TCPaymentViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *boardView;
@@ -108,9 +109,15 @@
     
     if ([string isEqualToString:@""]) {
         if (textField.text.length == 3) {
-            textField.attributedText = nil;
+            textField.text = @"";
+        
+//            return NO;
         }
         return YES;
+    }else {
+        if (textField.text.length >= 15) {
+            return NO;
+        }
     }
     NSString *text = nil;
     if (textField.text.length == 0) {
@@ -127,6 +134,8 @@
     [attStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:24] range:NSMakeRange(0, 1)];
     [attStr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(1, text.length-1)];
     [attStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:21] range:NSMakeRange(1, text.length-1)];
+    [attStr addAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:21]} range:NSMakeRange(1, text.length-1)];
+//    [attStr yy_setAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:21] range:NSMakeRange(1, text.length-1)];
     textField.attributedText = attStr;
 
     return NO;
@@ -136,6 +145,7 @@
 }
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
+    [self.view endEditing:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

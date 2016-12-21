@@ -11,7 +11,6 @@
 #import "TCBuluoApi.h"
 
 @interface TCOpenDoorController ()
-@property (nonatomic, strong) UIImageView *imageV1;
 
 @property (nonatomic, strong) UIButton *openBtn;
 
@@ -34,41 +33,14 @@
 
     [self setUpUI];
     
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(go)];
-//    [self.view addGestureRecognizer:tap];
-}
-
-//- (void)viewWillAppear:(BOOL)animated {
-//    [self updateUI];
-//}
-
-//- (void)go {
-//    [_pulseLayer removeAllAnimations];
-//}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [self updateUI];
-}
-
-- (void)updateUI {
-    UIImage *image = [self imageFromView:[UIApplication sharedApplication].keyWindow atFrame:self.view.bounds];
-    
-    _imageV1.image = [TCOpenDoorController coreBlurImage:image withBlurNumber:0.5];
 }
 
 - (void)setUpUI {
+    
     UIImageView *imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"openDoorBg"]];
     [self.view addSubview:imageV];
-//    imageV.userInteractionEnabled = YES;
     [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.bottom.equalTo(self.view);
-    }];
-    
-    _imageV1 = [[UIImageView alloc] init];
-//    _imageV1.userInteractionEnabled = YES;
-    [self.view addSubview:_imageV1];
-    [_imageV1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(imageV);
     }];
     
     UIButton *openBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -82,12 +54,10 @@
         make.centerX.equalTo(self.view.mas_centerX);
         make.bottom.equalTo(self.view.mas_bottom).offset(-115*scale);
         make.width.height.equalTo(@94);
-//        make.center.equalTo(self.view);
     }];
     openBtn.layer.cornerRadius = 47.0;
     openBtn.layer.borderWidth = 5.0;
     openBtn.layer.borderColor = [UIColor colorWithRed:124/255.0 green:211/255.0 blue:211/255.0 alpha:0.8].CGColor;
-//    openBtn.clipsToBounds = YES;
     _openBtn = openBtn;
     [openBtn addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
     
@@ -105,7 +75,9 @@
     [backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
 }
 
+
 - (void)click {
+    
     if (_pulseLayer == nil) {
         CAShapeLayer *pulseLayer = [CAShapeLayer layer];
         pulseLayer.frame = _openBtn.layer.bounds;
@@ -160,10 +132,12 @@
 
 
 - (void)openDoor {
+     [_openBtn setTitle:@"开锁中" forState:UIControlStateNormal];
     [[TCBuluoApi api] openDoorWithResult:^(BOOL isSuccessed, NSError *err) {
         if (isSuccessed) {
             
-            [_openBtn setBackgroundImage:[UIImage imageNamed:@"opened"] forState:UIControlStateNormal];
+            [_openBtn setImage:[UIImage imageNamed:@"opened"] forState:UIControlStateNormal];
+            [_openBtn setTitle:@"" forState:UIControlStateNormal];
         }else {
             [_openBtn setTitle:@"开锁失败" forState:UIControlStateNormal];
             _openBtn.titleLabel.font = [UIFont systemFontOfSize:18];
@@ -173,36 +147,17 @@
     }];
 }
 
-
-+ (UIImage *)coreBlurImage:(UIImage *)image withBlurNumber:(CGFloat)blur
-{
-    CIContext *context = [CIContext contextWithOptions:nil];
-    CIImage *inputImage= [CIImage imageWithCGImage:image.CGImage];
-    //设置filter
-    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [filter setValue:inputImage forKey:kCIInputImageKey]; [filter setValue:@(blur) forKey: @"inputRadius"];
-    //模糊图片
-    CIImage *result=[filter valueForKey:kCIOutputImageKey];
-    CGImageRef outImage=[context createCGImage:result fromRect:[result extent]];
-    UIImage *blurImage=[UIImage imageWithCGImage:outImage];
-    CGImageRelease(outImage);
-    return blurImage;
+- (void)dealloc {
+    TCLog(@"TCOpenDoorController--dealloc");
 }
 
-- (UIImage *)imageFromView: (UIView *) theView   atFrame:(CGRect)r
-{
-    UIGraphicsBeginImageContext(theView.frame.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    UIRectClip(r);
-    [theView.layer renderInContext:context];
-    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return  theImage;//[self getImageAreaFromImage:theImage atFrame:r];
-}
 
 - (void)back {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.myBlock) {
+            self.myBlock();
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

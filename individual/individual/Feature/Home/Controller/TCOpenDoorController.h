@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^Myblock)();
+
 @interface TCOpenDoorController : UIViewController
+
+@property (nonatomic, copy) Myblock myBlock;
 
 @end

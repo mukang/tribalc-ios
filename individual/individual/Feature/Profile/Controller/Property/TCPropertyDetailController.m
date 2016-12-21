@@ -155,17 +155,18 @@
     _btnHeightConstraint.constant = btnH;
     _btnBottomConstraint.constant = btnBottomC;
     
-     [self.view setNeedsUpdateConstraints];
-     [self.view updateConstraintsIfNeeded];
-    
-
-//    [self.view setNeedsLayout];
+    [self.view setNeedsUpdateConstraints];
+    [self.view updateConstraintsIfNeeded];
     [self.view layoutIfNeeded];
 }
 
 - (IBAction)payBtnClick:(id)sender {
     TCPaymentViewController *paymentVc = [[TCPaymentViewController alloc] init];
     [self.navigationController pushViewController:paymentVc animated:YES];
+}
+
+- (void)dealloc {
+    TCLog(@"TCPropertyDetailCOntroller--dealloc");
 }
 
 - (void)didReceiveMemoryWarning {
