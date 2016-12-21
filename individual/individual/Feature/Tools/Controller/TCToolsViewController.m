@@ -15,9 +15,14 @@
 #import "TCLoginViewController.h"
 #import "TCQRCodeViewController.h"
 #import "TCOpenDoorController.h"
+#import "masonry.h"
 
+#import "TCBlurImageView.h"
 
 @interface TCToolsViewController ()
+@property (nonatomic, strong) UIImageView *imageV;
+
+@property (nonatomic, strong) TCBlurImageView *blurImageView;
 
 @end
 
@@ -126,12 +131,12 @@
 }
 
 - (void)openDoor {
-    TCOpenDoorController *openDoorVC = [[TCOpenDoorController alloc] init];
     
-    openDoorVC.modalPresentationStyle = UIModalPresentationOverCurrentContext | UIModalPresentationFullScreen;
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:openDoorVC animated:YES completion:^{
-        openDoorVC.view.backgroundColor = [UIColor clearColor];
-    }];
+    if (_blurImageView == nil) {
+        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController];
+    }
+    
+    [_blurImageView show];
 }
 
 - (void)propertyTap {
@@ -139,9 +144,7 @@
     TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
-//    TCPropertyManageListController *propertyList = [[TCPropertyManageListController alloc] init];
-//    propertyList.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:propertyList animated:YES];
+
 }
 
 - (BOOL)checkUserNeedLogin {

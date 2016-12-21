@@ -89,12 +89,15 @@
 }
 
 - (void)setupTableViewRefreshView {
+    @WeakObj(self)
     TCRefreshHeader *refreshHeader = [TCRefreshHeader headerWithRefreshingBlock:^(void) {
+        @StrongObj(self)
         [self loadDataIsMore:NO];
     }];
     _propertyTableView.mj_header = refreshHeader;
     
     TCRefreshFooter *refreshFooter = [TCRefreshFooter footerWithRefreshingBlock:^(void) {
+        @StrongObj(self)
         if (self.propertymanageWrapper.hasMore) {
             [self loadDataIsMore:YES];
         }else {
@@ -162,6 +165,10 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.propertyManage = propertyManage;
     return cell;
+}
+
+- (void)dealloc {
+    TCLog(@"TCPropertyManageListController--dealloc");
 }
 
 - (void)didReceiveMemoryWarning {

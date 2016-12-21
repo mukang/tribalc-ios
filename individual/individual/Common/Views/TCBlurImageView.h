@@ -1,0 +1,15 @@
+//
+//  TCBlurImageView.h
+//  individual
+//
+//  Created by 王帅锋 on 16/12/21.
+//  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface TCBlurImageView : UIImageView
+
+- (instancetype)initWithController:(UIViewController *)controller;
+- (void)show;
+@end

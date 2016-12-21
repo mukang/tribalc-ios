@@ -18,6 +18,7 @@
 #import "TCLoginViewController.h"
 #import "TCRepairsViewController.h"
 
+#import "TCBlurImageView.h"
 
 @interface TCHomeViewController () {
     NSDictionary *homeInfoDic;
@@ -25,6 +26,8 @@
     UIScrollView *homeScrollView;
     UILabel *navigationTitleLab;
 }
+
+@property (nonatomic, strong) TCBlurImageView *blurImageView;
 
 @end
 
@@ -458,6 +461,10 @@
 #pragma mark - click
 - (void)touchCommunityUnlockBtn:(UIButton *)button {
     NSLog(@"点击社区开门");
+    if (_blurImageView == nil) {
+        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController];
+    }
+    [_blurImageView show];
 }
 
 - (void)touchEstateRepair:(UIButton *)button {
@@ -466,10 +473,6 @@
     TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
-
-//    TCRepairsViewController *repairsViewController = [[TCRepairsViewController alloc] init];
-//    repairsViewController.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:repairsViewController animated:YES];
 }
 
 
