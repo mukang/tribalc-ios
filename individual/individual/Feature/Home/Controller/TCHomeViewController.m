@@ -467,10 +467,14 @@
 - (void)touchCommunityUnlockBtn:(UIButton *)button {
     
     [self endTitleScrollTimer];   //计时器停止
-    [self startTitleScrollTimer];   //计时器开始
+//    [self startTitleScrollTimer];   //计时器开始
     NSLog(@"点击社区开门");
+    @WeakObj(self)
     if (_blurImageView == nil) {
-        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController];
+        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
+            @StrongObj(self)
+            [self startTitleScrollTimer];
+        }];
     }
     [_blurImageView show];
 }

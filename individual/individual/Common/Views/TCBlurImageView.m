@@ -13,18 +13,20 @@
 
 @property (nonatomic,weak) UIViewController *myConreoller;
 
+@property (nonatomic, copy) MyBlock block;
+
 @end
 
 
 
 @implementation TCBlurImageView
 
-- (instancetype)initWithController:(UIViewController *)controller {
+- (instancetype)initWithController:(UIViewController *)controller endBlock:(MyBlock)b{
     
     if (self = [super init]) {
         if (_myConreoller != controller) {
             _myConreoller = controller;
-            
+            _block = [b copy];
             UIImage *img = [self imageFromView:controller.view atFrame:controller.view.bounds];
             UIImage *i = [self coreBlurImage:img withBlurNumber:0.5];
             self.image = i;
@@ -48,6 +50,9 @@
     open.myBlock = ^{
         if (self) {
             [self removeFromSuperview];
+            if (self.block) {
+                self.block();
+            }
         }
     };
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

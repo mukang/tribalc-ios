@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^MyBlock)();
+
 @interface TCBlurImageView : UIImageView
 
-- (instancetype)initWithController:(UIViewController *)controller;
+- (instancetype)initWithController:(UIViewController *)controller endBlock:(MyBlock)b;
 - (void)show;
 @end
