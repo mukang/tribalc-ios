@@ -157,6 +157,7 @@
             if (weakSelf.editNickBlock) {
                 weakSelf.editNickBlock(nickname);
             }
+            [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
             [weakSelf.navigationController popViewControllerAnimated:YES];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
