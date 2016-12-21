@@ -12,7 +12,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame AndImgName:(NSString *)imgName AndText:(NSString *)text;
 
-@property (retain, nonatomic) UIButton *imgBtn;
-@property (retain, nonatomic) UILabel *textLab;
+@property (nonatomic, assign) BOOL isSelected;
 
 @end

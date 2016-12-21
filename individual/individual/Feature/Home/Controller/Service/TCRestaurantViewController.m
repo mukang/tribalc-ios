@@ -10,12 +10,6 @@
 
 @interface TCRestaurantViewController () {
     TCServiceWrapper *mServiceWrapper;
-    UIView *backView;
-    TCRestaurantSortView *sortView;
-    TCRestaurantFilterView *filterView;
-    TCRestaurantSelectButton *sortButton;
-    TCRestaurantSelectButton *filterButton;
-    
 }
 
 @end
@@ -32,16 +26,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-
     [self loadRestaurantDataWithSortType:nil];
     
-    [self initialTableView];
-    
-    [self initUI];
-    
-    
+    [self createTableView];
 }
 
 #pragma mark - Navigation Bar
@@ -87,36 +75,13 @@
     }
 }
 
-- (void)initUI {
-    [self initHiddenBackView];
-    
-    sortView = [[TCRestaurantSortView alloc] initWithFrame:CGRectMake(0, TCRealValue(42), self.view.width, TCRealValue(169 + 10))];
-    sortView.hidden = YES;
-    [self.view addSubview:sortView];
-    
-    filterView = [[TCRestaurantFilterView alloc] initWithFrame:CGRectMake(0, TCRealValue(42), self.view.width, TCRealValue(105))];
-    filterView.hidden = YES;
-    [self.view addSubview:filterView];
-}
-
-- (void)initHiddenBackView {
-    backView = [[UIView alloc] initWithFrame:CGRectMake(0, TCRealValue(42), self.view.width, self.view.height - TCRealValue(42))];
-    backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchHiddenSelectView)];
-    [backView addGestureRecognizer:recognizer];
-    [self.view addSubview:backView];
-    backView.hidden = YES;
-
-}
 
 
 
-
-- (void)initialTableView {
-    mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height) style:UITableViewStyleGrouped];
+- (void)createTableView {
+    mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height - TCRealValue(42)) style:UITableViewStyleGrouped];
     mResaurantTableView.delegate = self;
     mResaurantTableView.dataSource = self;
-    mResaurantTableView.contentInset = UIEdgeInsetsMake(0, 0, TCRealValue(22), 0);
     [self.view addSubview:mResaurantTableView];
     
     TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^{
@@ -131,60 +96,8 @@
     
 }
 
-- (NSString *)getDistanceWithLocation:(NSArray *)locationArr {
-    NSString *distance;
-    CLLocationManager *locationManager = [[CLLocationManager alloc] init];
-    
-    if (![CLLocationManager locationServicesEnabled]) {
-        NSLog(@"定位服务当前可能尚未打开，请设置打开！");
-    }
-    if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusNotDetermined){
-        [locationManager requestWhenInUseAuthorization];
-    }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse){
-        //设置代理
-        locationManager.delegate=self;
-        //设置定位精度
-        locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-        //定位频率,每隔多少米定位一次
-        CLLocationDistance distance=10.0;
-        locationManager.distanceFilter=distance;
-        //启动跟踪定位
-        [locationManager startUpdatingLocation];
-    }
-    
-    
-    
-    return distance;
-}
-
-
-
-- (UIView *)getTopViewWithFrame:(CGRect)frame {
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = [UIColor whiteColor];
-    
-    sortButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(0, 0, self.view.width / 2, TCRealValue(42)) AndText:@"智能排序" AndImgName:@"res_select_down"];
-    [view addSubview:sortButton];
-    [sortButton addTarget:self action:@selector(touchSortBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    filterButton = [[TCRestaurantSelectButton alloc] initWithFrame:CGRectMake(self.view.width / 2, 0, self.view.width / 2, TCRealValue(42)) AndText:@"筛选" AndImgName:@"res_select_down"];
-    [filterButton addTarget:self action:@selector(touchFilterBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:filterButton];
-    
-    
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width / 2 - TCRealValue(0.5), TCRealValue(14), TCRealValue(1), TCRealValue(46 - 16 * 2))];
-    lineView.backgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1];
-    [view addSubview:lineView];
-    
-    return view;
-    
-}
-
-
-
 - (TCRestaurantTableViewCell *)getTableViewCellInfoWithIndex:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView AndCell:(TCRestaurantTableViewCell *)cell{
-
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     TCServices *resInfo = mServiceWrapper.content[indexPath.row];
     NSURL *imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, resInfo.mainPicture]];
@@ -194,22 +107,57 @@
     [cell setLocation:storeInfo.markPlace];
     [cell setType:storeInfo.brand];
     [cell setPrice:resInfo.personExpense];
-//    if ([resInfo[@"room"] isEqual:@YES]) {
-        [cell isSupportRoom:YES];
-//    }
+    //    if ([resInfo[@"room"] isEqual:@YES]) {
+    [cell isSupportRoom:YES];
+    //    }
     if (resInfo.reservable == TRUE) {
         [cell isSupportReserve:YES];
     }
     cell.rangeLab.text = @"233m";
-    
-
-    
     return cell;
 }
 
 
+//- (NSString *)getDistanceWithLocation:(NSArray *)locationArr {
+//    NSString *distance;
+//    CLLocationManager *locationManager = [[CLLocationManager alloc] init];
+//    
+//    if (![CLLocationManager locationServicesEnabled]) {
+//        NSLog(@"定位服务当前可能尚未打开，请设置打开！");
+//    }
+//    if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusNotDetermined){
+//        [locationManager requestWhenInUseAuthorization];
+//    }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse){
+//        //设置代理
+//        locationManager.delegate=self;
+//        //设置定位精度
+//        locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+//        //定位频率,每隔多少米定位一次
+//        CLLocationDistance distance=10.0;
+//        locationManager.distanceFilter=distance;
+//        //启动跟踪定位
+//        [locationManager startUpdatingLocation];
+//    }
+//    
+//    return distance;
+//}
+
+
+
+
 
 #pragma mark - UITableViewDataSource
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"header"];
+    if (!headerView) {
+        headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:@"header"];
+        TCServiceFilterView *filterView = [[TCServiceFilterView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCRealValue(42))];
+        filterView.delegate = self;
+        [headerView addSubview:filterView];
+    }
+    return headerView;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return mServiceWrapper.content.count;
@@ -233,6 +181,8 @@
 }
 
 
+
+
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -249,11 +199,6 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return TCRealValue(42);
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [self getTopViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, TCRealValue(42))];
-    
 }
 
 
@@ -274,7 +219,44 @@
 }
 
 
-# pragma mark - click
+#pragma mark - TCServiceFilterViewDelegate
+- (void)filterView:(TCServiceFilterView *)filterView didSelectFilterServiceBtn:(NSInteger)type {
+    switch (type) {
+        case TCDeliver:
+            [self filterByInfo:TCDeliver];
+            break;
+        case TCReserve:
+            [self filterByInfo:TCReserve];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)filterView:(TCServiceFilterView *)filterView didSelectSortServiceBtn:(NSInteger)type {
+    switch (type) {
+        case TCAverageMin:
+            [self sortByInfo:TCAverageMin];
+            break;
+        case TCAverageMax:
+            [self sortByInfo:TCAverageMax];
+            break;
+        case TCPopularityMax:
+            [self sortByInfo:TCPopularityMax];
+            break;
+        case TCEvaluateMax:
+            [self sortByInfo:TCEvaluateMax];
+            break;
+        case TCDistanceMin:
+            [self sortByInfo:TCDistanceMin];
+            break;
+        default:
+            break;
+    }
+}
+
+
+# pragma mark - Touch Action
 - (void)touchBackBtn:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -284,232 +266,68 @@
     [self.navigationController pushViewController:locationViewController animated:YES];
 }
 
-- (void)touchSortBtn:(id)sender {
-    
-    if (sortView.hidden == YES) {
-        
-        [self showSortView];
-        
-        [sortView.averageMinBtn addTarget:self action:@selector(touchSortByAverageMin) forControlEvents:UIControlEventTouchUpInside];
-        [sortView.averageMaxBtn addTarget:self action:@selector(touchSortByAverageMax) forControlEvents:UIControlEventTouchUpInside];
-        [sortView.distanceMinBtn addTarget:self action:@selector(touchSortByDistance) forControlEvents:UIControlEventTouchUpInside];
-        [sortView.evaluateMaxBtn addTarget:self action:@selector(touchSortByEvaluate) forControlEvents:UIControlEventTouchUpInside];
-        [sortView.popularityMaxBtn addTarget:self action:@selector(touchSortByPopularity) forControlEvents:UIControlEventTouchUpInside];
 
-    } else {
-        [self hideViewWithButton:sortButton];
+
+# pragma mark - Sort And Filter
+
+- (void)sortByInfo:(NSInteger)type {
+    NSString *typeStr = @"";
+    switch (type) {
+        case TCAverageMin:
+            typeStr = @"personExpense,asc";
+            break;
+        case TCAverageMax:
+            typeStr = @"personExpense,desc";
+            break;
+        case TCEvaluateMax:
+            
+            break;
+        case TCPopularityMax:
+            typeStr = @"popularValue,desc";
+            break;
+        case TCDistanceMin:
+            
+            break;
+        default:
+            break;
     }
     
-    
-    
-}
-
-- (void)touchHiddenSelectView {
-    filterView.hidden = YES;
-    filterButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    filterButton.imgeView.image = [UIImage imageNamed:@"res_select_down"];
-    [filterButton.imgeView setSize:CGSizeMake(TCRealValue(13), TCRealValue(6))];
-    
-    
-    sortView.hidden = YES;
-    sortButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    sortButton.imgeView.image = [UIImage imageNamed:@"res_select_down"];
-    
-    backView.hidden = YES;
-}
-
-
-- (void)touchSortByAverageMin {
-    [self removeOtherSelectBtnColor:sortView.averageMinBtn AndType:@"sort"];
-    [self hideViewWithButton:sortButton];
-    
-    [self sortByInfo:@"人均最低"];
-    
-}
-- (void)touchSortByAverageMax {
-    [self removeOtherSelectBtnColor:sortView.averageMaxBtn AndType:@"sort"];
-    [self hideViewWithButton:sortButton];
-    
-    [self sortByInfo:@"人均最高"];
-    
-}
-- (void)touchSortByDistance {
-    [self removeOtherSelectBtnColor:sortView.distanceMinBtn AndType:@"sort"];
-    [self hideViewWithButton:sortButton];
-    
-    [self sortByInfo:@"距离最近"];
-    
-}
-- (void)touchSortByEvaluate {
-    [self removeOtherSelectBtnColor:sortView.evaluateMaxBtn AndType:@"sort"];
-    [self hideViewWithButton:sortButton];
-    
-    [self sortByInfo:@"评价最高"];
-    
-}
-- (void)touchSortByPopularity {
-    [self removeOtherSelectBtnColor:sortView.popularityMaxBtn AndType:@"sort"];
-    [self hideViewWithButton:sortButton];
-    [self sortByInfo:@"人气最高"];
-}
-
-
-
-
-- (void)touchFilterBtn:(id)sender {
-    if (filterView.hidden == YES) {
-        [self showFilterView];
-        [filterView.deliverBtn addTarget:self action:@selector(touchDeliverBtn) forControlEvents:UIControlEventTouchUpInside];
-        [filterView.reserveBtn addTarget:self action:@selector(touchReserveBtn) forControlEvents:UIControlEventTouchUpInside ];
-        
-    } else {
-        [self hideViewWithButton:filterButton];
-    }
-    
-}
-
-- (void)touchDeliverBtn {
-    [self removeOtherSelectBtnColor:filterView.deliverBtn AndType:@"filter"];
-    [self hideViewWithButton:filterButton];
-    
-    [self sortByInfo:@"有包间"];
-}
-
-- (void)touchReserveBtn {
-    [self removeOtherSelectBtnColor:filterView.reserveBtn AndType:@"filter" ];
-    [self hideViewWithButton:filterButton];
-    
-    [self sortByInfo:@"可预订"];
-}
-
-
-
-
-# pragma mark other
-- (void)getNewDataWithUrl:(NSURL *)url AndMessage:(NSString *)message {
-//    NSURL *url = [NSURL URLWithString:@""];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-//            NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            ///////////
-        }
-    }];
-    [dataTask resume];
-
-}
-
-- (void)sortByInfo:(NSString *)info {
-    NSString *type;
-    if ([info isEqualToString:@"人均最低"]) {
-        type = @"personExpense,asc";
-
-    } else if ([info isEqualToString:@"人均最高"]) {
-        type = @"personExpense,desc";
-
-    } else if ([info isEqualToString:@"人气最高"]) {
-        type = @"popularValue,desc";
-    }
-    [self loadRestaurantDataWithSortType:type];
-
-}
-
-
-- (void)removeOtherSelectBtnColor:(TCSelectSortButton *)button AndType:(NSString *)type{
-    
-    NSArray *btnArr;
-    if ([type isEqualToString:@"sort"]) {
-        btnArr =  @[sortView.averageMinBtn, sortView.averageMaxBtn, sortView.distanceMinBtn, sortView.evaluateMaxBtn, sortView.popularityMaxBtn];
-    } else {
-        btnArr = @[filterView.reserveBtn, filterView.deliverBtn];
-    }
-    
-    
-    for (int i = 0; i < btnArr.count; i++) {
-        TCSelectSortButton *sortBtn = btnArr[i];
-        if ([sortBtn.textLab.textColor isEqual:[UIColor colorWithRed:80/255.0 green:199/255.0 blue:209/255.0 alpha:1]] && ![sortBtn isEqual:button] ) {
-            sortBtn.textLab.textColor = [UIColor blackColor];
-            [sortBtn.imgBtn setImage:[UIImage imageNamed:[self getBtnImageNameWithInstance:sortBtn]] forState:UIControlStateNormal];
-        }
+    if (![typeStr isEqualToString:@""]) {
+        [self loadRestaurantDataWithSortType:typeStr];
     }
 }
 
-
-
-
-
-- (NSString *)getBtnImageNameWithInstance:(TCSelectSortButton *)button {
-    if ([button isEqual:sortView.averageMinBtn]) {
-        return @"res_average_min";
-    } else if([button isEqual:sortView.averageMaxBtn]) {
-        return @"res_average_max";
-    } else if([button isEqual:sortView.distanceMinBtn]) {
-        return @"res_near";
-    } else if([button isEqual:sortView.evaluateMaxBtn]) {
-        return @"res_evaluate";
-    } else if([button isEqual:sortView.popularityMaxBtn]) {
-        return @"res_popularity_max";
-    } else if([button isEqual:filterView.deliverBtn]) {
-        return @"res_deliver";
-    } else if ([button isEqual:filterView.reserveBtn]) {
-        return @"res_reserve2";
+- (void)filterByInfo:(NSInteger)type {
+    NSString *typeStr = @"";
+    switch (type) {
+        case TCDeliver:
+            
+            break;
+        case TCReserve:
+            
+            break;
+        default:
+            break;
     }
-    else {
-        return NULL;
+    if (![typeStr isEqualToString:@""]) {
+        [self loadRestaurantDataWithSortType:typeStr];
     }
+
 }
 
-- (void)showSortView {
-    sortView.hidden = NO;
-    sortButton.titleLab.textColor = [UIColor colorWithRed:80/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    sortButton.imgeView.image = [UIImage imageNamed:@"res_select_blue"];
-    [sortButton.imgeView setSize:CGSizeMake(13, 6)];
-    
-    filterView.hidden = YES;
-    filterButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    filterButton.imgeView.image = [UIImage imageNamed:@"res_select_down"];
-    
-    backView.hidden = NO;
-    
+#pragma mark - Status Bar
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
-- (void)showFilterView {
-    filterView.hidden = NO;
-    filterButton.titleLab.textColor = [UIColor colorWithRed:80/255.0 green:199/255.0 blue:209/255.0 alpha:1];
-    filterButton.imgeView.image = [UIImage imageNamed:@"res_select_blue"];
-    [filterButton.imgeView setSize:CGSizeMake(13, 6)];
-
-    
-    sortView.hidden = YES;
-    sortButton.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    sortButton.imgeView.image = [UIImage imageNamed:@"res_select_down"];
-    
-    backView.hidden = NO;
-}
-
-- (void)hideViewWithButton:(TCRestaurantSelectButton *)button {
-    if ([button isEqual:sortButton]) {
-        sortView.hidden = YES;
-    } else {
-        filterView.hidden = YES;
-    }
-    button.titleLab.textColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    button.imgeView.image = [UIImage imageNamed:@"res_select_down"];
-    backView.hidden = YES;
-}
 
 - (void)viewWillDisappear:(BOOL)animated {
-    
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
 }
 
 

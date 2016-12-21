@@ -18,13 +18,17 @@
 #import "TCLoginViewController.h"
 #import "TCRepairsViewController.h"
 
+#import "TCBlurImageView.h"
 
 @interface TCHomeViewController () {
     NSDictionary *homeInfoDic;
     UIScrollView *titleScrollView;
     UIScrollView *homeScrollView;
     UILabel *navigationTitleLab;
+    NSTimer *titleScrollTimer;
 }
+
+@property (nonatomic, strong) TCBlurImageView *blurImageView;
 
 @end
 
@@ -114,7 +118,7 @@
     }
     titleScrollView.contentSize = CGSizeMake(TCScreenWidth * (picturesArr.count + 1), titleScrollView.height);
     
-    [self setupTitleScrollTimer];
+    [self startTitleScrollTimer];
 }
 
 - (UIView *)getPropertyFunctionViewWithFrame:(CGRect)frame {
@@ -239,10 +243,14 @@
     return button;
 }
 
-- (void)setupTitleScrollTimer {
-    NSTimer *titleScrollTimer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(titleImageScroll) userInfo:nil repeats:YES];
+- (void)startTitleScrollTimer {
+    titleScrollTimer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(titleImageScroll) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:titleScrollTimer forMode:NSRunLoopCommonModes];
-    
+}
+
+- (void)endTitleScrollTimer {
+    [titleScrollTimer invalidate];
+    titleScrollTimer = nil;
 }
 
 - (void)titleImageScroll {
@@ -457,7 +465,18 @@
 
 #pragma mark - click
 - (void)touchCommunityUnlockBtn:(UIButton *)button {
+    
+    [self endTitleScrollTimer];   //计时器停止
+//    [self startTitleScrollTimer];   //计时器开始
     NSLog(@"点击社区开门");
+    @WeakObj(self)
+    if (_blurImageView == nil) {
+        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
+            @StrongObj(self)
+            [self startTitleScrollTimer];
+        }];
+    }
+    [_blurImageView show];
 }
 
 - (void)touchEstateRepair:(UIButton *)button {
@@ -466,10 +485,6 @@
     TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
-
-//    TCRepairsViewController *repairsViewController = [[TCRepairsViewController alloc] init];
-//    repairsViewController.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:repairsViewController animated:YES];
 }
 
 

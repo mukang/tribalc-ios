@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import "TCServiceFilterView.h"
 #import "TCRestaurantTableViewCell.h"
 #import "TCRestaurantInfoViewController.h"
 #import "TCGetNavigationItem.h"
 #import "TCRestaurantSortView.h"
-#import "TCRestaurantSelectButton.h"
 #import "TCRestaurantFilterView.h"
 #import "TCLocationViewController.h"
 #import "TCBuluoApi.h"
@@ -24,8 +23,7 @@
 #import "TCRecommendHeader.h"
 #import "MJRefresh.h"
 
-@interface TCRestaurantViewController : UIViewController<UITableViewDelegate,UITableViewDataSource, SDWebImageManagerDelegate, CLLocationManagerDelegate>
-{
+@interface TCRestaurantViewController : UIViewController<UITableViewDelegate,UITableViewDataSource, SDWebImageManagerDelegate, CLLocationManagerDelegate, TCServiceFilterViewDelegate>{
     UITableView *mResaurantTableView;
 }
 @end

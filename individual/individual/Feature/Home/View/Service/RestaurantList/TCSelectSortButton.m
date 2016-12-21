@@ -10,6 +10,8 @@
 
 @implementation TCSelectSortButton {
     NSString *imageName;
+    UIButton *imgBtn;
+    UILabel *textLab;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame AndImgName:(NSString *)imgName AndText:(NSString *)text{
@@ -17,33 +19,33 @@
     if (self) {
         imageName = imgName;
         
-        _imgBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, TCRealValue(24), frame.size.width, 0)];
+        imgBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, TCRealValue(24), frame.size.width, 0)];
         UIImage *img = [UIImage imageNamed:imgName];
-        [_imgBtn setHeight:30];
-        _imgBtn.userInteractionEnabled = NO;
-        [_imgBtn setImage:img forState:UIControlStateNormal];
+        [imgBtn setHeight:30];
+        imgBtn.userInteractionEnabled = NO;
+        [imgBtn setImage:img forState:UIControlStateNormal];
         
-        _textLab = [[UILabel alloc] initWithFrame:CGRectMake(0, _imgBtn.y + _imgBtn.height + TCRealValue(11), self.width, TCRealValue(12))];
-        _textLab.text = text;
-        _textLab.font = [UIFont systemFontOfSize:TCRealValue(14)];
-        _textLab.textAlignment = NSTextAlignmentCenter;
+        textLab = [[UILabel alloc] initWithFrame:CGRectMake(0, imgBtn.y + imgBtn.height + TCRealValue(11), self.width, TCRealValue(12))];
+        textLab.text = text;
+        textLab.font = [UIFont systemFontOfSize:TCRealValue(14)];
+        textLab.textAlignment = NSTextAlignmentCenter;
         
-        [self addTarget:self action:@selector(touchSortButton) forControlEvents:UIControlEventTouchUpInside];
-        
-        
-        [self addSubview:_imgBtn];
-        [self addSubview:_textLab];
+        [self addSubview:imgBtn];
+        [self addSubview:textLab];
     }
     
     return self;
 }
 
-- (void)touchSortButton {
-    
-    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%@_high", imageName]];
-    [_imgBtn setImage:img forState:UIControlStateNormal];
-    
-    _textLab.textColor = [UIColor colorWithRed:80/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+- (void)setIsSelected:(BOOL)isSelected {
+    if (isSelected) {
+        UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%@_high", imageName]];
+        [imgBtn setImage:img forState:UIControlStateNormal];
+        textLab.textColor = [UIColor colorWithRed:80/255.0 green:199/255.0 blue:209/255.0 alpha:1];
+    } else {
+        [imgBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+        textLab.textColor = [UIColor blackColor];
+    }
 }
 
 
