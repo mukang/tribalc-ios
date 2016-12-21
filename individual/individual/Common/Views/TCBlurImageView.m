@@ -28,7 +28,7 @@
             _myConreoller = controller;
             _block = [b copy];
             UIImage *img = [self imageFromView:controller.view atFrame:controller.view.bounds];
-            UIImage *i = [self coreBlurImage:img withBlurNumber:0.5];
+            UIImage *i = [self coreBlurImage:img withBlurNumber:0.8];
             self.image = i;
         }
     }

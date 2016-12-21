@@ -15,7 +15,6 @@
                 <outlet property="aliPayView" destination="m3p-3i-Fn4" id="de4-dg-Kae"/>
                 <outlet property="boardView" destination="Lxy-PW-jpI" id="jc7-Jd-fZ3"/>
                 <outlet property="payBtn" destination="9Vb-ZA-SQ8" id="1G5-To-zcY"/>
-                <outlet property="textField" destination="dA7-js-6hY" id="K3F-rf-9B9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="wechatBtn" destination="b7M-Zo-sCZ" id="Dfq-OG-zFn"/>
                 <outlet property="wechatView" destination="FEp-T9-KpT" id="OMN-s6-Tj8"/>
@@ -33,21 +32,9 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lxy-PW-jpI">
                             <rect key="frame" x="20" y="26" width="335" height="32"/>
-                            <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入付款金额" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dA7-js-6hY">
-                                    <rect key="frame" x="5" y="0.0" width="325" height="32"/>
-                                    <nil key="textColor"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
-                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="31.5" id="BYu-l5-XZP"/>
-                                <constraint firstItem="dA7-js-6hY" firstAttribute="leading" secondItem="Lxy-PW-jpI" secondAttribute="leading" constant="5" id="EJC-HK-osH"/>
-                                <constraint firstItem="dA7-js-6hY" firstAttribute="top" secondItem="Lxy-PW-jpI" secondAttribute="top" id="N7b-8w-1sS"/>
-                                <constraint firstAttribute="bottom" secondItem="dA7-js-6hY" secondAttribute="bottom" id="OpD-7a-Ne4"/>
-                                <constraint firstAttribute="trailing" secondItem="dA7-js-6hY" secondAttribute="trailing" constant="5" id="e83-8N-bId"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="注:请输入包含耗材费或特殊人工费的综合金额" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pWk-RN-OTI">

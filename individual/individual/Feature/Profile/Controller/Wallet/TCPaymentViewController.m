@@ -7,11 +7,11 @@
 //
 
 #import "TCPaymentViewController.h"
-#import "YYText.h"
+#import <Masonry.h>
 
 @interface TCPaymentViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *boardView;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+//@property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIView *yueView;
 @property (weak, nonatomic) IBOutlet UIButton *yueBtn;
 @property (weak, nonatomic) IBOutlet UIView *wechatView;
@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *payBtn;
 
 @property (strong, nonatomic) UIButton *currentSelectedBtn;
+
+@property (nonatomic, strong) UITextField *myTextField;
 
 @end
 
@@ -37,14 +39,21 @@
     _boardView.clipsToBounds = YES;
     _boardView.layer.borderColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0].CGColor;
     _boardView.layer.borderWidth = 0.5;
+    
+    _myTextField = [[UITextField alloc] initWithFrame:CGRectMake(25, 26, [UIScreen mainScreen].bounds.size.width-50, 31.5)];
+    [self.view addSubview:_myTextField];
+    _myTextField.placeholder = @"请输入付款金额";
+    _myTextField.delegate = self;
+    _myTextField.textAlignment = NSTextAlignmentRight;
+    _myTextField.font = [UIFont systemFontOfSize:14];
+    _myTextField.keyboardType = UIKeyboardTypeNumberPad;
+    
     UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 31)];
     l.text = @"付款金额";
     l.textColor = [UIColor blackColor];
     l.font = [UIFont boldSystemFontOfSize:14];
-    _textField.leftView = l;
-    _textField.leftViewMode = UITextFieldViewModeAlways;
-    _textField.delegate = self;
-    _textField.keyboardType = UIKeyboardTypeNumberPad;
+    _myTextField.leftView = l;
+    _myTextField.leftViewMode = UITextFieldViewModeAlways;
     
     _payBtn.layer.cornerRadius = 3.0;
     _payBtn.clipsToBounds = YES;
@@ -56,17 +65,22 @@
     [_wechatView addGestureRecognizer:tapGWC];
     [_aliPayView addGestureRecognizer:tapAL];
     
-    UITapGestureRecognizer *returnBackGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(returnBack)];
-    [self.view addGestureRecognizer:returnBackGes];
+    
+    
+//    UITapGestureRecognizer *returnBackGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(returnBack)];
+//    [self.view addGestureRecognizer:returnBackGes];
+    
+    
 
     
 }
 
-- (void)returnBack {
-    if ([_textField isFirstResponder]) {
-            [_textField resignFirstResponder];
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if ([_myTextField isFirstResponder]) {
+        [_myTextField resignFirstResponder];
     }
 }
+
 
 - (void)yueViewClick:(UITapGestureRecognizer *)ges {
     if (!_yueBtn.selected) {
@@ -102,17 +116,26 @@
     }
 }
 
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField.text.length == 0) {
+        _myTextField.font = [UIFont systemFontOfSize:14];
+    }
+    
+}
+
 #pragma UITextFieldDelegate
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSLog(@"%@",textField.text);
     NSLog(@"%@",string);
     
+    
     if ([string isEqualToString:@""]) {
         if (textField.text.length == 3) {
-            textField.text = @"";
+            textField.text = nil;
         
-//            return NO;
+            return NO;
         }
+        
         return YES;
     }else {
         if (textField.text.length >= 15) {
@@ -130,12 +153,9 @@
     }
 
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:text];
-    [attStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] range:NSMakeRange(0, 1)];
-    [attStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:24] range:NSMakeRange(0, 1)];
-    [attStr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(1, text.length-1)];
-    [attStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:21] range:NSMakeRange(1, text.length-1)];
+    [attStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0],NSFontAttributeName:[UIFont boldSystemFontOfSize:24]} range:NSMakeRange(0, 1)];
+
     [attStr addAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:21]} range:NSMakeRange(1, text.length-1)];
-//    [attStr yy_setAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:21] range:NSMakeRange(1, text.length-1)];
     textField.attributedText = attStr;
 
     return NO;
