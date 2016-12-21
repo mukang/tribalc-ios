@@ -12,11 +12,10 @@
     UIImageView *logoImageView;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame AndUrlStr:(NSString *)urlStr {
+- (instancetype)initWithFrame:(CGRect)frame AndUrl:(NSURL *)url {
     self = [super initWithFrame:frame];
     if (self) {
-//        titleStr = title;
-//        
+
         self.layer.cornerRadius = frame.size.height / 2;
         self.layer.borderWidth = 2;
         self.layer.borderColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8].CGColor;
@@ -24,17 +23,15 @@
         self.layer.masksToBounds = YES;
 
         logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
-        NSURL *url = [NSURL URLWithString:urlStr];
+//        logoImageView.contentMode = UIViewContentModeScaleAspectFit;
         [logoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
         [self addSubview:logoImageView];
-        
-        
     }
     
     return self;
 }
 
-- (void)setNewFrame:(CGRect)frame {
+- (void)setLogoFrame:(CGRect)frame {
     
     [self setFrame:frame];
     self.layer.cornerRadius = frame.size.height / 2;
@@ -44,13 +41,5 @@
 
 
 
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end
