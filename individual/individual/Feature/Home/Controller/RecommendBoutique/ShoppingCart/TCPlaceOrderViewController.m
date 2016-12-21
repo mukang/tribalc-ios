@@ -29,7 +29,9 @@
 
 @end
 
-@implementation TCPlaceOrderViewController
+@implementation TCPlaceOrderViewController {
+    __weak TCPlaceOrderViewController *weakSelf;
+}
 
 - (instancetype)initWithListShoppingCartArr:(NSArray *)listShoppingCartArr {
     self = [super init];
@@ -46,6 +48,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    weakSelf = self;
     
     self.view.backgroundColor = [UIColor whiteColor];
     [self initNavigationBar];
@@ -401,7 +405,7 @@
         [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:order.ID result:^(BOOL result, NSError *error) {
 //            if (result) {
                 if (i == payView.orderArr.count - 1)
-                    [self jumpToOrderDetailViewController];
+                    [weakSelf jumpToOrderDetailViewController];
 //            } else {
 //                [MBProgressHUD showHUDWithMessage:@"支付失败"];
 //                return;
@@ -463,7 +467,7 @@
     NSString *addressId = userAddressView.shippingAddress.ID;
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
-            payView = [[TCBalancePayView alloc] initWithPayPrice:[self getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
+            payView = [[TCBalancePayView alloc] initWithPayPrice:[weakSelf getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
             payView.orderArr = orderList;
             [payView showPayView];
             

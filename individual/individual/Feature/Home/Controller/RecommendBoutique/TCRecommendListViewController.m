@@ -7,7 +7,6 @@
 //
 
 #import "TCRecommendListViewController.h"
-#import "TCImageURLSynthesizer.h"
 
 @interface TCRecommendListViewController () {
     TCGoodsWrapper *goodsInfoWrapper;
@@ -21,6 +20,11 @@
 @implementation TCRecommendListViewController
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
+    barImageView.backgroundColor = TCRGBColor(42, 42, 42);
+    barImageView.alpha = 1;
     [self setupNavigationBar];
 }
 
@@ -91,6 +95,9 @@
 
 - (void)createCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.itemSize = CGSizeMake(TCRealValue(338 / 2), TCRealValue(428 / 2 + 158 / 2));
+    layout.sectionInset = UIEdgeInsetsMake(TCRealValue(7), TCRealValue(12.5), TCRealValue(7), TCRealValue(12));
+    layout.minimumLineSpacing = TCRealValue(8);
     recommendCollectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     recommendCollectionView.delegate = self;
     recommendCollectionView.dataSource = self;
@@ -98,7 +105,6 @@
     recommendCollectionView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1];
     [self.view addSubview:recommendCollectionView];
     [recommendCollectionView registerClass:[TCRecommendGoodCell class] forCellWithReuseIdentifier:@"cellId"];
-    [recommendCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"reusableView"];
     
     [self setupCollectionPullToRefresh];
 }
@@ -144,25 +150,10 @@
 
 
 #pragma mark - UICollectionDelegate
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 8;
-}
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     TCGoods *goodInfo = goodsInfoWrapper.content[indexPath.row];
     TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodId:goodInfo.ID];
     [self.navigationController pushViewController:recommendInfoViewController animated:YES];
-    
-}
-
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(TCRealValue(338 / 2), TCRealValue(428 / 2 + 158 / 2));
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(TCRealValue(7), TCRealValue(12.5), TCRealValue(7), TCRealValue(12));
 }
 
 

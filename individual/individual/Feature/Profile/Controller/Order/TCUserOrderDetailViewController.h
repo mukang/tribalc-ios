@@ -15,6 +15,11 @@
 #import "TCModelImport.h"
 #import "TCImageURLSynthesizer.h"
 #import "TCOrderDetailAlertView.h"
+#import "TCUserOrderTabBarController.h"
+#import "TCPlaceOrderViewController.h"
+#import "TCShoppingCartViewController.h"
+#import "TCBuluoApi.h"
+
 
 
 @interface TCUserOrderDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, TCOrderDetailAlertViewDelegate>

@@ -7,11 +7,6 @@
 //
 
 #import "TCShoppingCartViewController.h"
-#import "TCBuluoApi.h"
-#import "TCImageURLSynthesizer.h"
-#import "TCShoppingCartWrapper.h"
-#import "TCPlaceOrderViewController.h"
-#import "TCSelectStandardView.h"
 
 
 @interface TCShoppingCartViewController () {
@@ -28,10 +23,14 @@
 
 @end
 
-@implementation TCShoppingCartViewController
+@implementation TCShoppingCartViewController {
+    __weak TCShoppingCartViewController *weakSelf;
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    weakSelf = self;
     [self initShoppingCartData];
     
 }
@@ -41,9 +40,6 @@
     isEdit = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"购物车";
-    // Do any additional setup after loading the view.
-
-    
     
     [self initialNavigationBar];
     
@@ -58,9 +54,9 @@
         if (wrapper) {
             [MBProgressHUD hideHUD:YES];
             shoppingCartWrapper = wrapper;
-            [self initialTableView];
-            [self setupBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
-            [self setupNavigationRightBarButton];
+            [weakSelf initialTableView];
+            [weakSelf setupBottomViewWithFrame:CGRectMake(0, weakSelf.view.height - TCRealValue(49), weakSelf.view.width, TCRealValue(49))];
+            [weakSelf setupNavigationRightBarButton];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取购物车列表失败"];
         }
@@ -408,7 +404,7 @@
         }
         NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:section];
         [cartTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-//        [cartTableView reloadData];
+
     }];
 }
 
@@ -488,7 +484,7 @@
     [[TCBuluoApi api] deleteShoppingCartWithShoppingCartArr:goodsArr result:^(BOOL result, NSError *error) {
         if (result) {
             
-            shoppingCartWrapper.content = [self getShoppingCartArrWithSelect:NO];
+            shoppingCartWrapper.content = [weakSelf getShoppingCartArrWithSelect:NO];
             [cartTableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"删除失败"];
@@ -589,7 +585,7 @@
     orderItem.select = YES;
     [[TCBuluoApi api] deleteShoppingCartWithShoppingCartArr:@[ orderItem.ID ] result:^(BOOL result, NSError *error) {
         if (result) {
-            shoppingCartWrapper.content = [self getShoppingCartArrWithSelect:NO];
+            shoppingCartWrapper.content = [weakSelf getShoppingCartArrWithSelect:NO];
             [cartTableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"删除失败"];

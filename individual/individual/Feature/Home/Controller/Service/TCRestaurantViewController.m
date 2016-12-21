@@ -23,6 +23,8 @@
 @implementation TCRestaurantViewController
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupNavigationBar];
 
@@ -287,7 +289,6 @@
     if (sortView.hidden == YES) {
         
         [self showSortView];
-        
         
         [sortView.averageMinBtn addTarget:self action:@selector(touchSortByAverageMin) forControlEvents:UIControlEventTouchUpInside];
         [sortView.averageMaxBtn addTarget:self action:@selector(touchSortByAverageMax) forControlEvents:UIControlEventTouchUpInside];

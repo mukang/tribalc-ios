@@ -10,7 +10,7 @@
 #import "TCComponent.h"
 #import "TCComputeView.h"
 #import "TCSelectStandardView.h"
-#import "TCBuluoApi.h"
+
 
 
 @implementation TCShoppingCartBaseInfoView {
