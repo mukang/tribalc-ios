@@ -30,5 +30,12 @@
  @param animated 是否有动画
  */
 + (void)hideHUD:(BOOL)animated;
+/**
+ 展示提示信息
+ 
+ @param message 需要展示的信息
+ @param delay 停留时间
+ */
++ (void)showHUDWithMessage:(NSString *)message afterDelay:(CGFloat)delay;
 
 @end
