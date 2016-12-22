@@ -22,6 +22,7 @@
         self.layer.cornerRadius = TCRealValue(3);
         
         _addBtn = [self getComputeBtnWithOrigin:CGPointMake(self.width - TCRealValue(26), 0) AndText:@"+"];
+        _addBtn.width = TCRealValue(26);
         [self addSubview:_addBtn];
         
         rightLine = [TCComponent createGrayLineWithFrame:CGRectMake(_addBtn.x - TCRealValue(0.5), 0, TCRealValue(0.5), _addBtn.height)];
@@ -36,6 +37,7 @@
         [self addSubview:leftLine];
 
         _subBtn = [self getComputeBtnWithOrigin:CGPointMake(leftLine.x - TCRealValue(26), 0) AndText:@"-"];
+        _subBtn.width = TCRealValue(26);
         [self addSubview:_subBtn];
         
         self.width = _addBtn.width + rightLine.width + _countLab.width + leftLine.width + _subBtn.width;

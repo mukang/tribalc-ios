@@ -10,14 +10,23 @@
 #import "UIImageView+WebCache.h"
 #import "TCModelImport.h"
 
+@class TCSelectStandardView;
+@protocol TCSelectStandardViewDelegate <NSObject>
+
+- (void)selectStandardView:(TCSelectStandardView *)standardView didSelectConfirmButtonWithNumber:(NSInteger)number NewGoodsId:(NSString *)goodsId ShoppingCartGoodsId:(NSString *)shoppingCartGoodsId;
+
+@end
+
 @interface TCSelectStandardView : UIView <SDWebImageManagerDelegate>
 
-- (instancetype)initWithGood:(TCGoods *)goods AndStandardId:(NSString *)standardId AndRepertory:(NSInteger)repertory AndSelectTag:(NSString *)tag;
+- (instancetype)initWithCartItem:(TCCartItem *)cartItem;
 
 @property (retain, nonatomic) UILabel *numberLab;
 
 @property (retain, nonatomic) UILabel *primaryStandardLab;
 
 @property (retain, nonatomic) UILabel *secondaryStandardLab;
+
+@property (weak, nonatomic) id<TCSelectStandardViewDelegate> delegate;
 
 @end

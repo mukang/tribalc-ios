@@ -61,7 +61,7 @@
         
         
         _titleLab = [self getTitleLabWithFrame:CGRectMake(TCRealValue(13), TCRealValue(22.5 + 9), frame.size.width - TCRealValue(13) - TCRealValue(20), TCRealValue(14))];
-        [self addSubview:_titleLab];
+        [self addSubview    :_titleLab];
         
         _primaryStandardLab = [self getPrimaryStandardLabWithFrame:CGRectMake(_titleLab.x, _titleLab.y + _titleLab.height + TCRealValue(9), _titleLab.width, TCRealValue(12))];
         [self addSubview:_primaryStandardLab];
@@ -222,10 +222,10 @@
 }
 
 - (void)touchSelectStandardBtn:(UIButton *)button {
-    TCSelectStandardView *selectStandardView = [[TCSelectStandardView alloc] initWithGood:mCartItem.goods AndStandardId:mCartItem.standardId AndRepertory:mCartItem.repertory AndSelectTag:tag];
+//    TCSelectStandardView *selectStandardView = [[TCSelectStandardView alloc] initWithGood:mCartItem.goods AndStandardId:mCartItem.standardId AndRepertory:mCartItem.repertory AndSelectTag:tag];
     
     
-    [[UIApplication sharedApplication].keyWindow addSubview:selectStandardView];
+//    [[UIApplication sharedApplication].keyWindow addSubview:selectStandardView];
 }
 
 - (void)changeAmountWithNumber:(NSString *)number {

@@ -346,7 +346,6 @@
 
 - (NSMutableAttributedString *)getAttributedStringWithText:(NSString *)text {
     text = text ? text : @"" ;
-    text = @"定位挂电话挖个坟价格哇黄金分割晚饭后噶我发给文件分割哇减肥果哇加工费瓦工符文工房挖个坟还未";
     NSMutableAttributedString *attrText = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = TCRealValue(5);

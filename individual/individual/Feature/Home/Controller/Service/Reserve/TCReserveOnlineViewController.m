@@ -464,7 +464,6 @@
         __weak TCReserveOnlineViewController *weakSelf = self;
         [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(TCReservationDetail *result, NSError *error) {
             if (result) {
-                [MBProgressHUD showHUDWithMessage:@"预订成功"];
                 TCUserReserveDetailViewController *userReserveDetailViewController = [[TCUserReserveDetailViewController alloc] initWithReservationId:result.ID];
                 [weakSelf.navigationController pushViewController:userReserveDetailViewController animated:YES];
                 
