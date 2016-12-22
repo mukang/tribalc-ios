@@ -49,10 +49,17 @@
 - (void)loadRestaurantDataWithSortType:(NSString *)sortType {
     TCBuluoApi *api = [TCBuluoApi api];
     NSString *categoryStr = [self.title isEqualToString:@"餐饮"] ? @"REPAST" : @"ENTERTAINMENT";
+    [MBProgressHUD showHUD:YES];
     [api fetchServiceWrapper:categoryStr limiSize:20 sortSkip:nil sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
-        mServiceWrapper = serviceWrapper;
-        [mResaurantTableView reloadData];
-        [mResaurantTableView.mj_header endRefreshing];
+        if (serviceWrapper) {
+            [MBProgressHUD hideHUD:YES];
+            mServiceWrapper = serviceWrapper;
+            [mResaurantTableView reloadData];
+            [mResaurantTableView.mj_header endRefreshing];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取%@列表失败, %@",self.title, reason]];
+        }
     }];
     
 }
@@ -62,11 +69,16 @@
         TCBuluoApi *api = [TCBuluoApi api];
         NSString *categoryStr = [self.title isEqualToString:@"餐饮"] ? @"REPAST" : @"ENTERTAINMENT";
         [api fetchServiceWrapper:categoryStr limiSize:20 sortSkip:nextSkip sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
-            NSArray *contentArr = mServiceWrapper.content;
-            mServiceWrapper = serviceWrapper;
-            mServiceWrapper.content = [contentArr arrayByAddingObjectsFromArray:serviceWrapper.content];
-            [mResaurantTableView reloadData];
-            [mResaurantTableView.mj_footer endRefreshing];
+            if (serviceWrapper) {
+                NSArray *contentArr = mServiceWrapper.content;
+                mServiceWrapper = serviceWrapper;
+                mServiceWrapper.content = [contentArr arrayByAddingObjectsFromArray:serviceWrapper.content];
+                [mResaurantTableView reloadData];
+                [mResaurantTableView.mj_footer endRefreshing];
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取%@列表失败, %@",self.title, reason]];
+            }
         }];
     } else {
         TCRecommendFooter *footer = (TCRecommendFooter *)mResaurantTableView.mj_footer;

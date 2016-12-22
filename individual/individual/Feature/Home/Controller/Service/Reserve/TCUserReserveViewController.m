@@ -39,12 +39,17 @@
 
 
 - (void)initReservationData {
-    
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:20 sortSkip:nil result:^(TCReservationWrapper *wrapper, NSError *error) {
-        userReserveWrapper = wrapper;
-        [reserveTableView reloadData];
-        [reserveTableView.mj_header endRefreshing];
-        
+        if (wrapper) {
+            [MBProgressHUD hideHUD:YES];
+            userReserveWrapper = wrapper;
+            [reserveTableView reloadData];
+            [reserveTableView.mj_header endRefreshing];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取预订列表失败, %@", reason]];
+        }
     }];
 }
 
@@ -52,11 +57,14 @@
     [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:20 sortSkip:userReserveWrapper.nextSkip result:^(TCReservationWrapper *wrapper, NSError *error) {
         
         if (userReserveWrapper.hasMore) {
-            NSArray *contentArr = userReserveWrapper.content;
-            userReserveWrapper = wrapper;
-            userReserveWrapper.content = [contentArr arrayByAddingObjectsFromArray:wrapper.content];
-            
-            [reserveTableView reloadData];
+            if (wrapper) {
+                NSArray *contentArr = userReserveWrapper.content;
+                userReserveWrapper = wrapper;
+                userReserveWrapper.content = [contentArr arrayByAddingObjectsFromArray:wrapper.content];
+                [reserveTableView reloadData];
+            }
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取预订列表失败, %@", reason]];
         } else {
             TCRecommendFooter *footer = (TCRecommendFooter *)reserveTableView.mj_footer;
             [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];

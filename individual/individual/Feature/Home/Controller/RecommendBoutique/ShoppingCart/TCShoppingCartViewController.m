@@ -64,7 +64,8 @@
             shoppingCartWrapper = wrapper;
             [cartTableView reloadData];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"获取购物车列表失败"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取购物车列表失败, %@", reason]];
         }
     }];
 }
@@ -331,10 +332,14 @@
 #pragma mark - Setup UITableViewCell
 
 - (void)changeGoodStandardWithShoppingCartId:(NSString *)shoppingCartID newGoodId:(NSString *)newGoodId amount:(NSInteger)amount{
-
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] changeShoppingCartWithShoppingCartGoodsId:shoppingCartID AndNewGoodsId:newGoodId AndAmount:amount result:^(TCCartItem *result, NSError *error) {
         if (result) {
+            [MBProgressHUD hideHUD:YES];
             [self initShoppingCartData];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"修改购物车商品失败, %@", reason]];
         }
     }];
 }
@@ -412,12 +417,15 @@
 
 - (void)touchDeleteButton {
     NSArray *goodsArr = [[NSArray alloc] initWithArray:[self getSelectedGoodsInfo]];
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] deleteShoppingCartWithShoppingCartArr:goodsArr result:^(BOOL result, NSError *error) {
         if (result) {
+            [MBProgressHUD hideHUD:YES];
             shoppingCartWrapper.content = [weakSelf getShoppingCartArrWithSelect:NO];
             [cartTableView reloadData];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"删除失败"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"删除失败, %@", reason]];
         }
     }];
     
@@ -487,12 +495,15 @@
     TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
     TCCartItem *orderItem = listShoppingCart.goodsList[row];
     orderItem.select = YES;
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] deleteShoppingCartWithShoppingCartArr:@[ orderItem.ID ] result:^(BOOL result, NSError *error) {
         if (result) {
+            [MBProgressHUD hideHUD:YES];
             shoppingCartWrapper.content = [weakSelf getShoppingCartArrWithSelect:NO];
             [cartTableView reloadData];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"删除失败"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"删除失败, %@", reason]];
         }
     }];
 

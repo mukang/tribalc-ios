@@ -55,9 +55,17 @@
 
 
 - (void)initReservationDetail {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchReservationDetail:mReservationId result:^(TCReservationDetail *reservation, NSError *error) {
-        reservationDetail = reservation;
-        [weakSelf initUI];
+        if (reservation) {
+            [MBProgressHUD hideHUD:YES];
+            reservationDetail = reservation;
+            [weakSelf initUI];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取预订详情失败, %@", reason]];
+        }
+        
     }];
 }
 
@@ -293,11 +301,15 @@
 }
 
 - (void)changeReservationStatus:(NSString *)status {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] changeReservationStatus:status ReservationId:reservationDetail.ID result:^(BOOL result, NSError *error) {
         if (result) {
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
             [MBProgressHUD showHUDWithMessage:@"取消订单成功"];
-            
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"取消订单失败, %@", reason]];
+
         }
     }];
 }

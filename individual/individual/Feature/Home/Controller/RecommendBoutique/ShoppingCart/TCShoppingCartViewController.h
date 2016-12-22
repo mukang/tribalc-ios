@@ -10,7 +10,6 @@
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
 #import <MGSwipeTableCell/MGSwipeTableCell.h>
-#import "TCShoppingCartTableViewCell.h"
 #import "TCBuluoApi.h"
 #import "TCImageURLSynthesizer.h"
 #import "TCShoppingCartWrapper.h"

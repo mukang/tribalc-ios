@@ -449,9 +449,16 @@
     if (tag == 0) {
         [alertView removeFromSuperview];
     } else {
+        [MBProgressHUD showHUD:YES];
         [[TCBuluoApi api] changeOrderStatus:@"CANNEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-            [weakSelf showHUDMessageWithResult:result AndTitle:@"取消订单"];
-            [weakSelf touchBackBtn];
+            if (result) {
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf showHUDMessageWithResult:result AndTitle:@"取消订单"];
+                [weakSelf touchBackBtn];
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取订单列表失败, %@", reason]];
+            }
         }];
         [alertView removeFromSuperview];
 
@@ -498,9 +505,15 @@
 
 
 - (void)touchOrderPayBtn:(UIButton *)btn {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-        [weakSelf showHUDMessageWithResult:result AndTitle:@"付款"];
-        [weakSelf touchBackBtn];
+        if (result) {
+            [weakSelf showHUDMessageWithResult:result AndTitle:@"付款"];
+            [weakSelf touchBackBtn];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败, %@", reason]];
+        }
     }];
 }
 
@@ -512,9 +525,16 @@
 }
 
 - (void)touchOrderConfrimTake:(UIButton *)btn {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] changeOrderStatus:@"RECEIVED" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-        [weakSelf showHUDMessageWithResult:result AndTitle:@"确认收货"];
-        [weakSelf.navigationController popViewControllerAnimated:YES];
+        if (result) {
+            [weakSelf showHUDMessageWithResult:result AndTitle:@"确认收货"];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"确认收货失败, %@", reason]];
+        }
+        
     }];
 }
 

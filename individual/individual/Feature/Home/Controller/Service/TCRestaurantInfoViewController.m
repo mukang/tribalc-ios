@@ -82,9 +82,16 @@
 - (void)loadServiceDetail {
     __weak TCRestaurantInfoViewController *weakSelf = self;
     TCBuluoApi *api = [TCBuluoApi api];
+    [MBProgressHUD showHUD:YES];
     [api fetchServiceDetail:mServiceId result:^(TCServiceDetail *service, NSError *error) {
-        serviceDetail = service;
-        [weakSelf createWholeView];
+        if (service) {
+            [MBProgressHUD hideHUD:YES];
+            serviceDetail = service;
+            [weakSelf createWholeView];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取服务详情失败, %@", reason]];
+        }
     }];
 }
 
@@ -378,9 +385,12 @@
 
 - (UIView *)getStoreTagsView {
     UIView *view = [[UIView alloc] init];
-    NSArray *tagArr = serviceDetail.detailStore.tags;
+    NSArray *tagArr = serviceDetail.tags;
     NSArray *tagLogoArr = serviceDetail.detailStore.faclities;
-    for (int i = 0; i < tagArr.count; i++) {
+    if (tagLogoArr.count != tagArr.count) {
+        return view;
+    }
+    for (int i = 0; i < tagLogoArr.count; i++) {
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(24) + TCRealValue(35), 0, TCRealValue(24), TCRealValue(24))];
         if (i == 0) {
             [imgView setX:0];
