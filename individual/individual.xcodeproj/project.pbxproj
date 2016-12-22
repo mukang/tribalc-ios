@@ -476,6 +476,7 @@
 		553DC9761DFFE2310018783E /* oldphone-mono.wav in Resources */ = {isa = PBXBuildFile; fileRef = 553DC7E61DFFE22E0018783E /* oldphone-mono.wav */; };
 		553DC9771DFFE2310018783E /* soft_as_snow.mkv in Resources */ = {isa = PBXBuildFile; fileRef = 553DC7E71DFFE22E0018783E /* soft_as_snow.mkv */; };
 		553DC9781DFFE2310018783E /* toy-mono.wav in Resources */ = {isa = PBXBuildFile; fileRef = 553DC7E81DFFE22E0018783E /* toy-mono.wav */; };
+		559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */ = {isa = PBXBuildFile; fileRef = 559D84561E0BD24900982697 /* NSObject+TCNomal.m */; };
 		55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */; };
 		55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */; };
 		55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */; };
@@ -2643,6 +2644,8 @@
 		553DC7E61DFFE22E0018783E /* oldphone-mono.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "oldphone-mono.wav"; sourceTree = "<group>"; };
 		553DC7E71DFFE22E0018783E /* soft_as_snow.mkv */ = {isa = PBXFileReference; lastKnownFileType = file; path = soft_as_snow.mkv; sourceTree = "<group>"; };
 		553DC7E81DFFE22E0018783E /* toy-mono.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "toy-mono.wav"; sourceTree = "<group>"; };
+		559D84551E0BD24900982697 /* NSObject+TCNomal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TCNomal.h"; sourceTree = "<group>"; };
+		559D84561E0BD24900982697 /* NSObject+TCNomal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TCNomal.m"; sourceTree = "<group>"; };
 		55F06EEC1E03911400A849D7 /* TCPropertyManageListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageListController.h; sourceTree = "<group>"; };
 		55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageListController.m; sourceTree = "<group>"; };
 		55F06EF01E03977000A849D7 /* TCPropertyManageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageWrapper.h; sourceTree = "<group>"; };
@@ -7695,6 +7698,8 @@
 				7AB29F2A1DD40D0F00564D93 /* MBProgressHUD+Category.m */,
 				7A510F9E1DB8624400471A88 /* NSObject+TCModel.h */,
 				7A510F9F1DB8624400471A88 /* NSObject+TCModel.m */,
+				559D84551E0BD24900982697 /* NSObject+TCNomal.h */,
+				559D84561E0BD24900982697 /* NSObject+TCNomal.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -8577,6 +8582,7 @@
 				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
 				092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */,
 				7AEB4CF11E03944500F83A7C /* TCCityPickerView.m in Sources */,
+				559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */,
 				7A3C81C21DF00B26009ABCEC /* TCPaymentView.m in Sources */,
 				098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */,
 				7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */,
