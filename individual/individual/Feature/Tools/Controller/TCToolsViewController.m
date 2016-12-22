@@ -133,7 +133,9 @@
 - (void)openDoor {
     
     if (_blurImageView == nil) {
-        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:nil];
+        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
+            _blurImageView = nil;
+        }];
     }
     [_blurImageView show];
 }
