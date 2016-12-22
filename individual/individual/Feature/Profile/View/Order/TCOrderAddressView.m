@@ -51,6 +51,11 @@
         NSString *phone = addressArr[1];
         NSString *address = addressArr[2];
         [self initUIWithName:name AndPhone:phone AndAddress:address];
+        if (_shippingAddress == nil) {
+            receiverLab.text = @"请添加收货地址";
+            receiverLab.frame = CGRectMake(TCRealValue(32) + TCRealValue(5), TCRealValue(96 / 2 - 4), self.width - TCRealValue(32), TCRealValue(14));
+        }
+
     }
     
     return self;
@@ -68,8 +73,10 @@
 - (void)setAddress:(TCUserShippingAddress *)shippingAddress {
     _shippingAddress = shippingAddress;
     NSArray *addressArr = [self getAddressArr:shippingAddress];
-    receiverLab.text = addressArr[0];
+    receiverLab.text = [NSString stringWithFormat:@"收货人 : %@", addressArr[0]];
+    receiverLab.frame = CGRectMake(TCRealValue(32), TCRealValue(20), TCRealValue(152), TCRealValue(14));
     phoneLab.text = addressArr[1];
+    phoneLab.frame = CGRectMake(receiverLab.x + receiverLab.width, receiverLab.y, self.width - TCRealValue(77) - receiverLab.x - receiverLab.width, TCRealValue(14));
     [self setAddressLabel:addressLab Text:addressArr[2]];
     
 }
@@ -96,7 +103,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     NSString *nameStr = [NSString stringWithFormat:@"收货人 : %@", name];
     label.text = nameStr;
-    label.font = [UIFont fontWithName:BOLD_FONT size:14];
+    label.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
     
     return label;
 }
@@ -119,6 +126,7 @@
     CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: label.font}];
     if (size.width > label.width) {
         [label setHeight:(TCRealValue(13) * 2) + TCRealValue(4)];
+        label.y -= TCRealValue(2);
     }
     text = text == nil ? @"" : text;
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:text];
@@ -140,6 +148,7 @@
     CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: label.font}];
     if (size.width > label.width) {
         [label setHeight:(label.height * 2) + TCRealValue(4)];
+        label.y -= TCRealValue(2);
     }
     
     text = text == nil ? @"" : text;

@@ -7,67 +7,118 @@
 //
 
 #import "TCUserOrderTableViewCell.h"
+#import "TCImageURLSynthesizer.h"
+
 
 @implementation TCUserOrderTableViewCell {
-    UILabel *titleLab;
-    UILabel *priceLab;
-    UILabel *numberLab;
-    UIView *backView;
+    
+    
 }
 
-- (instancetype)initOrderDetailCellWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [self initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        CGRect screenRect = [UIScreen mainScreen].bounds;
-        CGFloat height = TCRealValue(96.5);
-        backView.frame = CGRectMake(TCRealValue(20), height / 2 - TCRealValue(79) / 2, screenRect.size.width - TCRealValue(40), height);
-        backView.backgroundColor = [UIColor whiteColor];
-        
-        _leftImgView.frame = CGRectMake(TCRealValue(8), 0, TCRealValue(79), TCRealValue(79));
-        _leftImgView.contentMode = UIViewContentModeScaleAspectFit;
-        titleLab.frame = CGRectMake(_leftImgView.x + _leftImgView.width + TCRealValue(9), _leftImgView.y + TCRealValue(7), screenRect.size.width - _leftImgView.x - _leftImgView.width - TCRealValue(13) - TCRealValue(54), TCRealValue(12));
-        
-        priceLab.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
-        
-        UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, screenRect.size.width - TCRealValue(40), TCRealValue(0.5))];
-        [self addSubview:topLineView];
-        
-        UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), height - TCRealValue(0.5), screenRect.size.width - TCRealValue(40), TCRealValue(0.5))];
-        [self addSubview:downLineView];
+
++ (instancetype)cellWithTableView:(UITableView *)tableView {
+    static NSString *identifier = @"orderListCell";
+    TCUserOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[TCUserOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    return self;
+    return cell;
 }
 
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+      
+        _backView = [[UIView alloc] init];
+        _backView.backgroundColor = TCRGBColor(242, 242, 242);
+        [self.contentView addSubview:_backView];
         
-        CGRect screenRect = [UIScreen mainScreen].bounds;
+        UIImageView *leftImageView = [[UIImageView alloc] init];
+        leftImageView.backgroundColor = _backView.backgroundColor;
+        leftImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [_backView addSubview:leftImageView];
+        self.leftImageView = leftImageView;
         
-        backView = [[UIView alloc] initWithFrame:CGRectMake(TCRealValue(20), TCRealValue(1), screenRect.size.width - TCRealValue(20) - TCRealValue(20), TCRealValue(77 - 2))];
-        backView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
-        [self.contentView addSubview:backView];
+        UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectNull AndFontSize:TCRealValue(12) AndTitle:@""];
+        [_backView addSubview:titleLab];
+        self.titleLab = titleLab;
         
-        _leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(backView.height / 2 - TCRealValue(71.5) / 2, backView.height / 2 - TCRealValue(71.5) / 2, TCRealValue(71.5), TCRealValue(71.5))];
-        _leftImgView.contentMode = UIViewContentModeScaleAspectFit;
-        [backView addSubview:_leftImgView];
+        UILabel *priceLab = [self getNumberOrPriceLabelWithFrame:CGRectNull];
+        [_backView addSubview:priceLab];
+        self.priceLab = priceLab;
         
-        titleLab = [TCComponent createLabelWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width + TCRealValue(9), 12, TCRealValue(337 / 2), TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:@""];
-        [backView addSubview:titleLab];
+        UILabel *numberLab = [self getNumberOrPriceLabelWithFrame:CGRectNull];
+        [_backView addSubview:numberLab];
+        self.numberLab = numberLab;
+
         
-        priceLab = [self getNumberOrPriceLabelWithFrame:CGRectMake(titleLab.x + titleLab.width + TCRealValue(1), titleLab.y, screenRect.size.width - TCRealValue(20) - TCRealValue(11) - titleLab.x - titleLab.width - TCRealValue(1) - TCRealValue(20), TCRealValue(13))];
-        [backView addSubview:priceLab];
+        UILabel *standardLab = [[UILabel alloc] init];
+        standardLab.textColor = TCRGBColor(154, 154, 154);
+        standardLab.font = [UIFont systemFontOfSize:TCRealValue(12)];
+        [_backView addSubview:standardLab];
+        self.standardLab = standardLab;
         
-        numberLab = [self getNumberOrPriceLabelWithFrame:CGRectMake(priceLab.x, priceLab.y + priceLab.height + TCRealValue(5), priceLab.width, TCRealValue(13))];
-        [backView addSubview:numberLab];
         
     }
     return self;
 }
 
+
+- (void)setOrderListOrderItem:(TCOrderItem *)orderItem {
+    _orderItem = orderItem;
+    [self setupOrderListFrame];
+    [self setupOrderListData];
+}
+
+- (void)setOrderDetailOrderItem:(TCOrderItem *)orderItem {
+    _orderItem = orderItem;
+    [self setupOrderDetailFrame];
+    [self setupOrderDetailData];
+}
+
+- (void)setupOrderDetailFrame {
+    CGRect screenRect = [UIScreen mainScreen].bounds;
+    CGFloat height = TCRealValue(96.5);
+    _backView.frame = CGRectMake(TCRealValue(20), height / 2 - TCRealValue(79) / 2, screenRect.size.width - TCRealValue(40), height);
+    _backView.backgroundColor = [UIColor whiteColor];
+    self.leftImageView.frame = CGRectMake(TCRealValue(8), 0, TCRealValue(79), TCRealValue(79));
+    self.titleLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(9), self.leftImageView.y + TCRealValue(7), screenRect.size.width - self.leftImageView.x - self.leftImageView.width - TCRealValue(13) - TCRealValue(60), TCRealValue(14));
+    [self setBoldNumberLabel:_orderItem.amount];
+    self.priceLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(1), self.titleLab.y + self.titleLab.height + TCRealValue(5), TCScreenWidth - TCRealValue(40) - self.leftImageView.x - self.leftImageView.width - TCRealValue(1), TCRealValue(14));
+
+    self.standardLab.frame = CGRectMake(self.titleLab.x, self.numberLab.y + TCRealValue(1), self.numberLab.x - self.leftImageView.x - self.leftImageView.width - TCRealValue(13), TCRealValue(13));
+}
+
+- (void)setupOrderDetailData {
+    [self setupOrderListData];
+    self.standardLab.font = [UIFont systemFontOfSize:TCRealValue(13)];
+    self.priceLab.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
+    UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, TCScreenWidth - TCRealValue(40), TCRealValue(0.5))];
+    [self addSubview:topLineView];
+    
+    UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), TCRealValue(96.5) - TCRealValue(0.5), TCScreenWidth - TCRealValue(40), TCRealValue(0.5))];
+    [self addSubview:downLineView];
+}
+
+- (void)setupOrderListFrame {
+    _backView.frame = CGRectMake(TCRealValue(20), TCRealValue(1), TCScreenWidth - TCRealValue(20) - TCRealValue(20), TCRealValue(77 - 2));
+    self.leftImageView.frame = CGRectMake(_backView.height / 2 - TCRealValue(71.5) / 2, _backView.height / 2 - TCRealValue(71.5) / 2, TCRealValue(71.5), TCRealValue(71.5));
+    self.titleLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(9), 12, TCRealValue(337 / 2), TCRealValue(12));
+    self.priceLab.frame = CGRectMake(self.titleLab.x + self.titleLab.width + TCRealValue(1), self.titleLab.y, TCScreenWidth - TCRealValue(20) - TCRealValue(11) - self.titleLab.x - self.titleLab.width - TCRealValue(1) - TCRealValue(20), TCRealValue(13));
+    self.numberLab.frame = CGRectMake(self.priceLab.x, self.priceLab.y + self.priceLab.height + TCRealValue(5), self.priceLab.width, TCRealValue(13));
+    self.standardLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(9), _backView.height - TCRealValue(10) - TCRealValue(12), TCScreenWidth - TCRealValue(20) - TCRealValue(71.5) - TCRealValue(20) - TCRealValue(9), TCRealValue(13));
+    
+}
+
+- (void)setupOrderListData {
+    [self.leftImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:_orderItem.goods.mainPicture]];
+    [self setTitleLabWithText:_orderItem.goods.name];
+    [self setPriceLabel:_orderItem.goods.salePrice];
+    [self setNumberLabel:_orderItem.amount];
+    [self setSelectedStandard:_orderItem.goods.standardSnapshot];
+}
 
 
 - (UILabel *)getNumberOrPriceLabelWithFrame:(CGRect)frame {
@@ -78,6 +129,21 @@
     return label;
 }
 
+
+
+- (void)setSelectedStandard:(NSString *)standardStr{
+
+    NSDictionary *standard = [self getSelectesStandardDic:standardStr];
+    standardStr = @"";
+    if (standard[@"secondary"] == NULL && standard[@"primary"] != NULL) {
+        standardStr = [NSString stringWithFormat:@"%@ : %@", standard[@"primary"][@"label"], standard[@"primary"][@"types"]];
+    } else if (standard[@"secondary"] != NULL) {
+        standardStr = [NSString stringWithFormat:@"%@ : %@      %@ : %@", standard[@"primary"][@"label"], standard[@"primary"][@"types"], standard[@"secondary"][@"label"], standard[@"secondary"][@"types"]];
+    }
+    self.standardLab.text = standardStr;
+    
+}
+
 - (NSDictionary *)getSelectesStandardDic:(NSString *)standard {
     if (![standard containsString:@":"]) {
         return nil;
@@ -86,9 +152,9 @@
         NSArray *standardArr = [standard componentsSeparatedByString:@":"];
         return @{
                  @"primary":@{
-                     @"label":standardArr[0],
-                     @"types":standardArr[1]
-                 }
+                         @"label":standardArr[0],
+                         @"types":standardArr[1]
+                         }
                  };
     }
     if ([standard containsString:@":"] && [standard containsString:@"|"]) {
@@ -104,62 +170,49 @@
     return nil;
 }
 
-- (void)setSelectedStandard:(NSString *)standardStr{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(_leftImgView.x + _leftImgView.width + TCRealValue(9), _leftImgView.height + _leftImgView.y - TCRealValue(20), [UIScreen mainScreen].bounds.size.width - TCRealValue(20) - TCRealValue(71.5) - TCRealValue(20) - TCRealValue(9), TCRealValue(13))];
-    NSDictionary *standard = [self getSelectesStandardDic:standardStr];
-    if (standard[@"secondary"] == NULL && standard[@"primary"] != NULL) {
-        UILabel *primaryStandardLab = [self getStandardLabelWithOrigin:CGPointMake(0, 0) AndText:[NSString stringWithFormat:@"%@ : %@", standard[@"primary"][@"label"], standard[@"primary"][@"types"]]];
-        [view addSubview:primaryStandardLab];
-    } else if (standard[@"secondary"] != NULL) {
-        NSString *standardStr = [NSString stringWithFormat:@"%@ : %@      %@ : %@", standard[@"primary"][@"label"], standard[@"primary"][@"types"], standard[@"secondary"][@"label"], standard[@"secondary"][@"types"]];
-        UILabel *standardLab = [self getStandardLabelWithOrigin:CGPointMake(0, 0) AndText:standardStr];
-        [view addSubview:standardLab];
-    }
-    [backView addSubview:view];
-}
-
 - (void)setNumberLabel:(float)number {
     NSString *numberStr = [NSString stringWithFormat:@"x %@", @([NSString stringWithFormat:@"%f", number].floatValue)];
-    numberLab.text = numberStr;
+    self.numberLab.text = numberStr;
 }
 
 - (void)setBoldNumberLabel:(float)number {
     NSString *numberStr = [NSString stringWithFormat:@"x%@", @([NSString stringWithFormat:@"%f", number].floatValue)];
-    numberLab.font = [UIFont systemFontOfSize:TCRealValue(13)];
-    numberLab.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
+    self.numberLab.font = [UIFont systemFontOfSize:TCRealValue(13)];
+    self.numberLab.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
     
-    UIImageView *writeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(backView.width - TCRealValue(13), _leftImgView.height + _leftImgView.y - TCRealValue(20) + TCRealValue(1), TCRealValue(11), TCRealValue(11))];
+    UIImageView *writeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(_backView.width - TCRealValue(13), self.leftImageView.height + self.leftImageView.y - TCRealValue(20) + TCRealValue(1), TCRealValue(11), TCRealValue(11))];
     writeImgView.image = [UIImage imageNamed:@"order_write"];
+    [_backView addSubview:writeImgView];
     
-    numberLab.frame = CGRectMake(writeImgView.x - TCRealValue(50) - TCRealValue(2), _leftImgView.height + _leftImgView.y - TCRealValue(20), TCRealValue(50), TCRealValue(13));
-    numberLab.text = numberStr;
-    [backView addSubview:writeImgView];
+    self.numberLab.frame = CGRectMake(writeImgView.x - TCRealValue(50) - TCRealValue(2), self.leftImageView.height + self.leftImageView.y - TCRealValue(20), TCRealValue(50), TCRealValue(13));
+    self.numberLab.text = numberStr;
+    
     
 }
 
 - (void)setPriceLabel:(float)price {
     NSString *priceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", price].floatValue)];
-    priceLab.text = priceStr;
-}
-
-- (void)setBoldPriceLabel:(float)price {
-    NSString *priceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", price].floatValue)];
-    priceLab.text = priceStr;
-    priceLab.frame = CGRectMake(_leftImgView.x + _leftImgView.width + TCRealValue(1), titleLab.y + titleLab.height + TCRealValue(2), [UIScreen mainScreen].bounds.size.width - TCRealValue(40) - _leftImgView.x - _leftImgView.width - TCRealValue(1), TCRealValue(14));
+    self.priceLab.text = priceStr;
 }
 
 - (void)setTitleLabWithText:(NSString *)text {
-    titleLab.lineBreakMode = NSLineBreakByWordWrapping;
-    titleLab.numberOfLines = TCRealValue(2);
-    CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: titleLab.font}];
-    if (size.width > titleLab.width) {
-        [titleLab setHeight:TCRealValue((12 * 2) + 5)];
+    self.titleLab.lineBreakMode = NSLineBreakByWordWrapping;
+    self.titleLab.numberOfLines = TCRealValue(2);
+    self.titleLab.font = [UIFont systemFontOfSize:self.titleLab.height];
+    NSString *salePriceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", _orderItem.goods.salePrice].floatValue)];
+    CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: self.titleLab.font}];
+    CGSize priceSize = [salePriceStr sizeWithAttributes:@{NSFontAttributeName: self.priceLab.font}];
+    if (size.width + 2 > self.titleLab.width) {
+        [self.titleLab setHeight:TCRealValue((self.titleLab.height * 2) + TCRealValue(5))];
+    }
+    if (size.width + 2 > self.titleLab.width * 2 - priceSize.width) {
+        self.priceLab.y = self.titleLab.y + self.titleLab.height;
     }
     NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     NSRange range = NSMakeRange(0, text.length);
     [textAttr addAttribute:NSParagraphStyleAttributeName value:style range:range];
-    titleLab.attributedText = textAttr;
+    self.titleLab.attributedText = textAttr;
     
 }
 

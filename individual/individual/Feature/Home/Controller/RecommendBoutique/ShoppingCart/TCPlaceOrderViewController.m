@@ -257,8 +257,8 @@
     NSURL *logoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, markStore.logo]];
     [storeLogoImgView sd_setImageWithURL:logoUrl placeholderImage:[UIImage imageNamed:@"map_bar"]];
     
-    UILabel *storeLabel = [TCComponent createLabelWithFrame:CGRectMake(storeLogoImgView.x + storeLogoImgView.width + TCRealValue(5), 0, self.view.width - storeLogoImgView.x - storeLogoImgView.width - TCRealValue(5), headerView.height) AndFontSize:TCRealValue(12) AndTitle:markStore.name AndTextColor:[UIColor blackColor]];
-    storeLabel.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(12)];
+    UILabel *storeLabel = [TCComponent createLabelWithFrame:CGRectMake(storeLogoImgView.x + storeLogoImgView.width + TCRealValue(5), 0, self.view.width - storeLogoImgView.x - storeLogoImgView.width - TCRealValue(5), headerView.height) AndFontSize:TCRealValue(13) AndTitle:markStore.name AndTextColor:[UIColor blackColor]];
+    storeLabel.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(13)];
     
     [headerView addSubview:storeLogoImgView];
     [headerView addSubview:storeLabel];
@@ -300,19 +300,11 @@
     if (indexPath.row >= orderList.count) {
         return [self getOrderInfoTableViewCellWithIndexPath:indexPath AndTableView:(UITableView *)tableView];
     } else {
-        NSString *identifier = [NSString stringWithFormat:@"%li", (long)indexPath.row];
-        TCUserOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [[TCUserOrderTableViewCell alloc] initOrderDetailCellWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        }
+        TCUserOrderTableViewCell *cell = [TCUserOrderTableViewCell cellWithTableView:tableView];
         TCOrderItem *orderItem = orderList[indexPath.row];
-        TCGoods *good = orderItem.goods;
+        [cell setOrderDetailOrderItem:orderItem];
+
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.leftImgView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:good.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
-        [cell setTitleLabWithText:good.name];
-        [cell setBoldPriceLabel:good.salePrice];
-        [cell setBoldNumberLabel:orderItem.amount];
-        [cell setSelectedStandard:good.standardSnapshot];
         return cell;
         
     }
@@ -378,8 +370,8 @@
 - (UIView *)getOrderInfoViewWithTitle:(NSString *)title AndText:(NSString *)text {
     UIView *orderInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(40))];
     
-    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), 0, TCRealValue(55), orderInfoView.height) AndFontSize:TCRealValue(12) AndTitle:title AndTextColor:[UIColor blackColor]];
-    UILabel *textLab = [TCComponent createLabelWithFrame:CGRectMake(titleLab.x + titleLab.width, 0, self.view.width - titleLab.x - titleLab.width - TCRealValue(20), orderInfoView.height) AndFontSize:TCRealValue(12) AndTitle:text AndTextColor:[UIColor blackColor]];
+    UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), 0, TCRealValue(15 * 5), orderInfoView.height) AndFontSize:TCRealValue(13) AndTitle:title AndTextColor:[UIColor blackColor]];
+    UILabel *textLab = [TCComponent createLabelWithFrame:CGRectMake(titleLab.x + titleLab.width, 0, self.view.width - titleLab.x - titleLab.width - TCRealValue(20), orderInfoView.height) AndFontSize:TCRealValue(13) AndTitle:text AndTextColor:[UIColor blackColor]];
     textLab.textAlignment = NSTextAlignmentRight;
     
     [orderInfoView addSubview:titleLab];

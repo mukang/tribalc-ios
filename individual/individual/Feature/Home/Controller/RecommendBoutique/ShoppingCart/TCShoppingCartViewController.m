@@ -7,7 +7,7 @@
 //
 
 #import "TCShoppingCartViewController.h"
-
+#import "TCRecommendInfoViewController.h"
 
 @interface TCShoppingCartViewController () {
     UITableView *cartTableView;
@@ -297,9 +297,16 @@
     return 0.0001;
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (!isEdit) {
+        TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[indexPath.section];
+        TCCartItem *cartItem = listShoppingCart.goodsList[indexPath.row];
+        TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodId:cartItem.goods.ID];
+        [self.navigationController pushViewController:recommendInfoViewController animated:YES];
+    }
 }
+
 
 
 #pragma mark - MGSwipeTableCellDelegate
@@ -399,11 +406,12 @@
             cartItem.ID = result.ID;
             cartItem.goods = result.goods;
             cartItem.amount = result.amount;
-            NSString *tag = [NSString stringWithFormat:@"%ld|%ld", (long)section, (long)row];
-            [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"changeGoodAmount%@", tag] object:[NSNumber numberWithInteger:result.amount]];
+//            NSString *tag = [NSString stringWithFormat:@"%ld|%ld", (long)section, (long)row];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"changeGoodAmount%@", tag] object:[NSNumber numberWithInteger:result.amount]];
+            [self initShoppingCartData];
         }
-        NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:section];
-        [cartTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+//        NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:section];
+//        [cartTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
 
     }];
 }
@@ -411,6 +419,16 @@
 
 
 #pragma mark - Get SelectedInfo
+
+- (void)mergeRepeatItemWithSection:(NSInteger)section AndResult:(TCCartItem *)result{
+    TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
+    for (int i = 0; i < listShoppingCart.goodsList.count; i++) {
+        TCCartItem *cartItem = listShoppingCart.goodsList[i];
+        if ([cartItem.goods.ID isEqualToString:result.goods.ID]) {
+            
+        }
+    }
+}
 
 - (TCCartItem *)getOrderItemWithSection:(NSInteger)section AndRow:(NSInteger)row {
     TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
