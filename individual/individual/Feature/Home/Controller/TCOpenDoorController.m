@@ -53,9 +53,9 @@
     [openBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
         make.bottom.equalTo(self.view.mas_bottom).offset(-115*scale);
-        make.width.height.equalTo(@94);
+        make.width.height.equalTo(@(94*scale));
     }];
-    openBtn.layer.cornerRadius = 47.0;
+    openBtn.layer.cornerRadius = 47.0*scale;
     openBtn.layer.borderWidth = 5.0;
     openBtn.layer.borderColor = [UIColor colorWithRed:124/255.0 green:211/255.0 blue:211/255.0 alpha:0.8].CGColor;
     _openBtn = openBtn;
