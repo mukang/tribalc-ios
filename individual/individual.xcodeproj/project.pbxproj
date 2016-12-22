@@ -8859,6 +8859,7 @@
 			baseConfigurationReference = 00B709DAE0FFB5E148A931FB /* Pods-individual.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 452XNHBVYZ;
@@ -8917,6 +8918,7 @@
 			baseConfigurationReference = 39C5AA3FC54D84E58748E333 /* Pods-individual.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 452XNHBVYZ;

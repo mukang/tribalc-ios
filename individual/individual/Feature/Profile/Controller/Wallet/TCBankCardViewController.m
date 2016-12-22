@@ -72,7 +72,8 @@
             }
             [weakSelf.tableView reloadData];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"获取银行卡信息失败！"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取银行卡信息失败，%@", reason]];
         }
     }];
 }
@@ -155,7 +156,8 @@
             [weakSelf.dataList removeObject:bankCard];
             [weakSelf.tableView reloadData];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"银行卡删除失败，请稍后再试"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"银行卡删除失败，%@", reason]];
         }
     }];
 }

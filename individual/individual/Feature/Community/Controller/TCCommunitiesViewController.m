@@ -43,7 +43,7 @@
 }
 
 - (void)setupNavBar {
-    self.navigationItem.title = @"社区列表";
+    self.navigationItem.title = @"社区";
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.navigationController.navigationBar.titleTextAttributes = @{
                                                                     NSFontAttributeName : [UIFont systemFontOfSize:16],

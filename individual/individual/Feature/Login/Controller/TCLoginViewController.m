@@ -234,9 +234,8 @@
     [[TCBuluoApi api] fetchVerificationCodeWithPhone:self.accountTextField.text result:^(BOOL success, NSError *error) {
         if (!success) {
             [weakSelf.getPasswordView stopCountDown];
-            if (error) {
-                [MBProgressHUD showHUDWithMessage:error.localizedDescription];
-            }
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"验证码发送失败，%@", reason]];
         }
     }];
 }
