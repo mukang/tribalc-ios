@@ -96,27 +96,6 @@
     
 }
 
-- (TCRestaurantTableViewCell *)getTableViewCellInfoWithIndex:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView AndCell:(TCRestaurantTableViewCell *)cell{
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    TCServices *resInfo = mServiceWrapper.content[indexPath.row];
-    NSURL *imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, resInfo.mainPicture]];
-    [cell.resImgView sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"home_image_place"]];
-    cell.nameLab.text = resInfo.name;
-    TCListStore *storeInfo = resInfo.store;
-    [cell setLocation:storeInfo.markPlace];
-    [cell setType:storeInfo.brand];
-    [cell setPrice:resInfo.personExpense];
-    //    if ([resInfo[@"room"] isEqual:@YES]) {
-    [cell isSupportRoom:YES];
-    //    }
-    if (resInfo.reservable == TRUE) {
-        [cell isSupportReserve:YES];
-    }
-    cell.rangeLab.text = @"233m";
-    return cell;
-}
-
 
 //- (NSString *)getDistanceWithLocation:(NSArray *)locationArr {
 //    NSString *distance;
@@ -165,15 +144,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSString *identifier = [NSString stringWithFormat:@"cell%ld%ld", (long)indexPath.section, (long)indexPath.row];
-    TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[TCRestaurantTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-
-    return [self getTableViewCellInfoWithIndex:indexPath AndTableView:tableView AndCell:cell];
     
+    TCRestaurantTableViewCell *cell = [TCRestaurantTableViewCell cellWithTableView:tableView];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    TCServices *resInfo = mServiceWrapper.content[indexPath.row];
+    cell.service = resInfo;
+    return cell;
 }
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

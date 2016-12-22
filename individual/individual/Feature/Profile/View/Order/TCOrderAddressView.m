@@ -68,8 +68,10 @@
 - (void)setAddress:(TCUserShippingAddress *)shippingAddress {
     _shippingAddress = shippingAddress;
     NSArray *addressArr = [self getAddressArr:shippingAddress];
-    receiverLab.text = addressArr[0];
+    receiverLab.text = [NSString stringWithFormat:@"收货人 : %@", addressArr[0]];
+    receiverLab.frame = CGRectMake(TCRealValue(32), TCRealValue(20), TCRealValue(152), TCRealValue(14));
     phoneLab.text = addressArr[1];
+    phoneLab.frame = CGRectMake(receiverLab.x + receiverLab.width, receiverLab.y, self.width - TCRealValue(77) - receiverLab.x - receiverLab.width, TCRealValue(14));
     [self setAddressLabel:addressLab Text:addressArr[2]];
     
 }
@@ -95,8 +97,12 @@
 - (UILabel *)getReceiverLabelWithFrame:(CGRect)frame AndName:(NSString *)name {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     NSString *nameStr = [NSString stringWithFormat:@"收货人 : %@", name];
+    if (_shippingAddress == nil) {
+        nameStr = @"请添加收货地址";
+        label.frame = CGRectMake(frame.origin.x + 5, TCRealValue(96 / 2 - 4), self.width - frame.origin.x, TCRealValue(14));
+    }
     label.text = nameStr;
-    label.font = [UIFont fontWithName:BOLD_FONT size:14];
+    label.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
     
     return label;
 }

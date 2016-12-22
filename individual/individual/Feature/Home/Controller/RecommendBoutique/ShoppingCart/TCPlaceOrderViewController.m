@@ -300,19 +300,11 @@
     if (indexPath.row >= orderList.count) {
         return [self getOrderInfoTableViewCellWithIndexPath:indexPath AndTableView:(UITableView *)tableView];
     } else {
-        NSString *identifier = [NSString stringWithFormat:@"%li", (long)indexPath.row];
-        TCUserOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [[TCUserOrderTableViewCell alloc] initOrderDetailCellWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        }
+        TCUserOrderTableViewCell *cell = [TCUserOrderTableViewCell cellWithTableView:tableView];
         TCOrderItem *orderItem = orderList[indexPath.row];
-        TCGoods *good = orderItem.goods;
+        [cell setOrderDetailOrderItem:orderItem];
+
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.leftImgView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:good.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
-        [cell setTitleLabWithText:good.name];
-        [cell setBoldPriceLabel:good.salePrice];
-        [cell setBoldNumberLabel:orderItem.amount];
-        [cell setSelectedStandard:good.standardSnapshot];
         return cell;
         
     }

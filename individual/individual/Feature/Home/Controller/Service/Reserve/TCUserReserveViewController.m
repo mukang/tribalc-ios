@@ -40,7 +40,7 @@
 
 - (void)initReservationData {
     
-    [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:10 sortSkip:nil result:^(TCReservationWrapper *wrapper, NSError *error) {
+    [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:20 sortSkip:nil result:^(TCReservationWrapper *wrapper, NSError *error) {
         userReserveWrapper = wrapper;
         [reserveTableView reloadData];
         [reserveTableView.mj_header endRefreshing];
@@ -49,7 +49,7 @@
 }
 
 - (void)loadReservationData {
-    [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:10 sortSkip:userReserveWrapper.nextSkip result:^(TCReservationWrapper *wrapper, NSError *error) {
+    [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:20 sortSkip:userReserveWrapper.nextSkip result:^(TCReservationWrapper *wrapper, NSError *error) {
         
         if (userReserveWrapper.hasMore) {
             NSArray *contentArr = userReserveWrapper.content;

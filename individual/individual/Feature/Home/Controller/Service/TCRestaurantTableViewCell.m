@@ -7,140 +7,177 @@
 //
 
 #import "TCRestaurantTableViewCell.h"
+#import "TCImageURLSynthesizer.h"
 
 @implementation TCRestaurantTableViewCell  {
-    UILabel *locationLab;
     UIView *locationLineType;
-    UILabel *typeLab;
-    UILabel *priceLab;
-    UILabel *unitLab;
-    UIImageView *roomImgView;
-    UIImageView *reserveImgView;
+    UILabel *priceTagLab;
 }
 
++ (instancetype)cellWithTableView:(UITableView *)tableView {
+    static NSString *identifier = @"serviceListCell";
+    TCRestaurantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[TCRestaurantTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    
+    return cell;
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        float cellWidth = [UIScreen mainScreen].bounds.size.width;
         
-        [self initialImgView];
+        UIImageView *resImgView = [[UIImageView alloc] init];
+        [self.contentView addSubview:resImgView];
+        self.resImgView = resImgView;
         
-        _nameLab = [self createLabWithFrame:CGRectMake(_resImgView.origin.x + _resImgView.size.width + TCRealValue(17), _resImgView.origin.y + TCRealValue(2), cellWidth - _resImgView.origin.x - _resImgView.size.width - TCRealValue(17), TCRealValue(15)) AndFontSize:TCRealValue(14)];
-        _nameLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(14)];
-        [self.contentView addSubview:_nameLab];
+        UILabel *nameLab = [self createLabWithFrame:CGRectNull AndFontSize:TCRealValue(14)];
+        nameLab.font = [UIFont fontWithName:@"Helvetica-Bold" size:TCRealValue(14)];
+        [self.contentView addSubview:nameLab];
+        self.nameLab = nameLab;
         
-        locationLab = [self createLabWithFrame:CGRectMake(_nameLab.origin.x + TCRealValue(2), _nameLab.y + _nameLab.height + TCRealValue(11), _nameLab.width, TCRealValue(12)) AndFontSize:TCRealValue(12)];
+        UILabel *locationLab = [self createLabWithFrame:CGRectNull AndFontSize:TCRealValue(12)];
         [self.contentView addSubview:locationLab];
+        self.markPlcaeLab = locationLab;
         
-        typeLab = [self createLabWithFrame:locationLab.frame AndFontSize:TCRealValue(12)];
+        UILabel *typeLab = [self createLabWithFrame:locationLab.frame AndFontSize:TCRealValue(12)];
         [self.contentView addSubview:typeLab];
+        self.typeLab = typeLab;
+        
+        UILabel *priceLab = [self getPriceLab];
+        [self.contentView addSubview:priceLab];
+        self.priceLab = priceLab;
+        
+        UILabel *rangeLab = [self getRangeLab];
+        [self.contentView addSubview:rangeLab];
+        self.rangeLab = rangeLab;
+        
+        UIImageView *roomImgView = [[UIImageView alloc] init];
+        [self.contentView addSubview:roomImgView];
+        self.roomLogoView = roomImgView;
+        
+        UIImageView *reserveImgView = [[UIImageView alloc] init];
+        [self.contentView addSubview:reserveImgView];
+        self.reserveLogoView = reserveImgView;
         
         
-        locationLineType = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCRealValue(1), TCRealValue(11))];
-        locationLineType.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
+        locationLineType = [self getCenterLineWithFrame:CGRectNull];
         [self.contentView addSubview:locationLineType];
         
-        [self createPrice];
+        priceTagLab = [self createLabWithFrame:CGRectNull AndFontSize:TCRealValue(12)];
+        [self.contentView addSubview:priceTagLab];
+
         
-        roomImgView = [self createImageViewWithFrame:CGRectMake(_nameLab.x + TCRealValue(5), priceLab.y + priceLab.width + TCRealValue(26), 0, 0) AndImageName:@"res_room"];
-        [self.contentView addSubview:roomImgView];
-        
-        reserveImgView = [self createImageViewWithFrame:CGRectMake(roomImgView.x + roomImgView.width + TCRealValue(12), roomImgView.y, 0, 0) AndImageName:@"res_reserve"];
-        [self.contentView addSubview:reserveImgView];
-        
-        [self initialRangeLab];
 
         
     }
     return self;
 }
 
-- (void)setLocation:(NSString *)location {
-    if (!location) {
-        locationLineType.hidden = YES;
-    }
-    locationLab.text = location;
-    [locationLab sizeToFit];
-    [locationLineType setOrigin:CGPointMake(locationLab.x + locationLab.width + TCRealValue(2), locationLab.y + TCRealValue(1))];
-    [typeLab setOrigin:CGPointMake(locationLineType.x + locationLineType.width + TCRealValue(2), locationLab.y)];
+
+- (void)setService:(TCServices *)service {
+    _service = service;
+    [self setupData];
+    [self setupFrame];
+    
 }
 
-- (void)setType:(NSString *)type {
-    if (!type) {
-        locationLineType.hidden = YES;
-    }
-    typeLab.text = type;
-    [typeLab sizeToFit];
+- (void)setupData {
+    [self.resImgView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:_service.mainPicture]];
+    self.nameLab.text = _service.name;
+    self.markPlcaeLab.text = _service.store.markPlace;
+    self.typeLab.text = _service.store.brand;
+    self.priceLab.text = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", _service.personExpense].floatValue)];
+    self.rangeLab.text = @"233m";
+    [self setupLogoImageData];
+    
 }
 
-- (void)setPrice:(CGFloat)price {
-    NSString *priceStr = [NSString stringWithFormat:@"%f", price];
-    priceStr = [NSString stringWithFormat:@"%@", @(priceStr.floatValue)];
-    priceLab.text = priceStr;
-    [priceLab sizeToFit];
-    [unitLab setX:priceLab.x + priceLab.width];
-}
-
-- (void)isSupportRoom:(BOOL)b {
-    if (b == YES) {
-        roomImgView.hidden = NO;
+- (void)setupLogoImageData {
+    if(_service.reservable) {
+        self.reserveLogoView.image = [UIImage imageNamed:@"res_reserve"];
+    } else {
+        self.reserveLogoView.image = [UIImage imageNamed:@""];
     }
-    [self showRestaurantSupportView];
-}
-
-- (void)isSupportReserve:(BOOL)b {
-    if (b == YES) {
-        reserveImgView.hidden = NO;
-    }
-    [self showRestaurantSupportView];
-}
-
-- (void)showRestaurantSupportView {
-    if (roomImgView.hidden == YES && reserveImgView.hidden == NO) {
-//        reserveImgView.origin = roomImgView.origin;
-        [reserveImgView setX:roomImgView.x];
+    BOOL isRoom = YES;
+    if (isRoom) {
+        self.roomLogoView.image = [UIImage imageNamed:@"res_room"];
+    } else {
+        self.roomLogoView.image = [UIImage imageNamed:@""];
     }
 }
+
+- (void)setupFrame {
+    self.resImgView.frame = CGRectMake(TCRealValue(20), TCRealValue(160) / 2 - TCRealValue(130) / 2, TCRealValue(175), TCRealValue(130));
+    self.nameLab.frame = CGRectMake(_resImgView.origin.x + _resImgView.size.width + TCRealValue(17), _resImgView.origin.y + TCRealValue(2), TCScreenWidth - _resImgView.origin.x - _resImgView.size.width - TCRealValue(17), TCRealValue(15));
+    [self setupMarkPlaceAndBrandFrame];
+    [self setupPriceFrame];
+    
+    self.rangeLab.frame = CGRectMake(TCScreenWidth - TCRealValue(80) - TCRealValue(20), TCRealValue(320 / 2) - TCRealValue(30 / 2) - TCRealValue(12), TCRealValue(80), TCRealValue(15));
+    [self setupLogoImageFrame];
+}
+
+- (void)setupMarkPlaceAndBrandFrame {
+    self.markPlcaeLab.frame = CGRectMake(_nameLab.origin.x + TCRealValue(2), _nameLab.y + _nameLab.height + TCRealValue(11), 0, TCRealValue(12));
+    [self.markPlcaeLab sizeToFit];
+    locationLineType.frame = CGRectMake(self.markPlcaeLab.x + self.markPlcaeLab.width + TCRealValue(2), self.markPlcaeLab.y + TCRealValue(1.5), TCRealValue(1), TCRealValue(11));
+    self.typeLab.frame = CGRectMake(locationLineType.x + TCRealValue(3), self.markPlcaeLab.y, 0, 0);
+    [self.typeLab sizeToFit];
+}
+
+- (void)setupPriceFrame {
+    self.priceLab.frame = CGRectMake(self.nameLab.x, TCRealValue(160) - TCRealValue(120 / 2) + 1, 0, 0);
+    [self.priceLab sizeToFit];
+    priceTagLab.frame = CGRectMake(self.priceLab.x + self.priceLab.width, self.priceLab.y + TCRealValue(19 - 12), TCRealValue(80), TCRealValue(12));
+    priceTagLab.text = @"元/人";
+}
+
+- (void)setupLogoImageFrame {
+    if (_service.reservable) {
+        self.reserveLogoView.frame = CGRectMake(self.nameLab.x + TCRealValue(5), self.priceLab.y + self.priceLab.height + TCRealValue(12 / 2), TCRealValue(16), TCRealValue(16));
+        self.roomLogoView.frame = CGRectMake(self.reserveLogoView.x + self.reserveLogoView.width + TCRealValue(12), self.reserveLogoView.y, TCRealValue(16), TCRealValue(16));
+    } else {
+        self.roomLogoView.frame =  CGRectMake(self.nameLab.x + TCRealValue(5), self.priceLab.y + self.priceLab.height + TCRealValue(12 / 2), TCRealValue(16), TCRealValue(16));
+    }
+}
+
+
+- (UIView *)getCenterLineWithFrame:(CGRect)frame {
+    UIView *line = [[UIView alloc] initWithFrame:frame];
+    line.backgroundColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
+    return line;
+}
+
+
 
 - (UIImageView *)createImageViewWithFrame:(CGRect)frame AndImageName:(NSString *)imgName {
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
     UIImage *img = [UIImage imageNamed:imgName];
     imgView.image = img;
-    [imgView sizeToFit];
-    imgView.hidden = YES;
     return imgView;
 }
 
-- (void)createPrice {
-    UILabel *markLab = [self createLabWithFrame:CGRectMake(_nameLab.x, TCRealValue(160) - TCRealValue(55) + 1, TCRealValue(19), TCRealValue(19)) AndFontSize:TCRealValue(19)];
-    markLab.text = @"￥";
-    markLab.font = [UIFont systemFontOfSize:TCRealValue(19)];
-    [self.contentView addSubview:markLab];
+- (UILabel *)getPriceLab {
+    UILabel *label = [[UILabel alloc] init];
+    label.font = [UIFont systemFontOfSize:TCRealValue(19)];
     
-    priceLab = [[UILabel alloc] init];
-    priceLab.frame = CGRectMake(markLab.x + markLab.width, markLab.y - 1, 0, markLab.height);
-    priceLab.font = markLab.font;
-    [self.contentView addSubview:priceLab];
-    
-    unitLab = [self createLabWithFrame:CGRectMake(priceLab.x, priceLab.y + TCRealValue(19 - 12), TCRealValue(80), TCRealValue(12)) AndFontSize:TCRealValue(12)];
-    unitLab.text = @"元/人";
-    [self.contentView addSubview:unitLab];
-    
+    return label;
 }
 
 
-- (void)initialRangeLab {
-    _rangeLab = [self createLabWithFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width - TCRealValue(80) - TCRealValue(20), roomImgView.y + TCRealValue(3), TCRealValue(80), TCRealValue(15)) AndFontSize:TCRealValue(12)];
-    _rangeLab.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
-    _rangeLab.textAlignment = NSTextAlignmentRight;
+- (UILabel *)getRangeLab {
+    UILabel *label = [[UILabel alloc] init];
+    label.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
+    label.textAlignment = NSTextAlignmentRight;
+    label.font = [UIFont systemFontOfSize:TCRealValue(12)];
     
-    [self.contentView addSubview:_rangeLab];
+    return label;
 }
 
 - (void)initialImgView {
-    _resImgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCRealValue(20), TCRealValue(160) / 2 - TCRealValue(130) / 2, TCRealValue(175), TCRealValue(130))];
+    
     [self.contentView addSubview:_resImgView];
 }
 

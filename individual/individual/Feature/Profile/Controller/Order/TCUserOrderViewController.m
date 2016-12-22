@@ -49,7 +49,7 @@
 
 - (void)initOrderItem {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchOrderWrapper:mStatus limiSize:10 sortSkip:nil result:^(TCOrderWrapper *orderWrapper, NSError *error) {
+    [api fetchOrderWrapper:mStatus limiSize:20 sortSkip:nil result:^(TCOrderWrapper *orderWrapper, NSError *error) {
         mOrderWrapper = orderWrapper;
         [orderTableView reloadData];
         [orderTableView.mj_header endRefreshing];
@@ -59,8 +59,8 @@
 
 - (void)setupOrderItem {
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchOrderWrapper:mStatus limiSize:10 sortSkip:mOrderWrapper.nextSkip result:^(TCOrderWrapper *orderWrapper, NSError *error) {
-        if (mOrderWrapper.hasMore == YES) {
+    [api fetchOrderWrapper:mStatus limiSize:20 sortSkip:mOrderWrapper.nextSkip result:^(TCOrderWrapper *orderWrapper, NSError *error) {
+        if (mOrderWrapper.hasMore == YES || (orderWrapper.content.count == 0)) {
             NSArray *beforeContentArr = mOrderWrapper.content;
             mOrderWrapper = orderWrapper;
             mOrderWrapper.content = [beforeContentArr arrayByAddingObjectsFromArray:orderWrapper.content];
@@ -235,26 +235,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = [NSString stringWithFormat:@"%li,%li", (long)indexPath.section, (long)indexPath.row];
-    TCUserOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[TCUserOrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-    
+    TCUserOrderTableViewCell *cell = [TCUserOrderTableViewCell cellWithTableView:tableView];
     NSArray *orderContentArr = mOrderWrapper.content;
     TCOrder *order = orderContentArr[indexPath.section];
     NSArray *itemList = order.itemList;
     TCOrderItem *orderItem = itemList[indexPath.row];
-    TCGoods *goods = orderItem.goods;
-    
-    cell.leftImgView.image = [UIImage imageNamed:@"good_placeholder"];
-    [cell.leftImgView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:goods.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
-    [cell setTitleLabWithText:goods.name];
-    [cell setPriceLabel:goods.salePrice];
-    [cell setNumberLabel:orderItem.amount];
-    [cell setSelectedStandard:goods.standardSnapshot];
+    [cell setOrderListOrderItem:orderItem];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     return cell;
 }
 

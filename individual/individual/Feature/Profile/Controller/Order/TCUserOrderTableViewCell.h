@@ -8,17 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "TCComponent.h"
+#import "TCOrderItem.h"
+#import "UIImageView+WebCache.h"
 
-@interface TCUserOrderTableViewCell : UITableViewCell
+@interface TCUserOrderTableViewCell : UITableViewCell <SDWebImageManagerDelegate>
 
-@property UIImageView *leftImgView;
 
-- (instancetype)initOrderDetailCellWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
++ (instancetype)cellWithTableView:(UITableView *)tableView;
 
-- (void)setTitleLabWithText:(NSString *)text;
-- (void)setNumberLabel:(float)number;
-- (void)setPriceLabel:(float)price;
-- (void)setSelectedStandard:(NSString *)standard;
-- (void)setBoldPriceLabel:(float)price ;
-- (void)setBoldNumberLabel:(float)number;
+- (void)setOrderListOrderItem:(TCOrderItem *)orderItem ;
+
+- (void)setOrderDetailOrderItem:(TCOrderItem *)orderItem;
+
+@property (nonatomic, strong) TCOrderItem *orderItem;
+
+@property (nonatomic) UIView *backView;
+
+@property (nonatomic, weak) UILabel *titleLab;
+@property (nonatomic, weak) UIImageView *leftImageView;
+@property (nonatomic, weak) UILabel *priceLab;
+@property (nonatomic, weak) UILabel *standardLab;
+@property (nonatomic, weak) UILabel *numberLab;
+
 @end

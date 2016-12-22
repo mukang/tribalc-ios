@@ -7,23 +7,33 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCServices.h"
+#import "UIImageView+WebCache.h"
 
-@interface TCRestaurantTableViewCell : UITableViewCell
+@interface TCRestaurantTableViewCell : UITableViewCell <SDWebImageManagerDelegate>
 
-@property (retain, nonatomic) UIImageView *resImgView;
-@property (retain, nonatomic) UILabel *nameLab;
-@property (retain, nonatomic) UILabel *rangeLab;
+@property (strong, nonatomic) TCServices *service;
 
+@property (weak, nonatomic) UIImageView *resImgView;
+@property (weak, nonatomic) UILabel *nameLab;
+@property (weak, nonatomic) UILabel *rangeLab;
+@property (weak, nonatomic) UILabel *markPlcaeLab;
+@property (weak, nonatomic) UILabel *typeLab;
+@property (weak, nonatomic) UILabel *priceLab;
+@property (weak, nonatomic) UIImageView *roomLogoView;
+@property (weak, nonatomic) UIImageView *reserveLogoView;
 
-- (void)setLocation:(NSString *)location;
++ (instancetype)cellWithTableView:(UITableView *)tableView ;
+//
+//- (void)setLocation:(NSString *)location;
+//
+//- (void)setType:(NSString *)type;
+//
+//
+//- (void)setPrice:(CGFloat)price;
 
-- (void)setType:(NSString *)type;
+//- (void)isSupportRoom:(BOOL)b;
 
-
-- (void)setPrice:(CGFloat)price;
-
-- (void)isSupportRoom:(BOOL)b;
-
-- (void)isSupportReserve:(BOOL)b;
+//- (void)isSupportReserve:(BOOL)b;
 
 @end
