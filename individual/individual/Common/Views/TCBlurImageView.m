@@ -93,5 +93,8 @@
     return  theImage;//[self getImageAreaFromImage:theImage atFrame:r];
 }
 
+- (void)dealloc {
+    TCLog(@"TCBlurImageView---dealloc");
+}
 
 @end

@@ -474,6 +474,7 @@
         _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
             @StrongObj(self)
             [self startTitleScrollTimer];
+            _blurImageView = nil;
         }];
     }
     [_blurImageView show];
