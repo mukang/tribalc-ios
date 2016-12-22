@@ -94,11 +94,11 @@
 #pragma mark - Actions
 
 - (IBAction)handleClickRechargeButton:(UIButton *)sender {
-    
+    [self btnClickUnifyTips];
 }
 
 - (IBAction)handleClickWithdrawButton:(UIButton *)sender {
-    
+    [self btnClickUnifyTips];
 }
 
 - (IBAction)handleClickBankCardButton:(UIButton *)sender {
@@ -107,7 +107,7 @@
 }
 
 - (IBAction)handleClickSweepCodeButton:(UIButton *)sender {
-    
+    [self btnClickUnifyTips];
 }
 - (IBAction)handleClickWalletBillButton:(UIButton *)sender {
     TCWalletBillViewController *vc = [[TCWalletBillViewController alloc] initWithNibName:@"TCWalletBillViewController" bundle:[NSBundle mainBundle]];
@@ -115,11 +115,11 @@
 }
 
 - (IBAction)handleClickCouponButton:(UIButton *)sender {
-    
+    [self btnClickUnifyTips];
 }
 
 - (IBAction)handleClickFinanceButton:(UIButton *)sender {
-    
+    [self btnClickUnifyTips];
 }
 
 - (IBAction)handleClickPasswordButton:(UIButton *)sender {
