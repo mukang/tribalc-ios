@@ -126,6 +126,7 @@
     CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: label.font}];
     if (size.width > label.width) {
         [label setHeight:(TCRealValue(13) * 2) + TCRealValue(4)];
+        label.y -= TCRealValue(2);
     }
     text = text == nil ? @"" : text;
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:text];
@@ -147,6 +148,7 @@
     CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: label.font}];
     if (size.width > label.width) {
         [label setHeight:(label.height * 2) + TCRealValue(4)];
+        label.y -= TCRealValue(2);
     }
     
     text = text == nil ? @"" : text;

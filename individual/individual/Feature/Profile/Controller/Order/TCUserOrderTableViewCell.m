@@ -84,7 +84,7 @@
     _backView.frame = CGRectMake(TCRealValue(20), height / 2 - TCRealValue(79) / 2, screenRect.size.width - TCRealValue(40), height);
     _backView.backgroundColor = [UIColor whiteColor];
     self.leftImageView.frame = CGRectMake(TCRealValue(8), 0, TCRealValue(79), TCRealValue(79));
-    self.titleLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(9), self.leftImageView.y + TCRealValue(7), screenRect.size.width - self.leftImageView.x - self.leftImageView.width - TCRealValue(13) - TCRealValue(60), TCRealValue(12));
+    self.titleLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(9), self.leftImageView.y + TCRealValue(7), screenRect.size.width - self.leftImageView.x - self.leftImageView.width - TCRealValue(13) - TCRealValue(60), TCRealValue(14));
     [self setBoldNumberLabel:_orderItem.amount];
     self.priceLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(1), self.titleLab.y + self.titleLab.height + TCRealValue(5), TCScreenWidth - TCRealValue(40) - self.leftImageView.x - self.leftImageView.width - TCRealValue(1), TCRealValue(14));
 
@@ -93,6 +93,7 @@
 
 - (void)setupOrderDetailData {
     [self setupOrderListData];
+    self.standardLab.font = [UIFont systemFontOfSize:TCRealValue(13)];
     self.priceLab.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
     UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, TCScreenWidth - TCRealValue(40), TCRealValue(0.5))];
     [self addSubview:topLineView];
@@ -197,9 +198,15 @@
 - (void)setTitleLabWithText:(NSString *)text {
     self.titleLab.lineBreakMode = NSLineBreakByWordWrapping;
     self.titleLab.numberOfLines = TCRealValue(2);
+    self.titleLab.font = [UIFont systemFontOfSize:self.titleLab.height];
+    NSString *salePriceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", _orderItem.goods.salePrice].floatValue)];
     CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: self.titleLab.font}];
+    CGSize priceSize = [salePriceStr sizeWithAttributes:@{NSFontAttributeName: self.priceLab.font}];
     if (size.width + 2 > self.titleLab.width) {
-        [self.titleLab setHeight:TCRealValue((12 * 2) + 5)];
+        [self.titleLab setHeight:TCRealValue((self.titleLab.height * 2) + TCRealValue(5))];
+    }
+    if (size.width + 2 > self.titleLab.width * 2 - priceSize.width) {
+        self.priceLab.y = self.titleLab.y + self.titleLab.height;
     }
     NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
