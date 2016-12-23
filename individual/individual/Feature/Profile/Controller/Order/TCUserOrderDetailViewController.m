@@ -371,7 +371,7 @@
     backView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     
     UITextField *supplementField = [[UITextField alloc] initWithFrame:CGRectMake(TCRealValue(5), 0, backView.width - TCRealValue(7), backView.height)];
-    supplementField.placeholder = @"订单补充说明:";
+    supplementField.placeholder = @"订单补充说明为空";
     supplementField.font = [UIFont systemFontOfSize:TCRealValue(11)];
     supplementField.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
     supplementField.text = orderDetail.note;

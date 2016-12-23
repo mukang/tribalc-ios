@@ -38,6 +38,7 @@
             }
         }
     }
+    cell.indexPath = indexPath;
     return cell;
 
 }

@@ -186,9 +186,6 @@
     [cell.storeImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:reservation.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
     [cell setTitleLabText:reservation.storeName];
     [cell setBrandLabText:@"西餐"];
-    if (indexPath.section == 2) {
-        [cell setBrandLabText:@"的货物多好玩"];
-    }
     [cell setPlaceLabText:reservation.markPlace];
     cell.timeLab.text = @"2016-11-01 16:05";
     cell.personNumberLab.text = [NSString stringWithFormat:@"%li", (long)reservation.personNum];

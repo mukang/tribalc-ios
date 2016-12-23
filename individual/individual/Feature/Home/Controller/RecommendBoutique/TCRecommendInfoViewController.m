@@ -120,7 +120,7 @@
     UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(394))];
     [mScrollView addSubview:titleImageView];
     
-    goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, TCRealValue(87)) WithTitle:mGoodDetail.name AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
+    goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, TCRealValue(87)) WithTitle:mGoodDetail.title AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
     [mScrollView addSubview:goodTitleView];
     
     UIButton *standardSelectBtn = [self createStandardSelectButtonWithFrame:CGRectMake(0, goodTitleView.y + goodTitleView.height + TCRealValue(7.5), self.view.width, TCRealValue(38))];
@@ -414,6 +414,10 @@
 
 
 - (void)touchAddShopCartBtnInDetailView:(UIButton *) btn {
+    if (mGoodDetail.standardId == nil) {
+        [MBProgressHUD showHUDWithMessage:@"该商品规格ID为空"];
+        return ;
+    }
     TCBuluoApi *api = [TCBuluoApi api];
     [MBProgressHUD showHUD:YES];
     [api fetchGoodStandards:mGoodDetail.standardId result:^(TCGoodStandards *result, NSError *error) {
@@ -435,7 +439,10 @@
 }
 
 - (void)touchSelectStandardBtn:(UIButton *)btn {
-
+    if (mGoodDetail.standardId == nil) {
+        [MBProgressHUD showHUDWithMessage:@"该商品规格ID为空"];
+        return ;
+    }
     TCBuluoApi *api = [TCBuluoApi api];
     [MBProgressHUD showHUD:YES];
     [api fetchGoodStandards:mGoodDetail.standardId result:^(TCGoodStandards *result, NSError *error) {
