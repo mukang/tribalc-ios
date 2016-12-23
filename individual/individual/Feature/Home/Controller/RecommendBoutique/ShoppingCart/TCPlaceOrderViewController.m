@@ -476,6 +476,9 @@
              };
 }
 
+/**
+ 创建订单
+ */
 - (void)createOrder {
     NSMutableArray *itemList = [[NSMutableArray alloc] init];
     for (int i = 0; i< orderDetailList.count; i++) {
@@ -503,6 +506,9 @@
     }];
 }
 
+/**
+ 获取钱包信息，判断用户是否设置了支付密码
+ */
 - (void)handlePaymentWithOrderList:(NSArray *)orderList {
     [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
         if (walletAccount) {
@@ -522,6 +528,9 @@
     }];
 }
 
+/**
+ 弹出paymentView
+ */
 - (void)handleShowPaymentViewWithOrderList:(NSArray *)orderList walletAccount:(TCWalletAccount *)walletAccount {
     NSMutableArray *orderIDs = [NSMutableArray array];
     CGFloat paymentAmount = 0;
