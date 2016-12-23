@@ -8,6 +8,8 @@
 
 #import "TCUserOrderDetailViewController.h"
 #import "TCPaymentView.h"
+#import "NSObject+TCModel.h"
+#import "TCImageURLSynthesizer.h"
 
 @interface TCUserOrderDetailViewController () <TCPaymentViewDelegate> {
     TCOrder *orderDetail;
@@ -354,8 +356,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(41))];
     TCMarkStore *markStore = orderDetail.store;
     UIImageView *storeLogoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCRealValue(20), headerView.height / 2 - TCRealValue(17) / 2, TCRealValue(17), TCRealValue(17))];
-    NSURL *logoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, markStore.logo]];
-    [storeLogoImgView sd_setImageWithURL:logoUrl placeholderImage:[UIImage imageNamed:@"map_bar"]];
+    [storeLogoImgView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:markStore.logo] placeholderImage:[UIImage imageNamed:@"map_bar"]];
     
     UILabel *storeLabel = [TCComponent createLabelWithFrame:CGRectMake(storeLogoImgView.x + storeLogoImgView.width + TCRealValue(5), 0, self.view.width - storeLogoImgView.x - storeLogoImgView.width - TCRealValue(5), headerView.height) AndFontSize:TCRealValue(13) AndTitle:markStore.name AndTextColor:[UIColor blackColor]];
     storeLabel.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(13)];
