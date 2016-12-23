@@ -24,7 +24,7 @@
     static TCSipAPI *api = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        api = [[self class] new];
+        api = [[TCSipAPI alloc] init];
     });
     return api;
 }
@@ -36,9 +36,6 @@
         [instance lpConfigBoolForKey:@"start_at_boot_preference"];
         
         [LinphoneManager.instance startLinphoneCore];
-//        LinphoneManager.instance.iapManager.notificationCategory = @"expiry_notification";
-        
-        [self loadAssistantConfig:@"assistant_external_sip.rc"];
         
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(registrationUpdateEvent:)
@@ -63,9 +60,10 @@
                                                selector:@selector(coreUpdateEvent:)
                                                    name:kLinphoneCoreUpdate
                                                  object:nil];
-        
+        [self loadAssistantConfig:@"assistant_external_sip.rc"];
         new_config = NULL;
         number_of_configs_before = bctbx_list_size(linphone_core_get_proxy_config_list(LC));
+        
     }
     return self;
 }
@@ -91,13 +89,11 @@
         case LinphoneCallConnected:
             break;
         case LinphoneCallStreamsRunning: {
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                linphone_call_send_dtmf(linphone_core_get_current_call(LC), '#');
-                linphone_core_play_dtmf(LC, '#', 100);
-            });
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [NSThread sleepForTimeInterval:0.5];
+            linphone_call_send_dtmf(linphone_core_get_current_call(LC), '#');
+            linphone_core_play_dtmf(LC, '#', 100);
+
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"opend" object:nil];
             });
 //
@@ -114,6 +110,10 @@
         }
         case LinphoneCallError: {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"openFailed" object:nil];
+            NSRange r = [message rangeOfString:@"text="];
+            NSString *err = [message substringFromIndex:r.location+r.length];
+            [MBProgressHUD showHUDWithMessage:err];
+            TCLog(@"%@",message);
             break;
         }
         case LinphoneCallEnd: {
@@ -122,15 +122,9 @@
             
             const MSList *calls = linphone_core_get_calls(LC);
             if (calls == NULL) {
-//                [nav popViewControllerAnimated:YES];
-                //                while ((currentView == CallView.compositeViewDescription) ||
-                //                       (currentView == CallIncomingView.compositeViewDescription) ||
-                //                       (currentView == CallOutgoingView.compositeViewDescription)) {
-                ////                    [self popCurrentView];
-                //                }
+
             } else {
                 linphone_core_resume_call(LC, (LinphoneCall *)calls->data);
-                //                [self changeCurrentView:CallView.compositeViewDescription];
             }
             break;
         }
@@ -159,7 +153,6 @@
         case LinphoneCallUpdating:
             break;
     }
-    //    [self updateApplicationBadgeNumber];
 }
 
 
@@ -283,10 +276,10 @@
     LinphoneAccountCreatorStatus s = linphone_account_creator_set_username(account_creator, @"10004".UTF8String);
     LinphoneAccountCreatorStatus s1 = linphone_account_creator_set_password(account_creator, @"3Q@110PA".UTF8String);
     LinphoneAccountCreatorStatus s2 = linphone_account_creator_set_domain(account_creator, @"dyc.bj.buluo-gs.com".UTF8String);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [LinphoneManager.instance lpConfigSetInt:1 forKey:@"transient_provisioning" inSection:@"misc"];
         [self configureProxyConfig];
-    });
+//    });
 }
 
 - (void)configureProxyConfig {
