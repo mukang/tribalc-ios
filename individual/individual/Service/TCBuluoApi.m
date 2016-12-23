@@ -1606,8 +1606,8 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSString *s = status ? [NSString stringWithFormat:@"status=%@&", status] : @"";
         NSString *limitSizePart = [NSString stringWithFormat:@"limitSize=%zd", count];
         NSString *sortSkipPart = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%@", sortSkip] : @"";
-        //NSString *apiName = [NSString stringWithFormat:@"persons/%@/property_management?%@%@%@", self.currentUserSession.assigned, s, limitSizePart, sortSkipPart];
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/property_management?%@%@%@", @"5824287f0cf210fc9cef5e42", s, limitSizePart, sortSkipPart];
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/property_management?%@%@%@", self.currentUserSession.assigned, s, limitSizePart, sortSkipPart];
+//        NSString *apiName = [NSString stringWithFormat:@"persons/%@/property_management?%@%@%@", @"5824287f0cf210fc9cef5e42", s, limitSizePart, sortSkipPart];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.error) {

@@ -39,7 +39,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSuccessed) name:@"opend" object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(end) name:@"end" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fail) name:@"openFailed" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toClose) name:@"closed" object:nil];
     
+}
+
+- (void)toClose {
+    [self close];
+    @WeakObj(self)
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        @StrongObj(self)
+        [self back];
+    });
 }
 
 - (void)fail {
@@ -58,12 +68,8 @@
 - (void)openSuccessed {
     [_openBtn setImage:[UIImage imageNamed:@"opened"] forState:UIControlStateNormal];
     [_openBtn setTitle:@"" forState:UIControlStateNormal];
-    [self close];
-    @WeakObj(self)
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        @StrongObj(self)
-        [self back];
-    });
+    
+    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

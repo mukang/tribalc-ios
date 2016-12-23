@@ -11,6 +11,9 @@
 #import "TCLinphoneUtils.h"
 
 @interface TCSipAPI : NSObject
+
+- (BOOL)isLogin;
+
 - (void)login;
 
 + (instancetype)api;

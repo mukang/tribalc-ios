@@ -16,6 +16,8 @@
     
 }
 
+@property (assign, nonatomic) BOOL logined;
+
 @end
 
 @implementation TCSipAPI
@@ -29,8 +31,13 @@
     return api;
 }
 
+- (BOOL)isLogin {
+    return _logined;
+}
+
 - (instancetype)init {
     if (self = [super init]) {
+        self.logined = NO;
         LinphoneManager *instance = [LinphoneManager instance];
         [instance lpConfigBoolForKey:@"backgroundmode_preference"];
         [instance lpConfigBoolForKey:@"start_at_boot_preference"];
@@ -93,8 +100,10 @@
             linphone_call_send_dtmf(linphone_core_get_current_call(LC), '#');
             linphone_core_play_dtmf(LC, '#', 100);
 
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"opend" object:nil];
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"opend" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"closed" object:nil];
             });
 //
             
@@ -203,6 +212,7 @@
     
     switch (state) {
         case LinphoneRegistrationOk: {
+            _logined = YES;
             [LinphoneManager.instance
              lpConfigSetInt:[NSDate new].timeIntervalSince1970 +
              [LinphoneManager.instance lpConfigIntForKey:@"link_account_popup_time" withDefault:84200]
