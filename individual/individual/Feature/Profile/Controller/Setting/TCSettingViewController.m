@@ -15,6 +15,7 @@
 
 #import "TCBuluoApi.h"
 #import <Masonry.h>
+#import "TCAboutUSViewController.h"
 
 @interface TCSettingViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -121,6 +122,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        
+    }else {
+        if (indexPath.row == 1) {
+            TCAboutUSViewController *aboutUs = [[TCAboutUSViewController alloc] init];
+            [self.navigationController pushViewController:aboutUs animated:YES];
+        }
+    }
 }
 
 #pragma mark - Actions
