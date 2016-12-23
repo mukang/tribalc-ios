@@ -9,6 +9,8 @@
 #import "TCVicinityViewController.h"
 #import "TCVicinityTitleView.h"
 #import <POP.h>
+#import "TCRestaurantViewController.h"
+#import "TCRecommendListViewController.h"
 
 @interface TCVicinityViewController ()
 
@@ -155,7 +157,35 @@
     [self.view addSubview:entertainmentView];
     self.entertainmentView = entertainmentView;
     
-//    UITapGestureRecognizer *shoppingTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(<#selector#>)];
+    UITapGestureRecognizer *shoppingTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toShop)];
+    [shoppingView addGestureRecognizer:shoppingTap];
+    
+    UITapGestureRecognizer *repastTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toRepast)];
+    [repastView addGestureRecognizer:repastTap];
+    
+    UITapGestureRecognizer *entertainmentTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toEntertainment)];
+    [entertainmentView addGestureRecognizer:entertainmentTap];
+    
+}
+
+- (void)toShop {
+    TCRecommendListViewController *recommend = [[TCRecommendListViewController alloc]init];
+    recommend.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:recommend animated:YES];
+}
+
+- (void)toRepast {
+    TCRestaurantViewController *resaurant = [[TCRestaurantViewController alloc]init];
+    resaurant.title = @"餐饮";
+    resaurant.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:resaurant animated:YES];
+}
+
+- (void)toEntertainment {
+    TCRestaurantViewController *resaurant = [[TCRestaurantViewController alloc]init];
+    resaurant.title = @"娱乐";
+    resaurant.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:resaurant animated:YES];
 }
 
 - (void)startAnimating01 {
