@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "TCBaseViewController.h"
 
+typedef void(^Completion)();
+
 @interface TCQRCodeViewController : TCBaseViewController
+
+@property (copy, nonatomic) Completion completion;
 
 @end

@@ -11,6 +11,8 @@
 
 #import <Bugly/Bugly.h>
 
+#import "TCSipAPI.h"
+
 static NSString *const kBuglyAppID = @"900059019";
 
 @implementation TCAppDelegate
@@ -29,6 +31,8 @@ static NSString *const kBuglyAppID = @"900059019";
     [self.window makeKeyAndVisible];
     
     [Bugly startWithAppId:kBuglyAppID];
+    
+    [[[TCSipAPI alloc] init] login];
     
     return YES;
 }
@@ -53,6 +57,9 @@ static NSString *const kBuglyAppID = @"900059019";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    LinphoneManager *instance = LinphoneManager.instance;
+    [instance becomeActive];
 }
 
 

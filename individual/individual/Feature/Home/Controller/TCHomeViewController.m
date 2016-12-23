@@ -20,6 +20,7 @@
 
 #import "TCBlurImageView.h"
 #import <MBProgressHUD.h>
+#import "TCQRCodeViewController.h"
 
 @interface TCHomeViewController () {
     NSDictionary *homeInfoDic;
@@ -129,7 +130,7 @@
     [propertyView addSubview:unclockBtn];
     UIButton *repairBtn = [self getPropertyButtonWithFrame:CGRectMake(unclockBtn.x * 2 + unclockBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_ estate_repair" AndTitle:@"物业报修" AndAction:@selector(touchEstateRepair:)];
     [propertyView addSubview:repairBtn];
-    UIButton *scanPayBtn = [self getPropertyButtonWithFrame:CGRectMake(repairBtn.x + unclockBtn.x + repairBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_scan_pay" AndTitle:@"扫码支付" AndAction:@selector(btnClickUnifyTips)];
+    UIButton *scanPayBtn = [self getPropertyButtonWithFrame:CGRectMake(repairBtn.x + unclockBtn.x + repairBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_scan_pay" AndTitle:@"扫码支付" AndAction:@selector(touchScanPayBtn:)];
     [propertyView addSubview:scanPayBtn];
     UIButton *officeReserveBtn = [self getPropertyButtonWithFrame:CGRectMake(scanPayBtn.x + unclockBtn.x + scanPayBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_office_reservation" AndTitle:@"办公预订" AndAction:@selector(btnClickUnifyTips)];
     [propertyView addSubview:officeReserveBtn];
@@ -489,7 +490,14 @@
 
 - (void)touchScanPayBtn:(UIButton *)button {
 //    NSLog(@"点击扫码支付");
-    [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
+//    [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
+    TCQRCodeViewController *qrVC = [[TCQRCodeViewController alloc] init];
+    qrVC.hidesBottomBarWhenPushed = YES;
+    qrVC.completion = ^{
+        [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+    [self.navigationController pushViewController:qrVC animated:YES];
 }
 
 - (void)touchOfficeReserveBtn:(UIButton *)button {
