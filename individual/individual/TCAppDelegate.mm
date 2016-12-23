@@ -34,7 +34,7 @@ static NSString *const kBuglyAppID = @"900059019";
     
     TCSipAPI *sipApi = [TCSipAPI api];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [sipApi login];
     });
     
@@ -65,20 +65,19 @@ static NSString *const kBuglyAppID = @"900059019";
     LinphoneManager *instance = LinphoneManager.instance;
     [instance becomeActive];
     
-        LinphoneCall *call = linphone_core_get_current_call(LC);
-    
-        if (call) {
-            if (call == instance->currentCallContextBeforeGoingBackground.call) {
-                const LinphoneCallParams *params = linphone_call_get_current_params(call);
-                if (linphone_call_params_video_enabled(params)) {
-                    linphone_call_enable_camera(call, instance->currentCallContextBeforeGoingBackground.cameraIsEnabled);
-                }
-                instance->currentCallContextBeforeGoingBackground.call = 0;
-            } else if (linphone_call_get_state(call) == LinphoneCallIncomingReceived) {
+    LinphoneCall *call = linphone_core_get_current_call(LC);
 
+    if (call) {
+        if (call == instance->currentCallContextBeforeGoingBackground.call) {
+            const LinphoneCallParams *params = linphone_call_get_current_params(call);
+            if (linphone_call_params_video_enabled(params)) {
+                linphone_call_enable_camera(call, instance->currentCallContextBeforeGoingBackground.cameraIsEnabled);
             }
+            instance->currentCallContextBeforeGoingBackground.call = 0;
+        } else if (linphone_call_get_state(call) == LinphoneCallIncomingReceived) {
+
         }
-//        [LinphoneManager.instance.iapManager check];
+    }
 }
 
 
