@@ -11,7 +11,7 @@
 @interface TCReservation : NSObject
 
 typedef NS_ENUM(NSInteger, TCReservationStatus) {
-    TCReservationCannel,
+    TCReservationCancel,
     TCReservationProcessing,
     TCReservationFailure,
     TCReservationSuccess

@@ -86,7 +86,7 @@
     [mScrollView addSubview:customerView];
     
     
-    if (![reservationDetail.status isEqualToString:@"CANNEL"] && ![reservationDetail.status isEqualToString:@"FAILURE"]) {
+    if (![reservationDetail.status isEqualToString:@"CANCEL"] && ![reservationDetail.status isEqualToString:@"FAILURE"]) {
         UIButton *cancelBtn =[self getCancelOrderBtnWithFrame:CGRectMake(self.view.width / 2 - TCRealValue(315) / 2, customerView.y + customerView.height, TCRealValue(315), TCRealValue(40))];
         [mScrollView addSubview:cancelBtn];
     }
@@ -350,7 +350,7 @@
             [alertView removeFromSuperview];
             break;
         case 1:
-            [self changeReservationStatus:@"CANNEL"];
+            [self changeReservationStatus:@"CANCEL"];
             [alertView removeFromSuperview];
             
         default:

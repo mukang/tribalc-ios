@@ -1298,7 +1298,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"reservations/%@/status?type=owner&me=%@", reservationId, self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-        [request setValue:statusStr forParam:@"value"];
+        [request setValue:@"CANCEL" forParam:@"value"];
         
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
             if (respone.statusCode == 200) {

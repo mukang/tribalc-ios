@@ -17,8 +17,8 @@
 
 - (void)setStatus:(NSString *)status {
     _status = status;
-    if ([status isEqualToString:@"CANNEL"]) {
-        self.orderStatus = TCOrderCannel;
+    if ([status isEqualToString:@"CANCEL"]) {
+        self.orderStatus = TCOrderCancel;
     } else if ([status isEqualToString:@"NO_SETTLE"]) {
         self.orderStatus = TCOrderNoSettle;
     } else if ([status isEqualToString:@"SETTLE"]) {

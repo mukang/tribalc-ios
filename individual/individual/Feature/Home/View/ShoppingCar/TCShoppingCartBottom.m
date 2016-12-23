@@ -42,6 +42,7 @@
         [self addSubview:_totalLab];
         
         UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 0.5)];
+        topLine.backgroundColor = TCRGBColor(224, 224, 224);
         [self addSubview:topLine];
         
         _isEdit = NO;

@@ -164,7 +164,7 @@
         return @"等待收货";
     } else if ([text isEqualToString:@"SETTLE"]) {
         return @"等待发货";
-    } else if ([text isEqualToString:@"CANNEL"]) {
+    } else if ([text isEqualToString:@"CANCEL"]) {
         return @"订单已取消";
     }
      else{
@@ -180,7 +180,7 @@
         return @"卖家已发货";
     } else if ([text isEqualToString:@"SETTLE"]) {
         return @"等待卖家发货";
-    } else if ([text isEqualToString:@"CANNEL"]) {
+    } else if ([text isEqualToString:@"CANCEL"]) {
         return @"订单已取消";
     }
     else{

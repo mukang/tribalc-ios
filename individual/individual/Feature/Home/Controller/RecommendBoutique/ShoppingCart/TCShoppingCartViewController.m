@@ -417,6 +417,10 @@
 
 - (void)touchDeleteButton {
     NSArray *goodsArr = [[NSArray alloc] initWithArray:[self getSelectedGoodsInfo]];
+    if (goodsArr.count == 0) {
+        [MBProgressHUD showHUDWithMessage:@"未选择需要删除的物品"];
+        return;
+    }
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] deleteShoppingCartWithShoppingCartArr:goodsArr result:^(BOOL result, NSError *error) {
         if (result) {

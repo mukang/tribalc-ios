@@ -12,6 +12,7 @@
 #import "TCUserReserveDetailViewController.h"
 #import "TCComponent.h"
 #import "TCBuluoApi.h"
+#import "TCImageURLSynthesizer.h"
 #import "TCRecommendHeader.h"
 #import "TCRecommendFooter.h"
 
@@ -98,13 +99,14 @@
 }
 
 - (void)initRefreshTableView {
+    __weak TCUserReserveViewController *weakSelf = self;
     TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^(void) {
-        [self initReservationData];
+        [weakSelf initReservationData];
     }];
     reserveTableView.mj_header = refreshHeader;
     
     TCRecommendFooter *refreshFooter = [TCRecommendFooter footerWithRefreshingBlock:^(void) {
-        [self loadReservationData];
+        [weakSelf loadReservationData];
     }];
     reserveTableView.mj_footer = refreshFooter;
 }
@@ -112,7 +114,7 @@
 - (NSString *)getHeaderStatusText:(NSString *)text {
     if ([text isEqualToString:@"PROCESSING"]) {
         return @"预订处理中";
-    } else if ([text isEqualToString:@"CANNEL"]){
+    } else if ([text isEqualToString:@"CANCEL"]){
         return @"订座取消";
     } else if ([text isEqualToString:@"FAILURE"]) {
         return @"订座失败";
@@ -124,7 +126,7 @@
 - (UIColor *)getHeaderStatusTextColor:(NSString *)text {
     if ([text isEqualToString:@"PROCESSING"]) {
         return TCRGBColor(242, 68, 69);
-    } else if ([text isEqualToString:@"FAILURE"] || [text isEqualToString:@"CANNEL"]) {
+    } else if ([text isEqualToString:@"FAILURE"] || [text isEqualToString:@"CANCEL"]) {
         return TCRGBColor(154, 154, 154);
     } else {
         return TCRGBColor(81, 199, 209);
@@ -174,22 +176,31 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = [NSString stringWithFormat:@"cell%li", (long)indexPath.section];
+    NSString *identifier = @"cell";
     TCUserReserveTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[TCUserReserveTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     NSArray *userReserveOrderArr = userReserveWrapper.content;
     TCReservation *reservation = userReserveOrderArr[indexPath.section];
-    cell.storeImageView.image = [UIImage imageNamed:@"good_placeholder"];
+    [cell.storeImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:reservation.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
     [cell setTitleLabText:reservation.storeName];
     [cell setBrandLabText:@"西餐"];
+    if (indexPath.section == 2) {
+        [cell setBrandLabText:@"的货物多好玩"];
+    }
     [cell setPlaceLabText:reservation.markPlace];
     cell.timeLab.text = @"2016-11-01 16:05";
     cell.personNumberLab.text = [NSString stringWithFormat:@"%li", (long)reservation.personNum];
     
     return cell;
 }
+
+//- (NSString *)getTimeStr:(NSInteger)timeInt {
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInt];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    dateFormatter setDateFormat:<#(NSString * _Nullable)#>
+//}
 
 #pragma mark - UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -178,7 +178,7 @@
         case TCOrderSettle:
             bottomView = [self getSettleBottomView];
             break;
-        case TCOrderCannel:
+        case TCOrderCancel:
             bottomView = [self getCannelBottomView];
             break;
         case TCOrderDelivery:
@@ -191,8 +191,7 @@
             break;
     }
 //    UIView *bottomView = [self getWaitPayOrderBottomView];
-
-    if (status != TCOrderCannel) {
+    if (status != TCOrderCancel) {
         bottomView.backgroundColor = [UIColor whiteColor];
     }
     [self.view addSubview:bottomView];
@@ -450,7 +449,7 @@
         [alertView removeFromSuperview];
     } else {
         [MBProgressHUD showHUD:YES];
-        [[TCBuluoApi api] changeOrderStatus:@"CANNEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
+        [[TCBuluoApi api] changeOrderStatus:@"CANCEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
             if (result) {
                 [MBProgressHUD hideHUD:YES];
                 [weakSelf showHUDMessageWithResult:result AndTitle:@"取消订单"];
