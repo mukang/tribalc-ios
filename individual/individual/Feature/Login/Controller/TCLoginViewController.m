@@ -41,6 +41,9 @@
     // Do any additional setup after loading the view from its nib.
     weakSelf = self;
     
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapViewGesture:)];
+    [self.view addGestureRecognizer:tapGesture];
+    
     [self setupSubviews];
     [self setupConstraints];
 }
@@ -211,6 +214,10 @@
 
 - (IBAction)handleTapWechatButton:(UIButton *)sender {
     NSLog(@"微信登录");
+}
+
+- (void)handleTapViewGesture:(UITapGestureRecognizer *)gesture {
+    [self.view endEditing:YES];
 }
 
 #pragma mark - UITextFieldDelegate
