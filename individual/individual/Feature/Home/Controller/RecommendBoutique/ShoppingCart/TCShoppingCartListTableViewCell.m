@@ -157,7 +157,7 @@
     self.titleLab.frame = CGRectMake(TCRealValue(13) + self.leftImageView.x + self.leftImageView.width, TCRealValue(22.5 + 9), TCScreenWidth - TCRealValue(13) - TCRealValue(20) - self.leftImageView.x - self.leftImageView.width, TCRealValue(14));
     self.primaryStandardLab.frame = CGRectMake(self.titleLab.x, self.titleLab.y + self.titleLab.height + TCRealValue(9), self.titleLab.width, TCRealValue(12));
     if ([_cartItem.goods.standardSnapshot containsString:@"|"]) {
-        self.secondaryStandardBtn.frame = CGRectMake(self.titleLab.x, self.primaryStandardLab.y + self.primaryStandardLab.height + TCRealValue(15.5), TCRealValue(47), TCRealValue(27));
+        self.secondaryStandardBtn.frame = CGRectMake(self.titleLab.x, self.primaryStandardLab.y + self.primaryStandardLab.height + TCRealValue(17), TCRealValue(94 / 2), TCRealValue(46 / 2));
     } else {
         self.secondaryStandardBtn.frame = CGRectNull;
     }
@@ -201,12 +201,12 @@
 - (UIButton *)getSecondaryBtn {
     UIButton *secondaryBtn = [[UIButton alloc] init];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"car_second_button"]];
-    imageView.y = TCRealValue(2);
+    imageView.size = CGSizeMake(TCRealValue(94 / 2), TCRealValue(46 / 2));
+//    imageView.y = TCRealValue(23 * 0.038);
     [secondaryBtn addSubview:imageView];
     secondaryBtn.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
     [secondaryBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     return secondaryBtn;
-    
 }
 
 

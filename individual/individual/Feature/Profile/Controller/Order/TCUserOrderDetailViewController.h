@@ -19,10 +19,11 @@
 #import "TCPlaceOrderViewController.h"
 #import "TCShoppingCartViewController.h"
 #import "TCBuluoApi.h"
+#import "TCPaymentView.h"
 
 
 
-@interface TCUserOrderDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, TCOrderDetailAlertViewDelegate>
+@interface TCUserOrderDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, TCOrderDetailAlertViewDelegate, TCPaymentViewDelegate>
 
 
 

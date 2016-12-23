@@ -55,38 +55,36 @@
             [MBProgressHUD hideHUD:YES];
             mOrderWrapper = orderWrapper;
             [orderTableView reloadData];
-            [orderTableView.mj_header endRefreshing];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取订单列表失败, %@", reason]];
         }
-        
+        [orderTableView.mj_header endRefreshing];
         
     }];
 }
 
 - (void)setupOrderItem {
-    TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchOrderWrapper:mStatus limiSize:20 sortSkip:mOrderWrapper.nextSkip result:^(TCOrderWrapper *orderWrapper, NSError *error) {
-        if (mOrderWrapper.hasMore == YES || (orderWrapper.content.count == 0)) {
+    if (mOrderWrapper.hasMore) {
+        TCBuluoApi *api = [TCBuluoApi api];
+        [api fetchOrderWrapper:mStatus limiSize:20 sortSkip:mOrderWrapper.nextSkip result:^(TCOrderWrapper *orderWrapper, NSError *error){
             if (orderWrapper) {
                 NSArray *beforeContentArr = mOrderWrapper.content;
                 mOrderWrapper = orderWrapper;
                 mOrderWrapper.content = [beforeContentArr arrayByAddingObjectsFromArray:orderWrapper.content];
                 [orderTableView reloadData];
-                [orderTableView.mj_footer endRefreshing];
-
+                
             } else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取订单列表失败, %@", reason]];
             }
-        } else {
-            TCRecommendFooter *footer = (TCRecommendFooter *)orderTableView.mj_footer;
-            [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];
-            [orderTableView.mj_footer endRefreshing];
+        }];
+    } else {
+        TCRecommendFooter *footer = (TCRecommendFooter *)orderTableView.mj_footer;
+        [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];
+    }
+    [orderTableView.mj_footer endRefreshing];
 
-        }
-    }];
 }
 
 - (void)initTableView {

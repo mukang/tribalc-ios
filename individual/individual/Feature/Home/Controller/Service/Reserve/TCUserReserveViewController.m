@@ -55,24 +55,24 @@
 }
 
 - (void)loadReservationData {
-    [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:20 sortSkip:userReserveWrapper.nextSkip result:^(TCReservationWrapper *wrapper, NSError *error) {
-        
-        if (userReserveWrapper.hasMore) {
+    
+    if (userReserveWrapper.hasMore) {
+        [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:20 sortSkip:userReserveWrapper.nextSkip result:^(TCReservationWrapper *wrapper, NSError *error) {
             if (wrapper) {
                 NSArray *contentArr = userReserveWrapper.content;
                 userReserveWrapper = wrapper;
                 userReserveWrapper.content = [contentArr arrayByAddingObjectsFromArray:wrapper.content];
                 [reserveTableView reloadData];
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取预订列表失败, %@", reason]];
             }
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取预订列表失败, %@", reason]];
-        } else {
-            TCRecommendFooter *footer = (TCRecommendFooter *)reserveTableView.mj_footer;
-            [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];
-        }
-        [reserveTableView.mj_footer endRefreshing];
-
-    }];
+        }];
+    } else {
+        TCRecommendFooter *footer = (TCRecommendFooter *)reserveTableView.mj_footer;
+        [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];
+    }
+    [reserveTableView.mj_footer endRefreshing];
 
 }
 
@@ -185,19 +185,24 @@
     TCReservation *reservation = userReserveOrderArr[indexPath.section];
     [cell.storeImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:reservation.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
     [cell setTitleLabText:reservation.storeName];
-    [cell setBrandLabText:@"西餐"];
-    [cell setPlaceLabText:reservation.markPlace];
-    cell.timeLab.text = @"2016-11-01 16:05";
+    [cell setBrandLabText:reservation.markPlace];
+    if (reservation.tags.count == 0) {
+        [cell setPlaceLabText:nil];
+    } else {
+        [cell setPlaceLabText:reservation.tags[0]];
+    }
+    cell.timeLab.text = [self getTimeStr:reservation.appointTime / 1000];
     cell.personNumberLab.text = [NSString stringWithFormat:@"%li", (long)reservation.personNum];
     
     return cell;
 }
 
-//- (NSString *)getTimeStr:(NSInteger)timeInt {
-//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInt];
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    dateFormatter setDateFormat:<#(NSString * _Nullable)#>
-//}
+- (NSString *)getTimeStr:(long)timeInt {
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInt];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+    return [dateFormatter stringFromDate:date];
+}
 
 #pragma mark - UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
