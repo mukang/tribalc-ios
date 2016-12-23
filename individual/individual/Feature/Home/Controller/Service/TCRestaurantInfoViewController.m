@@ -222,7 +222,7 @@
 
 - (UIView *)createServiceStoreBaseInfoViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UILabel *markPlaceLab = [TCComponent createLabelWithText:serviceDetail.detailStore.address AndFontSize:14];
+    UILabel *markPlaceLab = [TCComponent createLabelWithText:serviceDetail.detailStore.markPlace AndFontSize:TCRealValue(14)];
     [markPlaceLab setOrigin:CGPointMake(frame.size.width / 2 - markPlaceLab.width / 2, 0)];
     [view addSubview:markPlaceLab];
     
