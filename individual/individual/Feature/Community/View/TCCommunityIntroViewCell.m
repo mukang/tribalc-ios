@@ -30,7 +30,17 @@
     
     self.nameLabel.text = communityDetailInfo.name;
     self.addressLabel.text = communityDetailInfo.address;
-    self.descLabel.text = communityDetailInfo.desc;
+//    self.descLabel.text = communityDetailInfo.desc;
+    if (communityDetailInfo.desc) {
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineSpacing:5];
+        self.descLabel.attributedText = [[NSAttributedString alloc] initWithString:communityDetailInfo.desc
+                                                                        attributes:@{
+                                                                                     NSFontAttributeName: [UIFont systemFontOfSize:14],
+                                                                                     NSForegroundColorAttributeName: TCRGBColor(42, 42, 42),
+                                                                                     NSParagraphStyleAttributeName: paragraphStyle
+                                                                                     }];
+    }
 }
 
 - (IBAction)handleClickVisitButton:(UIButton *)sender {
