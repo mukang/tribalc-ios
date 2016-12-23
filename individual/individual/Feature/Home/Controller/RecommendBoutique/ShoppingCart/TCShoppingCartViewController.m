@@ -290,26 +290,24 @@
 - (NSArray<UIView *> *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
     if (direction == MGSwipeDirectionRightToLeft) {
         TCShoppingCartListTableViewCell *selectCell = (TCShoppingCartListTableViewCell *)cell;
-        return [self getCellLeftButtonWithSelectTag: selectCell.indexPath];
-        
+        return [weakSelf getCellLeftButtonWithSelectTag: selectCell.indexPath];
     }
     return nil;
 }
 
 - (NSArray *)getCellLeftButtonWithSelectTag:(NSIndexPath *)indexPath {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, TCRealValue(150), TCRealValue(139))];
-    TCShoppingCartSelectButton *editBtn = [self getSwipeDirectionRightToLeftButtonWithFrame:CGRectMake(0, 0, button.width, TCRealValue(139 / 2)) AndIndexPath:indexPath AndTitle:@"编辑"];
-    [editBtn addTarget:self action:@selector(touchGoodEditBtn:) forControlEvents:UIControlEventTouchUpInside];
+    TCShoppingCartSelectButton *editBtn = [weakSelf getSwipeDirectionRightToLeftButtonWithFrame:CGRectMake(0, 0, button.width, TCRealValue(139 / 2)) AndIndexPath:indexPath AndTitle:@"编辑"];
+    [editBtn addTarget:weakSelf action:@selector(touchGoodEditBtn:) forControlEvents:UIControlEventTouchUpInside];
     [button addSubview:editBtn];
     
-    TCShoppingCartSelectButton *deleteBtn = [self getSwipeDirectionRightToLeftButtonWithFrame:CGRectMake(0, editBtn.y + editBtn.height, button.width, TCRealValue(139) / 2) AndIndexPath:indexPath AndTitle:@"删除"];
+    TCShoppingCartSelectButton *deleteBtn = [weakSelf getSwipeDirectionRightToLeftButtonWithFrame:CGRectMake(0, editBtn.y + editBtn.height, button.width, TCRealValue(139) / 2) AndIndexPath:indexPath AndTitle:@"删除"];
     [deleteBtn setBackgroundColor:[UIColor redColor]];
-    [deleteBtn addTarget:self action:@selector(touchGoodDeleteBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [deleteBtn addTarget:weakSelf action:@selector(touchGoodDeleteBtn:) forControlEvents:UIControlEventTouchUpInside];
     [button addSubview:deleteBtn];
     
     return @[button];
 }
-
 
 - (TCShoppingCartSelectButton *)getSwipeDirectionRightToLeftButtonWithFrame:(CGRect)frame AndIndexPath:(NSIndexPath *)indexPath AndTitle:(NSString *)title{
     TCShoppingCartSelectButton *editBtn = [[TCShoppingCartSelectButton alloc] initWithFrame:frame];

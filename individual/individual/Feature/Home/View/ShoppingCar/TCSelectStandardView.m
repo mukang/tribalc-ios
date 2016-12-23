@@ -129,6 +129,7 @@
 - (UIView *)getTitleViewWithFrame:(CGRect)frame {
     UIView *titleView = [[UIView alloc] initWithFrame:frame];
     titleImageView = [self getTitleImageViewWithFrame:CGRectMake(TCRealValue(20), frame.size.height - TCRealValue(12) - TCRealValue(115), TCRealValue(115), TCRealValue(115))];
+    titleImageView.contentMode = UIViewContentModeScaleAspectFit;
     [titleView addSubview:titleImageView];
     
     UIButton *closeBtn = [TCComponent createImageBtnWithFrame:CGRectMake(TCScreenWidth - TCRealValue(20) - TCRealValue(20), TCRealValue(15), TCRealValue(20), TCRealValue(20)) AndImageName:@"good_close"];
