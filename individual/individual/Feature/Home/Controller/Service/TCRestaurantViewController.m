@@ -10,6 +10,7 @@
 
 @interface TCRestaurantViewController () {
     TCServiceWrapper *mServiceWrapper;
+    TCServiceFilterView *filterView;
 }
 
 @end
@@ -142,7 +143,7 @@
     UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"header"];
     if (!headerView) {
         headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:@"header"];
-        TCServiceFilterView *filterView = [[TCServiceFilterView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCRealValue(42))];
+        filterView = [[TCServiceFilterView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCRealValue(42))];
         filterView.delegate = self;
         [headerView addSubview:filterView];
     }
@@ -186,6 +187,7 @@
     TCServices *service = mServiceWrapper.content[indexPath.row];
     TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]initWithServiceId:service.ID];
     [self.navigationController pushViewController:restaurantInfo animated:YES];
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return TCRealValue(42);
@@ -313,6 +315,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [filterView hiddenAllView];
 }
 
 - (void)didReceiveMemoryWarning {

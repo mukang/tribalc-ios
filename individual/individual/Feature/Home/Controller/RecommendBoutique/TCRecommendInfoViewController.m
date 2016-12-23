@@ -415,7 +415,7 @@
 
 - (void)touchAddShopCartBtnInDetailView:(UIButton *) btn {
     if (mGoodDetail.standardId == nil) {
-        [MBProgressHUD showHUDWithMessage:@"该商品规格ID为空"];
+        [weakSelf showStandardView:nil];
         return ;
     }
     TCBuluoApi *api = [TCBuluoApi api];
@@ -440,7 +440,7 @@
 
 - (void)touchSelectStandardBtn:(UIButton *)btn {
     if (mGoodDetail.standardId == nil) {
-        [MBProgressHUD showHUDWithMessage:@"该商品规格ID为空"];
+        [weakSelf showStandardView:nil];
         return ;
     }
     TCBuluoApi *api = [TCBuluoApi api];

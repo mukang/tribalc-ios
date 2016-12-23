@@ -88,7 +88,9 @@
     [self.resImgView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:_service.mainPicture]];
     self.nameLab.text = _service.name;
     self.markPlcaeLab.text = _service.store.markPlace;
-    self.typeLab.text = _service.store.brand;
+    if (_service.tags.count != 0) {
+        self.typeLab.text = _service.tags[0];
+    }
     self.priceLab.text = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", _service.personExpense].floatValue)];
     self.rangeLab.text = @"233m";
     [self setupLogoImageData];
@@ -123,6 +125,9 @@
     self.markPlcaeLab.frame = CGRectMake(_nameLab.origin.x + TCRealValue(2), _nameLab.y + _nameLab.height + TCRealValue(11), 0, TCRealValue(12));
     [self.markPlcaeLab sizeToFit];
     locationLineType.frame = CGRectMake(self.markPlcaeLab.x + self.markPlcaeLab.width + TCRealValue(2), self.markPlcaeLab.y + TCRealValue(1.5), TCRealValue(1), TCRealValue(11));
+    if (_service.tags.count == 0) {
+        locationLineType.frame = CGRectNull;
+    }
     self.typeLab.frame = CGRectMake(locationLineType.x + TCRealValue(3), self.markPlcaeLab.y, 0, 0);
     [self.typeLab sizeToFit];
 }

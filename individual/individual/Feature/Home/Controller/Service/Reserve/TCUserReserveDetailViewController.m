@@ -201,15 +201,27 @@
     cell.backgroundColor = [UIColor whiteColor];
 //    cell.storeImageView.frame = CGRectMake(cell.storeImageView.x + 8, 131 / 2 - 109.5 / 2, cell.storeImageView.width - 8, 109.5);
     [cell.storeImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:reservationDetail.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
-    cell.timeLab.text = @"2016";
+    cell.timeLab.text = [self getTimeStr:reservationDetail.appointTime / 1000];
     cell.personNumberLab.text = [NSString stringWithFormat:@"%li", (long)reservationDetail.personNum];
     [cell setTitleLabText:reservationDetail.storeName];
-    [cell setDetailBrandLabText:@"西餐"];
-    [cell setDetailPlaceLabText:reservationDetail.markPlace];
+    [cell setDetailBrandLabText:reservationDetail.markPlace];
+    if (reservationDetail.tags.count != 0) {
+        [cell setDetailPlaceLabText:reservationDetail.tags[0]];
+    } else {
+        [cell setDetailPlaceLabText:nil];
+    }
 
     
     return cell;
 }
+
+- (NSString *)getTimeStr:(long)timeInt {
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInt];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+    return [dateFormatter stringFromDate:date];
+}
+
 
 - (UITableViewCell *)getTableViewCellForBaseInfo:(NSDictionary *)infoDic {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];

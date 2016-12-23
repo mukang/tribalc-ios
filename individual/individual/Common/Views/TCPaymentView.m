@@ -123,6 +123,7 @@ static CGFloat const duration = 0.25;
     TCPaymentPasswordView *paymentPasswordView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentPasswordView" owner:nil options:nil].lastObject;
     paymentPasswordView.frame = CGRectMake(TCScreenWidth, self.paymentDetailView.y, TCScreenWidth, subviewHeight);
     paymentPasswordView.delegate = self;
+    paymentPasswordView.textField.centerX = paymentPasswordView.width / 2;
     [self addSubview:paymentPasswordView];
     self.paymentPasswordView = paymentPasswordView;
     

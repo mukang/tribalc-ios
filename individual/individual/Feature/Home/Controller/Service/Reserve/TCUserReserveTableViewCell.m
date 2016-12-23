@@ -104,6 +104,11 @@
 }
 
 - (void)setDetailPlaceLabText:(NSString *)text {
+    if (text == nil) {
+        brandCenterPlaceView.frame = CGRectNull;
+        placeLab.text = @"";
+        return;
+    }
     placeLab.text = text;
     [placeLab sizeToFit];
     placeLab.y = titleLab.y + titleLab.height + TCRealValue(17.5);
@@ -111,6 +116,11 @@
 }
 
 - (void)setPlaceLabText:(NSString *)text {
+    if (text == nil) {
+        brandCenterPlaceView.frame = CGRectNull;
+        placeLab.text = @"";
+        return;
+    }
     placeLab.text = text;
     [placeLab sizeToFit];
     placeLab.y = titleLab.y + titleLab.height + TCRealValue(10);

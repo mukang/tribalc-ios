@@ -451,7 +451,6 @@
         [MBProgressHUD showHUD:YES];
         [[TCBuluoApi api] changeOrderStatus:@"CANCEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
             if (result) {
-                [MBProgressHUD hideHUD:YES];
                 [weakSelf showHUDMessageWithResult:result AndTitle:@"取消订单"];
                 [weakSelf touchBackBtn];
             } else {
@@ -464,6 +463,14 @@
     }
     
 }
+
+#pragma mark - TCPaymentViewDelegate
+- (void)paymentView:(TCPaymentView *)view didFinishedPaymentWithStatus:(NSString *)status {
+    // 跳转至“全部”订单列表
+    TCUserOrderTabBarController *orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
+    [self.navigationController pushViewController:orderViewController animated:YES];
+}
+
 
 
 #pragma mark - click
@@ -492,6 +499,37 @@
 //    
 //}
 
+- (void)handlePayment {
+    [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
+        if (walletAccount) {
+            [MBProgressHUD hideHUD:YES];
+            if (walletAccount.password) {
+                [weakSelf handleShowPaymentViewWalletAccount:walletAccount];
+            } else {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码，请到 我的钱包>支付密码 中设置" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+                [alertController addAction:action];
+                [weakSelf presentViewController:alertController animated:YES completion:nil];
+            }
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
+        }
+    }];
+}
+
+- (void)handleShowPaymentViewWalletAccount:(TCWalletAccount *)walletAccount {
+    
+    CGFloat paymentAmount = orderDetail.totalFee;
+    
+    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:paymentAmount fromController:self];
+    paymentView.walletAccount = walletAccount;
+    paymentView.orderIDs = @[ orderDetail.ID ];
+    paymentView.delegate = self;
+    [paymentView show:YES];
+}
+
+
 - (void)touchOrderCancelBtn:(UIButton *)btn {
     TCOrderDetailAlertView *alertView = [[TCOrderDetailAlertView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [alertView show];
@@ -504,17 +542,22 @@
 
 
 - (void)touchOrderPayBtn:(UIButton *)btn {
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-        if (result) {
-            [weakSelf showHUDMessageWithResult:result AndTitle:@"付款"];
-            [weakSelf touchBackBtn];
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败, %@", reason]];
-        }
-    }];
+//    [MBProgressHUD showHUD:YES];
+//    [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
+//        if (result) {
+//            [weakSelf showHUDMessageWithResult:result AndTitle:@"付款"];
+//            [weakSelf touchBackBtn];
+//        } else {
+//            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+//            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败, %@", reason]];
+//        }
+//    }];
+    
+    [self handlePayment];
 }
+
+
+
 
 - (void)touchOrderRemindBtn:(UIButton *)btn {
     [[TCBuluoApi api] changeOrderStatus:@"DELIVERY" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {

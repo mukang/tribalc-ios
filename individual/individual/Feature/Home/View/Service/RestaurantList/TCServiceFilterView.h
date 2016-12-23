@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger, TCFilterType) {
     TCReserve
 };
 
+- (void)hiddenAllView;
 
 @property (nonatomic, weak) id<TCServiceFilterViewDelegate> delegate;
 
