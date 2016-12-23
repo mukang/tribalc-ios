@@ -585,6 +585,8 @@
 		7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */; };
 		7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */; };
 		7A2874D01E0A2088001E5AE9 /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47CB1DB720DE00E39207 /* UIView+Category.m */; };
+		7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3321971E0D07E1003049DB /* TCSettingViewController.m */; };
+		7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */; };
 		7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */; };
 		7A381BC41DED5DC4008BDBF7 /* TCCommunityDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BC31DED5DC4008BDBF7 /* TCCommunityDetailInfo.m */; };
 		7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BCB1DED6969008BDBF7 /* TCCommunityIntroViewCell.m */; };
@@ -679,7 +681,6 @@
 		7AC347011E01454100E28EC9 /* TCBankCardAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC346FC1E01454100E28EC9 /* TCBankCardAddViewController.xib */; };
 		7AC347021E01454100E28EC9 /* TCBankCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC346FE1E01454100E28EC9 /* TCBankCardViewController.m */; };
 		7AC347031E01454100E28EC9 /* TCBankCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC346FF1E01454100E28EC9 /* TCBankCardViewController.xib */; };
-		7AC347061E016A3800E28EC9 /* TCSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC347051E016A3800E28EC9 /* TCSettingViewController.m */; };
 		7AC347091E016ED800E28EC9 /* TCCommonIndicatorViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC347081E016ED800E28EC9 /* TCCommonIndicatorViewCell.m */; };
 		7AC3470C1E01717C00E28EC9 /* TCSettingNotificationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC3470B1E01717C00E28EC9 /* TCSettingNotificationViewCell.m */; };
 		7AC3470F1E0171B100E28EC9 /* TCSettingCacheViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC3470E1E0171B000E28EC9 /* TCSettingCacheViewCell.m */; };
@@ -2853,6 +2854,10 @@
 		7A21E43C1DD02DEA00EF7427 /* TCProfileProcessViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileProcessViewCell.h; sourceTree = "<group>"; };
 		7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileProcessViewCell.m; sourceTree = "<group>"; };
 		7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileProcessViewCell.xib; sourceTree = "<group>"; };
+		7A3321961E0D07E1003049DB /* TCSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSettingViewController.h; sourceTree = "<group>"; };
+		7A3321971E0D07E1003049DB /* TCSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSettingViewController.m; sourceTree = "<group>"; };
+		7A3321991E0D0945003049DB /* TCSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSuggestionViewController.h; sourceTree = "<group>"; };
+		7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSuggestionViewController.m; sourceTree = "<group>"; };
 		7A34AF561DDB0E7400217161 /* TCUserShippingAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserShippingAddress.h; sourceTree = "<group>"; };
 		7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserShippingAddress.m; sourceTree = "<group>"; };
 		7A381BC21DED5DC4008BDBF7 /* TCCommunityDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityDetailInfo.h; sourceTree = "<group>"; };
@@ -3011,8 +3016,6 @@
 		7AC346FD1E01454100E28EC9 /* TCBankCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBankCardViewController.h; sourceTree = "<group>"; };
 		7AC346FE1E01454100E28EC9 /* TCBankCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBankCardViewController.m; sourceTree = "<group>"; };
 		7AC346FF1E01454100E28EC9 /* TCBankCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBankCardViewController.xib; sourceTree = "<group>"; };
-		7AC347041E016A3800E28EC9 /* TCSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSettingViewController.h; sourceTree = "<group>"; };
-		7AC347051E016A3800E28EC9 /* TCSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSettingViewController.m; sourceTree = "<group>"; };
 		7AC347071E016ED800E28EC9 /* TCCommonIndicatorViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommonIndicatorViewCell.h; sourceTree = "<group>"; };
 		7AC347081E016ED800E28EC9 /* TCCommonIndicatorViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommonIndicatorViewCell.m; sourceTree = "<group>"; };
 		7AC3470A1E01717C00E28EC9 /* TCSettingNotificationViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSettingNotificationViewCell.h; sourceTree = "<group>"; };
@@ -7533,6 +7536,7 @@
 		7A190B0D1DC0CC7800651905 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7A3321951E0D07E1003049DB /* Setting */,
 				55F06EEA1E03902000A849D7 /* Property */,
 				7AEB4CA91E03936300F83A7C /* Biography */,
 				7AC346CB1E0142FA00E28EC9 /* Wallet */,
@@ -7544,8 +7548,6 @@
 				7A1AC8221DF122C80052132F /* TCIDAuthViewController.h */,
 				7A1AC8231DF122C80052132F /* TCIDAuthViewController.m */,
 				7A1AC8241DF122C80052132F /* TCIDAuthViewController.xib */,
-				7AC347041E016A3800E28EC9 /* TCSettingViewController.h */,
-				7AC347051E016A3800E28EC9 /* TCSettingViewController.m */,
 				55F06F0E1E07D0AA00A849D7 /* TCQRCodeViewController.h */,
 				55F06F0F1E07D0AA00A849D7 /* TCQRCodeViewController.m */,
 			);
@@ -7614,6 +7616,17 @@
 				7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */,
 			);
 			path = Community;
+			sourceTree = "<group>";
+		};
+		7A3321951E0D07E1003049DB /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				7A3321961E0D07E1003049DB /* TCSettingViewController.h */,
+				7A3321971E0D07E1003049DB /* TCSettingViewController.m */,
+				7A3321991E0D0945003049DB /* TCSuggestionViewController.h */,
+				7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		7A381BE81DED9304008BDBF7 /* Commercial */ = {
@@ -8780,6 +8793,7 @@
 				7AF972D71E08CC72009D26A3 /* TCCommunityViewCell.m in Sources */,
 				559D845B1E0BF64800982697 /* TCSipAPI.m in Sources */,
 				7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */,
+				7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */,
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
 				55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
@@ -8853,6 +8867,7 @@
 				7A74674F1DF947EF00ACD815 /* TCCompanyInfo.m in Sources */,
 				7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */,
 				7A7E93F41DF502E7006A47CE /* TCGenderPickerView.m in Sources */,
+				7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */,
 				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
 				0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */,
 				7AEB4CFC1E03AC5400F83A7C /* TCBioEditGenderViewController.m in Sources */,
@@ -8881,7 +8896,6 @@
 				09275FBA1DDEFF5D00502167 /* TCDetailAnnotation.m in Sources */,
 				7AEB4CFF1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m in Sources */,
 				7AC346F81E0144F300E28EC9 /* TCBankPickerView.m in Sources */,
-				7AC347061E016A3800E28EC9 /* TCSettingViewController.m in Sources */,
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
 				092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */,
 				7AEB4D051E03F02F00F83A7C /* TCBioEditBirthdateViewController.m in Sources */,
