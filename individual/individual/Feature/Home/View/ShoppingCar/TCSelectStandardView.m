@@ -14,9 +14,9 @@
 #import "NSObject+TCModel.h"
 
 @implementation TCSelectStandardView {
-    NSInteger mRepertory;
-    NSString *mShoppingCartGoodsId;
-    TCGoods *mGood;
+    
+    TCCartItem *mCartItem;
+    
     TCGoodStandards *mGoodStandards;
     UIImageView *titleImageView;
     UILabel *priceLab;
@@ -30,9 +30,10 @@
 
 - (instancetype)initWithCartItem:(TCCartItem *)cartItem{
     self = [super initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight)];
-    mGood = cartItem.goods;
-    mRepertory = cartItem.repertory;
-    mShoppingCartGoodsId = cartItem.ID;
+//    mGood = cartItem.goods;
+//    mRepertory = cartItem.repertory;
+//    mShoppingCartGoodsId = cartItem.ID;
+    mCartItem = cartItem;
     if (self) {
         [self fetchGoodStandardWithStandardId:cartItem.standardId];
     }
@@ -136,11 +137,11 @@
     [closeBtn addTarget:self action:@selector(touchCloseBtn) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:closeBtn];
     
-    NSString *priceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", mGood.salePrice].floatValue)];
+    NSString *priceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", mCartItem.goods.salePrice].floatValue)];
     priceLab = [TCComponent createLabelWithFrame:CGRectMake(titleImageView.x + titleImageView.width + TCRealValue(12), TCRealValue(20), TCScreenWidth - titleImageView.x - TCRealValue(12) , TCRealValue(20)) AndFontSize:TCRealValue(20) AndTitle:priceStr AndTextColor:TCRGBColor(81, 199, 209)];
     [titleView addSubview:priceLab];
     
-    inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, priceLab.y + priceLab.height + TCRealValue(10), priceLab.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:[NSString stringWithFormat:@"(剩余:%li件)", (long)mRepertory] AndTextColor:TCRGBColor(154, 154, 154)];
+    inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, priceLab.y + priceLab.height + TCRealValue(10), priceLab.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:[NSString stringWithFormat:@"(剩余:%li件)", (long)mCartItem.repertory] AndTextColor:TCRGBColor(154, 154, 154)];
     [titleView addSubview:inventoryLab];
     
     UILabel *selectTagLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, inventoryLab.y + inventoryLab.height + TCRealValue(12), TCRealValue(45), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:@"已选择" AndTextColor:TCRGBColor(42, 42, 42)];
@@ -253,7 +254,7 @@
     } else {
         button.size = CGSizeMake(TCRealValue(47.5), TCRealValue(22));
     }
-    NSString *secondaryStr = [mGood.standardSnapshot containsString:@"|"] ? [mGood.standardSnapshot componentsSeparatedByString:@"|"][1] : mGood.standardSnapshot;
+    NSString *secondaryStr = [mCartItem.goods.standardSnapshot containsString:@"|"] ? [mCartItem.goods.standardSnapshot componentsSeparatedByString:@"|"][1] : mCartItem.goods.standardSnapshot;
     NSString *secondaryType = [secondaryStr componentsSeparatedByString:@":"][1];
     if ([title isEqualToString:secondaryType]) {
         [self setupSecondarySelectedButton:button AndStandard:goodStandard];
@@ -281,6 +282,7 @@
         button.size = CGSizeMake(TCRealValue(51), TCRealValue(24));
     }
     NSString *type;
+    TCGoods *mGood = mCartItem.goods;
     if ([mGood.standardSnapshot containsString:@"|"]) {
         type = [mGood.standardSnapshot componentsSeparatedByString:@"|"][0];
         type = [type componentsSeparatedByString:@":"][1];
@@ -309,7 +311,7 @@
     [addBtn addTarget:self action:@selector(touchAddNumberBtn:) forControlEvents:UIControlEventTouchUpInside];
     [selectNumberView addSubview:addBtn];
     
-    _numberLab = [self createBuyNumberLabelWithText:@"1" AndFrame:CGRectMake(addBtn.x - TCRealValue(58), addBtn.y, TCRealValue(58), addBtn.height)];
+    _numberLab = [self createBuyNumberLabelWithText:[NSString stringWithFormat:@"%ld", (long)mCartItem.amount] AndFrame:CGRectMake(addBtn.x - TCRealValue(58), addBtn.y, TCRealValue(58), addBtn.height)];
     [selectNumberView addSubview:_numberLab];
     
     UIButton *subBtn = [self createComputeBtnWithFrame:CGRectMake(_numberLab.x - TCRealValue(38), addBtn.y, TCRealValue(38), TCRealValue(35)) AndText:@"-"];
@@ -484,7 +486,7 @@
     imageView.layer.borderWidth = TCRealValue(1.5);
     imageView.layer.borderColor = TCRGBColor(242, 242, 242).CGColor;
     imageView.layer.cornerRadius = TCRealValue(5);
-    [imageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:mGood.mainPicture] ];
+    [imageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:mCartItem.goods.mainPicture] ];
     imageView.backgroundColor = [UIColor whiteColor];
     imageView.layer.masksToBounds = YES;
     return imageView;
@@ -510,8 +512,8 @@
                 goodsIndexes = [NSString stringWithFormat:@"%@", _primaryStandardLab.text];
             }
             TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:mGoodStandards.goodsIndexes[goodsIndexes]];
-            mGood = [self transGoodDetailToGoods:goodDetail];
-            mRepertory = goodDetail.repertory;
+            mCartItem.goods = [self transGoodDetailToGoods:goodDetail];
+            mCartItem.repertory = goodDetail.repertory;
             [self setupBaseInfoWithGoodDetailDic:goodDetail];
         }
     }
@@ -565,8 +567,8 @@
             [self setupSecondarySelectedButton:button AndStandard:mGoodStandards];
             NSString *goodsIndexes = [NSString stringWithFormat:@"%@^%@", _primaryStandardLab.text, _secondaryStandardLab.text];
             TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:mGoodStandards.goodsIndexes[goodsIndexes]];
-            mGood = [self transGoodDetailToGoods:goodDetail];
-            mRepertory = goodDetail.repertory;
+            mCartItem.goods = [self transGoodDetailToGoods:goodDetail];
+            mCartItem.repertory = goodDetail.repertory;
             [self setupBaseInfoWithGoodDetailDic:goodDetail];
         }
     }
@@ -576,7 +578,7 @@
     priceLab.text = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", goodDetail.salePrice].floatValue)];
     inventoryLab.text = [NSString stringWithFormat:@"(剩余:%ld件)", (long)goodDetail.repertory];
     [titleImageView sd_setImageWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, goodDetail.mainPicture]]];
-    _numberLab.text = @"1";
+//    _numberLab.text = @"1";
 
 }
 
@@ -615,13 +617,13 @@
             return;
         }
     }
-    if (mGood.ID == nil) {
+    if (mCartItem.goods.ID == nil) {
         [MBProgressHUD showHUDWithMessage:@"您选择的商品不存在"];
         return ;
     }
 
     if (_delegate && [_delegate respondsToSelector:@selector(selectStandardView:didSelectConfirmButtonWithNumber:NewGoodsId:ShoppingCartGoodsId:)]) {
-        [_delegate selectStandardView:self didSelectConfirmButtonWithNumber:_numberLab.text.integerValue NewGoodsId:mGood.ID ShoppingCartGoodsId:mShoppingCartGoodsId];
+        [_delegate selectStandardView:self didSelectConfirmButtonWithNumber:_numberLab.text.integerValue NewGoodsId:mCartItem.goods.ID ShoppingCartGoodsId:mCartItem.ID];
     }
     [self removeFromSuperview];
     

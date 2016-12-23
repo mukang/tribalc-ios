@@ -42,7 +42,6 @@
     mScrollView.delegate = self;
     
     [self setupNavigationBar];
-
 }
 
 
@@ -385,25 +384,73 @@
 
 - (UIView *)getStoreTagsView {
     UIView *view = [[UIView alloc] init];
-    NSArray *tagArr = serviceDetail.tags;
+    NSArray *tagArr = [self getStoreTagLogoTitleArr:serviceDetail.detailStore.faclities];
     NSArray *tagLogoArr = serviceDetail.detailStore.faclities;
-    if (tagLogoArr.count != tagArr.count) {
-        return view;
-    }
+    CGFloat width = TCRealValue(37);
     for (int i = 0; i < tagLogoArr.count; i++) {
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(24) + TCRealValue(35), 0, TCRealValue(24), TCRealValue(24))];
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i * TCRealValue(24) + width, 0, TCRealValue(24), TCRealValue(24))];
         if (i == 0) {
             [imgView setX:0];
         }
         imgView.image = [UIImage imageNamed:tagLogoArr[i]];
         UILabel *titleLab = [self getStoreTagsTitleLabelWithImgFrame:imgView.frame AndTitle:tagArr[i]];
-        
+        width = titleLab.width > 70 ?  TCRealValue(50): TCRealValue(37);
         [view addSubview:imgView];
         [view addSubview:titleLab];
     }
-    [view setSize:CGSizeMake(TCRealValue(24) * tagArr.count + (tagArr.count - 1) * TCRealValue(35), TCRealValue(24 + 5 + 13))];
+    [view setSize:CGSizeMake(TCRealValue(24) * tagArr.count + (tagArr.count - 1) * width, TCRealValue(24 + 5 + 13))];
     return view;
 }
+
+- (NSMutableArray *)getStoreTagLogoTitleArr:(NSArray *)faclities {
+    NSMutableArray *facArr = [[NSMutableArray alloc] init];
+    for (int i = 0; i < faclities.count; i++) {
+        NSString *facStr = [self getStoreTagLogoTitleStr:faclities[i]];
+        [facArr addObject:facStr];
+    }
+    
+    return facArr;
+}
+
+- (NSString *)getStoreTagLogoTitleStr:(NSString *)faclities {
+    if ([faclities isEqualToString:@"room"]) {
+        return @"包间";
+    } else if([faclities isEqualToString:@"facilities_for_disabled"]) {
+        return @"残疾人设施";
+    } else if([faclities isEqualToString:@"valet_parking"]) {
+        return @"代客泊车";
+    } else if([faclities isEqualToString:@"subway"]) {
+        return @"地铁";
+    } else if([faclities isEqualToString:@"vip_rights"]) {
+        return @"会员权限";
+    } else if([faclities isEqualToString:@"restaurants_of_hotel"]) {
+        return @"酒店内有餐厅";
+    } else if([faclities isEqualToString:@"pet_ok"]) {
+        return @"可带宠物";
+    } else if([faclities isEqualToString:@"business_circle"]) {
+        return @"商圈";
+    } else if([faclities isEqualToString:@"business_dinner"]) {
+        return @"商务宴请";
+    } else if([faclities isEqualToString:@"small_party"]) {
+        return @"适合小聚";
+    } else if([faclities isEqualToString:@"parking"]) {
+        return @"停车";
+    } else if([faclities isEqualToString:@"scene_seat"]) {
+        return @"有观景位";
+    } else if([faclities isEqualToString:@"organic_food"]) {
+        return @"有机食物";
+    } else if([faclities isEqualToString:@"bar"]) {
+        return @"有酒吧";
+    } else if([faclities isEqualToString:@"baby_chair"]) {
+        return @"有婴儿椅";
+    } else if([faclities isEqualToString:@"weekend_brunch"]) {
+        return @"周末早午餐";
+    } else {
+        return faclities;
+    }
+}
+
+
 
 - (UILabel *)getStoreTagsTitleLabelWithImgFrame:(CGRect)imgFrame AndTitle:(NSString *)title{
     UILabel *titleLab = [[UILabel alloc] init];

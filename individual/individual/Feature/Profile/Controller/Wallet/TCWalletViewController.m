@@ -12,6 +12,7 @@
 #import "TCBankCardViewController.h"
 
 #import "TCBuluoApi.h"
+#import "TCQRCodeViewController.h"
 
 @interface TCWalletViewController ()
 
@@ -107,7 +108,9 @@
 }
 
 - (IBAction)handleClickSweepCodeButton:(UIButton *)sender {
-    [self btnClickUnifyTips];
+//    [self btnClickUnifyTips];
+    TCQRCodeViewController *qrVc = [[TCQRCodeViewController alloc] init];
+    [self.navigationController pushViewController:qrVc animated:YES];
 }
 - (IBAction)handleClickWalletBillButton:(UIButton *)sender {
     TCWalletBillViewController *vc = [[TCWalletBillViewController alloc] initWithNibName:@"TCWalletBillViewController" bundle:[NSBundle mainBundle]];

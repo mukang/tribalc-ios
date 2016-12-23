@@ -53,11 +53,10 @@
     [self prepareOtherControls];
     @WeakObj(self)
     scanner = [TCScanner scanerWithView:self.view scanFrame:scannerBorder.frame completion:^(NSString *stringValue) {
+        @StrongObj(self)
         // 完成回调
-//        self.completionCallBack(stringValue);
-        self.completion();
-        
-        // 关闭
+//        self.completion();
+        [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
         [self.navigationController popViewControllerAnimated:YES];
     }];
    
@@ -66,23 +65,27 @@
 
 - (void)prepareNav {
     
-    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0,0,80,20)];
+    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0,0,115,30)];
     
     UIButton *photoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [photoBtn setImage:[UIImage imageNamed:@"qrPhotos"] forState:UIControlStateNormal];
-    photoBtn.frame = CGRectMake(5, 0, 20, 20);
+    [photoBtn setBackgroundImage:[UIImage imageNamed:@"qrPhotos"] forState:UIControlStateNormal];
+//    [photoBtn setImage:[UIImage imageNamed:@"qrPhotos"] forState:UIControlStateNormal];
+    photoBtn.frame = CGRectMake(15, 0, 30, 30);
     [rightView addSubview:photoBtn];
     [photoBtn addTarget:self action:@selector(clickAlbumButton) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *flashBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [flashBtn setImage:[UIImage imageNamed:@"qrFlashLight"] forState:UIControlStateNormal];
-    flashBtn.frame = CGRectMake(30, 0, 20, 20);
+//    [flashBtn setImage:[UIImage imageNamed:@"qrFlashLight"] forState:UIControlStateNormal];
+    [flashBtn setBackgroundImage:[UIImage imageNamed:@"qrFlashLight"] forState:UIControlStateNormal];
+    flashBtn.frame = CGRectMake(50, 0, 30, 30);
     [rightView addSubview:flashBtn];
     [flashBtn addTarget:self action:@selector(torchOnFlashBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [moreBtn setImage:[UIImage imageNamed:@"qrMore"] forState:UIControlStateNormal];
-    moreBtn.frame = CGRectMake(55, 0, 20, 20);
+//    [moreBtn setImage:[UIImage imageNamed:@"qrMore"] forState:UIControlStateNormal];
+    [moreBtn setBackgroundImage:[UIImage imageNamed:@"qrMore"] forState:UIControlStateNormal];
+
+    moreBtn.frame = CGRectMake(85, 0, 30, 30);
     [rightView addSubview:moreBtn];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightView];

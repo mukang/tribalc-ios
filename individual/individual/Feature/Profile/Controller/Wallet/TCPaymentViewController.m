@@ -70,9 +70,6 @@
 //    UITapGestureRecognizer *returnBackGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(returnBack)];
 //    [self.view addGestureRecognizer:returnBackGes];
     
-    
-
-    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

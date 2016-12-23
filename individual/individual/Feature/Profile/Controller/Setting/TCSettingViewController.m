@@ -17,6 +17,7 @@
 #import "TCBuluoApi.h"
 #import <Masonry.h>
 #import "TCAboutUSViewController.h"
+#import <SDImageCache.h>
 
 @interface TCSettingViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -128,7 +129,6 @@
     } else {
         switch (indexPath.row) {
             case 0:
-                
                 break;
             case 1:
             {
@@ -148,6 +148,7 @@
         }
     }
 }
+
 
 #pragma mark - Actions
 
