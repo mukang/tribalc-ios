@@ -150,7 +150,7 @@
     
     UILabel *label =  [TCComponent createLabelWithFrame:frame AndFontSize:TCRealValue(17) AndTitle:text AndTextColor:[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1]];
     if (labelSize.width > label.width) {
-        [label setHeight:2 * label.height + TCRealValue(8)];
+        [label setHeight:2 * label.height + TCRealValue(13)];
     }
     label.text = text;
     label.numberOfLines = 2;

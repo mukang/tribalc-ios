@@ -19,6 +19,7 @@
 #import "TCRepairsViewController.h"
 
 #import "TCBlurImageView.h"
+#import <MBProgressHUD.h>
 
 @interface TCHomeViewController () {
     NSDictionary *homeInfoDic;
@@ -128,9 +129,9 @@
     [propertyView addSubview:unclockBtn];
     UIButton *repairBtn = [self getPropertyButtonWithFrame:CGRectMake(unclockBtn.x * 2 + unclockBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_ estate_repair" AndTitle:@"物业报修" AndAction:@selector(touchEstateRepair:)];
     [propertyView addSubview:repairBtn];
-    UIButton *scanPayBtn = [self getPropertyButtonWithFrame:CGRectMake(repairBtn.x + unclockBtn.x + repairBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_scan_pay" AndTitle:@"扫码支付" AndAction:@selector(touchScanPayBtn:)];
+    UIButton *scanPayBtn = [self getPropertyButtonWithFrame:CGRectMake(repairBtn.x + unclockBtn.x + repairBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_scan_pay" AndTitle:@"扫码支付" AndAction:@selector(btnClickUnifyTips)];
     [propertyView addSubview:scanPayBtn];
-    UIButton *officeReserveBtn = [self getPropertyButtonWithFrame:CGRectMake(scanPayBtn.x + unclockBtn.x + scanPayBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_office_reservation" AndTitle:@"办公预订" AndAction:@selector(touchOfficeReserveBtn:)];
+    UIButton *officeReserveBtn = [self getPropertyButtonWithFrame:CGRectMake(scanPayBtn.x + unclockBtn.x + scanPayBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_office_reservation" AndTitle:@"办公预订" AndAction:@selector(btnClickUnifyTips)];
     [propertyView addSubview:officeReserveBtn];
     return propertyView;
 }
@@ -467,8 +468,6 @@
 - (void)touchCommunityUnlockBtn:(UIButton *)button {
     
     [self endTitleScrollTimer];   //计时器停止
-//    [self startTitleScrollTimer];   //计时器开始
-    NSLog(@"点击社区开门");
     @WeakObj(self)
     if (_blurImageView == nil) {
         _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
@@ -481,7 +480,6 @@
 }
 
 - (void)touchEstateRepair:(UIButton *)button {
-    NSLog(@"点击物业报修");
     if ([self checkUserNeedLogin]) return;
     TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];
     vc.hidesBottomBarWhenPushed = YES;
@@ -490,7 +488,8 @@
 
 
 - (void)touchScanPayBtn:(UIButton *)button {
-    NSLog(@"点击扫码支付");
+//    NSLog(@"点击扫码支付");
+    [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
 }
 
 - (void)touchOfficeReserveBtn:(UIButton *)button {

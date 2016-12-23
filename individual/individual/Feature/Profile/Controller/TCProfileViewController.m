@@ -33,6 +33,8 @@
 
 #import "TCPropertyManageListController.h"
 
+#import "TCQRCodeViewController.h"
+
 @interface TCProfileViewController ()
 <UITableViewDelegate,
 UITableViewDataSource,
@@ -353,17 +355,20 @@ TCPhotoPickerDelegate>
 
 - (void)didClickCardButtonInProfileHeaderView:(TCProfileHeaderView *)view {
     TCLog(@"点击了名片按钮");
-    if ([self checkUserNeedLogin]) return;
+    [self btnClickUnifyTips];
+//    if ([self checkUserNeedLogin]) return;
 }
 
 - (void)didClickCollectButtonInProfileHeaderView:(TCProfileHeaderView *)view {
     TCLog(@"点击了收藏按钮");
-    if ([self checkUserNeedLogin]) return;
+    [self btnClickUnifyTips];
+//    if ([self checkUserNeedLogin]) return;
 }
 
 - (void)didClickGradeButtonInProfileHeaderView:(TCProfileHeaderView *)view {
     TCLog(@"点击了等级按钮");
-    if ([self checkUserNeedLogin]) return;
+    [self btnClickUnifyTips];
+//    if ([self checkUserNeedLogin]) return;
 }
 
 - (void)didClickPhotographButtonInProfileHeaderView:(TCProfileHeaderView *)view {
@@ -497,6 +502,9 @@ TCPhotoPickerDelegate>
 - (void)handleClickQRCodeButton:(UIBarButtonItem *)sender {
     TCLog(@"点击了扫码按钮");
     if ([self checkUserNeedLogin]) return;
+    TCQRCodeViewController *qrVc = [[TCQRCodeViewController alloc] init];
+    qrVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:qrVc animated:YES];
 }
 
 - (void)handleClickSettingButton:(UIBarButtonItem *)sender {

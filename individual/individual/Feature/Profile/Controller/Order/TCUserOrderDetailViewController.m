@@ -178,7 +178,7 @@
         case TCOrderSettle:
             bottomView = [self getSettleBottomView];
             break;
-        case TCOrderCannel:
+        case TCOrderCancel:
             bottomView = [self getCannelBottomView];
             break;
         case TCOrderDelivery:
@@ -191,8 +191,7 @@
             break;
     }
 //    UIView *bottomView = [self getWaitPayOrderBottomView];
-
-    if (status != TCOrderCannel) {
+    if (status != TCOrderCancel) {
         bottomView.backgroundColor = [UIColor whiteColor];
     }
     [self.view addSubview:bottomView];
@@ -372,7 +371,7 @@
     backView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     
     UITextField *supplementField = [[UITextField alloc] initWithFrame:CGRectMake(TCRealValue(5), 0, backView.width - TCRealValue(7), backView.height)];
-    supplementField.placeholder = @"订单补充说明:";
+    supplementField.placeholder = @"订单补充说明为空";
     supplementField.font = [UIFont systemFontOfSize:TCRealValue(11)];
     supplementField.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
     supplementField.text = orderDetail.note;
@@ -449,9 +448,16 @@
     if (tag == 0) {
         [alertView removeFromSuperview];
     } else {
-        [[TCBuluoApi api] changeOrderStatus:@"CANNEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-            [weakSelf showHUDMessageWithResult:result AndTitle:@"取消订单"];
-            [weakSelf touchBackBtn];
+        [MBProgressHUD showHUD:YES];
+        [[TCBuluoApi api] changeOrderStatus:@"CANCEL" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
+            if (result) {
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf showHUDMessageWithResult:result AndTitle:@"取消订单"];
+                [weakSelf touchBackBtn];
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取订单列表失败, %@", reason]];
+            }
         }];
         [alertView removeFromSuperview];
 
@@ -498,9 +504,15 @@
 
 
 - (void)touchOrderPayBtn:(UIButton *)btn {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-        [weakSelf showHUDMessageWithResult:result AndTitle:@"付款"];
-        [weakSelf touchBackBtn];
+        if (result) {
+            [weakSelf showHUDMessageWithResult:result AndTitle:@"付款"];
+            [weakSelf touchBackBtn];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败, %@", reason]];
+        }
     }];
 }
 
@@ -512,9 +524,16 @@
 }
 
 - (void)touchOrderConfrimTake:(UIButton *)btn {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] changeOrderStatus:@"RECEIVED" OrderId:orderDetail.ID result:^(BOOL result, NSError *error) {
-        [weakSelf showHUDMessageWithResult:result AndTitle:@"确认收货"];
-        [weakSelf.navigationController popViewControllerAnimated:YES];
+        if (result) {
+            [weakSelf showHUDMessageWithResult:result AndTitle:@"确认收货"];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"确认收货失败, %@", reason]];
+        }
+        
     }];
 }
 

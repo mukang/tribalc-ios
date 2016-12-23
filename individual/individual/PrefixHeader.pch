@@ -15,6 +15,7 @@
 #ifdef __OBJC__
 #import "UIView+Category.h"
 #import "MBProgressHUD+Category.h"
+#import "NSObject+TCNomal.h"
 #endif
 
 

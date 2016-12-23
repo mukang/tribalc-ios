@@ -10,15 +10,15 @@
 #import "TCComponent.h"
 #import "TCGetNavigationItem.h"
 #import <MGSwipeTableCell/MGSwipeTableCell.h>
-#import "TCShoppingCartTableViewCell.h"
 #import "TCBuluoApi.h"
 #import "TCImageURLSynthesizer.h"
 #import "TCShoppingCartWrapper.h"
 #import "TCPlaceOrderViewController.h"
 #import "TCSelectStandardView.h"
+#import "TCShoppingCartListTableViewCell.h"
 
 
-@interface TCShoppingCartViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate>
+@interface TCShoppingCartViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, TCShoppingCartListTableViewCellDelegate, TCSelectStandardViewDelegate>
 
 
 
