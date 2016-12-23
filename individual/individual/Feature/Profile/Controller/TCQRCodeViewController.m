@@ -65,23 +65,23 @@
 
 - (void)prepareNav {
     
-    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0,0,80,20)];
+    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0,0,115,30)];
     
     UIButton *photoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [photoBtn setImage:[UIImage imageNamed:@"qrPhotos"] forState:UIControlStateNormal];
-    photoBtn.frame = CGRectMake(5, 0, 20, 20);
+    photoBtn.frame = CGRectMake(5, 0, 30, 30);
     [rightView addSubview:photoBtn];
     [photoBtn addTarget:self action:@selector(clickAlbumButton) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *flashBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [flashBtn setImage:[UIImage imageNamed:@"qrFlashLight"] forState:UIControlStateNormal];
-    flashBtn.frame = CGRectMake(30, 0, 20, 20);
+    flashBtn.frame = CGRectMake(40, 0, 30, 30);
     [rightView addSubview:flashBtn];
     [flashBtn addTarget:self action:@selector(torchOnFlashBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [moreBtn setImage:[UIImage imageNamed:@"qrMore"] forState:UIControlStateNormal];
-    moreBtn.frame = CGRectMake(55, 0, 20, 20);
+    moreBtn.frame = CGRectMake(75, 0, 30, 30);
     [rightView addSubview:moreBtn];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightView];
