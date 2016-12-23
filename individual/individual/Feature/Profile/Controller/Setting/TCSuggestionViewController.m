@@ -8,11 +8,11 @@
 
 #import "TCSuggestionViewController.h"
 #import <Masonry.h>
+#import <YYText.h>
 
-@interface TCSuggestionViewController () <UITextViewDelegate>
+@interface TCSuggestionViewController () <YYTextViewDelegate>
 
-@property (weak, nonatomic) UITextView *textView;
-@property (weak, nonatomic) UILabel *placeholderLabel;
+@property (weak, nonatomic) YYTextView *textView;
 
 @end
 
@@ -44,28 +44,20 @@
 }
 
 - (void)setupSubviews {
-    CGFloat margin = 10;
-    
-    UITextView *textView = [[UITextView alloc] init];
+    YYTextView *textView = [[YYTextView alloc] init];
     textView.backgroundColor = TCRGBColor(242, 242, 242);
-    textView.returnKeyType = UIReturnKeyDefault;
+    textView.returnKeyType = UIReturnKeyDone;
     textView.layer.cornerRadius = 2.5;
     textView.alwaysBounceVertical = YES;
     textView.alwaysBounceHorizontal = NO;
     textView.textColor = TCRGBColor(42, 42, 42);
     textView.font = [UIFont systemFontOfSize:14];
-    textView.textContainerInset = UIEdgeInsetsMake(margin, margin-5, margin, margin-5);
+    textView.placeholderText = @"请输入您的想法...";
+    textView.placeholderTextColor = TCRGBColor(154, 154, 154);
+    textView.placeholderFont = [UIFont systemFontOfSize:14];
     textView.delegate = self;
     [self.view addSubview:textView];
     self.textView = textView;
-    
-    UILabel *placeholderLabel = [[UILabel alloc] init];
-    placeholderLabel.text = @"请输入您的想法...";
-    placeholderLabel.textColor = TCRGBColor(154, 154, 154);
-    placeholderLabel.font = [UIFont systemFontOfSize:14];
-    [placeholderLabel sizeToFit];
-    [textView addSubview:placeholderLabel];
-    self.placeholderLabel = placeholderLabel;
 }
 
 - (void)setupContraints {
@@ -83,6 +75,16 @@
     return UIStatusBarStyleLightContent;
 }
 
+#pragma mark - YYTextViewDelegate
+
+- (BOOL)textView:(YYTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
+        [self.textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
@@ -90,7 +92,21 @@
 }
 
 - (void)handleClickSaveButton:(UIBarButtonItem *)sender {
-    
+    if (self.textView.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请输入您的想法"];
+        return;
+    }
+    if ([self.textView isFirstResponder]) {
+        [self.textView resignFirstResponder];
+    }
+    [MBProgressHUD showHUDWithMessage:@"感谢您的建议，我们会尽快处理哒"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf handleClickBackButton:nil];
+    });
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning {

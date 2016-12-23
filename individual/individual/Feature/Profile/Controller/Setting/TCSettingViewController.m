@@ -7,6 +7,7 @@
 //
 
 #import "TCSettingViewController.h"
+#import "TCSuggestionViewController.h"
 
 #import "TCCommonIndicatorViewCell.h"
 #import "TCSettingNotificationViewCell.h"
@@ -121,6 +122,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        
+    } else {
+        switch (indexPath.row) {
+            case 0:
+                
+                break;
+            case 1:
+                
+                break;
+            case 2:
+            {
+                TCSuggestionViewController *vc = [[TCSuggestionViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
 }
 
 #pragma mark - Actions
