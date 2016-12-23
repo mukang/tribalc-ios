@@ -86,7 +86,6 @@
     _problemDescBtn.contentEdgeInsets = UIEdgeInsetsMake(10, 20, 10, 20);
     
     NSString *problemDesc = _propertyManage.problemDesc ? _propertyManage.problemDesc : @"";
-//    NSString *problemDesc = @"吾问无为谓吾问无为谓吾问无为谓吾问无为谓吾问无为谓吾问无为谓吾问无为谓呜呜呜呜呜呜";
     NSDictionary *attribute1 = @{NSFontAttributeName: [UIFont systemFontOfSize:12]};
     CGSize size1 = [problemDesc boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width-80, 9999.0) options:NSStringDrawingTruncatesLastVisibleLine attributes:attribute1 context:nil].size;
     _problemDescHeightConstraint.constant = size1.height+40.0;
