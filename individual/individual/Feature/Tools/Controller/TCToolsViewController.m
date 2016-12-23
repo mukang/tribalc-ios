@@ -62,6 +62,10 @@
     TCLog(@"点击了扫码按钮");
     TCQRCodeViewController *qrVc = [[TCQRCodeViewController  alloc] init];
     qrVc.hidesBottomBarWhenPushed = YES;
+    qrVc.completion = ^{
+        [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
+        [self.navigationController popViewControllerAnimated:YES];
+    };
     [self.navigationController pushViewController:qrVc animated:YES];
 }
 

@@ -9,6 +9,9 @@
 #import "TCOpenDoorController.h"
 #import "Masonry.h"
 #import "TCBuluoApi.h"
+#import "LinphoneManager.h"
+#import "TCLinphoneUtils.h"
+#import "TCSipAPI.h"
 
 @interface TCOpenDoorController ()
 
@@ -33,6 +36,33 @@
 
     [self setUpUI];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSuccessed) name:@"opend" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(end) name:@"end" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fail) name:@"openFailed" object:nil];
+    
+}
+
+- (void)fail {
+    [_openBtn setTitle:@"开锁失败" forState:UIControlStateNormal];
+    _openBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    [self close];
+}
+
+- (void)end {
+    [self close];
+    [_openBtn setImage:nil forState:UIControlStateNormal];
+    [_openBtn setTitle:@"开锁" forState:UIControlStateNormal];
+    _openBtn.titleLabel.font = [UIFont systemFontOfSize:21];
+}
+
+- (void)openSuccessed {
+    [_openBtn setImage:[UIImage imageNamed:@"opened"] forState:UIControlStateNormal];
+    [_openBtn setTitle:@"" forState:UIControlStateNormal];
+    [self close];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self close];
 }
 
 - (void)setUpUI {
@@ -77,6 +107,8 @@
 
 
 - (void)click {
+    
+    [_openBtn setTitle:@"开锁中" forState:UIControlStateNormal];
     
     if (_pulseLayer == nil) {
         CAShapeLayer *pulseLayer = [CAShapeLayer layer];
@@ -131,21 +163,78 @@
 }
 
 
-- (void)openDoor {
-     [_openBtn setTitle:@"开锁中" forState:UIControlStateNormal];
-    [[TCBuluoApi api] openDoorWithResult:^(BOOL isSuccessed, NSError *err) {
-        if (isSuccessed) {
-            
-            [_openBtn setImage:[UIImage imageNamed:@"opened"] forState:UIControlStateNormal];
-            [_openBtn setTitle:@"" forState:UIControlStateNormal];
-        }else {
-            [_openBtn setTitle:@"开锁失败" forState:UIControlStateNormal];
-            _openBtn.titleLabel.font = [UIFont systemFontOfSize:18];
-
+- (void)close {
+    
+    [_pulseLayer removeAllAnimations];
+    
+    LinphoneCall *currentcall = linphone_core_get_current_call(LC);
+    if (linphone_core_is_in_conference(LC) ||										   // In conference
+        (linphone_core_get_conference_size(LC) > 0) // Only one conf
+        ) {
+        linphone_core_terminate_conference(LC);
+    } else if (currentcall != NULL) { // In a call
+        linphone_core_terminate_call(LC, currentcall);
+    } else {
+        const MSList *calls = linphone_core_get_calls(LC);
+        if (bctbx_list_size(calls) == 1) { // Only one call
+            linphone_core_terminate_call(LC, (LinphoneCall *)(calls->data));
         }
-        [_pulseLayer removeAllAnimations];
-    }];
+    }
 }
+
+
+- (void)openDoor {
+
+    // Update on show
+    LinphoneManager *mgr = LinphoneManager.instance;
+    LinphoneCall *call = linphone_core_get_current_call(LC);
+    LinphoneCallState state = (call != NULL) ? linphone_call_get_state(call) : 0;
+    [[TCSipAPI api] callUpdate:call state:state];
+    
+    if (IPAD) {
+        BOOL videoEnabled = linphone_core_video_display_enabled(LC);
+        BOOL previewPref = [mgr lpConfigBoolForKey:@"preview_preference"];
+        
+        if (videoEnabled && previewPref) {
+            
+            if (!linphone_core_video_preview_enabled(LC)) {
+                linphone_core_enable_video_preview(LC, TRUE);
+            }
+            
+        } else {
+            linphone_core_set_native_preview_window_id(LC, NULL);
+            linphone_core_enable_video_preview(LC, FALSE);
+            
+        }
+    } else {
+        linphone_core_enable_video_preview(LC, FALSE);
+    }
+    [LinphoneManager.instance shouldPresentLinkPopup];
+    
+    
+    LinphoneAddress *addr = [LinphoneUtils normalizeSipOrPhoneAddress:@"gate_01"];
+    [LinphoneManager.instance call:addr];
+    if (addr)
+        linphone_address_destroy(addr);
+    
+    
+    
+    
+
+//    [[TCBuluoApi api] openDoorWithResult:^(BOOL isSuccessed, NSError *err) {
+//        if (isSuccessed) {
+//            
+//            [_openBtn setImage:[UIImage imageNamed:@"opened"] forState:UIControlStateNormal];
+//            [_openBtn setTitle:@"" forState:UIControlStateNormal];
+//        }else {
+//            [_openBtn setTitle:@"开锁失败" forState:UIControlStateNormal];
+//            _openBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+//
+//        }
+//        [_pulseLayer removeAllAnimations];
+//    }];
+}
+
 
 - (void)dealloc {
     TCLog(@"TCOpenDoorController--dealloc");
@@ -153,6 +242,9 @@
 
 
 - (void)back {
+    
+    [self close];
+    
     [self dismissViewControllerAnimated:YES completion:^{
         if (self.myBlock) {
             self.myBlock();

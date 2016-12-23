@@ -55,6 +55,7 @@
     scanner = [TCScanner scanerWithView:self.view scanFrame:scannerBorder.frame completion:^(NSString *stringValue) {
         // 完成回调
 //        self.completionCallBack(stringValue);
+        self.completion();
         
         // 关闭
         [self.navigationController popViewControllerAnimated:YES];
