@@ -7,6 +7,7 @@
 //
 
 #import "TCVicinityViewController.h"
+#import "TCVicinityTitleView.h"
 #import <POP.h>
 
 @interface TCVicinityViewController ()
@@ -18,6 +19,10 @@
 @property (copy, nonatomic) NSArray *buttons;
 @property (nonatomic) CGPoint originCenter;
 @property (nonatomic) CGSize originSize;
+
+@property (weak, nonatomic) TCVicinityTitleView *shoppingView;
+@property (weak, nonatomic) TCVicinityTitleView *repastView;
+@property (weak, nonatomic) TCVicinityTitleView *entertainmentView;
 
 @end
 
@@ -31,6 +36,9 @@
     weakSelf = self;
     self.navigationController.navigationBarHidden = YES;
     
+    [self setupSubviews];
+    
+    /*
     CGSize size = CGSizeMake(20, 20);
     self.originSize = size;
     CGPoint center = CGPointMake(TCScreenWidth * 0.5, TCScreenHeight - 20);
@@ -65,11 +73,12 @@
     entertainmentButton.alpha = 0;
     [self.view addSubview:entertainmentButton];
     self.entertainmentButton = entertainmentButton;
+     */
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self startAnimating];
+    [self startAnimating01];
 //    [UIView animateWithDuration:0.1 animations:^{
 //        self.backgroundView.alpha = 0.8;
 //    }];
@@ -108,6 +117,96 @@
 //        button.center = self.originCenter;
 //    }
     
+}
+
+- (void)setupSubviews {
+    CGSize size = CGSizeMake(63, 85);
+    self.originSize = size;
+    CGPoint center = CGPointMake(TCScreenWidth * 0.5, TCScreenHeight - 20);
+    self.originCenter = center;
+    
+    TCVicinityTitleView *shoppingView = [[TCVicinityTitleView alloc] init];
+    shoppingView.imageView.image = [UIImage imageNamed:@"vicinity_shopping_button"];
+    shoppingView.titleLabel.text = @"购物";
+    shoppingView.titleLabel.textColor = TCRGBColor(254, 174, 135);
+    shoppingView.size = size;
+    shoppingView.center = center;
+    shoppingView.alpha = 0.0;
+    [self.view addSubview:shoppingView];
+    self.shoppingView = shoppingView;
+    
+    TCVicinityTitleView *repastView = [[TCVicinityTitleView alloc] init];
+    repastView.imageView.image = [UIImage imageNamed:@"vicinity_repast_button"];
+    repastView.titleLabel.text = @"餐饮";
+    repastView.titleLabel.textColor = TCRGBColor(84, 194, 206);
+    repastView.size = size;
+    repastView.center = center;
+    repastView.alpha = 0.0;
+    [self.view addSubview:repastView];
+    self.repastView = repastView;
+    
+    TCVicinityTitleView *entertainmentView = [[TCVicinityTitleView alloc] init];
+    entertainmentView.imageView.image = [UIImage imageNamed:@"vicinity_entertainment_button"];
+    entertainmentView.titleLabel.text = @"娱乐";
+    entertainmentView.titleLabel.textColor = TCRGBColor(67, 105, 168);
+    entertainmentView.size = size;
+    entertainmentView.center = center;
+    entertainmentView.alpha = 0.0;
+    [self.view addSubview:entertainmentView];
+    self.entertainmentView = entertainmentView;
+    
+//    UITapGestureRecognizer *shoppingTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(<#selector#>)];
+}
+
+- (void)startAnimating01 {
+    
+    NSTimeInterval beginTime = CACurrentMediaTime() + 0.3;
+    NSTimeInterval animationDuration = 0.2;
+    NSTimeInterval repastAlphaBeginTime = CACurrentMediaTime() + 0.05;
+    NSTimeInterval otherAlphaBeginTime = CACurrentMediaTime() + 0.35;
+    
+    CGPoint repastCenter = CGPointMake(TCScreenWidth * 0.5, TCScreenHeight - TCRealValue(176));
+    CGPoint shoppingCenter = CGPointMake(TCRealValue(93), TCScreenHeight - TCRealValue(114));
+    CGPoint entertainmentCenter = CGPointMake(TCScreenWidth - TCRealValue(93), TCScreenHeight - TCRealValue(114));
+    
+    // repast
+    POPSpringAnimation *repastCenterAnimation = [POPSpringAnimation animation];
+    repastCenterAnimation.springBounciness = 15;
+    repastCenterAnimation.property = [POPAnimatableProperty propertyWithName:kPOPViewCenter];
+    repastCenterAnimation.toValue = [NSValue valueWithCGPoint:repastCenter];
+    [self.repastView pop_addAnimation:repastCenterAnimation forKey:@"shoppingCenterAnimation"];
+    
+    POPBasicAnimation *repastAlphaAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+    repastAlphaAnimation.beginTime = repastAlphaBeginTime;
+    repastAlphaAnimation.duration = animationDuration;
+    repastAlphaAnimation.toValue = @(1.0);
+    [self.repastView pop_addAnimation:repastAlphaAnimation forKey:@"repastAlphaAnimation"];
+    
+    // shopping
+    POPBasicAnimation *shoppingAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+    shoppingAnimation.beginTime = beginTime;
+    shoppingAnimation.duration = animationDuration;
+    shoppingAnimation.toValue = [NSValue valueWithCGPoint:shoppingCenter];
+    [self.shoppingView pop_addAnimation:shoppingAnimation forKey:@"shoppingAnimation"];
+    
+    POPBasicAnimation *shoppingAlphaAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+    shoppingAlphaAnimation.beginTime = otherAlphaBeginTime;
+    shoppingAlphaAnimation.duration = animationDuration;
+    shoppingAlphaAnimation.toValue = @(1.0);
+    [self.shoppingView pop_addAnimation:shoppingAlphaAnimation forKey:@"shoppingAlphaAnimation"];
+    
+    // entertainment
+    POPBasicAnimation *entertainmentCenterAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+    entertainmentCenterAnimation.beginTime = beginTime;
+    entertainmentCenterAnimation.duration = animationDuration;
+    entertainmentCenterAnimation.toValue = [NSValue valueWithCGPoint:entertainmentCenter];
+    [self.entertainmentView pop_addAnimation:entertainmentCenterAnimation forKey:@"entertainmentCenterAnimation"];
+    
+    POPBasicAnimation *entertainmentAlphaAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+    entertainmentAlphaAnimation.beginTime = otherAlphaBeginTime;
+    entertainmentAlphaAnimation.duration = animationDuration;
+    entertainmentAlphaAnimation.toValue = @(1.0);
+    [self.entertainmentView pop_addAnimation:entertainmentAlphaAnimation forKey:@"entertainmentAlphaAnimation"];
 }
 
 - (void)startAnimating {
@@ -209,7 +308,35 @@
     
     NSTimeInterval animationDuration = 0.2;
     NSTimeInterval beginTime = CACurrentMediaTime() + animationDuration;
+    NSTimeInterval alphaAnimationDuration = 0.05;
     
+    // shipping and entertainment
+    POPBasicAnimation *centerAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+    centerAnimation.duration = animationDuration;
+    centerAnimation.toValue = [NSValue valueWithCGPoint:self.originCenter];
+    [self.shoppingView pop_addAnimation:centerAnimation forKey:@"shippingCenterDismissAnimation"];
+    [self.entertainmentView pop_addAnimation:centerAnimation forKey:@"entertainmentCenterDismissAnimation"];
+    
+    POPBasicAnimation *alphaAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+    alphaAnimation.duration = alphaAnimationDuration;
+    alphaAnimation.toValue = @(0.0);
+    [self.shoppingView pop_addAnimation:alphaAnimation forKey:@"shoppingAlphaDismissAnimation"];
+    [self.entertainmentView pop_addAnimation:alphaAnimation forKey:@"entertainmentAlphaDismissAnimation"];
+    
+    // diningButton
+    POPBasicAnimation *repastCenterDismissAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
+    repastCenterDismissAnimation.beginTime = beginTime;
+    repastCenterDismissAnimation.duration = animationDuration;
+    repastCenterDismissAnimation.toValue = [NSValue valueWithCGPoint:self.originCenter];
+    [self.repastView pop_addAnimation:repastCenterDismissAnimation forKey:@"repastCenterDismissAnimation"];
+    
+    POPBasicAnimation *repastAlphaDismissAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+    repastAlphaDismissAnimation.beginTime = beginTime;
+    repastAlphaDismissAnimation.duration = alphaAnimationDuration;
+    repastAlphaDismissAnimation.toValue = @(0.0);
+    [self.repastView pop_addAnimation:repastAlphaDismissAnimation forKey:@"repastAlphaDismissAnimation"];
+    
+    /*
     // pepoleButton and entertainmentButton
     POPBasicAnimation *centerAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewCenter];
     centerAnimation.duration = animationDuration;
@@ -259,12 +386,17 @@
     diningAlphaDismissAnimation.duration = 0.1;
     diningAlphaDismissAnimation.toValue = @(0.0);
     [self.diningButton pop_addAnimation:diningAlphaDismissAnimation forKey:@"diningAlphaDismissAnimation"];
+     */
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf dismissViewControllerAnimated:YES completion:nil];
     });
     
 }
+
+#pragma mark - Actions
+
+
 
 
 - (void)didReceiveMemoryWarning {

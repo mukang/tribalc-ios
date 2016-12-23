@@ -588,6 +588,7 @@
 		7A2874D01E0A2088001E5AE9 /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47CB1DB720DE00E39207 /* UIView+Category.m */; };
 		7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3321971E0D07E1003049DB /* TCSettingViewController.m */; };
 		7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */; };
+		7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219D1E0D3AA9003049DB /* TCVicinityTitleView.m */; };
 		7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */; };
 		7A381BC41DED5DC4008BDBF7 /* TCCommunityDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BC31DED5DC4008BDBF7 /* TCCommunityDetailInfo.m */; };
 		7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381BCB1DED6969008BDBF7 /* TCCommunityIntroViewCell.m */; };
@@ -2861,6 +2862,8 @@
 		7A3321971E0D07E1003049DB /* TCSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSettingViewController.m; sourceTree = "<group>"; };
 		7A3321991E0D0945003049DB /* TCSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSuggestionViewController.h; sourceTree = "<group>"; };
 		7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSuggestionViewController.m; sourceTree = "<group>"; };
+		7A33219C1E0D3AA9003049DB /* TCVicinityTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCVicinityTitleView.h; path = individual/Feature/Profile/Controller/Setting/TCVicinityTitleView.h; sourceTree = SOURCE_ROOT; };
+		7A33219D1E0D3AA9003049DB /* TCVicinityTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCVicinityTitleView.m; path = individual/Feature/Profile/Controller/Setting/TCVicinityTitleView.m; sourceTree = SOURCE_ROOT; };
 		7A34AF561DDB0E7400217161 /* TCUserShippingAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserShippingAddress.h; sourceTree = "<group>"; };
 		7A34AF571DDB0E7400217161 /* TCUserShippingAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserShippingAddress.m; sourceTree = "<group>"; };
 		7A381BC21DED5DC4008BDBF7 /* TCCommunityDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityDetailInfo.h; sourceTree = "<group>"; };
@@ -8118,6 +8121,8 @@
 		7ACE57A51DC73BA6004B383A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7A33219C1E0D3AA9003049DB /* TCVicinityTitleView.h */,
+				7A33219D1E0D3AA9003049DB /* TCVicinityTitleView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -8924,6 +8929,7 @@
 				7ACA4FE31DD5B8C2006634E8 /* TCUserPhoneInfo.m in Sources */,
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
 				7AEB4CC01E03936300F83A7C /* TCBioEditAvatarViewController.m in Sources */,
+				7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */,
 				096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */,
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
