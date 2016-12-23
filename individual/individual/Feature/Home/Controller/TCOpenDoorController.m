@@ -53,6 +53,7 @@
 }
 
 - (void)fail {
+    _openBtn.enabled = YES;
     [_openBtn setTitle:@"开锁失败" forState:UIControlStateNormal];
     _openBtn.titleLabel.font = [UIFont systemFontOfSize:18];
     [self close];
@@ -72,9 +73,9 @@
     
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self close];
-}
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//    [self close];
+//}
 
 - (void)setUpUI {
     
@@ -118,7 +119,7 @@
 
 
 - (void)click {
-    
+    _openBtn.enabled = NO;
     [_openBtn setTitle:@"开锁中" forState:UIControlStateNormal];
     
     if (_pulseLayer == nil) {
