@@ -480,6 +480,7 @@
     [_blurImageView show];
 }
 
+
 - (void)touchEstateRepair:(UIButton *)button {
     if ([self checkUserNeedLogin]) return;
     TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];

@@ -54,6 +54,14 @@
     }
 }
 
++ (NSDictionary *)objectClassInDictionary {
+    return @{
+             @"store": [TCMarkStore class]
+             };
+}
+
+
+
 
 @end
 

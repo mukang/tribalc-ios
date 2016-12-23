@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, TCOrderExpressType) {
 /** 收货时间 */
 @property (nonatomic) NSInteger receivedTime;
 /** 商铺简要信息 */
-@property (nonatomic) TCMarkStore *store;
+@property (nonatomic, retain) TCMarkStore *store;
 /** 关联商品信息 */
 @property (retain, nonatomic) NSArray *itemList;
 

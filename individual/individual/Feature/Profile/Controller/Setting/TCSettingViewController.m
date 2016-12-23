@@ -16,6 +16,7 @@
 
 #import "TCBuluoApi.h"
 #import <Masonry.h>
+#import "TCAboutUSViewController.h"
 
 @interface TCSettingViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -130,7 +131,10 @@
                 
                 break;
             case 1:
-                
+            {
+                TCAboutUSViewController *aboutUs = [[TCAboutUSViewController alloc] init];
+                [self.navigationController pushViewController:aboutUs animated:YES];
+            }
                 break;
             case 2:
             {

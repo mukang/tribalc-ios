@@ -28,7 +28,7 @@
 
 
 
-@interface TCShoppingCartListTableViewCell : MGSwipeTableCell <SDWebImageManagerDelegate>
+@interface TCShoppingCartListTableViewCell : MGSwipeTableCell <SDWebImageManagerDelegate, MGSwipeTableCellDelegate>
 
 + (instancetype)cellForTableView:(UITableView *)tableView AndIndexPath:(NSIndexPath *)indexPath;
 + (instancetype)editCellForTableView:(UITableView *)tableView AndIndexPath:(NSIndexPath *)indexPath;

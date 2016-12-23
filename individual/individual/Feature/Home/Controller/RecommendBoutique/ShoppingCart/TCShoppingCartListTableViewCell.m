@@ -158,27 +158,30 @@
     self.primaryStandardLab.frame = CGRectMake(self.titleLab.x, self.titleLab.y + self.titleLab.height + TCRealValue(9), self.titleLab.width, TCRealValue(12));
     if ([_cartItem.goods.standardSnapshot containsString:@"|"]) {
         self.secondaryStandardBtn.frame = CGRectMake(self.titleLab.x, self.primaryStandardLab.y + self.primaryStandardLab.height + TCRealValue(17), TCRealValue(94 / 2), TCRealValue(46 / 2));
+        self.amountLab.frame = CGRectMake(self.titleLab.x + TCRealValue(47) + TCRealValue(7), self.primaryStandardLab.y + self.primaryStandardLab.height + TCRealValue(15.5), self.amountLab.width, TCRealValue(27));
     } else {
         self.secondaryStandardBtn.frame = CGRectNull;
+        self.amountLab.frame = CGRectMake(self.titleLab.x + TCRealValue(7), self.primaryStandardLab.y + self.primaryStandardLab.height + TCRealValue(15.5), self.amountLab.width, TCRealValue(27));
     }
-    self.amountLab.frame = CGRectMake(self.titleLab.x + TCRealValue(47) + TCRealValue(7), self.primaryStandardLab.y + self.primaryStandardLab.height + TCRealValue(15.5), self.amountLab.width, TCRealValue(27));
     self.priceLab.frame = CGRectMake(TCScreenWidth - TCRealValue(20) - self.priceLab.width , self.primaryStandardLab.y + self.primaryStandardLab.height + TCRealValue(15.5) + TCRealValue(8), self.priceLab.width, TCRealValue(14));
 }
 
 - (void)setupEditFrame {
     [self setupFrame];
     self.priceLab.frame = CGRectMake(TCScreenWidth - TCRealValue(20) - self.priceLab.width, self.primaryStandardLab.y - TCRealValue(3), self.priceLab.width, self.priceLab.height);
-    selectStandardBtn.frame = CGRectMake(self.amountLab.x - TCRealValue(5), self.amountLab.y + TCRealValue(1), self.amountLab.width, self.amountLab.height);
-    [selectStandardBtn setImage:[UIImage imageNamed:@"car_select_standard"] forState:UIControlStateNormal];
-    self.amountLab.frame = CGRectNull;
     
-    computeView = [[TCComputeView alloc] initWithFrame:CGRectMake(self.width - TCRealValue(20) - TCRealValue(78), selectStandardBtn.y + (selectStandardBtn.height / 2 - TCRealValue(10)), TCRealValue(78), TCRealValue(20))];
+    
+    computeView = [[TCComputeView alloc] initWithFrame:CGRectMake(self.width - TCRealValue(20) - TCRealValue(78), self.amountLab.y + (self.amountLab.height / 2 - TCRealValue(10)), TCRealValue(78), TCRealValue(20))];
     [computeView setCount:_cartItem.amount];
     computeView.x = TCScreenWidth - TCRealValue(20) - computeView.width;
     [computeView.addBtn addTarget:self action:@selector(touchAddBtn:) forControlEvents:UIControlEventTouchUpInside];
     [computeView.subBtn addTarget:self action:@selector(touchSubBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:computeView];
+    
+    selectStandardBtn.frame = CGRectMake(self.titleLab.x, self.primaryStandardLab.y, computeView.x - self.titleLab.x - TCRealValue(7), computeView.y + computeView.height - self.primaryStandardLab.y);
+    self.amountLab.frame = CGRectNull;
 }
+
 
 
 
@@ -227,7 +230,9 @@
     NSInteger addAmount = computeView.countLab.text.integerValue + 1;
     if (addAmount > _cartItem.repertory) {
         [MBProgressHUD showHUDWithMessage:@"超出库存量"];
-    } else {
+    } else if(addAmount == 99) {
+        
+    } else{
         
         if (_shopCartDelegate && [_shopCartDelegate respondsToSelector:@selector(shoppingCartCell:AddOrSubAmountWithCartItem:)]) {
             _cartItem.amount = addAmount;

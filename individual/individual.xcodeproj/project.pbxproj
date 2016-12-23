@@ -517,6 +517,7 @@
 		559D88211E0C045B00982697 /* ringback.wav in Resources */ = {isa = PBXBuildFile; fileRef = 559D86591E0C045900982697 /* ringback.wav */; };
 		559D88221E0C045B00982697 /* notes_of_the_optimistic.caf in Resources */ = {isa = PBXBuildFile; fileRef = 559D865B1E0C045900982697 /* notes_of_the_optimistic.caf */; };
 		559D88231E0C045B00982697 /* shortring.caf in Resources */ = {isa = PBXBuildFile; fileRef = 559D865C1E0C045900982697 /* shortring.caf */; };
+		559D88261E0D17AF00982697 /* TCAboutUSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559D88251E0D17AF00982697 /* TCAboutUSViewController.m */; };
 		55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */; };
 		55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */; };
 		55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */; };
@@ -2733,6 +2734,8 @@
 		559D86591E0C045900982697 /* ringback.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringback.wav; sourceTree = "<group>"; };
 		559D865B1E0C045900982697 /* notes_of_the_optimistic.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notes_of_the_optimistic.caf; sourceTree = "<group>"; };
 		559D865C1E0C045900982697 /* shortring.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = shortring.caf; sourceTree = "<group>"; };
+		559D88241E0D17AF00982697 /* TCAboutUSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAboutUSViewController.h; sourceTree = "<group>"; };
+		559D88251E0D17AF00982697 /* TCAboutUSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAboutUSViewController.m; sourceTree = "<group>"; };
 		55F06EEC1E03911400A849D7 /* TCPropertyManageListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageListController.h; sourceTree = "<group>"; };
 		55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageListController.m; sourceTree = "<group>"; };
 		55F06EF01E03977000A849D7 /* TCPropertyManageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageWrapper.h; sourceTree = "<group>"; };
@@ -7625,6 +7628,8 @@
 				7A3321971E0D07E1003049DB /* TCSettingViewController.m */,
 				7A3321991E0D0945003049DB /* TCSuggestionViewController.h */,
 				7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */,
+				559D88241E0D17AF00982697 /* TCAboutUSViewController.h */,
+				559D88251E0D17AF00982697 /* TCAboutUSViewController.m */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -8723,6 +8728,7 @@
 				7AC346EE1E0144B500E28EC9 /* TCWalletBillViewCell.m in Sources */,
 				7A7E94231DF5723A006A47CE /* TCRepairsCommitViewCell.m in Sources */,
 				7AC346CF1E01432000E28EC9 /* TCWalletViewController.m in Sources */,
+				559D88261E0D17AF00982697 /* TCAboutUSViewController.m in Sources */,
 				7A11F7151DE43195005F3EAB /* MLBPasswordTextField.m in Sources */,
 				7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */,
 				553DC8AD1DFFE22F0018783E /* parser-impl.cc in Sources */,

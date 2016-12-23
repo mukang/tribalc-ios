@@ -21,5 +21,4 @@
 @interface TCShoppingCartViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, TCShoppingCartListTableViewCellDelegate, TCSelectStandardViewDelegate>
 
 
-
 @end
