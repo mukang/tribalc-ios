@@ -494,10 +494,6 @@
 //    [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
     TCQRCodeViewController *qrVC = [[TCQRCodeViewController alloc] init];
     qrVC.hidesBottomBarWhenPushed = YES;
-    qrVC.completion = ^{
-        [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
-        [self.navigationController popViewControllerAnimated:YES];
-    };
     [self.navigationController pushViewController:qrVC animated:YES];
 }
 

@@ -53,11 +53,10 @@
     [self prepareOtherControls];
     @WeakObj(self)
     scanner = [TCScanner scanerWithView:self.view scanFrame:scannerBorder.frame completion:^(NSString *stringValue) {
+        @StrongObj(self)
         // 完成回调
-//        self.completionCallBack(stringValue);
-        self.completion();
-        
-        // 关闭
+//        self.completion();
+        [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
         [self.navigationController popViewControllerAnimated:YES];
     }];
    
