@@ -60,7 +60,8 @@
 }
 
 - (void)handleChangeSwitchButton:(UISwitch *)sender {
-    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"消息通知" message:@"如果你要关闭或开启部落公社的新消息通知，请在设备的“设置”-“通知中心”功能中，找到应用程序“部落公社”进行修改。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alertView show];
 }
 
 @end
