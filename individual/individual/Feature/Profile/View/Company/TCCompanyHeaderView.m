@@ -40,7 +40,6 @@
     self.logoBgView = logoBgView;
     
     UIImageView *logoImageView = [[UIImageView alloc] init];
-    logoImageView.backgroundColor = [UIColor redColor];
     logoImageView.contentMode = UIViewContentModeScaleAspectFit;
     logoImageView.layer.cornerRadius = 29;
     logoImageView.layer.masksToBounds = YES;
@@ -68,6 +67,11 @@
     
     NSURL *logoURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:companyInfo.logo];
     [self.logoImageView sd_setImageWithURL:logoURL placeholderImage:nil options:SDWebImageRetryFailed];
+    
+    self.imagePalyerView.pictures = companyInfo.pictures;
+    if (companyInfo.pictures.count == 1) {
+        self.imagePalyerView.autoPlayEnabled = NO;
+    }
 }
 
 @end

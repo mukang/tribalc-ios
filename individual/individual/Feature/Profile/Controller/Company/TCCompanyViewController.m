@@ -95,6 +95,7 @@
     
     TCCompanyHeaderView *headerView = [[TCCompanyHeaderView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, self.headerViewHeight)];
     tableView.tableHeaderView = headerView;
+    headerView.companyInfo = self.userCompanyInfo.company;
 }
 
 #pragma mark - Navigation Bar
