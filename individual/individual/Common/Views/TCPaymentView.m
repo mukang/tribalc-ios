@@ -9,6 +9,8 @@
 #import "TCPaymentView.h"
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
+#import "TCBuluoApi.h"
+#import "TCFunctions.h"
 
 static CGFloat const subviewHeight = 400;
 static CGFloat const duration = 0.25;
@@ -88,22 +90,35 @@ static CGFloat const duration = 0.25;
 }
 
 - (void)dismiss:(BOOL)animated {
+    [self dismiss:animated completion:nil];
+}
+
+- (void)dismiss:(BOOL)animated completion:(void (^)())completion {
     if (animated) {
         [UIView animateWithDuration:duration animations:^{
             weakSelf.backgroundColor = TCARGBColor(0, 0, 0, 0);
             weakSelf.paymentDetailView.y = TCScreenHeight;
         } completion:^(BOOL finished) {
             [weakSelf removeFromSuperview];
+            if (completion) {
+                completion();
+            }
         }];
     } else {
         weakSelf.backgroundColor = TCARGBColor(0, 0, 0, 0);
         weakSelf.paymentDetailView.y = TCScreenHeight;
         [weakSelf removeFromSuperview];
+        if (completion) {
+            completion();
+        }
     }
 }
 
 #pragma mark - Private Methods
 
+/**
+ 显示输入密码页
+ */
 - (void)showPaymentPasswordView {
     TCPaymentPasswordView *paymentPasswordView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentPasswordView" owner:nil options:nil].lastObject;
     paymentPasswordView.frame = CGRectMake(TCScreenWidth, self.paymentDetailView.y, TCScreenWidth, subviewHeight);
@@ -119,6 +134,9 @@ static CGFloat const duration = 0.25;
     }];
 }
 
+/**
+ 退出输入密码页
+ */
 - (void)dismissPaymentPasswordView {
     [UIView animateWithDuration:duration animations:^{
         weakSelf.paymentDetailView.x = 0;
@@ -131,11 +149,15 @@ static CGFloat const duration = 0.25;
 #pragma mark - TCPaymentDetailViewDelegate
 
 - (void)didClickConfirmButtonInPaymentDetailView:(TCPaymentDetailView *)view {
-    [self showPaymentPasswordView];
+    [weakSelf showPaymentPasswordView];
 }
 
 - (void)didClickCloseButtonInPaymentDetailView:(TCPaymentDetailView *)view {
-    [self dismiss:YES];
+    [self dismiss:YES completion:^{
+        if ([weakSelf.delegate respondsToSelector:@selector(didClickCloseButtonInPaymentView:)]) {
+            [weakSelf.delegate didClickCloseButtonInPaymentView:self];
+        }
+    }];
 }
 
 - (void)didClickQueryButtonInPaymentDetailView:(TCPaymentDetailView *)view {
@@ -144,8 +166,74 @@ static CGFloat const duration = 0.25;
 
 #pragma mark - TCPaymentPasswordViewDelegate
 
+- (void)paymentPasswordView:(TCPaymentPasswordView *)view didFilledPassword:(NSString *)password {
+    [self handlePaymentWithPassword:password];
+}
+
 - (void)didClickBackButtonInPaymentPasswordView:(TCPaymentPasswordView *)view {
     [self dismissPaymentPasswordView];
+}
+
+#pragma mark - Actions
+
+/**
+ 提交付款申请
+ */
+- (void)handlePaymentWithPassword:(NSString *)password {
+    if (![TCDigestMD5(password) isEqualToString:self.walletAccount.password]) {
+        [MBProgressHUD showHUDWithMessage:@"付款失败，密码错误"];
+        return;
+    }
+    if (self.paymentAmount > self.walletAccount.balance) {
+        [MBProgressHUD showHUDWithMessage:@"付款失败，您的钱包余额不足"];
+        return;
+    }
+    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBalance orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
+        if (userPayment) {
+            if ([userPayment.status isEqualToString:@"CREATED"]) { // 正在处理中
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf handleQueryPaymentStatusWithPaymentID:userPayment.ID];
+                });
+            } else if ([userPayment.status isEqualToString:@"FAILURE"]) { // 错误（余额不足）
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", userPayment.note]];
+            } else { // 付款成功
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf dismiss:YES completion:^{
+                    if ([weakSelf.delegate respondsToSelector:@selector(paymentView:didFinishedPaymentWithStatus:)]) {
+                        [weakSelf.delegate paymentView:weakSelf didFinishedPaymentWithStatus:userPayment.status];
+                    }
+                }];
+            }
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
+        }
+    }];
+}
+
+/**
+ 查询付款状态
+ */
+- (void)handleQueryPaymentStatusWithPaymentID:(NSString *)paymentID {
+    [[TCBuluoApi api] fetchUserPayment:paymentID result:^(TCUserPayment *userPayment, NSError *error) {
+        if (userPayment) {
+            if ([userPayment.status isEqualToString:@"FAILURE"]) {
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", userPayment.note]];
+            } else {
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf dismiss:YES completion:^{
+                    if ([weakSelf.delegate respondsToSelector:@selector(paymentView:didFinishedPaymentWithStatus:)]) {
+                        [weakSelf.delegate paymentView:weakSelf didFinishedPaymentWithStatus:userPayment.status];
+                    }
+                }];
+            }
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
+        }
+    }];
 }
 
 @end

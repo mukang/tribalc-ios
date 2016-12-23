@@ -68,21 +68,26 @@
             [recommendCollectionView reloadData];
             [recommendCollectionView.mj_header endRefreshing];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"获取商品列表失败"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取商品列表失败, %@", reason]];
         }
     }];
-
 }
 
 - (void)loadGoodsDataWithSortSkip:(NSString *)sortSkip {
     if (goodsInfoWrapper.hasMore == YES) {
         TCBuluoApi *api = [TCBuluoApi api];
         [api fetchGoodsWrapper:20 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
-            NSArray *infoArr = goodsInfoWrapper.content;
-            goodsInfoWrapper = goodsWrapper;
-            goodsInfoWrapper.content = [infoArr arrayByAddingObjectsFromArray:goodsWrapper.content];
-            [recommendCollectionView reloadData];
-            [recommendCollectionView.mj_footer endRefreshing];
+            if (goodsWrapper) {
+                NSArray *infoArr = goodsInfoWrapper.content;
+                goodsInfoWrapper = goodsWrapper;
+                goodsInfoWrapper.content = [infoArr arrayByAddingObjectsFromArray:goodsWrapper.content];
+                [recommendCollectionView reloadData];
+                [recommendCollectionView.mj_footer endRefreshing];
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取商品列表失败, %@", reason]];
+            }
         }];
     } else {
         TCRecommendFooter *footer = (TCRecommendFooter *)recommendCollectionView.mj_footer;

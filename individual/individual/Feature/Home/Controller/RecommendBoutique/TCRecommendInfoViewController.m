@@ -67,7 +67,8 @@
             mGoodDetail = goodDetail;
             [weakSelf initMainView];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"获取商品信息失败"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取商品信息失败, %@", reason]];
         }
     }];
 }
@@ -119,7 +120,7 @@
     UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(394))];
     [mScrollView addSubview:titleImageView];
     
-    goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, TCRealValue(87)) WithTitle:mGoodDetail.name AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
+    goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, TCRealValue(87)) WithTitle:mGoodDetail.title AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
     [mScrollView addSubview:goodTitleView];
     
     UIButton *standardSelectBtn = [self createStandardSelectButtonWithFrame:CGRectMake(0, goodTitleView.y + goodTitleView.height + TCRealValue(7.5), self.view.width, TCRealValue(38))];
@@ -362,17 +363,16 @@
 
 #pragma mark - TCGoodSelectViewDelegate
 - (void)selectView:(TCGoodSelectView *)goodSelectView didAddShoppingCartWithGoodDetail:(TCGoodDetail *)goodDetail Amount:(NSInteger)amount {
-        [[TCBuluoApi api] createShoppingCartWithAmount:amount goodsId:goodDetail.ID result:^(BOOL result, NSError *error) {
-            if (result) {
-                [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
-            } else {
-                TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
-                if ([error isEqual:sessionError]) {
-                    [MBProgressHUD showHUDWithMessage:@"请登录"];
-                }
-                [MBProgressHUD showHUDWithMessage:@"加入购物车失败"];
-            }
-        }];
+    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] createShoppingCartWithAmount:amount goodsId:goodDetail.ID result:^(BOOL result, NSError *error) {
+        if (result) {
+            [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加入购物车失败, %@", reason]];
+        }
+    }];
     
 }
 
@@ -414,9 +414,21 @@
 
 
 - (void)touchAddShopCartBtnInDetailView:(UIButton *) btn {
+    if (mGoodDetail.standardId == nil) {
+        [MBProgressHUD showHUDWithMessage:@"该商品规格ID为空"];
+        return ;
+    }
     TCBuluoApi *api = [TCBuluoApi api];
+    [MBProgressHUD showHUD:YES];
     [api fetchGoodStandards:mGoodDetail.standardId result:^(TCGoodStandards *result, NSError *error) {
-        [weakSelf showStandardView:result];
+        if (result) {
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf showStandardView:result];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取商品规格失败, %@", reason]];
+        }
+        
     }];
 }
 
@@ -427,11 +439,21 @@
 }
 
 - (void)touchSelectStandardBtn:(UIButton *)btn {
-
+    if (mGoodDetail.standardId == nil) {
+        [MBProgressHUD showHUDWithMessage:@"该商品规格ID为空"];
+        return ;
+    }
     TCBuluoApi *api = [TCBuluoApi api];
+    [MBProgressHUD showHUD:YES];
     [api fetchGoodStandards:mGoodDetail.standardId result:^(TCGoodStandards *result, NSError *error) {
+        if (result) {
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf showStandardView:result];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取商品规格失败, %@", reason]];
+        }
         
-        [weakSelf showStandardView:result];
     }];
     
 }

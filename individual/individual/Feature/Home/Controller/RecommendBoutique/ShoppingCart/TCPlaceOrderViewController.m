@@ -14,17 +14,19 @@
 #import "TCUserOrderTableViewCell.h"
 #import "TCPayMethodView.h"
 #import "TCImageURLSynthesizer.h"
-#import "TCBalancePayView.h"
+//#import "TCBalancePayView.h"
 #import "TCUserOrderTabBarController.h"
 #import "TCUserOrderDetailViewController.h"
 #import "TCShippingAddressViewController.h"
 
-@interface TCPlaceOrderViewController () {
+#import "TCPaymentView.h"
+
+@interface TCPlaceOrderViewController () <TCPaymentViewDelegate> {
     UIScrollView *mScrollView;
     NSMutableArray *orderDetailList;
     NSMutableArray *supplementFieldArr;
     TCPayMethodView *payMethodView;
-    TCBalancePayView *payView;
+//    TCBalancePayView *payView;
     TCOrderAddressView *userAddressView;
     CGFloat cursorHeight;
     
@@ -405,6 +407,19 @@
     }
 }
 
+#pragma mark - TCPaymentViewDelegate
+
+- (void)paymentView:(TCPaymentView *)view didFinishedPaymentWithStatus:(NSString *)status {
+    // 跳转至“全部”订单列表
+    TCUserOrderTabBarController *orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
+    [self.navigationController pushViewController:orderViewController animated:YES];
+}
+
+- (void)didClickCloseButtonInPaymentView:(TCPaymentView *)view {
+    // 跳转至“待付款”订单列表
+    TCUserOrderTabBarController *orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"待付款"];
+    [self.navigationController pushViewController:orderViewController animated:YES];
+}
 
 #pragma mark - Action
 - (void)touchBackBtn {
@@ -418,30 +433,15 @@
     }
     [self filterPayMethod];
 }
-
+/*
 - (void)jumpToOrderDetailViewController {
     UIViewController *orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
     [payView removeFromSuperview];
     [self.navigationController pushViewController:orderViewController animated:YES];
 }
 
-- (void)touchPayMoneyBtn:(UIButton *)button {
-    for (int i = 0; i < payView.orderArr.count; i++) {
-        TCOrder *order = payView.orderArr[i];
-        [[TCBuluoApi api] changeOrderStatus:@"SETTLE" OrderId:order.ID result:^(BOOL result, NSError *error) {
-//            if (result) {
-                if (i == payView.orderArr.count - 1)
-                    [weakSelf jumpToOrderDetailViewController];
-//            } else {
-//                [MBProgressHUD showHUDWithMessage:@"支付失败"];
-//                return;
-//            }
-        }];
-    }
-}
-
 - (void)touchClosePayMoneyBtn:(id)sender {
-    [MBProgressHUD showHUDWithMessage:@"取消支付"];
+    
     UIViewController *orderViewController;
     if (!(payView.orderArr.count == 1)) {
         orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"待付款"];
@@ -453,6 +453,7 @@
     
 
 }
+  */
 
 - (void)touchOrderCancelBtn:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];
@@ -468,11 +469,6 @@
     [userAddressView setAddress:shippingAddress];
 }
 
-#pragma mark - Status Bar
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (NSDictionary *)getItemListWithAmount:(NSInteger)amount AndGoosId:(NSString *)goodsId {
     return @{
              @"amount":[NSNumber numberWithInteger:amount],
@@ -480,6 +476,9 @@
              };
 }
 
+/**
+ 创建订单
+ */
 - (void)createOrder {
     NSMutableArray *itemList = [[NSMutableArray alloc] init];
     for (int i = 0; i< orderDetailList.count; i++) {
@@ -491,19 +490,66 @@
         }
     }
     NSString *addressId = userAddressView.shippingAddress.ID;
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
-            payView = [[TCBalancePayView alloc] initWithPayPrice:[weakSelf getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
-            payView.orderArr = orderList;
-            [payView showPayView];
+//            payView = [[TCBalancePayView alloc] initWithPayPrice:[weakSelf getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
+//            payView.orderArr = orderList;
+//            [payView showPayView];
+            
+            [weakSelf handlePaymentWithOrderList:orderList];
             
         } else {
-            [MBProgressHUD showHUDWithMessage:@"创建订单失败"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
         }
     }];
 }
 
+/**
+ 获取钱包信息，判断用户是否设置了支付密码
+ */
+- (void)handlePaymentWithOrderList:(NSArray *)orderList {
+    [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
+        if (walletAccount) {
+            [MBProgressHUD hideHUD:YES];
+            if (walletAccount.password) {
+                [weakSelf handleShowPaymentViewWithOrderList:orderList walletAccount:walletAccount];
+            } else {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码，请到 我的钱包>支付密码 中设置" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+                [alertController addAction:action];
+                [weakSelf presentViewController:alertController animated:YES completion:nil];
+            }
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
+        }
+    }];
+}
 
+/**
+ 弹出paymentView
+ */
+- (void)handleShowPaymentViewWithOrderList:(NSArray *)orderList walletAccount:(TCWalletAccount *)walletAccount {
+    NSMutableArray *orderIDs = [NSMutableArray array];
+    CGFloat paymentAmount = 0;
+    for (TCOrder *order in orderList) {
+        paymentAmount += order.totalFee;
+        [orderIDs addObject:order.ID];
+    }
+    
+    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:paymentAmount fromController:self];
+    paymentView.walletAccount = walletAccount;
+    paymentView.orderIDs = orderIDs;
+    paymentView.delegate = self;
+    [paymentView show:YES];
+}
+
+#pragma mark - Status Bar
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

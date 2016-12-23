@@ -115,8 +115,9 @@
     
     [[TCBuluoApi api] fetchVerificationCodeWithPhone:self.phoneTextField.text result:^(BOOL success, NSError *error) {
         if (error) {
-            [MBProgressHUD showHUDWithMessage:@"验证码发送失败，请稍后再试"];
             [weakSelf stopCountDown];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"验证码发送失败，%@", reason]];
         }
     }];
 }
@@ -157,7 +158,8 @@
             }
             [weakSelf.navigationController popViewControllerAnimated:YES];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"银行卡绑定失败，请稍后再试"];
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"银行卡绑定失败，%@", reason]];
         }
     }];
 }

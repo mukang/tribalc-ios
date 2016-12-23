@@ -463,13 +463,14 @@
         }
         __weak TCReserveOnlineViewController *weakSelf = self;
         [[TCBuluoApi api] createReservationWithStoreSetMealId:storeSetMealId appintTime:timeSp personNum:personNum linkman:nickName phone:phoneStr note:noteStr vcode:vcodeStr result:^(TCReservationDetail *result, NSError *error) {
+            [MBProgressHUD showHUD:YES];
             if (result) {
-                [MBProgressHUD showHUDWithMessage:@"预订成功"];
+                [MBProgressHUD hideHUD:YES];
                 TCUserReserveDetailViewController *userReserveDetailViewController = [[TCUserReserveDetailViewController alloc] initWithReservationId:result.ID];
                 [weakSelf.navigationController pushViewController:userReserveDetailViewController animated:YES];
-                
             } else {
-                [MBProgressHUD showHUDWithMessage:@"预订失败"];
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"预订失败, %@", reason]];
             }
         }];
 

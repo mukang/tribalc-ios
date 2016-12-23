@@ -12,6 +12,7 @@
 #import "TCUserReserveDetailViewController.h"
 #import "TCComponent.h"
 #import "TCBuluoApi.h"
+#import "TCImageURLSynthesizer.h"
 #import "TCRecommendHeader.h"
 #import "TCRecommendFooter.h"
 
@@ -39,12 +40,17 @@
 
 
 - (void)initReservationData {
-    
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:20 sortSkip:nil result:^(TCReservationWrapper *wrapper, NSError *error) {
-        userReserveWrapper = wrapper;
-        [reserveTableView reloadData];
-        [reserveTableView.mj_header endRefreshing];
-        
+        if (wrapper) {
+            [MBProgressHUD hideHUD:YES];
+            userReserveWrapper = wrapper;
+            [reserveTableView reloadData];
+            [reserveTableView.mj_header endRefreshing];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取预订列表失败, %@", reason]];
+        }
     }];
 }
 
@@ -52,11 +58,14 @@
     [[TCBuluoApi api] fetchReservationWrapper:nil limiSize:20 sortSkip:userReserveWrapper.nextSkip result:^(TCReservationWrapper *wrapper, NSError *error) {
         
         if (userReserveWrapper.hasMore) {
-            NSArray *contentArr = userReserveWrapper.content;
-            userReserveWrapper = wrapper;
-            userReserveWrapper.content = [contentArr arrayByAddingObjectsFromArray:wrapper.content];
-            
-            [reserveTableView reloadData];
+            if (wrapper) {
+                NSArray *contentArr = userReserveWrapper.content;
+                userReserveWrapper = wrapper;
+                userReserveWrapper.content = [contentArr arrayByAddingObjectsFromArray:wrapper.content];
+                [reserveTableView reloadData];
+            }
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取预订列表失败, %@", reason]];
         } else {
             TCRecommendFooter *footer = (TCRecommendFooter *)reserveTableView.mj_footer;
             [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];
@@ -90,13 +99,14 @@
 }
 
 - (void)initRefreshTableView {
+    __weak TCUserReserveViewController *weakSelf = self;
     TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^(void) {
-        [self initReservationData];
+        [weakSelf initReservationData];
     }];
     reserveTableView.mj_header = refreshHeader;
     
     TCRecommendFooter *refreshFooter = [TCRecommendFooter footerWithRefreshingBlock:^(void) {
-        [self loadReservationData];
+        [weakSelf loadReservationData];
     }];
     reserveTableView.mj_footer = refreshFooter;
 }
@@ -104,7 +114,7 @@
 - (NSString *)getHeaderStatusText:(NSString *)text {
     if ([text isEqualToString:@"PROCESSING"]) {
         return @"预订处理中";
-    } else if ([text isEqualToString:@"CANNEL"]){
+    } else if ([text isEqualToString:@"CANCEL"]){
         return @"订座取消";
     } else if ([text isEqualToString:@"FAILURE"]) {
         return @"订座失败";
@@ -116,7 +126,7 @@
 - (UIColor *)getHeaderStatusTextColor:(NSString *)text {
     if ([text isEqualToString:@"PROCESSING"]) {
         return TCRGBColor(242, 68, 69);
-    } else if ([text isEqualToString:@"FAILURE"] || [text isEqualToString:@"CANNEL"]) {
+    } else if ([text isEqualToString:@"FAILURE"] || [text isEqualToString:@"CANCEL"]) {
         return TCRGBColor(154, 154, 154);
     } else {
         return TCRGBColor(81, 199, 209);
@@ -166,14 +176,14 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = [NSString stringWithFormat:@"cell%li", (long)indexPath.section];
+    NSString *identifier = @"cell";
     TCUserReserveTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[TCUserReserveTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     NSArray *userReserveOrderArr = userReserveWrapper.content;
     TCReservation *reservation = userReserveOrderArr[indexPath.section];
-    cell.storeImageView.image = [UIImage imageNamed:@"good_placeholder"];
+    [cell.storeImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:reservation.mainPicture] placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
     [cell setTitleLabText:reservation.storeName];
     [cell setBrandLabText:@"西餐"];
     [cell setPlaceLabText:reservation.markPlace];
@@ -182,6 +192,12 @@
     
     return cell;
 }
+
+//- (NSString *)getTimeStr:(NSInteger)timeInt {
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInt];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    dateFormatter setDateFormat:<#(NSString * _Nullable)#>
+//}
 
 #pragma mark - UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -180,17 +180,19 @@
 - (IBAction)handleTapLoginButton:(UIButton *)sender {
     [self hideKeyboard];
     
-    if (self.accountTextField.text.length == 0) {
-        [MBProgressHUD showHUDWithMessage:@"请您填写手机号码！"];
+    NSString *phone = [self.accountTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *password = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (phone.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请您填写手机号码"];
         return;
     }
-    if (self.passwordTextField.text.length == 0) {
-        [MBProgressHUD showHUDWithMessage:@"请您填写验证码!"];
+    if (password.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请您填写验证码"];
     }
     
     TCUserPhoneInfo *phoneInfo = [[TCUserPhoneInfo alloc] init];
-    phoneInfo.phone = self.accountTextField.text;
-    phoneInfo.verificationCode = self.passwordTextField.text;
+    phoneInfo.phone = phone;
+    phoneInfo.verificationCode = password;
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] login:phoneInfo result:^(TCUserSession *userSession, NSError *error) {
         if (userSession) {
@@ -234,9 +236,8 @@
     [[TCBuluoApi api] fetchVerificationCodeWithPhone:self.accountTextField.text result:^(BOOL success, NSError *error) {
         if (!success) {
             [weakSelf.getPasswordView stopCountDown];
-            if (error) {
-                [MBProgressHUD showHUDWithMessage:error.localizedDescription];
-            }
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"验证码发送失败，%@", reason]];
         }
     }];
 }

@@ -13,6 +13,7 @@
 @protocol TCPaymentPasswordViewDelegate <NSObject>
 
 @optional
+- (void)paymentPasswordView:(TCPaymentPasswordView *)view didFilledPassword:(NSString *)password;
 - (void)didClickBackButtonInPaymentPasswordView:(TCPaymentPasswordView *)view;
 
 @end

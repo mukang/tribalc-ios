@@ -15,6 +15,7 @@
 
 @implementation TCSelectStandardView {
     NSInteger mRepertory;
+    NSString *mShoppingCartGoodsId;
     TCGoods *mGood;
     TCGoodStandards *mGoodStandards;
     UIImageView *titleImageView;
@@ -24,19 +25,18 @@
     UIView *primarySelectButtonView;
     UIView *secondarySelectBtnView;
     
-    NSString *selectTag;
+
 }
 
-- (instancetype)initWithGood:(TCGoods *)goods AndStandardId:(NSString *)standardId AndRepertory:(NSInteger)repertory AndSelectTag:(NSString *)tag {
-    mRepertory = repertory;
-    selectTag = tag;
-    mGood = goods;
+- (instancetype)initWithCartItem:(TCCartItem *)cartItem{
     self = [super initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight)];
+    mGood = cartItem.goods;
+    mRepertory = cartItem.repertory;
+    mShoppingCartGoodsId = cartItem.ID;
     if (self) {
-        [self fetchGoodStandardWithStandardId:standardId];
+        [self fetchGoodStandardWithStandardId:cartItem.standardId];
     }
     return self;
-
 }
 
 - (void)fetchGoodStandardWithStandardId:(NSString *)standardId {
@@ -618,15 +618,12 @@
         [MBProgressHUD showHUDWithMessage:@"您选择的商品不存在"];
         return ;
     }
-    [self postConfirmStandardChange];
-}
 
-- (void)postConfirmStandardChange {
-    NSString *notifiName = [NSString stringWithFormat:@"changeStandard%@", selectTag];
-    NSDictionary *changeDic = @{ @"goodsId":mGood.ID , @"number":_numberLab.text, @"selectTag": selectTag };
-    [[NSNotificationCenter defaultCenter] postNotificationName:notifiName object:changeDic];
+    if (_delegate && [_delegate respondsToSelector:@selector(selectStandardView:didSelectConfirmButtonWithNumber:NewGoodsId:ShoppingCartGoodsId:)]) {
+        [_delegate selectStandardView:self didSelectConfirmButtonWithNumber:_numberLab.text.integerValue NewGoodsId:mGood.ID ShoppingCartGoodsId:mShoppingCartGoodsId];
+    }
     [self removeFromSuperview];
-
+    
 }
 
 - (void)touchHideSelect:(id)sender {

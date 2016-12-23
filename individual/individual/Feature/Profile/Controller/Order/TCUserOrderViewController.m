@@ -49,10 +49,18 @@
 
 - (void)initOrderItem {
     TCBuluoApi *api = [TCBuluoApi api];
+    [MBProgressHUD showHUD:YES];
     [api fetchOrderWrapper:mStatus limiSize:20 sortSkip:nil result:^(TCOrderWrapper *orderWrapper, NSError *error) {
-        mOrderWrapper = orderWrapper;
-        [orderTableView reloadData];
-        [orderTableView.mj_header endRefreshing];
+        if (orderWrapper) {
+            [MBProgressHUD hideHUD:YES];
+            mOrderWrapper = orderWrapper;
+            [orderTableView reloadData];
+            [orderTableView.mj_header endRefreshing];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取订单列表失败, %@", reason]];
+        }
+        
         
     }];
 }
@@ -61,11 +69,17 @@
     TCBuluoApi *api = [TCBuluoApi api];
     [api fetchOrderWrapper:mStatus limiSize:20 sortSkip:mOrderWrapper.nextSkip result:^(TCOrderWrapper *orderWrapper, NSError *error) {
         if (mOrderWrapper.hasMore == YES || (orderWrapper.content.count == 0)) {
-            NSArray *beforeContentArr = mOrderWrapper.content;
-            mOrderWrapper = orderWrapper;
-            mOrderWrapper.content = [beforeContentArr arrayByAddingObjectsFromArray:orderWrapper.content];
-            [orderTableView reloadData];
-            [orderTableView.mj_footer endRefreshing];
+            if (orderWrapper) {
+                NSArray *beforeContentArr = mOrderWrapper.content;
+                mOrderWrapper = orderWrapper;
+                mOrderWrapper.content = [beforeContentArr arrayByAddingObjectsFromArray:orderWrapper.content];
+                [orderTableView reloadData];
+                [orderTableView.mj_footer endRefreshing];
+
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取订单列表失败, %@", reason]];
+            }
         } else {
             TCRecommendFooter *footer = (TCRecommendFooter *)orderTableView.mj_footer;
             [footer setTitle:@"已加载全部" forState:MJRefreshStateRefreshing];
@@ -150,7 +164,7 @@
         return @"等待收货";
     } else if ([text isEqualToString:@"SETTLE"]) {
         return @"等待发货";
-    } else if ([text isEqualToString:@"CANNEL"]) {
+    } else if ([text isEqualToString:@"CANCEL"]) {
         return @"订单已取消";
     }
      else{
@@ -166,7 +180,7 @@
         return @"卖家已发货";
     } else if ([text isEqualToString:@"SETTLE"]) {
         return @"等待卖家发货";
-    } else if ([text isEqualToString:@"CANNEL"]) {
+    } else if ([text isEqualToString:@"CANCEL"]) {
         return @"订单已取消";
     }
     else{

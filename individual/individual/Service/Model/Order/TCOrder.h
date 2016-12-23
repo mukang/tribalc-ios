@@ -12,7 +12,7 @@
 @interface TCOrder : NSObject
 
 typedef NS_ENUM(NSInteger, TCOrderStatus) {
-    TCOrderCannel,
+    TCOrderCancel,
     TCOrderNoSettle,
     TCOrderSettle,
     TCOrderDelivery,

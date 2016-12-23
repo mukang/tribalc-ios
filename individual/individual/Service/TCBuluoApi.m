@@ -935,10 +935,17 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/payments", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
-        [request setValue:@(payChannel) forParam:@"payChannel"];
+        switch (payChannel) {
+            case TCPayChannelBalance:
+                [request setValue:@"BALANCE" forParam:@"payChannel"];
+                break;
+                
+            default:
+                break;
+        }
         [request setValue:orderIDs forParam:@"orderIds"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 201) {
+            if (response.statusCode == 200) {
                 TCUserPayment *payment = [[TCUserPayment alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(payment, nil));
@@ -1182,7 +1189,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)createOrderWithItemList:(NSArray *)itemList AddressId:(NSString *)addressId result:(void(^)(NSArray *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"orders?me=%@&status=SETTLE", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"orders?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
 
         [request setValue:addressId forParam:@"addressId"];
@@ -1190,15 +1197,15 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         
         
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            NSArray *result = response.data;
-            NSMutableArray *orderList = [[NSMutableArray alloc] init];
-            for (int i = 0; i < result.count; i++) {
-                TCOrder *order = [[TCOrder alloc] initWithObjectDictionary:result[i]];
-                [orderList addObject:order];
-            }
             if (response.statusCode == 200) {
+                NSArray *result = response.data;
+                NSMutableArray *orderList = [[NSMutableArray alloc] init];
+                for (int i = 0; i < result.count; i++) {
+                    TCOrder *order = [[TCOrder alloc] initWithObjectDictionary:result[i]];
+                    [orderList addObject:order];
+                }
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(orderList, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock([orderList copy], nil));
                 }
             } else {
                 if (resultBlock) {
@@ -1298,7 +1305,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"reservations/%@/status?type=owner&me=%@", reservationId, self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
-        [request setValue:statusStr forParam:@"value"];
+        [request setValue:@"CANCEL" forParam:@"value"];
         
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
             if (respone.statusCode == 200) {

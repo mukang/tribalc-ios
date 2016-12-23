@@ -12,8 +12,8 @@
 
 - (void)setStatus:(NSString *)status {
     _status = status;
-    if ([status isEqualToString:@"CANNEL"]) {
-        self.reservationStatus = TCReservationCannel;
+    if ([status isEqualToString:@"CANCEL"]) {
+        self.reservationStatus = TCReservationCancel;
     } else if ([status isEqualToString:@"PROCESSING"]) {
         self.reservationStatus = TCReservationProcessing;
     } else if ([status isEqualToString:@"FAILURE"]) {

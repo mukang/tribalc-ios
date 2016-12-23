@@ -35,7 +35,9 @@
 }
 
 - (void)mlb_passwordTextField:(MLBPasswordTextField *)pwdTextField didFilledPassword:(NSString *)password {
-    TCLog(@"%@", password);
+    if ([self.delegate respondsToSelector:@selector(paymentPasswordView:didFilledPassword:)]) {
+        [self.delegate paymentPasswordView:self didFilledPassword:password];
+    }
 }
 
 - (IBAction)handleClickBackButton:(UIButton *)sender {
