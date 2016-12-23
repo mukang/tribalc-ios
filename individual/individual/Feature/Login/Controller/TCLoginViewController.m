@@ -180,17 +180,19 @@
 - (IBAction)handleTapLoginButton:(UIButton *)sender {
     [self hideKeyboard];
     
-    if (self.accountTextField.text.length == 0) {
-        [MBProgressHUD showHUDWithMessage:@"请您填写手机号码！"];
+    NSString *phone = [self.accountTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *password = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (phone.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请您填写手机号码"];
         return;
     }
-    if (self.passwordTextField.text.length == 0) {
-        [MBProgressHUD showHUDWithMessage:@"请您填写验证码!"];
+    if (password.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请您填写验证码"];
     }
     
     TCUserPhoneInfo *phoneInfo = [[TCUserPhoneInfo alloc] init];
-    phoneInfo.phone = self.accountTextField.text;
-    phoneInfo.verificationCode = self.passwordTextField.text;
+    phoneInfo.phone = phone;
+    phoneInfo.verificationCode = password;
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] login:phoneInfo result:^(TCUserSession *userSession, NSError *error) {
         if (userSession) {
