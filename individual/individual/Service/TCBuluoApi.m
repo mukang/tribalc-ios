@@ -877,7 +877,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(TCUserSensitiveInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/authentication", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
@@ -886,20 +886,24 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 201) {
+            if (response.statusCode == 200) {
+                TCUserSensitiveInfo *sensitiveInfo = [[TCUserSensitiveInfo alloc] initWithObjectDictionary:response.data];
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userSensitiveInfo = sensitiveInfo;
+                [self setUserSession:userSession];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(sensitiveInfo, nil));
                 }
             } else {
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
         }
     }
 }

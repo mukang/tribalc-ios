@@ -149,7 +149,7 @@ TCDatePickerViewDelegate>
                 break;
             case TCInputCellTypeName:
                 cell.title = @"申请人";
-                cell.content = userInfo.name;
+                cell.content = userSensitiveInfo.name;
                 cell.inputEnabled = NO;
                 break;
             case TCInputCellTypefloor:

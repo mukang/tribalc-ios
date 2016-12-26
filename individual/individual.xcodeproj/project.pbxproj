@@ -603,6 +603,7 @@
 		7A381BE71DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A381BE51DED8B89008BDBF7 /* TCCommunitySurroundingSubtitleViewCell.xib */; };
 		7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381C031DEDA5CE008BDBF7 /* TCStoreInfo.m */; };
 		7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */; };
+		7A384F9C1E10B9AF00E6DB9E /* TCUserSipInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384F9B1E10B9AF00E6DB9E /* TCUserSipInfo.m */; };
 		7A3C81C21DF00B26009ABCEC /* TCPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */; };
 		7A3C81C51DF00DE7009ABCEC /* TCPaymentDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C41DF00DE7009ABCEC /* TCPaymentDetailView.m */; };
 		7A3C81C71DF00DFD009ABCEC /* TCPaymentDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3C81C61DF00DFD009ABCEC /* TCPaymentDetailView.xib */; };
@@ -2887,6 +2888,8 @@
 		7A381C031DEDA5CE008BDBF7 /* TCStoreInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreInfo.m; sourceTree = "<group>"; };
 		7A384E801DE84CF20094E1F5 /* TCUploadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUploadInfo.h; sourceTree = "<group>"; };
 		7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUploadInfo.m; sourceTree = "<group>"; };
+		7A384F9A1E10B9AF00E6DB9E /* TCUserSipInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserSipInfo.h; sourceTree = "<group>"; };
+		7A384F9B1E10B9AF00E6DB9E /* TCUserSipInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserSipInfo.m; sourceTree = "<group>"; };
 		7A3C81C01DF00B26009ABCEC /* TCPaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentView.h; sourceTree = "<group>"; };
 		7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentView.m; sourceTree = "<group>"; };
 		7A3C81C31DF00DE7009ABCEC /* TCPaymentDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentDetailView.h; sourceTree = "<group>"; };
@@ -8016,6 +8019,8 @@
 				7AB29F331DD46EE600564D93 /* TCUserInfo.m */,
 				7AB29F2F1DD46C7D00564D93 /* TCUserSensitiveInfo.h */,
 				7AB29F301DD46C7D00564D93 /* TCUserSensitiveInfo.m */,
+				7A384F9A1E10B9AF00E6DB9E /* TCUserSipInfo.h */,
+				7A384F9B1E10B9AF00E6DB9E /* TCUserSipInfo.m */,
 				7ACA4FE11DD5B8C2006634E8 /* TCUserPhoneInfo.h */,
 				7ACA4FE21DD5B8C2006634E8 /* TCUserPhoneInfo.m */,
 				7ACA4FDB1DD57D79006634E8 /* TCUserAddress.h */,
@@ -8893,6 +8898,7 @@
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
 				09222E1A1DEE98490064C0DF /* TCRestaurantTableViewCell.m in Sources */,
 				7A74674B1DF90F8300ACD815 /* TCCompanyIntroViewCell.m in Sources */,
+				7A384F9C1E10B9AF00E6DB9E /* TCUserSipInfo.m in Sources */,
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
 				09275FB71DDEF94900502167 /* TCUserLocationAnnotationView.m in Sources */,
 				0925590F1DED78CB00EFA4FB /* TCMarkStore.m in Sources */,

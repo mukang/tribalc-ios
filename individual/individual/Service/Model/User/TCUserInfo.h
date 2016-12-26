@@ -35,8 +35,6 @@ typedef NS_ENUM(NSInteger, TCUserEmotionState) {
 @property (copy, nonatomic) NSString *picture;
 /** 用户背景图 */
 @property (copy, nonatomic) NSString *cover;
-/** 姓名 */
-@property (copy, nonatomic) NSString *name;
 /** 性别(UNKNOWN, MALE, FEMALE) */
 @property (copy, nonatomic) NSString *sex;
 /** 性别(枚举) */
