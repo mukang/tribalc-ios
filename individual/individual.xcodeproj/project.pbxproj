@@ -7871,9 +7871,9 @@
 		7A9CCF071DB6279C003D90C6 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				559D84581E0BF60100982697 /* TCSIPService */,
 				7AAF23751DCB5853002B81A5 /* TCBuluoApi.h */,
 				7AAF23761DCB5853002B81A5 /* TCBuluoApi.m */,
+				559D84581E0BF60100982697 /* TCSIPService */,
 				7A9CCF0E1DB62E08003D90C6 /* WebService */,
 				7AAF23781DCB5B10002B81A5 /* Model */,
 				7A9CCF0D1DB62E08003D90C6 /* LocalService */,
@@ -8323,7 +8323,7 @@
 					7A9CCECB1DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 452XNHBVYZ;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					7A9CCEE41DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
@@ -9159,8 +9159,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "10c02943-fd86-4d57-81ef-86d467443f69";
+				PROVISIONING_PROFILE_SPECIFIER = "Individual Development By mukang";
 			};
 			name = Debug;
 		};
@@ -9171,7 +9171,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
@@ -9233,8 +9233,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "2959f294-421f-4202-ac78-c1b20fa8fc0f";
+				PROVISIONING_PROFILE_SPECIFIER = "Individual Distribution";
 			};
 			name = Release;
 		};
