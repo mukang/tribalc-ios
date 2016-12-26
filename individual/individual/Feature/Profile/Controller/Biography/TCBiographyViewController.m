@@ -9,7 +9,6 @@
 #import "TCBiographyViewController.h"
 #import "TCBioEditPhoneViewController.h"
 #import "TCShippingAddressViewController.h"
-#import "TCBioEditAvatarViewController.h"
 #import "TCBioEditNickViewController.h"
 #import "TCBioEditGenderViewController.h"
 #import "TCBioEditEmotionViewController.h"
@@ -18,22 +17,23 @@
 
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
-#import "TCCityPickerView.h"
+#import "TCPhotoModeView.h"
 
 #import "UIImage+Category.h"
 #import "MBProgressHUD+Category.h"
 
 #import "TCBuluoApi.h"
+#import "TCPhotoPicker.h"
+#import "TCImageURLSynthesizer.h"
 
-@interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource, TCCityPickerViewDelegate>
+@interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource, TCPhotoModeViewDelegate, TCPhotoPickerDelegate>
 
 @property (copy, nonatomic) NSArray *biographyTitles;
 @property (copy, nonatomic) NSArray *bioDetailsTitles;
 
 @property (weak, nonatomic) UITableView *tableView;
 
-@property (weak, nonatomic) UIView *pickerBgView;
-@property (weak, nonatomic) TCCityPickerView *cityPickerView;
+@property (strong, nonatomic) TCPhotoPicker *photoPicker;
 
 @end
 
@@ -49,12 +49,11 @@
     [self setupNavBar];
     [self setupSubviews];
     [self fetchUserInfo];
-    [self registerNotifications];
 }
 
 - (void)dealloc {
+    self.tableView.dataSource = nil;
     self.tableView.delegate = nil;
-    [self removeNotifications];
 }
 
 - (void)setupNavBar {
@@ -230,14 +229,51 @@
     }
 }
 
-#pragma mark - Notifications
+#pragma mark - TCPhotoModeViewDelegate
 
-- (void)registerNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoDidUpdate:) name:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
+- (void)didClickCameraButtonInPhotoModeView:(TCPhotoModeView *)view {
+    [view dismiss];
+    TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
+    photoPicker.delegate = self;
+    [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+    self.photoPicker = photoPicker;
 }
 
-- (void)removeNotifications {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+- (void)didClickAlbumButtonInPhotoModeView:(TCPhotoModeView *)view {
+    [view dismiss];
+    TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
+    photoPicker.delegate = self;
+    [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    self.photoPicker = photoPicker;
+}
+
+#pragma mark - TCPhotoPickerDelegate
+
+- (void)photoPicker:(TCPhotoPicker *)photoPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [photoPicker dismissPhotoPicker];
+    self.photoPicker = nil;
+    
+    UIImage *avatarImage;
+    if (info[UIImagePickerControllerEditedImage]) {
+        avatarImage = info[UIImagePickerControllerEditedImage];
+    } else {
+        avatarImage = info[UIImagePickerControllerOriginalImage];
+    }
+    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] uploadImage:avatarImage progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
+        if (success) {
+            [weakSelf handleUserAvatarChangedWithName:uploadInfo.objectKey];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"头像上传失败，%@", reason]];
+        }
+    }];
+}
+
+- (void)photoPickerDidCancel:(TCPhotoPicker *)photoPicker {
+    [photoPicker dismissPhotoPicker];
+    self.photoPicker = nil;
 }
 
 #pragma mark - Actions
@@ -246,14 +282,27 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)handleUserInfoDidUpdate:(id)sender {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+- (void)handleUserAvatarChangedWithName:(NSString *)name {
+    NSString *imagePath = [TCImageURLSynthesizer synthesizeImagePathWithName:name source:kTCImageSourceOSS];
+    [[TCBuluoApi api] changeUserAvatar:imagePath result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            if (weakSelf.bioEditBlock) {
+                weakSelf.bioEditBlock();
+            }
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"头像上传失败，%@", reason]];
+        }
+    }];
 }
 
 - (void)handleSelectAvatarCell {
-    TCBioEditAvatarViewController *vc = [[TCBioEditAvatarViewController alloc] initWithNibName:@"TCBioEditAvatarViewController" bundle:[NSBundle mainBundle]];
-    [self.navigationController pushViewController:vc animated:YES];
+    TCPhotoModeView *photoModeView = [[TCPhotoModeView alloc] initWithController:self];
+    photoModeView.delegate = self;
+    [photoModeView show];
 }
 
 - (void)handleSelectNickCell {

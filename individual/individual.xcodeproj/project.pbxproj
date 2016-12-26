@@ -604,6 +604,7 @@
 		7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A381C031DEDA5CE008BDBF7 /* TCStoreInfo.m */; };
 		7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */; };
 		7A384F9C1E10B9AF00E6DB9E /* TCUserSipInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384F9B1E10B9AF00E6DB9E /* TCUserSipInfo.m */; };
+		7A384F9F1E10CD2B00E6DB9E /* TCPhotoModeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384F9E1E10CD2B00E6DB9E /* TCPhotoModeView.m */; };
 		7A3C81C21DF00B26009ABCEC /* TCPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */; };
 		7A3C81C51DF00DE7009ABCEC /* TCPaymentDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C41DF00DE7009ABCEC /* TCPaymentDetailView.m */; };
 		7A3C81C71DF00DFD009ABCEC /* TCPaymentDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3C81C61DF00DFD009ABCEC /* TCPaymentDetailView.xib */; };
@@ -612,8 +613,6 @@
 		7A3C81CF1DF04DD5009ABCEC /* TCExtendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81CE1DF04DD5009ABCEC /* TCExtendButton.m */; };
 		7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */; };
 		7A45146B1DE582DA007D7193 /* bankCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A45146A1DE582DA007D7193 /* bankCard.plist */; };
-		7A4514771DD2D0C3009F170A /* TCProfileBgImageChangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514761DD2D0C3009F170A /* TCProfileBgImageChangeView.m */; };
-		7A4514791DD2D0DE009F170A /* TCProfileBgImageChangeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4514781DD2D0DE009F170A /* TCProfileBgImageChangeView.xib */; };
 		7A4514881DD30C48009F170A /* TCModelImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514871DD30C48009F170A /* TCModelImport.m */; };
 		7A4E05051DEE86D0002371B0 /* TCImageURLSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E05041DEE86D0002371B0 /* TCImageURLSynthesizer.m */; };
 		7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E05071DEED401002371B0 /* TCCommunityVisitViewController.m */; };
@@ -693,8 +692,6 @@
 		7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
 		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
-		7AEB4CC01E03936300F83A7C /* TCBioEditAvatarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4CAB1E03936300F83A7C /* TCBioEditAvatarViewController.m */; };
-		7AEB4CC11E03936300F83A7C /* TCBioEditAvatarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AEB4CAC1E03936300F83A7C /* TCBioEditAvatarViewController.xib */; };
 		7AEB4CC21E03936300F83A7C /* TCBioEditNickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4CAE1E03936300F83A7C /* TCBioEditNickViewController.m */; };
 		7AEB4CC31E03936300F83A7C /* TCBioEditPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4CB01E03936300F83A7C /* TCBioEditPhoneViewController.m */; };
 		7AEB4CC41E03936300F83A7C /* TCBioEditPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AEB4CB11E03936300F83A7C /* TCBioEditPhoneViewController.xib */; };
@@ -2890,6 +2887,8 @@
 		7A384E811DE84CF20094E1F5 /* TCUploadInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUploadInfo.m; sourceTree = "<group>"; };
 		7A384F9A1E10B9AF00E6DB9E /* TCUserSipInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserSipInfo.h; sourceTree = "<group>"; };
 		7A384F9B1E10B9AF00E6DB9E /* TCUserSipInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserSipInfo.m; sourceTree = "<group>"; };
+		7A384F9D1E10CD2B00E6DB9E /* TCPhotoModeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPhotoModeView.h; sourceTree = "<group>"; };
+		7A384F9E1E10CD2B00E6DB9E /* TCPhotoModeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPhotoModeView.m; sourceTree = "<group>"; };
 		7A3C81C01DF00B26009ABCEC /* TCPaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentView.h; sourceTree = "<group>"; };
 		7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentView.m; sourceTree = "<group>"; };
 		7A3C81C31DF00DE7009ABCEC /* TCPaymentDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentDetailView.h; sourceTree = "<group>"; };
@@ -2903,9 +2902,6 @@
 		7A41C0D61DCC71C0003FC63C /* TCClientRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientRequestError.h; sourceTree = "<group>"; };
 		7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCClientRequestError.m; sourceTree = "<group>"; };
 		7A45146A1DE582DA007D7193 /* bankCard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bankCard.plist; sourceTree = "<group>"; };
-		7A4514751DD2D0C3009F170A /* TCProfileBgImageChangeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileBgImageChangeView.h; sourceTree = "<group>"; };
-		7A4514761DD2D0C3009F170A /* TCProfileBgImageChangeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileBgImageChangeView.m; sourceTree = "<group>"; };
-		7A4514781DD2D0DE009F170A /* TCProfileBgImageChangeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileBgImageChangeView.xib; sourceTree = "<group>"; };
 		7A4514861DD30C48009F170A /* TCModelImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCModelImport.h; sourceTree = "<group>"; };
 		7A4514871DD30C48009F170A /* TCModelImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCModelImport.m; sourceTree = "<group>"; };
 		7A4E05031DEE86D0002371B0 /* TCImageURLSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImageURLSynthesizer.h; sourceTree = "<group>"; };
@@ -3042,9 +3038,6 @@
 		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
 		7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetPasswordView.m; sourceTree = "<group>"; };
 		7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCGetPasswordView.xib; sourceTree = "<group>"; };
-		7AEB4CAA1E03936300F83A7C /* TCBioEditAvatarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditAvatarViewController.h; sourceTree = "<group>"; };
-		7AEB4CAB1E03936300F83A7C /* TCBioEditAvatarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditAvatarViewController.m; sourceTree = "<group>"; };
-		7AEB4CAC1E03936300F83A7C /* TCBioEditAvatarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditAvatarViewController.xib; sourceTree = "<group>"; };
 		7AEB4CAD1E03936300F83A7C /* TCBioEditNickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditNickViewController.h; sourceTree = "<group>"; };
 		7AEB4CAE1E03936300F83A7C /* TCBioEditNickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditNickViewController.m; sourceTree = "<group>"; };
 		7AEB4CAF1E03936300F83A7C /* TCBioEditPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditPhoneViewController.h; sourceTree = "<group>"; };
@@ -7442,6 +7435,8 @@
 				7A7E93F31DF502E7006A47CE /* TCGenderPickerView.m */,
 				55F06F251E0A3AE200A849D7 /* TCBlurImageView.h */,
 				55F06F261E0A3AE200A849D7 /* TCBlurImageView.m */,
+				7A384F9D1E10CD2B00E6DB9E /* TCPhotoModeView.h */,
+				7A384F9E1E10CD2B00E6DB9E /* TCPhotoModeView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -8179,9 +8174,6 @@
 				7A21E43C1DD02DEA00EF7427 /* TCProfileProcessViewCell.h */,
 				7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */,
 				7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */,
-				7A4514751DD2D0C3009F170A /* TCProfileBgImageChangeView.h */,
-				7A4514761DD2D0C3009F170A /* TCProfileBgImageChangeView.m */,
-				7A4514781DD2D0DE009F170A /* TCProfileBgImageChangeView.xib */,
 				7AC3470A1E01717C00E28EC9 /* TCSettingNotificationViewCell.h */,
 				7AC3470B1E01717C00E28EC9 /* TCSettingNotificationViewCell.m */,
 				7AC3470D1E0171B000E28EC9 /* TCSettingCacheViewCell.h */,
@@ -8199,9 +8191,6 @@
 			children = (
 				7AEB4CB81E03936300F83A7C /* TCBiographyViewController.h */,
 				7AEB4CB91E03936300F83A7C /* TCBiographyViewController.m */,
-				7AEB4CAA1E03936300F83A7C /* TCBioEditAvatarViewController.h */,
-				7AEB4CAB1E03936300F83A7C /* TCBioEditAvatarViewController.m */,
-				7AEB4CAC1E03936300F83A7C /* TCBioEditAvatarViewController.xib */,
 				7AEB4CAD1E03936300F83A7C /* TCBioEditNickViewController.h */,
 				7AEB4CAE1E03936300F83A7C /* TCBioEditNickViewController.m */,
 				7AEB4CFA1E03AC5400F83A7C /* TCBioEditGenderViewController.h */,
@@ -8457,7 +8446,6 @@
 				553DC9031DFFE2300018783E /* ORTPTargets-release.cmake in Resources */,
 				559D881B1E0C045B00982697 /* linphonerc in Resources */,
 				55F06F061E040B2500A849D7 /* TCPropertyDetailController.xib in Resources */,
-				7AEB4CC11E03936300F83A7C /* TCBioEditAvatarViewController.xib in Resources */,
 				7A3C81CC1DF02FDA009ABCEC /* TCPaymentPasswordView.xib in Resources */,
 				553DC8A21DFFE22F0018783E /* incoming_chat.wav in Resources */,
 				553DC8EA1DFFE2300018783E /* BelleSIPConfig.cmake in Resources */,
@@ -8594,7 +8582,6 @@
 				553DC8241DFFE22E0018783E /* BelrTargets.cmake in Resources */,
 				553DC96D1DFFE2310018783E /* hello8000.wav in Resources */,
 				553DC8E71DFFE2300018783E /* BelcardConfig.cmake in Resources */,
-				7A4514791DD2D0DE009F170A /* TCProfileBgImageChangeView.xib in Resources */,
 				553DC8F21DFFE2300018783E /* BZRTPConfigVersion.cmake in Resources */,
 				553DC9141DFFE2300018783E /* Matroska2Config.cmake in Resources */,
 				553DC8841DFFE22F0018783E /* BelleSIPConfig.cmake in Resources */,
@@ -8750,6 +8737,7 @@
 				09222E2A1DEE98550064C0DF /* TCRestaurantFilterView.m in Sources */,
 				7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */,
 				553DC9131DFFE2300018783E /* parser-impl.cc in Sources */,
+				7A384F9F1E10CD2B00E6DB9E /* TCPhotoModeView.m in Sources */,
 				7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */,
 				092C69801DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
@@ -8826,7 +8814,6 @@
 				0929D29E1E0A6E1E0099B1BD /* TCServiceSelectBtn.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
 				7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */,
-				7A4514771DD2D0C3009F170A /* TCProfileBgImageChangeView.m in Sources */,
 				7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */,
 				09AE0F751DED2AC600F307D8 /* TCServices.m in Sources */,
 				7A11F7141DE43195005F3EAB /* MLBPasswordRenderView.m in Sources */,
@@ -8934,7 +8921,6 @@
 				7AEB4CC21E03936300F83A7C /* TCBioEditNickViewController.m in Sources */,
 				7ACA4FE31DD5B8C2006634E8 /* TCUserPhoneInfo.m in Sources */,
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
-				7AEB4CC01E03936300F83A7C /* TCBioEditAvatarViewController.m in Sources */,
 				7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */,
 				096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */,
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,
