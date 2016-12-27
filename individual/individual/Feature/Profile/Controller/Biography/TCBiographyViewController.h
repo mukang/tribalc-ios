@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^TCBioEditBlock)();
+
 @interface TCBiographyViewController : UIViewController
+
+@property (copy, nonatomic) TCBioEditBlock bioEditBlock;
 
 @end

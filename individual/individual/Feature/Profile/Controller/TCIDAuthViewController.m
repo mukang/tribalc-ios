@@ -242,8 +242,8 @@ TCGenderPickerViewDelegate>
     }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] authorizeUserIdentity:self.authInfo result:^(BOOL success, NSError *error) {
-        if (success) {
+    [[TCBuluoApi api] authorizeUserIdentity:self.authInfo result:^(TCUserSensitiveInfo *sensitiveInfo, NSError *error) {
+        if (sensitiveInfo) {
             [MBProgressHUD showHUDWithMessage:@"认证成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];

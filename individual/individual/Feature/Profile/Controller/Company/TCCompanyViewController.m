@@ -189,7 +189,7 @@
                     break;
                 case 2:
                     cell.titleLabel.text = @"姓名";
-                    cell.subtitleLabel.text = [[TCBuluoApi api] currentUserSession].userInfo.name;
+                    cell.subtitleLabel.text = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.name;
                     break;
                 case 3:
                     cell.titleLabel.text = @"部门";

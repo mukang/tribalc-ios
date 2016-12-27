@@ -15,11 +15,14 @@
 #import "TCCompanyApplyViewController.h"
 #import "TCUserOrderTabBarController.h"
 #import "TCSettingViewController.h"
+#import "TCUserReserveViewController.h"
+#import "TCPropertyManageListController.h"
+#import "TCQRCodeViewController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
 #import "TCProfileProcessViewCell.h"
-#import "TCProfileBgImageChangeView.h"
+#import "TCPhotoModeView.h"
 
 #import "TCImageURLSynthesizer.h"
 #import "TCPhotoPicker.h"
@@ -27,21 +30,15 @@
 
 #import "UIImage+Category.h"
 
-#import "TCUserReserveViewController.h"
-
 #import <SDWebImage/UIImageView+WebCache.h>
-
-#import "TCPropertyManageListController.h"
-
-#import "TCQRCodeViewController.h"
 
 @interface TCProfileViewController ()
 <UITableViewDelegate,
 UITableViewDataSource,
 UIScrollViewDelegate,
 TCProfileHeaderViewDelegate,
-TCProfileBgImageChangeViewDelegate,
-TCPhotoPickerDelegate>
+TCPhotoPickerDelegate,
+TCPhotoModeViewDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) TCProfileHeaderView *headerView;
@@ -52,11 +49,6 @@ TCPhotoPickerDelegate>
 
 @property (nonatomic) CGFloat headerViewHeight;
 @property (nonatomic) CGFloat topBarHeight;
-
-/** 点击更换背景图片时弹出的半透明背景视图 */
-@property (weak, nonatomic) UIView *translucenceBgView;
-/** 点击更换背景图片时弹出的选择视图 */
-@property (weak, nonatomic) TCProfileBgImageChangeView *bgImageChangeView;
 
 @property (strong, nonatomic) TCPhotoPicker *photoPicker;
 
@@ -348,6 +340,9 @@ TCPhotoPickerDelegate>
         [self showLoginViewController];
     } else {
         TCBiographyViewController *vc = [[TCBiographyViewController alloc] init];
+        vc.bioEditBlock = ^() {
+            [weakSelf updateHeaderView];
+        };
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -373,29 +368,28 @@ TCPhotoPickerDelegate>
 
 - (void)didClickPhotographButtonInProfileHeaderView:(TCProfileHeaderView *)view {
     if ([self checkUserNeedLogin]) return;
-    [self showBgImageChangeView];
+    
+    TCPhotoModeView *photoModeView = [[TCPhotoModeView alloc] initWithController:self];
+    photoModeView.delegate = self;
+    [photoModeView show];
 }
 
-#pragma mark - TCProfileBgImageChangeViewDelegate
+#pragma mark - TCPhotoModeViewDelegate
 
-- (void)didClickPhotographButtonInProfileBgImageChangeView:(TCProfileBgImageChangeView *)view {
-    [self dismissBgImageChangeView];
+- (void)didClickCameraButtonInPhotoModeView:(TCPhotoModeView *)view {
+    [view dismiss];
     TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
     photoPicker.delegate = self;
     [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypeCamera];
     self.photoPicker = photoPicker;
 }
 
-- (void)didClickAlbumButtonInProfileBgImageChangeView:(TCProfileBgImageChangeView *)view {
-    [self dismissBgImageChangeView];
+- (void)didClickAlbumButtonInPhotoModeView:(TCPhotoModeView *)view {
+    [view dismiss];
     TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
     photoPicker.delegate = self;
     [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     self.photoPicker = photoPicker;
-}
-
-- (void)didClickCancelButtonInProfileBgImageChangeView:(TCProfileBgImageChangeView *)view {
-    [self dismissBgImageChangeView];
 }
 
 #pragma mark - TCPhotoPickerDelegate
@@ -425,37 +419,6 @@ TCPhotoPickerDelegate>
 - (void)photoPickerDidCancel:(TCPhotoPicker *)photoPicker {
     [photoPicker dismissPhotoPicker];
     self.photoPicker = nil;
-}
-
-#pragma mark - Show BgImageChangeView
-
-- (void)showBgImageChangeView {
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    UIView *translucenceBgView = [[UIView alloc] initWithFrame:keyWindow.bounds];
-    translucenceBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
-    [keyWindow addSubview:translucenceBgView];
-    self.translucenceBgView = translucenceBgView;
-    
-    TCProfileBgImageChangeView *bgImageChangeView = [[NSBundle mainBundle] loadNibNamed:@"TCProfileBgImageChangeView" owner:nil options:nil][0];
-    bgImageChangeView.delegate = self;
-    bgImageChangeView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, 182);
-    [keyWindow addSubview:bgImageChangeView];
-    self.bgImageChangeView = bgImageChangeView;
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        translucenceBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.82];
-        bgImageChangeView.y = TCScreenHeight - bgImageChangeView.height;
-    }];
-}
-
-- (void)dismissBgImageChangeView {
-    [UIView animateWithDuration:0.25 animations:^{
-        weakSelf.translucenceBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
-        weakSelf.bgImageChangeView.y = TCScreenHeight;
-    } completion:^(BOOL finished) {
-        [weakSelf.translucenceBgView removeFromSuperview];
-        [weakSelf.bgImageChangeView removeFromSuperview];
-    }];
 }
 
 #pragma mark - Show Login View Controller

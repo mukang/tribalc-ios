@@ -13,7 +13,8 @@
 
 + (NSDictionary *)objectClassInDictionary {
     return @{
-             @"shippingAddress": [TCUserShippingAddress class]
+             @"shippingAddress": [TCUserShippingAddress class],
+             @"sip": [TCUserSipInfo class]
              };
 }
 
