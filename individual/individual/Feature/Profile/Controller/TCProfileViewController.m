@@ -147,15 +147,17 @@ TCPhotoModeViewDelegate>
         TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
         self.headerView.nickLabel.text = userInfo.nickname;
         if (userInfo.picture) {
+            UIImage *currentAvatarImage = self.headerView.avatarImageView.image;
             NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:userInfo.picture];
-            [self.headerView.avatarImageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
+            [self.headerView.avatarImageView sd_setImageWithURL:URL placeholderImage:currentAvatarImage options:SDWebImageRetryFailed];
         } else {
             [self.headerView.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
         }
         
         if (userInfo.cover) {
+            UIImage *currentBgImage = self.headerView.bgImageView.image;
             NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:userInfo.cover];
-            [self.headerView.bgImageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
+            [self.headerView.bgImageView sd_setImageWithURL:URL placeholderImage:currentBgImage options:SDWebImageRetryFailed];
         } else {
             [self.headerView.bgImageView setImage:[UIImage imageNamed:@"profile_default_cover"]];
         }

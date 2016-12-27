@@ -32,8 +32,9 @@
     if (!avatar) {
         [self.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
     } else {
+        UIImage *currentAvatarImage = self.avatarImageView.image;
         NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:avatar];
-        [self.avatarImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
+        [self.avatarImageView sd_setImageWithURL:URL placeholderImage:currentAvatarImage options:SDWebImageRetryFailed];
     }
 }
 
