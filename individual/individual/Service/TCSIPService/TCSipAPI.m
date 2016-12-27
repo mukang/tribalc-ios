@@ -120,8 +120,13 @@
         case LinphoneCallError: {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"openFailed" object:nil];
             NSRange r = [message rangeOfString:@"text="];
-            NSString *err = [message substringFromIndex:r.location+r.length];
-            [MBProgressHUD showHUDWithMessage:err];
+            if (r.length > 0) {
+                NSString *err = [message substringFromIndex:r.location+r.length];
+                [MBProgressHUD showHUDWithMessage:err];
+            }else {
+                [MBProgressHUD showHUDWithMessage:message];
+            }
+            
             TCLog(@"%@",message);
             break;
         }
@@ -283,6 +288,9 @@
 }
 
 - (void)login {
+    
+    
+    
     LinphoneAccountCreatorStatus s = linphone_account_creator_set_username(account_creator, @"10004".UTF8String);
     LinphoneAccountCreatorStatus s1 = linphone_account_creator_set_password(account_creator, @"3Q@110PA".UTF8String);
     LinphoneAccountCreatorStatus s2 = linphone_account_creator_set_domain(account_creator, @"dyc.bj.buluo-gs.com".UTF8String);
