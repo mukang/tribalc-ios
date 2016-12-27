@@ -74,7 +74,8 @@
     CGFloat scale = screenW/375.0;
     UIImageView *topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenW, scale*253)];
     [self.view addSubview:topImageView];
-    topImageView.image = [UIImage imageNamed:@"downImage.jpg"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"downImage01" ofType:@"jpg"];
+    topImageView.image = [UIImage imageWithContentsOfFile:path];
     
     UIView *v = [[UIView alloc] initWithFrame:CGRectMake((screenW-220.0)/2, CGRectGetMaxY(topImageView.frame), 220, scale*45)];
     [self.view addSubview:v];

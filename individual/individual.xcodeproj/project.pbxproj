@@ -623,6 +623,7 @@
 		7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5238241DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m */; };
 		7A58C5EF1E120D5E00C55A2C /* TCIDAuthDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A58C5EE1E120D5E00C55A2C /* TCIDAuthDetailViewController.m */; };
 		7A58C5F21E120F0300C55A2C /* TCIDAuthDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A58C5F11E120F0300C55A2C /* TCIDAuthDetailViewCell.m */; };
+		7A58C5F41E12719800C55A2C /* downImage01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7A58C5F31E12719800C55A2C /* downImage01.jpg */; };
 		7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87711DE297A100E4130B /* TCWalletAccount.m */; };
 		7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F877E1DE2EEB100E4130B /* TCWalletBill.m */; };
 		7A5F87821DE2EFF500E4130B /* TCWalletBillWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87811DE2EFF500E4130B /* TCWalletBillWrapper.m */; };
@@ -2922,6 +2923,7 @@
 		7A58C5EE1E120D5E00C55A2C /* TCIDAuthDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthDetailViewController.m; sourceTree = "<group>"; };
 		7A58C5F01E120F0300C55A2C /* TCIDAuthDetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIDAuthDetailViewCell.h; sourceTree = "<group>"; };
 		7A58C5F11E120F0300C55A2C /* TCIDAuthDetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthDetailViewCell.m; sourceTree = "<group>"; };
+		7A58C5F31E12719800C55A2C /* downImage01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = downImage01.jpg; sourceTree = "<group>"; };
 		7A5F87701DE297A100E4130B /* TCWalletAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletAccount.h; sourceTree = "<group>"; };
 		7A5F87711DE297A100E4130B /* TCWalletAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletAccount.m; sourceTree = "<group>"; };
 		7A5F877D1DE2EEB100E4130B /* TCWalletBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletBill.h; sourceTree = "<group>"; };
@@ -7871,6 +7873,7 @@
 			children = (
 				559D84921E0C045800982697 /* LinPhoneSources */,
 				55F06F071E053A1000A849D7 /* downImage.jpg */,
+				7A58C5F31E12719800C55A2C /* downImage01.jpg */,
 				7AC292291DC8BEA900B2C7E8 /* BinaryFiles */,
 			);
 			path = Resource;
@@ -8416,6 +8419,7 @@
 				553DC8FA1DFFE2300018783E /* LinphoneTargets-release.cmake in Resources */,
 				7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */,
 				553DC87F1DFFE22F0018783E /* BcToolboxTargets-release.cmake in Resources */,
+				7A58C5F41E12719800C55A2C /* downImage01.jpg in Resources */,
 				553DC87E1DFFE22F0018783E /* BcToolboxConfigVersion.cmake in Resources */,
 				7A4E050F1DEEDC69002371B0 /* TCCommonInputViewCell.xib in Resources */,
 				553DC89A1DFFE22F0018783E /* Mediastreamer2Targets.cmake in Resources */,
