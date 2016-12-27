@@ -1690,6 +1690,10 @@ static BOOL libStarted = FALSE;
 	// linphone_core_migrate_to_multi_transport(theLinphoneCore);
 
 	// init audio session (just getting the instance will init)
+    
+    
+    
+    
 	AVAudioSession *audioSession = [AVAudioSession sharedInstance];
 	BOOL bAudioInputAvailable = audioSession.inputAvailable;
 	NSError *err;

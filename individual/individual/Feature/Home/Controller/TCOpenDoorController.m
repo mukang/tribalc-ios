@@ -13,7 +13,7 @@
 #import "TCLinphoneUtils.h"
 #import "TCSipAPI.h"
 
-@interface TCOpenDoorController ()
+@interface TCOpenDoorController ()<CAAnimationDelegate>
 
 @property (nonatomic, strong) UIButton *openBtn;
 
@@ -26,6 +26,9 @@
 @property (nonatomic, strong) CABasicAnimation *scaleAnima;
 
 @property (nonatomic, strong) CAAnimationGroup *groupAnima;
+
+@property (nonatomic, strong) NSTimer *timer;
+
 @end
 
 @implementation TCOpenDoorController
@@ -37,14 +40,12 @@
     [self setUpUI];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openSuccessed) name:@"opend" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(end) name:@"end" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fail) name:@"openFailed" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toClose) name:@"closed" object:nil];
     
 }
 
 - (void)toClose {
-    [self close];
     @WeakObj(self)
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         @StrongObj(self)
@@ -59,23 +60,17 @@
     [self close];
 }
 
-- (void)end {
-    [self close];
-    [_openBtn setImage:nil forState:UIControlStateNormal];
-    [_openBtn setTitle:@"开锁" forState:UIControlStateNormal];
-    _openBtn.titleLabel.font = [UIFont systemFontOfSize:21];
-}
-
 - (void)openSuccessed {
+    
+    [_timer invalidate];
+    _timer = nil;
+    
     [_openBtn setImage:[UIImage imageNamed:@"opened"] forState:UIControlStateNormal];
     [_openBtn setTitle:@"" forState:UIControlStateNormal];
     
     
 }
 
-//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    [self close];
-//}
 
 - (void)setUpUI {
     
@@ -119,9 +114,71 @@
 
 
 - (void)click {
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(setUp) userInfo:nil repeats:YES];
+    
     _openBtn.enabled = NO;
     [_openBtn setTitle:@"开锁中" forState:UIControlStateNormal];
     
+    [self openDoor];
+}
+
+
+//画雷达圆圈图
+-(void)setUp
+{
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    shapeLayer.frame = _openBtn.layer.bounds;
+    shapeLayer.fillColor = [UIColor clearColor].CGColor;
+    shapeLayer.strokeColor = [UIColor whiteColor].CGColor;
+    shapeLayer.opacity = 0.5;
+    shapeLayer.path = [UIBezierPath bezierPathWithOvalInRect:shapeLayer.bounds].CGPath;
+    NSLog(@"%lu",self.openBtn.layer.sublayers.count);
+    [_openBtn.layer insertSublayer:shapeLayer atIndex:0];
+    NSLog(@"%lu",self.openBtn.layer.sublayers.count);
+    
+    CABasicAnimation *scaleAnima = [CABasicAnimation animationWithKeyPath:@"transform"];
+    scaleAnima.fromValue = [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.0, 0.0, 0.0)];
+    scaleAnima.toValue = [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 5, 5, 0.0)];
+    
+    
+    //雷达圈圈的透明度
+    CABasicAnimation *opacityAnimation = [CABasicAnimation animation];
+    opacityAnimation.keyPath = @"opacity";
+    
+    opacityAnimation.fromValue = @(0.5);
+    opacityAnimation.toValue = @(0);
+    opacityAnimation.fillMode = kCAFillModeForwards;
+    
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.animations = @[scaleAnima,opacityAnimation];
+    group.duration = 7;
+    group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    group.delegate = self;
+    //指定的时间段完成后,动画就自动的从层上移除
+    group.removedOnCompletion = YES;
+    //添加动画到layer
+    [shapeLayer addAnimation:group forKey:nil];
+    
+}
+
+-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    
+    if (flag) {
+        NSLog(@"animationDidStop----");
+        if ([self.openBtn.layer.sublayers[0] isKindOfClass:[CAShapeLayer class]]) {
+            CAShapeLayer *shaperLayer = (CAShapeLayer *)self.openBtn.layer.sublayers[0];
+            [shaperLayer removeFromSuperlayer];
+            shaperLayer = nil;
+            NSLog(@"layers:%lu",self.openBtn.layer.sublayers.count);
+        }
+        
+    }
+}
+
+
+- (void)setUpAnimation {
     if (_pulseLayer == nil) {
         CAShapeLayer *pulseLayer = [CAShapeLayer layer];
         pulseLayer.frame = _openBtn.layer.bounds;
@@ -170,14 +227,22 @@
     }
     
     [_pulseLayer addAnimation:_groupAnima forKey:@"groupAnimation"];
-    
-    [self openDoor];
 }
 
 
 - (void)close {
     
-    [_pulseLayer removeAllAnimations];
+    [_timer invalidate];
+    _timer = nil;
+    
+    
+    if ([self.openBtn.layer.sublayers[0] isKindOfClass:[CAShapeLayer class]]) {
+        CAShapeLayer *shaperLayer = (CAShapeLayer *)self.openBtn.layer.sublayers[0];
+        [shaperLayer removeFromSuperlayer];
+        shaperLayer = nil;
+        NSLog(@"%lu",self.openBtn.layer.sublayers.count);
+    }
+
     
     LinphoneCall *currentcall = linphone_core_get_current_call(LC);
     if (linphone_core_is_in_conference(LC) ||										   // In conference
@@ -250,6 +315,7 @@
 
 - (void)dealloc {
     TCLog(@"TCOpenDoorController--dealloc");
+    NSLog(@"%lu",self.openBtn.layer.sublayers.count);
 }
 
 
