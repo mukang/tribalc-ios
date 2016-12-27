@@ -11,6 +11,7 @@
 #import "TCBiographyViewController.h"
 #import "TCWalletViewController.h"
 #import "TCIDAuthViewController.h"
+#import "TCIDAuthDetailViewController.h"
 #import "TCCompanyViewController.h"
 #import "TCCompanyApplyViewController.h"
 #import "TCUserOrderTabBarController.h"
@@ -310,9 +311,7 @@ TCPhotoModeViewDelegate>
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } else if (indexPath.row == 1) { // 身份认证
-            TCIDAuthViewController *vc = [[TCIDAuthViewController alloc] initWithNibName:@"TCIDAuthViewController" bundle:[NSBundle mainBundle]];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
+            [self handleDidSelectedIDAuthCell];
         } else if (indexPath.row == 2) { // 我的预定
             TCUserReserveViewController *userReserveViewController = [[TCUserReserveViewController alloc] init];
             userReserveViewController.hidesBottomBarWhenPushed = YES;
@@ -522,6 +521,23 @@ TCPhotoModeViewDelegate>
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
         }
     }];
+}
+
+- (void)handleDidSelectedIDAuthCell {
+    TCUserSensitiveInfo *sensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
+    UIViewController *currentVC;
+    if ([sensitiveInfo.authorizedStatus isEqualToString:@"PROCESSING"]) {
+        TCIDAuthDetailViewController *vc = [[TCIDAuthDetailViewController alloc] initWithIDAuthStatus:TCIDAuthStatusProcessing];
+        currentVC = vc;
+    } else if ([sensitiveInfo.authorizedStatus isEqualToString:@"SUCCESS"] || [sensitiveInfo.authorizedStatus isEqualToString:@"FAILURE"]) {
+        TCIDAuthDetailViewController *vc = [[TCIDAuthDetailViewController alloc] initWithIDAuthStatus:TCIDAuthStatusFinished];
+        currentVC = vc;
+    } else {
+        TCIDAuthViewController *vc = [[TCIDAuthViewController alloc] initWithNibName:@"TCIDAuthViewController" bundle:[NSBundle mainBundle]];
+        currentVC = vc;
+    }
+    currentVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:currentVC animated:YES];
 }
 
 - (void)touchOrderButton:(UIButton *)button {

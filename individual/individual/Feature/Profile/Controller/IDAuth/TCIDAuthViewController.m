@@ -49,7 +49,6 @@ TCGenderPickerViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
     weakSelf = self;
     
     [self setupNavBar];
@@ -220,7 +219,8 @@ TCGenderPickerViewDelegate>
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    UIViewController *vc = self.navigationController.childViewControllers[0];
+    [self.navigationController popToViewController:vc animated:YES];
 }
 
 - (void)handleClickCommitButton:(TCCommonButton *)sender {
@@ -246,7 +246,7 @@ TCGenderPickerViewDelegate>
         if (sensitiveInfo) {
             [MBProgressHUD showHUDWithMessage:@"认证成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf.navigationController popViewControllerAnimated:YES];
+                [weakSelf handleClickBackButton:nil];
             });
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
