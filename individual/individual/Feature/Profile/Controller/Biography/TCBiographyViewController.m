@@ -315,6 +315,14 @@
 }
 
 - (void)handleSelectGenderCell {
+    if ([[[TCBuluoApi api] currentUserSession].userSensitiveInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+        [MBProgressHUD showHUDWithMessage:@"身份认证成功后，不能再修改性别"];
+        return;
+    }
+    if ([[[TCBuluoApi api] currentUserSession].userSensitiveInfo.authorizedStatus isEqualToString:@"PROCESSING"]) {
+        [MBProgressHUD showHUDWithMessage:@"身份认证审核中，不能修改性别"];
+        return;
+    }
     TCBioEditGenderViewController *vc = [[TCBioEditGenderViewController alloc] init];
     vc.gender = [[TCBuluoApi api] currentUserSession].userInfo.gender;
     vc.editGenderBlock = ^() {
@@ -333,6 +341,14 @@
 }
 
 - (void)handleSelectBirthdateCell {
+    if ([[[TCBuluoApi api] currentUserSession].userSensitiveInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+        [MBProgressHUD showHUDWithMessage:@"身份认证成功后，不能再修改出生日期"];
+        return;
+    }
+    if ([[[TCBuluoApi api] currentUserSession].userSensitiveInfo.authorizedStatus isEqualToString:@"PROCESSING"]) {
+        [MBProgressHUD showHUDWithMessage:@"身份认证审核中，不能修改出生日期"];
+        return;
+    }
     TCBioEditBirthdateViewController *vc = [[TCBioEditBirthdateViewController alloc] init];
     NSInteger birthday = [[TCBuluoApi api] currentUserSession].userInfo.birthday;
     if (birthday) {
