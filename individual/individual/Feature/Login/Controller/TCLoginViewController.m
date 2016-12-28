@@ -7,6 +7,7 @@
 //
 
 #import "TCLoginViewController.h"
+#import "TCUserAgreementViewController.h"
 
 #import "TCGetPasswordView.h"
 
@@ -42,10 +43,19 @@
     weakSelf = self;
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapViewGesture:)];
+    tapGesture.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapGesture];
     
     [self setupSubviews];
     [self setupConstraints];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.navigationController) {
+        self.navigationController.navigationBarHidden = YES;
+    }
 }
 
 - (void)setupSubviews {
@@ -75,7 +85,7 @@
     NSRange highlightRange = [noticeStr rangeOfString:userAgreementStr];
     YYTextHighlight *highlight = [[YYTextHighlight alloc] init];
     highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
-        NSLog(@"部落公社注册协议");
+        [weakSelf handleTapUserAgreementStr];
     };
     NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:noticeStr];
     attText.yy_font = [UIFont systemFontOfSize:12];
@@ -87,6 +97,9 @@
     noticeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     noticeLabel.attributedText = attText;
     noticeLabel.textAlignment = NSTextAlignmentCenter;
+    noticeLabel.size = CGSizeMake(350, 20);
+    noticeLabel.x = 50;
+    noticeLabel.y = 200;
     [self.view addSubview:noticeLabel];
     self.noticeLabel = noticeLabel;
 }
@@ -169,6 +182,7 @@
                                              multiplier:1.0
                                                constant:-17];
     [self.view addConstraint:constraint];
+    
 }
 
 
@@ -176,8 +190,11 @@
 
 - (IBAction)handleTapBackButton:(UIButton *)sender {
     [self hideKeyboard];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.navigationController) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)handleTapLoginButton:(UIButton *)sender {
@@ -200,7 +217,7 @@
     [[TCBuluoApi api] login:phoneInfo result:^(TCUserSession *userSession, NSError *error) {
         if (userSession) {
             [MBProgressHUD hideHUD:YES];
-            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+            [weakSelf handleTapBackButton:nil];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"登录失败，%@", reason]];
@@ -220,6 +237,11 @@
     [self.view endEditing:YES];
 }
 
+- (void)handleTapUserAgreementStr {
+    TCUserAgreementViewController *vc = [[TCUserAgreementViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -235,7 +257,7 @@
     [self hideKeyboard];
     
     if (self.accountTextField.text.length == 0) {
-        [MBProgressHUD showHUDWithMessage:@"请您填写手机号码！"];
+        [MBProgressHUD showHUDWithMessage:@"请您填写手机号码"];
         return;
     }
     

@@ -8,6 +8,7 @@
 
 #import "TCToolsViewController.h"
 #import "TCRepairsViewController.h"
+#import "TCNavigationController.h"
 
 #import "UIImage+Category.h"
 #import "TCBuluoApi.h"
@@ -162,7 +163,8 @@
 
 - (void)showLoginViewController {
     TCLoginViewController *vc = [[TCLoginViewController alloc] initWithNibName:@"TCLoginViewController" bundle:[NSBundle mainBundle]];
-    [self presentViewController:vc animated:YES completion:nil];
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - Status Bar
