@@ -12,7 +12,7 @@
 
 @interface TCBiographyAvatarViewCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+
 
 @end
 
@@ -24,18 +24,6 @@
     
     self.avatarImageView.layer.cornerRadius = 30;
     self.avatarImageView.layer.masksToBounds = YES;
-}
-
-- (void)setAvatar:(NSString *)avatar {
-    _avatar = avatar;
-    
-    if (!avatar) {
-        [self.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
-    } else {
-        UIImage *currentAvatarImage = self.avatarImageView.image;
-        NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:avatar];
-        [self.avatarImageView sd_setImageWithURL:URL placeholderImage:currentAvatarImage options:SDWebImageRetryFailed];
-    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

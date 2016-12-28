@@ -163,11 +163,13 @@
             cell.subtitleLabel.text = self.sensitiveInfo.name;
             break;
         case 1:
-        {
             cell.titleLabel.text = @"出生日期";
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.userInfo.birthday / 1000];
-            cell.subtitleLabel.text = [self.dateFormatter stringFromDate:date];
-        }
+            if (self.userInfo.birthday) {
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.userInfo.birthday / 1000];
+                cell.subtitleLabel.text = [self.dateFormatter stringFromDate:date];
+            } else {
+                cell.subtitleLabel.text = @"";
+            }
             break;
         case 2:
             cell.titleLabel.text = @"性别";

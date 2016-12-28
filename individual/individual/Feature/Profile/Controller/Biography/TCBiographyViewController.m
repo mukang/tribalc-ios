@@ -26,6 +26,8 @@
 #import "TCPhotoPicker.h"
 #import "TCImageURLSynthesizer.h"
 
+#import <UIImageView+WebCache.h>
+
 @interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource, TCPhotoModeViewDelegate, TCPhotoPickerDelegate>
 
 @property (copy, nonatomic) NSArray *biographyTitles;
@@ -159,7 +161,14 @@
     UITableViewCell *currentCell = nil;
     if (indexPath.section == 0 && indexPath.row == 0) {
         TCBiographyAvatarViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyAvatarViewCell" forIndexPath:indexPath];
-        cell.avatar = [[TCBuluoApi api] currentUserSession].userInfo.picture;
+        NSString *picture = [[TCBuluoApi api] currentUserSession].userInfo.picture;
+        if (picture) {
+            UIImage *currentAvatarImage = cell.avatarImageView.image;
+            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:picture];
+            [cell.avatarImageView sd_setImageWithURL:URL placeholderImage:currentAvatarImage options:SDWebImageRetryFailed];
+        } else {
+            [cell.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
+        }
         currentCell = cell;
     } else {
         TCBiographyViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyViewCell" forIndexPath:indexPath];
@@ -287,8 +296,7 @@
     [[TCBuluoApi api] changeUserAvatar:imagePath result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD hideHUD:YES];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [weakSelf.tableView reloadData];
             if (weakSelf.bioEditBlock) {
                 weakSelf.bioEditBlock();
             }

@@ -10,6 +10,6 @@
 
 @interface TCBiographyAvatarViewCell : UITableViewCell
 
-@property (copy, nonatomic) NSString *avatar;
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
 @end
