@@ -468,16 +468,22 @@
 #pragma mark - click
 - (void)touchCommunityUnlockBtn:(UIButton *)button {
     
-    [self endTitleScrollTimer];   //计时器停止
-    @WeakObj(self)
-    if (_blurImageView == nil) {
-        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
-            @StrongObj(self)
-            [self startTitleScrollTimer];
-            _blurImageView = nil;
-        }];
-    }
-    [_blurImageView show];
+    if ([self checkUserNeedLogin]) return;
+    
+//    if ([[TCBuluoApi api] currentUserSession].userSensitiveInfo.companyID) {
+        [self endTitleScrollTimer];   //计时器停止
+        @WeakObj(self)
+        if (_blurImageView == nil) {
+            _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
+                @StrongObj(self)
+                [self startTitleScrollTimer];
+                _blurImageView = nil;
+            }];
+        }
+        [_blurImageView show];
+//    }else {
+//        [MBProgressHUD showHUDWithMessage:@"请先绑定公司"];
+//    }
 }
 
 

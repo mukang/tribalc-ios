@@ -68,7 +68,6 @@
     [_openBtn setImage:[UIImage imageNamed:@"opened"] forState:UIControlStateNormal];
     [_openBtn setTitle:@"" forState:UIControlStateNormal];
     
-    
 }
 
 
@@ -135,6 +134,7 @@
     shapeLayer.path = [UIBezierPath bezierPathWithOvalInRect:shapeLayer.bounds].CGPath;
     NSLog(@"%lu",self.openBtn.layer.sublayers.count);
     [_openBtn.layer insertSublayer:shapeLayer atIndex:0];
+
     NSLog(@"%lu",self.openBtn.layer.sublayers.count);
     
     CABasicAnimation *scaleAnima = [CABasicAnimation animationWithKeyPath:@"transform"];
@@ -152,7 +152,7 @@
     
     CAAnimationGroup *group = [CAAnimationGroup animation];
     group.animations = @[scaleAnima,opacityAnimation];
-    group.duration = 7;
+    group.duration = 8;
     group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     group.delegate = self;
     //指定的时间段完成后,动画就自动的从层上移除
@@ -165,16 +165,17 @@
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     
-    if (flag) {
-        NSLog(@"animationDidStop----");
-        if ([self.openBtn.layer.sublayers[0] isKindOfClass:[CAShapeLayer class]]) {
-            CAShapeLayer *shaperLayer = (CAShapeLayer *)self.openBtn.layer.sublayers[0];
-            [shaperLayer removeFromSuperlayer];
-            shaperLayer = nil;
-            NSLog(@"layers:%lu",self.openBtn.layer.sublayers.count);
-        }
-        
-    }
+//    if (flag) {
+//        
+//        NSLog(@"animationDidStop----");
+//        if ([self.openBtn.layer.sublayers.lastObject isKindOfClass:[CAShapeLayer class]]) {
+//            CAShapeLayer *shaperLayer = (CAShapeLayer *)self.openBtn.layer.sublayers[0];
+//            [shaperLayer removeFromSuperlayer];
+//            shaperLayer = nil;
+//            NSLog(@"layers:%lu",self.openBtn.layer.sublayers.count);
+//        }
+//        
+//    }
 }
 
 
@@ -235,13 +236,15 @@
     [_timer invalidate];
     _timer = nil;
     
+//    [_pulseLayer removeFromSuperlayer];
     
-    if ([self.openBtn.layer.sublayers[0] isKindOfClass:[CAShapeLayer class]]) {
-        CAShapeLayer *shaperLayer = (CAShapeLayer *)self.openBtn.layer.sublayers[0];
-        [shaperLayer removeFromSuperlayer];
-        shaperLayer = nil;
-        NSLog(@"%lu",self.openBtn.layer.sublayers.count);
-    }
+    
+//    if ([self.openBtn.layer.sublayers[0] isKindOfClass:[CAShapeLayer class]]) {
+//        CAShapeLayer *shaperLayer = (CAShapeLayer *)self.openBtn.layer.sublayers[0];
+//        [shaperLayer removeFromSuperlayer];
+//        shaperLayer = nil;
+//        NSLog(@"%lu",self.openBtn.layer.sublayers.count);
+//    }
 
     
     LinphoneCall *currentcall = linphone_core_get_current_call(LC);
@@ -315,7 +318,7 @@
 
 - (void)dealloc {
     TCLog(@"TCOpenDoorController--dealloc");
-    NSLog(@"%lu",self.openBtn.layer.sublayers.count);
+    NSLog(@"-----------%lu",self.openBtn.layer.sublayers.count);
 }
 
 

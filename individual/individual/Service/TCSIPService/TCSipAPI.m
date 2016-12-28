@@ -7,6 +7,7 @@
 //
 
 #import "TCSipAPI.h"
+#import "TCBuluoApi.h"
 
 
 @interface TCSipAPI (){
@@ -289,15 +290,17 @@
 
 - (void)login {
     
-    
-    
-    LinphoneAccountCreatorStatus s = linphone_account_creator_set_username(account_creator, @"10004".UTF8String);
-    LinphoneAccountCreatorStatus s1 = linphone_account_creator_set_password(account_creator, @"3Q@110PA".UTF8String);
-    LinphoneAccountCreatorStatus s2 = linphone_account_creator_set_domain(account_creator, @"dyc.bj.buluo-gs.com".UTF8String);
-    //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    TCUserSipInfo *sipInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.sip;
+    if (sipInfo) {
+        linphone_account_creator_set_username(account_creator, sipInfo.user.UTF8String);
+        linphone_account_creator_set_password(account_creator, sipInfo.password.UTF8String);
+        linphone_account_creator_set_domain(account_creator, sipInfo.domain.UTF8String);
+        //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [LinphoneManager.instance lpConfigSetInt:1 forKey:@"transient_provisioning" inSection:@"misc"];
         [self configureProxyConfig];
-//    });
+        //    });
+    }
+    
 }
 
 - (void)configureProxyConfig {
