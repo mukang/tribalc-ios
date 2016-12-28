@@ -15,6 +15,9 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - Bugly (2.4.2)
+  - EAIntroView (2.10.0):
+    - EARestrictedScrollView (~> 1.1.0)
+  - EARestrictedScrollView (1.1.0)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - MGSwipeTableCell (1.5.6)
@@ -29,6 +32,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - Bugly
+  - EAIntroView (~> 2.10.0)
   - Masonry
   - MBProgressHUD (~> 1.0.0)
   - MGSwipeTableCell (~> 1.5.6)
@@ -41,6 +45,8 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Bugly: b09cd3c7e54048a0e079be88a7a99610f14eab8f
+  EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
+  EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MGSwipeTableCell: 616700eb0ffd1c611ba909066cb7fd739790a0a7
@@ -50,6 +56,6 @@ SPEC CHECKSUMS:
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 554fdfca92cec46ef8bbd144cb98986df518dd03
+PODFILE CHECKSUM: 90592aef1cf31daf378cdc9279eb5ed8f272773d
 
 COCOAPODS: 1.1.1
