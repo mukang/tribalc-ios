@@ -37,6 +37,7 @@
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL sessionConfiguration:configuration];
         _sessionManager.completionQueue = dispatch_queue_create("com.buluo-gs.queue", NULL);
         _requestSerializer = [AFJSONRequestSerializer serializer];
+        [_requestSerializer setTimeoutInterval:15];
         [_requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         _responseSerializer = [AFHTTPResponseSerializer serializer];
         _sessionManager.requestSerializer = _requestSerializer;
