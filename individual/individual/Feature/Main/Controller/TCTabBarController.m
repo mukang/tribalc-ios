@@ -15,6 +15,10 @@
 #import "TCToolsViewController.h"
 
 #import "TCTabBar.h"
+#import "TCFunctions.h"
+#import <EAIntroView/EAIntroView.h>
+
+static NSString *const kAppVersion = @"kAppVersion";
 
 @interface TCTabBarController ()
 
@@ -36,6 +40,8 @@
     [self setValue:[[TCTabBar alloc] init] forKey:@"tabBar"];
     
     [self registerNotifications];
+    
+    [self handleShowIntroView];
 }
 
 - (void)dealloc {
@@ -84,7 +90,39 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
+#pragma mark - Intro View
 
+/**
+ 判断是否要显示引导页
+ */
+- (void)handleShowIntroView {
+    if (![self isFirstLaunch]) return;
+    
+    NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:3];
+    for (int i=0; i<3; i++) {
+        NSString *imagePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"intro_image_%02zd", i+1] ofType:@"png"];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        imageView.image = [UIImage imageWithContentsOfFile:imagePath];
+        EAIntroPage *introPage = [EAIntroPage pageWithCustomView:imageView];
+        [tempArray addObject:introPage];
+    }
+    EAIntroView *introView = [[EAIntroView alloc] initWithFrame:self.view.bounds andPages:tempArray];
+    introView.skipButton.hidden = YES;
+    introView.scrollView.bounces = NO;
+    [introView showInView:self.view animateDuration:0];
+}
+
+- (BOOL)isFirstLaunch {
+    NSString *appVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kAppVersion];
+    NSString *currentAppVersion = TCGetAppVersion();
+    if (appVersion == nil || ![appVersion isEqualToString:currentAppVersion]) {
+        [[NSUserDefaults standardUserDefaults] setObject:currentAppVersion forKey:kAppVersion];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return YES;
+    } else {
+        return NO;
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
