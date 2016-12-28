@@ -115,6 +115,7 @@ static CGFloat const duration = 0.25;
     pickerView.delegate = self;
     pickerView.frame = CGRectMake(0, 40, containerView.width, containerView.height - 40);
     [containerView addSubview:pickerView];
+    self.pickerView = pickerView;
 }
 
 #pragma mark - UIPickerViewDataSource

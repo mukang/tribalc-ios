@@ -49,7 +49,6 @@ TCGenderPickerViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
     weakSelf = self;
     
     [self setupNavBar];
@@ -185,7 +184,7 @@ TCGenderPickerViewDelegate>
     if (indexPath.row == TCInputCellTypeBirthdate) {
         TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithController:self];
         datePickerView.datePicker.datePickerMode = UIDatePickerModeDate;
-        datePickerView.datePicker.date = [self.dateFormatter dateFromString:@"1990年01月01日"];
+        datePickerView.datePicker.date = self.authInfo.birthday ? [NSDate dateWithTimeIntervalSince1970:self.authInfo.birthday/1000] : [self.dateFormatter dateFromString:@"1990年01月01日"];
         datePickerView.datePicker.maximumDate = [NSDate date];
         datePickerView.delegate = self;
         [datePickerView show];
@@ -220,7 +219,8 @@ TCGenderPickerViewDelegate>
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    UIViewController *vc = self.navigationController.childViewControllers[0];
+    [self.navigationController popToViewController:vc animated:YES];
 }
 
 - (void)handleClickCommitButton:(TCCommonButton *)sender {
@@ -244,9 +244,9 @@ TCGenderPickerViewDelegate>
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] authorizeUserIdentity:self.authInfo result:^(TCUserSensitiveInfo *sensitiveInfo, NSError *error) {
         if (sensitiveInfo) {
-            [MBProgressHUD showHUDWithMessage:@"认证成功"];
+            [MBProgressHUD showHUDWithMessage:@"认证申请已提交"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf.navigationController popViewControllerAnimated:YES];
+                [weakSelf handleClickBackButton:nil];
             });
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -282,6 +282,12 @@ TCGenderPickerViewDelegate>
 - (TCUserIDAuthInfo *)authInfo {
     if (_authInfo == nil) {
         _authInfo = [[TCUserIDAuthInfo alloc] init];
+        TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+        TCUserSensitiveInfo *userSensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
+        _authInfo.name = userSensitiveInfo.name ?: nil;
+        _authInfo.birthday = userInfo.birthday ?: 0;
+        _authInfo.personSex = userInfo.sex ?: nil;
+        _authInfo.idNo = userSensitiveInfo.idNo ?: nil;
     }
     return _authInfo;
 }
