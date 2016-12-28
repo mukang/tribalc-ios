@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>microphoneDesciption</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleExecutable</key>
@@ -22,39 +20,45 @@
 	<string>3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>buluo-gs-pictures.oss-cn-beijing.aliyuncs.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>dev-app-services.buluo-gs.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>用于二维码扫描以及更新头像和背景</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>microphoneDesciption</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>更新头像和背景</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<false/>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSExceptionDomains</key>
-        <dict>
-            <key>dev-app-services.buluo-gs.com</key>
-            <dict>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-            </dict>
-            <key>buluo-gs-pictures.oss-cn-beijing.aliyuncs.com</key>
-            <dict>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-            </dict>
-        </dict>
-    </dict>
 </dict>
 </plist>

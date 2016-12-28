@@ -38,6 +38,7 @@ static NSString *const kBuglyAppID = @"900059019";
         [sipApi login];
     });
     
+    application.statusBarHidden = NO;
     return YES;
 }
 

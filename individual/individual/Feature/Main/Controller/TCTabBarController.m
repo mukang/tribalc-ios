@@ -108,6 +108,7 @@ static NSString *const kAppVersion = @"kAppVersion";
     }
     EAIntroView *introView = [[EAIntroView alloc] initWithFrame:self.view.bounds andPages:tempArray];
     introView.skipButton.hidden = YES;
+    introView.pageControl.hidden = YES;
     introView.scrollView.bounces = NO;
     [introView showInView:self.view animateDuration:0];
 }
