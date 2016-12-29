@@ -12,6 +12,7 @@
 #import <Bugly/Bugly.h>
 
 #import "TCSipAPI.h"
+#import "WXApiManager.h"
 
 static NSString *const kBuglyAppID = @"900059019";
 
@@ -29,16 +30,20 @@ static NSString *const kBuglyAppID = @"900059019";
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    application.statusBarHidden = NO;
     
+    // bugly
     [Bugly startWithAppId:kBuglyAppID];
     
+    // SIP
     TCSipAPI *sipApi = [TCSipAPI api];
-    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [sipApi login];
     });
     
-    application.statusBarHidden = NO;
+    // wechat
+    [WXApi registerApp:kWXAppID];
+    
     return YES;
 }
 
@@ -61,7 +66,6 @@ static NSString *const kBuglyAppID = @"900059019";
         [[TCSipAPI api] login];
     }
 }
-
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
@@ -87,6 +91,20 @@ static NSString *const kBuglyAppID = @"900059019";
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    if ([url.absoluteString hasPrefix:@"wx"]) {
+        return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+    }
+    return NO;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if ([url.absoluteString hasPrefix:@"wx"]) {
+        return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+    }
+    return NO;
 }
 
 @end

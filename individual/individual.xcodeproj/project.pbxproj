@@ -625,6 +625,8 @@
 		7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87711DE297A100E4130B /* TCWalletAccount.m */; };
 		7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F877E1DE2EEB100E4130B /* TCWalletBill.m */; };
 		7A5F87821DE2EFF500E4130B /* TCWalletBillWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87811DE2EFF500E4130B /* TCWalletBillWrapper.m */; };
+		7A64EA7A1E14EC55008D0C12 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A64EA761E14EC55008D0C12 /* libWeChatSDK.a */; };
+		7A64EA7D1E14EEE0008D0C12 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */; };
 		7A6506D31DC993D400B0EDBF /* TCTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6506D21DC993D400B0EDBF /* TCTabBar.m */; };
 		7A68C7F51DB9EF6700027C6E /* TCDicToModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7F41DB9EF6700027C6E /* TCDicToModelTests.m */; };
 		7A68C7F81DB9F03600027C6E /* TCTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7F71DB9F03600027C6E /* TCTestModel.m */; };
@@ -2933,6 +2935,12 @@
 		7A5F877E1DE2EEB100E4130B /* TCWalletBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletBill.m; sourceTree = "<group>"; };
 		7A5F87801DE2EFF500E4130B /* TCWalletBillWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletBillWrapper.h; sourceTree = "<group>"; };
 		7A5F87811DE2EFF500E4130B /* TCWalletBillWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletBillWrapper.m; sourceTree = "<group>"; };
+		7A64EA761E14EC55008D0C12 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		7A64EA771E14EC55008D0C12 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		7A64EA781E14EC55008D0C12 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		7A64EA791E14EC55008D0C12 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		7A64EA7B1E14EEE0008D0C12 /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
+		7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		7A6506D11DC993D400B0EDBF /* TCTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCTabBar.h; sourceTree = "<group>"; };
 		7A6506D21DC993D400B0EDBF /* TCTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTabBar.m; sourceTree = "<group>"; };
 		7A68C7F41DB9EF6700027C6E /* TCDicToModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCDicToModelTests.m; sourceTree = "<group>"; };
@@ -3203,6 +3211,7 @@
 				553DC8761DFFE22F0018783E /* libmsx264.a in Frameworks */,
 				553DC91F1DFFE2300018783E /* libbelr.a in Frameworks */,
 				553DC8C21DFFE2300018783E /* libmatroska2.a in Frameworks */,
+				7A64EA7A1E14EC55008D0C12 /* libWeChatSDK.a in Frameworks */,
 				553DC86E1DFFE22F0018783E /* libvo-amrwbenc.a in Frameworks */,
 				553DC8D51DFFE2300018783E /* libvpx.a in Frameworks */,
 				553DC7F41DFFE22E0018783E /* libbv16.a in Frameworks */,
@@ -7715,6 +7724,19 @@
 			path = Wallet;
 			sourceTree = "<group>";
 		};
+		7A64EA751E14EC33008D0C12 /* Wechat */ = {
+			isa = PBXGroup;
+			children = (
+				7A64EA7B1E14EEE0008D0C12 /* WXApiManager.h */,
+				7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */,
+				7A64EA761E14EC55008D0C12 /* libWeChatSDK.a */,
+				7A64EA771E14EC55008D0C12 /* WechatAuthSDK.h */,
+				7A64EA781E14EC55008D0C12 /* WXApi.h */,
+				7A64EA791E14EC55008D0C12 /* WXApiObject.h */,
+			);
+			path = Wechat;
+			sourceTree = "<group>";
+		};
 		7A6506D01DC9938900B0EDBF /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -7965,6 +7987,7 @@
 		7A9CCF0A1DB627A5003D90C6 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				7A64EA751E14EC33008D0C12 /* Wechat */,
 				553DBFFB1DFFE22B0018783E /* liblinphone-sdk */,
 				7A11F70F1DE43195005F3EAB /* MLBPasswordTextField */,
 			);
@@ -8922,6 +8945,7 @@
 				092626831E0BA44000F5A18C /* TCShoppingCartSelectButton.m in Sources */,
 				09222E111DEE732D0064C0DF /* TCDetailStore.m in Sources */,
 				7AEB4CCA1E03936300F83A7C /* TCShippingAddressEditViewController.m in Sources */,
+				7A64EA7D1E14EEE0008D0C12 /* WXApiManager.m in Sources */,
 				09275FB41DDEF8C800502167 /* TCUserLocationAnnotation.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,
@@ -9183,6 +9207,7 @@
 					"$(PROJECT_DIR)/individual/Common/Libs/liblinphone-sdk/armv7-apple-darwin.ios/lib/mediastreamer/plugins",
 					"$(PROJECT_DIR)/individual/Common/Libs/liblinphone-sdk/x86_64-apple-darwin.ios/lib",
 					"$(PROJECT_DIR)/individual/Common/Libs/liblinphone-sdk/x86_64-apple-darwin.ios/lib/mediastreamer/plugins",
+					"$(PROJECT_DIR)/individual/Common/Libs/Wechat",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -9257,6 +9282,7 @@
 					"$(PROJECT_DIR)/individual/Common/Libs/liblinphone-sdk/armv7-apple-darwin.ios/lib/mediastreamer/plugins",
 					"$(PROJECT_DIR)/individual/Common/Libs/liblinphone-sdk/x86_64-apple-darwin.ios/lib",
 					"$(PROJECT_DIR)/individual/Common/Libs/liblinphone-sdk/x86_64-apple-darwin.ios/lib/mediastreamer/plugins",
+					"$(PROJECT_DIR)/individual/Common/Libs/Wechat",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
