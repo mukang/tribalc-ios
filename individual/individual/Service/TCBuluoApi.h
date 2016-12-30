@@ -494,5 +494,11 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
 - (void)commitPropertyRepairsInfo:(TCPropertyRepairsInfo *)repairsInfo result:(void (^)(BOOL success, TCPropertyManage *propertyManage, NSError *error))resultBlock;
 
 
+/**
+ 取消物业报修订单
 
+ @param orderId 订单号
+ @param resultBlock 结果回调success为NO时表示提交失败
+ */
+- (void)cancelPropertyOrderWithOrderID:(NSString *)orderId result:(void(^)(BOOL success, NSError *error))resultBlock;
 @end
