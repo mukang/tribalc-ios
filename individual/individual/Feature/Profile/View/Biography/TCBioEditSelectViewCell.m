@@ -39,7 +39,7 @@
     [self.contentView addSubview:titleLabel];
     self.titleLabel = titleLabel;
     
-    UIImageView *selectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"biography_edit_selected_icon"]];
+    UIImageView *selectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profile_common_address_button_selected"]];
     selectedImageView.hidden = YES;
     [self.contentView addSubview:selectedImageView];
     self.selectedImageView = selectedImageView;
