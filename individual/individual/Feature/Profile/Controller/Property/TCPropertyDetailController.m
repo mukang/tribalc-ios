@@ -85,10 +85,16 @@
 }
 
 - (void)cancel {
+    @WeakObj(self)
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] cancelPropertyOrderWithOrderID:_propertyManage.ID result:^(BOOL success, NSError *error) {
+        @StrongObj(self)
         if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
+            [MBProgressHUD showHUDWithMessage:@"取消成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
         }else {
             [MBProgressHUD hideHUD:YES];
             [MBProgressHUD showHUDWithMessage:@"取消失败"];
