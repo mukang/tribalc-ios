@@ -501,4 +501,15 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param resultBlock 结果回调success为NO时表示提交失败
  */
 - (void)cancelPropertyOrderWithOrderID:(NSString *)orderId result:(void(^)(BOOL success, NSError *error))resultBlock;
+
+#pragma mark - 第三方支付
+
+/**
+ 获取调起微信支付接口所需信息
+
+ @param money 支付金额（元）
+ @param resultBlock 回调结果，rechargeWechatInfo为nil表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchRechargeWechatInfoWithMoney:(CGFloat)money result:(void(^)(TCRechargeWechatInfo *rechargeWechatInfo, NSError *error))resultBlock;
+
 @end

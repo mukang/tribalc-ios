@@ -75,6 +75,10 @@
 #import "TCPropertyManage.h"
 #import "TCPropertyRepairsInfo.h"
 
+/********** 第三方支付 **********/
+
+#import "TCRechargeWechatInfo.h"
+
 
 @interface TCModelImport : NSObject
 

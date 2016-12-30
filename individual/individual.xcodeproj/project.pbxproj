@@ -610,6 +610,7 @@
 		7A3C81CA1DF02C16009ABCEC /* TCPaymentPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C91DF02C16009ABCEC /* TCPaymentPasswordView.m */; };
 		7A3C81CC1DF02FDA009ABCEC /* TCPaymentPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3C81CB1DF02FDA009ABCEC /* TCPaymentPasswordView.xib */; };
 		7A3C81CF1DF04DD5009ABCEC /* TCExtendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81CE1DF04DD5009ABCEC /* TCExtendButton.m */; };
+		7A408FE61E16511400761F4A /* TCRechargeWechatInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A408FE51E16511400761F4A /* TCRechargeWechatInfo.m */; };
 		7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */; };
 		7A45146B1DE582DA007D7193 /* bankCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A45146A1DE582DA007D7193 /* bankCard.plist */; };
 		7A4514881DD30C48009F170A /* TCModelImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514871DD30C48009F170A /* TCModelImport.m */; };
@@ -2912,6 +2913,8 @@
 		7A3C81CB1DF02FDA009ABCEC /* TCPaymentPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentPasswordView.xib; sourceTree = "<group>"; };
 		7A3C81CD1DF04DD5009ABCEC /* TCExtendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCExtendButton.h; sourceTree = "<group>"; };
 		7A3C81CE1DF04DD5009ABCEC /* TCExtendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCExtendButton.m; sourceTree = "<group>"; };
+		7A408FE41E16511400761F4A /* TCRechargeWechatInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeWechatInfo.h; sourceTree = "<group>"; };
+		7A408FE51E16511400761F4A /* TCRechargeWechatInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeWechatInfo.m; sourceTree = "<group>"; };
 		7A41C0D61DCC71C0003FC63C /* TCClientRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientRequestError.h; sourceTree = "<group>"; };
 		7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCClientRequestError.m; sourceTree = "<group>"; };
 		7A45146A1DE582DA007D7193 /* bankCard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bankCard.plist; sourceTree = "<group>"; };
@@ -7714,6 +7717,15 @@
 			path = IDAuth;
 			sourceTree = "<group>";
 		};
+		7A408FE31E1650F200761F4A /* Recharge */ = {
+			isa = PBXGroup;
+			children = (
+				7A408FE41E16511400761F4A /* TCRechargeWechatInfo.h */,
+				7A408FE51E16511400761F4A /* TCRechargeWechatInfo.m */,
+			);
+			path = Recharge;
+			sourceTree = "<group>";
+		};
 		7A45147A1DD303EB009F170A /* Request */ = {
 			isa = PBXGroup;
 			children = (
@@ -8077,6 +8089,7 @@
 			children = (
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
+				7A408FE31E1650F200761F4A /* Recharge */,
 				55F06EEF1E0396C500A849D7 /* Property */,
 				7A74674C1DF947CE00ACD815 /* Company */,
 				7A381BE81DED9304008BDBF7 /* Commercial */,
@@ -8835,6 +8848,7 @@
 				09222E7C1DEEC0D60064C0DF /* TCOrder.m in Sources */,
 				7A381BE11DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.m in Sources */,
 				092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */,
+				7A408FE61E16511400761F4A /* TCRechargeWechatInfo.m in Sources */,
 				7A7E94191DF56C80006A47CE /* TCRepairsDescViewCell.m in Sources */,
 				09222E2A1DEE98550064C0DF /* TCRestaurantFilterView.m in Sources */,
 				7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */,
