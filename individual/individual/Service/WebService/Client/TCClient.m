@@ -59,6 +59,9 @@
     NSString *URLString = clientRequest.apiName;
     id parameters = clientRequest.params;
     
+    if (clientRequest.token) {
+        [self.requestSerializer setValue:clientRequest.token forHTTPHeaderField:@"Authorization"];
+    }
     [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     __block NSError *serializationError = nil;
