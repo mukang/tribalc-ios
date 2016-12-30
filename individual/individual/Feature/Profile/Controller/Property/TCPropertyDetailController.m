@@ -11,8 +11,10 @@
 #import "TCImageURLSynthesizer.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "TCPaymentViewController.h"
+#import "MBProgressHUD+Category.h"
+#import "TCBuluoApi.h"
 
-@interface TCPropertyDetailController ()
+@interface TCPropertyDetailController ()<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *communityNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *applyPersonNameLabel;
@@ -25,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *doorTimeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *problemDescBtn;
+@property (weak, nonatomic) IBOutlet UILabel *fixProjectLabel;
+@property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 
 @property (nonatomic, strong) TCPropertyManage *propertyManage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageVConstraint;
@@ -57,8 +61,39 @@
                                                                             target:self
                                                                             action:@selector(handleClickBackButton:)];
     
+    if ([_propertyManage.status isEqualToString:@"ORDER_ACCEPT"] || [_propertyManage.status isEqualToString:@"TASK_CONFIRM"]) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleDone target:self action:@selector(cancelOrder)];
+    }else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+    
     [self setData];
     
+}
+
+- (void)cancelOrder {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"取消订单" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        TCLog(@"取消");
+    }else if (buttonIndex == 1) {
+        [self cancel];
+    }
+}
+
+- (void)cancel {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] cancelPropertyOrderWithOrderID:_propertyManage.ID result:^(BOOL success, NSError *error) {
+        if (success) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else {
+            [MBProgressHUD hideHUD:YES];
+            [MBProgressHUD showHUDWithMessage:@"取消失败"];
+        }
+    }];
 }
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
@@ -75,12 +110,29 @@
     _communityNameLabel.text = _propertyManage.communityName ? _propertyManage.communityName : @"";
     _companyNameLabel.text =  _propertyManage.companyName ? _propertyManage.companyName : @"";
     _applyPersonNameLabel.text = _propertyManage.applyPersonName ? _propertyManage.applyPersonName : @"";
-    _floorLabel.text = _propertyManage.floor ? [NSString stringWithFormat:@"%@层",_propertyManage.floor] : @"";
+    _floorLabel.text = _propertyManage.floor ? [NSString stringWithFormat:@"%@",_propertyManage.floor] : @"";
     _appointTimeLabel.text = [formatter stringFromDate:appointDate];
     _phoneLabel.text = _propertyManage.phone;  
     _masterPersonNameLabe.text = _propertyManage.masterPersonName ? _propertyManage.masterPersonName : @"";
     _doorTimeLabel.text = [formatter stringFromDate:doorDate];
     _masterView.hidden = [_propertyManage.status isEqualToString:@"ORDER_ACCEPT"];
+    
+    if (_propertyManage.fixProject) {
+        if ([_propertyManage.fixProject isEqualToString:@"PIPE_FIX"]) {
+            _fixProjectLabel.text = @"管件维修";
+        }else if ([_propertyManage.fixProject isEqualToString:@"PUBLIC_LIGHTING"]) {
+            _fixProjectLabel.text = @"公共照明";
+        }else if ([_propertyManage.fixProject isEqualToString:@"WATER_PIPE_FIX"]) {
+            _fixProjectLabel.text = @"水管维修";
+        }else if ([_propertyManage.fixProject isEqualToString:@"ELECTRICAL_FIX"]) {
+            _fixProjectLabel.text = @"电器维修";
+        }else {
+            _fixProjectLabel.text = @"其他";
+        }
+    }else {
+        _fixProjectLabel.text = @"";
+    }
+    
     _payBtn.layer.cornerRadius = 3.0;
     _payBtn.clipsToBounds = YES;
     _problemDescBtn.contentEdgeInsets = UIEdgeInsetsMake(10, 20, 10, 20);
@@ -134,12 +186,15 @@
         }else if ([_propertyManage.status isEqualToString:@"TASK_CONFIRM"]) {
             _masterView.hidden = NO;
             _payBtn.hidden = YES;
-        }else if ([_propertyManage.status isEqualToString:@"NOT_PAYING"]) {
+        }else if ([_propertyManage.status isEqualToString:@"TO_PAYING"]) {
             _masterView.hidden = NO;
             _payBtn.hidden = NO;
             btnH = 30.0;
             btnBottomC = 86.5;
         }else if ([_propertyManage.status isEqualToString:@"PAYED"]) {
+            _masterView.hidden= NO;
+            _payBtn.hidden = YES;
+        }else if ([_propertyManage.status isEqualToString:@"TO_FIX"]) {
             _masterView.hidden= NO;
             _payBtn.hidden = YES;
         }else {
@@ -149,6 +204,15 @@
     }else {
         _masterView.hidden = YES;
         _payBtn.hidden = YES;
+    }
+    
+    if (_propertyManage.totalFee) {
+        NSString *money = [NSString stringWithFormat:@"维修金额¥%@",_propertyManage.totalFee];
+        NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:money];
+        [att addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14] range:[money rangeOfString:[NSString stringWithFormat:@"¥%@",_propertyManage.totalFee]]];
+        _moneyLabel.attributedText = att;
+    }else {
+        _moneyLabel.attributedText = nil;
     }
     
     _btnHeightConstraint.constant = btnH;
