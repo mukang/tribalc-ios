@@ -10,9 +10,11 @@
 #import "TCWalletBillViewController.h"
 #import "TCWalletPasswordViewController.h"
 #import "TCBankCardViewController.h"
+#import "TCQRCodeViewController.h"
+#import "TCRechargeViewController.h"
+#import "TCNavigationController.h"
 
 #import "TCBuluoApi.h"
-#import "TCQRCodeViewController.h"
 
 @interface TCWalletViewController ()
 
@@ -95,7 +97,9 @@
 #pragma mark - Actions
 
 - (IBAction)handleClickRechargeButton:(UIButton *)sender {
-    [self btnClickUnifyTips];
+    TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (IBAction)handleClickWithdrawButton:(UIButton *)sender {

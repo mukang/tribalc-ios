@@ -27,6 +27,8 @@ extern NSString *const kWXAppSecret;
 - (void)managerDidRecvAuthResponse:(SendAuthResp *)response;
 
 - (void)managerDidRecvAddCardResponse:(AddCardToWXCardPackageResp *)response;
+/** 接收到支付的响应 */
+- (void)managerDidRecvPayResponse:(PayResp *)response;
 
 @end
 

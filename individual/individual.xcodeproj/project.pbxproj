@@ -627,6 +627,8 @@
 		7A5F87821DE2EFF500E4130B /* TCWalletBillWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87811DE2EFF500E4130B /* TCWalletBillWrapper.m */; };
 		7A64EA7A1E14EC55008D0C12 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A64EA761E14EC55008D0C12 /* libWeChatSDK.a */; };
 		7A64EA7D1E14EEE0008D0C12 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */; };
+		7A64EA801E15016E008D0C12 /* TCRechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A64EA7F1E15016E008D0C12 /* TCRechargeViewController.m */; };
+		7A64EA831E150D23008D0C12 /* TCRechargeInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A64EA821E150D23008D0C12 /* TCRechargeInputView.m */; };
 		7A6506D31DC993D400B0EDBF /* TCTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A6506D21DC993D400B0EDBF /* TCTabBar.m */; };
 		7A68C7F51DB9EF6700027C6E /* TCDicToModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7F41DB9EF6700027C6E /* TCDicToModelTests.m */; };
 		7A68C7F81DB9F03600027C6E /* TCTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7F71DB9F03600027C6E /* TCTestModel.m */; };
@@ -668,6 +670,8 @@
 		7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23761DCB5853002B81A5 /* TCBuluoApi.m */; };
 		7AAF23821DCB5C04002B81A5 /* TCUserSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23811DCB5C04002B81A5 /* TCUserSession.m */; };
 		7AAF23851DCB6668002B81A5 /* TCClientResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23841DCB6668002B81A5 /* TCClientResponse.m */; };
+		7AB111D11E151502002B7259 /* TCRechargeMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB111D01E151502002B7259 /* TCRechargeMethodView.m */; };
+		7AB111D41E151CD3002B7259 /* TCRechargeMethodsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB111D31E151CD3002B7259 /* TCRechargeMethodsView.m */; };
 		7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB29F2A1DD40D0F00564D93 /* MBProgressHUD+Category.m */; };
 		7AB29F311DD46C7D00564D93 /* TCUserSensitiveInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB29F301DD46C7D00564D93 /* TCUserSensitiveInfo.m */; };
 		7AB29F341DD46EE600564D93 /* TCUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB29F331DD46EE600564D93 /* TCUserInfo.m */; };
@@ -2941,6 +2945,10 @@
 		7A64EA791E14EC55008D0C12 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		7A64EA7B1E14EEE0008D0C12 /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
 		7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
+		7A64EA7E1E15016E008D0C12 /* TCRechargeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeViewController.h; sourceTree = "<group>"; };
+		7A64EA7F1E15016E008D0C12 /* TCRechargeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeViewController.m; sourceTree = "<group>"; };
+		7A64EA811E150D23008D0C12 /* TCRechargeInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeInputView.h; sourceTree = "<group>"; };
+		7A64EA821E150D23008D0C12 /* TCRechargeInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeInputView.m; sourceTree = "<group>"; };
 		7A6506D11DC993D400B0EDBF /* TCTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCTabBar.h; sourceTree = "<group>"; };
 		7A6506D21DC993D400B0EDBF /* TCTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTabBar.m; sourceTree = "<group>"; };
 		7A68C7F41DB9EF6700027C6E /* TCDicToModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCDicToModelTests.m; sourceTree = "<group>"; };
@@ -3008,6 +3016,10 @@
 		7AAF23811DCB5C04002B81A5 /* TCUserSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserSession.m; sourceTree = "<group>"; };
 		7AAF23831DCB6668002B81A5 /* TCClientResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientResponse.h; sourceTree = "<group>"; };
 		7AAF23841DCB6668002B81A5 /* TCClientResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCClientResponse.m; sourceTree = "<group>"; };
+		7AB111CF1E151502002B7259 /* TCRechargeMethodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeMethodView.h; sourceTree = "<group>"; };
+		7AB111D01E151502002B7259 /* TCRechargeMethodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeMethodView.m; sourceTree = "<group>"; };
+		7AB111D21E151CD3002B7259 /* TCRechargeMethodsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeMethodsView.h; sourceTree = "<group>"; };
+		7AB111D31E151CD3002B7259 /* TCRechargeMethodsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeMethodsView.m; sourceTree = "<group>"; };
 		7AB29F291DD40D0F00564D93 /* MBProgressHUD+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Category.h"; sourceTree = "<group>"; };
 		7AB29F2A1DD40D0F00564D93 /* MBProgressHUD+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Category.m"; sourceTree = "<group>"; };
 		7AB29F2F1DD46C7D00564D93 /* TCUserSensitiveInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserSensitiveInfo.h; sourceTree = "<group>"; };
@@ -8140,6 +8152,8 @@
 				55F06F091E078C2900A849D7 /* TCPaymentViewController.h */,
 				55F06F0A1E078C2900A849D7 /* TCPaymentViewController.m */,
 				55F06F0B1E078C2900A849D7 /* TCPaymentViewController.xib */,
+				7A64EA7E1E15016E008D0C12 /* TCRechargeViewController.h */,
+				7A64EA7F1E15016E008D0C12 /* TCRechargeViewController.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -8162,6 +8176,12 @@
 				7AC346F31E0144F300E28EC9 /* TCBankPickerView.h */,
 				7AC346F41E0144F300E28EC9 /* TCBankPickerView.m */,
 				7AC346F51E0144F300E28EC9 /* TCBankPickerView.xib */,
+				7A64EA811E150D23008D0C12 /* TCRechargeInputView.h */,
+				7A64EA821E150D23008D0C12 /* TCRechargeInputView.m */,
+				7AB111D21E151CD3002B7259 /* TCRechargeMethodsView.h */,
+				7AB111D31E151CD3002B7259 /* TCRechargeMethodsView.m */,
+				7AB111CF1E151502002B7259 /* TCRechargeMethodView.h */,
+				7AB111D01E151502002B7259 /* TCRechargeMethodView.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -8809,6 +8829,7 @@
 				559D88261E0D17AF00982697 /* TCAboutUSViewController.m in Sources */,
 				7A11F7151DE43195005F3EAB /* MLBPasswordTextField.m in Sources */,
 				7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */,
+				7AB111D41E151CD3002B7259 /* TCRechargeMethodsView.m in Sources */,
 				553DC8AD1DFFE22F0018783E /* parser-impl.cc in Sources */,
 				55F06F1D1E07EA2100A849D7 /* TCScannerMaskView.m in Sources */,
 				09222E7C1DEEC0D60064C0DF /* TCOrder.m in Sources */,
@@ -8854,6 +8875,7 @@
 				093048BC1DE57E56000FDCBF /* TCGoodDetail.m in Sources */,
 				092CD4221DD9A07C0073A9C1 /* TCAnnotation.m in Sources */,
 				09222E0E1DEE72550064C0DF /* TCServiceDetail.m in Sources */,
+				7AB111D11E151502002B7259 /* TCRechargeMethodView.m in Sources */,
 				093D031C1DE41B4A007A053C /* TCUserOrderViewController.m in Sources */,
 				092559121DED791600EFA4FB /* TCListStore.m in Sources */,
 				7A1580311DD1DE8200B8F768 /* TCPhotoPicker.m in Sources */,
@@ -8865,6 +8887,7 @@
 				559D84651E0BFE8300982697 /* Log.m in Sources */,
 				7AC346D41E01432D00E28EC9 /* TCWalletBillViewController.m in Sources */,
 				7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */,
+				7A64EA831E150D23008D0C12 /* TCRechargeInputView.m in Sources */,
 				7AC346F61E0144F300E28EC9 /* TCBankCardViewCell.m in Sources */,
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
 				7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */,
@@ -8992,6 +9015,7 @@
 				7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */,
 				7A13EEA31DF8114E00377869 /* TCCompanyViewController.m in Sources */,
 				0960B3521DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m in Sources */,
+				7A64EA801E15016E008D0C12 /* TCRechargeViewController.m in Sources */,
 				7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */,
 				7A3C81C51DF00DE7009ABCEC /* TCPaymentDetailView.m in Sources */,
 				098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */,

@@ -561,7 +561,7 @@
     CGPoint point = scrollView.contentOffset;
     
     if (point.y > 70) {
-        [self setupNavigationBarWithLeftImgName:@"back_black" AndRightImgName:@"res_collection_black"];
+        [self setupNavigationBarWithLeftImgName:@"nav_back_item_black" AndRightImgName:@"res_collection_black"];
         isStatusBarBlack = YES;
         [self setNeedsStatusBarAppearanceUpdate];
     } else {
