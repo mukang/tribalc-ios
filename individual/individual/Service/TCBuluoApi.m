@@ -1719,6 +1719,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"property_orders/%@?type=owner", orderId];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
                 if (resultBlock) {

@@ -12,6 +12,9 @@
 #import "TCRechargeMethodsView.h"
 #import "TCCommonButton.h"
 
+#import "TCBuluoApi.h"
+#import "WXApiManager.h"
+
 #import <Masonry.h>
 
 @interface TCRechargeViewController () <TCRechargeMethodsViewDelegate, UITextFieldDelegate>
@@ -19,6 +22,8 @@
 @property (weak, nonatomic) UITextField *textField;
 /** 输入框里是否含有小数点 */
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
+
+@property (nonatomic) TCRechargeMethod rechargeMethod;
 
 @end
 
@@ -34,6 +39,8 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapViewGesture:)];
     tapGesture.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapGesture];
+    
+    self.rechargeMethod = TCRechargeMethodWechat;
     
     [self setupNavBar];
     [self setupSubviews];
@@ -68,10 +75,14 @@
     inputView.textField.textColor = TCRGBColor(42, 42, 42);
     inputView.textField.font = [UIFont systemFontOfSize:14];
     inputView.textField.delegate = self;
+    if (self.suggestMoney) {
+        inputView.textField.text = [NSString stringWithFormat:@"%0.2f", self.suggestMoney];
+    }
     [self.view addSubview:inputView];
     self.textField = inputView.textField;
     
     TCRechargeMethodsView *methodsView = [[TCRechargeMethodsView alloc] init];
+    methodsView.rechargeMethod = self.rechargeMethod;
     methodsView.delegate = self;
     [self.view addSubview:methodsView];
     
@@ -177,7 +188,7 @@
 #pragma mark - TCRechargeMethodsViewDelegate
 
 - (void)rechargeMethodsView:(TCRechargeMethodsView *)view didSelectedMethodButtonWithMethod:(TCRechargeMethod)rechargeMethod {
-    
+    self.rechargeMethod = rechargeMethod;
 }
 
 #pragma mark - Actions 
@@ -193,6 +204,25 @@
 }
 
 - (void)handleClickRechargeButton:(UIButton *)sender {
+    CGFloat money = [self.textField.text floatValue];
+    if (self.rechargeMethod == TCRechargeMethodWechat) {
+        [MBProgressHUD showHUD:YES];
+        [[TCBuluoApi api] fetchRechargeWechatInfoWithMoney:money result:^(TCRechargeWechatInfo *rechargeWechatInfo, NSError *error) {
+            if (rechargeWechatInfo) {
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf handleRechargeByWechatInfo:rechargeWechatInfo];
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"充值失败，%@", reason]];
+            }
+        }];
+    } else if (self.rechargeMethod == TCRechargeMethodAlipay) {
+        
+    }
+    
+}
+
+- (void)handleRechargeByWechatInfo:(TCRechargeWechatInfo *)wechatInfo {
     
 }
 

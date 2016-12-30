@@ -97,7 +97,15 @@
 #pragma mark - Actions
 
 - (IBAction)handleClickRechargeButton:(UIButton *)sender {
+    if (!self.walletAccount) {
+        [MBProgressHUD showHUDWithMessage:@"暂时无法充值"];
+        return;
+    }
     TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
+    vc.balance = self.walletAccount.balance;
+    vc.completionBlock = ^() {
+        [weakSelf fetchNetData];
+    };
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -131,7 +139,7 @@
 
 - (IBAction)handleClickPasswordButton:(UIButton *)sender {
     if (!self.walletAccount) {
-        [MBProgressHUD showHUDWithMessage:@"暂时无法设置支付密码！"];
+        [MBProgressHUD showHUDWithMessage:@"暂时无法设置支付密码"];
         return;
     }
     TCWalletPasswordType passwordType;

@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^TCRechargeCompletionBlock)();
+
 @interface TCRechargeViewController : UIViewController
+
+@property (nonatomic) CGFloat balance;
+@property (nonatomic) CGFloat suggestMoney;
+
+@property (copy, nonatomic) TCRechargeCompletionBlock completionBlock;
 
 @end
