@@ -35,7 +35,7 @@
 @property (copy, nonatomic) NSString *problemDesc;
 /** 图片列表 */
 @property (copy, nonatomic) NSArray *pictures;
-/** 订单号 */
+/** 报修单号 */
 @property (copy,nonatomic) NSString *propertyNum;
 /** 费用 */
 @property (assign,nonatomic) CGFloat totalFee;

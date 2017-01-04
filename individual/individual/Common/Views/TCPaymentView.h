@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TCWalletAccount.h"
+#import "TCBuluoApi.h"
 @class TCPaymentView;
 
 @protocol TCPaymentViewDelegate <NSObject>
@@ -20,8 +21,10 @@
 
 @interface TCPaymentView : UIView
 
-/** 商品订单ID数组（类型为商品时，必填） */
+/** 订单ID数组（类型为商品时，必填） */
 @property (copy, nonatomic) NSArray *orderIDs;
+/** 付款目的 */
+@property (nonatomic) TCPayPurpose payPurpose;
 
 @property (weak, nonatomic) id<TCPaymentViewDelegate> delegate;
 

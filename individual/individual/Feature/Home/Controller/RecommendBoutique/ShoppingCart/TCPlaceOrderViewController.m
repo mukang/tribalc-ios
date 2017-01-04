@@ -499,6 +499,7 @@
     
     TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:paymentAmount fromController:self];
     paymentView.orderIDs = orderIDs;
+    paymentView.payPurpose = TCPayPurposeOrder;
     paymentView.delegate = self;
     [paymentView show:YES];
 }

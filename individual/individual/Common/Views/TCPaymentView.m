@@ -10,7 +10,6 @@
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
 #import "TCPaymentMethodView.h"
-#import "TCBuluoApi.h"
 #import "TCFunctions.h"
 
 #import "TCNavigationController.h"
@@ -109,18 +108,18 @@ static CGFloat const duration = 0.25;
             weakSelf.backgroundColor = TCARGBColor(0, 0, 0, 0);
             weakSelf.paymentDetailView.y = TCScreenHeight;
         } completion:^(BOOL finished) {
-            [weakSelf removeFromSuperview];
             if (completion) {
                 completion();
             }
+            [weakSelf removeFromSuperview];
         }];
     } else {
         weakSelf.backgroundColor = TCARGBColor(0, 0, 0, 0);
         weakSelf.paymentDetailView.y = TCScreenHeight;
-        [weakSelf removeFromSuperview];
         if (completion) {
             completion();
         }
+        [weakSelf removeFromSuperview];
     }
 }
 
@@ -341,13 +340,9 @@ static CGFloat const duration = 0.25;
         [MBProgressHUD showHUDWithMessage:@"付款失败，密码错误"];
         return;
     }
-//    if (self.paymentAmount > self.walletAccount.balance) {
-//        [MBProgressHUD showHUDWithMessage:@"付款失败，您的钱包余额不足"];
-//        return;
-//    }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBalance payPurpose:TCPayPurposeOrder orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBalance payPurpose:self.payPurpose orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             if ([userPayment.status isEqualToString:@"CREATED"]) { // 正在处理中
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

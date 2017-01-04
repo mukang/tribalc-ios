@@ -10,11 +10,11 @@
 #import "TCPropertyManage.h"
 #import "TCImageURLSynthesizer.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "TCPaymentViewController.h"
+#import "TCPaymentView.h"
 #import "MBProgressHUD+Category.h"
 #import "TCBuluoApi.h"
 
-@interface TCPropertyDetailController ()<UIAlertViewDelegate>
+@interface TCPropertyDetailController ()<UIAlertViewDelegate, TCPaymentViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *communityNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *applyPersonNameLabel;
@@ -232,8 +232,30 @@
 }
 
 - (IBAction)payBtnClick:(id)sender {
-    TCPaymentViewController *paymentVc = [[TCPaymentViewController alloc] init];
-    [self.navigationController pushViewController:paymentVc animated:YES];
+    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:self.propertyManage.totalFee fromController:self];
+    paymentView.orderIDs = @[self.propertyManage.ID];
+    paymentView.payPurpose = TCPayPurposeMaintain;
+    paymentView.delegate = self;
+    [paymentView show:YES];
+}
+
+#pragma mark - TCPaymentViewDelegate
+
+- (void)paymentView:(TCPaymentView *)view didFinishedPaymentWithStatus:(NSString *)status {
+    [MBProgressHUD showHUDWithMessage:@"支付成功"];
+    if (self.completionBlock) {
+        self.completionBlock();
+    }
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    });
+}
+
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)dealloc {

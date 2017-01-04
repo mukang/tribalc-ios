@@ -9,7 +9,12 @@
 #import <UIKit/UIKit.h>
 @class TCPropertyManage;
 
+typedef void(^TCCompletionBlock)();
+
 @interface TCPropertyDetailController : UIViewController
+
+/** 支付完成的回调 */
+@property (copy, nonatomic) TCCompletionBlock completionBlock;
 
 - (instancetype)initWithPropertyManage:(TCPropertyManage *)property;
 

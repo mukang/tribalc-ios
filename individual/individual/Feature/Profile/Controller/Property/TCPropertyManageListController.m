@@ -56,13 +56,13 @@
 }
 
 - (void)loadDataIsMore:(BOOL)isMore {
-    [MBProgressHUD showHUD:YES];
+//    [MBProgressHUD showHUD:YES];
     @WeakObj(self)
     NSString *skip = isMore ? self.propertymanageWrapper.nextSkip : nil;
     [[TCBuluoApi api] fetchPropertyWrapper:nil count:20 sortSkip:skip result:^(TCPropertyManageWrapper *propertyManageWrapper, NSError *error) {
         @StrongObj(self)
         if (propertyManageWrapper) {
-            [MBProgressHUD hideHUD:YES];
+//            [MBProgressHUD hideHUD:YES];
             self.propertymanageWrapper = propertyManageWrapper;
             
             if (isMore) {
@@ -113,8 +113,12 @@
 #pragma UITableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    __weak typeof(self) weakSelf = self;
     TCPropertyManage *propertyManage = self.currentList[indexPath.section];
     TCPropertyDetailController *propertyDetailVC = [[TCPropertyDetailController alloc] initWithPropertyManage:propertyManage];
+    propertyDetailVC.completionBlock = ^() {
+        [weakSelf loadDataIsMore:NO];
+    };
     [self.navigationController pushViewController:propertyDetailVC animated:YES];
 }
 
@@ -165,6 +169,12 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.propertyManage = propertyManage;
     return cell;
+}
+
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)dealloc {
