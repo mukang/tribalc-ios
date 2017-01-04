@@ -204,7 +204,11 @@
             _masterView.hidden= NO;
             _payBtn.hidden = YES;
         }else if ([_propertyManage.status isEqualToString:@"CANCEL"]) {
-            _masterView.hidden = YES;
+            if (_propertyManage.masterPersonName) {
+                _masterView.hidden = NO;
+            }else {
+                _masterView.hidden = YES;
+            }
             _payBtn.hidden = YES;
         }
     }else {
