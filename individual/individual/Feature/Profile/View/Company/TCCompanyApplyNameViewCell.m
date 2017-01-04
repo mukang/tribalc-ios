@@ -23,7 +23,7 @@
 
 - (void)setupSubviews {
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"部门名称";
+    titleLabel.text = @"公司名称";
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = TCRGBColor(42, 42, 42);
     titleLabel.font = [UIFont systemFontOfSize:16];

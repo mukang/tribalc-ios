@@ -262,7 +262,6 @@
  查询微信支付结果
  */
 - (void)handleCheckWechatRechargeResult {
-    TCLog(@"-->%@", self.prepayID);
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchWechatRechargeResultWithPrepayID:self.prepayID result:^(BOOL success, NSError *error) {
         if (success) {
