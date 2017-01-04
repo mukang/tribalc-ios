@@ -71,7 +71,6 @@
 		0978DB141DE96E40006B6437 /* TCOrderAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0978DB131DE96E40006B6437 /* TCOrderAddressView.m */; };
 		098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435D81DFD118200B8CA63 /* TCPlaceOrderViewController.m */; };
 		098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */; };
-		098FDD5A1DFE392C00205663 /* TCPayMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098FDD591DFE392C00205663 /* TCPayMethodView.m */; };
 		098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098FDD5C1DFE7F0C00205663 /* TCBalancePayView.m */; };
 		0990F19A1E07CA11002692F6 /* TCGoodShopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0990F1991E07CA11002692F6 /* TCGoodShopView.m */; };
 		09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */; };
@@ -891,8 +890,6 @@
 		098435D81DFD118200B8CA63 /* TCPlaceOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPlaceOrderViewController.m; sourceTree = "<group>"; };
 		098435DD1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCOrderDetailAlertView.h; sourceTree = "<group>"; };
 		098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOrderDetailAlertView.m; sourceTree = "<group>"; };
-		098FDD581DFE392C00205663 /* TCPayMethodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPayMethodView.h; sourceTree = "<group>"; };
-		098FDD591DFE392C00205663 /* TCPayMethodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPayMethodView.m; sourceTree = "<group>"; };
 		098FDD5B1DFE7F0C00205663 /* TCBalancePayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBalancePayView.h; sourceTree = "<group>"; };
 		098FDD5C1DFE7F0C00205663 /* TCBalancePayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBalancePayView.m; sourceTree = "<group>"; };
 		0990F1981E07CA11002692F6 /* TCGoodShopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodShopView.h; sourceTree = "<group>"; };
@@ -3666,8 +3663,6 @@
 				09AE0F781DED462700F307D8 /* TCComputeView.m */,
 				0928B33F1DF96F930085A182 /* TCSelectStandardView.h */,
 				0928B3401DF96F930085A182 /* TCSelectStandardView.m */,
-				098FDD581DFE392C00205663 /* TCPayMethodView.h */,
-				098FDD591DFE392C00205663 /* TCPayMethodView.m */,
 				098FDD5B1DFE7F0C00205663 /* TCBalancePayView.h */,
 				098FDD5C1DFE7F0C00205663 /* TCBalancePayView.m */,
 				0926267E1E0BA3F300F5A18C /* TCShoppingCartBottom.h */,
@@ -9030,7 +9025,6 @@
 				7AC346D91E01433E00E28EC9 /* TCWalletBillDetailViewController.m in Sources */,
 				7AEB4CF51E03944500F83A7C /* TCShippingAddressViewCell.m in Sources */,
 				55F06F241E09259400A849D7 /* TCOpenDoorController.m in Sources */,
-				098FDD5A1DFE392C00205663 /* TCPayMethodView.m in Sources */,
 				09275FBA1DDEFF5D00502167 /* TCDetailAnnotation.m in Sources */,
 				7AEB4CFF1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m in Sources */,
 				7AC346F81E0144F300E28EC9 /* TCBankPickerView.m in Sources */,

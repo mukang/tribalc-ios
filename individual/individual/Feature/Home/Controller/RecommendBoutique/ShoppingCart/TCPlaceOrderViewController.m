@@ -12,7 +12,6 @@
 #import "TCOrderAddressView.h"
 #import "TCClientConfig.h"
 #import "TCUserOrderTableViewCell.h"
-#import "TCPayMethodView.h"
 #import "TCImageURLSynthesizer.h"
 //#import "TCBalancePayView.h"
 #import "TCUserOrderTabBarController.h"
@@ -25,7 +24,6 @@
     UIScrollView *mScrollView;
     NSMutableArray *orderDetailList;
     NSMutableArray *supplementFieldArr;
-    TCPayMethodView *payMethodView;
 //    TCBalancePayView *payView;
     TCOrderAddressView *userAddressView;
     CGFloat cursorHeight;
@@ -73,12 +71,8 @@
     
     UITableView *orderDetailTableView = [self getOrderDetailTableViewWithFrame:CGRectMake(0, userAddressView.y + userAddressView.height, self.view.width, [self getTableViewHeight])];
     [mScrollView addSubview:orderDetailTableView];
- 
-    payMethodView = [[TCPayMethodView alloc] initWithFrame:CGRectMake(0, orderDetailTableView.y + orderDetailTableView.height + TCRealValue(4), TCScreenWidth, TCRealValue(170))];
-    [mScrollView addSubview:payMethodView];
     
-    
-    mScrollView.contentSize = CGSizeMake(self.view.width, payMethodView.y + payMethodView.height);
+    mScrollView.contentSize = CGSizeMake(self.view.width, orderDetailTableView.y + orderDetailTableView.height);
  
     UIView *bottomView = [self getNotSettleBottomView];
     [self.view addSubview:bottomView];
@@ -392,21 +386,6 @@
     return totalPriceStr;
 }
 
-- (void)filterPayMethod {
-    
-    
-    NSString *selectPayStr = payMethodView.selectPayMethodStr;
-    if (!selectPayStr) {
-        [MBProgressHUD showHUDWithMessage:@"请选择支付方式"];
-    } else if ([selectPayStr isEqualToString:@"微信"]){
-        [MBProgressHUD showHUDWithMessage:@"请选择余额支付"];
-    } else if ([selectPayStr isEqualToString:@"支付宝"]) {
-        [MBProgressHUD showHUDWithMessage:@"请选择余额支付"];
-    } else {
-        [self createOrder];
-    }
-}
-
 #pragma mark - TCPaymentViewDelegate
 
 - (void)paymentView:(TCPaymentView *)view didFinishedPaymentWithStatus:(NSString *)status {
@@ -431,7 +410,8 @@
         [MBProgressHUD showHUDWithMessage:@"请选择地址"];
         return;
     }
-    [self filterPayMethod];
+//    [self filterPayMethod];
+    [self createOrder];
 }
 /*
 - (void)jumpToOrderDetailViewController {
@@ -505,46 +485,6 @@
         }
     }];
 }
-
-///**
-// 获取钱包信息，判断用户是否设置了支付密码
-// */
-//- (void)handlePaymentWithOrderList:(NSArray *)orderList {
-//    [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
-//        if (walletAccount) {
-//            [MBProgressHUD hideHUD:YES];
-//            if (walletAccount.password) {
-//                [weakSelf handleShowPaymentViewWithOrderList:orderList walletAccount:walletAccount];
-//            } else {
-//                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码，请到 我的钱包>支付密码 中设置" preferredStyle:UIAlertControllerStyleAlert];
-//                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
-//                [alertController addAction:action];
-//                [weakSelf presentViewController:alertController animated:YES completion:nil];
-//            }
-//        } else {
-//            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-//            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
-//        }
-//    }];
-//}
-//
-///**
-// 弹出paymentView
-// */
-//- (void)handleShowPaymentViewWithOrderList:(NSArray *)orderList walletAccount:(TCWalletAccount *)walletAccount {
-//    NSMutableArray *orderIDs = [NSMutableArray array];
-//    CGFloat paymentAmount = 0;
-//    for (TCOrder *order in orderList) {
-//        paymentAmount += order.totalFee;
-//        [orderIDs addObject:order.ID];
-//    }
-//    
-//    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:paymentAmount fromController:self];
-//    paymentView.walletAccount = walletAccount;
-//    paymentView.orderIDs = orderIDs;
-//    paymentView.delegate = self;
-//    [paymentView show:YES];
-//}
 
 /**
  弹出paymentView
