@@ -129,7 +129,7 @@
     if ([status isEqualToString:@"ORDER_ACCEPT"]) {
          height = 225.00;
     }else if ([status isEqualToString:@"CANCEL"]) {
-        if (propertyManage.masterPersonName) {
+        if (propertyManage.phone) {
             if (propertyManage.totalFee) {
                 height = 342.0;
             }else {

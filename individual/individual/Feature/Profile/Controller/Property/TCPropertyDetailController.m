@@ -204,7 +204,7 @@
             _masterView.hidden= NO;
             _payBtn.hidden = YES;
         }else if ([_propertyManage.status isEqualToString:@"CANCEL"]) {
-            if (_propertyManage.masterPersonName) {
+            if (_propertyManage.phone) {
                 _masterView.hidden = NO;
             }else {
                 _masterView.hidden = YES;
