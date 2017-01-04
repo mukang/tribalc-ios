@@ -126,8 +126,14 @@
     TCPropertyManage *propertyManage = self.currentList[indexPath.section];
     NSString *status = propertyManage.status;
     CGFloat height = 0.0;
-    if ([status isEqualToString:@"ORDER_ACCEPT"] || [status isEqualToString:@"CANCEL"]) {
+    if ([status isEqualToString:@"ORDER_ACCEPT"]) {
          height = 225.00;
+    }else if ([status isEqualToString:@"CANCEL"]) {
+        if (propertyManage.masterPersonName) {
+            height = 320.0;
+        }else {
+            height = 225.0;
+        }
     }else {
         if (([status isEqualToString:@"PAY_ED"] || [status isEqualToString:@"TO_PAYING"]) && propertyManage.totalFee > 0) {
             height = 342;
