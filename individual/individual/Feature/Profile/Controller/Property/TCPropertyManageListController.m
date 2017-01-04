@@ -56,13 +56,13 @@
 }
 
 - (void)loadDataIsMore:(BOOL)isMore {
-//    [MBProgressHUD showHUD:YES];
+    [MBProgressHUD showHUD:YES];
     @WeakObj(self)
     NSString *skip = isMore ? self.propertymanageWrapper.nextSkip : nil;
     [[TCBuluoApi api] fetchPropertyWrapper:nil count:20 sortSkip:skip result:^(TCPropertyManageWrapper *propertyManageWrapper, NSError *error) {
         @StrongObj(self)
         if (propertyManageWrapper) {
-//            [MBProgressHUD hideHUD:YES];
+            [MBProgressHUD hideHUD:YES];
             self.propertymanageWrapper = propertyManageWrapper;
             
             if (isMore) {

@@ -242,14 +242,10 @@
 #pragma mark - TCPaymentViewDelegate
 
 - (void)paymentView:(TCPaymentView *)view didFinishedPaymentWithStatus:(NSString *)status {
-    [MBProgressHUD showHUDWithMessage:@"支付成功"];
     if (self.completionBlock) {
         self.completionBlock();
     }
-    __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf.navigationController popViewControllerAnimated:YES];
-    });
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Status Bar
