@@ -7590,6 +7590,11 @@
 		7A190B0D1DC0CC7800651905 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7A190B0E1DC0CC9800651905 /* TCProfileViewController.h */,
+				7A190B0F1DC0CC9800651905 /* TCProfileViewController.m */,
+				7A190B101DC0CC9800651905 /* TCProfileViewController.xib */,
+				55F06F0E1E07D0AA00A849D7 /* TCQRCodeViewController.h */,
+				55F06F0F1E07D0AA00A849D7 /* TCQRCodeViewController.m */,
 				7A384FA01E1124A600E6DB9E /* IDAuth */,
 				7A3321951E0D07E1003049DB /* Setting */,
 				55F06EEA1E03902000A849D7 /* Property */,
@@ -7597,11 +7602,6 @@
 				7AC346CB1E0142FA00E28EC9 /* Wallet */,
 				7A13EE9F1DF80C9700377869 /* Company */,
 				093D03151DE40498007A053C /* Order */,
-				7A190B0E1DC0CC9800651905 /* TCProfileViewController.h */,
-				7A190B0F1DC0CC9800651905 /* TCProfileViewController.m */,
-				7A190B101DC0CC9800651905 /* TCProfileViewController.xib */,
-				55F06F0E1E07D0AA00A849D7 /* TCQRCodeViewController.h */,
-				55F06F0F1E07D0AA00A849D7 /* TCQRCodeViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

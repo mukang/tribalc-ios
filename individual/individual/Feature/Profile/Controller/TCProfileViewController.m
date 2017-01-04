@@ -498,6 +498,12 @@ TCPhotoModeViewDelegate>
 }
 
 - (void)handleDidSelectedMyCompanyCell {
+    TCUserSensitiveInfo *userSensitiveInfo = [TCBuluoApi api].currentUserSession.userSensitiveInfo;
+    if (![userSensitiveInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+        [MBProgressHUD showHUDWithMessage:@"身份认证成功后才可绑定公司"];
+        return;
+    }
+    
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchCompanyBlindStatus:^(TCUserCompanyInfo *userCompanyInfo, NSError *error) {
         if (userCompanyInfo) {

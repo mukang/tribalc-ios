@@ -139,7 +139,7 @@
         [MBProgressHUD showHUDWithMessage:@"请输入手机号"];
         return;
     }
-    if (self.cardNumTextField.text.length == 0) {
+    if (self.codeTextField.text.length == 0) {
         [MBProgressHUD showHUDWithMessage:@"请输入手机验证码"];
         return;
     }
@@ -150,7 +150,7 @@
     bankCard.bankCardNum = self.cardNumTextField.text;
     bankCard.phone = self.phoneTextField.text;
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] addBankCard:bankCard withVerificationCode:self.cardNumTextField.text result:^(BOOL success, NSError *error) {
+    [[TCBuluoApi api] addBankCard:bankCard withVerificationCode:self.codeTextField.text result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD hideHUD:YES];
             if (weakSelf.bankCardAddBlock) {

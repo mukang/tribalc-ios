@@ -12,6 +12,8 @@
 #import "TCRepairsViewCell.h"
 #import "TCPropertyManageListController.h"
 
+#import "TCBuluoApi.h"
+
 @interface TCRepairsViewController () <UITableViewDataSource, UITableViewDelegate, TCRepairsViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -79,6 +81,12 @@
 #pragma mark - TCRepairsViewCellDelegate
 
 - (void)repairsViewCell:(TCRepairsViewCell *)cell didClickRepairsButtonWithIndex:(NSInteger)index {
+    TCUserSensitiveInfo *userSensitiveInfo = [TCBuluoApi api].currentUserSession.userSensitiveInfo;
+    if (!userSensitiveInfo.companyID) {
+        [MBProgressHUD showHUDWithMessage:@"绑定公司成功后才可申请物业报修"];
+        return;
+    }
+    
     TCPropertyRepairsType repairsType = index;
     TCRepairsDetailViewController *vc = [[TCRepairsDetailViewController alloc] initWithPropertyRepairsType:repairsType];
     [self.navigationController pushViewController:vc animated:YES];
