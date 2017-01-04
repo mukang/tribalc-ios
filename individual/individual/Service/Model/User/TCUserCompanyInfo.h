@@ -21,5 +21,7 @@
 @property (copy, nonatomic) NSString *personNum;
 /** 请求状态（PROCESSING, SUCCEED, FAILURE, NOT_BIND） */
 @property (copy, nonatomic) NSString *comfirmed;
+/** 身份证号 */
+@property (copy, nonatomic) NSString *idNo;
 
 @end

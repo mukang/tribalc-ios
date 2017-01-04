@@ -182,6 +182,7 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1 && indexPath.row == 0) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [tableView endEditing:YES];
         TCCommunityListViewController *vc = [[TCCommunityListViewController alloc] init];
         vc.popToVC = self;
         vc.companyInfoBlock = ^(TCCompanyInfo *companyInfo) {
@@ -220,6 +221,12 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     return YES;
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [scrollView endEditing:YES];
+}
+
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
@@ -227,6 +234,12 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
 }
 
 - (void)handleClickCommitButton:(TCCommonButton *)sender {
+    if (!self.userCompanyInfo.company.ID) {
+        [MBProgressHUD showHUDWithMessage:@"请选择需要绑定的公司"];
+        return;
+    }
+    self.userCompanyInfo.idNo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.idNo;
+    
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] bindCompanyWithUserCompanyInfo:self.userCompanyInfo result:^(BOOL success, NSError *error) {
         if (success) {

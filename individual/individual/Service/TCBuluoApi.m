@@ -882,6 +882,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:userCompanyInfo.department forParam:@"department"];
         [request setValue:userCompanyInfo.position forParam:@"position"];
         [request setValue:userCompanyInfo.personNum forParam:@"personNum"];
+        [request setValue:userCompanyInfo.idNo forParam:@"idNo"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 201) {
                 if (resultBlock) {
