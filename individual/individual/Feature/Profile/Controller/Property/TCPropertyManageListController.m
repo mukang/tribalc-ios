@@ -130,7 +130,11 @@
          height = 225.00;
     }else if ([status isEqualToString:@"CANCEL"]) {
         if (propertyManage.masterPersonName) {
-            height = 320.0;
+            if (propertyManage.totalFee) {
+                height = 342.0;
+            }else {
+                height = 320.0;
+            }
         }else {
             height = 225.0;
         }
