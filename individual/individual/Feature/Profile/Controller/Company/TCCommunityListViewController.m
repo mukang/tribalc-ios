@@ -104,7 +104,7 @@
     TCCompanyListViewController *vc = [[TCCompanyListViewController alloc] init];
     TCCommunityListInCity *communityListInCity = self.communities[indexPath.section];
     TCCommunity *community = communityListInCity.communityList[indexPath.row];
-    vc.communityID = community.ID;
+    vc.community = community;
     vc.popToVC = self.popToVC;
     vc.companyInfoBlock = self.companyInfoBlock;
     [self.navigationController pushViewController:vc animated:YES];

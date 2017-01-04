@@ -23,6 +23,8 @@
 
 @interface TCCompanyViewController () <UITableViewDataSource, UITableViewDelegate, TCCompanyIntroViewCellDelegate, UIScrollViewDelegate>
 
+@property (strong, nonatomic) TCUserCompanyInfo *userCompanyInfo;
+
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) TCCompanyHeaderView *headerView;
 
@@ -54,6 +56,7 @@
     
     [self setupNavBar];
     [self setupSubviews];
+    [self loadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -95,7 +98,22 @@
     
     TCCompanyHeaderView *headerView = [[TCCompanyHeaderView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, self.headerViewHeight)];
     tableView.tableHeaderView = headerView;
-    headerView.companyInfo = self.userCompanyInfo.company;
+    self.headerView = headerView;
+}
+
+- (void)loadData {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchCompanyBlindStatus:^(TCUserCompanyInfo *userCompanyInfo, NSError *error) {
+        if (userCompanyInfo) {
+            [MBProgressHUD hideHUD:YES];
+            weakSelf.userCompanyInfo = userCompanyInfo;
+            self.headerView.companyInfo = userCompanyInfo.company;
+            [weakSelf.tableView reloadData];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
+        }
+    }];
 }
 
 #pragma mark - Navigation Bar

@@ -885,6 +885,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:userCompanyInfo.idNo forParam:@"idNo"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 201) {
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.userInfo.communityID = userCompanyInfo.community.ID;
+                userSession.userInfo.communityName = userCompanyInfo.community.name;
+                userSession.userSensitiveInfo.companyID = userCompanyInfo.company.ID;
+                userSession.userSensitiveInfo.companyName = userCompanyInfo.company.companyName;
+                [self setUserSession:userSession];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }

@@ -61,7 +61,7 @@
 }
 
 - (void)loadNetData {
-    [[TCBuluoApi api] fetchCompanyList:self.communityID result:^(NSArray *companyList, NSError *error) {
+    [[TCBuluoApi api] fetchCompanyList:self.community.ID result:^(NSArray *companyList, NSError *error) {
         if (companyList) {
             weakSelf.companyList = companyList;
             [weakSelf.tableView reloadData];
@@ -97,7 +97,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     TCCompanyInfo *companyInfo = self.companyList[indexPath.row];
     if (self.companyInfoBlock) {
-        self.companyInfoBlock(companyInfo);
+        self.companyInfoBlock(companyInfo, self.community);
     }
     [self.navigationController popToViewController:self.popToVC animated:YES];
 }
