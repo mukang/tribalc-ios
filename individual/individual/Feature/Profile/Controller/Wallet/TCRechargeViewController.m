@@ -17,13 +17,17 @@
 
 #import <Masonry.h>
 
-@interface TCRechargeViewController () <TCRechargeMethodsViewDelegate, UITextFieldDelegate>
+@interface TCRechargeViewController () <TCRechargeMethodsViewDelegate, UITextFieldDelegate, WXApiManagerDelegate>
+
+@property (weak, nonatomic) UILabel *balanceLabel;
 
 @property (weak, nonatomic) UITextField *textField;
 /** 输入框里是否含有小数点 */
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
 
 @property (nonatomic) TCRechargeMethod rechargeMethod;
+/** 预支付ID，查询微信支付结果时使用 */
+@property (copy, nonatomic) NSString *prepayID;
 
 @end
 
@@ -68,7 +72,11 @@
     
     UILabel *balanceLabel = [[UILabel alloc] init];
     balanceLabel.textAlignment = NSTextAlignmentCenter;
+    balanceLabel.textColor = TCRGBColor(42, 42, 42);
+    balanceLabel.font = [UIFont boldSystemFontOfSize:17];
+    balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", self.balance];
     [self.view addSubview:balanceLabel];
+    self.balanceLabel = balanceLabel;
     
     TCRechargeInputView *inputView = [[TCRechargeInputView alloc] init];
     inputView.textField.keyboardType = UIKeyboardTypeDecimalPad;
@@ -191,6 +199,19 @@
     self.rechargeMethod = rechargeMethod;
 }
 
+#pragma mark - WXApiManagerDelegate
+
+- (void)managerDidRecvPayResponse:(PayResp *)response {
+    switch (response.errCode) {
+        case WXSuccess:
+            [self handleCheckWechatRechargeResult];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - Actions 
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
@@ -204,26 +225,60 @@
 }
 
 - (void)handleClickRechargeButton:(UIButton *)sender {
-    CGFloat money = [self.textField.text floatValue];
+    double money = [self.textField.text doubleValue];
     if (self.rechargeMethod == TCRechargeMethodWechat) {
         [MBProgressHUD showHUD:YES];
-        [[TCBuluoApi api] fetchRechargeWechatInfoWithMoney:money result:^(TCRechargeWechatInfo *rechargeWechatInfo, NSError *error) {
-            if (rechargeWechatInfo) {
+        [[TCBuluoApi api] fetchWechatRechargeInfoWithMoney:money result:^(TCWechatRechargeInfo *wechatRechargeInfo, NSError *error) {
+            if (wechatRechargeInfo) {
                 [MBProgressHUD hideHUD:YES];
-                [weakSelf handleRechargeByWechatInfo:rechargeWechatInfo];
+                [weakSelf handleArouseWechatRecharge:wechatRechargeInfo];
             } else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"充值失败，%@", reason]];
             }
         }];
     } else if (self.rechargeMethod == TCRechargeMethodAlipay) {
-        
+        // TODO:
     }
-    
 }
 
-- (void)handleRechargeByWechatInfo:(TCRechargeWechatInfo *)wechatInfo {
-    
+/**
+ 调起微信支付
+ */
+- (void)handleArouseWechatRecharge:(TCWechatRechargeInfo *)rechargeInfo {
+    [WXApiManager sharedManager].delegate = self;
+    self.prepayID = rechargeInfo.prepayid;
+    PayReq *req = [[PayReq alloc] init];
+    req.partnerId = rechargeInfo.partnerid;
+    req.prepayId = rechargeInfo.prepayid;
+    req.nonceStr = rechargeInfo.noncestr;
+    req.timeStamp = [rechargeInfo.timestamp intValue];
+    req.package = rechargeInfo.package;
+    req.sign = rechargeInfo.sign;
+    [WXApi sendReq:req];
+}
+
+/**
+ 查询微信支付结果
+ */
+- (void)handleCheckWechatRechargeResult {
+    TCLog(@"-->%@", self.prepayID);
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchWechatRechargeResultWithPrepayID:self.prepayID result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD showHUDWithMessage:@"充值成功"];
+            weakSelf.balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", weakSelf.balance + [weakSelf.textField.text doubleValue]];
+            if (weakSelf.completionBlock) {
+                weakSelf.completionBlock();
+            }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
+            });
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"查询充值结果失败，%@", reason]];
+        }
+    }];
 }
 
 

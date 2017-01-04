@@ -15,12 +15,16 @@
 - (void)didClickConfirmButtonInPaymentDetailView:(TCPaymentDetailView *)view;
 - (void)didClickCloseButtonInPaymentDetailView:(TCPaymentDetailView *)view;
 - (void)didClickQueryButtonInPaymentDetailView:(TCPaymentDetailView *)view;
+- (void)didTapChangePaymentMethodViewInPaymentDetailView:(TCPaymentDetailView *)view;
 
 @end
 
 @interface TCPaymentDetailView : UIView
 
+/** 需付金额 */
 @property (nonatomic) CGFloat paymentAmount;
+/** 付款方式 */
+@property (weak, nonatomic) IBOutlet UILabel *methodLabel;
 
 @property (weak, nonatomic) id<TCPaymentDetailViewDelegate> delegate;
 

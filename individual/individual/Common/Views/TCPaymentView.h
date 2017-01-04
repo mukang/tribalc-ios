@@ -22,8 +22,6 @@
 
 /** 商品订单ID数组（类型为商品时，必填） */
 @property (copy, nonatomic) NSArray *orderIDs;
-/** 钱包信息 */
-@property (strong, nonatomic) TCWalletAccount *walletAccount;
 
 @property (weak, nonatomic) id<TCPaymentViewDelegate> delegate;
 

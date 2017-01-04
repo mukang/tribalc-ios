@@ -26,7 +26,7 @@
         UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), payMethodLab.y + payMethodLab.height - TCRealValue(0.5), TCScreenWidth - TCRealValue(40), TCRealValue(0.5))];
         [self addSubview:topLineView];
         
-        UIButton *balanceView = [self getPayViewWithImageName:@"car_balance_pay" AndTitle:@"余额支付" AndFrame:CGRectMake(0, payMethodLab.y + payMethodLab.height, payMethodLab.width, payMethodLab.height)];
+        UIButton *balanceView = [self getPayViewWithImageName:@"balance_icon" AndTitle:@"余额支付" AndFrame:CGRectMake(0, payMethodLab.y + payMethodLab.height, payMethodLab.width, payMethodLab.height)];
         balanceView.tag = 0;
         [self addSubview:balanceView];
         balanceBtn = [self getPaySelectBtnWithFrame:CGRectMake(TCScreenWidth - TCRealValue(20) - TCRealValue(16.5), payMethodLab.y + payMethodLab.height + balanceView.height / 2 - TCRealValue(16.5) / 2, TCRealValue(16.5), TCRealValue(16.5)) AndTitle:@"余额支付" AndTag:0];
@@ -35,13 +35,13 @@
         [self addSubview:balanceBtn];
         
         
-        UIButton *weChatView = [self getPayViewWithImageName:@"car_wechat_pay" AndTitle:@"微信支付" AndFrame:CGRectMake(0, balanceView.y + balanceView.height, balanceView.width, balanceView.height)];
+        UIButton *weChatView = [self getPayViewWithImageName:@"wechat_icon" AndTitle:@"微信支付" AndFrame:CGRectMake(0, balanceView.y + balanceView.height, balanceView.width, balanceView.height)];
         weChatView.tag = 1;
         [self addSubview:weChatView];
         weChatPayBtn = [self getPaySelectBtnWithFrame:CGRectMake(TCScreenWidth - TCRealValue(20) - TCRealValue(16.5), balanceView.y + balanceView.height + payMethodLab.height / 2 - TCRealValue(16.5) / 2, TCRealValue(16.5), TCRealValue(16.5)) AndTitle:@"微信支付" AndTag:1];
         [self addSubview:weChatPayBtn];
         
-        UIButton *aliPayView = [self getPayViewWithImageName:@"car_ali_pay" AndTitle:@"支付宝支付" AndFrame:CGRectMake(0, weChatView.y + weChatView.height, weChatView.width, weChatView.height)];
+        UIButton *aliPayView = [self getPayViewWithImageName:@"alipay_icon" AndTitle:@"支付宝支付" AndFrame:CGRectMake(0, weChatView.y + weChatView.height, weChatView.width, weChatView.height)];
         aliPayView.tag = 2;
         [self addSubview:aliPayView];
         aliPayBtn = [self getPaySelectBtnWithFrame:CGRectMake(TCScreenWidth - TCRealValue(20) - TCRealValue(16.5), weChatView.y + weChatView.height + payMethodLab.height / 2 - TCRealValue(16.5) / 2, TCRealValue(16.5), TCRealValue(16.5)) AndTitle:@"支付宝支付" AndTag:2];

@@ -1,9 +1,9 @@
 //
-//  TCRechargeWechatInfo.h
+//  TCWechatRechargeInfo.h
 //  individual
 //
-//  Created by 穆康 on 2016/12/30.
-//  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
+//  Created by 穆康 on 2017/1/3.
+//  Copyright © 2017年 杭州部落公社科技有限公司. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,7 +11,7 @@
 /**
  调起微信支付接口所需信息
  */
-@interface TCRechargeWechatInfo : NSObject
+@interface TCWechatRechargeInfo : NSObject
 
 /** 应用ID */
 @property (copy, nonatomic) NSString *appid;

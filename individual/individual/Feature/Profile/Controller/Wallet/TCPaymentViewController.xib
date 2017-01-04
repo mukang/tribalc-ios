@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -82,7 +82,7 @@
                 <view tag="10001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="15g-mj-UHw">
                     <rect key="frame" x="20" y="148" width="335" height="40"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car_balance_pay" translatesAutoresizingMaskIntoConstraints="NO" id="BWJ-S6-4Es">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="balance_icon" translatesAutoresizingMaskIntoConstraints="NO" id="BWJ-S6-4Es">
                             <rect key="frame" x="5" y="11" width="18" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="18" id="DpS-mq-cNq"/>
@@ -131,7 +131,7 @@
                             <state key="normal" image="car_unselected_pay"/>
                             <state key="selected" image="car_pay_selected"/>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car_wechat_pay" translatesAutoresizingMaskIntoConstraints="NO" id="QZD-MD-tvP">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_icon" translatesAutoresizingMaskIntoConstraints="NO" id="QZD-MD-tvP">
                             <rect key="frame" x="5" y="11" width="18" height="18"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信支付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uio-j7-mzr">
@@ -197,7 +197,7 @@
                         <constraint firstAttribute="height" constant="0.5" id="hqO-Kf-kGG"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car_ali_pay" translatesAutoresizingMaskIntoConstraints="NO" id="ap4-sB-KwV">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alipay_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ap4-sB-KwV">
                     <rect key="frame" x="25" y="239.5" width="18" height="18"/>
                 </imageView>
             </subviews>
@@ -258,10 +258,10 @@
         </view>
     </objects>
     <resources>
-        <image name="car_ali_pay" width="17" height="17"/>
-        <image name="car_balance_pay" width="17" height="17"/>
+        <image name="alipay_icon" width="17" height="17"/>
+        <image name="balance_icon" width="17" height="17"/>
         <image name="car_pay_selected" width="17" height="17"/>
         <image name="car_unselected_pay" width="17" height="17"/>
-        <image name="car_wechat_pay" width="17" height="17"/>
+        <image name="wechat_icon" width="17" height="17"/>
     </resources>
 </document>

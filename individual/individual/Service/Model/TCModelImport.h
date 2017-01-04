@@ -77,7 +77,7 @@
 
 /********** 第三方支付 **********/
 
-#import "TCRechargeWechatInfo.h"
+#import "TCWechatRechargeInfo.h"
 
 
 @interface TCModelImport : NSObject

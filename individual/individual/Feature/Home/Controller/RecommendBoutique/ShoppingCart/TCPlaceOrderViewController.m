@@ -496,8 +496,8 @@
 //            payView = [[TCBalancePayView alloc] initWithPayPrice:[weakSelf getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
 //            payView.orderArr = orderList;
 //            [payView showPayView];
-            
-            [weakSelf handlePaymentWithOrderList:orderList];
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf handleShowPaymentViewWithOrderList:orderList];
             
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -506,32 +506,50 @@
     }];
 }
 
-/**
- 获取钱包信息，判断用户是否设置了支付密码
- */
-- (void)handlePaymentWithOrderList:(NSArray *)orderList {
-    [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
-        if (walletAccount) {
-            [MBProgressHUD hideHUD:YES];
-            if (walletAccount.password) {
-                [weakSelf handleShowPaymentViewWithOrderList:orderList walletAccount:walletAccount];
-            } else {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码，请到 我的钱包>支付密码 中设置" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
-                [alertController addAction:action];
-                [weakSelf presentViewController:alertController animated:YES completion:nil];
-            }
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
-        }
-    }];
-}
+///**
+// 获取钱包信息，判断用户是否设置了支付密码
+// */
+//- (void)handlePaymentWithOrderList:(NSArray *)orderList {
+//    [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
+//        if (walletAccount) {
+//            [MBProgressHUD hideHUD:YES];
+//            if (walletAccount.password) {
+//                [weakSelf handleShowPaymentViewWithOrderList:orderList walletAccount:walletAccount];
+//            } else {
+//                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码，请到 我的钱包>支付密码 中设置" preferredStyle:UIAlertControllerStyleAlert];
+//                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+//                [alertController addAction:action];
+//                [weakSelf presentViewController:alertController animated:YES completion:nil];
+//            }
+//        } else {
+//            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+//            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
+//        }
+//    }];
+//}
+//
+///**
+// 弹出paymentView
+// */
+//- (void)handleShowPaymentViewWithOrderList:(NSArray *)orderList walletAccount:(TCWalletAccount *)walletAccount {
+//    NSMutableArray *orderIDs = [NSMutableArray array];
+//    CGFloat paymentAmount = 0;
+//    for (TCOrder *order in orderList) {
+//        paymentAmount += order.totalFee;
+//        [orderIDs addObject:order.ID];
+//    }
+//    
+//    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:paymentAmount fromController:self];
+//    paymentView.walletAccount = walletAccount;
+//    paymentView.orderIDs = orderIDs;
+//    paymentView.delegate = self;
+//    [paymentView show:YES];
+//}
 
 /**
  弹出paymentView
  */
-- (void)handleShowPaymentViewWithOrderList:(NSArray *)orderList walletAccount:(TCWalletAccount *)walletAccount {
+- (void)handleShowPaymentViewWithOrderList:(NSArray *)orderList {
     NSMutableArray *orderIDs = [NSMutableArray array];
     CGFloat paymentAmount = 0;
     for (TCOrder *order in orderList) {
@@ -540,7 +558,6 @@
     }
     
     TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:paymentAmount fromController:self];
-    paymentView.walletAccount = walletAccount;
     paymentView.orderIDs = orderIDs;
     paymentView.delegate = self;
     [paymentView show:YES];

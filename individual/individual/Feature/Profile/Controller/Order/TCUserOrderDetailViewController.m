@@ -540,7 +540,6 @@
  */
 - (void)handleShowPaymentViewWithWalletAccount:(TCWalletAccount *)walletAccount {
     TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:orderDetail.totalFee fromController:self];
-    paymentView.walletAccount = walletAccount;
     paymentView.orderIDs = @[orderDetail.ID];
     paymentView.delegate = self;
     [paymentView show:YES];
