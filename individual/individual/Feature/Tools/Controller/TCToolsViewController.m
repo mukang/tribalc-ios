@@ -137,6 +137,12 @@
 }
 
 - (void)openDoor {
+    if ([self checkUserNeedLogin]) return;
+    
+    if (![[TCBuluoApi api] currentUserSession].userSensitiveInfo.companyID) {
+        [MBProgressHUD showHUDWithMessage:@"绑定公司成功后才可使用开门功能"];
+        return;
+    }
     
     if (_blurImageView == nil) {
         _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
