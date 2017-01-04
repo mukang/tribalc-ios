@@ -73,7 +73,7 @@
 #pragma mark - Private Methods
 
 - (void)setupNavBar {
-    self.navigationItem.title = self.userCompanyInfo.company.name;
+    self.navigationItem.title = self.userCompanyInfo.company.companyName;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -185,7 +185,7 @@
             switch (indexPath.row) {
                 case 1:
                     cell.titleLabel.text = @"公司名称";
-                    cell.subtitleLabel.text = self.userCompanyInfo.company.name;
+                    cell.subtitleLabel.text = self.userCompanyInfo.company.companyName;
                     break;
                 case 2:
                     cell.titleLabel.text = @"姓名";

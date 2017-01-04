@@ -87,7 +87,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCCompanyNameViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCompanyNameViewCell" forIndexPath:indexPath];
     TCCompanyInfo *companyInfo = self.companyList[indexPath.row];
-    cell.titleLabel.text = companyInfo.name;
+    cell.titleLabel.text = companyInfo.companyName;
     return cell;
 }
 

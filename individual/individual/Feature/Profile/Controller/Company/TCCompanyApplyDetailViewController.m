@@ -119,7 +119,7 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     } else {
         if (indexPath.row == 0) {
             TCCompanyApplyNameViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCompanyApplyNameViewCell" forIndexPath:indexPath];
-            cell.nameLabel.text = self.userCompanyInfo.company.name;
+            cell.nameLabel.text = self.userCompanyInfo.company.companyName;
             return cell;
         } else {
             TCCommonInputViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCommonInputViewCell" forIndexPath:indexPath];

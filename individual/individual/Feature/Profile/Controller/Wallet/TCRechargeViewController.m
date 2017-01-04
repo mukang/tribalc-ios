@@ -208,6 +208,7 @@
             break;
             
         default:
+            [MBProgressHUD showHUDWithMessage:@"充值失败"];
             break;
     }
 }
