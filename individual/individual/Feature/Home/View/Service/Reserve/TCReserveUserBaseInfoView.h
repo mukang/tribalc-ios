@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TCReserveRadioBtnView.h"
 
-@interface TCReserveUserBaseInfoView : UIView
+@interface TCReserveUserBaseInfoView : UIView<UITextFieldDelegate>
 
 @property (nonatomic) TCReserveRadioBtnView *senderView;
 @property (nonatomic) UILabel *nameLab;
