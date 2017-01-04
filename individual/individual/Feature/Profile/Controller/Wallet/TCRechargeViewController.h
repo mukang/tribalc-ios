@@ -12,9 +12,11 @@ typedef void(^TCRechargeCompletionBlock)();
 
 @interface TCRechargeViewController : UIViewController
 
+/** 余额 */
 @property (nonatomic) CGFloat balance;
+/** 建议金额 */
 @property (nonatomic) CGFloat suggestMoney;
-
+/** 充值完成的回调 */
 @property (copy, nonatomic) TCRechargeCompletionBlock completionBlock;
 
 @end

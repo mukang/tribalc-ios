@@ -961,6 +961,41 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel payPurpose:(TCPayPurpose)payPurpose orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *purpose = payPurpose ? @"maintain" : @"order";
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/payments?type=%@", self.currentUserSession.assigned, purpose];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        request.token = self.currentUserSession.token;
+        switch (payChannel) {
+            case TCPayChannelBalance:
+                [request setValue:@"BALANCE" forParam:@"payChannel"];
+                break;
+                
+            default:
+                break;
+        }
+        [request setValue:orderIDs forParam:@"orderIds"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                TCUserPayment *payment = [[TCUserPayment alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(payment, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 - (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/payments", self.currentUserSession.assigned];
@@ -1659,7 +1694,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)commitPropertyRepairsInfo:(TCPropertyRepairsInfo *)repairsInfo result:(void (^)(BOOL, TCPropertyManage *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/property_management", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"property_orders/?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
         NSDictionary *dic = [repairsInfo toObjectDictionary];
@@ -1741,21 +1776,21 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 #pragma mark - 第三方支付
 
-- (void)fetchRechargeWechatInfoWithMoney:(CGFloat)money result:(void (^)(TCRechargeWechatInfo *, NSError *))resultBlock {
+- (void)fetchWechatRechargeInfoWithMoney:(double)money result:(void (^)(TCWechatRechargeInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"recharge/wechat/unifiedorder?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-        [request setValue:@(money) forParam:@"value"];
+        [request setValue:[NSNumber numberWithDouble:money] forParam:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.error) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             } else {
-                TCRechargeWechatInfo *wechatInfo = [[TCRechargeWechatInfo alloc] initWithObjectDictionary:response.data];
+                TCWechatRechargeInfo *rechargeInfo = [[TCWechatRechargeInfo alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(wechatInfo, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(rechargeInfo, nil));
                 }
             }
         }];
@@ -1763,6 +1798,31 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
             TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+- (void)fetchWechatRechargeResultWithPrepayID:(NSString *)prepayID result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"recharge/wechat/orderquery?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [request setValue:prepayID forParam:@"value"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.statusCode == 200) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
         }
     }
 }

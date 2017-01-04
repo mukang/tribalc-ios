@@ -13,7 +13,6 @@
 @interface TCPaymentDetailView ()
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet UILabel *methodLabel;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 
@@ -36,6 +35,9 @@
     
     self.closeButton.hitTestSlop = UIEdgeInsetsMake(-20, -20, -20, -20);
     self.queryButton.hitTestSlop = UIEdgeInsetsMake(-20, -20, -20, -20);
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapContainerView:)];
+    [self.containerView addGestureRecognizer:tapGesture];
 }
 
 - (void)setPaymentAmount:(CGFloat)paymentAmount {
@@ -59,6 +61,12 @@
 - (IBAction)handleClickConfirmButton:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(didClickConfirmButtonInPaymentDetailView:)]) {
         [self.delegate didClickConfirmButtonInPaymentDetailView:self];
+    }
+}
+
+- (void)handleTapContainerView:(UITapGestureRecognizer *)sender {
+    if ([self.delegate respondsToSelector:@selector(didTapChangePaymentMethodViewInPaymentDetailView:)]) {
+        [self.delegate didTapChangePaymentMethodViewInPaymentDetailView:self];
     }
 }
 

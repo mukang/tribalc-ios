@@ -9,17 +9,26 @@
 #import "TCPaymentView.h"
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
+#import "TCPaymentMethodView.h"
 #import "TCBuluoApi.h"
 #import "TCFunctions.h"
+
+#import "TCNavigationController.h"
+#import "TCRechargeViewController.h"
 
 static CGFloat const subviewHeight = 400;
 static CGFloat const duration = 0.25;
 
-@interface TCPaymentView () <TCPaymentDetailViewDelegate, TCPaymentPasswordViewDelegate>
+@interface TCPaymentView () <TCPaymentDetailViewDelegate, TCPaymentPasswordViewDelegate, TCPaymentMethodViewDelegate>
 
 @property (nonatomic) CGFloat paymentAmount;
 @property (weak, nonatomic) TCPaymentDetailView *paymentDetailView;
 @property (weak, nonatomic) TCPaymentPasswordView *paymentPasswordView;
+@property (weak, nonatomic) TCPaymentMethodView *paymentMethodView;
+/** 钱包信息 */
+@property (strong, nonatomic) TCWalletAccount *walletAccount;
+
+@property (nonatomic) TCPaymentMethod currentPaymentMethod;
 
 @end
 
@@ -58,6 +67,7 @@ static CGFloat const duration = 0.25;
     
     TCPaymentDetailView *paymentDetailView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentDetailView" owner:nil options:nil].lastObject;
     paymentDetailView.paymentAmount = _paymentAmount;
+    paymentDetailView.methodLabel.text = @"余额支付";
     paymentDetailView.delegate = self;
     paymentDetailView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, subviewHeight);
     [self addSubview:paymentDetailView];
@@ -147,10 +157,39 @@ static CGFloat const duration = 0.25;
     }];
 }
 
+/**
+ 显示选择支付方式页
+ */
+- (void)showPaymentMethodView {
+    TCPaymentMethodView *paymentMethodView = [[TCPaymentMethodView alloc] initWithPaymentMethod:self.currentPaymentMethod];
+    paymentMethodView.frame = CGRectMake(TCScreenWidth, self.paymentDetailView.y, TCScreenWidth, subviewHeight);
+    paymentMethodView.delegate = self;
+    [self addSubview:paymentMethodView];
+    self.paymentMethodView = paymentMethodView;
+    
+    [UIView animateWithDuration:duration animations:^{
+        weakSelf.paymentDetailView.x = - TCScreenWidth;
+        weakSelf.paymentMethodView.x = 0;
+    }];
+}
+
+/**
+ 退出选择支付方式页
+ */
+- (void)dismissPaymentMethodView {
+    [UIView animateWithDuration:duration animations:^{
+        weakSelf.paymentDetailView.x = 0;
+        weakSelf.paymentMethodView.x = TCScreenWidth;
+    } completion:^(BOOL finished) {
+        [weakSelf.paymentMethodView removeFromSuperview];
+    }];
+}
+
 #pragma mark - TCPaymentDetailViewDelegate
 
 - (void)didClickConfirmButtonInPaymentDetailView:(TCPaymentDetailView *)view {
-    [weakSelf showPaymentPasswordView];
+//    [weakSelf showPaymentPasswordView];
+    [self handleClickConfirmButton];
 }
 
 - (void)didClickCloseButtonInPaymentDetailView:(TCPaymentDetailView *)view {
@@ -165,6 +204,10 @@ static CGFloat const duration = 0.25;
     TCLog(@"点击了疑问按钮");
 }
 
+- (void)didTapChangePaymentMethodViewInPaymentDetailView:(TCPaymentDetailView *)view {
+    [self showPaymentMethodView];
+}
+
 #pragma mark - TCPaymentPasswordViewDelegate
 
 - (void)paymentPasswordView:(TCPaymentPasswordView *)view didFilledPassword:(NSString *)password {
@@ -175,7 +218,120 @@ static CGFloat const duration = 0.25;
     [self dismissPaymentPasswordView];
 }
 
+#pragma mark - TCPaymentMethodViewDelegate
+
+- (void)paymentMethodView:(TCPaymentMethodView *)view didSlectedPaymentMethod:(TCPaymentMethod)paymentMethod {
+    self.currentPaymentMethod = paymentMethod;
+    switch (paymentMethod) {
+        case TCPaymentMethodBalance:
+            self.paymentDetailView.methodLabel.text = @"余额支付";
+            break;
+        case TCPaymentMethodWechat:
+            self.paymentDetailView.methodLabel.text = @"微信支付";
+            break;
+        case TCPaymentMethodAlipay:
+            self.paymentDetailView.methodLabel.text = @"支付宝支付";
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissPaymentMethodView];
+}
+
+- (void)didClickBackButtonInPaymentMethodView:(TCPaymentMethodView *)view {
+    [self dismissPaymentMethodView];
+}
+
 #pragma mark - Actions
+
+/**
+ 点击了确认支付按钮
+ */
+- (void)handleClickConfirmButton {
+    switch (self.currentPaymentMethod) {
+        case TCPaymentMethodBalance:
+            [self handlePaymentWithBalance];
+            break;
+        case TCPaymentMethodWechat:
+            [self handlePaymentWithWechat];
+            break;
+        case TCPaymentMethodAlipay:
+            [self handlePaymentWithAlipay];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+/**
+ 使用余额付款
+ */
+- (void)handlePaymentWithBalance {
+    // 获取钱包信息
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
+        if (walletAccount) {
+            [MBProgressHUD hideHUD:YES];
+            weakSelf.walletAccount = walletAccount;
+            
+            if (!walletAccount.password) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码，请到\n我的钱包>支付密码\n设置" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+                [alertController addAction:action];
+                [sourceController presentViewController:alertController animated:YES completion:nil];
+                return;
+            }
+            
+            if (weakSelf.paymentAmount > walletAccount.balance) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您的钱包余额不足，请充值" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [weakSelf handleShowRechargeViewController];
+                }];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                [alertController addAction:confirmAction];
+                [alertController addAction:cancelAction];
+                [sourceController presentViewController:alertController animated:YES completion:nil];
+                return;
+            }
+            
+            [weakSelf showPaymentPasswordView];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
+        }
+    }];
+}
+
+/**
+ 使用微信付款
+ */
+- (void)handlePaymentWithWechat {
+    
+}
+
+/**
+ 使用余额宝付款
+ */
+- (void)handlePaymentWithAlipay {
+    
+}
+
+/**
+ 显示余额充值页面
+ */
+- (void)handleShowRechargeViewController {
+    TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
+    vc.balance = self.walletAccount.balance;
+    vc.suggestMoney = self.paymentAmount - self.walletAccount.balance;
+    vc.completionBlock = ^() {
+        
+    };
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
+    [sourceController presentViewController:nav animated:YES completion:nil];
+}
 
 /**
  提交付款申请
@@ -185,13 +341,13 @@ static CGFloat const duration = 0.25;
         [MBProgressHUD showHUDWithMessage:@"付款失败，密码错误"];
         return;
     }
-    if (self.paymentAmount > self.walletAccount.balance) {
-        [MBProgressHUD showHUDWithMessage:@"付款失败，您的钱包余额不足"];
-        return;
-    }
+//    if (self.paymentAmount > self.walletAccount.balance) {
+//        [MBProgressHUD showHUDWithMessage:@"付款失败，您的钱包余额不足"];
+//        return;
+//    }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBalance orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBalance payPurpose:TCPayPurposeOrder orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             if ([userPayment.status isEqualToString:@"CREATED"]) { // 正在处理中
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

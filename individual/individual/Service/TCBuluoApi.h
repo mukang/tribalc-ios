@@ -21,6 +21,11 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
     TCPayChannelBankCard      // 银行卡
 };
 
+typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
+    TCPayPurposeOrder = 0,   // 订单
+    TCPayPurposeMaintain,    // 维修
+};
+
 @interface TCBuluoApi : NSObject
 
 /**
@@ -298,7 +303,7 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param orderIDs 订单ID列表
  @param resultBlock 结果回调，userPayment为nil时表示提交失败，失败原因见error的code和userInfo
  */
-- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
+- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel payPurpose:(TCPayPurpose)payPurpose orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
 
 /**
  查询付款申请
@@ -510,6 +515,14 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
  @param money 支付金额（元）
  @param resultBlock 回调结果，rechargeWechatInfo为nil表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchRechargeWechatInfoWithMoney:(CGFloat)money result:(void(^)(TCRechargeWechatInfo *rechargeWechatInfo, NSError *error))resultBlock;
+- (void)fetchWechatRechargeInfoWithMoney:(double)money result:(void(^)(TCWechatRechargeInfo *wechatRechargeInfo, NSError *error))resultBlock;
+
+/**
+ 获取微信充值结果
+
+ @param prepayID 预支付ID，可以在“获取调起微信支付接口所需信息”接口中得到
+ @param resultBlock 回调结果，success为NO时表示获取或充值失败，失败原因见error的code和userInfo
+ */
+- (void)fetchWechatRechargeResultWithPrepayID:(NSString *)prepayID result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 @end
