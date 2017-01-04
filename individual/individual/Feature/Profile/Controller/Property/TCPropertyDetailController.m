@@ -197,13 +197,13 @@
             _payBtn.hidden = NO;
             btnH = 30.0;
             btnBottomC = 86.5;
-        }else if ([_propertyManage.status isEqualToString:@"PAYED"]) {
+        }else if ([_propertyManage.status isEqualToString:@"PAY_ED"]) {
             _masterView.hidden= NO;
             _payBtn.hidden = YES;
         }else if ([_propertyManage.status isEqualToString:@"TO_FIX"]) {
             _masterView.hidden= NO;
             _payBtn.hidden = YES;
-        }else {
+        }else if ([_propertyManage.status isEqualToString:@"CANCEL"]) {
             _masterView.hidden = YES;
             _payBtn.hidden = YES;
         }
@@ -213,9 +213,11 @@
     }
     
     if (_propertyManage.totalFee) {
-        NSString *money = [NSString stringWithFormat:@"维修金额¥%@",_propertyManage.totalFee];
+        NSString *money = [NSString stringWithFormat:@"维修金额¥%.2f",_propertyManage.totalFee];
+        NSRange ra = [money rangeOfString:[NSString stringWithFormat:@"¥%.2f",_propertyManage.totalFee]];
         NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:money];
-        [att addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14] range:[money rangeOfString:[NSString stringWithFormat:@"¥%@",_propertyManage.totalFee]]];
+        [att addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14] range:ra];
+        [att addAttribute:NSForegroundColorAttributeName value:TCRGBColor(42, 42, 42) range:ra];
         _moneyLabel.attributedText = att;
     }else {
         _moneyLabel.attributedText = nil;
