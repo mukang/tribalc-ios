@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - Bugly (2.4.2)
+  - Bugly (2.4.6)
   - EAIntroView (2.10.0):
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
@@ -23,28 +23,28 @@ PODS:
   - MGSwipeTableCell (1.5.6)
   - MJRefresh (3.1.12)
   - pop (1.0.9)
-  - SDWebImage (4.0.0-beta2):
-    - SDWebImage/Core (= 4.0.0-beta2)
-  - SDWebImage/Core (4.0.0-beta2)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - UITableView+FDTemplateLayoutCell (1.4)
   - YYText (1.0.7)
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.0)
+  - AFNetworking
   - Bugly
   - EAIntroView (~> 2.10.0)
   - Masonry
-  - MBProgressHUD (~> 1.0.0)
+  - MBProgressHUD
   - MGSwipeTableCell (~> 1.5.6)
-  - MJRefresh (~> 3.1.12)
+  - MJRefresh
   - pop (~> 1.0.7)
-  - SDWebImage (~> 4.0.0-beta2)
+  - SDWebImage
   - UITableView+FDTemplateLayoutCell
   - YYText
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Bugly: b09cd3c7e54048a0e079be88a7a99610f14eab8f
+  Bugly: 7756e72c59387b0d490f46e83ab458ae94ee7fba
   EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
@@ -52,10 +52,10 @@ SPEC CHECKSUMS:
   MGSwipeTableCell: 616700eb0ffd1c611ba909066cb7fd739790a0a7
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  SDWebImage: e379f33106cf8d6766f970c0ef1c3fb609c94d78
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 90592aef1cf31daf378cdc9279eb5ed8f272773d
+PODFILE CHECKSUM: b0f4d79a21fc16eff872c62527dc9b8bf8bbbddb
 
 COCOAPODS: 1.1.1

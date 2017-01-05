@@ -70,7 +70,8 @@
     UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(64, 64)];
     [self.logoImageView sd_setImageWithURL:logoURL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
-    self.imagePalyerView.pictures = companyInfo.pictures;
+    [self.imagePalyerView setPictures:companyInfo.pictures isLocal:NO];
+    
     if (companyInfo.pictures.count == 1) {
         self.imagePalyerView.autoPlayEnabled = NO;
     }

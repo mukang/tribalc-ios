@@ -23,6 +23,8 @@
 #import <MBProgressHUD.h>
 #import "TCQRCodeViewController.h"
 
+#import "TCImagePlayerView.h"
+
 @interface TCHomeViewController () {
     NSDictionary *homeInfoDic;
     UIScrollView *titleScrollView;
@@ -32,6 +34,8 @@
 }
 
 @property (nonatomic, strong) TCBlurImageView *blurImageView;
+
+@property (nonatomic, strong) TCImagePlayerView *cycleImageView;
 
 @end
 
@@ -60,9 +64,9 @@
     [self.view addSubview:homeScrollView];
     
     [self setupTitleImageScrollViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(265))];
-    [homeScrollView addSubview:titleScrollView];
+    [homeScrollView addSubview:_cycleImageView];
     
-    UIView *expressView = [self getExpressViewWithFrame:CGRectMake(0, titleScrollView.y + titleScrollView.height, TCScreenWidth, TCRealValue(33))];
+    UIView *expressView = [self getExpressViewWithFrame:CGRectMake(0, _cycleImageView.y + _cycleImageView.height, TCScreenWidth, TCRealValue(33))];
     [homeScrollView addSubview:expressView];
     
     UIView *propertyView = [self getPropertyFunctionViewWithFrame:CGRectMake(0, expressView.y + expressView.height + TCRealValue(5), TCScreenWidth, TCRealValue(88))];
@@ -105,23 +109,12 @@
 }
 
 - (void)setupTitleImageScrollViewWithFrame:(CGRect)frame {
-    titleScrollView = [self getTitleImageScrollViewWithFrame:frame];
-    titleScrollView.delegate = self;
-
-    NSArray *picturesArr = homeInfoDic[@"pictures"];
-    for (int i = 0; i < picturesArr.count; i++) {
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCScreenWidth * i, 0, TCScreenWidth, titleScrollView.height)];
-        imgView.image = [UIImage imageNamed:picturesArr[i]];
-        [titleScrollView addSubview:imgView];
-    }
-    if (picturesArr.count > 1) {
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCScreenWidth * picturesArr.count, 0, TCScreenWidth, titleScrollView.height)];
-        imgView.image = [UIImage imageNamed:picturesArr[0]];
-        [titleScrollView addSubview:imgView];
-    }
-    titleScrollView.contentSize = CGSizeMake(TCScreenWidth * (picturesArr.count + 1), titleScrollView.height);
     
-    [self startTitleScrollTimer];
+    TCImagePlayerView *scrollView = [[TCImagePlayerView alloc] initWithFrame:frame];
+    [scrollView setPictures:homeInfoDic[@"pictures"] isLocal:YES];
+    scrollView.autoPlayEnabled = YES;
+    [scrollView startPlaying];
+    _cycleImageView = scrollView;
 }
 
 - (UIView *)getPropertyFunctionViewWithFrame:(CGRect)frame {
@@ -245,30 +238,6 @@
     [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     return button;
 }
-
-- (void)startTitleScrollTimer {
-    titleScrollTimer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(titleImageScroll) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:titleScrollTimer forMode:NSRunLoopCommonModes];
-}
-
-- (void)endTitleScrollTimer {
-    [titleScrollTimer invalidate];
-    titleScrollTimer = nil;
-}
-
-- (void)titleImageScroll {
-    NSArray *pictures = homeInfoDic[@"pictures"];
-    if (titleScrollView.contentOffset.x == TCScreenWidth * (pictures.count)) {
-        [titleScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
-    }
-    
-    CGFloat x = titleScrollView.contentOffset.x;
-    NSInteger multipe = (x + TCScreenWidth) / TCScreenWidth;
-    x = multipe * TCScreenWidth;
-    [titleScrollView setContentOffset:CGPointMake(x, 0) animated:YES];
-}
-
-
 
 - (UIView *)getHeaderTitleViewWithImgName:(NSString *)imgName AndTitle:(NSString *)title {
     UIView *view = [[UIView alloc] init];
@@ -477,12 +446,12 @@
         return;
     }
     
-    [self endTitleScrollTimer];   //计时器停止
+    [_cycleImageView stopPlaying];   //计时器停止
     @WeakObj(self)
     if (_blurImageView == nil) {
         _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
             @StrongObj(self)
-            [self startTitleScrollTimer];
+            [self.cycleImageView startPlaying];
             _blurImageView = nil;
         }];
     }
