@@ -40,7 +40,7 @@
     if (self = [super init]) {
         self.logined = NO;
         LinphoneManager *instance = [LinphoneManager instance];
-        [instance lpConfigBoolForKey:@"backgroundmode_preference"];
+//        [instance lpConfigBoolForKey:@"backgroundmode_preference"];
         [instance lpConfigBoolForKey:@"start_at_boot_preference"];
         
         [LinphoneManager.instance startLinphoneCore];

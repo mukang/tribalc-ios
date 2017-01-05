@@ -11,6 +11,7 @@
 #import "TCArchiveService.h"
 
 #import "NSObject+TCModel.h"
+#import "TCSipAPI.h"
 
 NSString *const TCBuluoApiNotificationUserDidLogin = @"TCBuluoApiNotificationUserDidLogin";
 NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUserDidLogout";
@@ -116,6 +117,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             TCUserSession *userSession = self.currentUserSession;
             userSession.userSensitiveInfo = userSensitiveInfo;
             [self setUserSession:userSession];
+            [[TCSipAPI api] login];
             if (userSensitiveInfo.addressID) {
                 [self fetchUserDefaultShippingAddressWithAddressID:userSensitiveInfo.addressID];
             }
@@ -152,6 +154,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [self setUserSession:userSession];
             [self fetchCurrentUserInfoWithUserID:userSession.assigned];
             [self fetchCurrentUserSensitiveInfoWithUserID:userSession.assigned];
+            
             TC_CALL_ASYNC_MQ({
                 [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserDidLogin object:nil];
             });

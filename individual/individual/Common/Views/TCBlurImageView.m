@@ -8,6 +8,7 @@
 
 #import "TCBlurImageView.h"
 #import "TCOpenDoorController.h"
+#import "TCSipAPI.h"
 
 @interface TCBlurImageView ()
 
@@ -38,6 +39,10 @@
 
 - (void)show {
     if (!_myConreoller) return;
+    
+    if (![[TCSipAPI api] isLogin]) {
+        [[TCSipAPI api] login];
+    }
     
     UIView *superView;
     superView = _myConreoller.view;
