@@ -68,7 +68,8 @@
     NSURL *logoURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:companyInfo.logo];
     [self.logoImageView sd_setImageWithURL:logoURL placeholderImage:nil options:SDWebImageRetryFailed];
     
-    self.imagePalyerView.pictures = companyInfo.pictures;
+    [self.imagePalyerView setPictures:companyInfo.pictures isLocal:NO];
+    
     if (companyInfo.pictures.count == 1) {
         self.imagePalyerView.autoPlayEnabled = NO;
     }

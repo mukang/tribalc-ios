@@ -10,9 +10,10 @@
 
 @interface TCImagePlayerView : UIView
 
-@property (strong, nonatomic) NSArray *pictures;
 /** 是否能自动滚动 */
 @property (nonatomic, getter=isAutoPlayEnabled) BOOL autoPlayEnabled;
+
+- (void)setPictures:(NSArray *)pictures isLocal:(BOOL)isLocal;
 
 - (void)startPlaying;
 - (void)stopPlaying;

@@ -88,7 +88,8 @@
 }
 
 - (void)updateTableHeaderView {
-    self.tableHeaderView.pictures = self.communityDetailInfo.pictures;
+    
+    [self.tableHeaderView setPictures:self.communityDetailInfo.pictures isLocal:NO];
     [self.tableHeaderView startPlaying];
 }
 

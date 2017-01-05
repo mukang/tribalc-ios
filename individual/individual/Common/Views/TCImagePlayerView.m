@@ -19,6 +19,7 @@ static NSInteger const plusNum = 2;  // 需要加上的数
 @property (weak, nonatomic) UIPageControl *pageControl;
 @property (strong, nonatomic) NSTimer *timer;
 
+@property (strong, nonatomic) NSArray *pictures;
 @end
 
 @implementation TCImagePlayerView
@@ -53,7 +54,8 @@ static NSInteger const plusNum = 2;  // 需要加上的数
     self.pageControl = pageControl;
 }
 
-- (void)setPictures:(NSArray *)pictures {
+
+- (void)setPictures:(NSArray *)pictures isLocal:(BOOL)isLocal{
     _pictures = pictures;
     
     NSInteger imageCount = pictures.count;
@@ -88,11 +90,17 @@ static NSInteger const plusNum = 2;  // 需要加上的数
         [imageView addGestureRecognizer:tapGesture];
         [self.scrollView addSubview:imageView];
         
-        NSString *URLString = pictures[imageIndex];
-        NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:URLString];
-        [imageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
+        if (isLocal) {
+            imageView.image = [UIImage imageNamed:pictures[imageIndex]];
+        }else {
+            NSString *URLString = pictures[imageIndex];
+            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:URLString];
+            [imageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
+        }
+        
     }
 }
+
 
 #pragma mark - Public Methods
 
