@@ -38,8 +38,13 @@
         NSDate *appointDate = [NSDate dateWithTimeIntervalSince1970:appointTime];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
-        NSTimeInterval doorTime = propertyManage.doorTime/1000;
-        NSDate *doorDate = [NSDate dateWithTimeIntervalSince1970:doorTime];
+        if (propertyManage.doorTime) {
+            NSTimeInterval doorTime = propertyManage.doorTime/1000;
+            NSDate *doorDate = [NSDate dateWithTimeIntervalSince1970:doorTime];
+            _doorTimeLabel.text = [formatter stringFromDate:doorDate];
+        }else {
+            _doorTimeLabel.text = @"";
+        }
         _orderNumLabel.text = propertyManage.propertyNum ? [NSString stringWithFormat:@"订单号:%@",propertyManage.propertyNum] : @"";
         _communityNameLabel.text = propertyManage.communityName ? propertyManage.communityName : @"";
         _companyNameLabel.text =  propertyManage.companyName ? propertyManage.companyName : @"";
@@ -48,7 +53,7 @@
         _appiontTimeLabel.text = [formatter stringFromDate:appointDate];
         _phoneLabel.text = propertyManage.phone;
         _masterPersonNameLabel.text = propertyManage.masterPersonName ? propertyManage.masterPersonName : @"";
-        _doorTimeLabel.text = [formatter stringFromDate:doorDate];
+        
         _masterView.hidden = [propertyManage.status isEqualToString:@"ORDER_ACCEPT"];
         
         if (propertyManage.fixProject) {

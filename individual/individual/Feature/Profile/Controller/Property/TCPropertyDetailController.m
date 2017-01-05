@@ -111,8 +111,13 @@
     NSDate *appointDate = [NSDate dateWithTimeIntervalSince1970:appointTime];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
-    NSTimeInterval doorTime = _propertyManage.doorTime/1000;
-    NSDate *doorDate = [NSDate dateWithTimeIntervalSince1970:doorTime];
+    if (_propertyManage.doorTime) {
+        NSTimeInterval doorTime = _propertyManage.doorTime/1000;
+        NSDate *doorDate = [NSDate dateWithTimeIntervalSince1970:doorTime];
+        _doorTimeLabel.text = [formatter stringFromDate:doorDate];
+    }else {
+        _doorTimeLabel.text = @"";
+    }
     _communityNameLabel.text = _propertyManage.communityName ? _propertyManage.communityName : @"";
     _companyNameLabel.text =  _propertyManage.companyName ? _propertyManage.companyName : @"";
     _applyPersonNameLabel.text = _propertyManage.applyPersonName ? _propertyManage.applyPersonName : @"";
@@ -120,7 +125,6 @@
     _appointTimeLabel.text = [formatter stringFromDate:appointDate];
     _phoneLabel.text = _propertyManage.phone;  
     _masterPersonNameLabe.text = _propertyManage.masterPersonName ? _propertyManage.masterPersonName : @"";
-    _doorTimeLabel.text = [formatter stringFromDate:doorDate];
     _masterView.hidden = [_propertyManage.status isEqualToString:@"ORDER_ACCEPT"];
     
     if (_propertyManage.fixProject) {
