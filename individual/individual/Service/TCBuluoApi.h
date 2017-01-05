@@ -88,6 +88,13 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
 - (void)fetchUserInfoWithUserID:(NSString *)userID result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
 
 /**
+ 获取当前用户敏感信息
+
+ @param userID 用户ID
+ */
+- (void)fetchCurrentUserSensitiveInfoWithUserID:(NSString *)userID;
+
+/**
  获取用户敏感信息
 
  @param userID 用户ID
