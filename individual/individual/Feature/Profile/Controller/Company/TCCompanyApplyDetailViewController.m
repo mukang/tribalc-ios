@@ -119,7 +119,7 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     } else {
         if (indexPath.row == 0) {
             TCCompanyApplyNameViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCompanyApplyNameViewCell" forIndexPath:indexPath];
-            cell.nameLabel.text = self.userCompanyInfo.company.name;
+            cell.nameLabel.text = self.userCompanyInfo.company.companyName;
             return cell;
         } else {
             TCCommonInputViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCommonInputViewCell" forIndexPath:indexPath];
@@ -185,8 +185,9 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
         [tableView endEditing:YES];
         TCCommunityListViewController *vc = [[TCCommunityListViewController alloc] init];
         vc.popToVC = self;
-        vc.companyInfoBlock = ^(TCCompanyInfo *companyInfo) {
+        vc.companyInfoBlock = ^(TCCompanyInfo *companyInfo, TCCommunity *community) {
             weakSelf.userCompanyInfo.company = companyInfo;
+            weakSelf.userCompanyInfo.community = community;
             [weakSelf.tableView reloadData];
         };
         [self.navigationController pushViewController:vc animated:YES];
@@ -243,9 +244,11 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] bindCompanyWithUserCompanyInfo:self.userCompanyInfo result:^(BOOL success, NSError *error) {
         if (success) {
-            [MBProgressHUD hideHUD:YES];
-            TCCompanyApplyViewController *vc = [[TCCompanyApplyViewController alloc] initWithCompanyApplyStatus:TCCompanyApplyStatusProcess];
-            [weakSelf.navigationController pushViewController:vc animated:YES];
+            [MBProgressHUD showHUDWithMessage:@"绑定成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                UIViewController *vc = weakSelf.navigationController.childViewControllers[0];
+                [weakSelf.navigationController popToViewController:vc animated:YES];
+            });
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"绑定失败，%@", reason]];

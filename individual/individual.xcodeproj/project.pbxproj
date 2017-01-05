@@ -582,6 +582,13 @@
 		7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */; };
 		7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */; };
 		7A2874D01E0A2088001E5AE9 /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47CB1DB720DE00E39207 /* UIView+Category.m */; };
+		7A2D2A921E1CF9820067D591 /* TCPaymentDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A871E1CF9820067D591 /* TCPaymentDetailView.m */; };
+		7A2D2A931E1CF9820067D591 /* TCPaymentDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A2D2A881E1CF9820067D591 /* TCPaymentDetailView.xib */; };
+		7A2D2A941E1CF9820067D591 /* TCPaymentMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A8A1E1CF9820067D591 /* TCPaymentMethodView.m */; };
+		7A2D2A951E1CF9820067D591 /* TCPaymentMethodViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A8C1E1CF9820067D591 /* TCPaymentMethodViewCell.m */; };
+		7A2D2A961E1CF9820067D591 /* TCPaymentPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A8E1E1CF9820067D591 /* TCPaymentPasswordView.m */; };
+		7A2D2A971E1CF9820067D591 /* TCPaymentPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A2D2A8F1E1CF9820067D591 /* TCPaymentPasswordView.xib */; };
+		7A2D2A981E1CF9820067D591 /* TCPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A911E1CF9820067D591 /* TCPaymentView.m */; };
 		7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3321971E0D07E1003049DB /* TCSettingViewController.m */; };
 		7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */; };
 		7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219D1E0D3AA9003049DB /* TCVicinityTitleView.m */; };
@@ -603,11 +610,6 @@
 		7A384F9F1E10CD2B00E6DB9E /* TCPhotoModeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384F9E1E10CD2B00E6DB9E /* TCPhotoModeView.m */; };
 		7A384FA51E1124D600E6DB9E /* TCIDAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384FA31E1124D600E6DB9E /* TCIDAuthViewController.m */; };
 		7A384FA61E1124D600E6DB9E /* TCIDAuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A384FA41E1124D600E6DB9E /* TCIDAuthViewController.xib */; };
-		7A3C81C21DF00B26009ABCEC /* TCPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */; };
-		7A3C81C51DF00DE7009ABCEC /* TCPaymentDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C41DF00DE7009ABCEC /* TCPaymentDetailView.m */; };
-		7A3C81C71DF00DFD009ABCEC /* TCPaymentDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3C81C61DF00DFD009ABCEC /* TCPaymentDetailView.xib */; };
-		7A3C81CA1DF02C16009ABCEC /* TCPaymentPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81C91DF02C16009ABCEC /* TCPaymentPasswordView.m */; };
-		7A3C81CC1DF02FDA009ABCEC /* TCPaymentPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3C81CB1DF02FDA009ABCEC /* TCPaymentPasswordView.xib */; };
 		7A3C81CF1DF04DD5009ABCEC /* TCExtendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3C81CE1DF04DD5009ABCEC /* TCExtendButton.m */; };
 		7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */; };
 		7A45146B1DE582DA007D7193 /* bankCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A45146A1DE582DA007D7193 /* bankCard.plist */; };
@@ -660,8 +662,6 @@
 		7A7E94231DF5723A006A47CE /* TCRepairsCommitViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7E94211DF5723A006A47CE /* TCRepairsCommitViewCell.m */; };
 		7A7E94241DF5723A006A47CE /* TCRepairsCommitViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A7E94221DF5723A006A47CE /* TCRepairsCommitViewCell.xib */; };
 		7A7FD7471E1B5AFC002D7949 /* TCWechatRechargeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FD7461E1B5AFC002D7949 /* TCWechatRechargeInfo.m */; };
-		7A7FD74A1E1B9D08002D7949 /* TCPaymentMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FD7491E1B9D08002D7949 /* TCPaymentMethodView.m */; };
-		7A7FD74D1E1BA9A7002D7949 /* TCPaymentMethodViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FD74C1E1BA9A7002D7949 /* TCPaymentMethodViewCell.m */; };
 		7A9CCED11DB62011003D90C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCED01DB62011003D90C6 /* main.m */; };
 		7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */; };
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
@@ -2866,6 +2866,18 @@
 		7A21E43C1DD02DEA00EF7427 /* TCProfileProcessViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileProcessViewCell.h; sourceTree = "<group>"; };
 		7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileProcessViewCell.m; sourceTree = "<group>"; };
 		7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileProcessViewCell.xib; sourceTree = "<group>"; };
+		7A2D2A861E1CF9820067D591 /* TCPaymentDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentDetailView.h; sourceTree = "<group>"; };
+		7A2D2A871E1CF9820067D591 /* TCPaymentDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentDetailView.m; sourceTree = "<group>"; };
+		7A2D2A881E1CF9820067D591 /* TCPaymentDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentDetailView.xib; sourceTree = "<group>"; };
+		7A2D2A891E1CF9820067D591 /* TCPaymentMethodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentMethodView.h; sourceTree = "<group>"; };
+		7A2D2A8A1E1CF9820067D591 /* TCPaymentMethodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentMethodView.m; sourceTree = "<group>"; };
+		7A2D2A8B1E1CF9820067D591 /* TCPaymentMethodViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentMethodViewCell.h; sourceTree = "<group>"; };
+		7A2D2A8C1E1CF9820067D591 /* TCPaymentMethodViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentMethodViewCell.m; sourceTree = "<group>"; };
+		7A2D2A8D1E1CF9820067D591 /* TCPaymentPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentPasswordView.h; sourceTree = "<group>"; };
+		7A2D2A8E1E1CF9820067D591 /* TCPaymentPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentPasswordView.m; sourceTree = "<group>"; };
+		7A2D2A8F1E1CF9820067D591 /* TCPaymentPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentPasswordView.xib; sourceTree = "<group>"; };
+		7A2D2A901E1CF9820067D591 /* TCPaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentView.h; sourceTree = "<group>"; };
+		7A2D2A911E1CF9820067D591 /* TCPaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentView.m; sourceTree = "<group>"; };
 		7A3321961E0D07E1003049DB /* TCSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSettingViewController.h; sourceTree = "<group>"; };
 		7A3321971E0D07E1003049DB /* TCSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSettingViewController.m; sourceTree = "<group>"; };
 		7A3321991E0D0945003049DB /* TCSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSuggestionViewController.h; sourceTree = "<group>"; };
@@ -2902,14 +2914,6 @@
 		7A384FA21E1124D600E6DB9E /* TCIDAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIDAuthViewController.h; sourceTree = "<group>"; };
 		7A384FA31E1124D600E6DB9E /* TCIDAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthViewController.m; sourceTree = "<group>"; };
 		7A384FA41E1124D600E6DB9E /* TCIDAuthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCIDAuthViewController.xib; sourceTree = "<group>"; };
-		7A3C81C01DF00B26009ABCEC /* TCPaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentView.h; sourceTree = "<group>"; };
-		7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentView.m; sourceTree = "<group>"; };
-		7A3C81C31DF00DE7009ABCEC /* TCPaymentDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentDetailView.h; sourceTree = "<group>"; };
-		7A3C81C41DF00DE7009ABCEC /* TCPaymentDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentDetailView.m; sourceTree = "<group>"; };
-		7A3C81C61DF00DFD009ABCEC /* TCPaymentDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentDetailView.xib; sourceTree = "<group>"; };
-		7A3C81C81DF02C16009ABCEC /* TCPaymentPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentPasswordView.h; sourceTree = "<group>"; };
-		7A3C81C91DF02C16009ABCEC /* TCPaymentPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentPasswordView.m; sourceTree = "<group>"; };
-		7A3C81CB1DF02FDA009ABCEC /* TCPaymentPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentPasswordView.xib; sourceTree = "<group>"; };
 		7A3C81CD1DF04DD5009ABCEC /* TCExtendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCExtendButton.h; sourceTree = "<group>"; };
 		7A3C81CE1DF04DD5009ABCEC /* TCExtendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCExtendButton.m; sourceTree = "<group>"; };
 		7A41C0D61DCC71C0003FC63C /* TCClientRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCClientRequestError.h; sourceTree = "<group>"; };
@@ -2998,10 +3002,6 @@
 		7A7E94221DF5723A006A47CE /* TCRepairsCommitViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCRepairsCommitViewCell.xib; sourceTree = "<group>"; };
 		7A7FD7451E1B5AFC002D7949 /* TCWechatRechargeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWechatRechargeInfo.h; sourceTree = "<group>"; };
 		7A7FD7461E1B5AFC002D7949 /* TCWechatRechargeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWechatRechargeInfo.m; sourceTree = "<group>"; };
-		7A7FD7481E1B9D08002D7949 /* TCPaymentMethodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentMethodView.h; sourceTree = "<group>"; };
-		7A7FD7491E1B9D08002D7949 /* TCPaymentMethodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentMethodView.m; sourceTree = "<group>"; };
-		7A7FD74B1E1BA9A7002D7949 /* TCPaymentMethodViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentMethodViewCell.h; sourceTree = "<group>"; };
-		7A7FD74C1E1BA9A7002D7949 /* TCPaymentMethodViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentMethodViewCell.m; sourceTree = "<group>"; };
 		7A9CCECC1DB62011003D90C6 /* individual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = individual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9CCED01DB62011003D90C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -7450,6 +7450,7 @@
 		7A11F6FC1DE41E93005F3EAB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7A2D2A851E1CF9820067D591 /* PaymentView */,
 				7A3C81CD1DF04DD5009ABCEC /* TCExtendButton.h */,
 				7A3C81CE1DF04DD5009ABCEC /* TCExtendButton.m */,
 				7A11F6FD1DE41F43005F3EAB /* TCRefreshHeader.h */,
@@ -7461,18 +7462,6 @@
 				7A4E050D1DEEDC69002371B0 /* TCCommonInputViewCell.xib */,
 				7AC347071E016ED800E28EC9 /* TCCommonIndicatorViewCell.h */,
 				7AC347081E016ED800E28EC9 /* TCCommonIndicatorViewCell.m */,
-				7A3C81C01DF00B26009ABCEC /* TCPaymentView.h */,
-				7A3C81C11DF00B26009ABCEC /* TCPaymentView.m */,
-				7A3C81C31DF00DE7009ABCEC /* TCPaymentDetailView.h */,
-				7A3C81C41DF00DE7009ABCEC /* TCPaymentDetailView.m */,
-				7A3C81C61DF00DFD009ABCEC /* TCPaymentDetailView.xib */,
-				7A3C81C81DF02C16009ABCEC /* TCPaymentPasswordView.h */,
-				7A3C81C91DF02C16009ABCEC /* TCPaymentPasswordView.m */,
-				7A3C81CB1DF02FDA009ABCEC /* TCPaymentPasswordView.xib */,
-				7A7FD7481E1B9D08002D7949 /* TCPaymentMethodView.h */,
-				7A7FD7491E1B9D08002D7949 /* TCPaymentMethodView.m */,
-				7A7FD74B1E1BA9A7002D7949 /* TCPaymentMethodViewCell.h */,
-				7A7FD74C1E1BA9A7002D7949 /* TCPaymentMethodViewCell.m */,
 				7A1AC8271DF125F40052132F /* TCCommonButton.h */,
 				7A1AC8281DF125F40052132F /* TCCommonButton.m */,
 				7A13EEB91DF820B600377869 /* TCImagePlayerView.h */,
@@ -7668,6 +7657,25 @@
 				7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */,
 			);
 			path = Community;
+			sourceTree = "<group>";
+		};
+		7A2D2A851E1CF9820067D591 /* PaymentView */ = {
+			isa = PBXGroup;
+			children = (
+				7A2D2A901E1CF9820067D591 /* TCPaymentView.h */,
+				7A2D2A911E1CF9820067D591 /* TCPaymentView.m */,
+				7A2D2A861E1CF9820067D591 /* TCPaymentDetailView.h */,
+				7A2D2A871E1CF9820067D591 /* TCPaymentDetailView.m */,
+				7A2D2A881E1CF9820067D591 /* TCPaymentDetailView.xib */,
+				7A2D2A8D1E1CF9820067D591 /* TCPaymentPasswordView.h */,
+				7A2D2A8E1E1CF9820067D591 /* TCPaymentPasswordView.m */,
+				7A2D2A8F1E1CF9820067D591 /* TCPaymentPasswordView.xib */,
+				7A2D2A891E1CF9820067D591 /* TCPaymentMethodView.h */,
+				7A2D2A8A1E1CF9820067D591 /* TCPaymentMethodView.m */,
+				7A2D2A8B1E1CF9820067D591 /* TCPaymentMethodViewCell.h */,
+				7A2D2A8C1E1CF9820067D591 /* TCPaymentMethodViewCell.m */,
+			);
+			path = PaymentView;
 			sourceTree = "<group>";
 		};
 		7A3321951E0D07E1003049DB /* Setting */ = {
@@ -8561,9 +8569,9 @@
 				559D88221E0C045B00982697 /* notes_of_the_optimistic.caf in Resources */,
 				553DC9771DFFE2310018783E /* soft_as_snow.mkv in Resources */,
 				553DC9031DFFE2300018783E /* ORTPTargets-release.cmake in Resources */,
+				7A2D2A971E1CF9820067D591 /* TCPaymentPasswordView.xib in Resources */,
 				559D881B1E0C045B00982697 /* linphonerc in Resources */,
 				55F06F061E040B2500A849D7 /* TCPropertyDetailController.xib in Resources */,
-				7A3C81CC1DF02FDA009ABCEC /* TCPaymentPasswordView.xib in Resources */,
 				7A384FA61E1124D600E6DB9E /* TCIDAuthViewController.xib in Resources */,
 				553DC8A21DFFE22F0018783E /* incoming_chat.wav in Resources */,
 				553DC8EA1DFFE2300018783E /* BelleSIPConfig.cmake in Resources */,
@@ -8578,7 +8586,6 @@
 				553DC8231DFFE22E0018783E /* BelrTargets-release.cmake in Resources */,
 				559D88201E0C045B00982697 /* msg.caf in Resources */,
 				7AC347031E01454100E28EC9 /* TCBankCardViewController.xib in Resources */,
-				7A3C81C71DF00DFD009ABCEC /* TCPaymentDetailView.xib in Resources */,
 				7A7E940B1DF51A01006A47CE /* TCRepairsViewCell.xib in Resources */,
 				553DC9111DFFE2300018783E /* soft_as_snow.mkv in Resources */,
 				553DC8901DFFE22F0018783E /* nowebcamCIF.jpg in Resources */,
@@ -8596,6 +8603,7 @@
 				553DC9511DFFE2300018783E /* BelleSIPConfigVersion.cmake in Resources */,
 				553DC8361DFFE22E0018783E /* ORTPConfigVersion.cmake in Resources */,
 				553DC8481DFFE22F0018783E /* Matroska2Config.cmake in Resources */,
+				7A2D2A931E1CF9820067D591 /* TCPaymentDetailView.xib in Resources */,
 				553DC94F1DFFE2300018783E /* BelcardTargets.cmake in Resources */,
 				553DC8A91DFFE22F0018783E /* oldphone-mono-30s.caf in Resources */,
 				553DC9751DFFE2310018783E /* oldphone-mono-30s.caf in Resources */,
@@ -8834,6 +8842,7 @@
 				7A11F6EC1DE3E39B005F3EAB /* TCVicinityViewController.m in Sources */,
 				7A13EEB21DF814AD00377869 /* TCCommunityListViewController.m in Sources */,
 				7AEB4CCC1E03936300F83A7C /* TCShippingAddressViewController.m in Sources */,
+				7A2D2A951E1CF9820067D591 /* TCPaymentMethodViewCell.m in Sources */,
 				7A11F6EB1DE3E304005F3EAB /* TCClient.m in Sources */,
 				091AABA41DE7CE1B003A4192 /* TCGoodTitleView.m in Sources */,
 				092626801E0BA3F300F5A18C /* TCShoppingCartBottom.m in Sources */,
@@ -8867,6 +8876,7 @@
 				553DC7E91DFFE22E0018783E /* parser-impl.cc in Sources */,
 				09222E7F1DEEC2C70064C0DF /* TCOrderItem.m in Sources */,
 				55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */,
+				7A2D2A941E1CF9820067D591 /* TCPaymentMethodView.m in Sources */,
 				09222E2D1DEE98550064C0DF /* TCSelectSortButton.m in Sources */,
 				55F06F0C1E078C2900A849D7 /* TCPaymentViewController.m in Sources */,
 				7AEB4CED1E03944400F83A7C /* TCBiographyAvatarViewCell.m in Sources */,
@@ -8908,6 +8918,7 @@
 				7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */,
 				7A64EA831E150D23008D0C12 /* TCRechargeInputView.m in Sources */,
 				7AC346F61E0144F300E28EC9 /* TCBankCardViewCell.m in Sources */,
+				7A2D2A921E1CF9820067D591 /* TCPaymentDetailView.m in Sources */,
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
 				7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */,
 				0929D2911E0A25820099B1BD /* TCGoodSelectTitleView.m in Sources */,
@@ -8923,18 +8934,15 @@
 				7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */,
 				7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */,
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
-				7A7FD74D1E1BA9A7002D7949 /* TCPaymentMethodViewCell.m in Sources */,
 				55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
 				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
 				092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */,
 				7AEB4CF11E03944500F83A7C /* TCCityPickerView.m in Sources */,
 				559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */,
-				7A3C81C21DF00B26009ABCEC /* TCPaymentView.m in Sources */,
 				098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */,
 				7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */,
 				7A0EA7341E00F0F700823505 /* TCCommunityListInCity.m in Sources */,
-				7A3C81CA1DF02C16009ABCEC /* TCPaymentPasswordView.m in Sources */,
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				0929D29E1E0A6E1E0099B1BD /* TCServiceSelectBtn.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
@@ -8942,7 +8950,6 @@
 				7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */,
 				09AE0F751DED2AC600F307D8 /* TCServices.m in Sources */,
 				7A11F7141DE43195005F3EAB /* MLBPasswordRenderView.m in Sources */,
-				7A7FD74A1E1B9D08002D7949 /* TCPaymentMethodView.m in Sources */,
 				7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */,
 				7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */,
 				7AB29F341DD46EE600564D93 /* TCUserInfo.m in Sources */,
@@ -9008,6 +9015,7 @@
 				7A1F129E1DEC551400A9B58F /* TCCommunityDetailViewController.m in Sources */,
 				7A381BC41DED5DC4008BDBF7 /* TCCommunityDetailInfo.m in Sources */,
 				7A384FA51E1124D600E6DB9E /* TCIDAuthViewController.m in Sources */,
+				7A2D2A961E1CF9820067D591 /* TCPaymentPasswordView.m in Sources */,
 				7A16665B1DFAB01E007B5733 /* TCCompanyHeaderView.m in Sources */,
 				7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */,
 				092CD3E71DD99DBC0073A9C1 /* TCLocationViewController.m in Sources */,
@@ -9030,6 +9038,7 @@
 				7AC346F81E0144F300E28EC9 /* TCBankPickerView.m in Sources */,
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
 				092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */,
+				7A2D2A981E1CF9820067D591 /* TCPaymentView.m in Sources */,
 				7AEB4D051E03F02F00F83A7C /* TCBioEditBirthdateViewController.m in Sources */,
 				09275FBD1DDEFF6E00502167 /* TCDetailAnnotationView.m in Sources */,
 				7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */,
@@ -9037,7 +9046,6 @@
 				0960B3521DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m in Sources */,
 				7A64EA801E15016E008D0C12 /* TCRechargeViewController.m in Sources */,
 				7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */,
-				7A3C81C51DF00DE7009ABCEC /* TCPaymentDetailView.m in Sources */,
 				098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */,
 				7AB29F311DD46C7D00564D93 /* TCUserSensitiveInfo.m in Sources */,
 				7A7E941E1DF57136006A47CE /* TCRepairsPhotosViewCell.m in Sources */,
@@ -9282,8 +9290,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "975c2a77-1436-457f-86a8-cef169a0017d";
-				PROVISIONING_PROFILE_SPECIFIER = sf1215;
+				PROVISIONING_PROFILE = "0d9af2db-6d4d-47e5-85f7-f787038acc32";
+				PROVISIONING_PROFILE_SPECIFIER = "Individual Development By mukang";
 			};
 			name = Debug;
 		};
@@ -9294,7 +9302,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: wang shuaifeng (CL336ERY54)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
@@ -9357,8 +9365,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "975c2a77-1436-457f-86a8-cef169a0017d";
-				PROVISIONING_PROFILE_SPECIFIER = sf1215;
+				PROVISIONING_PROFILE = "84f30ef8-71f2-4f81-80f4-2d528400d6f6";
+				PROVISIONING_PROFILE_SPECIFIER = "Individual Distribution";
 			};
 			name = Release;
 		};

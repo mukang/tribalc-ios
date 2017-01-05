@@ -499,38 +499,15 @@ TCPhotoModeViewDelegate>
 
 - (void)handleDidSelectedMyCompanyCell {
     TCUserSensitiveInfo *userSensitiveInfo = [TCBuluoApi api].currentUserSession.userSensitiveInfo;
-    if (![userSensitiveInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
-        [MBProgressHUD showHUDWithMessage:@"身份认证成功后才可绑定公司"];
-        return;
+    if (userSensitiveInfo.companyID) {
+        TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        TCCompanyApplyViewController *vc = [[TCCompanyApplyViewController alloc] initWithCompanyApplyStatus:TCCompanyApplyStatusNotApply];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }
-    
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchCompanyBlindStatus:^(TCUserCompanyInfo *userCompanyInfo, NSError *error) {
-        if (userCompanyInfo) {
-            [MBProgressHUD hideHUD:YES];
-            if ([userCompanyInfo.comfirmed isEqualToString:@"SUCCEED"]) {
-                TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
-                vc.userCompanyInfo = userCompanyInfo;
-                vc.hidesBottomBarWhenPushed = YES;
-                [weakSelf.navigationController pushViewController:vc animated:YES];
-            } else {
-                TCCompanyApplyStatus applyStatus;
-                if ([userCompanyInfo.comfirmed isEqualToString:@"PROCESSING"]) {
-                    applyStatus = TCCompanyApplyStatusProcess;
-                } else if ([userCompanyInfo.comfirmed isEqualToString:@"FAILURE"]) {
-                    applyStatus = TCCompanyApplyStatusFailure;
-                } else {
-                    applyStatus = TCCompanyApplyStatusNotApply;
-                }
-                TCCompanyApplyViewController *vc = [[TCCompanyApplyViewController alloc] initWithCompanyApplyStatus:applyStatus];
-                vc.hidesBottomBarWhenPushed = YES;
-                [weakSelf.navigationController pushViewController:vc animated:YES];
-            }
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
-        }
-    }];
 }
 
 - (void)handleDidSelectedIDAuthCell {

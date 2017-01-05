@@ -515,37 +515,12 @@
  点击待付款按钮
  */
 - (void)touchOrderPayBtn:(UIButton *)btn {
-    
-
-    [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
-        if (walletAccount) {
-            [MBProgressHUD hideHUD:YES];
-            if (walletAccount.password) {
-                [weakSelf handleShowPaymentViewWithWalletAccount:walletAccount];
-            } else {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码，请到 我的钱包>支付密码 中设置" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
-                [alertController addAction:action];
-                [weakSelf presentViewController:alertController animated:YES completion:nil];
-            }
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
-        }
-    }];
-}
-
-/**
- 弹出paymentView
- */
-- (void)handleShowPaymentViewWithWalletAccount:(TCWalletAccount *)walletAccount {
     TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:orderDetail.totalFee fromController:self];
     paymentView.orderIDs = @[orderDetail.ID];
+    paymentView.payPurpose = TCPayPurposeOrder;
     paymentView.delegate = self;
     [paymentView show:YES];
 }
-
-
 
 
 - (void)touchOrderRemindBtn:(UIButton *)btn {
