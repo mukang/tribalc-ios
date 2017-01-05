@@ -245,6 +245,7 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
     [[TCBuluoApi api] bindCompanyWithUserCompanyInfo:self.userCompanyInfo result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD showHUDWithMessage:@"绑定成功"];
+            [weakSelf handleFetchUserSensitiveInfo];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 UIViewController *vc = weakSelf.navigationController.childViewControllers[0];
                 [weakSelf.navigationController popToViewController:vc animated:YES];
@@ -254,6 +255,14 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"绑定失败，%@", reason]];
         }
     }];
+}
+
+/**
+ 更新个人敏感信息
+ */
+- (void)handleFetchUserSensitiveInfo {
+    NSString *userID = [[TCBuluoApi api] currentUserSession].assigned;
+    [[TCBuluoApi api] fetchCurrentUserSensitiveInfoWithUserID:userID];
 }
 
 - (void)didReceiveMemoryWarning {

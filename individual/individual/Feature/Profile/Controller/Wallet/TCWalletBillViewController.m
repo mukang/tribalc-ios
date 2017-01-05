@@ -50,6 +50,7 @@
 
 - (void)setupSubviews {
     self.tableView.backgroundColor = TCRGBColor(242, 242, 242);
+    self.tableView.tableFooterView = [UIView new];
     
     self.tableView.mj_header = [TCRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     self.tableView.mj_footer = [TCRefreshFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadOldData)];
