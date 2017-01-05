@@ -30,6 +30,7 @@
 
 - (void)setupSubviewsWithFrame:(CGRect)frame {
     TCImagePlayerView *imagePalyerView = [[TCImagePlayerView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    [imagePalyerView hidePageControl];
     [self addSubview:imagePalyerView];
     self.imagePalyerView = imagePalyerView;
     
@@ -71,10 +72,6 @@
     [self.logoImageView sd_setImageWithURL:logoURL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
     [self.imagePalyerView setPictures:companyInfo.pictures isLocal:NO];
-    
-    if (companyInfo.pictures.count == 1) {
-        self.imagePalyerView.autoPlayEnabled = NO;
-    }
 }
 
 @end

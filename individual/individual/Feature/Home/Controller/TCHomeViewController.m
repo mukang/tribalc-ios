@@ -112,7 +112,6 @@
     
     TCImagePlayerView *scrollView = [[TCImagePlayerView alloc] initWithFrame:frame];
     [scrollView setPictures:homeInfoDic[@"pictures"] isLocal:YES];
-    scrollView.autoPlayEnabled = YES;
     [scrollView startPlaying];
     _cycleImageView = scrollView;
 }

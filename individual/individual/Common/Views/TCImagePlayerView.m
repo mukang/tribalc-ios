@@ -8,8 +8,8 @@
 
 #import "TCImagePlayerView.h"
 #import "TCImageURLSynthesizer.h"
+#import "UIImage+Category.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import <Masonry.h>
 
 static NSInteger const plusNum = 2;  // 需要加上的数
 
@@ -18,6 +18,7 @@ static NSInteger const plusNum = 2;  // 需要加上的数
 @property (weak, nonatomic) UIScrollView *scrollView;
 @property (weak, nonatomic) UIPageControl *pageControl;
 @property (strong, nonatomic) NSTimer *timer;
+@property (nonatomic, getter=isPlayEnabled) BOOL playEnabled;
 
 @property (strong, nonatomic) NSArray *pictures;
 @end
@@ -52,6 +53,8 @@ static NSInteger const plusNum = 2;  // 需要加上的数
     pageControl.centerY = self.height - 15;
     [self addSubview:pageControl];
     self.pageControl = pageControl;
+    
+    self.playEnabled = YES;
 }
 
 
@@ -62,10 +65,34 @@ static NSInteger const plusNum = 2;  // 需要加上的数
     
     if (!imageCount) return;
     
+    if (imageCount == 1) {
+        self.playEnabled = NO;
+        self.scrollView.contentSize = CGSizeZero;
+        self.scrollView.bounces = NO;
+        self.pageControl.hidden = YES;
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.scrollView.bounds];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
+        [imageView setTag:0];
+        [imageView setUserInteractionEnabled:YES];
+        UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapImageView:)];
+        [imageView addGestureRecognizer:tapGesture];
+        [self.scrollView addSubview:imageView];
+        if (isLocal) {
+            imageView.image = [UIImage imageNamed:pictures[0]];
+        }else {
+            NSString *URLString = pictures[0];
+            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:URLString];
+            UIImage *placeholderImage = [UIImage placeholderImageWithSize:imageView.size];
+            [imageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
+        }
+        return;
+    }
+    
     self.scrollView.contentSize = CGSizeMake(self.scrollView.width * (imageCount + plusNum), 0);
     [self.scrollView setContentOffset:CGPointMake(self.scrollView.width, 0) animated:NO];
-    
     self.pageControl.numberOfPages = imageCount;
+    self.pageControl.currentPage = 0;
     
     for (int i=0; i<imageCount + plusNum; i++) {
         CGFloat imageW = self.scrollView.width;
@@ -95,17 +122,21 @@ static NSInteger const plusNum = 2;  // 需要加上的数
         }else {
             NSString *URLString = pictures[imageIndex];
             NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:URLString];
-            [imageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
+            UIImage *placeholderImage = [UIImage placeholderImageWithSize:imageView.size];
+            [imageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
         }
-        
     }
 }
 
 
 #pragma mark - Public Methods
 
+- (void)hidePageControl {
+    self.pageControl.hidden = YES;
+}
+
 - (void)startPlaying {
-    if (!self.isAutoPlayEnabled) return;
+    if (!self.isPlayEnabled) return;
     
     if (!self.timer) {
         [self addTimer];
@@ -113,7 +144,7 @@ static NSInteger const plusNum = 2;  // 需要加上的数
 }
 
 - (void)stopPlaying {
-    if (!self.isAutoPlayEnabled) return;
+    if (!self.isPlayEnabled) return;
     
     [self removeTimer];
 }
