@@ -8,6 +8,7 @@
 
 #import "TCCommunityDetailViewController.h"
 #import "TCCommunityVisitViewController.h"
+#import "TCRestaurantInfoViewController.h"
 
 #import "TCImagePlayerView.h"
 #import "TCCommunityIntroViewCell.h"
@@ -170,7 +171,7 @@
             return;
         }
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        /*
+        
         TCStoreInfo *storeInfo;
         if (indexPath.row <= self.communityDetailInfo.repastList.count) {
             storeInfo = self.communityDetailInfo.repastList[indexPath.row - 1];
@@ -179,7 +180,6 @@
         }
         TCRestaurantInfoViewController *vc = [[TCRestaurantInfoViewController alloc] initWithServiceId:storeInfo.ID];
         [self.navigationController pushViewController:vc animated:YES];
-         */
     }
 }
 
