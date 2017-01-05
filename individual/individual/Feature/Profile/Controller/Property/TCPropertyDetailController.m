@@ -9,6 +9,7 @@
 #import "TCPropertyDetailController.h"
 #import "TCPropertyManage.h"
 #import "TCImageURLSynthesizer.h"
+#import "UIImage+Category.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "TCPaymentView.h"
 #import "MBProgressHUD+Category.h"
@@ -166,7 +167,8 @@
                         [_imgView addSubview:imageView];
                         imageView.layer.cornerRadius = 3.0;
                         imageView.clipsToBounds = YES;
-                        [imageView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageRetryFailed];
+                        UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(height, height)];
+                        [imageView sd_setImageWithURL:imageURL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
                     }
                 }
                 

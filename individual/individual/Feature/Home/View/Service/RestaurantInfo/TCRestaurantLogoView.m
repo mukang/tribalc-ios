@@ -7,6 +7,7 @@
 //
 
 #import "TCRestaurantLogoView.h"
+#import "UIImage+Category.h"
 
 @implementation TCRestaurantLogoView {
     UIImageView *logoImageView;
@@ -23,8 +24,9 @@
         self.layer.masksToBounds = YES;
 
         logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
-//        logoImageView.contentMode = UIViewContentModeScaleAspectFit;
-        [logoImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"good_placeholder"]];
+        //        logoImageView.contentMode = UIViewContentModeScaleAspectFit;
+        UIImage *placeholderImage = [UIImage placeholderImageWithSize:logoImageView.size];
+        [logoImageView sd_setImageWithURL:url placeholderImage:placeholderImage options:SDWebImageRetryFailed];
         [self addSubview:logoImageView];
     }
     

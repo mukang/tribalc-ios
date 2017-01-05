@@ -10,6 +10,7 @@
 #import "TCCommunity.h"
 #import "TCExtendButton.h"
 #import "TCImageURLSynthesizer.h"
+#import "UIImage+Category.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <Masonry.h>
 
@@ -108,7 +109,8 @@
     _community = community;
     
     NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:community.mainPicture];
-    [self.imageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRetryFailed];
+    UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCScreenWidth, 207)];
+    [self.imageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
     self.nameLabel.text = community.name;
     

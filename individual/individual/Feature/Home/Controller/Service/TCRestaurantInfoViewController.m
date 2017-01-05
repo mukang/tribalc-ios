@@ -8,6 +8,7 @@
 
 #import "TCRestaurantInfoViewController.h"
 #import "TCImageURLSynthesizer.h"
+#import "UIImage+Category.h"
 
 @interface TCRestaurantInfoViewController () {
     UIImageView *serviceTitleImageView;
@@ -124,7 +125,9 @@
 
 - (void)createTitleImageView {
     serviceTitleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, TCRealValue(270))];
-    [serviceTitleImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:serviceDetail.mainPicture] placeholderImage:[UIImage imageNamed:@"home_image_place"]];
+    NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:serviceDetail.mainPicture];
+    UIImage *placeholderImage = [UIImage placeholderImageWithSize:serviceTitleImageView.size];
+    [serviceTitleImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     serviceTitleImageView.clipsToBounds = NO;
     
     float logoViewRadius = serviceTitleImageView.height * 0.12;

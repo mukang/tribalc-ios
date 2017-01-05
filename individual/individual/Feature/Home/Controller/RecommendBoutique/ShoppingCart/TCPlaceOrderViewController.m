@@ -13,6 +13,7 @@
 #import "TCClientConfig.h"
 #import "TCUserOrderTableViewCell.h"
 #import "TCImageURLSynthesizer.h"
+#import "UIImage+Category.h"
 //#import "TCBalancePayView.h"
 #import "TCUserOrderTabBarController.h"
 #import "TCUserOrderDetailViewController.h"
@@ -251,7 +252,8 @@
     TCMarkStore *markStore = orderDetail.store;
     UIImageView *storeLogoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCRealValue(20), headerView.height / 2 - TCRealValue(17) / 2, TCRealValue(17), TCRealValue(17))];
     NSURL *logoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, markStore.logo]];
-    [storeLogoImgView sd_setImageWithURL:logoUrl placeholderImage:[UIImage imageNamed:@"map_bar"]];
+    UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCRealValue(17), TCRealValue(17))];
+    [storeLogoImgView sd_setImageWithURL:logoUrl placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
     UILabel *storeLabel = [TCComponent createLabelWithFrame:CGRectMake(storeLogoImgView.x + storeLogoImgView.width + TCRealValue(5), 0, self.view.width - storeLogoImgView.x - storeLogoImgView.width - TCRealValue(5), headerView.height) AndFontSize:TCRealValue(13) AndTitle:markStore.name AndTextColor:[UIColor blackColor]];
     storeLabel.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(13)];

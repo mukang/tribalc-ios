@@ -8,6 +8,7 @@
 
 #import "TCUserOrderTableViewCell.h"
 #import "TCImageURLSynthesizer.h"
+#import "UIImage+Category.h"
 
 
 @implementation TCUserOrderTableViewCell {
@@ -113,7 +114,9 @@
 }
 
 - (void)setupOrderListData {
-    [self.leftImageView sd_setImageWithURL:[TCImageURLSynthesizer synthesizeImageURLWithPath:_orderItem.goods.mainPicture]];
+    NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:_orderItem.goods.mainPicture];
+    UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCRealValue(71.5), TCRealValue(71.5))];
+    [self.leftImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     [self setTitleLabWithText:_orderItem.goods.name];
     [self setPriceLabel:_orderItem.goods.salePrice];
     [self setNumberLabel:_orderItem.amount];

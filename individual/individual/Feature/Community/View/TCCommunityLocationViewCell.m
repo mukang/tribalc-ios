@@ -10,6 +10,7 @@
 #import "TCCommunityDetailInfo.h"
 
 #import "TCImageURLSynthesizer.h"
+#import "UIImage+Category.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -31,7 +32,8 @@
     _communityDetailInfo = communityDetailInfo;
     
     NSURL *imageURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:communityDetailInfo.map];
-    [self.mapImageView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageRetryFailed];
+    UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCScreenWidth, TCScreenWidth * 0.44)];
+    [self.mapImageView sd_setImageWithURL:imageURL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
     self.addressLabel.text = communityDetailInfo.address;
 }

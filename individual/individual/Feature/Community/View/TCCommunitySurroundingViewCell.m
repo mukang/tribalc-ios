@@ -11,6 +11,7 @@
 #import "TCStoreInfo.h"
 
 #import "TCImageURLSynthesizer.h"
+#import "UIImage+Category.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -41,7 +42,8 @@
     _storeInfo = storeInfo;
     
     NSURL *imageURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:storeInfo.thumbnail];
-    [self.logoImageView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageRetryFailed];
+    UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(90, 70)];
+    [self.logoImageView sd_setImageWithURL:imageURL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
     self.nameLabel.text = storeInfo.name;
     

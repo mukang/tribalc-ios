@@ -9,6 +9,7 @@
 #import "TCCompanyHeaderView.h"
 #import "TCCompanyInfo.h"
 #import "TCImageURLSynthesizer.h"
+#import "UIImage+Category.h"
 #import <Masonry.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -66,7 +67,8 @@
     _companyInfo = companyInfo;
     
     NSURL *logoURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:companyInfo.logo];
-    [self.logoImageView sd_setImageWithURL:logoURL placeholderImage:nil options:SDWebImageRetryFailed];
+    UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(64, 64)];
+    [self.logoImageView sd_setImageWithURL:logoURL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
     self.imagePalyerView.pictures = companyInfo.pictures;
     if (companyInfo.pictures.count == 1) {
