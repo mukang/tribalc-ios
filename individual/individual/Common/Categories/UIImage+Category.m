@@ -58,7 +58,7 @@
     NSString *key = [NSString stringWithFormat:@"%@%@", name, NSStringFromCGSize(size)];
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
     
-    UIImage *image = [imageCache imageFromCacheForKey:key];
+    UIImage *image = [imageCache imageFromDiskCacheForKey:key];
     if (image) {
         return image;
     } else {         // 没有就创建再存储到缓存和磁盘
@@ -82,7 +82,7 @@
         UIGraphicsEndImageContext();
         
         // 存储到缓存和磁盘
-        [imageCache storeImage:image forKey:key completion:nil];
+        [imageCache storeImage:image forKey:key];
         
         return image;
     }
