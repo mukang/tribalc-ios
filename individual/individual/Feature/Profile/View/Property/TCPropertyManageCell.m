@@ -96,8 +96,13 @@
                 _masterView.hidden = NO;
             }else if ([propertyManage.status isEqualToString:@"CANCEL"]) {
                 [_statusBtn setTitle:@"已取消" forState:UIControlStateNormal];
+                if (propertyManage.phone) {
+                    _masterView.hidden = NO;
+                }else {
+                    _masterView.hidden = YES;
+                }
                 _finishedImage.hidden= YES;
-                _masterView.hidden = YES;
+                
             }else {
                 [_statusBtn setTitle:@"" forState:UIControlStateNormal];
                 _finishedImage.hidden = YES;
