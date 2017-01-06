@@ -50,16 +50,16 @@
     [wechatView.button addTarget:self action:@selector(handleClickWechatButton:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:wechatView];
     
-    TCRechargeMethodView *alipayView = [[TCRechargeMethodView alloc] init];
-    alipayView.imageView.image = [UIImage imageNamed:@"alipay_icon"];
-    alipayView.titleLabel.text = @"支付宝充值";
-    [alipayView.button addTarget:self action:@selector(handleClickAlipayButton:) forControlEvents:UIControlEventTouchDown];
-    [self addSubview:alipayView];
+//    TCRechargeMethodView *alipayView = [[TCRechargeMethodView alloc] init];
+//    alipayView.imageView.image = [UIImage imageNamed:@"alipay_icon"];
+//    alipayView.titleLabel.text = @"支付宝充值";
+//    [alipayView.button addTarget:self action:@selector(handleClickAlipayButton:) forControlEvents:UIControlEventTouchDown];
+//    [self addSubview:alipayView];
     
     self.methodLabel = methodLabel;
     self.topSeparatorView = topSeparatorView;
     self.wechatView = wechatView;
-    self.alipayView = alipayView;
+//    self.alipayView = alipayView;
 }
 
 - (void)setupConstraints {
@@ -81,11 +81,11 @@
         make.left.right.equalTo(weakSelf);
         make.height.mas_equalTo(40);
     }];
-    [self.alipayView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.wechatView.mas_bottom);
-        make.left.right.equalTo(weakSelf);
-        make.height.mas_equalTo(40);
-    }];
+//    [self.alipayView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(weakSelf.wechatView.mas_bottom);
+//        make.left.right.equalTo(weakSelf);
+//        make.height.mas_equalTo(40);
+//    }];
 }
 
 - (void)setRechargeMethod:(TCRechargeMethod)rechargeMethod {

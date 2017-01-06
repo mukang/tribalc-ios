@@ -78,7 +78,7 @@
             break;
         case 3:
             cell.titleLabel.text = @"商家名称";
-            cell.detailLabel.text = @"杰士邦";
+            cell.detailLabel.text = @"";
             break;
         default:
             break;

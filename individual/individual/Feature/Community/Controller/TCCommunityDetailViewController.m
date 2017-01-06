@@ -8,6 +8,7 @@
 
 #import "TCCommunityDetailViewController.h"
 #import "TCCommunityVisitViewController.h"
+//#import "TCRestaurantInfoViewController.h"
 
 #import "TCImagePlayerView.h"
 #import "TCCommunityIntroViewCell.h"

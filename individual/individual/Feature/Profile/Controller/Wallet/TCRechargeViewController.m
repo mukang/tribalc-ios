@@ -226,6 +226,10 @@
 }
 
 - (void)handleClickRechargeButton:(UIButton *)sender {
+    if (self.textField.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请输入充值金额"];
+        return;
+    }
     double money = [self.textField.text doubleValue];
     if (self.rechargeMethod == TCRechargeMethodWechat) {
         [MBProgressHUD showHUD:YES];
