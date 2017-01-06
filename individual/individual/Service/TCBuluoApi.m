@@ -881,11 +881,11 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/company_bind_request", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-        [request setValue:userCompanyInfo.company.ID forParam:@"companyId"];
-        [request setValue:userCompanyInfo.department forParam:@"department"];
-        [request setValue:userCompanyInfo.position forParam:@"position"];
-        [request setValue:userCompanyInfo.personNum forParam:@"personNum"];
-        [request setValue:userCompanyInfo.idNo forParam:@"idNo"];
+        [request setValue:userCompanyInfo.company.ID forParam:@"value"];
+//        [request setValue:userCompanyInfo.department forParam:@"department"];
+//        [request setValue:userCompanyInfo.position forParam:@"position"];
+//        [request setValue:userCompanyInfo.personNum forParam:@"personNum"];
+//        [request setValue:userCompanyInfo.idNo forParam:@"idNo"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 201) {
                 TCUserSession *userSession = self.currentUserSession;
