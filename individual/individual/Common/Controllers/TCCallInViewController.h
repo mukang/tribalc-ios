@@ -10,6 +10,11 @@
 #include "LinphoneManager.h"
 #import "TCLinphoneUtils.h"
 
+typedef void (^Myblock)();
+
 @interface TCCallInViewController : TCBaseViewController
 @property(nonatomic, assign) LinphoneCall *call;
+
+@property (nonatomic, copy) Myblock myBlock;
+
 @end

@@ -514,6 +514,7 @@
 		559D88261E0D17AF00982697 /* TCAboutUSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559D88251E0D17AF00982697 /* TCAboutUSViewController.m */; };
 		55EC5BE11E2492F500C5FB73 /* TCCallInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC5BE01E2492F500C5FB73 /* TCCallInViewController.m */; };
 		55EC5BE41E24D7E700C5FB73 /* TCCallVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC5BE31E24D7E700C5FB73 /* TCCallVideoViewController.m */; };
+		55EC5BE81E28E9FA00C5FB73 /* TCCallInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC5BE71E28E9FA00C5FB73 /* TCCallInView.m */; };
 		55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */; };
 		55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */; };
 		55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */; };
@@ -2745,6 +2746,8 @@
 		55EC5BE01E2492F500C5FB73 /* TCCallInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCallInViewController.m; sourceTree = "<group>"; };
 		55EC5BE21E24D7E700C5FB73 /* TCCallVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCallVideoViewController.h; sourceTree = "<group>"; };
 		55EC5BE31E24D7E700C5FB73 /* TCCallVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCallVideoViewController.m; sourceTree = "<group>"; };
+		55EC5BE61E28E9FA00C5FB73 /* TCCallInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCallInView.h; sourceTree = "<group>"; };
+		55EC5BE71E28E9FA00C5FB73 /* TCCallInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCallInView.m; sourceTree = "<group>"; };
 		55F06EEC1E03911400A849D7 /* TCPropertyManageListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageListController.h; sourceTree = "<group>"; };
 		55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageListController.m; sourceTree = "<group>"; };
 		55F06EF01E03977000A849D7 /* TCPropertyManageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageWrapper.h; sourceTree = "<group>"; };
@@ -7453,6 +7456,8 @@
 				55F06F261E0A3AE200A849D7 /* TCBlurImageView.m */,
 				7A384F9D1E10CD2B00E6DB9E /* TCPhotoModeView.h */,
 				7A384F9E1E10CD2B00E6DB9E /* TCPhotoModeView.m */,
+				55EC5BE61E28E9FA00C5FB73 /* TCCallInView.h */,
+				55EC5BE71E28E9FA00C5FB73 /* TCCallInView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -8845,6 +8850,7 @@
 				7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */,
 				092C69801DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
+				55EC5BE81E28E9FA00C5FB73 /* TCCallInView.m in Sources */,
 				7AAF23821DCB5C04002B81A5 /* TCUserSession.m in Sources */,
 				0929D2841E0A24F00099B1BD /* TCRecommendFooter.m in Sources */,
 				553DC7E91DFFE22E0018783E /* parser-impl.cc in Sources */,

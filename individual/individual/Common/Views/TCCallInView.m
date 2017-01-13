@@ -1,28 +1,24 @@
 //
-//  TCBlurImageView.m
+//  TCCallInView.m
 //  individual
 //
-//  Created by 王帅锋 on 16/12/21.
-//  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
+//  Created by 王帅锋 on 17/1/13.
+//  Copyright © 2017年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCBlurImageView.h"
-#import "TCOpenDoorController.h"
+#import "TCCallInView.h"
 #import "TCSipAPI.h"
+#import "TCCallInViewController.h"
 
-@interface TCBlurImageView ()
+@interface TCCallInView ()
 
 @property (nonatomic,weak) UIViewController *myConreoller;
 
 @property (nonatomic, copy) MyBlock block;
 
-@property (copy, nonatomic) NSString *subClassStr;
-
 @end
 
-
-
-@implementation TCBlurImageView
+@implementation TCCallInView
 
 - (instancetype)initWithController:(UIViewController *)controller endBlock:(MyBlock)b{
     
@@ -52,9 +48,7 @@
     [superView addSubview:self];
     [superView bringSubviewToFront:self];
     
-//    Class clss = NSClassFromString(_subClassStr);
-    
-    TCOpenDoorController *open = [[TCOpenDoorController alloc] init];
+    TCCallInViewController *open = [[TCCallInViewController alloc] init];
     open.modalPresentationStyle = UIModalPresentationOverCurrentContext | UIModalPresentationFullScreen;
     open.myBlock = ^{
         if (self) {
@@ -68,7 +62,7 @@
         [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:open animated:YES completion:^{
             open.view.backgroundColor = [UIColor clearColor];
         }];
-
+        
     });
     
     
