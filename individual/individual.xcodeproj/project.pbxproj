@@ -9290,7 +9290,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "520a01ec-de83-4965-88c5-92b2f5243af3";
+				PROVISIONING_PROFILE = "975df6bb-e440-4993-8425-09ee0b9edcc9";
 				PROVISIONING_PROFILE_SPECIFIER = "Individual Development";
 			};
 			name = Debug;
