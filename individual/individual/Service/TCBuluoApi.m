@@ -106,19 +106,9 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             userSession.userInfo = userInfo;
             [self setUserSession:userSession];
             [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
-        }
-    }];
-}
-
-- (void)fetchCurrentUserSensitiveInfoWithUserID:(NSString *)userID {
-    [self fetchUserSensitiveInfoWithUserID:userID result:^(TCUserSensitiveInfo *userSensitiveInfo, NSError *error) {
-        if (userSensitiveInfo) {
-            TCUserSession *userSession = self.currentUserSession;
-            userSession.userSensitiveInfo = userSensitiveInfo;
-            [self setUserSession:userSession];
             [[TCSipAPI api] login];
-            if (userSensitiveInfo.addressID) {
-                [self fetchUserDefaultShippingAddressWithAddressID:userSensitiveInfo.addressID];
+            if (userInfo.addressID) {
+                [self fetchUserDefaultShippingAddressWithAddressID:userInfo.addressID];
             }
         }
     }];
@@ -152,7 +142,6 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             userSession = [[TCUserSession alloc] initWithObjectDictionary:response.data];
             [self setUserSession:userSession];
             [self fetchCurrentUserInfoWithUserID:userSession.assigned];
-            [self fetchCurrentUserSensitiveInfoWithUserID:userSession.assigned];
             
             TC_CALL_ASYNC_MQ({
                 [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserDidLogin object:nil];
@@ -478,7 +467,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)changeUserPhone:(TCUserPhoneInfo *)phoneInfo result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/sensitive_info/phone", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/phone", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
         request.token = self.currentUserSession.token;
         NSDictionary *dic = [phoneInfo toObjectDictionary];
@@ -488,7 +477,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
                 TCUserSession *userSession = self.currentUserSession;
-                userSession.userSensitiveInfo.phone = phoneInfo.phone;
+                userSession.userInfo.phone = phoneInfo.phone;
                 [self setUserSession:userSession];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
@@ -509,15 +498,15 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)setUserDefaultShippingAddress:(TCUserShippingAddress *)shippingAddress result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/sensitive_info/addressID", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/addressID", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
         request.token = self.currentUserSession.token;
         [request setValue:shippingAddress.ID forKey:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
                 TCUserSession *userSession = self.currentUserSession;
-                userSession.userSensitiveInfo.addressID = shippingAddress.ID;
-                userSession.userSensitiveInfo.shippingAddress = shippingAddress;
+                userSession.userInfo.addressID = shippingAddress.ID;
+                userSession.userInfo.shippingAddress = shippingAddress;
                 [self setUserSession:userSession];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
@@ -875,42 +864,36 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(TCUserInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/company_bind_request", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
         [request setValue:userCompanyInfo.company.ID forParam:@"value"];
-//        [request setValue:userCompanyInfo.department forParam:@"department"];
-//        [request setValue:userCompanyInfo.position forParam:@"position"];
-//        [request setValue:userCompanyInfo.personNum forParam:@"personNum"];
-//        [request setValue:userCompanyInfo.idNo forParam:@"idNo"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 201) {
+            if (response.statusCode == 200) {
+                TCUserInfo *userInfo = [[TCUserInfo alloc] initWithObjectDictionary:response.data];
                 TCUserSession *userSession = self.currentUserSession;
-                userSession.userInfo.communityID = userCompanyInfo.community.ID;
-                userSession.userInfo.communityName = userCompanyInfo.community.name;
-                userSession.userSensitiveInfo.companyID = userCompanyInfo.company.ID;
-                userSession.userSensitiveInfo.companyName = userCompanyInfo.company.companyName;
+                userSession.userInfo = userInfo;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(userInfo, nil));
                 }
             } else {
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
         }
     }
 }
 
-- (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(TCUserSensitiveInfo *, NSError *))resultBlock {
+- (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(TCUserInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"persons/%@/authentication", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
@@ -921,12 +904,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
-                TCUserSensitiveInfo *sensitiveInfo = [[TCUserSensitiveInfo alloc] initWithObjectDictionary:response.data];
+                TCUserInfo *userInfo = [[TCUserInfo alloc] initWithObjectDictionary:response.data];
                 TCUserSession *userSession = self.currentUserSession;
-                userSession.userSensitiveInfo = sensitiveInfo;
+                userSession.userInfo = userInfo;
                 [self setUserSession:userSession];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(sensitiveInfo, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(userInfo, nil));
                 }
             } else {
                 if (resultBlock) {

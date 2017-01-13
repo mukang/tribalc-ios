@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TCUserShippingAddress.h"
+#import "TCUserSipInfo.h"
 
 typedef NS_ENUM(NSInteger, TCUserGender) {
     TCUserGenderUnknown,
@@ -57,5 +59,24 @@ typedef NS_ENUM(NSInteger, TCUserEmotionState) {
 @property (copy, nonatomic) NSString *communityID;
 /** 所在社区名称 */
 @property (copy, nonatomic) NSString *communityName;
+
+/** 姓名 */
+@property (copy, nonatomic) NSString *name;
+/** 手机号码 */
+@property (copy, nonatomic) NSString *phone;
+/** 身份证号码 */
+@property (copy, nonatomic) NSString *idNo;
+/** 实名认证状态{ NOT_START, PROCESSING, SUCCESS, FAILURE } */
+@property (copy, nonatomic) NSString *authorizedStatus;
+/** 默认收货地址ID */
+@property (copy, nonatomic) NSString *addressID;
+/** 默认收货地址 */
+@property (strong, nonatomic) TCUserShippingAddress *shippingAddress;
+/** 所在公司ID */
+@property (copy, nonatomic) NSString *companyID;
+/** 公司名称 */
+@property (copy, nonatomic) NSString *companyName;
+/** sip信息 */
+@property (strong, nonatomic) TCUserSipInfo *sip;
 
 @end

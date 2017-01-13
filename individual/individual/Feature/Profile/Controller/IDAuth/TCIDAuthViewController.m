@@ -242,8 +242,8 @@ TCGenderPickerViewDelegate>
     }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] authorizeUserIdentity:self.authInfo result:^(TCUserSensitiveInfo *sensitiveInfo, NSError *error) {
-        if (sensitiveInfo) {
+    [[TCBuluoApi api] authorizeUserIdentity:self.authInfo result:^(TCUserInfo *userInfo, NSError *error) {
+        if (userInfo) {
             [MBProgressHUD showHUDWithMessage:@"认证申请已提交"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf handleClickBackButton:nil];

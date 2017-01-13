@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
 - (void)changeUserCoordinate:(NSArray *)coordinate result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
- 修改用户手机（敏感信息）
+ 修改用户手机
 
  @param phoneInfo TCUserPhoneInfo对象
  @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
@@ -285,7 +285,7 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
  @param userCompanyInfo TCUserCompanyInfo对象
  @param resultBlock 结果回调，success为NO时表示绑定失败，失败原因见error的code和userInfo
  */
-- (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
 
 /**
  认证用户身份
@@ -293,7 +293,7 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
  @param userIDAuthInfo TCUserIDAuthInfo对象
  @param resultBlock 结果回调，认证状态请查看sensitiveInfo中的authorizedStatus字段，sensitiveInfo为nil时表示请求失败，原因见error的code和userInfo
  */
-- (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(TCUserSensitiveInfo *sensitiveInfo, NSError *error))resultBlock;
+- (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
 
 /**
  社区参观预约
