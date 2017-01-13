@@ -13,6 +13,8 @@
 
 #import "TCSipAPI.h"
 #import "WXApiManager.h"
+#import "TCCallInViewController.h"
+#import "TCCallVideoViewController.h"
 
 static NSString *const kBuglyAppID = @"900059019";
 
@@ -44,7 +46,17 @@ static NSString *const kBuglyAppID = @"900059019";
     // wechat
     [WXApi registerApp:kWXAppID];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toCallInView) name:@"TCDidReceiveCall" object:nil];
+    
     return YES;
+}
+
+- (void)toCallInView {
+    UINavigationController *nav = [(UITabBarController *)self.window.rootViewController selectedViewController];
+    TCCallInViewController *callInVC = [[TCCallInViewController alloc] init];
+    callInVC.hidesBottomBarWhenPushed = YES;
+    [nav pushViewController:callInVC animated:YES];
 }
 
 

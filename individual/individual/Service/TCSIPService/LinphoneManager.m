@@ -867,8 +867,8 @@ static void linphone_iphone_display_status(struct _LinphoneCore *lc, const char 
 	if (state == LinphoneCallIncomingReceived || state == LinphoneCallOutgoingInit || state == LinphoneCallConnected ||
 		state == LinphoneCallStreamsRunning) {
 		if (linphone_call_params_video_enabled(linphone_call_get_current_params(call)) && !speaker_already_enabled) {
-			[self setSpeakerEnabled:TRUE];
-			speaker_already_enabled = TRUE;
+//			[self setSpeakerEnabled:TRUE];
+//			speaker_already_enabled = TRUE;
 		}
 	}
 
@@ -1845,6 +1845,9 @@ void popup_link_account_cb(LinphoneAccountCreator *creator, LinphoneAccountCreat
 	// start scheduler
 	mIterateTimer =
 		[NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(iterate) userInfo:nil repeats:YES];
+    
+    linphone_core_enable_mic(LC, false);
+
 }
 
 - (void)destroyLinphoneCore {
@@ -1885,6 +1888,7 @@ void popup_link_account_cb(LinphoneAccountCreator *creator, LinphoneAccountCreat
 	// reload friends
 //	[self.fastAddressBook reload];
 
+    
 	// reset network state to trigger a new network connectivity assessment
 	linphone_core_set_network_reachable(theLinphoneCore, FALSE);
 }
@@ -2217,7 +2221,7 @@ static int comp_call_state_paused(const LinphoneCall *call, const void *param) {
 		NSString *route = (__bridge NSString *)newRoute;
 		LOGI(@"Current audio route is [%s]", [route UTF8String]);
 
-		_speakerEnabled = [route isEqualToString:@"Speaker"] || [route isEqualToString:@"SpeakerAndMicrophone"];
+//		_speakerEnabled = [route isEqualToString:@"Speaker"] || [route isEqualToString:@"SpeakerAndMicrophone"];
 		if ([route isEqualToString:@"HeadsetBT"] && !_speakerEnabled) {
 			_bluetoothAvailable = TRUE;
 			_bluetoothEnabled = TRUE;
@@ -2234,54 +2238,55 @@ static int comp_call_state_paused(const LinphoneCall *call, const void *param) {
 }
 
 - (void)setSpeakerEnabled:(BOOL)enable {
-	OSStatus ret;
-	_speakerEnabled = enable;
-	UInt32 override = kAudioSessionUnspecifiedError;
-
-	if (!enable && _bluetoothAvailable) {
-		UInt32 bluetoothInputOverride = _bluetoothEnabled;
-		ret = AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryEnableBluetoothInput,
-									  sizeof(bluetoothInputOverride), &bluetoothInputOverride);
-		// if setting bluetooth failed, it must be because the device is not available
-		// anymore (disconnected), so deactivate bluetooth.
-		if (ret != kAudioSessionNoError) {
-			_bluetoothAvailable = _bluetoothEnabled = FALSE;
-		}
-	}
-
-	if (override != kAudioSessionNoError) {
-		if (enable && [self allowSpeaker]) {
-			override = kAudioSessionOverrideAudioRoute_Speaker;
-			ret = AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(override), &override);
-			_bluetoothEnabled = FALSE;
-		} else {
-			override = kAudioSessionOverrideAudioRoute_None;
-			ret = AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(override), &override);
-		}
-	}
-
-	if (ret != kAudioSessionNoError) {
-		LOGE(@"Failed to change audio route: err %d", ret);
-	}
+//	OSStatus ret;
+//	_speakerEnabled = enable;
+//	UInt32 override = kAudioSessionUnspecifiedError;
+//
+//	if (!enable && _bluetoothAvailable) {
+//		UInt32 bluetoothInputOverride = _bluetoothEnabled;
+//		ret = AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryEnableBluetoothInput,
+//									  sizeof(bluetoothInputOverride), &bluetoothInputOverride);
+//		// if setting bluetooth failed, it must be because the device is not available
+//		// anymore (disconnected), so deactivate bluetooth.
+//		if (ret != kAudioSessionNoError) {
+//			_bluetoothAvailable = _bluetoothEnabled = FALSE;
+//		}
+//	}
+//
+//	if (override != kAudioSessionNoError) {
+//		if (enable && [self allowSpeaker]) {
+//			override = kAudioSessionOverrideAudioRoute_Speaker;
+//			ret = AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(override), &override);
+//			_bluetoothEnabled = FALSE;
+//		} else {
+//			override = kAudioSessionOverrideAudioRoute_None;
+//			ret = AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(override), &override);
+//		}
+//	}
+//
+//	if (ret != kAudioSessionNoError) {
+//		LOGE(@"Failed to change audio route: err %d", ret);
+//	}
 }
 
 - (void)setBluetoothEnabled:(BOOL)enable {
 	if (_bluetoothAvailable) {
 		// The change of route will be done in setSpeakerEnabled
 		_bluetoothEnabled = enable;
-		[self setSpeakerEnabled:!_bluetoothEnabled && _speakerEnabled];
+//		[self setSpeakerEnabled:!_bluetoothEnabled && _speakerEnabled];
 	}
 }
 
 #pragma mark - Call Functions
 
 - (void)acceptCall:(LinphoneCall *)call evenWithVideo:(BOOL)video {
+    
+//    [self resetLinphoneCore];
 	LinphoneCallParams *lcallParams = linphone_core_create_call_params(theLinphoneCore, call);
 	if (!lcallParams) {
 		LOGW(@"Could not create call parameters for %p, call has probably already ended.", call);
 		return;
 	}
-
 	if ([self lpConfigBoolForKey:@"edge_opt_preference"]) {
 		bool low_bandwidth = self.network == network_2g;
 		if (low_bandwidth) {
@@ -2290,8 +2295,11 @@ static int comp_call_state_paused(const LinphoneCall *call, const void *param) {
 		linphone_call_params_enable_low_bandwidth(lcallParams, low_bandwidth);
 	}
 	linphone_call_params_enable_video(lcallParams, video);
-
-	linphone_core_accept_call_with_params(theLinphoneCore, call, lcallParams);
+//    bool_t b = linphone_call_params_video_enabled(lcallParams);
+    
+    //TODO:BUG
+    linphone_core_accept_call_with_params(theLinphoneCore, call, lcallParams);
+	
 }
 
 - (BOOL)call:(const LinphoneAddress *)iaddr {

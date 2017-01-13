@@ -16,6 +16,8 @@
 
 - (void)login;
 
+- (void)close;
+
 + (instancetype)api;
 
 - (void)callUpdate:(LinphoneCall *)call state:(LinphoneCallState)state;
