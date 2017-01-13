@@ -511,12 +511,9 @@
 		559D881C1E0C045B00982697 /* linphonerc-factory in Resources */ = {isa = PBXBuildFile; fileRef = 559D86531E0C045900982697 /* linphonerc-factory */; };
 		559D881D1E0C045B00982697 /* linphonerc~ipad in Resources */ = {isa = PBXBuildFile; fileRef = 559D86541E0C045900982697 /* linphonerc~ipad */; };
 		559D881E1E0C045B00982697 /* rootca.pem in Resources */ = {isa = PBXBuildFile; fileRef = 559D86551E0C045900982697 /* rootca.pem */; };
-		559D881F1E0C045B00982697 /* hold.mkv in Resources */ = {isa = PBXBuildFile; fileRef = 559D86571E0C045900982697 /* hold.mkv */; };
-		559D88201E0C045B00982697 /* msg.caf in Resources */ = {isa = PBXBuildFile; fileRef = 559D86581E0C045900982697 /* msg.caf */; };
-		559D88211E0C045B00982697 /* ringback.wav in Resources */ = {isa = PBXBuildFile; fileRef = 559D86591E0C045900982697 /* ringback.wav */; };
-		559D88221E0C045B00982697 /* notes_of_the_optimistic.caf in Resources */ = {isa = PBXBuildFile; fileRef = 559D865B1E0C045900982697 /* notes_of_the_optimistic.caf */; };
-		559D88231E0C045B00982697 /* shortring.caf in Resources */ = {isa = PBXBuildFile; fileRef = 559D865C1E0C045900982697 /* shortring.caf */; };
 		559D88261E0D17AF00982697 /* TCAboutUSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559D88251E0D17AF00982697 /* TCAboutUSViewController.m */; };
+		55EC5BE11E2492F500C5FB73 /* TCCallInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC5BE01E2492F500C5FB73 /* TCCallInViewController.m */; };
+		55EC5BE41E24D7E700C5FB73 /* TCCallVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC5BE31E24D7E700C5FB73 /* TCCallVideoViewController.m */; };
 		55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */; };
 		55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */; };
 		55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */; };
@@ -2742,13 +2739,12 @@
 		559D86531E0C045900982697 /* linphonerc-factory */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc-factory"; sourceTree = "<group>"; };
 		559D86541E0C045900982697 /* linphonerc~ipad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "linphonerc~ipad"; sourceTree = "<group>"; };
 		559D86551E0C045900982697 /* rootca.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rootca.pem; sourceTree = "<group>"; };
-		559D86571E0C045900982697 /* hold.mkv */ = {isa = PBXFileReference; lastKnownFileType = file; path = hold.mkv; sourceTree = "<group>"; };
-		559D86581E0C045900982697 /* msg.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = msg.caf; sourceTree = "<group>"; };
-		559D86591E0C045900982697 /* ringback.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringback.wav; sourceTree = "<group>"; };
-		559D865B1E0C045900982697 /* notes_of_the_optimistic.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notes_of_the_optimistic.caf; sourceTree = "<group>"; };
-		559D865C1E0C045900982697 /* shortring.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = shortring.caf; sourceTree = "<group>"; };
 		559D88241E0D17AF00982697 /* TCAboutUSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAboutUSViewController.h; sourceTree = "<group>"; };
 		559D88251E0D17AF00982697 /* TCAboutUSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAboutUSViewController.m; sourceTree = "<group>"; };
+		55EC5BDF1E2492F500C5FB73 /* TCCallInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCallInViewController.h; sourceTree = "<group>"; };
+		55EC5BE01E2492F500C5FB73 /* TCCallInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCallInViewController.m; sourceTree = "<group>"; };
+		55EC5BE21E24D7E700C5FB73 /* TCCallVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCallVideoViewController.h; sourceTree = "<group>"; };
+		55EC5BE31E24D7E700C5FB73 /* TCCallVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCallVideoViewController.m; sourceTree = "<group>"; };
 		55F06EEC1E03911400A849D7 /* TCPropertyManageListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageListController.h; sourceTree = "<group>"; };
 		55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageListController.m; sourceTree = "<group>"; };
 		55F06EF01E03977000A849D7 /* TCPropertyManageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageWrapper.h; sourceTree = "<group>"; };
@@ -7369,29 +7365,8 @@
 				559D86531E0C045900982697 /* linphonerc-factory */,
 				559D86541E0C045900982697 /* linphonerc~ipad */,
 				559D86551E0C045900982697 /* rootca.pem */,
-				559D86561E0C045900982697 /* sounds */,
 			);
 			path = LinPhoneSources;
-			sourceTree = "<group>";
-		};
-		559D86561E0C045900982697 /* sounds */ = {
-			isa = PBXGroup;
-			children = (
-				559D86571E0C045900982697 /* hold.mkv */,
-				559D86581E0C045900982697 /* msg.caf */,
-				559D86591E0C045900982697 /* ringback.wav */,
-				559D865A1E0C045900982697 /* ringtones */,
-				559D865C1E0C045900982697 /* shortring.caf */,
-			);
-			path = sounds;
-			sourceTree = "<group>";
-		};
-		559D865A1E0C045900982697 /* ringtones */ = {
-			isa = PBXGroup;
-			children = (
-				559D865B1E0C045900982697 /* notes_of_the_optimistic.caf */,
-			);
-			path = ringtones;
 			sourceTree = "<group>";
 		};
 		55F06EEA1E03902000A849D7 /* Property */ = {
@@ -7434,6 +7409,10 @@
 			children = (
 				55F06F121E07D15500A849D7 /* TCBaseViewController.h */,
 				55F06F131E07D15500A849D7 /* TCBaseViewController.m */,
+				55EC5BDF1E2492F500C5FB73 /* TCCallInViewController.h */,
+				55EC5BE01E2492F500C5FB73 /* TCCallInViewController.m */,
+				55EC5BE21E24D7E700C5FB73 /* TCCallVideoViewController.h */,
+				55EC5BE31E24D7E700C5FB73 /* TCCallVideoViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8531,7 +8510,6 @@
 				553DC9621DFFE2310018783E /* rootca.pem in Resources */,
 				553DC8FE1DFFE2300018783E /* Mediastreamer2ConfigVersion.cmake in Resources */,
 				553DC8931DFFE22F0018783E /* LinphoneConfigVersion.cmake in Resources */,
-				559D88211E0C045B00982697 /* ringback.wav in Resources */,
 				553DC95F1DFFE2310018783E /* LinphoneConfigVersion.cmake in Resources */,
 				553DC8A01DFFE22F0018783E /* hello16000.wav in Resources */,
 				553DC90E1DFFE2300018783E /* notes_of_the_optimistic.mkv in Resources */,
@@ -8566,7 +8544,6 @@
 				7AC346DA1E01433E00E28EC9 /* TCWalletBillDetailViewController.xib in Resources */,
 				553DC8DF1DFFE2300018783E /* ortp.pc in Resources */,
 				7A720ABB1E13892E00567216 /* intro_image_01.png in Resources */,
-				559D88221E0C045B00982697 /* notes_of_the_optimistic.caf in Resources */,
 				553DC9771DFFE2310018783E /* soft_as_snow.mkv in Resources */,
 				553DC9031DFFE2300018783E /* ORTPTargets-release.cmake in Resources */,
 				7A2D2A971E1CF9820067D591 /* TCPaymentPasswordView.xib in Resources */,
@@ -8584,7 +8561,6 @@
 				553DC8AC1DFFE22F0018783E /* toy-mono.wav in Resources */,
 				553DC82A1DFFE22E0018783E /* nowebcamCIF.jpg in Resources */,
 				553DC8231DFFE22E0018783E /* BelrTargets-release.cmake in Resources */,
-				559D88201E0C045B00982697 /* msg.caf in Resources */,
 				7AC347031E01454100E28EC9 /* TCBankCardViewController.xib in Resources */,
 				7A7E940B1DF51A01006A47CE /* TCRepairsViewCell.xib in Resources */,
 				553DC9111DFFE2300018783E /* soft_as_snow.mkv in Resources */,
@@ -8641,7 +8617,6 @@
 				553DC8EE1DFFE2300018783E /* BelrConfig.cmake in Resources */,
 				553DC9691DFFE2310018783E /* ORTPTargets-release.cmake in Resources */,
 				553DC8831DFFE22F0018783E /* BelcardTargets.cmake in Resources */,
-				559D88231E0C045B00982697 /* shortring.caf in Resources */,
 				553DC8921DFFE22F0018783E /* LinphoneConfig.cmake in Resources */,
 				553DC96F1DFFE2310018783E /* ringback.wav in Resources */,
 				553DC8801DFFE22F0018783E /* BcToolboxTargets.cmake in Resources */,
@@ -8731,7 +8706,6 @@
 				7AC346ED1E0144B500E28EC9 /* TCWalletBillDetailViewCell.xib in Resources */,
 				553DC89B1DFFE22F0018783E /* ORTPConfig.cmake in Resources */,
 				7A7E94061DF51790006A47CE /* TCRepairsViewController.xib in Resources */,
-				559D881F1E0C045B00982697 /* hold.mkv in Resources */,
 				553DC9571DFFE2300018783E /* BZRTPConfig.cmake in Resources */,
 				553DC95C1DFFE2310018783E /* nowebcamCIF.jpg in Resources */,
 				553DC8301DFFE22E0018783E /* rootca.pem in Resources */,
@@ -8877,6 +8851,7 @@
 				09222E7F1DEEC2C70064C0DF /* TCOrderItem.m in Sources */,
 				55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */,
 				7A2D2A941E1CF9820067D591 /* TCPaymentMethodView.m in Sources */,
+				55EC5BE41E24D7E700C5FB73 /* TCCallVideoViewController.m in Sources */,
 				09222E2D1DEE98550064C0DF /* TCSelectSortButton.m in Sources */,
 				55F06F0C1E078C2900A849D7 /* TCPaymentViewController.m in Sources */,
 				7AEB4CED1E03944400F83A7C /* TCBiographyAvatarViewCell.m in Sources */,
@@ -9035,6 +9010,7 @@
 				55F06F241E09259400A849D7 /* TCOpenDoorController.m in Sources */,
 				09275FBA1DDEFF5D00502167 /* TCDetailAnnotation.m in Sources */,
 				7AEB4CFF1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m in Sources */,
+				55EC5BE11E2492F500C5FB73 /* TCCallInViewController.m in Sources */,
 				7AC346F81E0144F300E28EC9 /* TCBankPickerView.m in Sources */,
 				092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */,
 				092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */,
@@ -9292,7 +9268,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "975c2a77-1436-457f-86a8-cef169a0017d";
 				PROVISIONING_PROFILE_SPECIFIER = sf1215;
-
 			};
 			name = Debug;
 		};

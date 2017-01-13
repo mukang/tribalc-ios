@@ -236,30 +236,24 @@
     [_timer invalidate];
     _timer = nil;
     
-//    [_pulseLayer removeFromSuperlayer];
+    [[TCSipAPI api] close];
     
-    
-//    if ([self.openBtn.layer.sublayers[0] isKindOfClass:[CAShapeLayer class]]) {
-//        CAShapeLayer *shaperLayer = (CAShapeLayer *)self.openBtn.layer.sublayers[0];
-//        [shaperLayer removeFromSuperlayer];
-//        shaperLayer = nil;
-//        NSLog(@"%lu",self.openBtn.layer.sublayers.count);
-//    }
+//    linphone_core_terminate_call(LC, linphone_core_get_current_call(LC));
 
     
-    LinphoneCall *currentcall = linphone_core_get_current_call(LC);
-    if (linphone_core_is_in_conference(LC) ||										   // In conference
-        (linphone_core_get_conference_size(LC) > 0) // Only one conf
-        ) {
-        linphone_core_terminate_conference(LC);
-    } else if (currentcall != NULL) { // In a call
-        linphone_core_terminate_call(LC, currentcall);
-    } else {
-        const MSList *calls = linphone_core_get_calls(LC);
-        if (bctbx_list_size(calls) == 1) { // Only one call
-            linphone_core_terminate_call(LC, (LinphoneCall *)(calls->data));
-        }
-    }
+//    LinphoneCall *currentcall = linphone_core_get_current_call(LC);
+//    if (linphone_core_is_in_conference(LC) ||										   // In conference
+//        (linphone_core_get_conference_size(LC) > 0) // Only one conf
+//        ) {
+//        linphone_core_terminate_conference(LC);
+//    } else if (currentcall != NULL) { // In a call
+//        linphone_core_terminate_call(LC, currentcall);
+//    } else {
+//        const MSList *calls = linphone_core_get_calls(LC);
+//        if (bctbx_list_size(calls) == 1) { // Only one call
+//            linphone_core_terminate_call(LC, (LinphoneCall *)(calls->data));
+//        }
+//    }
 }
 
 

@@ -8,6 +8,8 @@
 
 #import "TCSipAPI.h"
 #import "TCBuluoApi.h"
+#import "TCCallVideoViewController.h"
+#import "TCCallInViewController.h"
 
 
 @interface TCSipAPI (){
@@ -18,6 +20,8 @@
 }
 
 @property (assign, nonatomic) BOOL logined;
+
+@property (assign, nonatomic) BOOL callIn;
 
 @end
 
@@ -39,6 +43,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         self.logined = NO;
+        self.callIn = NO;
         LinphoneManager *instance = [LinphoneManager instance];
 //        [instance lpConfigBoolForKey:@"backgroundmode_preference"];
         [instance lpConfigBoolForKey:@"start_at_boot_preference"];
@@ -68,12 +73,73 @@
                                                selector:@selector(coreUpdateEvent:)
                                                    name:kLinphoneCoreUpdate
                                                  object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openDoor) name:@"TCOPENDOOR" object:nil];
+        
         [self loadAssistantConfig:@"assistant_external_sip.rc"];
         new_config = NULL;
         number_of_configs_before = bctbx_list_size(linphone_core_get_proxy_config_list(LC));
+//        linphone_core_enable_mic(LC, false);
         
     }
     return self;
+}
+
+- (void)openDoor {
+    [NSThread sleepForTimeInterval:0.5];
+    linphone_call_send_dtmf(linphone_core_get_current_call(LC), '#');
+    linphone_core_play_dtmf(LC, '#', 100);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"opend" object:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"closed" object:nil];
+    });
+}
+
+- (void)displayIncomingCall:(LinphoneCall *)call {
+    
+    _callIn = YES;
+    
+    LinphoneCallLog *callLog = linphone_call_get_call_log(call);
+    NSString *callId = [NSString stringWithUTF8String:linphone_call_log_get_call_id(callLog)];
+    
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
+        LinphoneManager *lm = LinphoneManager.instance;
+        BOOL callIDFromPush = [lm popPushCallID:callId];
+        BOOL autoAnswer = [lm lpConfigBoolForKey:@"autoanswer_notif_preference"];
+        
+        if (callIDFromPush && autoAnswer) {
+            // accept call automatically
+            [lm acceptCall:call evenWithVideo:YES];
+        } else {
+            AudioServicesPlaySystemSound(lm.sounds.vibrate);
+            [self toCallInViewWith:call];
+            
+            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"TCDidReceiveCall" object:nil];
+            
+//            CallIncomingView *view = VIEW(CallIncomingView);
+//            [self changeCurrentView:view.compositeViewDescription];
+//            [view setCall:call];
+//            [view setDelegate:self];
+        }
+    }
+}
+
+- (void)toCallInViewWith:(LinphoneCall *)call {
+    UINavigationController *nav = [(UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController selectedViewController];
+    TCCallInViewController *callInVC = [[TCCallInViewController alloc] init];
+    callInVC.call = call;
+    callInVC.hidesBottomBarWhenPushed = YES;
+    [nav pushViewController:callInVC animated:YES];
+}
+
+- (void)toCallVideoView {
+    UINavigationController *nav = [(UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController selectedViewController];
+    if (![nav.visibleViewController isKindOfClass:[TCCallVideoViewController class]]) {
+        TCCallVideoViewController *callVideo = [TCCallVideoViewController shareInstance];
+        [nav pushViewController:callVideo animated:YES];
+    }
 }
 
 - (void)callUpdate:(NSNotification *)notif {
@@ -86,10 +152,12 @@
         case LinphoneCallIncomingReceived:
         case LinphoneCallIncomingEarlyMedia: {
             //打进来的
+            [self displayIncomingCall:call];
             break;
         }
         case LinphoneCallOutgoingInit: {
             //打出去
+            _callIn = NO;
             break;
         }
         case LinphoneCallPausedByRemote:
@@ -97,16 +165,12 @@
         case LinphoneCallConnected:
             break;
         case LinphoneCallStreamsRunning: {
-            [NSThread sleepForTimeInterval:0.5];
-            linphone_call_send_dtmf(linphone_core_get_current_call(LC), '#');
-            linphone_core_play_dtmf(LC, '#', 100);
-
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"opend" object:nil];
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"closed" object:nil];
-            });
-//
+            if (_callIn) {
+                [self toCallVideoView];
+            }else {
+                [self openDoor];
+            }
             
             break;
         }
@@ -137,10 +201,16 @@
             
             const MSList *calls = linphone_core_get_calls(LC);
             if (calls == NULL) {
-
+                
             } else {
                 linphone_core_resume_call(LC, (LinphoneCall *)calls->data);
+                
             }
+            [self didEnd];
+            
+//            [LinphoneManager.instance shouldPresentLinkPopup];
+
+            
             break;
         }
         case LinphoneCallEarlyUpdatedByRemote:
@@ -168,6 +238,11 @@
         case LinphoneCallUpdating:
             break;
     }
+}
+
+- (void)didEnd {
+    linphone_core_enable_video_preview(LC, FALSE);
+    [LinphoneManager.instance shouldPresentLinkPopup];
 }
 
 
@@ -386,6 +461,48 @@
                                                        assistant_is_account_linked);
     
 }
+
+- (void)close {
+    LinphoneCall *currentcall = linphone_core_get_current_call(LC);
+//    linphone_core_terminate_call(LC, currentcall);
+    
+    
+    
+    if (linphone_core_is_in_conference(LC) ||										   // In conference
+        (linphone_core_get_conference_size(LC) > 0 && [TCSipAPI callCount] == 0) // Only one conf
+        ) {
+        linphone_core_terminate_conference(LC);
+    } else if (currentcall != NULL) { // In a call
+        linphone_core_terminate_call(LC, currentcall);
+    } else {
+        const MSList *calls = linphone_core_get_calls(LC);
+        if (bctbx_list_size(calls) == 1) { // Only one call
+            linphone_core_terminate_call(LC, (LinphoneCall *)(calls->data));
+        }
+    }
+    
+}
+
+
++ (bool)isInConference:(LinphoneCall *)call {
+    if (!call)
+        return false;
+    return linphone_call_params_get_local_conference_mode(linphone_call_get_current_params(call));
+}
+
++ (int)callCount {
+    int count = 0;
+    const MSList *calls = linphone_core_get_calls(LC);
+    
+    while (calls != 0) {
+        if (![TCSipAPI isInConference:((LinphoneCall *)calls->data)]) {
+            count++;
+        }
+        calls = calls->next;
+    }
+    return count;
+}
+
 
 #pragma mark - Account creator callbacks
 
