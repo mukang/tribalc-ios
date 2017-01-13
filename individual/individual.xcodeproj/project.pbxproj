@@ -9302,7 +9302,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: wang shuaifeng (CL336ERY54)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
@@ -9365,8 +9365,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "84f30ef8-71f2-4f81-80f4-2d528400d6f6";
-				PROVISIONING_PROFILE_SPECIFIER = "Individual Distribution";
+				PROVISIONING_PROFILE = "975c2a77-1436-457f-86a8-cef169a0017d";
+				PROVISIONING_PROFILE_SPECIFIER = sf1215;
 			};
 			name = Release;
 		};

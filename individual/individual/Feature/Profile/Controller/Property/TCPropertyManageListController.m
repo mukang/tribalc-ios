@@ -131,7 +131,7 @@
     }else if ([status isEqualToString:@"CANCEL"]) {
         if (propertyManage.phone) {
             if (propertyManage.totalFee) {
-                height = 342.0;
+                height = 350.0;
             }else {
                 height = 320.0;
             }
@@ -140,7 +140,7 @@
         }
     }else {
         if (([status isEqualToString:@"PAY_ED"] || [status isEqualToString:@"TO_PAYING"]) && propertyManage.totalFee > 0) {
-            height = 342;
+            height = 350;
         }else {
             height = 320.0;
         }
