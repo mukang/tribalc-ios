@@ -81,8 +81,8 @@
 #pragma mark - TCRepairsViewCellDelegate
 
 - (void)repairsViewCell:(TCRepairsViewCell *)cell didClickRepairsButtonWithIndex:(NSInteger)index {
-    TCUserSensitiveInfo *userSensitiveInfo = [TCBuluoApi api].currentUserSession.userSensitiveInfo;
-    if (!userSensitiveInfo.companyID) {
+    TCUserInfo *userInfo = [TCBuluoApi api].currentUserSession.userInfo;
+    if (!userInfo.companyID) {
         [MBProgressHUD showHUDWithMessage:@"绑定公司成功后才可申请物业报修"];
         return;
     }

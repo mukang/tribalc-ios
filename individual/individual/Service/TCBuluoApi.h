@@ -88,21 +88,6 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
 - (void)fetchUserInfoWithUserID:(NSString *)userID result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
 
 /**
- 获取当前用户敏感信息
-
- @param userID 用户ID
- */
-- (void)fetchCurrentUserSensitiveInfoWithUserID:(NSString *)userID;
-
-/**
- 获取用户敏感信息
-
- @param userID 用户ID
- @param resultBlock 结果回调，userSensitiveInfo为nil时表示获取失败，失败原因见error的code和userInfo
- */
-- (void)fetchUserSensitiveInfoWithUserID:(NSString *)userID result:(void (^)(TCUserSensitiveInfo *userSensitiveInfo, NSError *error))resultBlock;
-
-/**
  修改用户昵称
  
  @param nickname 要改为的昵称
@@ -291,7 +276,7 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
  认证用户身份
 
  @param userIDAuthInfo TCUserIDAuthInfo对象
- @param resultBlock 结果回调，认证状态请查看sensitiveInfo中的authorizedStatus字段，sensitiveInfo为nil时表示请求失败，原因见error的code和userInfo
+ @param resultBlock 结果回调，认证状态请查看userInfo中的authorizedStatus字段，userInfo为nil时表示请求失败，原因见error的code和userInfo
  */
 - (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
 

@@ -13,8 +13,7 @@
 
 + (NSDictionary *)objectClassInDictionary {
     return @{
-             @"userInfo": [TCUserInfo class],
-             @"userSensitiveInfo": [TCUserSensitiveInfo class]
+             @"userInfo": [TCUserInfo class]
              };
 }
 

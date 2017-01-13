@@ -283,11 +283,10 @@ TCGenderPickerViewDelegate>
     if (_authInfo == nil) {
         _authInfo = [[TCUserIDAuthInfo alloc] init];
         TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
-        TCUserSensitiveInfo *userSensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
-        _authInfo.name = userSensitiveInfo.name ?: nil;
+        _authInfo.name = userInfo.name ?: nil;
         _authInfo.birthday = userInfo.birthday ?: 0;
         _authInfo.personSex = userInfo.sex ?: nil;
-        _authInfo.idNo = userSensitiveInfo.idNo ?: nil;
+        _authInfo.idNo = userInfo.idNo ?: nil;
     }
     return _authInfo;
 }

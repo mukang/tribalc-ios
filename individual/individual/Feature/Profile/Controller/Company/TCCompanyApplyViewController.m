@@ -136,8 +136,8 @@
 }
 
 - (void)handlePushToApplyDetailVC {
-    TCUserSensitiveInfo *userSensitiveInfo = [TCBuluoApi api].currentUserSession.userSensitiveInfo;
-    if (![userSensitiveInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+    TCUserInfo *userInfo = [TCBuluoApi api].currentUserSession.userInfo;
+    if (![userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
         [MBProgressHUD showHUDWithMessage:@"身份认证成功后才可绑定公司"];
         return;
     }

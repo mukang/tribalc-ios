@@ -64,7 +64,7 @@
     mScrollView = [self getScrollViewWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 64 - TCRealValue(49))];
     
     TCUserSession *userSession = [[TCBuluoApi api] currentUserSession];
-    TCUserShippingAddress *shippingAddress = userSession.userSensitiveInfo.shippingAddress;
+    TCUserShippingAddress *shippingAddress = userSession.userInfo.shippingAddress;
     userAddressView = [[TCOrderAddressView alloc] initWithOrigin:CGPointMake(0, 0) WithShippingAddress:shippingAddress];
     UITapGestureRecognizer *selectAddressRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchAddressSelect:)];
     [userAddressView addGestureRecognizer:selectAddressRecognizer];
@@ -192,10 +192,10 @@
     order.itemList = listShoppingCart.goodsList;
     
     TCUserSession *userSession = [[TCBuluoApi api] currentUserSession];
-    TCUserShippingAddress *shippingAddress = userSession.userSensitiveInfo.shippingAddress;
+    TCUserShippingAddress *shippingAddress = userSession.userInfo.shippingAddress;
     order.ownerId = userSession.userInfo.ID;
     order.address = [NSString stringWithFormat:@"%@|%@|%@%@%@%@", shippingAddress.name, shippingAddress.phone, shippingAddress.province, shippingAddress.city, shippingAddress.district, shippingAddress.address];
-    order.addressId = userSession.userSensitiveInfo.addressID;
+    order.addressId = userSession.userInfo.addressID;
     order.expressType = @"NOT_PAYPOSTAGE";
     order.expressFee = 7.0;
     order.totalFee = [self getConfirmOrderViewTotalPriceWithItemList:order];

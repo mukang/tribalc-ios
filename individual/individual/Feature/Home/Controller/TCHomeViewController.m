@@ -440,7 +440,7 @@
     
     if ([self checkUserNeedLogin]) return;
     
-    if (![[TCBuluoApi api] currentUserSession].userSensitiveInfo.companyID) {
+    if (![[TCBuluoApi api] currentUserSession].userInfo.companyID) {
         [MBProgressHUD showHUDWithMessage:@"绑定公司成功后才可使用开门功能"];
         return;
     }

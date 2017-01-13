@@ -135,7 +135,6 @@ TCDatePickerViewDelegate>
         cell.hideSeparatorView = NO;
         cell.delegate = self;
         TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
-        TCUserSensitiveInfo *userSensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
         switch (indexPath.row) {
             case TCInputCellTypeCommunity:
                 cell.title = @"社区";
@@ -144,12 +143,12 @@ TCDatePickerViewDelegate>
                 break;
             case TCInputCellTypeCompany:
                 cell.title = @"公司";
-                cell.content = userSensitiveInfo.companyName;
+                cell.content = userInfo.companyName;
                 cell.inputEnabled = NO;
                 break;
             case TCInputCellTypeName:
                 cell.title = @"申请人";
-                cell.content = userSensitiveInfo.name;
+                cell.content = userInfo.name;
                 cell.inputEnabled = NO;
                 break;
             case TCInputCellTypefloor:

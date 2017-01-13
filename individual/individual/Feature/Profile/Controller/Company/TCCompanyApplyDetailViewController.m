@@ -126,7 +126,7 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
             switch (indexPath.row) {
                 case TCInputCellTypeName:
                     cell.title = @"姓名";
-                    cell.content = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.name;
+                    cell.content = [[TCBuluoApi api] currentUserSession].userInfo.name;
                     cell.inputEnabled = NO;
                     break;
                 case TCInputCellTypeDepartment:
@@ -239,7 +239,7 @@ typedef NS_ENUM(NSInteger, TCInputCellType) {
         [MBProgressHUD showHUDWithMessage:@"请选择需要绑定的公司"];
         return;
     }
-    self.userCompanyInfo.idNo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.idNo;
+    self.userCompanyInfo.idNo = [[TCBuluoApi api] currentUserSession].userInfo.idNo;
     
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] bindCompanyWithUserCompanyInfo:self.userCompanyInfo result:^(TCUserInfo *userInfo, NSError *error) {

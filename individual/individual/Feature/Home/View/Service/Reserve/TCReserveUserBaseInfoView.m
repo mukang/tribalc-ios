@@ -134,8 +134,8 @@
     return [TCBuluoApi api].currentUserSession.userInfo;
 }
 
-- (TCUserSensitiveInfo *)getUserSensitiveInfo {
-    return [TCBuluoApi api].currentUserSession.userSensitiveInfo;
+- (TCUserInfo *)getUserSensitiveInfo {
+    return [TCBuluoApi api].currentUserSession.userInfo;
 }
 
 - (UIView *)getNameAndSenderViewWithFrame:(CGRect)frame {
