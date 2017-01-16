@@ -10,6 +10,7 @@
 #import "TCBuluoApi.h"
 #import "TCCallVideoViewController.h"
 #import "TCCallInViewController.h"
+#import "TCCallInView.h"
 
 
 @interface TCSipAPI (){
@@ -128,10 +129,15 @@
 
 - (void)toCallInViewWith:(LinphoneCall *)call {
     UINavigationController *nav = [(UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController selectedViewController];
-    TCCallInViewController *callInVC = [[TCCallInViewController alloc] init];
-    callInVC.call = call;
-    callInVC.hidesBottomBarWhenPushed = YES;
-    [nav pushViewController:callInVC animated:YES];
+    
+    TCCallInView *callIView = [[TCCallInView alloc] initWithController:nav endBlock:^{
+    }];
+    [callIView show];
+    
+//    TCCallInViewController *callInVC = [[TCCallInViewController alloc] init];
+//    callInVC.call = call;
+//    callInVC.hidesBottomBarWhenPushed = YES;
+//    [nav pushViewController:callInVC animated:YES];
 }
 
 - (void)toCallVideoView {
@@ -167,7 +173,10 @@
         case LinphoneCallStreamsRunning: {
             
             if (_callIn) {
-                [self toCallVideoView];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"KTCSIPCALLINTOVIEDOVIEW" object:nil];
+                
+//                [self toCallVideoView];
             }else {
                 [self openDoor];
             }

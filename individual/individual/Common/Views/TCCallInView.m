@@ -27,7 +27,7 @@
             _myConreoller = controller;
             _block = [b copy];
             UIImage *img = [self imageFromView:controller.view atFrame:controller.view.bounds];
-            UIImage *i = [self coreBlurImage:img withBlurNumber:0.8];
+            UIImage *i = [self coreBlurImage:img withBlurNumber:0.9];
             self.image = i;
         }
     }
@@ -49,7 +49,7 @@
     [superView bringSubviewToFront:self];
     
     TCCallInViewController *open = [[TCCallInViewController alloc] init];
-    open.modalPresentationStyle = UIModalPresentationOverCurrentContext | UIModalPresentationFullScreen;
+//    open.modalPresentationStyle = UIModalPresentationOverCurrentContext | UIModalPresentationFullScreen;
     open.myBlock = ^{
         if (self) {
             [self removeFromSuperview];
@@ -58,9 +58,13 @@
             }
         }
     };
+    
+    UINavigationController *navgition = [[UINavigationController alloc] initWithRootViewController:open];
+    navgition.modalPresentationStyle = UIModalPresentationOverCurrentContext | UIModalPresentationFullScreen;
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:open animated:YES completion:^{
-            open.view.backgroundColor = [UIColor clearColor];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:navgition animated:YES completion:^{
+            navgition.view.backgroundColor = [UIColor clearColor];
         }];
         
     });
@@ -97,7 +101,7 @@
 }
 
 - (void)dealloc {
-    TCLog(@"TCBlurImageView---dealloc");
+    TCLog(@"TCCallInView---dealloc");
 }
 
 @end

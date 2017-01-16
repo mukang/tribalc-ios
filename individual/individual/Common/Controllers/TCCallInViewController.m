@@ -8,7 +8,7 @@
 
 #import "TCCallInViewController.h"
 #import <Masonry.h>
-
+#import "TCCallVideoViewController.h"
 
 @interface TCCallInViewController ()
 
@@ -27,7 +27,7 @@
     [self.view addSubview:imageView];
     
     UIImageView *person = [[UIImageView alloc] init];
-    person.image = [UIImage imageNamed:@""];
+    person.image = [UIImage imageNamed:@"callInPerson"];
     [self.view addSubview:person];
     
     UILabel *label = [[UILabel alloc] init];
@@ -69,6 +69,18 @@
         make.edges.equalTo(self.view);
     }];
     
+    [person mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.view).offset(TCRealValue(204));
+        make.width.equalTo(@(TCRealValue(49)));
+        make.height.equalTo(@(TCRealValue(50)));
+    }];
+    
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(person.mas_bottom).offset(10);
+    }];
+    
     [hangUpBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(TCRealValue(60));
         make.bottom.equalTo(self.view).offset(-TCRealValue(50));
@@ -78,7 +90,7 @@
     
     [hangUpImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(hangUpBtn);
-        make.height.equalTo(@(hangUpBtn.width));
+        make.height.equalTo(@(TCRealValue(65)));
     }];
     
     [hangUpLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -93,7 +105,7 @@
     
     [holdImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(holdBtn);
-        make.height.equalTo(@(holdBtn.width));
+        make.height.equalTo(@(TCRealValue(65)));
     }];
     
     [holdLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -102,19 +114,52 @@
     }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(end) name:@"end" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toCallVideoView) name:@"KTCSIPCALLINTOVIEDOVIEW" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismiss) name:@"KTCCALLINVIEWDISMISS" object:nil];
+}
+
+- (void)dismiss {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (self.myBlock) {
+                self.myBlock();
+            }
+        }];
+    });
+}
+
+- (void)toCallVideoView {
+//    UINavigationController *nav = [(UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController selectedViewController];
+//    if (![nav.visibleViewController isKindOfClass:[TCCallVideoViewController class]]) {
+        TCCallVideoViewController *callVideo = [TCCallVideoViewController shareInstance];
+        [self.navigationController pushViewController:callVideo animated:YES];
+//    }
 }
 
 - (void)end {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.myBlock) {
+            self.myBlock();
+        }
+    }];
 }
 
 - (void)refuse {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.myBlock) {
+            self.myBlock();
+        }
+    }];
     linphone_core_terminate_call(LC, _call);
 }
 
 - (void)accept {
     [LinphoneManager.instance acceptCall:_call evenWithVideo:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
