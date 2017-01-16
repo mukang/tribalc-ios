@@ -45,6 +45,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapView:)];
+    [self.view addGestureRecognizer:tapGesture];
+    
     self.noticeLabel.text = [NSString stringWithFormat:@"请输入%@收到的短信校验码", self.phone];
     [self setupNavBar];
     [self setupSubviews];
@@ -165,6 +168,12 @@
 - (void)handleCickBackButton:(UIBarButtonItem *)sender {
     TCBiographyViewController *bioVC = self.navigationController.viewControllers[1];
     [self.navigationController popToViewController:bioVC animated:YES];
+}
+
+- (void)handleTapView:(UITapGestureRecognizer *)sender {
+    if ([self.textField isFirstResponder]) {
+        [self.textField resignFirstResponder];
+    }
 }
 
 #pragma mark - Count Down

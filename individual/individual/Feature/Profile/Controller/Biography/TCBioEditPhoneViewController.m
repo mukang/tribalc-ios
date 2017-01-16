@@ -25,6 +25,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapView:)];
+    [self.view addGestureRecognizer:tapGesture];
+    
     [self setupNavBar];
     [self setupSubviews];
 }
@@ -81,6 +84,12 @@
 
 - (void)handleCickBackButton:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)handleTapView:(UITapGestureRecognizer *)sender {
+    if ([self.textField isFirstResponder]) {
+        [self.textField resignFirstResponder];
+    }
 }
 
 #pragma mark - Other
