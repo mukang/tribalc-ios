@@ -381,6 +381,8 @@ TCDatePickerViewDelegate>
 }
 
 - (void)handleClickCommitButton {
+    [self.tableView endEditing:YES];
+    
     if (!self.repairsInfo.floor.length) {
         [MBProgressHUD showHUDWithMessage:@"请您填写楼层信息"];
         return;
