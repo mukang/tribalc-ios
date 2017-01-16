@@ -82,7 +82,6 @@
 
 - (void)fetchUserInfo {
     TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
-    TCUserSensitiveInfo *userSensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
     // 昵称
     NSString *nickname = userInfo.nickname ?: @"";
     // 性别
@@ -121,7 +120,7 @@
             break;
     }
     // 电话号码
-    NSString *phone = userSensitiveInfo.phone ?: @"";
+    NSString *phone = userInfo.phone ?: @"";
     // 所在地
     NSString *province = userInfo.province ?: @"";
     NSString *city = userInfo.city ?: @"";
@@ -129,8 +128,8 @@
     NSString *address = [NSString stringWithFormat:@"%@%@%@", province, city, district];
     // 收货地址
     NSString *chippingAddress = @"";
-    if (userSensitiveInfo.shippingAddress) {
-        chippingAddress = [NSString stringWithFormat:@"%@%@%@%@", userSensitiveInfo.shippingAddress.province, userSensitiveInfo.shippingAddress.city, userSensitiveInfo.shippingAddress.district, userSensitiveInfo.shippingAddress.address];
+    if (userInfo.shippingAddress) {
+        chippingAddress = [NSString stringWithFormat:@"%@%@%@%@", userInfo.shippingAddress.province, userInfo.shippingAddress.city, userInfo.shippingAddress.district, userInfo.shippingAddress.address];
     }
     
     self.bioDetailsTitles = @[@[@"", nickname, genderStr, birthDateStr, emotionStateStr], @[phone, address, chippingAddress]];
@@ -323,11 +322,11 @@
 }
 
 - (void)handleSelectGenderCell {
-    if ([[[TCBuluoApi api] currentUserSession].userSensitiveInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+    if ([[[TCBuluoApi api] currentUserSession].userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
         [MBProgressHUD showHUDWithMessage:@"身份认证成功后，不能再修改性别"];
         return;
     }
-    if ([[[TCBuluoApi api] currentUserSession].userSensitiveInfo.authorizedStatus isEqualToString:@"PROCESSING"]) {
+    if ([[[TCBuluoApi api] currentUserSession].userInfo.authorizedStatus isEqualToString:@"PROCESSING"]) {
         [MBProgressHUD showHUDWithMessage:@"身份认证审核中，不能修改性别"];
         return;
     }
@@ -349,11 +348,11 @@
 }
 
 - (void)handleSelectBirthdateCell {
-    if ([[[TCBuluoApi api] currentUserSession].userSensitiveInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+    if ([[[TCBuluoApi api] currentUserSession].userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
         [MBProgressHUD showHUDWithMessage:@"身份认证成功后，不能再修改出生日期"];
         return;
     }
-    if ([[[TCBuluoApi api] currentUserSession].userSensitiveInfo.authorizedStatus isEqualToString:@"PROCESSING"]) {
+    if ([[[TCBuluoApi api] currentUserSession].userInfo.authorizedStatus isEqualToString:@"PROCESSING"]) {
         [MBProgressHUD showHUDWithMessage:@"身份认证审核中，不能修改出生日期"];
         return;
     }

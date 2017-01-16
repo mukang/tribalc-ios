@@ -498,8 +498,8 @@ TCPhotoModeViewDelegate>
 }
 
 - (void)handleDidSelectedMyCompanyCell {
-    TCUserSensitiveInfo *userSensitiveInfo = [TCBuluoApi api].currentUserSession.userSensitiveInfo;
-    if (userSensitiveInfo.companyID) {
+    TCUserInfo *userInfo = [TCBuluoApi api].currentUserSession.userInfo;
+    if (userInfo.companyID) {
         TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
@@ -511,12 +511,12 @@ TCPhotoModeViewDelegate>
 }
 
 - (void)handleDidSelectedIDAuthCell {
-    TCUserSensitiveInfo *sensitiveInfo = [[TCBuluoApi api] currentUserSession].userSensitiveInfo;
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
     UIViewController *currentVC;
-    if ([sensitiveInfo.authorizedStatus isEqualToString:@"PROCESSING"]) {
+    if ([userInfo.authorizedStatus isEqualToString:@"PROCESSING"]) {
         TCIDAuthDetailViewController *vc = [[TCIDAuthDetailViewController alloc] initWithIDAuthStatus:TCIDAuthStatusProcessing];
         currentVC = vc;
-    } else if ([sensitiveInfo.authorizedStatus isEqualToString:@"SUCCESS"] || [sensitiveInfo.authorizedStatus isEqualToString:@"FAILURE"]) {
+    } else if ([userInfo.authorizedStatus isEqualToString:@"SUCCESS"] || [userInfo.authorizedStatus isEqualToString:@"FAILURE"]) {
         TCIDAuthDetailViewController *vc = [[TCIDAuthDetailViewController alloc] initWithIDAuthStatus:TCIDAuthStatusFinished];
         currentVC = vc;
     } else {

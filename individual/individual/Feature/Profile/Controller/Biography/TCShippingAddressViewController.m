@@ -72,7 +72,7 @@
         if (addressList) {
             [weakSelf.dataList removeAllObjects];
             [weakSelf.dataList addObjectsFromArray:addressList];
-            NSString *defaultAddressID = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.addressID;
+            NSString *defaultAddressID = [[TCBuluoApi api] currentUserSession].userInfo.addressID;
             for (TCUserShippingAddress *shippingAddress in weakSelf.dataList) {
                 if ([shippingAddress.ID isEqualToString:defaultAddressID]) {
                     shippingAddress.defaultAddress = YES;

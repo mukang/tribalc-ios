@@ -237,7 +237,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
 
 - (void)handleClickForgetButton:(UIButton *)sender {
     TCBioEditSMSViewController *vc = [[TCBioEditSMSViewController alloc] initWithMessageCodeType:TCMessageCodeTypeFindPassword];
-    vc.phone = [[TCBuluoApi api] currentUserSession].userSensitiveInfo.phone;
+    vc.phone = [[TCBuluoApi api] currentUserSession].userInfo.phone;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

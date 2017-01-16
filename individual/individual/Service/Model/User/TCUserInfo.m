@@ -11,6 +11,13 @@
 
 @implementation TCUserInfo
 
++ (NSDictionary *)objectClassInDictionary {
+    return @{
+             @"shippingAddress": [TCUserShippingAddress class],
+             @"sip": [TCUserSipInfo class]
+             };
+}
+
 - (void)setSex:(NSString *)sex {
     _sex = sex;
     if ([sex isEqualToString:@"MALE"]) {

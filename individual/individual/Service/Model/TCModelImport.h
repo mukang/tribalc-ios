@@ -6,12 +6,11 @@
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 
 /********** 用户相关 **********/
-
 #import "TCUserSession.h"
 #import "TCUserInfo.h"
-#import "TCUserSensitiveInfo.h"
 #import "TCUserSipInfo.h"
 #import "TCUserPhoneInfo.h"
 #import "TCUserAddress.h"
@@ -25,7 +24,6 @@
 #import "TCUserPayment.h"
 
 /********** 商业相关 **********/
-
 #import "TCGoods.h"
 #import "TCGoodsWrapper.h"
 #import "TCGoodDetail.h"
@@ -56,18 +54,15 @@
 #import "TCCartItem.h"
 
 /********** OSS上传相关 **********/
-
 #import "TCUploadInfo.h"
 
 /********** 社区相关 **********/
-
 #import "TCCommunity.h"
 #import "TCCommunityDetailInfo.h"
 #import "TCCommunityListInCity.h"
 #import "TCCommunityReservationInfo.h"
 
 /********** 公司相关 **********/
-
 #import "TCCompanyInfo.h"
 
 /********** 物业报修 **********/
@@ -76,7 +71,6 @@
 #import "TCPropertyRepairsInfo.h"
 
 /********** 第三方支付 **********/
-
 #import "TCWechatRechargeInfo.h"
 
 
