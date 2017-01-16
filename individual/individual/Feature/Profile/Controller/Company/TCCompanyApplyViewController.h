@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
 typedef NS_ENUM(NSInteger, TCCompanyApplyStatus) {
     TCCompanyApplyStatusNotApply,
@@ -14,7 +15,7 @@ typedef NS_ENUM(NSInteger, TCCompanyApplyStatus) {
     TCCompanyApplyStatusFailure
 };
 
-@interface TCCompanyApplyViewController : UIViewController
+@interface TCCompanyApplyViewController : TCBaseViewController
 
 @property (nonatomic, readonly) TCCompanyApplyStatus applyStatus;
 

@@ -16,9 +16,9 @@
 #import "TCPlaceOrderViewController.h"
 #import "TCSelectStandardView.h"
 #import "TCShoppingCartListTableViewCell.h"
+#import "TCBaseViewController.h"
 
-
-@interface TCShoppingCartViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, TCShoppingCartListTableViewCellDelegate, TCSelectStandardViewDelegate>
+@interface TCShoppingCartViewController : TCBaseViewController <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, TCShoppingCartListTableViewCellDelegate, TCSelectStandardViewDelegate>
 
 
 @end

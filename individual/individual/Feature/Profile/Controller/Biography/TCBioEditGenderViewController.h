@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "TCBuluoApi.h"
+#import "TCBaseViewController.h"
 
 typedef void(^TCBioEditGenderBlock)();
 
-@interface TCBioEditGenderViewController : UIViewController
+@interface TCBioEditGenderViewController : TCBaseViewController
 
 @property (nonatomic) TCUserGender gender;
 @property (copy, nonatomic) TCBioEditGenderBlock editGenderBlock;

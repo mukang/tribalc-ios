@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TCReserveRadioBtnView.h"
+#import "TCBaseViewController.h"
 
-@interface TCReserveOnlineViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface TCReserveOnlineViewController : TCBaseViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 
 - (instancetype)initWithStoreSetMealId:(NSString *)storeSetMeal;
 

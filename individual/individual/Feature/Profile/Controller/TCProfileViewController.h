@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "TCUserOrderTabBarController.h"
 #import "TCUserOrderViewController.h"
+#import "TCBaseViewController.h"
 
-
-@interface TCProfileViewController : UIViewController
+@interface TCProfileViewController : TCBaseViewController
 
 @end

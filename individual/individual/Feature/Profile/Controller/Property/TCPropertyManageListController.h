@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
-@interface TCPropertyManageListController : UIViewController
+@interface TCPropertyManageListController : TCBaseViewController
 
 @end

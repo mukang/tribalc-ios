@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
-@interface TCCompanyApplyDetailViewController : UIViewController
+@interface TCCompanyApplyDetailViewController : TCBaseViewController
 
 @end

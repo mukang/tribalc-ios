@@ -60,10 +60,6 @@
 
 - (void)setupNavBar {
     self.navigationItem.title = @"个人信息";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleCickBackButton:)];
 }
 
 - (void)setupSubviews {
@@ -285,10 +281,6 @@
 }
 
 #pragma mark - Actions
-
-- (void)handleCickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)handleUserAvatarChangedWithName:(NSString *)name {
     NSString *imagePath = [TCImageURLSynthesizer synthesizeImagePathWithName:name source:kTCImageSourceOSS];

@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
 typedef void(^TCBioEditBirthdateBlock)();
 
-@interface TCBioEditBirthdateViewController : UIViewController
+@interface TCBioEditBirthdateViewController : TCBaseViewController
 
 @property (strong, nonatomic) NSDate *birthdate;
 @property (copy, nonatomic) TCBioEditBirthdateBlock editBirthdateBlock;

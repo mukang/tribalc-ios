@@ -41,10 +41,6 @@
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -65,12 +61,8 @@
 }
 
 - (void)initNavigationBar {
-    
+    self.navigationItem.title = @"在线订座";
     self.title = @"在线订座";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(touchBackBtn)];
 }
 
 
@@ -477,10 +469,6 @@
     } else {
         [MBProgressHUD showHUDWithMessage:@"请填写完整信息"];
     }
-}
-
-- (void)touchBackBtn {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (NSInteger)transToTimeSp:(NSString *)time {

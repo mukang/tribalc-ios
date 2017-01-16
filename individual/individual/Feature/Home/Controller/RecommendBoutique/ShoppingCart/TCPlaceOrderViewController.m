@@ -56,7 +56,6 @@
     weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
-    self.view.backgroundColor = [UIColor whiteColor];
     [self initNavigationBar];
     
     supplementFieldArr = [[NSMutableArray alloc] init];
@@ -111,11 +110,7 @@
 
 
 - (void)initNavigationBar {
-    self.title = @"确认下单";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(touchBackBtn)];
+    self.navigationItem.title = @"确认下单";
 }
 
 - (UIView *)getNotSettleBottomView {
@@ -403,9 +398,6 @@
 }
 
 #pragma mark - Action
-- (void)touchBackBtn {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)touchOrderPayBtn:(UIButton *)button {
     if (userAddressView.shippingAddress == nil) {

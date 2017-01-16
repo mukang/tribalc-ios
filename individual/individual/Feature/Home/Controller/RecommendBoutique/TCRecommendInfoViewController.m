@@ -41,20 +41,17 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor whiteColor];
+    
     if (mScrollView == nil) {
         [self createEntiretyScrollView];
     }
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     weakSelf = self;
-
+    self.hideOriginalNavBar = YES;
     [self loadGoodDetailInfoWithGoodId:mGoodId];
 }
 
@@ -473,17 +470,6 @@
 
 - (void)touchCollectionBtn:(id)sender {
     
-}
-
-
-
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-
-    self.navigationController.navigationBarHidden = NO;
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-
 }
 
 

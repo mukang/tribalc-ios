@@ -37,10 +37,6 @@
 
 - (void)setupNavBar {
     self.navigationItem.title = @"物业报修";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleClickBackButton:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"repairs_order_button"]
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self

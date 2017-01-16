@@ -13,14 +13,15 @@
 @interface TCRestaurantInfoViewController () {
     UIImageView *serviceTitleImageView;
     TCRestaurantLogoView *logoView;
-    UIImageView *navBarBackImageView;
     UIView *serviceInfoView;
     
     TCServiceDetail *serviceDetail;
     NSString *mServiceId;
     BOOL isCollection;
-    BOOL isStatusBarBlack;
 }
+
+@property (weak, nonatomic) UINavigationBar *navBar;
+@property (weak, nonatomic) UINavigationItem *navItem;
 
 @end
 
@@ -36,47 +37,61 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    isStatusBarBlack = NO;
-    mScrollView.delegate = self;
-    
-    [self setupNavigationBar];
-}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
     
     [self setupNavigationBar];
-    
     [self loadServiceDetail];
-    
-    isCollection = NO;
-    
 }
 
 #pragma mark - Navigation Bar
-- (void)setupNavigationBarWithLeftImgName:(NSString *)leftName AndRightImgName:(NSString *)rightName {
-    UIButton *leftBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 0, 30, 17) AndImageName:leftName];
-    [leftBtn addTarget:self action:@selector(touchBackBtn) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
-    UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(20, 0, 20, 17) AndImageName:rightName];
-    [rightBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-}
 
 - (void)setupNavigationBar {
-    self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    navBarBackImageView = self.navigationController.navigationBar.subviews.firstObject;
-    navBarBackImageView.backgroundColor = [UIColor whiteColor];
-    navBarBackImageView.alpha = 0;
-    [self setupNavigationBarWithLeftImgName:@"back" AndRightImgName:[self getCollectionImageName]];
+    self.hideOriginalNavBar = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
+    [navBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [navBar setTintColor:[UIColor whiteColor]];
+    [self.view addSubview:navBar];
+    
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"首页"];
+    navItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+                                                                 style:UIBarButtonItemStylePlain
+                                                                target:self
+                                                                action:@selector(handleClickBackButton:)];
+    [navBar setItems:@[navItem]];
+    
+    self.navBar = navBar;
+    self.navItem = navItem;
+    
+    [self updateNavigationBarWithAlpha:0.0];
 }
 
+- (void)updateNavigationBar {
+    CGFloat maxOffsetY = TCRealValue(270);
+    CGFloat offsetY = mScrollView.contentOffset.y;
+    CGFloat alpha = offsetY / maxOffsetY;
+    if (alpha > 1.0) alpha = 1.0;
+    if (alpha < 0.0) alpha = 0.0;
+    [self updateNavigationBarWithAlpha:alpha];
+}
+
+- (void)updateNavigationBarWithAlpha:(CGFloat)alpha {
+    UIColor *titleColor = nil;
+    if (alpha > 0.7) {
+        titleColor = [UIColor whiteColor];
+    } else {
+        titleColor = [UIColor clearColor];
+    }
+    self.navBar.titleTextAttributes = @{
+                                        NSFontAttributeName : [UIFont systemFontOfSize:16],
+                                        NSForegroundColorAttributeName : titleColor
+                                        };
+    
+    UIImage *bgImage = [UIImage imageWithColor:TCARGBColor(42, 42, 42, alpha)];
+    [self.navBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
+}
 
 #pragma mark - Get Data
 - (void)loadServiceDetail {
@@ -87,6 +102,7 @@
         if (service) {
             [MBProgressHUD hideHUD:YES];
             serviceDetail = service;
+            weakSelf.navItem.title = service.name;
             [weakSelf createWholeView];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -100,7 +116,7 @@
 #pragma mark - UI
 - (void)createWholeScrollView {
     mScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, TCScreenWidth, self.view.frame.size.height - TCRealValue(45))];
-    [self.view addSubview:mScrollView];
+    [self.view insertSubview:mScrollView belowSubview:self.navBar];
     mScrollView.backgroundColor = [UIColor whiteColor];
     mScrollView.delegate = self;
 }
@@ -492,17 +508,9 @@
 
 
 #pragma mark - Touch Action
-- (void)touchBackBtn {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
-- (void)touchCollectionBtn:(UIButton *)button {
-    if (mScrollView.contentOffset.y < 70) {
-        isCollection = !isCollection;
-        UIButton *rightBtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(20, 10, 20, 17) AndImageName:[self getCollectionImageName]];
-        [rightBtn addTarget:self action:@selector(touchCollectionBtn:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    }
+- (void)handleClickBackButton:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)touchReserveRest {
@@ -554,24 +562,11 @@
 #pragma mark - ScrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    CGFloat minAlphaOffset = 0;
-    CGFloat maxAlphaOffset = TCRealValue(270);
-    CGFloat offset = scrollView.contentOffset.y;
-    CGFloat alpha = (offset - minAlphaOffset) / (maxAlphaOffset - minAlphaOffset);
-    navBarBackImageView.alpha = alpha;
-    
+    if ([scrollView isEqual:mScrollView]) {
+        [self updateNavigationBar];
+    }
 
     CGPoint point = scrollView.contentOffset;
-    
-    if (point.y > 70) {
-        [self setupNavigationBarWithLeftImgName:@"nav_back_item_black" AndRightImgName:@"res_collection_black"];
-        isStatusBarBlack = YES;
-        [self setNeedsStatusBarAppearanceUpdate];
-    } else {
-        [self setupNavigationBarWithLeftImgName:@"back" AndRightImgName:[self getCollectionImageName]];
-        isStatusBarBlack = NO;
-        [self setNeedsStatusBarAppearanceUpdate];
-    }
     
     if (point.y < 0) {
         double height = -point.y + TCRealValue(270);
@@ -587,26 +582,8 @@
     }
 }
 
-
-
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    mScrollView.delegate = nil;
-    
-    [self.navigationController.navigationBar setTranslucent:NO];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    navBarBackImageView.alpha = 1.0;
-    
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    if (isStatusBarBlack) {
-        return UIStatusBarStyleDefault;
-    } else {
-        return UIStatusBarStyleLightContent;
-    }
-    
+    return UIStatusBarStyleLightContent;
 }
 
 

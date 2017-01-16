@@ -41,10 +41,6 @@
 
 - (void)setupNavBar {
     self.navigationItem.title = @"手机绑定";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleCickBackButton:)];
 }
 
 - (void)setupSubviews {
@@ -82,9 +78,6 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)handleCickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)handleTapView:(UITapGestureRecognizer *)sender {
     if ([self.textField isFirstResponder]) {

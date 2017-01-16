@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "TCBuluoApi.h"
+#import "TCBaseViewController.h"
 
 typedef void(^TCBioEditEmotionBlock)();
 
-@interface TCBioEditEmotionViewController : UIViewController
+@interface TCBioEditEmotionViewController : TCBaseViewController
 
 @property (nonatomic) TCUserEmotionState emotionState;
 @property (copy, nonatomic) TCBioEditEmotionBlock editEmotionBlock;

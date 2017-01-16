@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
 typedef void(^TCDefaultShippingAddressChangeBlock)(BOOL isChange);
 
-@interface TCShippingAddressViewController : UIViewController
+@interface TCShippingAddressViewController : TCBaseViewController
 
 @property (copy, nonatomic) TCDefaultShippingAddressChangeBlock defaultShippingAddressChangeBlock;
 

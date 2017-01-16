@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
+#import "TCBaseViewController.h"
 
-@interface TCPlaceOrderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, UITextFieldDelegate>
+@interface TCPlaceOrderViewController : TCBaseViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, UITextFieldDelegate>
 
 - (instancetype)initWithListShoppingCartArr:(NSArray *)listShoppingCart;
 

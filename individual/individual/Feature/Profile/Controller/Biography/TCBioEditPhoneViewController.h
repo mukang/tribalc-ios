@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TCBioEditSMSViewController.h"
+#import "TCBaseViewController.h"
 
-@interface TCBioEditPhoneViewController : UIViewController
+@interface TCBioEditPhoneViewController : TCBaseViewController
 
 /** 编辑新手机号回调 */
 @property (copy, nonatomic) TCEditPhoneBlock editPhoneBlock;

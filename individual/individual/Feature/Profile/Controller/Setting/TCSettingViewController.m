@@ -39,10 +39,6 @@
 
 - (void)setupNavBar {
     self.navigationItem.title = @"设置";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleClickBackButton:)];
 }
 
 - (void)setupSubviews {
@@ -151,10 +147,6 @@
 
 
 #pragma mark - Actions
-
-- (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)handleClickLogoutButton:(UIButton *)sender {
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否确定退出登录？" preferredStyle:UIAlertControllerStyleAlert];

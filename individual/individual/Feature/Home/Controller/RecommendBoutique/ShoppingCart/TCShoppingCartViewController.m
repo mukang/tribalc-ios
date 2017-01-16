@@ -34,23 +34,19 @@
         [cartTableView reloadData];
     }
     [self setupNavigationRightBarButton];
-
+    
     [self initBottomView];
     
-    weakSelf = self;
     [self initShoppingCartData];
-
-    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    weakSelf = self;
     isEdit = NO;
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"购物车";
     
     [self initialNavigationBar];
-    
     [self setupBottomView];
 }
 
@@ -91,12 +87,6 @@
 
 - (void)initialNavigationBar {
     self.title = @"购物车";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(touchBackBtn:)];
-
-    
 }
 
 
@@ -409,10 +399,6 @@
 
 # pragma mark - Click Action
 
-- (void)touchBackBtn:(UIButton *)button {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)touchDeleteButton {
     NSArray *goodsArr = [[NSArray alloc] initWithArray:[self getSelectedGoodsInfo]];
     if (goodsArr.count == 0) {
@@ -545,18 +531,6 @@
     }
     
     return true;
-}
-
-
-- (void)viewWillDisappear:(BOOL)animated {
-    
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    UIImageView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
-    barImageView.backgroundColor =[UIColor colorWithRed:42/255.0 green:42/255.0 blue:42/255.0 alpha:1];
-    barImageView.alpha = 1;
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    
 }
 
 - (void)didReceiveMemoryWarning {

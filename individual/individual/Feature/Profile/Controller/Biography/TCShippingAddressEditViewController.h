@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 @class TCUserShippingAddress;
 
 typedef NS_ENUM(NSInteger, TCShippingAddressType) {
@@ -16,7 +17,7 @@ typedef NS_ENUM(NSInteger, TCShippingAddressType) {
 
 typedef void(^TCShippingAddressBlock)(TCShippingAddressType shippingAddressType, TCUserShippingAddress *newShippingAddress);
 
-@interface TCShippingAddressEditViewController : UIViewController
+@interface TCShippingAddressEditViewController : TCBaseViewController
 
 @property (nonatomic) TCShippingAddressType shippingAddressType;
 @property (strong, nonatomic) TCUserShippingAddress *shippingAddress;

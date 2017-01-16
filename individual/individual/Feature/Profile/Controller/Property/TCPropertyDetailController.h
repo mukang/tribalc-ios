@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 @class TCPropertyManage;
 
 typedef void(^TCCompletionBlock)();
 
-@interface TCPropertyDetailController : UIViewController
+@interface TCPropertyDetailController : TCBaseViewController
 
 /** 支付完成的回调 */
 @property (copy, nonatomic) TCCompletionBlock completionBlock;

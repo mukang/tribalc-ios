@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
 typedef NS_ENUM(NSInteger, TCMessageCodeType) {
     TCMessageCodeTypeBindPhone,       // 绑定手机号
@@ -15,7 +16,7 @@ typedef NS_ENUM(NSInteger, TCMessageCodeType) {
 
 typedef void(^TCEditPhoneBlock)(BOOL isEdit);
 
-@interface TCBioEditSMSViewController : UIViewController
+@interface TCBioEditSMSViewController : TCBaseViewController
 
 @property (copy, nonatomic) NSString *phone;
 @property (nonatomic, readonly) TCMessageCodeType messageCodeType;

@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
 typedef NS_ENUM(NSInteger, TCIDAuthStatus) {
     TCIDAuthStatusProcessing = 0,
     TCIDAuthStatusFinished
 };
 
-@interface TCIDAuthDetailViewController : UIViewController
+@interface TCIDAuthDetailViewController : TCBaseViewController
 
 @property (nonatomic, readonly) TCIDAuthStatus authStatus;
 

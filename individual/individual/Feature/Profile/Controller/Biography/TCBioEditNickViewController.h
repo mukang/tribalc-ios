@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
 typedef void(^TCBioEditNickBlock)(NSString *nickname);
 
-@interface TCBioEditNickViewController : UIViewController
+@interface TCBioEditNickViewController : TCBaseViewController
 
 @property (copy, nonatomic) NSString *nickname;
 @property (nonatomic) TCBioEditNickBlock editNickBlock;

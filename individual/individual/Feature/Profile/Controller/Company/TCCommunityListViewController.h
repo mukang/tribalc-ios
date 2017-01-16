@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 #import "TCCompanyListViewController.h"
 
-@interface TCCommunityListViewController : UIViewController
+@interface TCCommunityListViewController : TCBaseViewController
 
 @property (copy, nonatomic) TCCompanyInfoBlock companyInfoBlock;
 @property (weak, nonatomic) UIViewController *popToVC;

@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "TCBuluoApi.h"
+#import "TCBaseViewController.h"
 
 typedef void(^TCBioEditLocationBlock)();
 
-@interface TCBioEditLocationViewController : UIViewController
+@interface TCBioEditLocationViewController : TCBaseViewController
 
 @property (strong, nonatomic) TCUserAddress *address;
 @property (copy, nonatomic) TCBioEditLocationBlock editLocationBlock;

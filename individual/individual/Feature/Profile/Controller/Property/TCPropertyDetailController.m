@@ -55,12 +55,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.title = @"物业订单";
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleClickBackButton:)];
+    self.navigationItem.title = @"物业订单";
     
     if ([_propertyManage.status isEqualToString:@"ORDER_ACCEPT"] || [_propertyManage.status isEqualToString:@"TASK_CONFIRM"]) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleDone target:self action:@selector(cancelOrder)];
@@ -101,10 +96,6 @@
             [MBProgressHUD showHUDWithMessage:@"取消失败"];
         }
     }];
-}
-
-- (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setData {

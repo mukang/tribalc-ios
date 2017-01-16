@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
-@interface TCWalletViewController : UIViewController
+@interface TCWalletViewController : TCBaseViewController
 
 @end

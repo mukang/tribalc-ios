@@ -43,13 +43,6 @@
 
 - (void)setupNavBar {
     self.navigationItem.title = @"常用";
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    self.navigationController.navigationBar.titleTextAttributes = @{
-                                                                    NSFontAttributeName : [UIFont systemFontOfSize:16],
-                                                                    NSForegroundColorAttributeName : [UIColor whiteColor]
-                                                                    };
-    UIImage *bgImage = [UIImage imageWithColor:TCRGBColor(42, 42, 42)];
-    [self.navigationController.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile_nav_QRcode_item"]
                                                                  style:UIBarButtonItemStylePlain

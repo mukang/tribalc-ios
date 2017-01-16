@@ -23,11 +23,11 @@
 #import "TCImgPageControl.h"
 #import "TCShoppingCartViewController.h"
 #import "TCGoodSelectView.h"
+#import "TCBaseViewController.h"
 
 
 
-
-@interface TCRecommendInfoViewController : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, SDWebImageManagerDelegate, TCGoodSelectViewDelegate>
+@interface TCRecommendInfoViewController : TCBaseViewController <UIScrollViewDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, SDWebImageManagerDelegate, TCGoodSelectViewDelegate>
 
 
 - (instancetype)initWithGoodId:(NSString *)goodID;

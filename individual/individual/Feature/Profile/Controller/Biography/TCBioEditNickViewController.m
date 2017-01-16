@@ -49,10 +49,6 @@
 
 - (void)setupNavBar {
     self.navigationItem.title = @"昵称";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleClickBackButton:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
@@ -130,10 +126,6 @@
 }
 
 #pragma mark - Actions
-
-- (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)handleClickSaveButton:(UIBarButtonItem *)sender {
     if ([self.textField isFirstResponder]) {
