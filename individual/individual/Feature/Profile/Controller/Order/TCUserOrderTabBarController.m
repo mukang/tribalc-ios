@@ -49,6 +49,13 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.navigationController.navigationBarHidden) {
+        [self.navigationController setNavigationBarHidden:NO];
+    }
+}
+
 - (void)selectIndexWithTitle {
     if ([self.title isEqualToString:@"待付款"]) {
         [self touchOrderSelectBtn:waitPayBtn];

@@ -89,7 +89,7 @@ TCPhotoModeViewDelegate>
     [navBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     [self.view addSubview:navBar];
     
-    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"商铺"];
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile_nav_QRcode_item"]
                                                                  style:UIBarButtonItemStylePlain
                                                                 target:self

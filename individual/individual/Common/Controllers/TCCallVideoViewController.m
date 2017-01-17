@@ -41,8 +41,6 @@
     
     self.title = @"开锁";
     self.view.backgroundColor = [UIColor blackColor];
-    UIImage *bgImage = [UIImage imageWithColor:TCARGBColor(255, 255, 255, 0.01)];
-    [self.navigationController.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
     
     // Do any additional setup after loading the view.
     _videoView = [[UIView alloc] init];
@@ -115,6 +113,9 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBar.translucent = YES;
+    
+    UIImage *bgImage = [UIImage imageWithColor:TCARGBColor(255, 255, 255, 0.00)];
+    [self.navigationController.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
     
     LinphoneManager.instance.nextCallIsTransfer = NO;
     

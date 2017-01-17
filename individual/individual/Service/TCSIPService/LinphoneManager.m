@@ -1846,7 +1846,7 @@ void popup_link_account_cb(LinphoneAccountCreator *creator, LinphoneAccountCreat
 	mIterateTimer =
 		[NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(iterate) userInfo:nil repeats:YES];
     
-    linphone_core_enable_mic(LC, false);
+//    linphone_core_enable_mic(LC, false);
 
 }
 

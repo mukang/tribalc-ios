@@ -72,6 +72,8 @@
     
 }
 
+
+
 - (UIScrollView *)getHomeScrollViewWithFrame:(CGRect)frame {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:frame];
     scrollView.backgroundColor = TCRGBColor(242, 242, 242);
