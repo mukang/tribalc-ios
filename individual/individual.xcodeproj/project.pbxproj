@@ -534,6 +534,10 @@
 		7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */; };
 		7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C341E001BFF00224677 /* TCCompanyApplyNameViewCell.m */; };
 		7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C371E002CF000224677 /* TCCompanyNameViewCell.m */; };
+		7A0E009B1E2DC1DE0028555D /* TCLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E009A1E2DC1DE0028555D /* TCLaunchViewController.m */; };
+		7A0E009F1E2DCDAF0028555D /* HD4.0''.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A0E009C1E2DCDAF0028555D /* HD4.0''.png */; };
+		7A0E00A01E2DCDAF0028555D /* HD4.7''.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A0E009D1E2DCDAF0028555D /* HD4.7''.png */; };
+		7A0E00A11E2DCDAF0028555D /* HD5.5''.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A0E009E1E2DCDAF0028555D /* HD5.5''.png */; };
 		7A0EA7341E00F0F700823505 /* TCCommunityListInCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0EA7331E00F0F700823505 /* TCCommunityListInCity.m */; };
 		7A11F6EB1DE3E304005F3EAB /* TCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A190AEF1DC09BF500651905 /* TCClient.m */; };
 		7A11F6EC1DE3E39B005F3EAB /* TCVicinityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */; };
@@ -2782,6 +2786,11 @@
 		7A084C341E001BFF00224677 /* TCCompanyApplyNameViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyApplyNameViewCell.m; sourceTree = "<group>"; };
 		7A084C361E002CF000224677 /* TCCompanyNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyNameViewCell.h; sourceTree = "<group>"; };
 		7A084C371E002CF000224677 /* TCCompanyNameViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyNameViewCell.m; sourceTree = "<group>"; };
+		7A0E00991E2DC1DE0028555D /* TCLaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLaunchViewController.h; sourceTree = "<group>"; };
+		7A0E009A1E2DC1DE0028555D /* TCLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLaunchViewController.m; sourceTree = "<group>"; };
+		7A0E009C1E2DCDAF0028555D /* HD4.0''.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD4.0''.png"; sourceTree = "<group>"; };
+		7A0E009D1E2DCDAF0028555D /* HD4.7''.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD4.7''.png"; sourceTree = "<group>"; };
+		7A0E009E1E2DCDAF0028555D /* HD5.5''.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD5.5''.png"; sourceTree = "<group>"; };
 		7A0EA7321E00F0F700823505 /* TCCommunityListInCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityListInCity.h; sourceTree = "<group>"; };
 		7A0EA7331E00F0F700823505 /* TCCommunityListInCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityListInCity.m; sourceTree = "<group>"; };
 		7A11F6FD1DE41F43005F3EAB /* TCRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRefreshHeader.h; sourceTree = "<group>"; };
@@ -7413,6 +7422,8 @@
 				55EC5BE01E2492F500C5FB73 /* TCCallInViewController.m */,
 				55EC5BE21E24D7E700C5FB73 /* TCCallVideoViewController.h */,
 				55EC5BE31E24D7E700C5FB73 /* TCCallVideoViewController.m */,
+				7A0E00991E2DC1DE0028555D /* TCLaunchViewController.h */,
+				7A0E009A1E2DC1DE0028555D /* TCLaunchViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -7779,6 +7790,9 @@
 		7A720AB31E13892200567216 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				7A0E009C1E2DCDAF0028555D /* HD4.0''.png */,
+				7A0E009D1E2DCDAF0028555D /* HD4.7''.png */,
+				7A0E009E1E2DCDAF0028555D /* HD5.5''.png */,
 				7A720AB81E13892E00567216 /* intro_image_01.png */,
 				7A720AB91E13892E00567216 /* intro_image_02.png */,
 				7A720ABA1E13892E00567216 /* intro_image_03.png */,
@@ -8504,6 +8518,7 @@
 				553DC9561DFFE2300018783E /* BelrTargets.cmake in Resources */,
 				553DC88B1DFFE22F0018783E /* BZRTPConfig.cmake in Resources */,
 				553DC95A1DFFE2310018783E /* BZRTPTargets.cmake in Resources */,
+				7A0E00A11E2DCDAF0028555D /* HD5.5''.png in Resources */,
 				553DC9651DFFE2310018783E /* Mediastreamer2Targets-release.cmake in Resources */,
 				553DC8851DFFE22F0018783E /* BelleSIPConfigVersion.cmake in Resources */,
 				553DC8441DFFE22E0018783E /* oldphone-mono.wav in Resources */,
@@ -8537,6 +8552,7 @@
 				553DC8FC1DFFE2300018783E /* rootca.pem in Resources */,
 				553DC8311DFFE22E0018783E /* Mediastreamer2Config.cmake in Resources */,
 				553DC9501DFFE2300018783E /* BelleSIPConfig.cmake in Resources */,
+				7A0E00A01E2DCDAF0028555D /* HD4.7''.png in Resources */,
 				7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */,
 				553DC8221DFFE22E0018783E /* BelrConfig.cmake in Resources */,
 				553DC90C1DFFE2300018783E /* its_a_game.mkv in Resources */,
@@ -8597,6 +8613,7 @@
 				553DC8F81DFFE2300018783E /* LinphoneConfig.cmake in Resources */,
 				553DC8E81DFFE2300018783E /* BelcardTargets-release.cmake in Resources */,
 				553DC89F1DFFE22F0018783E /* dont_wait_too_long.mkv in Resources */,
+				7A0E009F1E2DCDAF0028555D /* HD4.0''.png in Resources */,
 				553DC9471DFFE2300018783E /* speexdsp.pc in Resources */,
 				559D881D1E0C045B00982697 /* linphonerc~ipad in Resources */,
 				553DC8E61DFFE2300018783E /* BcToolboxTargets.cmake in Resources */,
@@ -8932,6 +8949,7 @@
 				7A58C5EF1E120D5E00C55A2C /* TCIDAuthDetailViewController.m in Sources */,
 				09222E1B1DEE98490064C0DF /* TCRestaurantViewController.m in Sources */,
 				09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */,
+				7A0E009B1E2DC1DE0028555D /* TCLaunchViewController.m in Sources */,
 				7A1F12901DEC0BDD00A9B58F /* TCCommunitiesViewController.m in Sources */,
 				0929D2951E0A25820099B1BD /* TCSelectSecondaryBtn.m in Sources */,
 				093D03191DE40D71007A053C /* TCUserOrderTabBarController.m in Sources */,
