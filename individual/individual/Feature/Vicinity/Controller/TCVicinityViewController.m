@@ -37,11 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     weakSelf = self;
-//    self.navigationController.navigationBarHidden = YES;
-    
-//    self.extendedLayoutIncludesOpaqueBars = YES;
-//    self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    self.hideOriginalNavBar = YES;
     
     [self setupSubviews];
     
@@ -85,73 +81,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateNavigationBarWithAlpha:0.00];
+    
     [self startAnimating01];
-//    [UIView animateWithDuration:0.1 animations:^{
-//        self.backgroundView.alpha = 0.8;
-//    }];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-//    [self startAnimating];
-    
-//    CGFloat angle;
-//    CGFloat radius = 150;
-//    CGPoint center;
-//    
-//    for (int i=0; i<self.buttons.count; i++) {
-//        UIButton *button = self.buttons[i];
-//        angle = 55 + 35 * (self.buttons.count - i - 1);
-//        center = [self calcCircleCoordinateWithCenter:self.originCenter angle:angle radius:radius];
-//        POPSpringAnimation *animation = [POPSpringAnimation animationWithPropertyNamed:kPOPViewCenter];
-////        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-////        animation.duration = 0.2;
-//        animation.springBounciness = 8;
-////        animation.beginTime = CACurrentMediaTime() + i * 0.1;
-//        animation.toValue = [NSValue valueWithCGPoint:center];
-//        [button pop_addAnimation:animation forKey:[NSString stringWithFormat:@"TCButton%d", i]];
-//    }
-    
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    
-    
-//    self.backgroundView.alpha = 0.6;
-//    
-//    for (UIButton *button in self.buttons) {
-//        button.center = self.originCenter;
-//    }
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [self updateNavigationBarWithAlpha:1.0];
-}
-
-- (void)updateNavigationBarWithAlpha:(CGFloat)alpha {
-    UIColor *tintColor = nil, *titleColor = nil;
-    if (alpha) {
-        tintColor = [UIColor whiteColor];
-        titleColor = [UIColor whiteColor];
-        self.navigationController.navigationBar.translucent = NO;
-    } else {
-        tintColor = [UIColor clearColor];
-        titleColor = [UIColor clearColor];
-        self.navigationController.navigationBar.translucent = YES;
-    }
-    [self.navigationController.navigationBar setTintColor:tintColor];
-    self.navigationController.navigationBar.titleTextAttributes = @{
-                                                                    NSFontAttributeName : [UIFont systemFontOfSize:16],
-                                                                    NSForegroundColorAttributeName : titleColor
-                                                                    };
-    UIImage *bgImage = [UIImage imageWithColor:TCARGBColor(42, 42, 42, alpha)];
-    [self.navigationController.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)setupSubviews {
