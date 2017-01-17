@@ -11,5 +11,9 @@
 @interface TCAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow *launchWindow;
+
+/** 显示启动视窗 */
+- (void)showLaunchWindow;
 
 @end

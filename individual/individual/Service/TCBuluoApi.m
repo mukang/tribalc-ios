@@ -657,7 +657,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)fetchWalletAccountInfo:(void (^)(TCWalletAccount *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/wallet", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
@@ -685,7 +685,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSString *tradingTypePart = tradingType ? [NSString stringWithFormat:@"tradingType=%@&", tradingType] : @"";
         NSString *limitSizePart = [NSString stringWithFormat:@"limitSize=%zd", count];
         NSString *sortSkipPart = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%@", sortSkip] : @"";
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/bills?%@%@%@", self.currentUserSession.assigned, tradingTypePart, limitSizePart, sortSkipPart];
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bills?%@%@%@", self.currentUserSession.assigned, tradingTypePart, limitSizePart, sortSkipPart];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
@@ -712,9 +712,9 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     if ([self isUserSessionValid]) {
         NSString *apiName;
         if (messageCode) {
-            apiName = [NSString stringWithFormat:@"persons/%@/wallet/password?vcode=%@", self.currentUserSession.assigned, messageCode];
+            apiName = [NSString stringWithFormat:@"wallets/%@/password?vcode=%@", self.currentUserSession.assigned, messageCode];
         } else {
-            apiName = [NSString stringWithFormat:@"persons/%@/wallet/password", self.currentUserSession.assigned];
+            apiName = [NSString stringWithFormat:@"wallets/%@/password", self.currentUserSession.assigned];
         }
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
         request.token = self.currentUserSession.token;
@@ -741,7 +741,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)fetchBankCardList:(void (^)(NSArray *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/bank_cards", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bank_cards", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
@@ -771,7 +771,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)addBankCard:(TCBankCard *)bankCard withVerificationCode:(NSString *)verificationCode result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/bank_cards?vcode=%@", self.currentUserSession.assigned, verificationCode];
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bank_cards?vcode=%@", self.currentUserSession.assigned, verificationCode];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
         NSDictionary *dic = [bankCard toObjectDictionary];
@@ -799,7 +799,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)deleteBankCard:(NSString *)bankCardID result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/bank_cards/%@", self.currentUserSession.assigned, bankCardID];
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bank_cards/%@", self.currentUserSession.assigned, bankCardID];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
@@ -938,41 +938,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 - (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel payPurpose:(TCPayPurpose)payPurpose orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *purpose = payPurpose ? @"maintain" : @"order";
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/payments?type=%@", self.currentUserSession.assigned, purpose];
-        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
-        request.token = self.currentUserSession.token;
-        switch (payChannel) {
-            case TCPayChannelBalance:
-                [request setValue:@"BALANCE" forParam:@"payChannel"];
-                break;
-                
-            default:
-                break;
-        }
-        [request setValue:orderIDs forParam:@"orderIds"];
-        [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
-                TCUserPayment *payment = [[TCUserPayment alloc] initWithObjectDictionary:response.data];
-                if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(payment, nil));
-                }
-            } else {
-                if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
-                }
-            }
-        }];
-    } else {
-        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
-        if (resultBlock) {
-            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
-        }
-    }
-}
-
-- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *, NSError *))resultBlock {
-    if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/payments", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/payments?type=%@", self.currentUserSession.assigned, purpose];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
         switch (payChannel) {
@@ -1006,7 +972,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)fetchUserPayment:(NSString *)paymentID result:(void (^)(TCUserPayment *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/payments/%@", self.currentUserSession.assigned, paymentID];
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/payments/%@", self.currentUserSession.assigned, paymentID];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {

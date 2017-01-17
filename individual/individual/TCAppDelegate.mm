@@ -8,13 +8,14 @@
 
 #import "TCAppDelegate.h"
 #import "TCTabBarController.h"
+#import "TCCallInViewController.h"
+#import "TCCallVideoViewController.h"
+#import "TCLaunchViewController.h"
 
 #import <Bugly/Bugly.h>
 
 #import "TCSipAPI.h"
 #import "WXApiManager.h"
-#import "TCCallInViewController.h"
-#import "TCCallVideoViewController.h"
 
 static NSString *const kBuglyAppID = @"900059019";
 
@@ -32,6 +33,7 @@ static NSString *const kBuglyAppID = @"900059019";
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    [self showLaunchWindow];
     application.statusBarHidden = NO;
     
     // bugly
@@ -57,6 +59,16 @@ static NSString *const kBuglyAppID = @"900059019";
     TCCallInViewController *callInVC = [[TCCallInViewController alloc] init];
     callInVC.hidesBottomBarWhenPushed = YES;
     [nav pushViewController:callInVC animated:YES];
+}
+
+/** 显示启动视窗 */
+- (void)showLaunchWindow {
+    TCLaunchViewController *launchViewController = [[TCLaunchViewController alloc] init];
+    self.launchWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.launchWindow.rootViewController = launchViewController;
+    self.launchWindow.windowLevel = UIWindowLevelNormal;
+    self.launchWindow.hidden = NO;
+    launchViewController.launchWindow = self.launchWindow;
 }
 
 

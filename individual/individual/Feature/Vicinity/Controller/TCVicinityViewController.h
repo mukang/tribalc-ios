@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
-@interface TCVicinityViewController : UIViewController
+@interface TCVicinityViewController : TCBaseViewController
 
 @end
