@@ -143,6 +143,8 @@ struct codec_name_pref_table codec_pref_table[] = {{"speex", 8000, "speex_8k_pre
 												   {"opus", 48000, "opus_preference"},
 												   {NULL, 0, Nil}};
 
+//struct codec_name_pref_table codec_pref_table[] = {{"h264", 90000, "h264_preference"},{NULL, 0, Nil}};
+
 + (NSString *)getPreferenceForCodec:(const char *)name withRate:(int)rate {
 	int i;
 	for (i = 0; codec_pref_table[i].name != NULL; ++i) {
