@@ -78,7 +78,8 @@
         make.bottom.width.height.equalTo(refuseBtn);
     }];
     
-    
+    linphone_core_set_video_device(LC, "AV Capture: com.apple.avfoundation.avcapturedevice.built-in_video:1");
+
 }
 
 - (void)end {
