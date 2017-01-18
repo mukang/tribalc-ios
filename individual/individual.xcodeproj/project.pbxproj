@@ -9299,8 +9299,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d8f1299c-3a50-4046-a3a1-606f20cd0f22";
-				PROVISIONING_PROFILE_SPECIFIER = sf1215;
+				PROVISIONING_PROFILE = "f133662b-ff70-4837-87b8-d0be7088ae31";
+				PROVISIONING_PROFILE_SPECIFIER = "Individual Development";
 			};
 			name = Debug;
 		};
@@ -9311,7 +9311,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: wang shuaifeng (CL336ERY54)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -9375,8 +9375,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d8f1299c-3a50-4046-a3a1-606f20cd0f22";
-				PROVISIONING_PROFILE_SPECIFIER = sf1215;
+				PROVISIONING_PROFILE = "84f30ef8-71f2-4f81-80f4-2d528400d6f6";
+				PROVISIONING_PROFILE_SPECIFIER = "Individual Distribution";
 			};
 			name = Release;
 		};
