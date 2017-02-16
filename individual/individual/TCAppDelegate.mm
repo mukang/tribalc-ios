@@ -16,10 +16,18 @@
 
 #import "TCSipAPI.h"
 #import "WXApiManager.h"
+#import <CoreLocation/CoreLocation.h>
 
 static NSString *const kBuglyAppID = @"900059019";
 
-@implementation TCAppDelegate
+@interface TCAppDelegate ()<CLLocationManagerDelegate>
+
+@end
+
+@implementation TCAppDelegate{
+    CLLocationManager *_locationManager;
+    BOOL _isRequest;
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -48,11 +56,61 @@ static NSString *const kBuglyAppID = @"900059019";
     // wechat
     [WXApi registerApp:kWXAppID];
     
+    [self startLocationAction];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toCallInView) name:@"TCDidReceiveCall" object:nil];
     
     return YES;
 }
+
+- (void)startLocationAction
+{
+    _locationManager = [[CLLocationManager alloc] init];
+    if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [_locationManager requestWhenInUseAuthorization];
+    }
+    
+    if ([CLLocationManager locationServicesEnabled] &&
+        (!([CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted)
+         && !([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))) {
+            //定位功能可用，开始定位
+            _locationManager.delegate=self;
+            //设置定位精度
+            _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+            
+            [_locationManager stopUpdatingLocation];
+            [_locationManager startUpdatingLocation];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"isAllowLocal"];
+        }else {
+            [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"isAllowLocal"];
+        }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if (status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied) {
+        [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"isAllowLocal"];
+    }else {
+        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"isAllowLocal"];
+    }
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    
+    if (!_isRequest) {
+        CLLocation *location=[locations lastObject];//取出第一个位置
+        CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
+        
+        _isRequest = YES;
+        [_locationManager stopUpdatingLocation];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%f,%f",coordinate.latitude, coordinate.longitude] forKey:@"locationLatAndLog"];
+        
+    }
+    
+}
+
 
 - (void)toCallInView {
     UINavigationController *nav = [(UITabBarController *)self.window.rootViewController selectedViewController];
