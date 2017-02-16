@@ -342,7 +342,7 @@ static CGFloat const duration = 0.25;
     }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBalance payPurpose:self.payPurpose orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBalance payPurpose:self.payPurpose password:password orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             if ([userPayment.status isEqualToString:@"CREATED"]) { // 正在处理中
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

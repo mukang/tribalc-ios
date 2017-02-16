@@ -36,6 +36,8 @@ typedef NS_ENUM(NSInteger, TCOrderExpressType) {
 @property (copy, nonatomic) NSString *ID;
 /** 订单编号 */
 @property (copy, nonatomic) NSString *orderNum;
+/** 物流单号 */
+@property (copy, nonatomic) NSString *logisticsNum;
 /** 用户ID */
 @property (copy, nonatomic) NSString *ownerId;
 /** 收货地址 */
@@ -46,7 +48,7 @@ typedef NS_ENUM(NSInteger, TCOrderExpressType) {
 /** 配送方式(枚举) */
 @property (nonatomic) TCOrderExpressType express;
 /** 邮递费 */
-@property (nonatomic) NSInteger expressFee;
+@property (nonatomic) CGFloat expressFee;
 /** 价格合计 */
 @property (nonatomic) CGFloat totalFee;
 /** 订单补充说明 */

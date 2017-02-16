@@ -295,7 +295,7 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
  @param orderIDs 订单ID列表
  @param resultBlock 结果回调，userPayment为nil时表示提交失败，失败原因见error的code和userInfo
  */
-- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel payPurpose:(TCPayPurpose)payPurpose orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
+- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel payPurpose:(TCPayPurpose)payPurpose password:(NSString *)password orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
 
 /**
  查询付款申请
@@ -385,6 +385,14 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
 - (void)fetchOrderWrapper:(NSString *)status limiSize:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCOrderWrapper *orderWrapper, NSError *error))resultBlock;
 
 /**
+ 获取商品订单详情
+
+ @param orderID 订单id
+ @param resultBlock 结果回调，order为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchOrderDetailWithOrderID:(NSString *)orderID result:(void (^)(TCOrder *order, NSError *error))resultBlock;
+
+/**
  创建商品订单
  
  @param itemList 数组，包含多个字典，字典格式为 @{ amount:2, goodsId:@"xxxxx" }
@@ -399,6 +407,15 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
  @param orderId  订单id
  */
 - (void)changeOrderStatus:(NSString *)statusStr OrderId:(NSString *)orderId result:(void(^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 更改订单状态（取消订单、收货时使用）
+
+ @param status 需要更改的状态
+ @param orderID 订单id
+ @param resultBlock 结果回调，success为NO时表示更改失败，失败原因见error的code和userInfo
+ */
+- (void)changeOrderStatus:(NSString *)status orderID:(NSString *)orderID result:(void(^)(BOOL success, TCOrder *order, NSError *error))resultBlock;
 
 
 #pragma mark - 服务预订资源
