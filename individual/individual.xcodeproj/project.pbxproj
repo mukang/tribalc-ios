@@ -60,14 +60,10 @@
 		092CD4241DD9A07C0073A9C1 /* TCCalloutAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4111DD9A07C0073A9C1 /* TCCalloutAnnotationView.m */; };
 		092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */; };
 		093048BC1DE57E56000FDCBF /* TCGoodDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 093048BB1DE57E56000FDCBF /* TCGoodDetail.m */; };
-		093D03191DE40D71007A053C /* TCUserOrderTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D03181DE40D71007A053C /* TCUserOrderTabBarController.m */; };
-		093D031C1DE41B4A007A053C /* TCUserOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */; };
-		093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */; };
 		0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0955A4A01DF83A7C0019A57D /* TCReservationWrapper.m */; };
 		0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0955A4A31DF83AB60019A57D /* TCReservation.m */; };
 		0960B3521DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0960B3511DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m */; };
 		096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 096254341DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m */; };
-		0978DB111DE95D62006B6437 /* TCUserOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0978DB101DE95D62006B6437 /* TCUserOrderDetailViewController.m */; };
 		0978DB141DE96E40006B6437 /* TCOrderAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0978DB131DE96E40006B6437 /* TCOrderAddressView.m */; };
 		098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435D81DFD118200B8CA63 /* TCPlaceOrderViewController.m */; };
 		098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */; };
@@ -756,6 +752,7 @@
 		7AFEC48D1E54729100B0E754 /* TCGoodsOrderStoreViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFEC48C1E54729100B0E754 /* TCGoodsOrderStoreViewCell.m */; };
 		7AFEC4931E55446D00B0E754 /* TCGoodsOrderCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFEC4921E55446D00B0E754 /* TCGoodsOrderCountDownView.m */; };
 		7AFEC4961E555D2E00B0E754 /* TCGoodsOrderStatusViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFEC4951E555D2E00B0E754 /* TCGoodsOrderStatusViewCell.m */; };
+		7AFEC4991E55CF6800B0E754 /* TCUserOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFEC4981E55CF6800B0E754 /* TCUserOrderTableViewCell.m */; };
 		D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */; };
 /* End PBXBuildFile section */
 
@@ -884,12 +881,6 @@
 		092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCImgPageControl.m; sourceTree = "<group>"; };
 		093048BA1DE57E56000FDCBF /* TCGoodDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodDetail.h; sourceTree = "<group>"; };
 		093048BB1DE57E56000FDCBF /* TCGoodDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodDetail.m; sourceTree = "<group>"; };
-		093D03171DE40D71007A053C /* TCUserOrderTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderTabBarController.h; sourceTree = "<group>"; };
-		093D03181DE40D71007A053C /* TCUserOrderTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderTabBarController.m; sourceTree = "<group>"; };
-		093D031A1DE41B4A007A053C /* TCUserOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderViewController.h; sourceTree = "<group>"; };
-		093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderViewController.m; sourceTree = "<group>"; };
-		093D031D1DE41D28007A053C /* TCUserOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderTableViewCell.h; sourceTree = "<group>"; };
-		093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderTableViewCell.m; sourceTree = "<group>"; };
 		0955A49F1DF83A7C0019A57D /* TCReservationWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReservationWrapper.h; sourceTree = "<group>"; };
 		0955A4A01DF83A7C0019A57D /* TCReservationWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCReservationWrapper.m; sourceTree = "<group>"; };
 		0955A4A21DF83AB60019A57D /* TCReservation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReservation.h; sourceTree = "<group>"; };
@@ -898,8 +889,6 @@
 		0960B3511DF67D9500AD5D2A /* TCHomeCommodityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCHomeCommodityTableViewCell.m; path = Map/TCHomeCommodityTableViewCell.m; sourceTree = "<group>"; };
 		096254331DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserReserveDetailViewController.h; sourceTree = "<group>"; };
 		096254341DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserReserveDetailViewController.m; sourceTree = "<group>"; };
-		0978DB0F1DE95D62006B6437 /* TCUserOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderDetailViewController.h; sourceTree = "<group>"; };
-		0978DB101DE95D62006B6437 /* TCUserOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderDetailViewController.m; sourceTree = "<group>"; };
 		0978DB121DE96E40006B6437 /* TCOrderAddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCOrderAddressView.h; sourceTree = "<group>"; };
 		0978DB131DE96E40006B6437 /* TCOrderAddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOrderAddressView.m; sourceTree = "<group>"; };
 		098435D71DFD118200B8CA63 /* TCPlaceOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPlaceOrderViewController.h; sourceTree = "<group>"; };
@@ -3189,6 +3178,8 @@
 		7AFEC4921E55446D00B0E754 /* TCGoodsOrderCountDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsOrderCountDownView.m; sourceTree = "<group>"; };
 		7AFEC4941E555D2E00B0E754 /* TCGoodsOrderStatusViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsOrderStatusViewCell.h; sourceTree = "<group>"; };
 		7AFEC4951E555D2E00B0E754 /* TCGoodsOrderStatusViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsOrderStatusViewCell.m; sourceTree = "<group>"; };
+		7AFEC4971E55CF6800B0E754 /* TCUserOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserOrderTableViewCell.h; sourceTree = "<group>"; };
+		7AFEC4981E55CF6800B0E754 /* TCUserOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserOrderTableViewCell.m; sourceTree = "<group>"; };
 		CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-individual.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -3653,14 +3644,6 @@
 		093D03151DE40498007A053C /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				093D03171DE40D71007A053C /* TCUserOrderTabBarController.h */,
-				093D03181DE40D71007A053C /* TCUserOrderTabBarController.m */,
-				093D031A1DE41B4A007A053C /* TCUserOrderViewController.h */,
-				093D031B1DE41B4A007A053C /* TCUserOrderViewController.m */,
-				093D031D1DE41D28007A053C /* TCUserOrderTableViewCell.h */,
-				093D031E1DE41D28007A053C /* TCUserOrderTableViewCell.m */,
-				0978DB0F1DE95D62006B6437 /* TCUserOrderDetailViewController.h */,
-				0978DB101DE95D62006B6437 /* TCUserOrderDetailViewController.m */,
 				7AFEC4641E53F9FB00B0E754 /* TCOrderViewController.h */,
 				7AFEC4651E53F9FB00B0E754 /* TCOrderViewController.m */,
 				7AFEC4851E545D1700B0E754 /* TCOrderDetailViewController.h */,
@@ -3745,6 +3728,8 @@
 				0926267F1E0BA3F300F5A18C /* TCShoppingCartBottom.m */,
 				092626811E0BA44000F5A18C /* TCShoppingCartSelectButton.h */,
 				092626821E0BA44000F5A18C /* TCShoppingCartSelectButton.m */,
+				7AFEC4971E55CF6800B0E754 /* TCUserOrderTableViewCell.h */,
+				7AFEC4981E55CF6800B0E754 /* TCUserOrderTableViewCell.m */,
 			);
 			path = ShoppingCar;
 			sourceTree = "<group>";
@@ -8988,9 +8973,9 @@
 				7A7E94141DF55C31006A47CE /* TCRepairsDetailViewController.m in Sources */,
 				093048BC1DE57E56000FDCBF /* TCGoodDetail.m in Sources */,
 				092CD4221DD9A07C0073A9C1 /* TCAnnotation.m in Sources */,
+				7AFEC4991E55CF6800B0E754 /* TCUserOrderTableViewCell.m in Sources */,
 				09222E0E1DEE72550064C0DF /* TCServiceDetail.m in Sources */,
 				7AB111D11E151502002B7259 /* TCRechargeMethodView.m in Sources */,
-				093D031C1DE41B4A007A053C /* TCUserOrderViewController.m in Sources */,
 				092559121DED791600EFA4FB /* TCListStore.m in Sources */,
 				7A1580311DD1DE8200B8F768 /* TCPhotoPicker.m in Sources */,
 				7A58C5F21E120F0300C55A2C /* TCIDAuthDetailViewCell.m in Sources */,
@@ -9010,7 +8995,6 @@
 				7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */,
 				55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */,
 				7AEB4CF91E03955A00F83A7C /* TCBioEditNickViewCell.m in Sources */,
-				093D031F1DE41D28007A053C /* TCUserOrderTableViewCell.m in Sources */,
 				553DC8471DFFE22F0018783E /* parser-impl.cc in Sources */,
 				092C697D1DF0378600FE2FD8 /* TCUserReserveViewController.m in Sources */,
 				7AFEC4871E545D1700B0E754 /* TCOrderDetailViewController.m in Sources */,
@@ -9048,7 +9032,6 @@
 				7A0E009B1E2DC1DE0028555D /* TCLaunchViewController.m in Sources */,
 				7A1F12901DEC0BDD00A9B58F /* TCCommunitiesViewController.m in Sources */,
 				0929D2951E0A25820099B1BD /* TCSelectSecondaryBtn.m in Sources */,
-				093D03191DE40D71007A053C /* TCUserOrderTabBarController.m in Sources */,
 				7A13EEBB1DF820B600377869 /* TCImagePlayerView.m in Sources */,
 				09222E791DEEC0920064C0DF /* TCOrderWrapper.m in Sources */,
 				09222E2C1DEE98550064C0DF /* TCRestaurantSortView.m in Sources */,
@@ -9100,7 +9083,6 @@
 				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
 				0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */,
 				7AEB4CFC1E03AC5400F83A7C /* TCBioEditGenderViewController.m in Sources */,
-				0978DB111DE95D62006B6437 /* TCUserOrderDetailViewController.m in Sources */,
 				09222E291DEE98550064C0DF /* TCRestaurantLogoView.m in Sources */,
 				7AC3470F1E0171B100E28EC9 /* TCSettingCacheViewCell.m in Sources */,
 				7A1F129E1DEC551400A9B58F /* TCCommunityDetailViewController.m in Sources */,

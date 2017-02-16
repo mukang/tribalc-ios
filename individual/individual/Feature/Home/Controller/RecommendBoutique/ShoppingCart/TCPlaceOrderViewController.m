@@ -16,8 +16,6 @@
 #import "UIImage+Category.h"
 //#import "TCBalancePayView.h"
 #import "TCOrderViewController.h"
-#import "TCUserOrderTabBarController.h"
-#import "TCUserOrderDetailViewController.h"
 #import "TCShippingAddressViewController.h"
 
 #import "TCPaymentView.h"
@@ -391,8 +389,6 @@
     TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:TCGoodsOrderStatusAll];
     vc.fromController = self.fromController;
     [self.navigationController pushViewController:vc animated:YES];
-//    TCUserOrderTabBarController *orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"全部"];
-//    [self.navigationController pushViewController:orderViewController animated:YES];
 }
 
 - (void)didClickCloseButtonInPaymentView:(TCPaymentView *)view {
@@ -400,8 +396,6 @@
     TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:TCGoodsOrderStatusWaitPayment];
     vc.fromController = self.fromController;
     [self.navigationController pushViewController:vc animated:YES];
-//    TCUserOrderTabBarController *orderViewController = [[TCUserOrderTabBarController alloc] initWithTitle:@"待付款"];
-//    [self.navigationController pushViewController:orderViewController animated:YES];
 }
 
 #pragma mark - Action

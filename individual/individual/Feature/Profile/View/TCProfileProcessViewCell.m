@@ -7,7 +7,6 @@
 //
 
 #import "TCProfileProcessViewCell.h"
-#import "TCUserOrderTabBarController.h"
 
 @interface TCProfileProcessViewCell ()
 
