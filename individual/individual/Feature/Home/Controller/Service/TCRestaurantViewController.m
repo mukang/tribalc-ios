@@ -7,6 +7,7 @@
 //
 
 #import "TCRestaurantViewController.h"
+#import "TCServiceListCell.h"
 
 @interface TCRestaurantViewController () {
     TCServiceWrapper *mServiceWrapper;
@@ -21,7 +22,9 @@
     [super viewDidLoad];
     
     [self setupNavigationBar];
+    
     [self loadRestaurantDataWithSortType:nil];
+    
     [self createTableView];
 }
 
@@ -37,7 +40,7 @@
 #pragma mark - Get Data
 - (void)loadRestaurantDataWithSortType:(NSString *)sortType {
     TCBuluoApi *api = [TCBuluoApi api];
-    NSString *categoryStr = [self.title isEqualToString:@"餐饮"] ? @"REPAST" : @"ENTERTAINMENT";
+    NSString *categoryStr = [self.title isEqualToString:@"餐饮"] ? @"REPAST" : @"HAIRDRESSING,FITNESS,ENTERTAINMENT,KEEPHEALTHY";
     [MBProgressHUD showHUD:YES];
     [api fetchServiceWrapper:categoryStr limiSize:20 sortSkip:nil sort:sortType result:^(TCServiceWrapper *serviceWrapper, NSError *error) {
         if (serviceWrapper) {
@@ -83,6 +86,7 @@
     mResaurantTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.size.height - TCRealValue(42)) style:UITableViewStyleGrouped];
     mResaurantTableView.delegate = self;
     mResaurantTableView.dataSource = self;
+    mResaurantTableView.rowHeight = TCRealValue(160);
     [self.view addSubview:mResaurantTableView];
     
     TCRecommendHeader *refreshHeader = [TCRecommendHeader headerWithRefreshingBlock:^{
@@ -101,7 +105,7 @@
 //- (NSString *)getDistanceWithLocation:(NSArray *)locationArr {
 //    NSString *distance;
 //    CLLocationManager *locationManager = [[CLLocationManager alloc] init];
-//    
+//
 //    if (![CLLocationManager locationServicesEnabled]) {
 //        NSLog(@"定位服务当前可能尚未打开，请设置打开！");
 //    }
@@ -118,7 +122,7 @@
 //        //启动跟踪定位
 //        [locationManager startUpdatingLocation];
 //    }
-//    
+//
 //    return distance;
 //}
 
@@ -144,12 +148,17 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
-    TCRestaurantTableViewCell *cell = [TCRestaurantTableViewCell cellWithTableView:tableView];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    TCServiceListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCServiceListCell"];
+    if (cell == nil) {
+        cell = [[TCServiceListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"TCServiceListCell"];
+    }
     TCServices *resInfo = mServiceWrapper.content[indexPath.row];
+    cell.isRes = [self.title isEqualToString:@"餐饮"] ? YES : NO;
     cell.service = resInfo;
+    //    TCRestaurantTableViewCell *cell = [TCRestaurantTableViewCell cellWithTableView:tableView];
+    //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //    TCServices *resInfo = mServiceWrapper.content[indexPath.row];
+    //    cell.service = resInfo;
     return cell;
 }
 
@@ -163,10 +172,10 @@
 
 
 #pragma mark - UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return TCRealValue(160);
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return TCRealValue(160);
+//}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -289,7 +298,7 @@
     if (![typeStr isEqualToString:@""]) {
         [self loadRestaurantDataWithSortType:typeStr];
     }
-
+    
 }
 
 #pragma mark - Status Bar
@@ -310,13 +319,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
