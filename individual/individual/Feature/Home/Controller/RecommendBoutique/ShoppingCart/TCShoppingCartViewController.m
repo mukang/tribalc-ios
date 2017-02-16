@@ -424,6 +424,7 @@
     NSArray *selectArr = [self getShoppingCartArrWithSelect:YES];
     if (selectArr.count != 0) {
         TCPlaceOrderViewController *placeOrderViewController = [[TCPlaceOrderViewController alloc] initWithListShoppingCartArr:selectArr];
+        placeOrderViewController.fromController = self;
         [self.navigationController pushViewController:placeOrderViewController animated:YES];
     } else {
         [MBProgressHUD showHUDWithMessage:@"您还未选择商品"];

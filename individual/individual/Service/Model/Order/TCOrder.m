@@ -15,6 +15,10 @@
     return @{@"itemList": [TCOrderItem class]};
 }
 
++ (NSDictionary *)objectClassInDictionary {
+    return @{@"store": [TCMarkStore class]};
+}
+
 - (void)setStatus:(NSString *)status {
     _status = status;
     if ([status isEqualToString:@"CANCEL"]) {
@@ -53,14 +57,6 @@
         self.express = TCExpressTypePayPostage;
     }
 }
-
-+ (NSDictionary *)objectClassInDictionary {
-    return @{
-             @"store": [TCMarkStore class]
-             };
-}
-
-
 
 
 @end

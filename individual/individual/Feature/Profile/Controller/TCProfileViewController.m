@@ -5,7 +5,7 @@
 //  Created by 穆康 on 2016/10/26.
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
-#import "TCUserOrderTabBarController.h"
+
 #import "TCProfileViewController.h"
 #import "TCLoginViewController.h"
 #import "TCBiographyViewController.h"
@@ -14,12 +14,12 @@
 #import "TCIDAuthDetailViewController.h"
 #import "TCCompanyViewController.h"
 #import "TCCompanyApplyViewController.h"
-#import "TCUserOrderTabBarController.h"
 #import "TCSettingViewController.h"
 #import "TCUserReserveViewController.h"
 #import "TCPropertyManageListController.h"
 #import "TCQRCodeViewController.h"
 #import "TCNavigationController.h"
+#import "TCOrderViewController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
@@ -286,10 +286,9 @@ TCPhotoModeViewDelegate>
     if ([self checkUserNeedLogin]) return;
     
     if (indexPath.section == 0) {
-        TCUserOrderTabBarController *orderMainViewController = [[TCUserOrderTabBarController alloc] init];
-        orderMainViewController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:orderMainViewController animated:YES];
-        
+        TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:TCGoodsOrderStatusAll];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) { // 我的钱包
             TCWalletViewController *vc = [[TCWalletViewController alloc] initWithNibName:@"TCWalletViewController" bundle:[NSBundle mainBundle]];
@@ -512,23 +511,10 @@ TCPhotoModeViewDelegate>
 - (void)touchOrderButton:(UIButton *)button {
     if ([self checkUserNeedLogin]) return;
     
-    NSString *title;
-    switch (button.tag) {
-        case 1:
-            title = @"待付款";
-            break;
-        case 2:
-            title = @"待收货";
-            break;
-        case 3:
-            title = @"已结束";
-            break;
-        default:
-            break;
-    }
-    TCUserOrderTabBarController *userOrderTabBarController = [[TCUserOrderTabBarController alloc] initWithTitle:title];
-    userOrderTabBarController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:userOrderTabBarController animated:YES];
+    TCGoodsOrderStatus goodsOrderStatus = button.tag;
+    TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:goodsOrderStatus];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
