@@ -9,8 +9,6 @@
 #import "TCRechargeMethodsView.h"
 #import "TCRechargeMethodView.h"
 
-#import <Masonry.h>
-
 @interface TCRechargeMethodsView ()
 
 @property (weak, nonatomic) UILabel *methodLabel;

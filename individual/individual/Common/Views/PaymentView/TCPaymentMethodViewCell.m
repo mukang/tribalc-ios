@@ -7,7 +7,6 @@
 //
 
 #import "TCPaymentMethodViewCell.h"
-#import <Masonry.h>
 
 @interface TCPaymentMethodViewCell ()
 

@@ -7,7 +7,6 @@
 //
 
 #import "TCCallVideoViewController.h"
-#import <Masonry.h>
 #import "LinphoneManager.h"
 #import "TCLinphoneUtils.h"
 #import "TCSipAPI.h"

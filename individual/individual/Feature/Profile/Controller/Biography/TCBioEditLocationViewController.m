@@ -10,7 +10,6 @@
 #import "TCCommonInputViewCell.h"
 #import "TCCityPickerView.h"
 #import "TCBuluoApi.h"
-#import <Masonry.h>
 
 @interface TCBioEditLocationViewController () <UITableViewDataSource, UITableViewDelegate, TCCommonInputViewCellDelegate, TCCityPickerViewDelegate>
 

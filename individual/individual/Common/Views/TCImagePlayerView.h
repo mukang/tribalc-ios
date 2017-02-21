@@ -10,6 +10,8 @@
 
 @interface TCImagePlayerView : UIView
 
+@property (nonatomic, getter=isAutoPlayEnabled) BOOL autoPlayEnabled;
+
 - (void)setPictures:(NSArray *)pictures isLocal:(BOOL)isLocal;
 
 - (void)startPlaying;

@@ -614,6 +614,9 @@
 		7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A41C0D71DCC71C0003FC63C /* TCClientRequestError.m */; };
 		7A45146B1DE582DA007D7193 /* bankCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A45146A1DE582DA007D7193 /* bankCard.plist */; };
 		7A4514881DD30C48009F170A /* TCModelImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514871DD30C48009F170A /* TCModelImport.m */; };
+		7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */; };
+		7A48A6AA1E5A93AF006CAB62 /* TCServiceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */; };
+		7A48A6AD1E5ACFDD006CAB62 /* TCPicturesHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6AC1E5ACFDD006CAB62 /* TCPicturesHeaderView.m */; };
 		7A4E05051DEE86D0002371B0 /* TCImageURLSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E05041DEE86D0002371B0 /* TCImageURLSynthesizer.m */; };
 		7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E05071DEED401002371B0 /* TCCommunityVisitViewController.m */; };
 		7A4E050A1DEED401002371B0 /* TCCommunityVisitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4E05081DEED401002371B0 /* TCCommunityVisitViewController.xib */; };
@@ -2936,6 +2939,12 @@
 		7A45146A1DE582DA007D7193 /* bankCard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bankCard.plist; sourceTree = "<group>"; };
 		7A4514861DD30C48009F170A /* TCModelImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCModelImport.h; sourceTree = "<group>"; };
 		7A4514871DD30C48009F170A /* TCModelImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCModelImport.m; sourceTree = "<group>"; };
+		7A48A6A51E5A8EC2006CAB62 /* TCServiceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceDetailViewController.h; sourceTree = "<group>"; };
+		7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceDetailViewController.m; sourceTree = "<group>"; };
+		7A48A6A81E5A93AF006CAB62 /* TCServiceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceHeaderView.h; sourceTree = "<group>"; };
+		7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceHeaderView.m; sourceTree = "<group>"; };
+		7A48A6AB1E5ACFDD006CAB62 /* TCPicturesHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPicturesHeaderView.h; sourceTree = "<group>"; };
+		7A48A6AC1E5ACFDD006CAB62 /* TCPicturesHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPicturesHeaderView.m; sourceTree = "<group>"; };
 		7A4E05031DEE86D0002371B0 /* TCImageURLSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImageURLSynthesizer.h; sourceTree = "<group>"; };
 		7A4E05041DEE86D0002371B0 /* TCImageURLSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCImageURLSynthesizer.m; sourceTree = "<group>"; };
 		7A4E05061DEED401002371B0 /* TCCommunityVisitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityVisitViewController.h; sourceTree = "<group>"; };
@@ -3430,6 +3439,8 @@
 		09222E121DEE98490064C0DF /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				7A48A6A51E5A8EC2006CAB62 /* TCServiceDetailViewController.h */,
+				7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */,
 				09222E2E1DEE99210064C0DF /* Reserve */,
 				09222E131DEE98490064C0DF /* TCRestaurantInfoViewController.h */,
 				09222E141DEE98490064C0DF /* TCRestaurantInfoViewController.m */,
@@ -3444,6 +3455,8 @@
 		09222E1C1DEE98550064C0DF /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				7A48A6A81E5A93AF006CAB62 /* TCServiceHeaderView.h */,
+				7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */,
 				09222E2F1DEE99340064C0DF /* Reserve */,
 				09222E1D1DEE98550064C0DF /* RestaurantInfo */,
 				09222E201DEE98550064C0DF /* ServiceList */,
@@ -3703,12 +3716,12 @@
 				09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */,
 				09AE0F731DED2AC600F307D8 /* TCServices.h */,
 				09AE0F741DED2AC600F307D8 /* TCServices.m */,
+				09222E0C1DEE72550064C0DF /* TCServiceDetail.h */,
+				09222E0D1DEE72550064C0DF /* TCServiceDetail.m */,
 				0925590D1DED78CB00EFA4FB /* TCMarkStore.h */,
 				0925590E1DED78CB00EFA4FB /* TCMarkStore.m */,
 				092559101DED791600EFA4FB /* TCListStore.h */,
 				092559111DED791600EFA4FB /* TCListStore.m */,
-				09222E0C1DEE72550064C0DF /* TCServiceDetail.h */,
-				09222E0D1DEE72550064C0DF /* TCServiceDetail.m */,
 				09222E0F1DEE732D0064C0DF /* TCDetailStore.h */,
 				09222E101DEE732D0064C0DF /* TCDetailStore.m */,
 			);
@@ -7512,6 +7525,8 @@
 				7A1AC8281DF125F40052132F /* TCCommonButton.m */,
 				7A13EEB91DF820B600377869 /* TCImagePlayerView.h */,
 				7A13EEBA1DF820B600377869 /* TCImagePlayerView.m */,
+				7A48A6AB1E5ACFDD006CAB62 /* TCPicturesHeaderView.h */,
+				7A48A6AC1E5ACFDD006CAB62 /* TCPicturesHeaderView.m */,
 				7A1AC8301DF1A32E0052132F /* TCDatePickerView.h */,
 				7A1AC8311DF1A32E0052132F /* TCDatePickerView.m */,
 				7A7E93F21DF502E7006A47CE /* TCGenderPickerView.h */,
@@ -8129,8 +8144,8 @@
 		7AAF236E1DCAE7EB002B81A5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				092CD40A1DD9A07C0073A9C1 /* View */,
 				7AAF236F1DCAE7EB002B81A5 /* Controller */,
+				092CD40A1DD9A07C0073A9C1 /* View */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -8938,6 +8953,7 @@
 				092C69801DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
 				55EC5BE81E28E9FA00C5FB73 /* TCCallInView.m in Sources */,
+				7A48A6AA1E5A93AF006CAB62 /* TCServiceHeaderView.m in Sources */,
 				7AAF23821DCB5C04002B81A5 /* TCUserSession.m in Sources */,
 				0929D2841E0A24F00099B1BD /* TCRecommendFooter.m in Sources */,
 				553DC7E91DFFE22E0018783E /* parser-impl.cc in Sources */,
@@ -9073,6 +9089,7 @@
 				09275FB41DDEF8C800502167 /* TCUserLocationAnnotation.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,
+				7A48A6AD1E5ACFDD006CAB62 /* TCPicturesHeaderView.m in Sources */,
 				7A1A47D51DB76C1900E39207 /* TCArchiveService.m in Sources */,
 				7AFEC48D1E54729100B0E754 /* TCGoodsOrderStoreViewCell.m in Sources */,
 				7A7E94001DF51712006A47CE /* TCToolsViewController.m in Sources */,
@@ -9139,6 +9156,7 @@
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
 				7AFEC4801E54056D00B0E754 /* TCGoodsOrderNoteViewCell.m in Sources */,
 				7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */,
+				7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */,
 				096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */,
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,

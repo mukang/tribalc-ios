@@ -7,7 +7,6 @@
 //
 
 #import "TCPaymentViewController.h"
-#import <Masonry.h>
 
 @interface TCPaymentViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *boardView;

@@ -18,7 +18,6 @@ static NSInteger const plusNum = 2;  // 需要加上的数
 @property (weak, nonatomic) UIScrollView *scrollView;
 @property (weak, nonatomic) UIPageControl *pageControl;
 @property (strong, nonatomic) NSTimer *timer;
-@property (nonatomic, getter=isPlayEnabled) BOOL playEnabled;
 
 @property (strong, nonatomic) NSArray *pictures;
 @end
@@ -54,19 +53,23 @@ static NSInteger const plusNum = 2;  // 需要加上的数
     [self addSubview:pageControl];
     self.pageControl = pageControl;
     
-    self.playEnabled = YES;
+    self.autoPlayEnabled = YES;
 }
 
 
 - (void)setPictures:(NSArray *)pictures isLocal:(BOOL)isLocal{
     _pictures = pictures;
     
+    for (UIView *view in self.scrollView.subviews) {
+        [view removeFromSuperview];
+    }
+    
     NSInteger imageCount = pictures.count;
     
     if (!imageCount) return;
     
     if (imageCount == 1) {
-        self.playEnabled = NO;
+        self.autoPlayEnabled = NO;
         self.scrollView.contentSize = CGSizeZero;
         self.scrollView.bounces = NO;
         self.pageControl.hidden = YES;
@@ -136,7 +139,7 @@ static NSInteger const plusNum = 2;  // 需要加上的数
 }
 
 - (void)startPlaying {
-    if (!self.isPlayEnabled) return;
+    if (!self.isAutoPlayEnabled) return;
     
     if (!self.timer) {
         [self addTimer];
@@ -144,7 +147,7 @@ static NSInteger const plusNum = 2;  // 需要加上的数
 }
 
 - (void)stopPlaying {
-    if (!self.isPlayEnabled) return;
+    if (!self.isAutoPlayEnabled) return;
     
     [self removeTimer];
 }

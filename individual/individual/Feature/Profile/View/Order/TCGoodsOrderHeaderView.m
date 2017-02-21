@@ -8,7 +8,6 @@
 
 #import "TCGoodsOrderHeaderView.h"
 #import "TCOrder.h"
-#import <Masonry.h>
 
 @interface TCGoodsOrderHeaderView ()
 

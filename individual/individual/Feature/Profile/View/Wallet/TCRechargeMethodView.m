@@ -7,7 +7,6 @@
 //
 
 #import "TCRechargeMethodView.h"
-#import <Masonry.h>
 
 @implementation TCRechargeMethodView
 

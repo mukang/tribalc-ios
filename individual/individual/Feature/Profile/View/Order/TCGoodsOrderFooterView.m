@@ -8,7 +8,6 @@
 
 #import "TCGoodsOrderFooterView.h"
 #import "TCOrder.h"
-#import <Masonry.h>
 
 @interface TCGoodsOrderFooterView ()
 

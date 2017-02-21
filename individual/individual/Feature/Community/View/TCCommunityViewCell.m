@@ -12,7 +12,6 @@
 #import "TCImageURLSynthesizer.h"
 #import "UIImage+Category.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import <Masonry.h>
 
 @interface TCCommunityViewCell ()
 

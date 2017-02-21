@@ -7,7 +7,6 @@
 //
 
 #import "TCGoodsOrderStoreViewCell.h"
-#import <Masonry.h>
 
 @implementation TCGoodsOrderStoreViewCell
 

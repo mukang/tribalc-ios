@@ -18,8 +18,6 @@
 #import "UIImage+Category.h"
 #import "TCBuluoApi.h"
 
-#import <Masonry.h>
-
 typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeCommunity = 0,
     TCInputCellTypeDate,

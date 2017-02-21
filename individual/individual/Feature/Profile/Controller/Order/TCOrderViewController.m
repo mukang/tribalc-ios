@@ -20,8 +20,6 @@
 
 #import "TCBuluoApi.h"
 
-#import <Masonry.h>
-
 @interface TCOrderViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) TCTabView *tabView;

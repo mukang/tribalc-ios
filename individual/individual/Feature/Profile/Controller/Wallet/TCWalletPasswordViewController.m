@@ -16,7 +16,6 @@
 #import "TCFunctions.h"
 #import "TCBuluoApi.h"
 #import "UIImage+Category.h"
-#import <Masonry.h>
 
 NSString *const TCWalletPasswordKey = @"TCWalletPasswordKey";
 NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidChangeNotification";

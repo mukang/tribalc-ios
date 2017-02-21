@@ -9,7 +9,6 @@
 #import "TCPaymentMethodView.h"
 #import "TCExtendButton.h"
 #import "TCPaymentMethodViewCell.h"
-#import <Masonry.h>
 
 @interface TCPaymentMethodView () <UITableViewDataSource, UITableViewDelegate>
 

@@ -15,8 +15,6 @@
 #import "TCBuluoApi.h"
 #import "WXApiManager.h"
 
-#import <Masonry.h>
-
 @interface TCRechargeViewController () <TCRechargeMethodsViewDelegate, UITextFieldDelegate, WXApiManagerDelegate>
 
 @property (weak, nonatomic) UILabel *balanceLabel;

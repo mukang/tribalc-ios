@@ -7,7 +7,6 @@
 //
 
 #import "TCCallInViewController.h"
-#import <Masonry.h>
 #import "TCCallVideoViewController.h"
 
 @interface TCCallInViewController ()

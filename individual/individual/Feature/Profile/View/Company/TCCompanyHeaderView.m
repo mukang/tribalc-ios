@@ -10,7 +10,6 @@
 #import "TCCompanyInfo.h"
 #import "TCImageURLSynthesizer.h"
 #import "UIImage+Category.h"
-#import <Masonry.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TCCompanyHeaderView ()

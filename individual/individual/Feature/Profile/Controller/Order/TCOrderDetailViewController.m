@@ -23,7 +23,6 @@
 #import "TCImageURLSynthesizer.h"
 #import "UIImage+Category.h"
 #import <UIImageView+WebCache.h>
-#import <Masonry.h>
 
 @interface TCOrderDetailViewController () <UITableViewDataSource, UITableViewDelegate, TCPaymentViewDelegate>
 
