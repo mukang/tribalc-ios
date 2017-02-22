@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) UIScrollView *scrollView;
 @property (weak, nonatomic) UIView *containerView;
+@property (nonatomic) NSInteger currentIndex;
 
 @end
 
@@ -26,6 +27,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         weakSelf = self;
+        self.currentIndex = -1;
         [self setupSubviews];
     }
     return self;
@@ -106,10 +108,17 @@
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    CGFloat pageWidth = TCScreenWidth;
+    CGFloat offsetX = scrollView.contentOffset.x;
+    NSInteger index = (offsetX + pageWidth * 0.5) / pageWidth;
+    
+    if (self.currentIndex == index) return;
+    self.currentIndex = index;
+    
     if ([self.delegate respondsToSelector:@selector(picturesHeaderView:didScrollToIndex:)]) {
-        NSInteger index = self.scrollView.contentOffset.x / TCScreenWidth;
-        [self.delegate picturesHeaderView:self didScrollToIndex:index];
+        [self.delegate picturesHeaderView:self didScrollToIndex:self.currentIndex];
     }
 }
 

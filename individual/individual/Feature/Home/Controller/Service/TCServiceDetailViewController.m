@@ -67,11 +67,11 @@
     
     UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, navBarH)];
     [navBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    [navBar setTintColor:[UIColor whiteColor]];
     [self.view addSubview:navBar];
     
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
-    navItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+    UIImage *backImage = [[UIImage imageNamed:@"nav_back_black_bg_item"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    navItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backImage
                                                                  style:UIBarButtonItemStylePlain
                                                                 target:self
                                                                 action:@selector(handleClickBackButton:)];
