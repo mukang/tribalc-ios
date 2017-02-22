@@ -7,12 +7,20 @@
 //
 
 #import "TCServiceDetailViewController.h"
+#import "TCReserveOnlineViewController.h"
 
+#import "TCCommonButton.h"
 #import "TCServiceHeaderView.h"
+#import "TCServiceNameViewCell.h"
+#import "TCServiceAddressViewCell.h"
+#import "TCServiceRecommendViewCell.h"
+#import "TCServicePromptViewCell.h"
 
 #import "UIImage+Category.h"
 
 #import "TCBuluoApi.h"
+
+#import <UITableView+FDTemplateLayoutCell.h>
 
 #define headerViewH TCRealValue(270)
 #define navBarH     64.0
@@ -45,6 +53,12 @@
     [self loadNetData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.tableView setContentOffset:CGPointMake(0, -headerViewH) animated:NO];
+}
+
 #pragma mark - Private Methods
 
 - (void)setupNavBar {
@@ -56,7 +70,7 @@
     [navBar setTintColor:[UIColor whiteColor]];
     [self.view addSubview:navBar];
     
-    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"首页"];
+    UINavigationItem *navItem = [[UINavigationItem alloc] init];
     navItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
                                                                  style:UIBarButtonItemStylePlain
                                                                 target:self
@@ -72,13 +86,15 @@
 - (void)setupSubviews {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     tableView.backgroundColor = TCRGBColor(242, 242, 242);
-//    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.contentInset = UIEdgeInsetsMake(headerViewH, 0, 0, 0);
     tableView.dataSource = self;
     tableView.delegate = self;
-    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
-    [tableView setContentOffset:CGPointMake(0, -headerViewH) animated:NO];
-    [self.view addSubview:tableView];
+    [tableView registerClass:[TCServiceNameViewCell class] forCellReuseIdentifier:@"TCServiceNameViewCell"];
+    [tableView registerClass:[TCServiceAddressViewCell class] forCellReuseIdentifier:@"TCServiceAddressViewCell"];
+    [tableView registerClass:[TCServiceRecommendViewCell class] forCellReuseIdentifier:@"TCServiceRecommendViewCell"];
+    [tableView registerClass:[TCServicePromptViewCell class] forCellReuseIdentifier:@"TCServicePromptViewCell"];
+    [self.view insertSubview:tableView belowSubview:self.navBar];
     self.tableView = tableView;
     
     TCServiceHeaderView *headerView = [[TCServiceHeaderView alloc] init];
@@ -86,13 +102,49 @@
     self.headerView = headerView;
     
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(weakSelf.view);
+        make.top.left.right.equalTo(weakSelf.view);
+        make.bottom.equalTo(weakSelf.view);
     }];
     [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.width.equalTo(tableView);
         make.top.equalTo(tableView).offset(-headerViewH);
         make.height.mas_equalTo(headerViewH);
     }];
+}
+
+- (void)loadNetData {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchServiceDetail:self.serviceID result:^(TCServiceDetail *serviceDetail, NSError *error) {
+        if (serviceDetail) {
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf updateUIWithServiceDetail:serviceDetail];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请退出该页面重试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
+        }
+    }];
+}
+
+- (void)updateUIWithServiceDetail:(TCServiceDetail *)serviceDetail {
+    if (serviceDetail.reservable) {
+        TCCommonButton *reserveButton = [TCCommonButton bottomButtonWithTitle:@"立即预约"
+                                                                        color:TCCommonButtonColorBlue
+                                                                       target:self
+                                                                       action:@selector(handleClickReserveButton:)];
+        [self.view addSubview:reserveButton];
+        [reserveButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.bottom.right.equalTo(weakSelf.view);
+            make.height.mas_equalTo(49);
+        }];
+        [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(weakSelf.view).offset(-49);
+        }];
+    }
+    
+    self.navItem.title = serviceDetail.name;
+    self.serviceDetail = serviceDetail;
+    self.headerView.detailStore = serviceDetail.detailStore;
+    [weakSelf.tableView reloadData];
 }
 
 - (void)updateHeaderView {
@@ -108,26 +160,12 @@
     }];
 }
 
-- (void)loadNetData {
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchServiceDetail:self.serviceID result:^(TCServiceDetail *serviceDetail, NSError *error) {
-        if (serviceDetail) {
-            [MBProgressHUD hideHUD:YES];
-            weakSelf.serviceDetail = serviceDetail;
-            weakSelf.headerView.detailStore = serviceDetail.detailStore;
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请退出该页面重试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
-        }
-    }];
-}
-
 #pragma mark - Navigation Bar
 
 - (void)updateNavigationBar {
-    CGFloat maxOffsetY = TCRealValue(270);
+    CGFloat maxOffsetY = headerViewH;
     CGFloat offsetY = self.tableView.contentOffset.y;
-    CGFloat alpha = offsetY / maxOffsetY;
+    CGFloat alpha = (offsetY + headerViewH) / maxOffsetY;
     if (alpha > 1.0) alpha = 1.0;
     if (alpha < 0.0) alpha = 0.0;
     [self updateNavigationBarWithAlpha:alpha];
@@ -152,19 +190,104 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    if (self.serviceDetail) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
-    return cell;
+    UITableViewCell *currentCell;
+    switch (indexPath.row) {
+        case 0:
+        {
+            TCServiceNameViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCServiceNameViewCell" forIndexPath:indexPath];
+            cell.serviceDetail = self.serviceDetail;
+            currentCell = cell;
+        }
+            break;
+        case 1:
+        {
+            TCServiceAddressViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCServiceAddressViewCell" forIndexPath:indexPath];
+            TCDetailStore *detailStore = self.serviceDetail.detailStore;
+            cell.phoneLabel.text = detailStore.phone;
+            cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@", detailStore.province, detailStore.city, detailStore.district, detailStore.address];
+            currentCell = cell;
+        }
+            break;
+        case 2:
+        case 3:
+        {
+            TCServiceRecommendViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCServiceRecommendViewCell" forIndexPath:indexPath];
+            if (indexPath.row == 2) {
+                cell.type = TCServiceRecommendViewCellTypeReason;
+                cell.content = self.serviceDetail.recommendedReason;
+            } else {
+                cell.type = TCServiceRecommendViewCellTypeTopics;
+                cell.content = self.serviceDetail.topics;
+            }
+            currentCell = cell;
+        }
+            break;
+        case 4:
+        {
+            TCServicePromptViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCServicePromptViewCell" forIndexPath:indexPath];
+            cell.detailStore = self.serviceDetail.detailStore;
+            currentCell = cell;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return currentCell;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 0;
+    switch (indexPath.row) {
+        case 0:
+            height = 145;
+            break;
+        case 1:
+            height = 82;
+            break;
+        case 2:
+        {
+            height = [tableView fd_heightForCellWithIdentifier:@"TCServiceRecommendViewCell"
+                                              cacheByIndexPath:indexPath
+                                                 configuration:^(TCServiceRecommendViewCell *cell) {
+                                                     cell.type = TCServiceRecommendViewCellTypeReason;
+                                                     cell.content = self.serviceDetail.recommendedReason;
+                                                 }];
+        }
+            break;
+        case 3:
+        {
+            height = [tableView fd_heightForCellWithIdentifier:@"TCServiceRecommendViewCell"
+                                              cacheByIndexPath:indexPath
+                                                 configuration:^(TCServiceRecommendViewCell *cell) {
+                                                     cell.type = TCServiceRecommendViewCellTypeTopics;
+                                                     cell.content = self.serviceDetail.topics;
+                                                 }];
+        }
+            break;
+        case 4:
+            height = 138.5;
+            break;
+            
+        default:
+            break;
+    }
+    return height;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return CGFLOAT_MIN;
@@ -178,12 +301,18 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self updateHeaderView];
+    [self updateNavigationBar];
 }
 
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)handleClickReserveButton:(UIButton *)sender {
+    TCReserveOnlineViewController *vc = [[TCReserveOnlineViewController alloc] initWithStoreSetMealId:self.serviceDetail.ID];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

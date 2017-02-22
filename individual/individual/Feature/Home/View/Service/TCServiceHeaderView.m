@@ -33,6 +33,8 @@
     return self;
 }
 
+#pragma mark - Private Methods
+
 - (void)setupSubviews {
     TCPicturesHeaderView *picturesView = [[TCPicturesHeaderView alloc] init];
     picturesView.delegate = self;
@@ -43,6 +45,7 @@
     indexView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     indexView.layer.cornerRadius = 7;
     indexView.layer.masksToBounds = YES;
+    indexView.hidden = YES;
     [self addSubview:indexView];
     self.indexView = indexView;
     
@@ -91,16 +94,18 @@
     }];
 }
 
+#pragma mark - Public Methods
+
 - (void)setDetailStore:(TCDetailStore *)detailStore {
     _detailStore = detailStore;
     
     self.picturesView.pictures = detailStore.pictures;
     
-    if (!detailStore.pictures || detailStore.pictures.count == 1) {
-        self.indexView.hidden = YES;
-    } else {
+    if (self.detailStore.pictures.count > 1) {
         self.indexView.hidden = NO;
         self.indexLabel.text = [NSString stringWithFormat:@"1/%zd", detailStore.pictures.count];
+    } else {
+        self.indexView.hidden = YES;
     }
     
     NSURL *logoURL = [TCImageURLSynthesizer synthesizeImageURLWithPath:detailStore.logo];
@@ -111,7 +116,9 @@
 #pragma mark - TCPicturesHeaderViewDelegate
 
 - (void)picturesHeaderView:(TCPicturesHeaderView *)view didScrollToIndex:(NSInteger)index {
-    NSLog(@"-->%zd", index);
+    if (self.detailStore.pictures.count > 1) {
+        self.indexLabel.text = [NSString stringWithFormat:@"%zd/%zd", index+1, self.detailStore.pictures.count];
+    }
 }
 
 @end

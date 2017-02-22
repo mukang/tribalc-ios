@@ -181,14 +181,10 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
     TCServices *service = mServiceWrapper.content[indexPath.row];
     TCServiceDetailViewController *vc = [[TCServiceDetailViewController alloc] init];
     vc.serviceID = service.ID;
     [self.navigationController pushViewController:vc animated:YES];
-//    TCRestaurantInfoViewController *restaurantInfo = [[TCRestaurantInfoViewController alloc]initWithServiceId:service.ID];
-//    [self.navigationController pushViewController:restaurantInfo animated:YES];
-    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return TCRealValue(42);

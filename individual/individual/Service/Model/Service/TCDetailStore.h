@@ -36,7 +36,7 @@
 /** 详细地址 */
 @property (copy, nonatomic) NSString *address;
 /** 菜系类型 */
-@property (copy, nonatomic) NSString *cookingStyle;
+@property (copy, nonatomic) NSArray *cookingStyle;
 
 /** 电话号码 */
 @property (copy, nonatomic) NSString *phone;
