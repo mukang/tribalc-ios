@@ -17,8 +17,10 @@
 #import "TCTabBar.h"
 #import "TCFunctions.h"
 #import <EAIntroView/EAIntroView.h>
+#import <AMapFoundationKit/AMapFoundationKit.h>
 
 static NSString *const kAppVersion = @"kAppVersion";
+static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 
 @interface TCTabBarController ()
 
@@ -40,8 +42,8 @@ static NSString *const kAppVersion = @"kAppVersion";
     [self setValue:[[TCTabBar alloc] init] forKey:@"tabBar"];
     
     [self registerNotifications];
-    
     [self handleShowIntroView];
+    [self setupAMapServices];
 }
 
 - (void)dealloc {
@@ -123,6 +125,13 @@ static NSString *const kAppVersion = @"kAppVersion";
     } else {
         return NO;
     }
+}
+
+#pragma mark - AMapServices
+
+- (void)setupAMapServices {
+    [AMapServices sharedServices].apiKey = AMapApiKey;
+    [AMapServices sharedServices].enableHTTPS = YES;
 }
 
 - (void)didReceiveMemoryWarning {

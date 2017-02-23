@@ -10,9 +10,8 @@
 #import "UIImage+Category.h"
 #import <UIImageView+WebCache.h>
 #import "TCImageURLSynthesizer.h"
-#import "TCServices.h"
+#import "TCService.h"
 #import <CoreLocation/CoreLocation.h>
-#import "NSObject+Distance.h"
 
 @interface TCServiceListCell ()
 
@@ -37,7 +36,7 @@
     return self;
 }
 
-- (void)setService:(TCServices *)service {
+- (void)setService:(TCService *)service {
     if (_service != service) {
         _service = service;
         
@@ -48,15 +47,7 @@
         self.titleL.text = service.name;
         
         NSString *positionStr = service.store.markPlace;
-        
-        if (service.store) {
-            
-            CGFloat distance = [NSObject distanceWithCoordinateArr:service.store.coordinate];
-            
-            if (distance) {
-                positionStr = [NSString stringWithFormat:@"%@ | %.2fkm", positionStr?positionStr:@"", distance];
-            }
-        }
+        positionStr = [NSString stringWithFormat:@"%@ | %.2fkm", positionStr?positionStr:@"", service.store.distance];
         
         if ([positionStr isKindOfClass:[NSString class]]) {
             NSRange range = [positionStr rangeOfString:@"|"];
