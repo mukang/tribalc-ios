@@ -8,7 +8,6 @@
 
 #import "TCGoodSelectView.h"
 #import "TCImageURLSynthesizer.h"
-#import "UIImage+Category.h"
 #import "TCGoodSelectTitleView.h"
 #import "TCBuluoApi.h"
 #import "NSObject+TCModel.h"
@@ -16,6 +15,7 @@
 #import "TCSelectSecondaryBtn.h"
 #import "TCSelectButton.h"
 #import "TCComponent.h"
+#import "UIImage+Category.h"
 
 @implementation TCGoodSelectView {
     TCGoodDetail *goodDetail;
@@ -34,7 +34,7 @@
         self.hidden = YES;
         [self setupBackView];
         [self setupSelectView];
-
+        
     }
     
     return self;
@@ -96,21 +96,21 @@
     UILabel *numberTagLab = [[UILabel alloc] initWithFrame:CGRectMake(TCRealValue(20), TCRealValue(29), TCRealValue(50), TCRealValue(14))];
     numberTagLab.text = @"数量";
     [calculateView addSubview:numberTagLab];
-
+    
     UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, frame.size.width - TCRealValue(40), TCRealValue(0.5))];
     [calculateView addSubview:lineView];
     
     UIButton *addBtn = [self createCaculateBtnWithFrame:CGRectMake(frame.size.width - TCRealValue(20) - TCRealValue(38), TCRealValue(20), TCRealValue(38), TCRealValue(35)) AndText:@"+"];
     [addBtn addTarget:self action:@selector(touchAddBtn:) forControlEvents:UIControlEventTouchUpInside];
     [calculateView addSubview:addBtn];
-
+    
     numberLab = [self createBuyNumberLabelWithText:@"1"];
     [calculateView addSubview:numberLab];
     
     UIButton *subBtn = [self createCaculateBtnWithFrame:CGRectMake(numberLab.x - TCRealValue(38), addBtn.y, TCRealValue(38), TCRealValue(35)) AndText:@"-"];
     [subBtn addTarget:self action:@selector(touchSubBtn:) forControlEvents:UIControlEventTouchUpInside];
     [calculateView addSubview:subBtn];
-
+    
     
     return calculateView;
 }
@@ -161,7 +161,7 @@
         bottomView.y = caculateView.y + caculateView.height;
         [standardScrollView setHeight:bottomView.y + bottomView.height];
     }
-
+    
     
     return standardScrollView;
 }
@@ -291,17 +291,21 @@
 }
 
 - (void)changeGoodDetailWithIndex:(NSString *)index {
+    if (index) {
+        goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:_goodStandard.goodsIndexes[index]];
+        
+        UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCRealValue(115), TCRealValue(115))];
+        NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:goodDetail.mainPicture];
+        [selectTitleView.selectImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
+        selectTitleView.selectPriceLab.text = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", goodDetail.salePrice].floatValue)];
+        
+        [selectTitleView setupRepertory:goodDetail.repertory];
+        
+        [self changeStandardButton:YES];
+    }else {
+        [self changeStandardButton:NO];
+    }
     
-    goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:_goodStandard.goodsIndexes[index]];
-    
-    UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCRealValue(115), TCRealValue(115))];
-    NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:goodDetail.mainPicture];
-    [selectTitleView.selectImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
-    selectTitleView.selectPriceLab.text = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", goodDetail.salePrice].floatValue)];
-    
-    [selectTitleView setupRepertory:goodDetail.repertory];
-    
-    [self changeStandardButton];
 }
 
 - (void)touchClose {
@@ -339,6 +343,8 @@
         TCSelectButton *selectBtn = secondaryBtnView.subviews[i];
         selectBtn.isEffective = YES;
     }
+    
+    [self changeGoodDetailWithIndex:nil];
 }
 
 - (void)touchSecondaryBtnWhenIsSelected:(TCSelectButton *)btn {
@@ -348,6 +354,7 @@
         TCSelectButton *selectBtn = primaryBtnView.subviews[i];
         selectBtn.isEffective = YES;
     }
+    [self changeGoodDetailWithIndex:nil];
 }
 
 - (void)touchPrimaryBtn:(TCSelectPrimaryBtn *)btn {
@@ -391,9 +398,14 @@
     }
 }
 
-- (void)changeStandardButton {
+- (void)changeStandardButton:(BOOL)isHaveDetail; {
     if (_delegate && [_delegate respondsToSelector:@selector(selectView:didChangeStandardButtonWithGoodDetail:)]) {
-        [_delegate selectView:self didChangeStandardButtonWithGoodDetail:goodDetail];
+        if (isHaveDetail) {
+            [_delegate selectView:self didChangeStandardButtonWithGoodDetail:goodDetail];
+        }else {
+            [_delegate selectView:self didChangeStandardButtonWithGoodDetail:nil];
+        }
+        
     }
 }
 
@@ -416,7 +428,7 @@
         [_delegate selectView:self didAddShoppingCartWithGoodDetail:goodDetail Amount:amount];
         [self close];
     }
-
+    
 }
 
 
