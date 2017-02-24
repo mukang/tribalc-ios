@@ -14,6 +14,7 @@
 
 #import "TCNavigationController.h"
 #import "TCRechargeViewController.h"
+#import "TCWalletPasswordViewController.h"
 
 static CGFloat const subviewHeight = 400;
 static CGFloat const duration = 0.25;
@@ -277,9 +278,13 @@ static CGFloat const duration = 0.25;
             weakSelf.walletAccount = walletAccount;
             
             if (!walletAccount.password) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码，请到\n我的钱包>支付密码\n设置" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
-                [alertController addAction:action];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码\n请先设置支付密码，再进行付款" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [weakSelf handleShowPasswordViewController];
+                }];
+                [alertController addAction:cancelAction];
+                [alertController addAction:confirmAction];
                 [sourceController presentViewController:alertController animated:YES completion:nil];
                 return;
             }
@@ -331,6 +336,18 @@ static CGFloat const duration = 0.25;
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [sourceController presentViewController:nav animated:YES completion:nil];
 }
+
+/**
+ 显示设置支付密码页面
+ */
+- (void)handleShowPasswordViewController {
+    TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFirstTimeInputPassword];
+    vc.modalMode = YES;
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
+    [sourceController presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - 付款申请
 
 /**
  提交付款申请

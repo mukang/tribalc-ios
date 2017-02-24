@@ -1402,7 +1402,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         
         [request setValue:storeSetMealId forParam:@"storeSetMealId"];
-        [request setValue:[NSNumber numberWithInteger:appintTime] forParam:@"appintTime"];
+        [request setValue:[NSNumber numberWithInteger:appintTime] forParam:@"appointTime"];
         [request setValue:[NSNumber numberWithInteger:personNum] forParam:@"personNum"];
         [request setValue:linkman forParam:@"linkman"];
         [request setValue:phone forParam:@"phone"];
