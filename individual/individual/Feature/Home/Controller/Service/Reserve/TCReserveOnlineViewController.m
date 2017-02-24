@@ -465,7 +465,7 @@
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"预订失败, %@", reason]];
             }
         }];
-
+        
     } else {
         [MBProgressHUD showHUDWithMessage:@"请填写完整信息"];
     }
@@ -477,11 +477,12 @@
 //    timeArr = [time componentsSeparatedByString:@":"];
 //    
 //    time = [NSString stringWithFormat:@"%@ %@", monthStr, timeStr];
+    time = [NSString stringWithFormat:@"2017年%@", time];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
-    [dateFormat setDateFormat:@"MM月dd日 HH:mm"];
+    dateFormat.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+    [dateFormat setDateFormat:@"yyyy年MM月dd日 EEEE HH:mm"];
     NSDate *date = [dateFormat dateFromString:time];
-    NSInteger timeSp = [date timeIntervalSince1970];
+    NSTimeInterval timeSp = [date timeIntervalSince1970];
     return timeSp * 1000;
 }
 

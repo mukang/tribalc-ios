@@ -159,13 +159,30 @@
 - (UIView *)getStatusViewWithStatus:(NSString *)status {
     UIView *statusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(71))];
     statusView.backgroundColor = TCRGBColor(242, 242, 242);
-    UILabel *statusLab = [TCComponent createLabelWithText:status AndFontSize:TCRealValue(14)];
-    statusLab.frame = CGRectMake(self.view.width / 2 - (statusLab.width + TCRealValue(17)) / 2, TCRealValue(20), statusLab.width, TCRealValue(14));
-    [statusView addSubview:statusLab];
     
-    UIImageView *statusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(statusLab.x - TCRealValue(17), statusLab.y, TCRealValue(14), TCRealValue(14))];
-    statusImgView.image = [UIImage imageNamed:[self getStatusImgName:status]];
-    [statusView addSubview:statusImgView];
+    UIButton *statusButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *image = [UIImage imageNamed:[self getStatusImgName:status]];
+    [statusButton setImage:image forState:UIControlStateNormal];
+    [statusButton setAttributedTitle:[[NSAttributedString alloc] initWithString:status
+                                                                     attributes:@{
+                                                                                  NSFontAttributeName: [UIFont boldSystemFontOfSize:TCRealValue(14)],
+                                                                                  NSForegroundColorAttributeName: TCRGBColor(42, 42, 42)
+                                                                                  }]
+                            forState:UIControlStateNormal];
+    statusButton.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
+    statusButton.userInteractionEnabled = NO;
+    statusButton.size = CGSizeMake(self.view.width - 40, TCRealValue(14));
+    statusButton.centerX = self.view.width * 0.5;
+    statusButton.y = TCRealValue(20);
+    [statusView addSubview:statusButton];
+    
+//    UILabel *statusLab = [TCComponent createLabelWithText:status AndFontSize:TCRealValue(14)];
+//    statusLab.frame = CGRectMake(self.view.width / 2 - (statusLab.width + TCRealValue(17)) / 2, TCRealValue(20), statusLab.width, TCRealValue(14));
+//    [statusView addSubview:statusLab];
+//    
+//    UIImageView *statusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(statusLab.x - TCRealValue(17), statusLab.y, TCRealValue(14), TCRealValue(14))];
+//    statusImgView.image = [UIImage imageNamed:[self getStatusImgName:status]];
+//    [statusView addSubview:statusImgView];
     
     UILabel *statusPromptLab = [TCComponent createLabelWithFrame:CGRectMake(0, statusView.height - TCRealValue(15) - TCRealValue(12), self.view.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:[self getStatusPrompt:status] AndTextColor:TCRGBColor(125, 125, 125)];
     statusPromptLab.textAlignment = NSTextAlignmentCenter;
@@ -218,9 +235,10 @@
     return cell;
 }
 
-- (NSString *)getTimeStr:(long)timeInt {
+- (NSString *)getTimeStr:(NSTimeInterval)timeInt {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInt];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
     [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm"];
     return [dateFormatter stringFromDate:date];
 }
@@ -297,8 +315,9 @@
     if (!timeStamp) {
         return @"";
     }
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp/1000];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
     dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
     NSString *dateString = [dateFormatter stringFromDate:date];
     return dateString;
