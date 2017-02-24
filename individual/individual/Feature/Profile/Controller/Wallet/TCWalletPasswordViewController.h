@@ -6,7 +6,7 @@
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "TCBaseViewController.h"
 
 typedef NS_ENUM(NSInteger, TCWalletPasswordType) {
     TCWalletPasswordTypeFirstTimeInputPassword,      // 首次 - 输入密码
@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, TCWalletPasswordType) {
 extern NSString *const TCWalletPasswordKey;
 extern NSString *const TCWalletPasswordDidChangeNotification;
 
-@interface TCWalletPasswordViewController : UIViewController
+@interface TCWalletPasswordViewController : TCBaseViewController
 
 @property (nonatomic, readonly) TCWalletPasswordType passwordType;
 /** 旧密码 */
@@ -30,6 +30,8 @@ extern NSString *const TCWalletPasswordDidChangeNotification;
 @property (copy, nonatomic) NSString *aNewPassword;
 /** 短信验证码 */
 @property (copy, nonatomic) NSString *messageCode;
+/** 是否是以模态形式展示 */
+@property (nonatomic, getter=isModalMode) BOOL modalMode;
 
 /**
  指定初始化方法

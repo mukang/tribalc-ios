@@ -51,7 +51,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self setupNavBar];
+//    [self setupNavBar];
     [self setupSubviews];
     [self setupConstraints];
 }
@@ -72,12 +72,12 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     }
 }
 
-- (void)setupNavBar {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleClickBackButton:)];
-}
+//- (void)setupNavBar {
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
+//                                                                             style:UIBarButtonItemStylePlain
+//                                                                            target:self
+//                                                                            action:@selector(handleClickBackButton:)];
+//}
 
 - (void)setupSubviews {
     NSString *titleLabelText;
@@ -189,12 +189,6 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     }];
 }
 
-#pragma mark - Status Bar
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 //#pragma mark - MLBPasswordTextFieldDelegate
 //
 //- (void)mlb_passwordTextField:(MLBPasswordTextField *)pwdTextField didFilledPassword:(NSString *)password {
@@ -248,6 +242,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFirstTimeConfirmPassword];
     vc.aNewPassword = self.password;
+    vc.modalMode = self.isModalMode;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -315,8 +310,16 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
             [MBProgressHUD showHUDWithMessage:@"设置成功"];
             [[NSNotificationCenter defaultCenter] postNotificationName:TCWalletPasswordDidChangeNotification object:nil userInfo:@{TCWalletPasswordKey: TCDigestMD5(weakSelf.aNewPassword)}];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                UIViewController *vc = weakSelf.navigationController.childViewControllers[1];
-                [weakSelf.navigationController popToViewController:vc animated:YES];
+                if (weakSelf.isModalMode) {
+                    if (weakSelf.navigationController) {
+                        [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                    }
+                } else {
+                    UIViewController *vc = weakSelf.navigationController.childViewControllers[1];
+                    [weakSelf.navigationController popToViewController:vc animated:YES];
+                }
             });
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -326,7 +329,15 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
 }
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.isModalMode) {
+        if (self.navigationController) {
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
