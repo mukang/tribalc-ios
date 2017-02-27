@@ -473,7 +473,8 @@
 
 
 - (void)touchShopCarBtn:(id)sender {
-    
+    TCShoppingCartViewController *shoppingCartViewController = [[TCShoppingCartViewController alloc] init];
+    [self.navigationController pushViewController:shoppingCartViewController animated:YES];
 }
 
 - (void)touchSelectStandardBtn:(UIButton *)btn {
