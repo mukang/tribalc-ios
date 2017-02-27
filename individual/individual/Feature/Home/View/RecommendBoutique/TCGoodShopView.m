@@ -40,7 +40,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.font = [UIFont systemFontOfSize:TCRealValue(11)];
     label.textColor = TCRGBColor(154, 154, 154);
-    label.text = [NSString stringWithFormat:@"总销量 : %li   电话 : %@", saleNumber, phoneNumer?phoneNumer:@""];
+    label.text = [NSString stringWithFormat:@"总销量 : %zd   电话 : %@", saleNumber, phoneNumer?phoneNumer:@""];
     return label;
 }
 
