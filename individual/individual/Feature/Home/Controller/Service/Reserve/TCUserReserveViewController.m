@@ -7,7 +7,6 @@
 //
 
 #import "TCUserReserveViewController.h"
-#import "TCGetNavigationItem.h"
 #import "TCUserReserveTableViewCell.h"
 #import "TCUserReserveDetailViewController.h"
 #import "TCComponent.h"

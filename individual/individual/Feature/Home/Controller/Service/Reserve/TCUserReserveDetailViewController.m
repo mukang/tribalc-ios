@@ -8,7 +8,6 @@
 
 #import "TCUserReserveDetailViewController.h"
 #import "TCComponent.h"
-#import "TCGetNavigationItem.h"
 #import "TCImageURLSynthesizer.h"
 #import "TCUserReserveTableViewCell.h"
 #import "TCReserveOnlineViewController.h"

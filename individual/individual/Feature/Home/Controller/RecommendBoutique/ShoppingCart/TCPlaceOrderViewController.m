@@ -8,7 +8,6 @@
 
 #import "TCPlaceOrderViewController.h"
 #import "TCBuluoApi.h"
-#import "TCGetNavigationItem.h"
 #import "TCOrderAddressView.h"
 #import "TCClientConfig.h"
 #import "TCUserOrderTableViewCell.h"

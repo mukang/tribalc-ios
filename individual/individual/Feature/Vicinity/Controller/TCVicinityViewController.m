@@ -9,7 +9,7 @@
 #import "TCVicinityViewController.h"
 #import "TCVicinityTitleView.h"
 #import <POP.h>
-#import "TCRestaurantViewController.h"
+#import "TCServiceListViewController.h"
 #import "TCRecommendListViewController.h"
 #import "UIImage+Category.h"
 
@@ -139,17 +139,15 @@
 }
 
 - (void)toRepast {
-    TCRestaurantViewController *resaurant = [[TCRestaurantViewController alloc]init];
-    resaurant.title = @"餐饮";
-    resaurant.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:resaurant animated:YES];
+    TCServiceListViewController *vc = [[TCServiceListViewController alloc] initWithServiceType:TCServiceTypeRepast];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)toEntertainment {
-    TCRestaurantViewController *resaurant = [[TCRestaurantViewController alloc]init];
-    resaurant.title = @"娱乐";
-    resaurant.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:resaurant animated:YES];
+    TCServiceListViewController *vc = [[TCServiceListViewController alloc] initWithServiceType:TCServiceTypeOther];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)startAnimating01 {
