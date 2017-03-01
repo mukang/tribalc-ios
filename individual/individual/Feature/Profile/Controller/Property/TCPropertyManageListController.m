@@ -43,6 +43,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"物业报修";
+//    [self loadDataIsMore:NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self loadDataIsMore:NO];
 }
 
@@ -55,6 +60,10 @@
         if (propertyManageWrapper) {
             [MBProgressHUD hideHUD:YES];
             self.propertymanageWrapper = propertyManageWrapper;
+            
+            if (!propertyManageWrapper.hasMore) {
+                [self.propertyTableView.mj_footer endRefreshingWithNoMoreData];
+            }
             
             if (isMore) {
                 NSMutableArray *mutableArr = [NSMutableArray arrayWithArray:self.currentList];
