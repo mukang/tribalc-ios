@@ -557,6 +557,8 @@
 		7A1A85541E66D64700BB5EDB /* TCServiceSortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A854D1E66D64700BB5EDB /* TCServiceSortView.m */; };
 		7A1A85551E66D64700BB5EDB /* TCServiceTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A854F1E66D64700BB5EDB /* TCServiceTabBar.m */; };
 		7A1A85561E66D64700BB5EDB /* TCServiceTabItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A85511E66D64700BB5EDB /* TCServiceTabItemView.m */; };
+		7A1A857B1E6800B200BB5EDB /* TCServiceFacilitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A85781E6800B200BB5EDB /* TCServiceFacilitiesViewController.m */; };
+		7A1A857C1E6800B200BB5EDB /* TCServiceLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A857A1E6800B200BB5EDB /* TCServiceLocationViewController.m */; };
 		7A1AC8321DF1A32E0052132F /* TCDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1AC8311DF1A32E0052132F /* TCDatePickerView.m */; };
 		7A1F12901DEC0BDD00A9B58F /* TCCommunitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1F128E1DEC0BDD00A9B58F /* TCCommunitiesViewController.m */; };
 		7A1F12911DEC0BDD00A9B58F /* TCCommunitiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A1F128F1DEC0BDD00A9B58F /* TCCommunitiesViewController.xib */; };
@@ -2838,6 +2840,10 @@
 		7A1A854F1E66D64700BB5EDB /* TCServiceTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceTabBar.m; sourceTree = "<group>"; };
 		7A1A85501E66D64700BB5EDB /* TCServiceTabItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceTabItemView.h; sourceTree = "<group>"; };
 		7A1A85511E66D64700BB5EDB /* TCServiceTabItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceTabItemView.m; sourceTree = "<group>"; };
+		7A1A85771E6800B200BB5EDB /* TCServiceFacilitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceFacilitiesViewController.h; sourceTree = "<group>"; };
+		7A1A85781E6800B200BB5EDB /* TCServiceFacilitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceFacilitiesViewController.m; sourceTree = "<group>"; };
+		7A1A85791E6800B200BB5EDB /* TCServiceLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceLocationViewController.h; sourceTree = "<group>"; };
+		7A1A857A1E6800B200BB5EDB /* TCServiceLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceLocationViewController.m; sourceTree = "<group>"; };
 		7A1AC8301DF1A32E0052132F /* TCDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCDatePickerView.h; sourceTree = "<group>"; };
 		7A1AC8311DF1A32E0052132F /* TCDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCDatePickerView.m; sourceTree = "<group>"; };
 		7A1F128D1DEC0BDD00A9B58F /* TCCommunitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunitiesViewController.h; sourceTree = "<group>"; };
@@ -3439,6 +3445,10 @@
 				7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */,
 				7A8352E81E5EE3C4003A8E76 /* TCServiceMapViewController.h */,
 				7A8352E91E5EE3C4003A8E76 /* TCServiceMapViewController.m */,
+				7A1A85791E6800B200BB5EDB /* TCServiceLocationViewController.h */,
+				7A1A857A1E6800B200BB5EDB /* TCServiceLocationViewController.m */,
+				7A1A85771E6800B200BB5EDB /* TCServiceFacilitiesViewController.h */,
+				7A1A85781E6800B200BB5EDB /* TCServiceFacilitiesViewController.m */,
 				09222E2E1DEE99210064C0DF /* Reserve */,
 			);
 			path = Service;
@@ -8987,6 +8997,7 @@
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
 				55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
+				7A1A857C1E6800B200BB5EDB /* TCServiceLocationViewController.m in Sources */,
 				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
 				092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */,
 				7AEB4CF11E03944500F83A7C /* TCCityPickerView.m in Sources */,
@@ -9004,6 +9015,7 @@
 				7A11F7141DE43195005F3EAB /* MLBPasswordRenderView.m in Sources */,
 				7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */,
 				7A41C0D81DCC71C0003FC63C /* TCClientRequestError.m in Sources */,
+				7A1A857B1E6800B200BB5EDB /* TCServiceFacilitiesViewController.m in Sources */,
 				7AB29F341DD46EE600564D93 /* TCUserInfo.m in Sources */,
 				7A58C5EF1E120D5E00C55A2C /* TCIDAuthDetailViewController.m in Sources */,
 				09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */,

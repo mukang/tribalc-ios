@@ -8,6 +8,8 @@
 
 #import "TCServiceDetailViewController.h"
 #import "TCReserveOnlineViewController.h"
+#import "TCServiceLocationViewController.h"
+#import "TCServiceFacilitiesViewController.h"
 
 #import "TCCommonButton.h"
 #import "TCServiceHeaderView.h"
@@ -26,7 +28,7 @@
 #define headerViewH TCRealValue(270)
 #define navBarH     64.0
 
-@interface TCServiceDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface TCServiceDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, TCServiceAddressViewCellDelegate>
 
 @property (weak, nonatomic) UINavigationBar *navBar;
 @property (weak, nonatomic) UINavigationItem *navItem;
@@ -35,6 +37,8 @@
 @property (weak, nonatomic) TCServiceHeaderView *headerView;
 
 @property (strong, nonatomic) TCServiceDetail *serviceDetail;
+
+@property (strong, nonatomic) UIWebView *webView;
 
 @end
 
@@ -231,6 +235,7 @@
             TCDetailStore *detailStore = self.serviceDetail.detailStore;
             cell.phoneLabel.text = detailStore.phone;
             cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@", detailStore.province, detailStore.city, detailStore.district, detailStore.address];
+            cell.delegate = self;
             currentCell = cell;
         }
             break;
@@ -311,11 +316,41 @@
     return CGFLOAT_MIN;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.serviceDetail.detailStore.facilities.count) {
+        TCServiceFacilitiesViewController *vc = [[TCServiceFacilitiesViewController alloc] init];
+        vc.facilities = self.serviceDetail.detailStore.facilities;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self updateHeaderView];
     [self updateNavigationBar];
+}
+
+#pragma mark - TCServiceAddressViewCellDelegate
+
+- (void)didClickPhoneButtonInServiceAddressViewCell:(TCServiceAddressViewCell *)cell {
+    NSString *phone = self.serviceDetail.detailStore.phone;
+    if (!phone) {
+        return;
+    }
+    if (!self.webView) {
+        self.webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    }
+    NSString *URLString = [NSString stringWithFormat:@"tel://%@", phone];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URLString]]];
+}
+
+- (void)didClickAddressButtonInServiceAddressViewCell:(TCServiceAddressViewCell *)cell {
+    if (!self.serviceDetail.detailStore.coordinate) return;
+    
+    TCServiceLocationViewController *vc = [[TCServiceLocationViewController alloc] init];
+    vc.detailStore = self.serviceDetail.detailStore;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Actions
