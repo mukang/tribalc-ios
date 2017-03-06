@@ -570,6 +570,9 @@
 		7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */; };
 		7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */; };
 		7A2874D01E0A2088001E5AE9 /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A47CB1DB720DE00E39207 /* UIView+Category.m */; };
+		7A2A77321E6D4426000CFAA8 /* intro_image_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */; };
+		7A2A77331E6D4426000CFAA8 /* intro_image_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A77301E6D4426000CFAA8 /* intro_image_02.png */; };
+		7A2A77341E6D4426000CFAA8 /* intro_image_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A77311E6D4426000CFAA8 /* intro_image_03.png */; };
 		7A2D2A921E1CF9820067D591 /* TCPaymentDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A871E1CF9820067D591 /* TCPaymentDetailView.m */; };
 		7A2D2A931E1CF9820067D591 /* TCPaymentDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A2D2A881E1CF9820067D591 /* TCPaymentDetailView.xib */; };
 		7A2D2A941E1CF9820067D591 /* TCPaymentMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A8A1E1CF9820067D591 /* TCPaymentMethodView.m */; };
@@ -627,9 +630,6 @@
 		7A68C7FB1DB9F37400027C6E /* TCTestBoss.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68C7FA1DB9F37400027C6E /* TCTestBoss.m */; };
 		7A720AB61E13892200567216 /* downImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7A720AB41E13892200567216 /* downImage.jpg */; };
 		7A720AB71E13892200567216 /* downImage01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7A720AB51E13892200567216 /* downImage01.jpg */; };
-		7A720ABB1E13892E00567216 /* intro_image_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A720AB81E13892E00567216 /* intro_image_01.png */; };
-		7A720ABC1E13892E00567216 /* intro_image_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A720AB91E13892E00567216 /* intro_image_02.png */; };
-		7A720ABD1E13892E00567216 /* intro_image_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A720ABA1E13892E00567216 /* intro_image_03.png */; };
 		7A720ABF1E13BBFD00567216 /* TCUserAgreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7A720ABE1E13BBFD00567216 /* TCUserAgreement.rtf */; };
 		7A720AC21E13BC9A00567216 /* TCUserAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A720AC11E13BC9A00567216 /* TCUserAgreementViewController.m */; };
 		7A74674B1DF90F8300ACD815 /* TCCompanyIntroViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A74674A1DF90F8300ACD815 /* TCCompanyIntroViewCell.m */; };
@@ -2860,6 +2860,9 @@
 		7A21E43C1DD02DEA00EF7427 /* TCProfileProcessViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileProcessViewCell.h; sourceTree = "<group>"; };
 		7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileProcessViewCell.m; sourceTree = "<group>"; };
 		7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileProcessViewCell.xib; sourceTree = "<group>"; };
+		7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_01.png; sourceTree = "<group>"; };
+		7A2A77301E6D4426000CFAA8 /* intro_image_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_02.png; sourceTree = "<group>"; };
+		7A2A77311E6D4426000CFAA8 /* intro_image_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_03.png; sourceTree = "<group>"; };
 		7A2D2A861E1CF9820067D591 /* TCPaymentDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentDetailView.h; sourceTree = "<group>"; };
 		7A2D2A871E1CF9820067D591 /* TCPaymentDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentDetailView.m; sourceTree = "<group>"; };
 		7A2D2A881E1CF9820067D591 /* TCPaymentDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentDetailView.xib; sourceTree = "<group>"; };
@@ -2962,9 +2965,6 @@
 		7A68C7FA1DB9F37400027C6E /* TCTestBoss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTestBoss.m; sourceTree = "<group>"; };
 		7A720AB41E13892200567216 /* downImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = downImage.jpg; sourceTree = "<group>"; };
 		7A720AB51E13892200567216 /* downImage01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = downImage01.jpg; sourceTree = "<group>"; };
-		7A720AB81E13892E00567216 /* intro_image_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_01.png; sourceTree = "<group>"; };
-		7A720AB91E13892E00567216 /* intro_image_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_02.png; sourceTree = "<group>"; };
-		7A720ABA1E13892E00567216 /* intro_image_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_03.png; sourceTree = "<group>"; };
 		7A720ABE1E13BBFD00567216 /* TCUserAgreement.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TCUserAgreement.rtf; sourceTree = "<group>"; };
 		7A720AC01E13BC9A00567216 /* TCUserAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserAgreementViewController.h; sourceTree = "<group>"; };
 		7A720AC11E13BC9A00567216 /* TCUserAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserAgreementViewController.m; sourceTree = "<group>"; };
@@ -7836,9 +7836,9 @@
 				7A0E009C1E2DCDAF0028555D /* HD4.0''.png */,
 				7A0E009D1E2DCDAF0028555D /* HD4.7''.png */,
 				7A0E009E1E2DCDAF0028555D /* HD5.5''.png */,
-				7A720AB81E13892E00567216 /* intro_image_01.png */,
-				7A720AB91E13892E00567216 /* intro_image_02.png */,
-				7A720ABA1E13892E00567216 /* intro_image_03.png */,
+				7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */,
+				7A2A77301E6D4426000CFAA8 /* intro_image_02.png */,
+				7A2A77311E6D4426000CFAA8 /* intro_image_03.png */,
 				7A720AB41E13892200567216 /* downImage.jpg */,
 				7A720AB51E13892200567216 /* downImage01.jpg */,
 			);
@@ -8518,7 +8518,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				553DC8AA1DFFE22F0018783E /* oldphone-mono.wav in Resources */,
-				7A720ABD1E13892E00567216 /* intro_image_03.png in Resources */,
 				553DC87B1DFFE22F0018783E /* speexdsp.pc in Resources */,
 				7AEB4CF21E03944500F83A7C /* TCCityPickerView.xib in Resources */,
 				553DC94E1DFFE2300018783E /* BelcardTargets-release.cmake in Resources */,
@@ -8567,6 +8566,7 @@
 				553DC8441DFFE22E0018783E /* oldphone-mono.wav in Resources */,
 				553DC9621DFFE2310018783E /* rootca.pem in Resources */,
 				553DC8FE1DFFE2300018783E /* Mediastreamer2ConfigVersion.cmake in Resources */,
+				7A2A77341E6D4426000CFAA8 /* intro_image_03.png in Resources */,
 				553DC8931DFFE22F0018783E /* LinphoneConfigVersion.cmake in Resources */,
 				553DC95F1DFFE2310018783E /* LinphoneConfigVersion.cmake in Resources */,
 				553DC8A01DFFE22F0018783E /* hello16000.wav in Resources */,
@@ -8602,7 +8602,6 @@
 				7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */,
 				7AC346DA1E01433E00E28EC9 /* TCWalletBillDetailViewController.xib in Resources */,
 				553DC8DF1DFFE2300018783E /* ortp.pc in Resources */,
-				7A720ABB1E13892E00567216 /* intro_image_01.png in Resources */,
 				553DC9771DFFE2310018783E /* soft_as_snow.mkv in Resources */,
 				553DC9031DFFE2300018783E /* ORTPTargets-release.cmake in Resources */,
 				7A2D2A971E1CF9820067D591 /* TCPaymentPasswordView.xib in Resources */,
@@ -8625,7 +8624,6 @@
 				553DC9111DFFE2300018783E /* soft_as_snow.mkv in Resources */,
 				553DC8901DFFE22F0018783E /* nowebcamCIF.jpg in Resources */,
 				553DC81F1DFFE22E0018783E /* BelleSIPConfigVersion.cmake in Resources */,
-				7A720ABC1E13892E00567216 /* intro_image_02.png in Resources */,
 				553DC8A51DFFE22F0018783E /* house_keeping.mkv in Resources */,
 				553DC8381DFFE22E0018783E /* ORTPTargets.cmake in Resources */,
 				553DC8791DFFE22F0018783E /* ortp.pc in Resources */,
@@ -8672,6 +8670,7 @@
 				553DC8461DFFE22E0018783E /* toy-mono.wav in Resources */,
 				553DC8891DFFE22F0018783E /* BelrTargets-release.cmake in Resources */,
 				553DC8451DFFE22E0018783E /* soft_as_snow.mkv in Resources */,
+				7A2A77321E6D4426000CFAA8 /* intro_image_01.png in Resources */,
 				553DC9081DFFE2300018783E /* incoming_chat.wav in Resources */,
 				553DC8F01DFFE2300018783E /* BelrTargets.cmake in Resources */,
 				553DC8EE1DFFE2300018783E /* BelrConfig.cmake in Resources */,
@@ -8763,6 +8762,7 @@
 				7AC347011E01454100E28EC9 /* TCBankCardAddViewController.xib in Resources */,
 				7AEB4CCB1E03936300F83A7C /* TCShippingAddressEditViewController.xib in Resources */,
 				553DC8401DFFE22E0018783E /* its_a_game.mkv in Resources */,
+				7A2A77331E6D4426000CFAA8 /* intro_image_02.png in Resources */,
 				7AC346ED1E0144B500E28EC9 /* TCWalletBillDetailViewCell.xib in Resources */,
 				553DC89B1DFFE22F0018783E /* ORTPConfig.cmake in Resources */,
 				7A7E94061DF51790006A47CE /* TCRepairsViewController.xib in Resources */,
