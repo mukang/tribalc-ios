@@ -8480,13 +8480,13 @@
 					};
 					7A9CCEE41DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = VYB975MGFB;
+						DevelopmentTeam = 452XNHBVYZ;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 7A9CCECB1DB62011003D90C6;
 					};
 					7A9CCEEF1DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = VYB975MGFB;
+						DevelopmentTeam = 452XNHBVYZ;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 7A9CCECB1DB62011003D90C6;
 					};
@@ -9212,10 +9212,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 广 李 (47NNVGYWKJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: kang mu (3KD2Q352NW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kang mu (3KD2Q352NW)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -9235,7 +9236,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "3c64982e-6335-4976-96ac-ee7b28fc031f";
+				PROVISIONING_PROFILE = "f133662b-ff70-4837-87b8-d0be7088ae31";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -9263,10 +9265,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 广 李 (47NNVGYWKJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 广 李 (47NNVGYWKJ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Tribal Commune Technology Co., Ltd. (452XNHBVYZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Tribal Commune Technology Co., Ltd. (452XNHBVYZ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -9279,7 +9282,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "3c64982e-6335-4976-96ac-ee7b28fc031f";
+				PROVISIONING_PROFILE = "84f30ef8-71f2-4f81-80f4-2d528400d6f6";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -9441,7 +9445,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = VYB975MGFB;
+				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				INFOPLIST_FILE = individualTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.buluogs.individualTests;
@@ -9454,7 +9458,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = VYB975MGFB;
+				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				INFOPLIST_FILE = individualTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.buluogs.individualTests;
@@ -9466,7 +9470,7 @@
 		7A9CCF001DB62011003D90C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = VYB975MGFB;
+				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				INFOPLIST_FILE = individualUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.buluogs.individualUITests;
@@ -9478,7 +9482,7 @@
 		7A9CCF011DB62011003D90C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = VYB975MGFB;
+				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				INFOPLIST_FILE = individualUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.buluogs.individualUITests;
