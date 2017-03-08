@@ -343,13 +343,13 @@
     
     UIWebView *webView = [[UIWebView alloc] init];
     [webView setOrigin:point];
-    NSURL *url = [NSURL URLWithString:urlStr];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    webView.delegate = self;
-    [webView loadRequest:request];
-    [webView sizeToFit];
-    UIScrollView *tempView = (UIScrollView *)[webView.subviews objectAtIndex:0];
-    tempView.scrollEnabled = NO;
+//    NSURL *url = [NSURL URLWithString:urlStr];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    webView.delegate = self;
+//    [webView loadRequest:request];
+//    [webView sizeToFit];
+//    UIScrollView *tempView = (UIScrollView *)[webView.subviews objectAtIndex:0];
+//    tempView.scrollEnabled = NO;
     
     return webView;
 }
