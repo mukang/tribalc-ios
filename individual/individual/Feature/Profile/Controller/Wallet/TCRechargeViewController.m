@@ -249,6 +249,12 @@
  调起微信支付
  */
 - (void)handleArouseWechatRecharge:(TCWechatRechargeInfo *)rechargeInfo {
+    
+    if (![WXApi isWXAppInstalled]) {
+        [MBProgressHUD showHUDWithMessage:@"您未安装微信客户端，无法充值"];
+        return;
+    }
+    
     [WXApiManager sharedManager].delegate = self;
     self.prepayID = rechargeInfo.prepayid;
     PayReq *req = [[PayReq alloc] init];
