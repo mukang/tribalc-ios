@@ -144,7 +144,7 @@
 #pragma mark - UI
 - (void)createEntiretyScrollView {
     mScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -20, self.view.width, self.view.height + 20)];
-    mScrollView.contentSize = CGSizeMake(self.view.width, TCRealValue(1500));
+//    mScrollView.contentSize = CGSizeMake(self.view.width, TCRealValue(1500));
     mScrollView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
     [self.view addSubview:mScrollView];
 }
@@ -162,12 +162,15 @@
     
     UIView *shopView = [[TCGoodShopView alloc] initWithFrame:CGRectMake(0, standardSelectBtn.y + standardSelectBtn.height + TCRealValue(7.5), self.view.width, TCRealValue(64)) AndShopDetail:mGoodDetail];
     [mScrollView addSubview:shopView];
+    mScrollView.contentSize = CGSizeMake(0, shopView.y);
     
     UISegmentedControl *selectGoodInfoSegment = [self createSelectGoodGraphicAndParameterView:CGRectMake(0, shopView.y + shopView.height, self.view.width, TCRealValue(39))];
+    selectGoodInfoSegment.hidden = YES;
     [mScrollView addSubview:selectGoodInfoSegment];
     
     textAndImageView = [self createURLInfoViewWithOrigin:CGPointMake(0, selectGoodInfoSegment.y + selectGoodInfoSegment.height) AndURLStr:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, mGoodDetail.detailURL]];
     [mScrollView addSubview:textAndImageView];
+    textAndImageView.hidden = YES;
     
     UIView *bottomView = [self createBottomViewWithFrame:CGRectMake(0, self.view.height - TCRealValue(49), self.view.width, TCRealValue(49))];
     [self.view addSubview:bottomView];
@@ -365,7 +368,8 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     CGFloat height =  [[webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight"] floatValue];
     [webView setSize:CGSizeMake(self.view.frame.size.width, height)];
-    mScrollView.contentSize = CGSizeMake(self.view.width, webView.y + webView.height);
+//    mScrollView.contentSize = CGSizeMake(self.view.width, webView.y + webView.height);
+    mScrollView.contentSize = CGSizeMake(self.view.width, webView.y);
 }
 
 #pragma mark - UICollectionViewDataSource
