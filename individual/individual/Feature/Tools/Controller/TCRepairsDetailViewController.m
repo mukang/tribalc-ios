@@ -17,6 +17,7 @@
 #import "TCPhotoPicker.h"
 
 #import "TCImageURLSynthesizer.h"
+#import "TCImageCompressHandler.h"
 #import "TCBuluoApi.h"
 
 typedef NS_ENUM(NSInteger, TCInputCellType) {
@@ -414,7 +415,8 @@ TCDatePickerViewDelegate>
         [self handleCommitRepairsInfo];
     } else {
         for (UIImage *image in self.selectedPhotos) {
-            [[TCBuluoApi api] uploadImage:image progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
+            NSData *imageData = [TCImageCompressHandler compressImage:image toByte:100 * 1000];
+            [[TCBuluoApi api] uploadImageData:imageData progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
                 if (success) {
                     uploadCount ++;
                     [pictures addObject:[TCImageURLSynthesizer synthesizeImagePathWithName:uploadInfo.objectKey source:kTCImageSourceOSS]];

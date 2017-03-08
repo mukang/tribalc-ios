@@ -615,6 +615,10 @@
 		7A4E050F1DEEDC69002371B0 /* TCCommonInputViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4E050D1DEEDC69002371B0 /* TCCommonInputViewCell.xib */; };
 		7A510FA01DB8624400471A88 /* NSObject+TCModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A510F9F1DB8624400471A88 /* NSObject+TCModel.m */; };
 		7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5238241DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m */; };
+		7A550F9F1E6EA1CC00BC36A8 /* WXApiRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A550F9E1E6EA1CC00BC36A8 /* WXApiRequestHandler.m */; };
+		7A550FA81E6EAEB300BC36A8 /* SendMessageToWXReq+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A550FA71E6EAEB300BC36A8 /* SendMessageToWXReq+Category.m */; };
+		7A550FAB1E6EAED200BC36A8 /* WXMediaMessage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A550FAA1E6EAED200BC36A8 /* WXMediaMessage+Category.m */; };
+		7A550FAE1E70166D00BC36A8 /* TCImageCompressHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A550FAD1E70166D00BC36A8 /* TCImageCompressHandler.m */; };
 		7A58C5EF1E120D5E00C55A2C /* TCIDAuthDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A58C5EE1E120D5E00C55A2C /* TCIDAuthDetailViewController.m */; };
 		7A58C5F21E120F0300C55A2C /* TCIDAuthDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A58C5F11E120F0300C55A2C /* TCIDAuthDetailViewCell.m */; };
 		7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87711DE297A100E4130B /* TCWalletAccount.m */; };
@@ -2936,6 +2940,14 @@
 		7A510F9F1DB8624400471A88 /* NSObject+TCModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TCModel.m"; sourceTree = "<group>"; };
 		7A5238231DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyEmployeesViewCell.h; sourceTree = "<group>"; };
 		7A5238241DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyEmployeesViewCell.m; sourceTree = "<group>"; };
+		7A550F9D1E6EA1CC00BC36A8 /* WXApiRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiRequestHandler.h; sourceTree = "<group>"; };
+		7A550F9E1E6EA1CC00BC36A8 /* WXApiRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiRequestHandler.m; sourceTree = "<group>"; };
+		7A550FA61E6EAEB300BC36A8 /* SendMessageToWXReq+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SendMessageToWXReq+Category.h"; sourceTree = "<group>"; };
+		7A550FA71E6EAEB300BC36A8 /* SendMessageToWXReq+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SendMessageToWXReq+Category.m"; sourceTree = "<group>"; };
+		7A550FA91E6EAED200BC36A8 /* WXMediaMessage+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WXMediaMessage+Category.h"; sourceTree = "<group>"; };
+		7A550FAA1E6EAED200BC36A8 /* WXMediaMessage+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WXMediaMessage+Category.m"; sourceTree = "<group>"; };
+		7A550FAC1E70166D00BC36A8 /* TCImageCompressHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImageCompressHandler.h; sourceTree = "<group>"; };
+		7A550FAD1E70166D00BC36A8 /* TCImageCompressHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCImageCompressHandler.m; sourceTree = "<group>"; };
 		7A58C5ED1E120D5E00C55A2C /* TCIDAuthDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIDAuthDetailViewController.h; sourceTree = "<group>"; };
 		7A58C5EE1E120D5E00C55A2C /* TCIDAuthDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthDetailViewController.m; sourceTree = "<group>"; };
 		7A58C5F01E120F0300C55A2C /* TCIDAuthDetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIDAuthDetailViewCell.h; sourceTree = "<group>"; };
@@ -7799,12 +7811,18 @@
 		7A64EA751E14EC33008D0C12 /* Wechat */ = {
 			isa = PBXGroup;
 			children = (
-				7A64EA7B1E14EEE0008D0C12 /* WXApiManager.h */,
-				7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */,
 				7A64EA761E14EC55008D0C12 /* libWeChatSDK.a */,
 				7A64EA771E14EC55008D0C12 /* WechatAuthSDK.h */,
 				7A64EA781E14EC55008D0C12 /* WXApi.h */,
 				7A64EA791E14EC55008D0C12 /* WXApiObject.h */,
+				7A64EA7B1E14EEE0008D0C12 /* WXApiManager.h */,
+				7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */,
+				7A550F9D1E6EA1CC00BC36A8 /* WXApiRequestHandler.h */,
+				7A550F9E1E6EA1CC00BC36A8 /* WXApiRequestHandler.m */,
+				7A550FA91E6EAED200BC36A8 /* WXMediaMessage+Category.h */,
+				7A550FAA1E6EAED200BC36A8 /* WXMediaMessage+Category.m */,
+				7A550FA61E6EAEB300BC36A8 /* SendMessageToWXReq+Category.h */,
+				7A550FA71E6EAEB300BC36A8 /* SendMessageToWXReq+Category.m */,
 			);
 			path = Wechat;
 			sourceTree = "<group>";
@@ -8080,6 +8098,8 @@
 				7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */,
 				7A4E05031DEE86D0002371B0 /* TCImageURLSynthesizer.h */,
 				7A4E05041DEE86D0002371B0 /* TCImageURLSynthesizer.m */,
+				7A550FAC1E70166D00BC36A8 /* TCImageCompressHandler.h */,
+				7A550FAD1E70166D00BC36A8 /* TCImageCompressHandler.m */,
 				55F06F1E1E07EC6500A849D7 /* TCScanner.h */,
 				55F06F1F1E07EC6500A849D7 /* TCScanner.m */,
 				7A8352DC1E5EDDC8003A8E76 /* TCConst.h */,
@@ -8895,6 +8915,7 @@
 				092626801E0BA3F300F5A18C /* TCShoppingCartBottom.m in Sources */,
 				55F06F101E07D0AA00A849D7 /* TCQRCodeViewController.m in Sources */,
 				7A133ECC1DDC7AEE00FCAB95 /* TCClientRequest.m in Sources */,
+				7A550FA81E6EAEB300BC36A8 /* SendMessageToWXReq+Category.m in Sources */,
 				55F06F1A1E07E9FA00A849D7 /* TCScannerBorder.m in Sources */,
 				7AFEC4841E54056E00B0E754 /* TCGoodsOrderViewCell.m in Sources */,
 				7AEB4CC31E03936300F83A7C /* TCBioEditPhoneViewController.m in Sources */,
@@ -8939,6 +8960,7 @@
 				7A8352E61E5EE3A6003A8E76 /* TCServiceAnnotation.m in Sources */,
 				7A14FC581DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m in Sources */,
 				7AEB4CEF1E03944500F83A7C /* TCBiographyViewCell.m in Sources */,
+				7A550FAE1E70166D00BC36A8 /* TCImageCompressHandler.m in Sources */,
 				7AFEC4691E53FD7D00B0E754 /* TCTabView.m in Sources */,
 				7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */,
 				7A13EEAD1DF8140A00377869 /* TCCompanyApplyDetailViewController.m in Sources */,
@@ -9091,6 +9113,7 @@
 				7AFEC47E1E54056D00B0E754 /* TCGoodsOrderGoodsViewCell.m in Sources */,
 				7AEB4CC51E03936300F83A7C /* TCBioEditSMSViewController.m in Sources */,
 				7AC3470C1E01717C00E28EC9 /* TCSettingNotificationViewCell.m in Sources */,
+				7A550FAB1E6EAED200BC36A8 /* WXMediaMessage+Category.m in Sources */,
 				7AEB4D021E03E83800F83A7C /* TCBioEditEmotionViewController.m in Sources */,
 				7A2874D01E0A2088001E5AE9 /* UIView+Category.m in Sources */,
 				7AC346D91E01433E00E28EC9 /* TCWalletBillDetailViewController.m in Sources */,
@@ -9105,6 +9128,7 @@
 				7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */,
 				7A13EEA31DF8114E00377869 /* TCCompanyViewController.m in Sources */,
 				7A64EA801E15016E008D0C12 /* TCRechargeViewController.m in Sources */,
+				7A550F9F1E6EA1CC00BC36A8 /* WXApiRequestHandler.m in Sources */,
 				7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */,
 				098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */,
 				7A7E941E1DF57136006A47CE /* TCRepairsPhotosViewCell.m in Sources */,

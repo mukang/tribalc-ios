@@ -27,6 +27,7 @@
 #import "TCPhotoModeView.h"
 
 #import "TCImageURLSynthesizer.h"
+#import "TCImageCompressHandler.h"
 #import "TCPhotoPicker.h"
 #import "TCBuluoApi.h"
 
@@ -389,7 +390,8 @@ TCPhotoModeViewDelegate>
     }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] uploadImage:coverImage progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
+    NSData *imageData = [TCImageCompressHandler compressImage:coverImage toByte:100 * 1000];
+    [[TCBuluoApi api] uploadImageData:imageData progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
         if (success) {
             [weakSelf changeUserCoverWithName:uploadInfo.objectKey];
         } else {

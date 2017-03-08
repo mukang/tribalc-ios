@@ -436,11 +436,11 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
 /**
  上传图片资源
 
- @param image 要上传的图片
+ @param imageData 要上传的图片数据
  @param progress 上传进度
  @param resultBlock 结果回调，success为NO时表示上传失败，失败原因见error的code和userInfo
  */
-- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, TCUploadInfo *uploadInfo, NSError *error))resultBlock;
+- (void)uploadImageData:(NSData *)imageData progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, TCUploadInfo *uploadInfo, NSError *error))resultBlock;
 
 #pragma mark - 社区资源
 

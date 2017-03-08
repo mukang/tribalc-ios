@@ -63,6 +63,8 @@ static NSString *const kBuglyAppID = @"900059019";
     return YES;
 }
 
+#pragma mark - 定位相关
+
 - (void)startLocationAction
 {
     _locationManager = [[CLLocationManager alloc] init];
@@ -110,6 +112,7 @@ static NSString *const kBuglyAppID = @"900059019";
     
 }
 
+#pragma mark - SIP相关
 
 - (void)toCallInView {
     UINavigationController *nav = [(UITabBarController *)self.window.rootViewController selectedViewController];
@@ -117,6 +120,8 @@ static NSString *const kBuglyAppID = @"900059019";
     callInVC.hidesBottomBarWhenPushed = YES;
     [nav pushViewController:callInVC animated:YES];
 }
+
+#pragma mark - 启动视窗相关
 
 /** 显示启动视窗 */
 - (void)showLaunchWindow {
@@ -128,6 +133,7 @@ static NSString *const kBuglyAppID = @"900059019";
     launchViewController.launchWindow = self.launchWindow;
 }
 
+#pragma mark - 其它代理方法
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -155,7 +161,7 @@ static NSString *const kBuglyAppID = @"900059019";
     [instance becomeActive];
     
     LinphoneCall *call = linphone_core_get_current_call(LC);
-
+    
     if (call) {
         if (call == instance->currentCallContextBeforeGoingBackground.call) {
             const LinphoneCallParams *params = linphone_call_get_current_params(call);

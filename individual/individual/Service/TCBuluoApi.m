@@ -1525,8 +1525,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 #pragma mark - 上传图片资源
 
-- (void)uploadImage:(UIImage *)image progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, TCUploadInfo *, NSError *))resultBlock {
-    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+- (void)uploadImageData:(NSData *)imageData progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, TCUploadInfo *, NSError *))resultBlock {
     [self authorizeImageData:imageData result:^(TCUploadInfo *uploadInfo, NSError *error) {
         if (error) {
             if (resultBlock) {

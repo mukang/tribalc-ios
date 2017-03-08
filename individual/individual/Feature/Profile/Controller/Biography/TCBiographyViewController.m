@@ -24,6 +24,7 @@
 
 #import "TCBuluoApi.h"
 #import "TCPhotoPicker.h"
+#import "TCImageCompressHandler.h"
 #import "TCImageURLSynthesizer.h"
 
 #import <UIImageView+WebCache.h>
@@ -265,7 +266,8 @@
     }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] uploadImage:avatarImage progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
+    NSData *imageData = [TCImageCompressHandler compressImage:avatarImage toByte:100 * 1000];
+    [[TCBuluoApi api] uploadImageData:imageData progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
         if (success) {
             [weakSelf handleUserAvatarChangedWithName:uploadInfo.objectKey];
         } else {
