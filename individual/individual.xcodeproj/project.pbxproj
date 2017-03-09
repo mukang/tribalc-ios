@@ -581,6 +581,8 @@
 		7A2D2A961E1CF9820067D591 /* TCPaymentPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A8E1E1CF9820067D591 /* TCPaymentPasswordView.m */; };
 		7A2D2A971E1CF9820067D591 /* TCPaymentPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A2D2A8F1E1CF9820067D591 /* TCPaymentPasswordView.xib */; };
 		7A2D2A981E1CF9820067D591 /* TCPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A911E1CF9820067D591 /* TCPaymentView.m */; };
+		7A2F5C2C1E71536E00174EB1 /* TCLockQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */; };
+		7A2F5C2F1E716DCF00174EB1 /* TCLockQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */; };
 		7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3321971E0D07E1003049DB /* TCSettingViewController.m */; };
 		7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */; };
 		7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219D1E0D3AA9003049DB /* TCVicinityTitleView.m */; };
@@ -2882,6 +2884,10 @@
 		7A2D2A8F1E1CF9820067D591 /* TCPaymentPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPaymentPasswordView.xib; sourceTree = "<group>"; };
 		7A2D2A901E1CF9820067D591 /* TCPaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentView.h; sourceTree = "<group>"; };
 		7A2D2A911E1CF9820067D591 /* TCPaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentView.m; sourceTree = "<group>"; };
+		7A2F5C2A1E71536E00174EB1 /* TCLockQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockQRCodeViewController.h; sourceTree = "<group>"; };
+		7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockQRCodeViewController.m; sourceTree = "<group>"; };
+		7A2F5C2D1E716DCF00174EB1 /* TCLockQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCLockQRCodeView.h; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeView.h; sourceTree = SOURCE_ROOT; };
+		7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCLockQRCodeView.m; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeView.m; sourceTree = SOURCE_ROOT; };
 		7A3321961E0D07E1003049DB /* TCSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSettingViewController.h; sourceTree = "<group>"; };
 		7A3321971E0D07E1003049DB /* TCSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSettingViewController.m; sourceTree = "<group>"; };
 		7A3321991E0D0945003049DB /* TCSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSuggestionViewController.h; sourceTree = "<group>"; };
@@ -3770,6 +3776,8 @@
 				5513065C1E714045004DF32F /* TCOpenDoorController.m */,
 				551306581E714008004DF32F /* TCLocksAndVisitorsViewController.h */,
 				551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */,
+				7A2F5C2A1E71536E00174EB1 /* TCLockQRCodeViewController.h */,
+				7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */,
 			);
 			path = OpenDoor;
 			sourceTree = "<group>";
@@ -7447,6 +7455,8 @@
 		55BB9EB01E714DE300B0FD94 /* OpenDoor */ = {
 			isa = PBXGroup;
 			children = (
+				7A2F5C2D1E716DCF00174EB1 /* TCLockQRCodeView.h */,
+				7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */,
 			);
 			path = OpenDoor;
 			sourceTree = "<group>";
@@ -9104,6 +9114,7 @@
 				092626831E0BA44000F5A18C /* TCShoppingCartSelectButton.m in Sources */,
 				09222E111DEE732D0064C0DF /* TCDetailStore.m in Sources */,
 				7AEB4CCA1E03936300F83A7C /* TCShippingAddressEditViewController.m in Sources */,
+				7A2F5C2F1E716DCF00174EB1 /* TCLockQRCodeView.m in Sources */,
 				7A64EA7D1E14EEE0008D0C12 /* WXApiManager.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,
@@ -9138,6 +9149,7 @@
 				7AC3470C1E01717C00E28EC9 /* TCSettingNotificationViewCell.m in Sources */,
 				7A550FAB1E6EAED200BC36A8 /* WXMediaMessage+Category.m in Sources */,
 				7AEB4D021E03E83800F83A7C /* TCBioEditEmotionViewController.m in Sources */,
+				7A2F5C2C1E71536E00174EB1 /* TCLockQRCodeViewController.m in Sources */,
 				7A2874D01E0A2088001E5AE9 /* UIView+Category.m in Sources */,
 				7AC346D91E01433E00E28EC9 /* TCWalletBillDetailViewController.m in Sources */,
 				7AEB4CF51E03944500F83A7C /* TCShippingAddressViewCell.m in Sources */,

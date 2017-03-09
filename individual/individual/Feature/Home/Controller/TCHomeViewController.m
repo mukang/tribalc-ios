@@ -11,7 +11,7 @@
 #import "TCRepairsViewController.h"
 #import "TCNavigationController.h"
 #import "TCServiceListViewController.h"
-
+#import "TCLockQRCodeViewController.h"
 #import "TCGoodSelectView.h"
 
 
@@ -504,11 +504,14 @@
 
 
 - (void)touchScanPayBtn:(UIButton *)button {
-//    NSLog(@"点击扫码支付");
-//    [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
+    
     TCQRCodeViewController *qrVC = [[TCQRCodeViewController alloc] init];
     qrVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:qrVC animated:YES];
+    
+//    TCLockQRCodeViewController *vc = [[TCLockQRCodeViewController alloc] init];
+//    vc.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)touchOfficeReserveBtn:(UIButton *)button {
