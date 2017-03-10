@@ -531,4 +531,19 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
  */
 - (void)fetchWechatRechargeResultWithPrepayID:(NSString *)prepayID result:(void(^)(BOOL success, NSError *error))resultBlock;
 
+
+/**
+ 获取自己的锁列表
+
+ @param resultBlock 回调
+ */
+- (void)fetchMyLockListResult:(void (^)(NSArray *lockList, NSError *error))resultBlock;
+
+
+/**
+ 获取激活的锁列表
+
+ @param resultBlock 回调
+ */
+- (void)fetchMyLockKeysResult:(void (^)(NSArray *lockKeysList, NSError *error))resultBlock;
 @end

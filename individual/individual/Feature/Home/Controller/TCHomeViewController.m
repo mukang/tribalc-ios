@@ -22,8 +22,9 @@
 #import "TCBlurImageView.h"
 #import <MBProgressHUD.h>
 #import "TCQRCodeViewController.h"
-
 #import "TCImagePlayerView.h"
+
+#import "TCLocksAndVisitorsViewController.h"
 
 #import "UIImage+Category.h"
 
@@ -104,12 +105,14 @@
     propertyView.backgroundColor = [UIColor whiteColor];
     UIButton *unclockBtn = [self getPropertyButtonWithFrame:CGRectMake((TCScreenWidth - (TCRealValue(50 * 4))) / 5, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_unlock" AndTitle:@"社区开门" AndAction:@selector(touchCommunityUnlockBtn:)];
     [propertyView addSubview:unclockBtn];
-    UIButton *repairBtn = [self getPropertyButtonWithFrame:CGRectMake(unclockBtn.x * 2 + unclockBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_ estate_repair" AndTitle:@"物业报修" AndAction:@selector(touchEstateRepair:)];
-    [propertyView addSubview:repairBtn];
-    UIButton *scanPayBtn = [self getPropertyButtonWithFrame:CGRectMake(repairBtn.x + unclockBtn.x + repairBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_scan_pay" AndTitle:@"扫码支付" AndAction:@selector(touchScanPayBtn:)];
-    [propertyView addSubview:scanPayBtn];
-    UIButton *officeReserveBtn = [self getPropertyButtonWithFrame:CGRectMake(scanPayBtn.x + unclockBtn.x + scanPayBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_office_reservation" AndTitle:@"办公预订" AndAction:@selector(btnClickUnifyTips)];
+    
+    UIButton *officeReserveBtn = [self getPropertyButtonWithFrame:CGRectMake(unclockBtn.x * 2 + unclockBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_office_reservation" AndTitle:@"访客授权" AndAction:@selector(touchOfficeReserveBtn:)];
     [propertyView addSubview:officeReserveBtn];
+    UIButton *repairBtn = [self getPropertyButtonWithFrame:CGRectMake(unclockBtn.x + officeReserveBtn.x + officeReserveBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_ estate_repair" AndTitle:@"物业报修" AndAction:@selector(touchEstateRepair:)];
+    [propertyView addSubview:repairBtn];
+    UIButton *scanPayBtn = [self getPropertyButtonWithFrame:CGRectMake(unclockBtn.x + repairBtn.x + repairBtn.width, TCRealValue(11), TCRealValue(50), TCRealValue(64)) AndImgName:@"home_scan_pay" AndTitle:@"扫码支付" AndAction:@selector(touchScanPayBtn:)];
+    [propertyView addSubview:scanPayBtn];
+    
     return propertyView;
 }
 
@@ -475,13 +478,25 @@
 #pragma mark - click
 - (void)touchCommunityUnlockBtn:(UIButton *)button {
     
-    if ([self checkUserNeedLogin]) return;
+//    if ([self checkUserNeedLogin]) return;
+//    
+//    if (![[TCBuluoApi api] currentUserSession].userInfo.companyID) {
+//        [MBProgressHUD showHUDWithMessage:@"绑定公司成功后才可使用开门功能"];
+//        return;
+//    }
     
-    if (![[TCBuluoApi api] currentUserSession].userInfo.companyID) {
-        [MBProgressHUD showHUDWithMessage:@"绑定公司成功后才可使用开门功能"];
-        return;
-    }
+//    [self showOpenDoorView];
+    [self toLocksOrVisitorsView:TCLocks];
     
+}
+
+- (void)toLocksOrVisitorsView:(TCLocksOrVisitors)lockOrVisitor {
+    TCLocksAndVisitorsViewController *lockAndVisitorVC = [[TCLocksAndVisitorsViewController alloc] initWithType:lockOrVisitor];
+    lockAndVisitorVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:lockAndVisitorVC animated:YES];
+}
+
+- (void)showOpenDoorView {
     [_cycleImageView stopPlaying];   //计时器停止
     @WeakObj(self)
     if (_blurImageView == nil) {
@@ -516,6 +531,7 @@
 
 - (void)touchOfficeReserveBtn:(UIButton *)button {
     NSLog(@"点击办公预订");
+    [self toLocksOrVisitorsView:TCVisitors];
 }
 
 - (void)touchShoppingBtn:(id)sender {
