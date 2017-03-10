@@ -624,6 +624,7 @@
 		7A550FAE1E70166D00BC36A8 /* TCImageCompressHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A550FAD1E70166D00BC36A8 /* TCImageCompressHandler.m */; };
 		7A58C5EF1E120D5E00C55A2C /* TCIDAuthDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A58C5EE1E120D5E00C55A2C /* TCIDAuthDetailViewController.m */; };
 		7A58C5F21E120F0300C55A2C /* TCIDAuthDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A58C5F11E120F0300C55A2C /* TCIDAuthDetailViewCell.m */; };
+		7A5DC69D1E7250C9006C161A /* TCLockQRCodeTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5DC69C1E7250C9006C161A /* TCLockQRCodeTitleView.m */; };
 		7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87711DE297A100E4130B /* TCWalletAccount.m */; };
 		7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F877E1DE2EEB100E4130B /* TCWalletBill.m */; };
 		7A5F87821DE2EFF500E4130B /* TCWalletBillWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87811DE2EFF500E4130B /* TCWalletBillWrapper.m */; };
@@ -2961,6 +2962,8 @@
 		7A58C5EE1E120D5E00C55A2C /* TCIDAuthDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthDetailViewController.m; sourceTree = "<group>"; };
 		7A58C5F01E120F0300C55A2C /* TCIDAuthDetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIDAuthDetailViewCell.h; sourceTree = "<group>"; };
 		7A58C5F11E120F0300C55A2C /* TCIDAuthDetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthDetailViewCell.m; sourceTree = "<group>"; };
+		7A5DC69B1E7250C9006C161A /* TCLockQRCodeTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCLockQRCodeTitleView.h; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeTitleView.h; sourceTree = SOURCE_ROOT; };
+		7A5DC69C1E7250C9006C161A /* TCLockQRCodeTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCLockQRCodeTitleView.m; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeTitleView.m; sourceTree = SOURCE_ROOT; };
 		7A5F87701DE297A100E4130B /* TCWalletAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletAccount.h; sourceTree = "<group>"; };
 		7A5F87711DE297A100E4130B /* TCWalletAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletAccount.m; sourceTree = "<group>"; };
 		7A5F877D1DE2EEB100E4130B /* TCWalletBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletBill.h; sourceTree = "<group>"; };
@@ -7457,6 +7460,8 @@
 			children = (
 				7A2F5C2D1E716DCF00174EB1 /* TCLockQRCodeView.h */,
 				7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */,
+				7A5DC69B1E7250C9006C161A /* TCLockQRCodeTitleView.h */,
+				7A5DC69C1E7250C9006C161A /* TCLockQRCodeTitleView.m */,
 			);
 			path = OpenDoor;
 			sourceTree = "<group>";
@@ -9185,6 +9190,7 @@
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
 				7A1A85471E66D61000BB5EDB /* TCServiceListViewController.m in Sources */,
+				7A5DC69D1E7250C9006C161A /* TCLockQRCodeTitleView.m in Sources */,
 				7A4E05051DEE86D0002371B0 /* TCImageURLSynthesizer.m in Sources */,
 				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.mm in Sources */,

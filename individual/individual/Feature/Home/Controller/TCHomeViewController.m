@@ -509,7 +509,7 @@
     qrVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:qrVC animated:YES];
     
-//    TCLockQRCodeViewController *vc = [[TCLockQRCodeViewController alloc] init];
+//    TCLockQRCodeViewController *vc = [[TCLockQRCodeViewController alloc] initWithLockQRCodeType:TCLockQRCodeTypeOneself];
 //    vc.hidesBottomBarWhenPushed = YES;
 //    [self.navigationController pushViewController:vc animated:YES];
 }
