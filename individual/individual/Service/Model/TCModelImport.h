@@ -73,6 +73,10 @@
 /********** 第三方支付 **********/
 #import "TCWechatRechargeInfo.h"
 
+/*********** 门锁 ***********/
+#import "TCLockKey.h"
+#import "TCLockEquip.h"
+#import "TCLockWrapper.h"
 
 @interface TCModelImport : NSObject
 

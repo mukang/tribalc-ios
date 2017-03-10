@@ -29,6 +29,12 @@
     return self;
 }
 
+- (void)setName:(NSString *)name {
+    if (_name != name) {
+        _name = name;
+        self.titleLabel.text = name;
+    }
+}
 
 - (void)setUpViews {
     self.backgroundColor = [UIColor whiteColor];

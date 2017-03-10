@@ -494,6 +494,9 @@
 		559D88261E0D17AF00982697 /* TCAboutUSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559D88251E0D17AF00982697 /* TCAboutUSViewController.m */; };
 		55BB9EB31E728C7200B0FD94 /* TCVisitorLocksCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EB21E728C7200B0FD94 /* TCVisitorLocksCell.m */; };
 		55BB9EB61E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EB51E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.m */; };
+		55BB9EBA1E72AF5400B0FD94 /* TCLockEquip.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EB91E72AF5400B0FD94 /* TCLockEquip.m */; };
+		55BB9EBD1E72AF7800B0FD94 /* TCLockKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EBC1E72AF7800B0FD94 /* TCLockKey.m */; };
+		55BB9EC01E72B49100B0FD94 /* TCLockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EBF1E72B49100B0FD94 /* TCLockWrapper.m */; };
 		55EC5BE11E2492F500C5FB73 /* TCCallInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC5BE01E2492F500C5FB73 /* TCCallInViewController.m */; };
 		55EC5BE41E24D7E700C5FB73 /* TCCallVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC5BE31E24D7E700C5FB73 /* TCCallVideoViewController.m */; };
 		55EC5BE81E28E9FA00C5FB73 /* TCCallInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC5BE71E28E9FA00C5FB73 /* TCCallInView.m */; };
@@ -2733,6 +2736,12 @@
 		55BB9EB21E728C7200B0FD94 /* TCVisitorLocksCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVisitorLocksCell.m; sourceTree = "<group>"; };
 		55BB9EB41E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockOrVisitorSectionHeader.h; sourceTree = "<group>"; };
 		55BB9EB51E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockOrVisitorSectionHeader.m; sourceTree = "<group>"; };
+		55BB9EB81E72AF5400B0FD94 /* TCLockEquip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockEquip.h; sourceTree = "<group>"; };
+		55BB9EB91E72AF5400B0FD94 /* TCLockEquip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockEquip.m; sourceTree = "<group>"; };
+		55BB9EBB1E72AF7800B0FD94 /* TCLockKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockKey.h; sourceTree = "<group>"; };
+		55BB9EBC1E72AF7800B0FD94 /* TCLockKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockKey.m; sourceTree = "<group>"; };
+		55BB9EBE1E72B49100B0FD94 /* TCLockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockWrapper.h; sourceTree = "<group>"; };
+		55BB9EBF1E72B49100B0FD94 /* TCLockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockWrapper.m; sourceTree = "<group>"; };
 		55EC5BDF1E2492F500C5FB73 /* TCCallInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCallInViewController.h; sourceTree = "<group>"; };
 		55EC5BE01E2492F500C5FB73 /* TCCallInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCallInViewController.m; sourceTree = "<group>"; };
 		55EC5BE21E24D7E700C5FB73 /* TCCallVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCallVideoViewController.h; sourceTree = "<group>"; };
@@ -7471,6 +7480,19 @@
 			path = OpenDoor;
 			sourceTree = "<group>";
 		};
+		55BB9EB71E72AF2D00B0FD94 /* OpenDoor */ = {
+			isa = PBXGroup;
+			children = (
+				55BB9EB81E72AF5400B0FD94 /* TCLockEquip.h */,
+				55BB9EB91E72AF5400B0FD94 /* TCLockEquip.m */,
+				55BB9EBB1E72AF7800B0FD94 /* TCLockKey.h */,
+				55BB9EBC1E72AF7800B0FD94 /* TCLockKey.m */,
+				55BB9EBE1E72B49100B0FD94 /* TCLockWrapper.h */,
+				55BB9EBF1E72B49100B0FD94 /* TCLockWrapper.m */,
+			);
+			path = OpenDoor;
+			sourceTree = "<group>";
+		};
 		55F06EEA1E03902000A849D7 /* Property */ = {
 			isa = PBXGroup;
 			children = (
@@ -8200,6 +8222,7 @@
 			children = (
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
+				55BB9EB71E72AF2D00B0FD94 /* OpenDoor */,
 				7A408FE31E1650F200761F4A /* Recharge */,
 				55F06EEF1E0396C500A849D7 /* Property */,
 				7A74674C1DF947CE00ACD815 /* Company */,
@@ -9061,6 +9084,7 @@
 				7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */,
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
 				55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */,
+				55BB9EBD1E72AF7800B0FD94 /* TCLockKey.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
 				7A1A857C1E6800B200BB5EDB /* TCServiceLocationViewController.m in Sources */,
 				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
@@ -9140,6 +9164,7 @@
 				7A7E93F41DF502E7006A47CE /* TCGenderPickerView.m in Sources */,
 				7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */,
 				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
+				55BB9EC01E72B49100B0FD94 /* TCLockWrapper.m in Sources */,
 				0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */,
 				7AEB4CFC1E03AC5400F83A7C /* TCBioEditGenderViewController.m in Sources */,
 				7A8352841E5C2D8A003A8E76 /* TCServicePromptViewCell.m in Sources */,
@@ -9190,6 +9215,7 @@
 				7AEB4CC21E03936300F83A7C /* TCBioEditNickViewController.m in Sources */,
 				7ACA4FE31DD5B8C2006634E8 /* TCUserPhoneInfo.m in Sources */,
 				7A1A47CF1DB7213C00E39207 /* UIImage+Category.m in Sources */,
+				55BB9EBA1E72AF5400B0FD94 /* TCLockEquip.m in Sources */,
 				7AFEC4801E54056D00B0E754 /* TCGoodsOrderNoteViewCell.m in Sources */,
 				7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */,
 				7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */,

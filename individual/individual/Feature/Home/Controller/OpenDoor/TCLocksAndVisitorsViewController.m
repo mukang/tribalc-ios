@@ -11,6 +11,7 @@
 #import "UIImage+Category.h"
 #import "TCVisitorLocksCell.h"
 #import "TCLockOrVisitorSectionHeader.h"
+#import "TCBuluoApi.h"
 
 #define kTCLocksCellID @"TCLocksCell"
 #define kTCVisitorLockCellID @"TCVisitorLocksCell"
@@ -29,6 +30,8 @@
 @property (strong, nonatomic) UIImageView *btnImageView;
 
 @property (strong, nonatomic) UILabel *btnLabel;
+
+@property (copy, nonatomic) NSArray *lockArr;
 
 @end
 
@@ -85,7 +88,25 @@
 }
 
 - (void)loadData {
-    
+    if (self.locksOrVisitors == TCLocks) {
+        [[TCBuluoApi api] fetchMyLockListResult:^(NSArray *lockList, NSError *error) {
+            if ([lockList isKindOfClass:[NSArray class]]) {
+                self.lockArr = lockList;
+            }else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
+            }
+        }];
+    }else {
+        [[TCBuluoApi api] fetchMyLockKeysResult:^(NSArray *lockKeysList, NSError *error) {
+            if ([lockKeysList isKindOfClass:[NSArray class]]) {
+                self.lockArr = lockKeysList;
+            }else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
+            }
+        }];
+    }
 }
 
 - (void)setUpViews {
@@ -128,11 +149,22 @@
 
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    if (self.locksOrVisitors == TCLocks) {
+        return 1;
+    }
+    return self.lockArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    if (self.locksOrVisitors == TCLocks) {
+        return self.lockArr.count;
+    }
+    
+    TCLockWrapper *lockWrapper = self.lockArr[section];
+    if ([lockWrapper.keys isKindOfClass:[NSArray class]]) {
+        return lockWrapper.keys.count;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -140,14 +172,22 @@
     if (self.locksOrVisitors == TCLocks) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTCLocksCellID];
         cell.imageView.image = [UIImage imageNamed:@"locks"];
-        cell.textLabel.text = @"一楼大门";
+        
+        TCLockEquip *lockE = self.lockArr[indexPath.row];
+        cell.textLabel.text = lockE.name;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }else {
+        
         TCVisitorLocksCell *cell = [tableView dequeueReusableCellWithIdentifier:kTCVisitorLockCellID];
         cell.imageView.image = [UIImage imageNamed:@"locks"];
-        cell.textLabel.text = @"大门";
         cell.accessoryType = UITableViewCellAccessoryNone;
+        TCLockWrapper *wrapper = self.lockArr[indexPath.section];
+        if ([wrapper.keys isKindOfClass:[NSArray class]]) {
+            TCLockKey *key = wrapper.keys[indexPath.row];
+            cell.textLabel.text = key.name;
+        }
+        
         return cell;
     }
     
@@ -155,8 +195,10 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    TCLockOrVisitorSectionHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kTCVisitorLockSectionHeaderID];
+    TCLockWrapper *wrapper = self.lockArr[section];
     
+    TCLockOrVisitorSectionHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kTCVisitorLockSectionHeaderID];
+    header.name = wrapper.name;
     return header;
 }
 
