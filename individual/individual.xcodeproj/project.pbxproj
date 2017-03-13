@@ -588,6 +588,7 @@
 		7A2D2A981E1CF9820067D591 /* TCPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A911E1CF9820067D591 /* TCPaymentView.m */; };
 		7A2F5C2C1E71536E00174EB1 /* TCLockQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */; };
 		7A2F5C2F1E716DCF00174EB1 /* TCLockQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */; };
+		7A2F7C691E763BB6007B831D /* TCVisitorInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C681E763BB6007B831D /* TCVisitorInfo.m */; };
 		7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3321971E0D07E1003049DB /* TCSettingViewController.m */; };
 		7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */; };
 		7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219D1E0D3AA9003049DB /* TCVicinityTitleView.m */; };
@@ -2904,6 +2905,8 @@
 		7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockQRCodeViewController.m; sourceTree = "<group>"; };
 		7A2F5C2D1E716DCF00174EB1 /* TCLockQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCLockQRCodeView.h; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeView.h; sourceTree = SOURCE_ROOT; };
 		7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCLockQRCodeView.m; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeView.m; sourceTree = SOURCE_ROOT; };
+		7A2F7C671E763BB6007B831D /* TCVisitorInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVisitorInfo.h; sourceTree = "<group>"; };
+		7A2F7C681E763BB6007B831D /* TCVisitorInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVisitorInfo.m; sourceTree = "<group>"; };
 		7A3321961E0D07E1003049DB /* TCSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSettingViewController.h; sourceTree = "<group>"; };
 		7A3321971E0D07E1003049DB /* TCSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSettingViewController.m; sourceTree = "<group>"; };
 		7A3321991E0D0945003049DB /* TCSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSuggestionViewController.h; sourceTree = "<group>"; };
@@ -7494,6 +7497,8 @@
 				55BB9EBC1E72AF7800B0FD94 /* TCLockKey.m */,
 				55BB9EBE1E72B49100B0FD94 /* TCLockWrapper.h */,
 				55BB9EBF1E72B49100B0FD94 /* TCLockWrapper.m */,
+				7A2F7C671E763BB6007B831D /* TCVisitorInfo.h */,
+				7A2F7C681E763BB6007B831D /* TCVisitorInfo.m */,
 			);
 			path = OpenDoor;
 			sourceTree = "<group>";
@@ -9223,6 +9228,7 @@
 				55BB9EBA1E72AF5400B0FD94 /* TCLockEquip.m in Sources */,
 				7AFEC4801E54056D00B0E754 /* TCGoodsOrderNoteViewCell.m in Sources */,
 				7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */,
+				7A2F7C691E763BB6007B831D /* TCVisitorInfo.m in Sources */,
 				7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */,
 				096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */,
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,

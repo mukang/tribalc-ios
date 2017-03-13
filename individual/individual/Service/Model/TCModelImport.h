@@ -77,6 +77,7 @@
 #import "TCLockKey.h"
 #import "TCLockEquip.h"
 #import "TCLockWrapper.h"
+#import "TCVisitorInfo.h"
 
 @interface TCModelImport : NSObject
 

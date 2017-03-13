@@ -531,6 +531,7 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
  */
 - (void)fetchWechatRechargeResultWithPrepayID:(NSString *)prepayID result:(void(^)(BOOL success, NSError *error))resultBlock;
 
+#pragma mark - 门锁设备
 
 /**
  获取自己的锁列表
@@ -546,4 +547,21 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
  @param resultBlock 回调
  */
 - (void)fetchMyLockKeysResult:(void (^)(NSArray *lockKeysList, NSError *error))resultBlock;
+
+/**
+ 申请设备的二维码
+
+ @param visitorInfo 访客信息
+ @param resultBlock 结果回调
+ */
+- (void)fetchLockKeyWithVisitorInfo:(TCVisitorInfo *)visitorInfo result:(void(^)(TCLockKey *lockKey, NSError *error))resultBlock;
+
+/**
+ 清除设备的二维码
+
+ @param lockKeyID 设备二维码id
+ @param resultBlock 结果回调
+ */
+- (void)deleteLockKeyWithID:(NSString *)lockKeyID result:(void(^)(BOOL success, NSError *error))resultBlock;
+
 @end
