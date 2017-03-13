@@ -49,8 +49,17 @@
     if (_rightBtn == nil) {
         _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_rightBtn setImage:[UIImage imageNamed:@"deleteVisitor"] forState:UIControlStateNormal];
+        [_rightBtn addTarget:self action:@selector(delete) forControlEvents:UIControlEventTouchUpInside];
     }
     return _rightBtn;
+}
+
+- (void)delete {
+    if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(deleteEquip:)]) {
+            [self.delegate deleteEquip:self];
+        }
+    }
 }
 
 //- (UIImageView *)rightImageView {

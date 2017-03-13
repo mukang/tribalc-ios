@@ -28,5 +28,7 @@
 
 @property (copy, nonatomic) NSString *name;
 
+@property (copy, nonatomic) NSString *equipName;
+
 @end
 

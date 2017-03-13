@@ -17,7 +17,7 @@
 #define kTCVisitorLockCellID @"TCVisitorLocksCell"
 #define kTCVisitorLockSectionHeaderID @"TCLockOrVisitorSectionHeader"
 
-@interface TCLocksAndVisitorsViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface TCLocksAndVisitorsViewController ()<UITableViewDelegate,UITableViewDataSource,TCVisitorLocksCellDelegate>
 
 @property (assign, nonatomic) TCLocksOrVisitors locksOrVisitors;
 
@@ -49,6 +49,7 @@
     
     [self setUpViews];
     [self setupNavBar];
+    [self loadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,6 +93,7 @@
         [[TCBuluoApi api] fetchMyLockListResult:^(NSArray *lockList, NSError *error) {
             if ([lockList isKindOfClass:[NSArray class]]) {
                 self.lockArr = lockList;
+                [self.tableView reloadData];
             }else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
@@ -101,6 +103,7 @@
         [[TCBuluoApi api] fetchMyLockKeysResult:^(NSArray *lockKeysList, NSError *error) {
             if ([lockKeysList isKindOfClass:[NSArray class]]) {
                 self.lockArr = lockKeysList;
+                [self.tableView reloadData];
             }else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
@@ -147,6 +150,31 @@
     
 }
 
+#pragma mark TCVisitorLocksCellDelegate 
+- (void)deleteEquip:(UITableViewCell *)cell {
+    if ([cell isKindOfClass:[UITableViewCell class]]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        
+        TCLockWrapper *lockWrapper = self.lockArr[indexPath.section];
+        NSArray *arr = lockWrapper.lockKeyList;
+        if ([arr isKindOfClass:[NSArray class]]) {
+            if (arr.count == 1) {
+                
+                NSMutableArray *mutabelA = [NSMutableArray arrayWithArray:self.lockArr];
+                [mutabelA removeObject:lockWrapper];
+                self.lockArr = mutabelA;
+                
+            }else {
+                NSMutableArray *mutableArr = [NSMutableArray arrayWithArray:lockWrapper.lockKeyList];
+                [mutableArr removeObjectAtIndex:indexPath.row];
+                lockWrapper.lockKeyList = mutableArr;
+            }
+            [self.tableView reloadData];
+        }
+        
+    }
+}
+
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.locksOrVisitors == TCLocks) {
@@ -161,8 +189,8 @@
     }
     
     TCLockWrapper *lockWrapper = self.lockArr[section];
-    if ([lockWrapper.keys isKindOfClass:[NSArray class]]) {
-        return lockWrapper.keys.count;
+    if ([lockWrapper.lockKeyList isKindOfClass:[NSArray class]]) {
+        return lockWrapper.lockKeyList.count;
     }
     return 0;
 }
@@ -176,16 +204,19 @@
         TCLockEquip *lockE = self.lockArr[indexPath.row];
         cell.textLabel.text = lockE.name;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else {
         
         TCVisitorLocksCell *cell = [tableView dequeueReusableCellWithIdentifier:kTCVisitorLockCellID];
         cell.imageView.image = [UIImage imageNamed:@"locks"];
+        cell.delegate = self;
         cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         TCLockWrapper *wrapper = self.lockArr[indexPath.section];
-        if ([wrapper.keys isKindOfClass:[NSArray class]]) {
-            TCLockKey *key = wrapper.keys[indexPath.row];
-            cell.textLabel.text = key.name;
+        if ([wrapper.lockKeyList isKindOfClass:[NSArray class]]) {
+            TCLockKey *key = wrapper.lockKeyList[indexPath.row];
+            cell.textLabel.text = key.equipName;
         }
         
         return cell;
@@ -241,6 +272,7 @@
 - (UIButton *)addBtn {
     if (_addBtn == nil) {
         _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_addBtn addTarget:self action:@selector(addClick) forControlEvents:UIControlEventTouchUpInside];
         if (self.locksOrVisitors == TCLocks) {
             _addBtn.hidden = YES;
         }else {
@@ -248,6 +280,10 @@
         }
     }
     return _addBtn;
+}
+
+- (void)addClick {
+    NSLog(@"---------");
 }
 
 - (UIImageView *)btnImageView {

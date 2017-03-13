@@ -48,17 +48,17 @@ static NSString *const kBuglyAppID = @"900059019";
     [Bugly startWithAppId:kBuglyAppID];
     
     // SIP
-    TCSipAPI *sipApi = [TCSipAPI api];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [sipApi login];
-    });
+//    TCSipAPI *sipApi = [TCSipAPI api];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [sipApi login];
+//    });
     
     // wechat
     [WXApi registerApp:kWXAppID];
     
     [self startLocationAction];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toCallInView) name:@"TCDidReceiveCall" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toCallInView) name:@"TCDidReceiveCall" object:nil];
     
     return YES;
 }
@@ -114,12 +114,12 @@ static NSString *const kBuglyAppID = @"900059019";
 
 #pragma mark - SIP相关
 
-- (void)toCallInView {
-    UINavigationController *nav = [(UITabBarController *)self.window.rootViewController selectedViewController];
-    TCCallInViewController *callInVC = [[TCCallInViewController alloc] init];
-    callInVC.hidesBottomBarWhenPushed = YES;
-    [nav pushViewController:callInVC animated:YES];
-}
+//- (void)toCallInView {
+//    UINavigationController *nav = [(UITabBarController *)self.window.rootViewController selectedViewController];
+//    TCCallInViewController *callInVC = [[TCCallInViewController alloc] init];
+//    callInVC.hidesBottomBarWhenPushed = YES;
+//    [nav pushViewController:callInVC animated:YES];
+//}
 
 #pragma mark - 启动视窗相关
 
@@ -149,30 +149,30 @@ static NSString *const kBuglyAppID = @"900059019";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    if (![[TCSipAPI api] isLogin]) {
-        [[TCSipAPI api] login];
-    }
+//    if (![[TCSipAPI api] isLogin]) {
+//        [[TCSipAPI api] login];
+//    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
-    LinphoneManager *instance = LinphoneManager.instance;
-    [instance becomeActive];
-    
-    LinphoneCall *call = linphone_core_get_current_call(LC);
-    
-    if (call) {
-        if (call == instance->currentCallContextBeforeGoingBackground.call) {
-            const LinphoneCallParams *params = linphone_call_get_current_params(call);
-            if (linphone_call_params_video_enabled(params)) {
-                linphone_call_enable_camera(call, instance->currentCallContextBeforeGoingBackground.cameraIsEnabled);
-            }
-            instance->currentCallContextBeforeGoingBackground.call = 0;
-        } else if (linphone_call_get_state(call) == LinphoneCallIncomingReceived) {
-
-        }
-    }
+//    LinphoneManager *instance = LinphoneManager.instance;
+//    [instance becomeActive];
+//    
+//    LinphoneCall *call = linphone_core_get_current_call(LC);
+//    
+//    if (call) {
+//        if (call == instance->currentCallContextBeforeGoingBackground.call) {
+//            const LinphoneCallParams *params = linphone_call_get_current_params(call);
+//            if (linphone_call_params_video_enabled(params)) {
+//                linphone_call_enable_camera(call, instance->currentCallContextBeforeGoingBackground.cameraIsEnabled);
+//            }
+//            instance->currentCallContextBeforeGoingBackground.call = 0;
+//        } else if (linphone_call_get_state(call) == LinphoneCallIncomingReceived) {
+//
+//        }
+//    }
 }
 
 

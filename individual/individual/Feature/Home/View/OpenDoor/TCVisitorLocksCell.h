@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol TCVisitorLocksCellDelegate <NSObject>
+
+- (void)deleteEquip:(UITableViewCell *)cell;
+
+@end
+
 @interface TCVisitorLocksCell : UITableViewCell
+
+@property (weak, nonatomic) id<TCVisitorLocksCellDelegate> delegate;
 
 @end
