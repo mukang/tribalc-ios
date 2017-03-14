@@ -16,6 +16,8 @@
 @property (strong, nonatomic) TCLockKey *lockKey;
 @property (strong, nonatomic) NSString *equipID;
 
+@property (weak, nonatomic) UIViewController *fromController;
+
 - (instancetype)initWithLockQRCodeType:(TCLockQRCodeType)type;
 
 @end

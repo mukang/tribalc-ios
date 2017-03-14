@@ -31,6 +31,7 @@ static NSString *InputMessage = @"InputMessage";
 - (void)setupSubviews {
     UIImageView *codeImageView = [[UIImageView alloc] init];
     [self addSubview:codeImageView];
+    self.codeImageView = codeImageView;
     
     if (self.type == TCLockQRCodeTypeOneself) {
         UILabel *nameLabel = [[UILabel alloc] init];
@@ -38,6 +39,7 @@ static NSString *InputMessage = @"InputMessage";
         nameLabel.textColor = TCRGBColor(42, 42, 42);
         nameLabel.font = [UIFont systemFontOfSize:14];
         [self addSubview:nameLabel];
+        self.nameLabel = nameLabel;
         
         UIView *lineView = [[UIView alloc] init];
         lineView.backgroundColor = TCRGBColor(221, 221, 221);
@@ -78,10 +80,12 @@ static NSString *InputMessage = @"InputMessage";
         UIButton *wechatButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [wechatButton setImage:[UIImage imageNamed:@"lock_QR_code_wechat"] forState:UIControlStateNormal];
         [self addSubview:wechatButton];
+        self.wechatButton = wechatButton;
         
         UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [messageButton setImage:[UIImage imageNamed:@"lock_QR_code_MMS"] forState:UIControlStateNormal];
         [self addSubview:messageButton];
+        self.messageButton = messageButton;
         
         [codeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(TCRealValue(180), TCRealValue(180)));
