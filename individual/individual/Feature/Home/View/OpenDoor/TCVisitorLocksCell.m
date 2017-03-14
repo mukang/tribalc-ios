@@ -30,6 +30,7 @@
 
 - (void)setUpViews {
     [self.contentView addSubview:self.rightBtn];
+    self.textLabel.font = [UIFont systemFontOfSize:14];
     [self.rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.contentView).offset(-10);
         make.centerY.equalTo(self.contentView);

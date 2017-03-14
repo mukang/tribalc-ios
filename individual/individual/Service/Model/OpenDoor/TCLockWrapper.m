@@ -12,7 +12,7 @@
 @implementation TCLockWrapper
 
 + (NSDictionary *)objectClassInArray {
-    return @{@"lockKeyList": [TCLockKey class]};
+    return @{@"keys": [TCLockKey class]};
 }
 
 @end

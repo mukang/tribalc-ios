@@ -164,7 +164,7 @@
         if ([arr isKindOfClass:[NSArray class]]) {
             TCLockKey *lockKey = arr[indexPath.row];
             
-            [[TCBuluoApi api] deleteLockKeyWithID:lockKey.equipId result:^(BOOL success, NSError *error) {
+            [[TCBuluoApi api] deleteLockKeyWithID:lockKey.ID result:^(BOOL success, NSError *error) {
                 if (success) {
                     
                     if (arr.count == 1) {
