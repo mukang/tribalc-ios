@@ -1,23 +1,24 @@
 //
-//  TCDatePickerView.m
+//  TCLockEquipPickerView.m
 //  individual
 //
-//  Created by 穆康 on 2016/12/2.
-//  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
+//  Created by 穆康 on 2017/3/13.
+//  Copyright © 2017年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCDatePickerView.h"
+#import "TCLockEquipPickerView.h"
 
 static CGFloat const duration = 0.25;
 
-@interface TCDatePickerView ()
+@interface TCLockEquipPickerView () <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) UIView *containerView;
+@property (weak, nonatomic) UIPickerView *pickerView;
 
 @end
 
-@implementation TCDatePickerView {
-    __weak TCDatePickerView *weakSelf;
+@implementation TCLockEquipPickerView {
+    __weak TCLockEquipPickerView *weakSelf;
     __weak UIViewController *sourceController;
 }
 
@@ -109,11 +110,40 @@ static CGFloat const duration = 0.25;
     confirmButton.frame = CGRectMake(containerView.width - 20 - buttonW, 0, buttonW, buttonH);
     [containerView addSubview:confirmButton];
     
-    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-    datePicker.backgroundColor = TCRGBColor(242, 242, 242);
-    datePicker.frame = CGRectMake(0, 40, containerView.width, containerView.height - 40);
-    [containerView addSubview:datePicker];
-    self.datePicker = datePicker;
+    UIPickerView *pickerView = [[UIPickerView alloc] init];
+    pickerView.backgroundColor = TCRGBColor(242, 242, 242);
+    pickerView.dataSource = self;
+    pickerView.delegate = self;
+    pickerView.frame = CGRectMake(0, 40, containerView.width, containerView.height - 40);
+    [containerView addSubview:pickerView];
+    self.pickerView = pickerView;
+}
+
+#pragma mark - UIPickerViewDataSource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.lockEquips.count;
+}
+
+#pragma mark - UIPickerViewDelegate
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel *label = (UILabel *)view;
+    if (!label) {
+        label = [[UILabel alloc] init];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = TCRGBColor(42, 42, 42);
+        label.font = [UIFont systemFontOfSize:16];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+    }
+    TCLockEquip *lockEquip = self.lockEquips[row];
+    label.text = lockEquip.name;
+    return label;
 }
 
 #pragma mark - Actions
@@ -123,9 +153,12 @@ static CGFloat const duration = 0.25;
 }
 
 - (void)handleClickConfirmButton:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(didClickConfirmButtonInDatePickerView:)]) {
-        [self.delegate didClickConfirmButtonInDatePickerView:self];
+    NSInteger row = [self.pickerView selectedRowInComponent:0];
+    TCLockEquip *lockEquip = self.lockEquips[row];
+    if ([self.delegate respondsToSelector:@selector(equipPickerView:didClickConfirmButtonWithEquip:)]) {
+        [self.delegate equipPickerView:self didClickConfirmButtonWithEquip:lockEquip];
     }
+    
     [self dismiss];
 }
 

@@ -8,10 +8,13 @@
 
 #import "TCBaseViewController.h"
 #import "TCLockQRCodeView.h"
+@class TCLockKey;
 
 @interface TCLockQRCodeViewController : TCBaseViewController
 
 @property (nonatomic, readonly) TCLockQRCodeType type;
+@property (strong, nonatomic) TCLockKey *lockKey;
+@property (strong, nonatomic) NSString *equipID;
 
 - (instancetype)initWithLockQRCodeType:(TCLockQRCodeType)type;
 

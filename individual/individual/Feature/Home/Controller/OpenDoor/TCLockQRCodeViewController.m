@@ -10,6 +10,8 @@
 
 #import "TCLockQRCodeTitleView.h"
 
+#import "TCBuluoApi.h"
+
 #define navBarH     64.0
 
 @interface TCLockQRCodeViewController ()
@@ -20,6 +22,8 @@
 @property (weak, nonatomic) UILabel *timeLabel;
 @property (weak, nonatomic) TCLockQRCodeView *QRCodeView;
 @property (weak, nonatomic) TCLockQRCodeTitleView *titleView;
+
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -44,6 +48,7 @@
     
     [self setupNavBar];
     [self setupSubviews];
+    [self loadData];
 }
 
 #pragma mark - Private Methods
@@ -101,8 +106,6 @@
     if (self.type == TCLockQRCodeTypeOneself) {
         timeLabelTop = navBarH + TCRealValue(46.5);
         QRCodeViewTop = navBarH + TCRealValue(69);
-        
-        
     } else {
         timeLabelTop = navBarH + TCRealValue(31);
         QRCodeViewTop = navBarH + TCRealValue(153.5);
@@ -116,9 +119,8 @@
             make.centerX.equalTo(weakSelf.view);
         }];
         
-        titleView.deviceLabel.text = @"设备名称：一楼主门锁";
-        titleView.visitorLabel.text = @"访客姓名：张晓华";
-        titleView.phoneLabel.text = @"手机号：15647642113";
+        [QRCodeView.wechatButton addTarget:self action:@selector(handleClickWechatButton:) forControlEvents:UIControlEventTouchUpInside];
+        [QRCodeView.messageButton addTarget:self action:@selector(handleClickMessageButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.view).offset(timeLabelTop);
@@ -126,14 +128,82 @@
     [QRCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.view).offset(QRCodeViewTop);
     }];
-    
-    timeLabel.text = @"有效期截止：2月2日 16时30分";
+}
+
+- (void)loadData {
+    if (self.type == TCLockQRCodeTypeOneself) {
+        TCVisitorInfo *info = [[TCVisitorInfo alloc] init];
+        info.equipId = self.equipID;
+        [MBProgressHUD showHUD:YES];
+        [[TCBuluoApi api] fetchLockKeyWithVisitorInfo:info result:^(TCLockKey *lockKey, NSError *error) {
+            if (lockKey) {
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf reloadUIWithLockKey:lockKey];
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
+            }
+        }];
+    } else {
+        [self reloadUIWithLockKey:self.lockKey];
+    }
+}
+
+- (void)reloadUIWithLockKey:(TCLockKey *)lockKey {
+    self.timeLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:lockKey.endTime / 1000]];
+    self.QRCodeView.codeImageView.image = [self generateQRCodeImageWithCodeString:lockKey.key size:CGSizeMake(TCRealValue(180), TCRealValue(180))];
+    if (self.type == TCLockQRCodeTypeOneself) {
+        self.QRCodeView.nameLabel.text = [NSString stringWithFormat:@"设备名称：%@", lockKey.equipName];
+    } else {
+        self.titleView.deviceLabel.text = [NSString stringWithFormat:@"设备名称：%@", lockKey.equipName];
+        self.titleView.visitorLabel.text = [NSString stringWithFormat:@"访客姓名：%@", lockKey.name];
+        self.titleView.phoneLabel.text = [NSString stringWithFormat:@"访客电话：%@", lockKey.phone];
+    }
+}
+
+#pragma mark - Generate QRCode
+
+- (UIImage *)generateQRCodeImageWithCodeString:(NSString *)codeString size:(CGSize)size {
+    if (codeString.length) {
+        NSData *data = [codeString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+        [filter setValue:data forKey:@"inputMessage"];
+        CIImage *outputImage = filter.outputImage;
+        
+        CGFloat scale = size.width / CGRectGetWidth(outputImage.extent);
+        CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
+        CIImage *transformImage = [outputImage imageByApplyingTransform:transform];
+        
+        return [UIImage imageWithCIImage:transformImage];
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)handleClickWechatButton:(UIButton *)sender {
+    
+}
+
+- (void)handleClickMessageButton:(UIButton *)sender {
+    
+}
+
+#pragma mark - Override Methods
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+        _dateFormatter.dateFormat = @"MM月dd日 HH时mm分";
+    }
+    return _dateFormatter;
 }
 
 - (void)didReceiveMemoryWarning {

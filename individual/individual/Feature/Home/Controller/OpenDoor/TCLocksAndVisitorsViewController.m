@@ -7,7 +7,9 @@
 //
 
 #import "TCLocksAndVisitorsViewController.h"
-#import <Masonry.h>
+#import "TCLockQRCodeViewController.h"
+#import "TCAddVisitorViewController.h"
+
 #import "UIImage+Category.h"
 #import "TCVisitorLocksCell.h"
 #import "TCLockOrVisitorSectionHeader.h"
@@ -49,6 +51,7 @@
     
     [self setUpViews];
     [self setupNavBar];
+    [self loadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -147,7 +150,7 @@
     
 }
 
-#pragma mark UITableViewDataSource
+#pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.locksOrVisitors == TCLocks) {
         return 1;
@@ -193,6 +196,8 @@
     
 }
 
+#pragma mark - UITableViewDelegate
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     TCLockWrapper *wrapper = self.lockArr[section];
@@ -200,6 +205,15 @@
     TCLockOrVisitorSectionHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kTCVisitorLockSectionHeaderID];
     header.name = wrapper.name;
     return header;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.locksOrVisitors == TCLocks) {
+        TCLockEquip *lockEquip = self.lockArr[indexPath.row];
+    } else {
+        TCLockWrapper *wrapper = self.lockArr[indexPath.section];
+        TCLockKey *key = wrapper.keys[indexPath.row];
+    }
 }
 
 
@@ -241,6 +255,7 @@
 - (UIButton *)addBtn {
     if (_addBtn == nil) {
         _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_addBtn addTarget:self action:@selector(handleClickAddButton:) forControlEvents:UIControlEventTouchUpInside];
         if (self.locksOrVisitors == TCLocks) {
             _addBtn.hidden = YES;
         }else {
@@ -267,6 +282,11 @@
         _btnLabel.text = @"添加";
     }
     return _btnLabel;
+}
+
+- (void)handleClickAddButton:(UIButton *)sender {
+    TCAddVisitorViewController *vc = [[TCAddVisitorViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

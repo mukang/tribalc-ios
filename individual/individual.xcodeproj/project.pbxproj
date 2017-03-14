@@ -589,6 +589,10 @@
 		7A2F5C2C1E71536E00174EB1 /* TCLockQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */; };
 		7A2F5C2F1E716DCF00174EB1 /* TCLockQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */; };
 		7A2F7C691E763BB6007B831D /* TCVisitorInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C681E763BB6007B831D /* TCVisitorInfo.m */; };
+		7A2F7C6F1E768BAF007B831D /* TCAddVisitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C6E1E768BAF007B831D /* TCAddVisitorViewController.m */; };
+		7A2F7C721E768C36007B831D /* TCAddVisitorTimeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C711E768C36007B831D /* TCAddVisitorTimeViewCell.m */; };
+		7A2F7C751E768C4E007B831D /* TCAddVisitorDeviceViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C741E768C4E007B831D /* TCAddVisitorDeviceViewCell.m */; };
+		7A2F7C781E76BFCC007B831D /* TCLockEquipPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C771E76BFCC007B831D /* TCLockEquipPickerView.m */; };
 		7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3321971E0D07E1003049DB /* TCSettingViewController.m */; };
 		7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */; };
 		7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219D1E0D3AA9003049DB /* TCVicinityTitleView.m */; };
@@ -2907,6 +2911,14 @@
 		7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCLockQRCodeView.m; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeView.m; sourceTree = SOURCE_ROOT; };
 		7A2F7C671E763BB6007B831D /* TCVisitorInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVisitorInfo.h; sourceTree = "<group>"; };
 		7A2F7C681E763BB6007B831D /* TCVisitorInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVisitorInfo.m; sourceTree = "<group>"; };
+		7A2F7C6D1E768BAF007B831D /* TCAddVisitorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAddVisitorViewController.h; sourceTree = "<group>"; };
+		7A2F7C6E1E768BAF007B831D /* TCAddVisitorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAddVisitorViewController.m; sourceTree = "<group>"; };
+		7A2F7C701E768C35007B831D /* TCAddVisitorTimeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAddVisitorTimeViewCell.h; sourceTree = "<group>"; };
+		7A2F7C711E768C36007B831D /* TCAddVisitorTimeViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAddVisitorTimeViewCell.m; sourceTree = "<group>"; };
+		7A2F7C731E768C4E007B831D /* TCAddVisitorDeviceViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAddVisitorDeviceViewCell.h; sourceTree = "<group>"; };
+		7A2F7C741E768C4E007B831D /* TCAddVisitorDeviceViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAddVisitorDeviceViewCell.m; sourceTree = "<group>"; };
+		7A2F7C761E76BFCC007B831D /* TCLockEquipPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockEquipPickerView.h; sourceTree = "<group>"; };
+		7A2F7C771E76BFCC007B831D /* TCLockEquipPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockEquipPickerView.m; sourceTree = "<group>"; };
 		7A3321961E0D07E1003049DB /* TCSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSettingViewController.h; sourceTree = "<group>"; };
 		7A3321971E0D07E1003049DB /* TCSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSettingViewController.m; sourceTree = "<group>"; };
 		7A3321991E0D0945003049DB /* TCSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSuggestionViewController.h; sourceTree = "<group>"; };
@@ -3797,6 +3809,8 @@
 				5513065C1E714045004DF32F /* TCOpenDoorController.m */,
 				551306581E714008004DF32F /* TCLocksAndVisitorsViewController.h */,
 				551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */,
+				7A2F7C6D1E768BAF007B831D /* TCAddVisitorViewController.h */,
+				7A2F7C6E1E768BAF007B831D /* TCAddVisitorViewController.m */,
 				7A2F5C2A1E71536E00174EB1 /* TCLockQRCodeViewController.h */,
 				7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */,
 			);
@@ -7484,6 +7498,12 @@
 				55BB9EB21E728C7200B0FD94 /* TCVisitorLocksCell.m */,
 				55BB9EB41E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.h */,
 				55BB9EB51E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.m */,
+				7A2F7C701E768C35007B831D /* TCAddVisitorTimeViewCell.h */,
+				7A2F7C711E768C36007B831D /* TCAddVisitorTimeViewCell.m */,
+				7A2F7C731E768C4E007B831D /* TCAddVisitorDeviceViewCell.h */,
+				7A2F7C741E768C4E007B831D /* TCAddVisitorDeviceViewCell.m */,
+				7A2F7C761E76BFCC007B831D /* TCLockEquipPickerView.h */,
+				7A2F7C771E76BFCC007B831D /* TCLockEquipPickerView.m */,
 			);
 			path = OpenDoor;
 			sourceTree = "<group>";
@@ -9108,9 +9128,11 @@
 				7AFEC47F1E54056D00B0E754 /* TCGoodsOrderHeaderView.m in Sources */,
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
+				7A2F7C6F1E768BAF007B831D /* TCAddVisitorViewController.m in Sources */,
 				7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */,
 				7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */,
 				7A944BA41E5BE53B00E79C31 /* TCServiceNameViewCell.m in Sources */,
+				7A2F7C781E76BFCC007B831D /* TCLockEquipPickerView.m in Sources */,
 				7AFEC4931E55446D00B0E754 /* TCGoodsOrderCountDownView.m in Sources */,
 				7A11F7141DE43195005F3EAB /* MLBPasswordRenderView.m in Sources */,
 				7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */,
@@ -9185,6 +9207,7 @@
 				7A2D2A961E1CF9820067D591 /* TCPaymentPasswordView.m in Sources */,
 				7A16665B1DFAB01E007B5733 /* TCCompanyHeaderView.m in Sources */,
 				7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */,
+				7A2F7C721E768C36007B831D /* TCAddVisitorTimeViewCell.m in Sources */,
 				7AFEC4811E54056D00B0E754 /* TCGoodsOrderPriceViewCell.m in Sources */,
 				7A190AF31DC0A5DB00651905 /* TCClientConfig.m in Sources */,
 				7A74674B1DF90F8300ACD815 /* TCCompanyIntroViewCell.m in Sources */,
@@ -9232,6 +9255,7 @@
 				7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */,
 				096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */,
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,
+				7A2F7C751E768C4E007B831D /* TCAddVisitorDeviceViewCell.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
 				7A1A85471E66D61000BB5EDB /* TCServiceListViewController.m in Sources */,
 				7A5DC69D1E7250C9006C161A /* TCLockQRCodeTitleView.m in Sources */,

@@ -26,6 +26,4 @@
 
 @property (assign, nonatomic) BOOL actived;
 
-@property (copy, nonatomic) NSDictionary *parameters;
-
 @end

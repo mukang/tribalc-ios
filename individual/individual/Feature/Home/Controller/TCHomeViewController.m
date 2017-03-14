@@ -11,7 +11,6 @@
 #import "TCRepairsViewController.h"
 #import "TCNavigationController.h"
 #import "TCServiceListViewController.h"
-#import "TCLockQRCodeViewController.h"
 #import "TCGoodSelectView.h"
 
 
@@ -523,10 +522,6 @@
     TCQRCodeViewController *qrVC = [[TCQRCodeViewController alloc] init];
     qrVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:qrVC animated:YES];
-    
-//    TCLockQRCodeViewController *vc = [[TCLockQRCodeViewController alloc] initWithLockQRCodeType:TCLockQRCodeTypeOneself];
-//    vc.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)touchOfficeReserveBtn:(UIButton *)button {

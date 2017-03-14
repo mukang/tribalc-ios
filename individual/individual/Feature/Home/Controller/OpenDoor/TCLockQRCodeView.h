@@ -17,6 +17,11 @@ typedef NS_ENUM(NSInteger, TCLockQRCodeType) {
 
 @property (nonatomic, readonly) TCLockQRCodeType type;
 
+@property (weak, nonatomic) UIImageView *codeImageView;
+@property (weak, nonatomic) UILabel *nameLabel;
+@property (weak, nonatomic) UIButton *wechatButton;
+@property (weak, nonatomic) UIButton *messageButton;
+
 - (instancetype)initWithLockQRCodeType:(TCLockQRCodeType)type;
 
 @end

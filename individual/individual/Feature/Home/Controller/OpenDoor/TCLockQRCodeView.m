@@ -30,13 +30,10 @@ static NSString *InputMessage = @"InputMessage";
 
 - (void)setupSubviews {
     UIImageView *codeImageView = [[UIImageView alloc] init];
-//    codeImageView.backgroundColor = [UIColor orangeColor];
-    codeImageView.image = [self generateQRCodeImageWithCodeString:@"dai76dbsi9shehid9" size:CGSizeMake(TCRealValue(180), TCRealValue(180))];
     [self addSubview:codeImageView];
     
     if (self.type == TCLockQRCodeTypeOneself) {
         UILabel *nameLabel = [[UILabel alloc] init];
-        nameLabel.text = @"设备名称：一楼主门锁";
         nameLabel.textAlignment = NSTextAlignmentCenter;
         nameLabel.textColor = TCRGBColor(42, 42, 42);
         nameLabel.font = [UIFont systemFontOfSize:14];
@@ -115,26 +112,6 @@ static NSString *InputMessage = @"InputMessage";
             make.top.equalTo(wechatButton);
             make.centerX.equalTo(weakSelf.mas_centerX).offset(TCRealValue(35));
         }];
-    }
-}
-
-#pragma mark - Generate QRCode
-
-- (UIImage *)generateQRCodeImageWithCodeString:(NSString *)codeString size:(CGSize)size {
-    if (codeString.length) {
-        NSData *data = [codeString dataUsingEncoding:NSUTF8StringEncoding];
-        
-        CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
-        [filter setValue:data forKey:@"inputMessage"];
-        CIImage *outputImage = filter.outputImage;
-        
-        CGFloat scale = size.width / CGRectGetWidth(outputImage.extent);
-        CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
-        CIImage *transformImage = [outputImage imageByApplyingTransform:transform];
-        
-        return [UIImage imageWithCIImage:transformImage];
-    } else {
-        return nil;
     }
 }
 
