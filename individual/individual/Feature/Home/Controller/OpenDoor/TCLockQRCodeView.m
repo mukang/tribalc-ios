@@ -79,6 +79,7 @@ static NSString *InputMessage = @"InputMessage";
         
         UIButton *wechatButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [wechatButton setImage:[UIImage imageNamed:@"lock_QR_code_wechat"] forState:UIControlStateNormal];
+        [wechatButton setImage:[UIImage imageNamed:@"lock_QR_code_wechat_disabled"] forState:UIControlStateDisabled];
         [self addSubview:wechatButton];
         self.wechatButton = wechatButton;
         

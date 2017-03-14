@@ -13,9 +13,13 @@
 
 #import "TCBuluoApi.h"
 
+#import "WXApiManager.h"
+#import "WXApiRequestHandler.h"
+#import "TCImageCompressHandler.h"
+
 #define navBarH     64.0
 
-@interface TCLockQRCodeViewController ()
+@interface TCLockQRCodeViewController () <WXApiManagerDelegate>
 
 @property (weak, nonatomic) UINavigationBar *navBar;
 @property (weak, nonatomic) UINavigationItem *navItem;
@@ -56,7 +60,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     if (self.fromController) {
         TCNavigationController *nav = (TCNavigationController *)self.navigationController;
         self.originalInteractivePopGestureEnabled = nav.enableInteractivePopGesture;
@@ -68,7 +72,7 @@
     [super viewWillDisappear:animated];
     
     if (self.fromController) {
-        TCNavigationController *nav = (TCNavigationController *)self.navigationController;
+        TCNavigationController *nav = (TCNavigationController *)self.fromController.navigationController;
         nav.enableInteractivePopGesture = self.originalInteractivePopGestureEnabled;
     }
 }
@@ -143,6 +147,8 @@
         
         [QRCodeView.wechatButton addTarget:self action:@selector(handleClickWechatButton:) forControlEvents:UIControlEventTouchUpInside];
         [QRCodeView.messageButton addTarget:self action:@selector(handleClickMessageButton:) forControlEvents:UIControlEventTouchUpInside];
+        
+//        if (![WXApi isWXAppInstalled]) QRCodeView.wechatButton.enabled = NO;
     }
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.view).offset(timeLabelTop);
@@ -204,6 +210,39 @@
     }
 }
 
+#pragma mark - Wechat
+
+- (void)shareQRCodeToWechat {
+    [WXApiManager sharedManager].delegate = self;
+    
+    UIImage *codeImage = self.QRCodeView.codeImageView.image;
+    NSData *imageData = [TCImageCompressHandler compressImage:codeImage toByte:(100 * 1000)];
+    NSData *thumbData = [TCImageCompressHandler compressImage:codeImage toByte:(30 * 1000)];
+//    BOOL send = [WXApiRequestHandler sendImageData:imageData
+//                               tagName:@"code"
+//                            messageExt:@"buluo-gs"
+//                                action:nil
+//                            thumbImage:[UIImage imageWithData:thumbData]
+//                               inScene:WXSceneSession];
+    WXMediaMessage *message = [WXMediaMessage message];
+    message.thumbData = thumbData;
+    WXImageObject *imageObject = [WXImageObject object];
+    imageObject.imageData = imageData;
+    message.mediaObject = imageObject;
+    
+    SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+    req.bText = NO;
+    req.message = message;
+    req.scene = WXSceneSession;
+    [WXApi sendReq:req];
+}
+
+#pragma mark - WXApiManagerDelegate
+
+- (void)managerDidRecvMessageResponse:(SendMessageToWXResp *)response {
+    NSLog(@"%zd", response.errCode);
+}
+
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
@@ -215,7 +254,7 @@
 }
 
 - (void)handleClickWechatButton:(UIButton *)sender {
-    
+    [self shareQRCodeToWechat];
 }
 
 - (void)handleClickMessageButton:(UIButton *)sender {

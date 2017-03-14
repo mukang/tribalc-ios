@@ -98,10 +98,12 @@ TCLockEquipPickerViewDelegate>
                 cell.title = @"姓名";
                 cell.placeholder = @"请填写姓名";
                 cell.content = self.lockKey.name;
+                cell.keyboardType = UIKeyboardTypeDefault;
             } else {
                 cell.title = @"电话";
                 cell.placeholder = @"请填写电话";
                 cell.content = self.lockKey.phone;
+                cell.keyboardType = UIKeyboardTypeNumberPad;
             }
             currentCell = cell;
         }
