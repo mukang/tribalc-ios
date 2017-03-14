@@ -14,6 +14,6 @@
 
 @property (copy, nonatomic) NSString *name;
 
-@property (copy, nonatomic) NSArray *lockKeyList;
+@property (copy, nonatomic) NSArray *keys;
 
 @end

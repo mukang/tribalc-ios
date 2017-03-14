@@ -156,20 +156,29 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         
         TCLockWrapper *lockWrapper = self.lockArr[indexPath.section];
-        NSArray *arr = lockWrapper.lockKeyList;
+        
+        NSArray *arr = lockWrapper.keys;
+        
         if ([arr isKindOfClass:[NSArray class]]) {
-            if (arr.count == 1) {
-                
-                NSMutableArray *mutabelA = [NSMutableArray arrayWithArray:self.lockArr];
-                [mutabelA removeObject:lockWrapper];
-                self.lockArr = mutabelA;
-                
-            }else {
-                NSMutableArray *mutableArr = [NSMutableArray arrayWithArray:lockWrapper.lockKeyList];
-                [mutableArr removeObjectAtIndex:indexPath.row];
-                lockWrapper.lockKeyList = mutableArr;
-            }
-            [self.tableView reloadData];
+            TCLockKey *lockKey = arr[indexPath.row];
+            
+            [[TCBuluoApi api] deleteLockKeyWithID:lockKey.equipId result:^(BOOL success, NSError *error) {
+                if (success) {
+                    
+                    if (arr.count == 1) {
+                        
+                        NSMutableArray *mutabelA = [NSMutableArray arrayWithArray:self.lockArr];
+                        [mutabelA removeObject:lockWrapper];
+                        self.lockArr = mutabelA;
+                        
+                    }else {
+                        NSMutableArray *mutableArr = [NSMutableArray arrayWithArray:lockWrapper.keys];
+                        [mutableArr removeObjectAtIndex:indexPath.row];
+                        lockWrapper.keys = mutableArr;
+                    }
+                    [self.tableView reloadData];
+                }
+            }];
         }
         
     }
@@ -189,8 +198,8 @@
     }
     
     TCLockWrapper *lockWrapper = self.lockArr[section];
-    if ([lockWrapper.lockKeyList isKindOfClass:[NSArray class]]) {
-        return lockWrapper.lockKeyList.count;
+    if ([lockWrapper.keys isKindOfClass:[NSArray class]]) {
+        return lockWrapper.keys.count;
     }
     return 0;
 }
@@ -214,8 +223,8 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         TCLockWrapper *wrapper = self.lockArr[indexPath.section];
-        if ([wrapper.lockKeyList isKindOfClass:[NSArray class]]) {
-            TCLockKey *key = wrapper.lockKeyList[indexPath.row];
+        if ([wrapper.keys isKindOfClass:[NSArray class]]) {
+            TCLockKey *key = wrapper.keys[indexPath.row];
             cell.textLabel.text = key.equipName;
         }
         
