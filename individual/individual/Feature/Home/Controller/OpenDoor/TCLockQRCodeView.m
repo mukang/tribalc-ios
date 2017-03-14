@@ -85,6 +85,7 @@ static NSString *InputMessage = @"InputMessage";
         
         UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [messageButton setImage:[UIImage imageNamed:@"lock_QR_code_MMS"] forState:UIControlStateNormal];
+        [messageButton setImage:[UIImage imageNamed:@"lock_QR_code_MMS_disabled"] forState:UIControlStateDisabled];
         [self addSubview:messageButton];
         self.messageButton = messageButton;
         

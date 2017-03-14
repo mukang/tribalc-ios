@@ -14,12 +14,13 @@
 #import "TCBuluoApi.h"
 
 #import "WXApiManager.h"
-#import "WXApiRequestHandler.h"
 #import "TCImageCompressHandler.h"
+
+#import <MessageUI/MessageUI.h>
 
 #define navBarH     64.0
 
-@interface TCLockQRCodeViewController () <WXApiManagerDelegate>
+@interface TCLockQRCodeViewController () <WXApiManagerDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (weak, nonatomic) UINavigationBar *navBar;
 @property (weak, nonatomic) UINavigationItem *navItem;
@@ -148,7 +149,8 @@
         [QRCodeView.wechatButton addTarget:self action:@selector(handleClickWechatButton:) forControlEvents:UIControlEventTouchUpInside];
         [QRCodeView.messageButton addTarget:self action:@selector(handleClickMessageButton:) forControlEvents:UIControlEventTouchUpInside];
         
-//        if (![WXApi isWXAppInstalled]) QRCodeView.wechatButton.enabled = NO;
+        if (![WXApi isWXAppInstalled]) QRCodeView.wechatButton.enabled = NO;
+        if (![MFMessageComposeViewController canSendAttachments]) QRCodeView.messageButton.enabled = NO;
     }
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.view).offset(timeLabelTop);
@@ -200,14 +202,37 @@
         [filter setValue:data forKey:@"inputMessage"];
         CIImage *outputImage = filter.outputImage;
         
-        CGFloat scale = size.width / CGRectGetWidth(outputImage.extent);
-        CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
-        CIImage *transformImage = [outputImage imageByApplyingTransform:transform];
-        
-        return [UIImage imageWithCIImage:transformImage];
+        return [self createNonInterpolatedUIImageFormCIImage:outputImage withSize:size.width];
     } else {
         return nil;
     }
+}
+
+/**
+ * 根据CIImage生成指定大小的UIImage
+ *
+ * @param image CIImage
+ * @param size 图片宽度
+ */
+- (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size
+{
+    CGRect extent = CGRectIntegral(image.extent);
+    CGFloat scale = MIN(size/CGRectGetWidth(extent), size/CGRectGetHeight(extent));
+    // 1.创建bitmap;
+    size_t width = CGRectGetWidth(extent) * scale;
+    size_t height = CGRectGetHeight(extent) * scale;
+    CGColorSpaceRef cs = CGColorSpaceCreateDeviceGray();
+    CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, cs, (CGBitmapInfo)kCGImageAlphaNone);
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef bitmapImage = [context createCGImage:image fromRect:extent];
+    CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
+    CGContextScaleCTM(bitmapRef, scale, scale);
+    CGContextDrawImage(bitmapRef, extent, bitmapImage);
+    // 2.保存bitmap到图片
+    CGImageRef scaledImage = CGBitmapContextCreateImage(bitmapRef);
+    CGContextRelease(bitmapRef);
+    CGImageRelease(bitmapImage);
+    return [UIImage imageWithCGImage:scaledImage];
 }
 
 #pragma mark - Wechat
@@ -218,12 +243,6 @@
     UIImage *codeImage = self.QRCodeView.codeImageView.image;
     NSData *imageData = [TCImageCompressHandler compressImage:codeImage toByte:(100 * 1000)];
     NSData *thumbData = [TCImageCompressHandler compressImage:codeImage toByte:(30 * 1000)];
-//    BOOL send = [WXApiRequestHandler sendImageData:imageData
-//                               tagName:@"code"
-//                            messageExt:@"buluo-gs"
-//                                action:nil
-//                            thumbImage:[UIImage imageWithData:thumbData]
-//                               inScene:WXSceneSession];
     WXMediaMessage *message = [WXMediaMessage message];
     message.thumbData = thumbData;
     WXImageObject *imageObject = [WXImageObject object];
@@ -240,7 +259,19 @@
 #pragma mark - WXApiManagerDelegate
 
 - (void)managerDidRecvMessageResponse:(SendMessageToWXResp *)response {
-    NSLog(@"%zd", response.errCode);
+    if (response.errCode == 0) {
+        [MBProgressHUD showHUDWithMessage:@"分享成功"];
+    }
+}
+
+#pragma mark - MFMessageComposeViewControllerDelegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    
+    if (result == MessageComposeResultSent) {
+        [MBProgressHUD showHUDWithMessage:@"分享成功"];
+    }
 }
 
 #pragma mark - Actions
@@ -258,7 +289,15 @@
 }
 
 - (void)handleClickMessageButton:(UIButton *)sender {
-    
+    NSString *uti = @"image/jpeg";
+    if ([MFMessageComposeViewController isSupportedAttachmentUTI:uti]) {
+        UIImage *codeImage = self.QRCodeView.codeImageView.image;
+        NSData *imageData = [TCImageCompressHandler compressImage:codeImage toByte:(100 * 1000)];
+        MFMessageComposeViewController *vc = [[MFMessageComposeViewController alloc] init];
+        [vc addAttachmentData:imageData typeIdentifier:uti filename:@"QRCode.jpg"];
+        vc.messageComposeDelegate = self;
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 #pragma mark - Override Methods
