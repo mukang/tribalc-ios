@@ -7,6 +7,7 @@
 //
 
 #import "TCLockQRCodeViewController.h"
+#import "TCNavigationController.h"
 
 #import "TCLockQRCodeTitleView.h"
 
@@ -24,6 +25,8 @@
 @property (weak, nonatomic) TCLockQRCodeTitleView *titleView;
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
+@property (nonatomic) BOOL originalInteractivePopGestureEnabled;
 
 @end
 
@@ -49,6 +52,25 @@
     [self setupNavBar];
     [self setupSubviews];
     [self loadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.fromController) {
+        TCNavigationController *nav = (TCNavigationController *)self.navigationController;
+        self.originalInteractivePopGestureEnabled = nav.enableInteractivePopGesture;
+        nav.enableInteractivePopGesture = NO;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if (self.fromController) {
+        TCNavigationController *nav = (TCNavigationController *)self.navigationController;
+        nav.enableInteractivePopGesture = self.originalInteractivePopGestureEnabled;
+    }
 }
 
 #pragma mark - Private Methods
@@ -150,7 +172,8 @@
 }
 
 - (void)reloadUIWithLockKey:(TCLockKey *)lockKey {
-    self.timeLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:lockKey.endTime / 1000]];
+    NSString *endTimeStr = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:lockKey.endTime / 1000]];
+    self.timeLabel.text = [NSString stringWithFormat:@"有效期截止：%@", endTimeStr];
     self.QRCodeView.codeImageView.image = [self generateQRCodeImageWithCodeString:lockKey.key size:CGSizeMake(TCRealValue(180), TCRealValue(180))];
     if (self.type == TCLockQRCodeTypeOneself) {
         self.QRCodeView.nameLabel.text = [NSString stringWithFormat:@"设备名称：%@", lockKey.equipName];
@@ -184,7 +207,11 @@
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.fromController) {
+        [self.navigationController popToViewController:self.fromController animated:YES];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)handleClickWechatButton:(UIButton *)sender {

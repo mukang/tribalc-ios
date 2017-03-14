@@ -1820,7 +1820,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSString *apiName = [NSString stringWithFormat:@"locks?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
 //        request.token = self.currentUserSession.token;
-        request.token = @"c6877dc3-a090-477d-9e7b-b9da7d28a628-1489456881689";
+        request.token = @"d5c8387a-1937-4a45-bc70-148a31640c26-1489460080135";
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
                 if (resultBlock) {
@@ -1852,7 +1852,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSString *apiName = [NSString stringWithFormat:@"keys?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         //        request.token = self.currentUserSession.token;
-        request.token = @"c6877dc3-a090-477d-9e7b-b9da7d28a628-1489456881689";
+        request.token = @"d5c8387a-1937-4a45-bc70-148a31640c26-1489460080135";
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
                 if (resultBlock) {
@@ -1883,7 +1883,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSString *apiName = [NSString stringWithFormat:@"keys?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         //        request.token = self.currentUserSession.token;
-        request.token = @"c6877dc3-a090-477d-9e7b-b9da7d28a628-1489456881689";
+        request.token = @"d5c8387a-1937-4a45-bc70-148a31640c26-1489460080135";
         NSDictionary *dic = [visitorInfo toObjectDictionary];
         for (NSString *key in dic.allKeys) {
             [request setValue:dic[key] forParam:key];
@@ -1913,7 +1913,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSString *apiName = [NSString stringWithFormat:@"keys/%@?me=%@",lockKeyID,self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
 //        request.token = self.currentUserSession.token;
-        request.token = @"c6877dc3-a090-477d-9e7b-b9da7d28a628-1489456881689";
+        request.token = @"d5c8387a-1937-4a45-bc70-148a31640c26-1489460080135";
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 204) {
                 if (resultBlock) {

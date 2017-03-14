@@ -248,12 +248,18 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    TCLockQRCodeViewController *vc;
     if (self.locksOrVisitors == TCLocks) {
         TCLockEquip *lockEquip = self.lockArr[indexPath.row];
+        vc = [[TCLockQRCodeViewController alloc] initWithLockQRCodeType:TCLockQRCodeTypeOneself];
+        vc.equipID = lockEquip.ID;
     } else {
         TCLockWrapper *wrapper = self.lockArr[indexPath.section];
         TCLockKey *key = wrapper.keys[indexPath.row];
+        vc = [[TCLockQRCodeViewController alloc] initWithLockQRCodeType:TCLockQRCodeTypeVisitor];
+        vc.lockKey = key;
     }
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -325,7 +331,12 @@
 }
 
 - (void)handleClickAddButton:(UIButton *)sender {
+    __weak typeof(self) weakSelf = self;
     TCAddVisitorViewController *vc = [[TCAddVisitorViewController alloc] init];
+    vc.fromController = self;
+    vc.addVisitorCompletion = ^() {
+        [weakSelf loadData];
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 

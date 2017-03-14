@@ -7,7 +7,13 @@
 //
 
 #import "TCBaseViewController.h"
+@class TCLockKey;
+
+typedef void(^TCAddVisitorCompletion)();
 
 @interface TCAddVisitorViewController : TCBaseViewController
+
+@property (weak, nonatomic) UIViewController *fromController;
+@property (copy, nonatomic) TCAddVisitorCompletion addVisitorCompletion;
 
 @end

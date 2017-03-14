@@ -47,6 +47,11 @@ TCLockEquipPickerViewDelegate>
     [self setupSubviews];
 }
 
+- (void)dealloc {
+    self.tableView.dataSource = nil;
+    self.tableView.delegate = nil;
+}
+
 #pragma mark - Private Methods
 
 - (void)setupSubviews {
@@ -247,8 +252,12 @@ TCLockEquipPickerViewDelegate>
     info.endTime = self.lockKey.endTime;
     [[TCBuluoApi api] fetchLockKeyWithVisitorInfo:info result:^(TCLockKey *lockKey, NSError *error) {
         if (lockKey) {
+            if (weakSelf.addVisitorCompletion) {
+                weakSelf.addVisitorCompletion();
+            }
             TCLockQRCodeViewController *vc = [[TCLockQRCodeViewController alloc] initWithLockQRCodeType:TCLockQRCodeTypeVisitor];
             vc.lockKey = lockKey;
+            vc.fromController = weakSelf.fromController;
             [weakSelf.navigationController pushViewController:vc animated:YES];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
