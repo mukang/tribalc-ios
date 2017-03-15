@@ -74,7 +74,7 @@
     [super viewWillDisappear:animated];
     
     if (self.fromController) {
-        TCNavigationController *nav = (TCNavigationController *)self.navigationController;
+        TCNavigationController *nav = (TCNavigationController *)self.fromController.navigationController;
         nav.enableInteractivePopGesture = self.originalInteractivePopGestureEnabled;
     }
 }
