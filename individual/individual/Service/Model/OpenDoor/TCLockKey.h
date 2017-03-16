@@ -19,11 +19,11 @@
 /** 锁名称 */
 @property (copy, nonatomic) NSString *equipName;
 /** 申请时间 */
-@property (assign, nonatomic) NSInteger createTime;
+@property (assign, nonatomic) long long createTime;
 /** 起效时间 */
-@property (assign, nonatomic) NSInteger beginTime;
+@property (assign, nonatomic) long long beginTime;
 /** 截止时间 */
-@property (assign, nonatomic) NSInteger endTime;
+@property (assign, nonatomic) long long endTime;
 /** 二维码数据 */
 @property (copy, nonatomic) NSString *key;
 /** 访客手机，如果为空表示为所有者本人 */

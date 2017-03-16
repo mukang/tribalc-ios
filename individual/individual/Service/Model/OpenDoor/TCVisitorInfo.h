@@ -20,8 +20,8 @@
 /** 访客姓名，自己开门为空 */
 @property (copy, nonatomic) NSString *name;
 /** 起效时间，自己开门为空 */
-@property (nonatomic) NSInteger beginTime;
+@property (nonatomic) long long beginTime;
 /** 截止时间，自己开门为空 */
-@property (nonatomic) NSInteger endTime;
+@property (nonatomic) long long endTime;
 
 @end

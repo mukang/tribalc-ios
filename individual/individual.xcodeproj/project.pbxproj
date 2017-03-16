@@ -515,6 +515,8 @@
 		55F06F1D1E07EA2100A849D7 /* TCScannerMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F1C1E07EA2100A849D7 /* TCScannerMaskView.m */; };
 		55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F1F1E07EC6500A849D7 /* TCScanner.m */; };
 		55F06F271E0A3AE200A849D7 /* TCBlurImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F261E0A3AE200A849D7 /* TCBlurImageView.m */; };
+		7A01916E1E7A92B500283822 /* TCLockQRCodeTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A01916B1E7A92B500283822 /* TCLockQRCodeTitleView.m */; };
+		7A01916F1E7A92B500283822 /* TCLockQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A01916D1E7A92B500283822 /* TCLockQRCodeView.m */; };
 		7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */; };
 		7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C341E001BFF00224677 /* TCCompanyApplyNameViewCell.m */; };
 		7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C371E002CF000224677 /* TCCompanyNameViewCell.m */; };
@@ -587,7 +589,6 @@
 		7A2D2A971E1CF9820067D591 /* TCPaymentPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A2D2A8F1E1CF9820067D591 /* TCPaymentPasswordView.xib */; };
 		7A2D2A981E1CF9820067D591 /* TCPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D2A911E1CF9820067D591 /* TCPaymentView.m */; };
 		7A2F5C2C1E71536E00174EB1 /* TCLockQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */; };
-		7A2F5C2F1E716DCF00174EB1 /* TCLockQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */; };
 		7A2F7C691E763BB6007B831D /* TCVisitorInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C681E763BB6007B831D /* TCVisitorInfo.m */; };
 		7A2F7C6F1E768BAF007B831D /* TCAddVisitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C6E1E768BAF007B831D /* TCAddVisitorViewController.m */; };
 		7A2F7C721E768C36007B831D /* TCAddVisitorTimeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C711E768C36007B831D /* TCAddVisitorTimeViewCell.m */; };
@@ -631,7 +632,6 @@
 		7A550FAE1E70166D00BC36A8 /* TCImageCompressHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A550FAD1E70166D00BC36A8 /* TCImageCompressHandler.m */; };
 		7A58C5EF1E120D5E00C55A2C /* TCIDAuthDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A58C5EE1E120D5E00C55A2C /* TCIDAuthDetailViewController.m */; };
 		7A58C5F21E120F0300C55A2C /* TCIDAuthDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A58C5F11E120F0300C55A2C /* TCIDAuthDetailViewCell.m */; };
-		7A5DC69D1E7250C9006C161A /* TCLockQRCodeTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5DC69C1E7250C9006C161A /* TCLockQRCodeTitleView.m */; };
 		7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87711DE297A100E4130B /* TCWalletAccount.m */; };
 		7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F877E1DE2EEB100E4130B /* TCWalletBill.m */; };
 		7A5F87821DE2EFF500E4130B /* TCWalletBillWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87811DE2EFF500E4130B /* TCWalletBillWrapper.m */; };
@@ -2778,6 +2778,10 @@
 		55F06F1F1E07EC6500A849D7 /* TCScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCScanner.m; sourceTree = "<group>"; };
 		55F06F251E0A3AE200A849D7 /* TCBlurImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBlurImageView.h; sourceTree = "<group>"; };
 		55F06F261E0A3AE200A849D7 /* TCBlurImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBlurImageView.m; sourceTree = "<group>"; };
+		7A01916A1E7A92B500283822 /* TCLockQRCodeTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockQRCodeTitleView.h; sourceTree = "<group>"; };
+		7A01916B1E7A92B500283822 /* TCLockQRCodeTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockQRCodeTitleView.m; sourceTree = "<group>"; };
+		7A01916C1E7A92B500283822 /* TCLockQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockQRCodeView.h; sourceTree = "<group>"; };
+		7A01916D1E7A92B500283822 /* TCLockQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockQRCodeView.m; sourceTree = "<group>"; };
 		7A084C301E000D3B00224677 /* TCCompanyApplyTitleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyTitleViewCell.h; sourceTree = "<group>"; };
 		7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyApplyTitleViewCell.m; sourceTree = "<group>"; };
 		7A084C331E001BFF00224677 /* TCCompanyApplyNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyApplyNameViewCell.h; sourceTree = "<group>"; };
@@ -2904,8 +2908,6 @@
 		7A2D2A911E1CF9820067D591 /* TCPaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentView.m; sourceTree = "<group>"; };
 		7A2F5C2A1E71536E00174EB1 /* TCLockQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockQRCodeViewController.h; sourceTree = "<group>"; };
 		7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockQRCodeViewController.m; sourceTree = "<group>"; };
-		7A2F5C2D1E716DCF00174EB1 /* TCLockQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCLockQRCodeView.h; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeView.h; sourceTree = SOURCE_ROOT; };
-		7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCLockQRCodeView.m; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeView.m; sourceTree = SOURCE_ROOT; };
 		7A2F7C671E763BB6007B831D /* TCVisitorInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVisitorInfo.h; sourceTree = "<group>"; };
 		7A2F7C681E763BB6007B831D /* TCVisitorInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVisitorInfo.m; sourceTree = "<group>"; };
 		7A2F7C6D1E768BAF007B831D /* TCAddVisitorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAddVisitorViewController.h; sourceTree = "<group>"; };
@@ -2983,8 +2985,6 @@
 		7A58C5EE1E120D5E00C55A2C /* TCIDAuthDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthDetailViewController.m; sourceTree = "<group>"; };
 		7A58C5F01E120F0300C55A2C /* TCIDAuthDetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIDAuthDetailViewCell.h; sourceTree = "<group>"; };
 		7A58C5F11E120F0300C55A2C /* TCIDAuthDetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthDetailViewCell.m; sourceTree = "<group>"; };
-		7A5DC69B1E7250C9006C161A /* TCLockQRCodeTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCLockQRCodeTitleView.h; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeTitleView.h; sourceTree = SOURCE_ROOT; };
-		7A5DC69C1E7250C9006C161A /* TCLockQRCodeTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCLockQRCodeTitleView.m; path = individual/Feature/Home/Controller/OpenDoor/TCLockQRCodeTitleView.m; sourceTree = SOURCE_ROOT; };
 		7A5F87701DE297A100E4130B /* TCWalletAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletAccount.h; sourceTree = "<group>"; };
 		7A5F87711DE297A100E4130B /* TCWalletAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletAccount.m; sourceTree = "<group>"; };
 		7A5F877D1DE2EEB100E4130B /* TCWalletBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletBill.h; sourceTree = "<group>"; };
@@ -7481,10 +7481,10 @@
 		55BB9EB01E714DE300B0FD94 /* OpenDoor */ = {
 			isa = PBXGroup;
 			children = (
-				7A2F5C2D1E716DCF00174EB1 /* TCLockQRCodeView.h */,
-				7A2F5C2E1E716DCF00174EB1 /* TCLockQRCodeView.m */,
-				7A5DC69B1E7250C9006C161A /* TCLockQRCodeTitleView.h */,
-				7A5DC69C1E7250C9006C161A /* TCLockQRCodeTitleView.m */,
+				7A01916C1E7A92B500283822 /* TCLockQRCodeView.h */,
+				7A01916D1E7A92B500283822 /* TCLockQRCodeView.m */,
+				7A01916A1E7A92B500283822 /* TCLockQRCodeTitleView.h */,
+				7A01916B1E7A92B500283822 /* TCLockQRCodeTitleView.m */,
 				55BB9EB11E728C7200B0FD94 /* TCVisitorLocksCell.h */,
 				55BB9EB21E728C7200B0FD94 /* TCVisitorLocksCell.m */,
 				55BB9EB41E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.h */,
@@ -8999,6 +8999,7 @@
 				7AEB4CC31E03936300F83A7C /* TCBioEditPhoneViewController.m in Sources */,
 				7AC346EE1E0144B500E28EC9 /* TCWalletBillViewCell.m in Sources */,
 				7A7E94231DF5723A006A47CE /* TCRepairsCommitViewCell.m in Sources */,
+				7A01916E1E7A92B500283822 /* TCLockQRCodeTitleView.m in Sources */,
 				7A8352E11E5EDEC9003A8E76 /* TCService.m in Sources */,
 				5513065D1E714045004DF32F /* TCOpenDoorController.m in Sources */,
 				7A83528A1E5C4EEA003A8E76 /* TCCommonButton.m in Sources */,
@@ -9166,7 +9167,7 @@
 				092626831E0BA44000F5A18C /* TCShoppingCartSelectButton.m in Sources */,
 				09222E111DEE732D0064C0DF /* TCDetailStore.m in Sources */,
 				7AEB4CCA1E03936300F83A7C /* TCShippingAddressEditViewController.m in Sources */,
-				7A2F5C2F1E716DCF00174EB1 /* TCLockQRCodeView.m in Sources */,
+				7A01916F1E7A92B500283822 /* TCLockQRCodeView.m in Sources */,
 				7A64EA7D1E14EEE0008D0C12 /* WXApiManager.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,
@@ -9240,7 +9241,6 @@
 				7A2F7C751E768C4E007B831D /* TCAddVisitorDeviceViewCell.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
 				7A1A85471E66D61000BB5EDB /* TCServiceListViewController.m in Sources */,
-				7A5DC69D1E7250C9006C161A /* TCLockQRCodeTitleView.m in Sources */,
 				7A4E05051DEE86D0002371B0 /* TCImageURLSynthesizer.m in Sources */,
 				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.mm in Sources */,
@@ -9409,8 +9409,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: kang mu (3KD2Q352NW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kang mu (3KD2Q352NW)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -9474,7 +9474,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8dd63c32-c6dc-4d7a-a962-ee2232915699";
+				PROVISIONING_PROFILE = "f133662b-ff70-4837-87b8-d0be7088ae31";
 				PROVISIONING_PROFILE_SPECIFIER = "Individual Development";
 			};
 			name = Debug;
@@ -9485,8 +9485,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Tribal Commune Technology Co., Ltd. (452XNHBVYZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Tribal Commune Technology Co., Ltd. (452XNHBVYZ)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 452XNHBVYZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -9550,7 +9550,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1e052cd7-e3a5-4b85-ae31-5f1d8eabbcf1";
+				PROVISIONING_PROFILE = "84f30ef8-71f2-4f81-80f4-2d528400d6f6";
 				PROVISIONING_PROFILE_SPECIFIER = "Individual Distribution";
 			};
 			name = Release;

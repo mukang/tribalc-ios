@@ -113,7 +113,7 @@ TCLockEquipPickerViewDelegate>
             TCAddVisitorTimeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCAddVisitorTimeViewCell" forIndexPath:indexPath];
             cell.delegate = self;
             if (self.lockKey.endTime) {
-                cell.endTime = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.lockKey.endTime / 1000]];
+                cell.endTime = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.lockKey.endTime / 1000.0]];
             } else {
                 cell.endTime = @"请选择";
             }
@@ -178,7 +178,7 @@ TCLockEquipPickerViewDelegate>
 - (void)didTapEndLabelInAddVisitorTimeViewCell:(TCAddVisitorTimeViewCell *)cell {
     TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithController:self];
     datePickerView.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    datePickerView.datePicker.date = self.lockKey.endTime ? [NSDate dateWithTimeIntervalSince1970:self.lockKey.endTime/1000] : [NSDate date];
+    datePickerView.datePicker.date = self.lockKey.endTime ? [NSDate dateWithTimeIntervalSince1970:self.lockKey.endTime/1000.0] : [NSDate date];
     datePickerView.datePicker.minimumDate = [NSDate date];
     datePickerView.datePicker.maximumDate = [[NSDate date] dateByAddingTimeInterval:(60 * 60 * 24)];
     datePickerView.delegate = self;
@@ -211,8 +211,7 @@ TCLockEquipPickerViewDelegate>
 #pragma mark - TCDatePickerViewDelegate
 
 - (void)didClickConfirmButtonInDatePickerView:(TCDatePickerView *)view {
-    NSTimeInterval timestamp = [view.datePicker.date timeIntervalSince1970];
-    self.lockKey.endTime = (NSInteger)(timestamp * 1000);
+    self.lockKey.endTime = [view.datePicker.date timeIntervalSince1970] * 1000;
     [self.tableView reloadData];
 }
 
