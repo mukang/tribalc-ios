@@ -233,7 +233,7 @@
         [MBProgressHUD showHUD:YES];
         [[TCBuluoApi api] fetchWechatRechargeInfoWithMoney:money result:^(TCWechatRechargeInfo *wechatRechargeInfo, NSError *error) {
             if (wechatRechargeInfo) {
-                [MBProgressHUD hideHUD:YES];
+                [MBProgressHUD hideHUD:NO];
                 [weakSelf handleArouseWechatRecharge:wechatRechargeInfo];
             } else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
