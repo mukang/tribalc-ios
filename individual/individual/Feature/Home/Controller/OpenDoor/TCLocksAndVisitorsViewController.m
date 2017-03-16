@@ -101,6 +101,7 @@
             if ([lockList isKindOfClass:[NSArray class]]) {
                 weakSelf.lockArr = lockList;
                 [weakSelf.tableView reloadData];
+                [weakSelf checkLocksOrVisitors];
             }else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
@@ -111,7 +112,7 @@
             if ([lockKeysList isKindOfClass:[NSArray class]]) {
                 weakSelf.lockArr = lockKeysList;
                 [weakSelf.tableView reloadData];
-                [weakSelf checkVisitors];
+                [weakSelf checkLocksOrVisitors];
             }else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
@@ -158,7 +159,7 @@
     
 }
 
-- (void)checkVisitors {
+- (void)checkLocksOrVisitors {
     if (self.lockArr.count) {
         if (self.noVisitorView) {
             [self.noVisitorView removeFromSuperview];
@@ -166,12 +167,18 @@
         }
     } else {
         if (!self.noVisitorView) {
-            [self addNoVisitorView];
+            NSString *title;
+            if (self.locksOrVisitors == TCLocks) {
+                title = @"您的公司未被授权，暂不支持开锁";
+            } else {
+                title = @"您还没有添加访客，请您添加访客";
+            }
+            [self addNoVisitorViewWithTitle:title];
         }
     }
 }
 
-- (void)addNoVisitorView {
+- (void)addNoVisitorViewWithTitle:(NSString *)title {
     UIView *noVisitorView = [[UIView alloc] init];
     noVisitorView.backgroundColor = [UIColor whiteColor];
     noVisitorView.layer.cornerRadius = 5.0;
@@ -185,7 +192,7 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock_no_visitors"]];
     [noVisitorView addSubview:imageView];
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"您还没有添加访客，请您添加访客！";
+    titleLabel.text = title;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = TCRGBColor(154, 154, 154);
     titleLabel.font = [UIFont systemFontOfSize:12];
@@ -232,7 +239,7 @@
                         lockWrapper.keys = mutableArr;
                     }
                     [self.tableView reloadData];
-                    [weakSelf checkVisitors];
+                    [weakSelf checkLocksOrVisitors];
                 }
             }];
         }
