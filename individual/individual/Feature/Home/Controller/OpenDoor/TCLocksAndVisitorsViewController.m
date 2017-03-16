@@ -27,6 +27,8 @@
 
 @property (strong, nonatomic) UIImageView *imageView;
 
+@property (weak, nonatomic) UIView *noVisitorView;
+
 @property (strong, nonatomic) UIButton *addBtn;
 
 @property (strong, nonatomic) UIImageView *btnImageView;
@@ -37,10 +39,13 @@
 
 @end
 
-@implementation TCLocksAndVisitorsViewController
+@implementation TCLocksAndVisitorsViewController {
+    __weak TCLocksAndVisitorsViewController *weakSelf;
+}
 
 - (instancetype)initWithType:(TCLocksOrVisitors)locksOrVisitors {
     if (self = [super init]) {
+        weakSelf = self;
         _locksOrVisitors = locksOrVisitors;
     }
     return self;
@@ -94,8 +99,8 @@
     if (self.locksOrVisitors == TCLocks) {
         [[TCBuluoApi api] fetchMyLockListResult:^(NSArray *lockList, NSError *error) {
             if ([lockList isKindOfClass:[NSArray class]]) {
-                self.lockArr = lockList;
-                [self.tableView reloadData];
+                weakSelf.lockArr = lockList;
+                [weakSelf.tableView reloadData];
             }else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
@@ -104,8 +109,9 @@
     }else {
         [[TCBuluoApi api] fetchMyLockKeysResult:^(NSArray *lockKeysList, NSError *error) {
             if ([lockKeysList isKindOfClass:[NSArray class]]) {
-                self.lockArr = lockKeysList;
-                [self.tableView reloadData];
+                weakSelf.lockArr = lockKeysList;
+                [weakSelf.tableView reloadData];
+                [weakSelf checkVisitors];
             }else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
@@ -152,7 +158,54 @@
     
 }
 
-#pragma mark TCVisitorLocksCellDelegate 
+- (void)checkVisitors {
+    if (self.lockArr.count) {
+        if (self.noVisitorView) {
+            [self.noVisitorView removeFromSuperview];
+            self.noVisitorView = nil;
+        }
+    } else {
+        if (!self.noVisitorView) {
+            [self addNoVisitorView];
+        }
+    }
+}
+
+- (void)addNoVisitorView {
+    UIView *noVisitorView = [[UIView alloc] init];
+    noVisitorView.backgroundColor = [UIColor whiteColor];
+    noVisitorView.layer.cornerRadius = 5.0;
+    noVisitorView.layer.borderColor = TCRGBColor(186, 186, 186).CGColor;
+    CGFloat scale = TCScreenWidth > 375.0 ? 3 : 2;
+    noVisitorView.layer.borderWidth = 1 / scale;
+    noVisitorView.clipsToBounds = YES;
+    [self.view insertSubview:noVisitorView aboveSubview:self.tableView];
+    self.noVisitorView = noVisitorView;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock_no_visitors"]];
+    [noVisitorView addSubview:imageView];
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"您还没有添加访客，请您添加访客！";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = TCRGBColor(154, 154, 154);
+    titleLabel.font = [UIFont systemFontOfSize:12];
+    [noVisitorView addSubview:titleLabel];
+    
+    [noVisitorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.bottom.right.equalTo(weakSelf.tableView);
+    }];
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(TCRealValue(59.5), TCRealValue(66.5)));
+        make.top.equalTo(noVisitorView.mas_top).offset(TCRealValue(68));
+        make.centerX.equalTo(noVisitorView);
+    }];
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageView.mas_bottom).offset(10);
+        make.centerX.equalTo(imageView);
+    }];
+}
+
+#pragma mark TCVisitorLocksCellDelegate
 - (void)deleteEquip:(UITableViewCell *)cell {
     if ([cell isKindOfClass:[UITableViewCell class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
@@ -179,6 +232,7 @@
                         lockWrapper.keys = mutableArr;
                     }
                     [self.tableView reloadData];
+                    [weakSelf checkVisitors];
                 }
             }];
         }
@@ -331,7 +385,6 @@
 }
 
 - (void)handleClickAddButton:(UIButton *)sender {
-    __weak typeof(self) weakSelf = self;
     TCAddVisitorViewController *vc = [[TCAddVisitorViewController alloc] init];
     vc.fromController = self;
     vc.addVisitorCompletion = ^() {
