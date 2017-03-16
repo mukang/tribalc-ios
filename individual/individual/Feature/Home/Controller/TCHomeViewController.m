@@ -490,6 +490,25 @@
 }
 
 - (void)toLocksOrVisitorsView:(TCLocksOrVisitors)lockOrVisitor {
+    if ([self checkUserNeedLogin]) return;
+    
+    NSString *featureStr;
+    if (lockOrVisitor == TCLocks) {
+        featureStr = @"开门";
+    } else {
+        featureStr = @"授权";
+    }
+    
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+    if (![userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+        [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"身份认证成功后才可使用%@功能", featureStr]];
+        return;
+    }
+    if (!userInfo.companyID) {
+        [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"绑定公司成功后才可使用%@功能", featureStr]];
+        return;
+    }
+    
     TCLocksAndVisitorsViewController *lockAndVisitorVC = [[TCLocksAndVisitorsViewController alloc] initWithType:lockOrVisitor];
     lockAndVisitorVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:lockAndVisitorVC animated:YES];

@@ -12,7 +12,8 @@
 #define _TCClientConfig_h
 
 #if DEBUG
-#define TCCLIENT_API_HOST    @"dev-app-services.buluo-gs.com"
+//#define TCCLIENT_API_HOST    @"dev-app-services.buluo-gs.com"
+#define TCCLIENT_API_HOST    @"123.56.251.131"
 #else
 #define TCCLIENT_API_HOST    @"app-services.buluo-gs.com"
 #endif

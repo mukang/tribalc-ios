@@ -245,6 +245,11 @@ TCLockEquipPickerViewDelegate>
         [MBProgressHUD showHUDWithMessage:@"请选择门锁"];
         return;
     }
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+    if ([self.lockKey.phone isEqualToString:userInfo.phone]) {
+        [MBProgressHUD showHUDWithMessage:@"不能添加自己的手机号"];
+        return;
+    }
     
     TCVisitorInfo *info = [[TCVisitorInfo alloc] init];
     info.equipId = self.lockKey.equipId;
