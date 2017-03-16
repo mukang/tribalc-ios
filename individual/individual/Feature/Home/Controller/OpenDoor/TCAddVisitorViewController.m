@@ -180,7 +180,7 @@ TCLockEquipPickerViewDelegate>
     datePickerView.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     datePickerView.datePicker.date = self.lockKey.endTime ? [NSDate dateWithTimeIntervalSince1970:self.lockKey.endTime/1000] : [NSDate date];
     datePickerView.datePicker.minimumDate = [NSDate date];
-    datePickerView.datePicker.maximumDate = [[NSDate date] dateByAddingTimeInterval:(60 * 60 * 24 * 7)];
+    datePickerView.datePicker.maximumDate = [[NSDate date] dateByAddingTimeInterval:(60 * 60 * 24)];
     datePickerView.delegate = self;
     [datePickerView show];
     
