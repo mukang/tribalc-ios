@@ -8,6 +8,7 @@
 
 #import "TCToolsViewController.h"
 #import "TCRepairsViewController.h"
+#import "TCLocksAndVisitorsViewController.h"
 #import "TCNavigationController.h"
 
 #import "UIImage+Category.h"
@@ -132,17 +133,26 @@
 - (void)openDoor {
     if ([self checkUserNeedLogin]) return;
     
-    if (![[TCBuluoApi api] currentUserSession].userInfo.companyID) {
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+    if (![userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+        [MBProgressHUD showHUDWithMessage:@"身份认证成功后才可使用开门功能"];
+        return;
+    }
+    if (!userInfo.companyID) {
         [MBProgressHUD showHUDWithMessage:@"绑定公司成功后才可使用开门功能"];
         return;
     }
     
-    if (_blurImageView == nil) {
-        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
-            _blurImageView = nil;
-        }];
-    }
-    [_blurImageView show];
+    TCLocksAndVisitorsViewController *lockAndVisitorVC = [[TCLocksAndVisitorsViewController alloc] initWithType:TCLocks];
+    lockAndVisitorVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:lockAndVisitorVC animated:YES];
+    
+//    if (_blurImageView == nil) {
+//        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
+//            _blurImageView = nil;
+//        }];
+//    }
+//    [_blurImageView show];
 }
 
 - (void)propertyTap {
