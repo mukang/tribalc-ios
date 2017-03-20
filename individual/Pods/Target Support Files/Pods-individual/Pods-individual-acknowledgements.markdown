@@ -44,11 +44,6 @@ Copyright © 2014 AutoNavi. All Rights Reserved.
 Copyright © 2014 AutoNavi. All Rights Reserved.
 
 
-## Bugly
-
-Copyright 2016 tencent.com. All rights reserved.
-
-
 ## EAIntroView
 
 Copyright (c) 2013-2016 Evgeny Aleksandrov

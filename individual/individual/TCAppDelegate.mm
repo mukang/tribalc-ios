@@ -12,13 +12,9 @@
 #import "TCCallVideoViewController.h"
 #import "TCLaunchViewController.h"
 
-#import <Bugly/Bugly.h>
-
 #import "TCSipAPI.h"
 #import "WXApiManager.h"
 #import <CoreLocation/CoreLocation.h>
-
-static NSString *const kBuglyAppID = @"900059019";
 
 @interface TCAppDelegate ()<CLLocationManagerDelegate>
 
@@ -43,9 +39,6 @@ static NSString *const kBuglyAppID = @"900059019";
     [self.window makeKeyAndVisible];
     [self showLaunchWindow];
     application.statusBarHidden = NO;
-    
-    // bugly
-    [Bugly startWithAppId:kBuglyAppID];
     
     // SIP
 //    TCSipAPI *sipApi = [TCSipAPI api];
