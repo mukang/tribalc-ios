@@ -13,6 +13,7 @@
 #import "TCHomeViewController.h"
 #import "TCCommunitiesViewController.h"
 #import "TCToolsViewController.h"
+#import "TCLoginViewController.h"
 
 #import "TCTabBar.h"
 #import "TCFunctions.h"
@@ -26,12 +27,15 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 
 @end
 
-@implementation TCTabBarController
+@implementation TCTabBarController {
+    __weak TCTabBarController *weakSelf;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    weakSelf = self;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self addChildController:[[TCHomeViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
@@ -73,22 +77,51 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [self addChildViewController:nav];
 }
 
-#pragma mark - notification
+#pragma mark - Notification
 
 - (void)registerNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleClickVicinityButton:) name:TCVicinityButtonDidClickNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleClickVicinityButton:)
+                                                 name:TCVicinityButtonDidClickNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleUnauthorizedNotification:)
+                                                 name:TCClientUnauthorizedNotification object:nil];
 }
 
 - (void)removeNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark - actions
+#pragma mark - Actions
 
 - (void)handleClickVicinityButton:(NSNotification *)noti {
     TCVicinityViewController *vicinityVC = [[TCVicinityViewController alloc] init];
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vicinityVC];
     nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)handleUnauthorizedNotification:(NSNotification *)notification {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您的账号已在其他设备使用，请重新登录" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [weakSelf handleUserLogout];
+    }];
+    [alertController addAction:action];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)handleUserLogout {
+    [[TCBuluoApi api] logout:^(BOOL success, NSError *error) {
+        [weakSelf showLoginViewController];
+    }];
+}
+
+#pragma mark - Show Login View Controller
+
+- (void)showLoginViewController {
+    TCLoginViewController *vc = [[TCLoginViewController alloc] initWithNibName:@"TCLoginViewController" bundle:[NSBundle mainBundle]];
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
