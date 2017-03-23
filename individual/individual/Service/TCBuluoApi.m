@@ -197,7 +197,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:nickname forParam:@"nickname"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.nickname = nickname;
                 [self setUserSession:userSession];
@@ -225,7 +225,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:avatar forParam:@"picture"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.picture = avatar;
                 [self setUserSession:userSession];
@@ -253,7 +253,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:cover forParam:@"cover"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.cover = cover;
                 [self setUserSession:userSession];
@@ -292,7 +292,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
         [request setValue:sex forParam:@"sex"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.sex = sex;
                 userSession.userInfo.gender = gender;
@@ -322,7 +322,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSTimeInterval timestamp = [birthdate timeIntervalSince1970];
         [request setValue:[NSNumber numberWithInteger:(timestamp * 1000)] forParam:@"birthday"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.birthday = (NSUInteger)(timestamp * 1000);
                 [self setUserSession:userSession];
@@ -364,7 +364,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         }
         [request setValue:emotion forKey:@"emotion"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.emotion = emotion;
                 userSession.userInfo.emotionState = emotionState;
@@ -396,7 +396,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.province = userAddress.province;
                 userSession.userInfo.city = userAddress.city;
@@ -426,7 +426,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:coordinate forParam:@"coordinate"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.coordinate = coordinate;
                 [self setUserSession:userSession];
@@ -457,7 +457,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.phone = phoneInfo.phone;
                 [self setUserSession:userSession];
@@ -485,7 +485,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:shippingAddress.ID forKey:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo.addressID = shippingAddress.ID;
                 userSession.userInfo.shippingAddress = shippingAddress;
@@ -517,7 +517,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 201) {
+            if (response.codeInResponse == 201) {
                 TCUserShippingAddress *address = [[TCUserShippingAddress alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, address, nil));
@@ -602,7 +602,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 if ([shippingAddress.ID isEqualToString:self.currentUserSession.userInfo.addressID]) {
                     TCUserSession *userSession = self.currentUserSession;
                     userSession.userInfo.shippingAddress = shippingAddress;
@@ -631,7 +631,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 204) {
+            if (response.codeInResponse == 204) {
                 if ([shippingAddressID isEqualToString:self.currentUserSession.userInfo.addressID]) {
                     TCUserSession *userSession = [self currentUserSession];
                     userSession.userInfo.addressID = nil;
@@ -721,7 +721,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:anOldPassword forParam:@"oldPassword"];
         [request setValue:aNewPassword forParam:@"newPassword"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -779,7 +779,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 201) {
+            if (response.codeInResponse == 201) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -803,7 +803,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 204) {
+            if (response.codeInResponse == 204) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -853,7 +853,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:userCompanyInfo.company.ID forParam:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserInfo *userInfo = [[TCUserInfo alloc] initWithObjectDictionary:response.data];
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo = userInfo;
@@ -885,7 +885,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserInfo *userInfo = [[TCUserInfo alloc] initWithObjectDictionary:response.data];
                 TCUserSession *userSession = self.currentUserSession;
                 userSession.userInfo = userInfo;
@@ -917,7 +917,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 201) {
+            if (response.codeInResponse == 201) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -952,7 +952,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:password forParam:@"password"];
         [request setValue:orderIDs forParam:@"orderIds"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserPayment *payment = [[TCUserPayment alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(payment, nil));
@@ -977,7 +977,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCUserPayment *payment = [[TCUserPayment alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(payment, nil));
@@ -1004,7 +1004,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     request.token = self.currentUserSession.token;
     [request setValue:phone forParam:@"value"];
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
-        if (response.statusCode == 202) {
+        if (response.codeInResponse == 202) {
             if (resultBlock) {
                 TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
             }
@@ -1209,7 +1209,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         
         
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 NSArray *result = response.data;
                 NSMutableArray *orderList = [[NSMutableArray alloc] init];
                 for (int i = 0; i < result.count; i++) {
@@ -1240,7 +1240,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:statusStr forParam:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
-            if (respone.statusCode == 200) {
+            if (respone.codeInResponse == 200) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -1265,7 +1265,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:status forParam:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
-            if (respone.statusCode == 200) {
+            if (respone.codeInResponse == 200) {
                 if (resultBlock) {
                     TCOrder *order = [[TCOrder alloc] initWithObjectDictionary:respone.data];
                     TC_CALL_ASYNC_MQ(resultBlock(YES, order, nil));
@@ -1348,7 +1348,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:@"CANCEL" forParam:@"value"];
         
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
-            if (respone.statusCode == 200) {
+            if (respone.codeInResponse == 200) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -1384,7 +1384,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
             TCReservationDetail *result = [[TCReservationDetail alloc] initWithObjectDictionary:respone.data];
-            if (respone.statusCode == 201) {
+            if (respone.codeInResponse == 201) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(result, nil));
                 }
@@ -1440,7 +1440,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:goodsId forParam:@"goodsId"];
         
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
-            if (respone.statusCode == 201) {
+            if (respone.codeInResponse == 201) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -1469,7 +1469,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [request setValue:[NSNumber numberWithInteger:amount] forParam:@"amount"];
         
         [[TCClient client ] send:request finish:^(TCClientResponse *respone) {
-            if (respone.statusCode == 200) {
+            if (respone.codeInResponse == 200) {
                 TCCartItem *result = [[TCCartItem alloc] initWithObjectDictionary:respone.data];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(result, nil));
@@ -1502,7 +1502,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         
         [[TCClient client] send:request finish:^(TCClientResponse *respone) {
-            if (respone.statusCode == 204) {
+            if (respone.codeInResponse == 204) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -1536,7 +1536,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut uploadURLString:uploadURLString];
             [request setImageData:imageData];
             [[TCClient client] upload:request progress:progress finish:^(TCClientResponse *response) {
-                if (response.statusCode == 200) {
+                if (response.codeInResponse == 200) {
                     if (resultBlock) {
                         TC_CALL_ASYNC_MQ(resultBlock(YES, uploadInfo, nil));
                     }
@@ -1688,7 +1688,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             [request setValue:dic[key] forParam:key];
         }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 TCPropertyManage *propertyManage = [[TCPropertyManage alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, propertyManage, nil));
@@ -1716,7 +1716,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:@"ssssss" forParam:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -1742,7 +1742,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -1795,7 +1795,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:prepayID forParam:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
@@ -1821,7 +1821,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 if (resultBlock) {
                     NSMutableArray *lockList = [NSMutableArray array];
                     NSArray *dicArray = response.data;
@@ -1852,7 +1852,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 200) {
+            if (response.codeInResponse == 200) {
                 if (resultBlock) {
                     NSMutableArray *lockList = [NSMutableArray array];
                     NSArray *dicArray = response.data;
@@ -1911,7 +1911,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodDelete apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.statusCode == 204) {
+            if (response.codeInResponse == 204) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }
