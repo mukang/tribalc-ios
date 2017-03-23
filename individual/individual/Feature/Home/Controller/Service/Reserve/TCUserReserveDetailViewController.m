@@ -72,7 +72,7 @@
 
 - (void)initUI {
     UIScrollView *mScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
-    mScrollView.backgroundColor = TCRGBColor(242, 242, 242);
+    mScrollView.backgroundColor = TCBackgroundColor;
     [self.view addSubview:mScrollView];
     
     
@@ -139,7 +139,7 @@
 - (UIView *)getContactCustomerServiceViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
     UILabel *tagLab = [TCComponent createLabelWithText:@"有问题请联系客服 : " AndFontSize:TCRealValue(12)];
-    tagLab.textColor = TCRGBColor(154, 154, 154);
+    tagLab.textColor = TCGrayColor;
     UIButton *phoneBtn = [[UIButton alloc] init];
     [phoneBtn setTitle:@"4008-252-987" forState:UIControlStateNormal];
     [phoneBtn setTitleColor:TCRGBColor(81, 199, 209) forState:UIControlStateNormal];
@@ -157,7 +157,7 @@
 
 - (UIView *)getStatusViewWithStatus:(NSString *)status {
     UIView *statusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(71))];
-    statusView.backgroundColor = TCRGBColor(242, 242, 242);
+    statusView.backgroundColor = TCBackgroundColor;
     
     UIButton *statusButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *image = [UIImage imageNamed:[self getStatusImgName:status]];
@@ -165,7 +165,7 @@
     [statusButton setAttributedTitle:[[NSAttributedString alloc] initWithString:status
                                                                      attributes:@{
                                                                                   NSFontAttributeName: [UIFont boldSystemFontOfSize:TCRealValue(14)],
-                                                                                  NSForegroundColorAttributeName: TCRGBColor(42, 42, 42)
+                                                                                  NSForegroundColorAttributeName: TCBlackColor
                                                                                   }]
                             forState:UIControlStateNormal];
     statusButton.titleEdgeInsets = UIEdgeInsetsMake(0, 3, 0, 0);
@@ -324,7 +324,7 @@
 
 - (UIView *)getTableBottomViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = TCRGBColor(242, 242, 242);
+    view.backgroundColor = TCBackgroundColor;
     UIView *bottomLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, view.height - TCRealValue(0.5), view.width, TCRealValue(0.5))];
     UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, view.width, TCRealValue(0.5))];
     [view addSubview:bottomLineView];

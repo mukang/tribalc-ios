@@ -25,7 +25,7 @@
     UILabel *amountLabel = [[UILabel alloc] init];
     amountLabel.text = @"充值金额";
     amountLabel.textAlignment = NSTextAlignmentLeft;
-    amountLabel.textColor = TCRGBColor(42, 42, 42);
+    amountLabel.textColor = TCBlackColor;
     amountLabel.font = [UIFont boldSystemFontOfSize:14];
     [self addSubview:amountLabel];
     
@@ -34,7 +34,7 @@
     textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入充值金额"
                                                                       attributes:@{
                                                                                    NSFontAttributeName: [UIFont systemFontOfSize:14],
-                                                                                   NSForegroundColorAttributeName: TCRGBColor(154, 154, 154)
+                                                                                   NSForegroundColorAttributeName: TCGrayColor
                                                                                    }];
     [self addSubview:textField];
     self.textField = textField;

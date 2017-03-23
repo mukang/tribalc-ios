@@ -28,12 +28,12 @@
     [self.contentView addSubview:iconView];
     
     UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.textColor = TCRGBColor(42, 42, 42);
+    nameLabel.textColor = TCBlackColor;
     nameLabel.font = [UIFont boldSystemFontOfSize:12];
     [self.contentView addSubview:nameLabel];
     
     UIView *lineView = [[UIView alloc] init];
-    lineView.backgroundColor = TCRGBColor(221, 221, 221);
+    lineView.backgroundColor = TCSeparatorLineColor;
     [self.contentView addSubview:lineView];
     
     self.iconView = iconView;

@@ -21,8 +21,8 @@
     [super awakeFromNib];
     
     MLBPasswordTextField *textField = [[MLBPasswordTextField alloc] init];
-    textField.mlb_borderColor = TCRGBColor(221, 221, 221);
-    textField.mlb_dotColor = TCRGBColor(42, 42, 42);
+    textField.mlb_borderColor = TCSeparatorLineColor;
+    textField.mlb_dotColor = TCBlackColor;
     textField.mlb_dotRadius = 7;
     textField.mlb_delegate = self;
     textField.size = CGSizeMake(TCRealValue(337), 49.5);

@@ -34,7 +34,7 @@
     UILabel *methodLabel = [[UILabel alloc] init];
     methodLabel.text = @"充值方式";
     methodLabel.textAlignment = NSTextAlignmentLeft;
-    methodLabel.textColor = TCRGBColor(154, 154, 154);
+    methodLabel.textColor = TCGrayColor;
     methodLabel.font = [UIFont systemFontOfSize:12];
     [self addSubview:methodLabel];
     

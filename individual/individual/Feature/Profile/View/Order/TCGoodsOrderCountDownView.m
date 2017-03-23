@@ -25,7 +25,7 @@
 }
 
 - (void)setupSubviews {
-    self.backgroundColor = TCRGBColor(242, 242, 242);
+    self.backgroundColor = TCBackgroundColor;
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.userInteractionEnabled = NO;
@@ -50,7 +50,7 @@
     [self.button setAttributedTitle:[[NSAttributedString alloc] initWithString:countDowntext
                                                                     attributes:@{
                                                                                  NSFontAttributeName: [UIFont systemFontOfSize:10],
-                                                                                 NSForegroundColorAttributeName: TCRGBColor(154, 154, 154)
+                                                                                 NSForegroundColorAttributeName: TCGrayColor
                                                                                  }]
                            forState:UIControlStateNormal];
 }

@@ -277,7 +277,7 @@
     [footerView addSubview:topLineView];
     
     UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, footerView.height - TCRealValue(4), self.view.width, TCRealValue(4))];
-    downLineView.backgroundColor = TCRGBColor(242, 242, 242);
+    downLineView.backgroundColor = TCBackgroundColor;
     [footerView addSubview:downLineView];
     
     [footerView addSubview:backView];

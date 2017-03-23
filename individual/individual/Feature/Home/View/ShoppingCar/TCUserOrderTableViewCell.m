@@ -33,7 +33,7 @@
     if (self) {
       
         _backView = [[UIView alloc] init];
-        _backView.backgroundColor = TCRGBColor(242, 242, 242);
+        _backView.backgroundColor = TCBackgroundColor;
         [self.contentView addSubview:_backView];
         
         UIImageView *leftImageView = [[UIImageView alloc] init];
@@ -56,7 +56,7 @@
 
         
         UILabel *standardLab = [[UILabel alloc] init];
-        standardLab.textColor = TCRGBColor(154, 154, 154);
+        standardLab.textColor = TCGrayColor;
         standardLab.font = [UIFont systemFontOfSize:TCRealValue(12)];
         [_backView addSubview:standardLab];
         self.standardLab = standardLab;

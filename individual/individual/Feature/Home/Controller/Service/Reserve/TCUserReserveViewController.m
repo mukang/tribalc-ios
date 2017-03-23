@@ -126,7 +126,7 @@
     if ([text isEqualToString:@"PROCESSING"]) {
         return TCRGBColor(242, 68, 69);
     } else if ([text isEqualToString:@"FAILURE"] || [text isEqualToString:@"CANCEL"]) {
-        return TCRGBColor(154, 154, 154);
+        return TCGrayColor;
     } else {
         return TCRGBColor(81, 199, 209);
     }
@@ -167,7 +167,7 @@
     }
     
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCRealValue(7))];
-    backView.backgroundColor = TCRGBColor(242, 242, 242);
+    backView.backgroundColor = TCBackgroundColor;
     [footerView addSubview:backView];
     
     return footerView;
