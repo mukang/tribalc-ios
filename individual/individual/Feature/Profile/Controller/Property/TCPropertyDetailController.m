@@ -218,7 +218,7 @@
         NSRange ra = [money rangeOfString:[NSString stringWithFormat:@"¥%.2f",_propertyManage.totalFee]];
         NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:money];
         [att addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14] range:ra];
-        [att addAttribute:NSForegroundColorAttributeName value:TCRGBColor(42, 42, 42) range:ra];
+        [att addAttribute:NSForegroundColorAttributeName value:TCBlackColor range:ra];
         _moneyLabel.attributedText = att;
     }else {
         _moneyLabel.attributedText = nil;

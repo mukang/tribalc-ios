@@ -31,7 +31,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = TCRGBColor(242, 242, 242);
+        self.backgroundColor = TCBackgroundColor;
         
         _isNeedVerification = NO;
         
@@ -67,7 +67,7 @@
 
 - (UIView *)getLineViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = TCRGBColor(242, 242, 242);
+    view.backgroundColor = TCBackgroundColor;
     
     return view;
 }
@@ -93,7 +93,7 @@
     _verificationCodeTextField = [[UITextField alloc] initWithFrame:CGRectMake(TCRealValue(20), 0, self.width - TCRealValue(40), view.height)];
     _verificationCodeTextField.placeholder = @"请输入您的验证码";
     _verificationCodeTextField.font = [UIFont systemFontOfSize:TCRealValue(14)];
-    [_verificationCodeTextField setValue:TCRGBColor(154, 154, 154) forKeyPath:@"_placeholderLabel.textColor"];
+    [_verificationCodeTextField setValue:TCGrayColor forKeyPath:@"_placeholderLabel.textColor"];
     [_verificationCodeTextField setValue:[UIFont systemFontOfSize:TCRealValue(14)] forKeyPath:@"_placeholderLabel.font"];
     [view addSubview:_verificationCodeTextField];
     _verificationCodeTextField.delegate = self;
@@ -114,7 +114,7 @@
     _additionalTextField.backgroundColor = [UIColor whiteColor];
     _additionalTextField.font = [UIFont systemFontOfSize:TCRealValue(11)];
     _additionalTextField.placeholder = @"可填写附加要求，我们会尽量安排，不超过20字";
-    [_additionalTextField setValue:TCRGBColor(186, 186, 186) forKeyPath:@"_placeholderLabel.textColor"];
+    [_additionalTextField setValue:TCLightGrayColor forKeyPath:@"_placeholderLabel.textColor"];
     [_additionalTextField setValue:[UIFont systemFontOfSize:TCRealValue(11)] forKeyPath:@"_placeholderLabel.font"];
     [view addSubview:_additionalTextField];
     
@@ -163,7 +163,7 @@
     _phoneTextField.delegate = self;
     _phoneTextField.tag = 10010;
     _phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
-    [_phoneTextField setValue:TCRGBColor(154, 154, 154) forKeyPath:@"_placeholderLabel.textColor"];
+    [_phoneTextField setValue:TCGrayColor forKeyPath:@"_placeholderLabel.textColor"];
     [_phoneTextField setValue:[UIFont systemFontOfSize:TCRealValue(14)] forKeyPath:@"_placeholderLabel.font"];
     _phoneTextField.userInteractionEnabled = NO;
     [phoneView addSubview:_phoneTextField];

@@ -37,7 +37,7 @@
         self.descLabel.attributedText = [[NSAttributedString alloc] initWithString:communityDetailInfo.desc
                                                                         attributes:@{
                                                                                      NSFontAttributeName: [UIFont systemFontOfSize:14],
-                                                                                     NSForegroundColorAttributeName: TCRGBColor(42, 42, 42),
+                                                                                     NSForegroundColorAttributeName: TCBlackColor,
                                                                                      NSParagraphStyleAttributeName: paragraphStyle
                                                                                      }];
     }

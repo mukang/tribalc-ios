@@ -36,7 +36,7 @@
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"选择付款方式";
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.textColor = TCRGBColor(42, 42, 42);
+    titleLabel.textColor = TCBlackColor;
     titleLabel.font = [UIFont systemFontOfSize:17];
     [self addSubview:titleLabel];
     
@@ -47,11 +47,11 @@
     [self addSubview:backButton];
     
     UIView *separatorView = [[UIView alloc] init];
-    separatorView.backgroundColor = TCRGBColor(221, 221, 221);
+    separatorView.backgroundColor = TCSeparatorLineColor;
     [self addSubview:separatorView];
     
     UITableView *tableView = [[UITableView alloc] init];
-    tableView.separatorColor = TCRGBColor(221, 221, 221);
+    tableView.separatorColor = TCSeparatorLineColor;
     tableView.rowHeight = 50;
     tableView.dataSource = self;
     tableView.delegate = self;

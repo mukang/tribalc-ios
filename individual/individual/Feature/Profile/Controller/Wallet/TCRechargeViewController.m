@@ -52,7 +52,7 @@
 
 - (void)setupNavBar {
     [self.navigationController.navigationBar setTranslucent:YES];
-    [self.navigationController.navigationBar setTintColor:TCRGBColor(42, 42, 42)];
+    [self.navigationController.navigationBar setTintColor:TCBlackColor];
     
     UIImage *barImage = [UIImage imageNamed:@"TransparentPixel"];
     [self.navigationController.navigationBar setBackgroundImage:barImage forBarMetrics:UIBarMetricsDefault];
@@ -70,7 +70,7 @@
     
     UILabel *balanceLabel = [[UILabel alloc] init];
     balanceLabel.textAlignment = NSTextAlignmentCenter;
-    balanceLabel.textColor = TCRGBColor(42, 42, 42);
+    balanceLabel.textColor = TCBlackColor;
     balanceLabel.font = [UIFont boldSystemFontOfSize:17];
     balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", self.balance];
     [self.view addSubview:balanceLabel];
@@ -78,7 +78,7 @@
     
     TCRechargeInputView *inputView = [[TCRechargeInputView alloc] init];
     inputView.textField.keyboardType = UIKeyboardTypeDecimalPad;
-    inputView.textField.textColor = TCRGBColor(42, 42, 42);
+    inputView.textField.textColor = TCBlackColor;
     inputView.textField.font = [UIFont systemFontOfSize:14];
     inputView.textField.delegate = self;
     if (self.suggestMoney) {

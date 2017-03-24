@@ -191,7 +191,7 @@
     [timeButton addSubview:timeLab];
     
     UIView *downLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), timeButton.height - TCRealValue(0.5), self.view.width - TCRealValue(40), TCRealValue(0.5))];
-    downLineView.backgroundColor = TCRGBColor(242, 242, 242);
+    downLineView.backgroundColor = TCBackgroundColor;
     [timeButton addSubview:downLineView];
     
     return timeButton;
@@ -207,7 +207,7 @@
     [personNumberButton addSubview:personNumberLab];
     
     UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(TCRealValue(20), 0, personNumberButton.width - TCRealValue(40), TCRealValue(0.5))];
-    topLineView.backgroundColor = TCRGBColor(242, 242, 242);
+    topLineView.backgroundColor = TCBackgroundColor;
     [personNumberButton addSubview:topLineView];
     
     return personNumberButton;

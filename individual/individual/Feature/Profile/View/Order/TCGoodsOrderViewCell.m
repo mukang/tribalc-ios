@@ -40,7 +40,7 @@
     self.contentView.backgroundColor = [UIColor whiteColor];
     
     UIView *containerView = [[UIView alloc] init];
-    containerView.backgroundColor = TCRGBColor(242, 242, 242);
+    containerView.backgroundColor = TCBackgroundColor;
     [self.contentView addSubview:containerView];
     
     UIImageView *imageView = [[UIImageView alloc] init];
@@ -49,29 +49,29 @@
     [containerView addSubview:imageView];
     
     UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.textColor = TCRGBColor(42, 42, 42);
+    nameLabel.textColor = TCBlackColor;
     nameLabel.font = [UIFont systemFontOfSize:12];
     [containerView addSubview:nameLabel];
     
     UILabel *brandLabel = [[UILabel alloc] init];
-    brandLabel.textColor = TCRGBColor(42, 42, 42);
+    brandLabel.textColor = TCBlackColor;
     brandLabel.font = [UIFont systemFontOfSize:12];
     [containerView addSubview:brandLabel];
     
     UILabel *priceLabel = [[UILabel alloc] init];
-    priceLabel.textColor = TCRGBColor(42, 42, 42);
+    priceLabel.textColor = TCBlackColor;
     priceLabel.textAlignment = NSTextAlignmentRight;
     priceLabel.font = [UIFont systemFontOfSize:12];
     [containerView addSubview:priceLabel];
     
     UILabel *countLabel = [[UILabel alloc] init];
-    countLabel.textColor = TCRGBColor(42, 42, 42);
+    countLabel.textColor = TCBlackColor;
     countLabel.textAlignment = NSTextAlignmentRight;
     countLabel.font = [UIFont systemFontOfSize:12];
     [containerView addSubview:countLabel];
     
     UILabel *standardLabel = [[UILabel alloc] init];
-    standardLabel.textColor = TCRGBColor(154, 154, 154);
+    standardLabel.textColor = TCGrayColor;
     standardLabel.font = [UIFont systemFontOfSize:12];
     [containerView addSubview:standardLabel];
     
