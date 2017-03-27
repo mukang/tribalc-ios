@@ -141,7 +141,7 @@
     UILabel *tagLab = [TCComponent createLabelWithText:@"有问题请联系客服 : " AndFontSize:TCRealValue(12)];
     tagLab.textColor = TCGrayColor;
     UIButton *phoneBtn = [[UIButton alloc] init];
-    [phoneBtn setTitle:@"4008-252-987" forState:UIControlStateNormal];
+    [phoneBtn setTitle:TCCommonServiceTel forState:UIControlStateNormal];
     [phoneBtn setTitleColor:TCRGBColor(81, 199, 209) forState:UIControlStateNormal];
     phoneBtn.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
     [phoneBtn sizeToFit];

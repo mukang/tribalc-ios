@@ -12,3 +12,4 @@ NSString *const TCBuluoUserLocationCoordinateKey = @"TCBuluoUserLocationCoordina
 
 NSString *const TCClientUnauthorizedNotification = @"TCClientUnauthorizedNotification";
 
+NSString *const TCCommonServiceTel = @"4008-252-987";
