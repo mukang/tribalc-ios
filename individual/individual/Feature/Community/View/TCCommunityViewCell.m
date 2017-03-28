@@ -35,7 +35,7 @@
 }
 
 - (void)setupSubviews {
-    self.backgroundView.backgroundColor = TCRGBColor(242, 242, 242);
+    self.backgroundView.backgroundColor = TCBackgroundColor;
     
     UIView *containerView = [[UIView alloc] init];
     containerView.backgroundColor = [UIColor whiteColor];
@@ -50,13 +50,13 @@
     
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.textAlignment = NSTextAlignmentLeft;
-    nameLabel.textColor = TCRGBColor(42, 42, 42);
+    nameLabel.textColor = TCBlackColor;
     nameLabel.font = [UIFont boldSystemFontOfSize:16];
     [containerView addSubview:nameLabel];
     
     UILabel *addressLabel = [[UILabel alloc] init];
     addressLabel.textAlignment = NSTextAlignmentLeft;
-    addressLabel.textColor = TCRGBColor(154, 154, 154);
+    addressLabel.textColor = TCGrayColor;
     addressLabel.font = [UIFont systemFontOfSize:14];
     [containerView addSubview:addressLabel];
     

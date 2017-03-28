@@ -62,7 +62,7 @@
         [self.contentView addSubview:titleLab];
         self.titleLab = titleLab;
         
-        UILabel *primaryLab = [self getLabelWithFont:[UIFont systemFontOfSize:TCRealValue(12)] AndTextColor:TCRGBColor(154, 154, 154)];
+        UILabel *primaryLab = [self getLabelWithFont:[UIFont systemFontOfSize:TCRealValue(12)] AndTextColor:TCGrayColor];
         [self.contentView addSubview:primaryLab];
         self.primaryStandardLab = primaryLab;
         
@@ -70,11 +70,11 @@
         [self.contentView addSubview:secondaryBtn];
         self.secondaryStandardBtn = secondaryBtn;
         
-        UILabel *priceLab = [self getLabelWithFont:[UIFont fontWithName:BOLD_FONT size:TCRealValue(14)] AndTextColor:TCRGBColor(42, 42, 42)];
+        UILabel *priceLab = [self getLabelWithFont:[UIFont fontWithName:BOLD_FONT size:TCRealValue(14)] AndTextColor:TCBlackColor];
         [self.contentView addSubview:priceLab];
         self.priceLab = priceLab;
         
-        UILabel *amountLab = [self getLabelWithFont:[UIFont fontWithName:BOLD_FONT size:TCRealValue(12)] AndTextColor:TCRGBColor(154, 154, 154)];
+        UILabel *amountLab = [self getLabelWithFont:[UIFont fontWithName:BOLD_FONT size:TCRealValue(12)] AndTextColor:TCGrayColor];
         [self.contentView addSubview:amountLab];
         self.amountLab = amountLab;
         
@@ -192,7 +192,7 @@
 - (UIImageView *)getLeftImageView {
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.layer.borderWidth = TCRealValue(1);
-    imageView.layer.borderColor = TCRGBColor(242, 242, 242).CGColor;
+    imageView.layer.borderColor = TCBackgroundColor.CGColor;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     return imageView;
 }

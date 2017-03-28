@@ -31,13 +31,13 @@
 - (void)setupSubviews {
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"总计：";
-    titleLabel.textColor = TCRGBColor(154, 154, 154);
+    titleLabel.textColor = TCGrayColor;
     titleLabel.textAlignment = NSTextAlignmentRight;
     titleLabel.font = [UIFont systemFontOfSize:12];
     [self addSubview:titleLabel];
     
     UILabel *amountLabel = [[UILabel alloc] init];
-    amountLabel.textColor = TCRGBColor(42, 42, 42);
+    amountLabel.textColor = TCBlackColor;
     amountLabel.font = [UIFont boldSystemFontOfSize:18];
     [self addSubview:amountLabel];
     

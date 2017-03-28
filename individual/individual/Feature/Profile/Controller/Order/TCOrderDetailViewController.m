@@ -66,7 +66,7 @@
 
 - (void)setupSubviews {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    tableView.backgroundColor = TCRGBColor(242, 242, 242);
+    tableView.backgroundColor = TCBackgroundColor;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.dataSource = self;
     tableView.delegate = self;
@@ -94,7 +94,7 @@
         [cancelButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"取消订单"
                                                                          attributes:@{
                                                                                       NSFontAttributeName: [UIFont systemFontOfSize:16],
-                                                                                      NSForegroundColorAttributeName: TCRGBColor(42, 42, 42)
+                                                                                      NSForegroundColorAttributeName: TCBlackColor
                                                                                       }]
                                 forState:UIControlStateNormal];
         [cancelButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]]
@@ -104,7 +104,7 @@
         [cancelButton addTarget:self
                          action:@selector(handleClickCancelButton:)
                forControlEvents:UIControlEventTouchUpInside];
-        cancelButton.layer.borderColor = TCRGBColor(221, 221, 221).CGColor;
+        cancelButton.layer.borderColor = TCSeparatorLineColor.CGColor;
         cancelButton.layer.borderWidth = 0.5;
         [bottomView addSubview:cancelButton];
         self.cancelButton = cancelButton;

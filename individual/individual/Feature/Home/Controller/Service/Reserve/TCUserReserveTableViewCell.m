@@ -72,7 +72,7 @@
 
 - (UIView *)getTableBottomViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = TCRGBColor(242, 242, 242);
+    view.backgroundColor = TCBackgroundColor;
     UIView *bottomLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, view.height - TCRealValue(0.5), view.width, TCRealValue(0.5))];
     UIView *topLineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, view.width, TCRealValue(0.5))];
     [view addSubview:bottomLineView];
@@ -143,10 +143,10 @@
 
 - (UIView *)getTimeOrPersonNumberViewWtihFrame:(CGRect)frame AndTitle:(NSString *)title{
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    UILabel *tagLab = [TCComponent createLabelWithFrame:CGRectMake(0, 0, TCRealValue(24), frame.size.height) AndFontSize:TCRealValue(11) AndTitle:title AndTextColor:TCRGBColor(154, 154, 154)];
+    UILabel *tagLab = [TCComponent createLabelWithFrame:CGRectMake(0, 0, TCRealValue(24), frame.size.height) AndFontSize:TCRealValue(11) AndTitle:title AndTextColor:TCGrayColor];
     [view addSubview:tagLab];
     
-    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(tagLab.x + tagLab.width + TCRealValue(3), 0, view.width - tagLab.x - tagLab.width - TCRealValue(3), view.height) AndFontSize:TCRealValue(11) AndTitle:@"" AndTextColor:TCRGBColor(42, 42, 42)];
+    UILabel *label = [TCComponent createLabelWithFrame:CGRectMake(tagLab.x + tagLab.width + TCRealValue(3), 0, view.width - tagLab.x - tagLab.width - TCRealValue(3), view.height) AndFontSize:TCRealValue(11) AndTitle:@"" AndTextColor:TCBlackColor];
     [view addSubview:label];
     if ([title isEqualToString:@"时间"]) {
         _timeLab = label;
@@ -160,7 +160,7 @@
 - (UILabel *)getTitleLabWithFrame:(CGRect)frame {
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.font = [UIFont fontWithName:BOLD_FONT size:TCRealValue(14)];
-    label.textColor = TCRGBColor(42, 42, 42);
+    label.textColor = TCBlackColor;
     
     
     return label;

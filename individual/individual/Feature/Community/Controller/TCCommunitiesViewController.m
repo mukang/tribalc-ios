@@ -49,12 +49,12 @@
                                                                     NSFontAttributeName : [UIFont systemFontOfSize:16],
                                                                     NSForegroundColorAttributeName : [UIColor whiteColor]
                                                                     };
-    UIImage *bgImage = [UIImage imageWithColor:TCRGBColor(42, 42, 42)];
+    UIImage *bgImage = [UIImage imageWithColor:TCBlackColor];
     [self.navigationController.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)setupSubviews {
-    self.collectionView.backgroundColor = TCRGBColor(242, 242, 242);
+    self.collectionView.backgroundColor = TCBackgroundColor;
     self.flowLayout.minimumLineSpacing = 9;
     self.flowLayout.itemSize = CGSizeMake(TCScreenWidth - 23, 293);
     self.flowLayout.sectionInset = UIEdgeInsetsMake(9, 11.5, 0, 11.5);

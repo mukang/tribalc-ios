@@ -103,7 +103,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.text = text;
     label.font = [UIFont systemFontOfSize:14];
-    label.textColor = TCRGBColor(154, 154, 154);
+    label.textColor = TCGrayColor;
     
     return label;
 }

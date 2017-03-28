@@ -142,10 +142,10 @@
     priceLab = [TCComponent createLabelWithFrame:CGRectMake(titleImageView.x + titleImageView.width + TCRealValue(12), TCRealValue(20), TCScreenWidth - titleImageView.x - TCRealValue(12) , TCRealValue(20)) AndFontSize:TCRealValue(20) AndTitle:priceStr AndTextColor:TCRGBColor(81, 199, 209)];
     [titleView addSubview:priceLab];
     
-    inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, priceLab.y + priceLab.height + TCRealValue(10), priceLab.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:[NSString stringWithFormat:@"(剩余:%li件)", (long)mCartItem.repertory] AndTextColor:TCRGBColor(154, 154, 154)];
+    inventoryLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, priceLab.y + priceLab.height + TCRealValue(10), priceLab.width, TCRealValue(12)) AndFontSize:TCRealValue(12) AndTitle:[NSString stringWithFormat:@"(剩余:%li件)", (long)mCartItem.repertory] AndTextColor:TCGrayColor];
     [titleView addSubview:inventoryLab];
     
-    UILabel *selectTagLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, inventoryLab.y + inventoryLab.height + TCRealValue(12), TCRealValue(45), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:@"已选择" AndTextColor:TCRGBColor(42, 42, 42)];
+    UILabel *selectTagLab = [TCComponent createLabelWithFrame:CGRectMake(priceLab.x, inventoryLab.y + inventoryLab.height + TCRealValue(12), TCRealValue(45), TCRealValue(14)) AndFontSize:TCRealValue(14) AndTitle:@"已选择" AndTextColor:TCBlackColor];
     [titleView addSubview:selectTagLab];
     
     UIView *selectedView = [self getSelectedViewWithFrame:CGRectMake(selectTagLab.x + selectTagLab.width + TCRealValue(4), selectTagLab.y - TCRealValue(1), TCScreenWidth - selectTagLab.x - selectTagLab.width - TCRealValue(2), selectTagLab.height)];
@@ -244,8 +244,8 @@
 - (UIButton *)getSecondaryButtonWithOrigin:(CGPoint)point AndTitle:(NSString *)title AndGoodStandards:(TCGoodStandards *)goodStandard{
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(point.x, point.y, TCRealValue(47.5), TCRealValue(22))];
     button.layer.cornerRadius = TCRealValue(11);
-    button.backgroundColor = TCRGBColor(242, 242, 242);
-    [button setTitleColor:TCRGBColor(42, 42, 42) forState:UIControlStateNormal];
+    button.backgroundColor = TCBackgroundColor;
+    [button setTitleColor:TCBlackColor forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
     [button sizeToFit];
@@ -271,9 +271,9 @@
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(point.x, point.y, TCRealValue(51), TCRealValue(24))];
     button.layer.borderWidth = TCRealValue(1);
     button.layer.cornerRadius = TCRealValue(2.5);
-    button.layer.borderColor = TCRGBColor(154, 154, 154).CGColor;
+    button.layer.borderColor = TCGrayColor.CGColor;
     button.titleLabel.font = [UIFont systemFontOfSize:TCRealValue(12)];
-    [button setTitleColor:TCRGBColor(154, 154, 154) forState:UIControlStateNormal];
+    [button setTitleColor:TCGrayColor forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
     [button sizeToFit];
     [button addTarget:self action:@selector(touchPrimaryStandardBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -353,9 +353,9 @@
     for (int i = 0; i < button.superview.subviews.count; i++) {
         if ([button.superview.subviews[i] isKindOfClass:[UIButton class]]) {
             UIButton *noSelectBtn = button.superview.subviews[i];
-            if (![[noSelectBtn titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(221, 221, 221)]) {
-                noSelectBtn.layer.borderColor = TCRGBColor(154, 154, 154).CGColor;
-                [noSelectBtn setTitleColor:TCRGBColor(154, 154, 154) forState:UIControlStateNormal];
+            if (![[noSelectBtn titleColorForState:UIControlStateNormal] isEqual:TCSeparatorLineColor]) {
+                noSelectBtn.layer.borderColor = TCGrayColor.CGColor;
+                [noSelectBtn setTitleColor:TCGrayColor forState:UIControlStateNormal];
             }
         }
     }
@@ -370,9 +370,9 @@
     for (int i = 0; i < button.superview.subviews.count; i++) {
         if ([button.superview.subviews[i] isKindOfClass:[UIButton class]]) {
             UIButton *noSelectBtn = button.superview.subviews[i];
-            if (![[noSelectBtn titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(221, 221, 221)]) {
-                noSelectBtn.backgroundColor = TCRGBColor(242, 242, 242);
-                [noSelectBtn setTitleColor:TCRGBColor(42, 42, 42) forState:UIControlStateNormal];
+            if (![[noSelectBtn titleColorForState:UIControlStateNormal] isEqual:TCSeparatorLineColor]) {
+                noSelectBtn.backgroundColor = TCBackgroundColor;
+                [noSelectBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
             }
         }
     }
@@ -387,15 +387,15 @@
             UIButton *secondaryBtn = secondarySelectBtnView.subviews[i];
             NSString *indexesStr = [NSString stringWithFormat:@"%@^%@", title, [secondaryBtn titleForState:UIControlStateNormal]];
             if (![self judgeButtonIsEffective:indexesStr AndGoodStandards:mGoodStandards]) {
-                secondaryBtn.backgroundColor = TCRGBColor(242, 242, 242);
-                [secondaryBtn setTitleColor:TCRGBColor(221, 221, 221) forState:UIControlStateNormal];
+                secondaryBtn.backgroundColor = TCBackgroundColor;
+                [secondaryBtn setTitleColor:TCSeparatorLineColor forState:UIControlStateNormal];
             } else {
                 if ([[secondaryBtn titleForState:UIControlStateNormal] isEqualToString:_secondaryStandardLab.text]) {
                     secondaryBtn.backgroundColor = TCRGBColor(81, 199, 209);
                     [secondaryBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 } else {
-                    secondaryBtn.backgroundColor = TCRGBColor(242, 242, 242);
-                    [secondaryBtn setTitleColor:TCRGBColor(42, 42, 42) forState:UIControlStateNormal];
+                    secondaryBtn.backgroundColor = TCBackgroundColor;
+                    [secondaryBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
                 }
             }
         }
@@ -408,15 +408,15 @@
             UIButton *primaryBtn = primarySelectButtonView.subviews[i];
             NSString *indexesStr = [NSString stringWithFormat:@"%@^%@",  [primaryBtn titleForState:UIControlStateNormal], title];
             if (![self judgeButtonIsEffective:indexesStr AndGoodStandards:mGoodStandards]) {
-                primaryBtn.layer.borderColor = TCRGBColor(221, 221, 221).CGColor;
-                [primaryBtn setTitleColor:TCRGBColor(221, 221, 221) forState:UIControlStateNormal];
+                primaryBtn.layer.borderColor = TCSeparatorLineColor.CGColor;
+                [primaryBtn setTitleColor:TCSeparatorLineColor forState:UIControlStateNormal];
             } else {
                 if ([[primaryBtn titleForState:UIControlStateNormal] isEqualToString:_primaryStandardLab.text]) {
                     primaryBtn.layer.borderColor = TCRGBColor(81, 199, 209).CGColor;
                     [primaryBtn setTitleColor:TCRGBColor(81, 199, 209) forState:UIControlStateNormal];
                 } else {
-                    primaryBtn.layer.borderColor = TCRGBColor(154, 154, 154).CGColor;
-                    [primaryBtn setTitleColor:TCRGBColor(154, 154, 154) forState:UIControlStateNormal];
+                    primaryBtn.layer.borderColor = TCGrayColor.CGColor;
+                    [primaryBtn setTitleColor:TCGrayColor forState:UIControlStateNormal];
                 }
             }
         }
@@ -485,7 +485,7 @@
 - (UIImageView *)getTitleImageViewWithFrame:(CGRect)frame {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
     imageView.layer.borderWidth = TCRealValue(1.5);
-    imageView.layer.borderColor = TCRGBColor(242, 242, 242).CGColor;
+    imageView.layer.borderColor = TCBackgroundColor.CGColor;
     imageView.layer.cornerRadius = TCRealValue(5);
     NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:mCartItem.goods.mainPicture];
     UIImage *placeholderImage = [UIImage placeholderImageWithSize:imageView.size];
@@ -506,7 +506,7 @@
     if ([[button titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(81, 199, 209)]) {
         [self touchPrimaryWhenIsSelected:button];
     } else {
-        if (![[button titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(221, 221, 221)]) {
+        if (![[button titleColorForState:UIControlStateNormal] isEqual:TCSeparatorLineColor]) {
             [self setupPrimarySelectedButton:button AndStandard:mGoodStandards];
             NSString *goodsIndexes;
             if (mGoodStandards.descriptions.allKeys.count == 2) {
@@ -523,27 +523,27 @@
 }
 
 - (void)touchPrimaryWhenIsSelected:(UIButton *)button {
-    [button setTitleColor:TCRGBColor(154, 154, 154) forState:UIControlStateNormal];
-    button.layer.borderColor = TCRGBColor(154, 154, 154).CGColor;
+    [button setTitleColor:TCGrayColor forState:UIControlStateNormal];
+    button.layer.borderColor = TCGrayColor.CGColor;
     _primaryStandardLab.text = @"";
     for (int i = 0; i < secondarySelectBtnView.subviews.count; i++) {
         UIButton *btn = secondarySelectBtnView.subviews[i];
         if (![[btn titleColorForState:UIControlStateNormal] isEqual:[UIColor whiteColor]]) {
-            btn.backgroundColor = TCRGBColor(242, 242, 242);
-            [btn setTitleColor:TCRGBColor(42, 42, 42) forState:UIControlStateNormal];
+            btn.backgroundColor = TCBackgroundColor;
+            [btn setTitleColor:TCBlackColor forState:UIControlStateNormal];
         }
     }
 }
 
 - (void)touchSecondaryWhenIsSelected:(UIButton *)button {
-    button.backgroundColor = TCRGBColor(242, 242, 242);
-    [button setTitleColor:TCRGBColor(42, 42, 42) forState:UIControlStateNormal];
+    button.backgroundColor = TCBackgroundColor;
+    [button setTitleColor:TCBlackColor forState:UIControlStateNormal];
     _secondaryStandardLab.text = @"";
     for (int i = 0; i < primarySelectButtonView.subviews.count; i++) {
         UIButton *btn = primarySelectButtonView.subviews[i];
         if (![[btn titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(81, 199, 209)]) {
-            [btn setTitleColor:TCRGBColor(154, 154, 154) forState:UIControlStateNormal];
-            btn.layer.borderColor = TCRGBColor(154, 154, 154).CGColor;
+            [btn setTitleColor:TCGrayColor forState:UIControlStateNormal];
+            btn.layer.borderColor = TCGrayColor.CGColor;
         }
     }
 }
@@ -566,7 +566,7 @@
     if ([[button titleColorForState:UIControlStateNormal] isEqual:[UIColor whiteColor]]) {
         [self touchSecondaryWhenIsSelected:button];
     } else {
-        if (![[button titleColorForState:UIControlStateNormal] isEqual:TCRGBColor(221, 221, 221)]) {
+        if (![[button titleColorForState:UIControlStateNormal] isEqual:TCSeparatorLineColor]) {
             [self setupSecondarySelectedButton:button AndStandard:mGoodStandards];
             NSString *goodsIndexes = [NSString stringWithFormat:@"%@^%@", _primaryStandardLab.text, _secondaryStandardLab.text];
             TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:mGoodStandards.goodsIndexes[goodsIndexes]];
