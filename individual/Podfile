@@ -4,6 +4,7 @@ platform :ios, '8.0'
 target 'individual' do
 pod 'TCCommonLibs'
 pod 'YYText'
+pod 'MBProgressHUD'
 pod 'pop', '~> 1.0.7'
 pod 'UITableView+FDTemplateLayoutCell'
 pod 'MGSwipeTableCell', '~> 1.5.6'
