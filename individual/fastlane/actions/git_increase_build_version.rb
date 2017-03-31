@@ -3,7 +3,7 @@ module Fastlane
   module Actions
     class GitIncreaseBuildVersionAction < Action
       def self.run(params)
-        plist = CFPropertyList::List.new(:file => 'individual/individual/Info.plist')
+        plist = CFPropertyList::List.new(:file => '/test4/individual/individual/Info.plist')
         data = CFPropertyList.native_types(plist.value)
         version = data['CFBundleVersion']
         sh 'git add .'
