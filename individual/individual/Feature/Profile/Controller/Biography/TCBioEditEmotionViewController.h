@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TCBuluoApi.h"
-#import "TCBaseViewController.h"
+#import <TCCommonLibs/TCBaseViewController.h>
 
 typedef void(^TCBioEditEmotionBlock)();
 

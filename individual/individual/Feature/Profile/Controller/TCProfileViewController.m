@@ -24,14 +24,14 @@
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
 #import "TCProfileProcessViewCell.h"
-#import "TCPhotoModeView.h"
+#import <TCCommonLibs/TCPhotoModeView.h>
 
-#import "TCImageURLSynthesizer.h"
-#import "TCImageCompressHandler.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <TCCommonLibs/TCImageCompressHandler.h>
 #import "TCPhotoPicker.h"
 #import "TCBuluoApi.h"
 
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 #import <SDWebImage/UIImageView+WebCache.h>
 

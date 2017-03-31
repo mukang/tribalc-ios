@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
-#import "TCBaseViewController.h"
+#import <TCCommonLibs/TCBaseViewController.h>
 
 @interface TCUserReserveViewController : TCBaseViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate>
 

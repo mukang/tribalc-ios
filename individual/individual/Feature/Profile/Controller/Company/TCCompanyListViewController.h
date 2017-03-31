@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TCBaseViewController.h"
+#import <TCCommonLibs/TCBaseViewController.h>
 #import "TCCompanyInfo.h"
 #import "TCCommunity.h"
 

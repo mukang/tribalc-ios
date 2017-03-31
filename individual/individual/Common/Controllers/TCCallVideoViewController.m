@@ -10,7 +10,7 @@
 #import "LinphoneManager.h"
 #import "TCLinphoneUtils.h"
 #import "TCSipAPI.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 
 @interface TCCallVideoViewController ()

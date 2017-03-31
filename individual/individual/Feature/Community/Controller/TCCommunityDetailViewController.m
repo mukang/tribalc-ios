@@ -9,14 +9,14 @@
 #import "TCCommunityDetailViewController.h"
 #import "TCCommunityVisitViewController.h"
 
-#import "TCImagePlayerView.h"
+#import <TCCommonLibs/TCImagePlayerView.h>
 #import "TCCommunityIntroViewCell.h"
 #import "TCCommunityLocationViewCell.h"
 #import "TCCommunitySurroundingViewCell.h"
 #import "TCCommunitySurroundingTitleViewCell.h"
 #import "TCCommunitySurroundingSubtitleViewCell.h"
 
-#import "TCRefreshHeader.h"
+#import <TCCommonLibs/TCRefreshHeader.h>
 
 #import "TCBuluoApi.h"
 

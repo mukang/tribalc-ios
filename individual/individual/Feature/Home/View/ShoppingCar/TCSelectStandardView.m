@@ -8,11 +8,11 @@
 
 #import "TCSelectStandardView.h"
 #import "TCBuluoApi.h"
-#import "TCImageURLSynthesizer.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import "TCComponent.h"
-#import "TCClientConfig.h"
-#import "NSObject+TCModel.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/TCClientConfig.h>
+#import <TCCommonLibs/NSObject+TCModel.h>
+#import <TCCommonLibs/UIImage+Category.h>
 
 @implementation TCSelectStandardView {
     

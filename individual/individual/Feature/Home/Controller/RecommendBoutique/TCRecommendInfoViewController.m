@@ -7,9 +7,9 @@
 //
 
 #import "TCRecommendInfoViewController.h"
-#import "UIImage+Category.h"
-#import "TCImageURLSynthesizer.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <TCCommonLibs/UIImage+Category.h>
 
 @interface TCRecommendInfoViewController () {
     TCGoodDetail *mGoodDetail;

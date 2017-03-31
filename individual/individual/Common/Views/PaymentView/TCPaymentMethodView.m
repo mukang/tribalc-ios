@@ -7,7 +7,7 @@
 //
 
 #import "TCPaymentMethodView.h"
-#import "TCExtendButton.h"
+#import <TCCommonLibs/TCExtendButton.h>
 #import "TCPaymentMethodViewCell.h"
 
 @interface TCPaymentMethodView () <UITableViewDataSource, UITableViewDelegate>

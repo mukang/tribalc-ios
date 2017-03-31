@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TCBaseViewController.h"
+#import <TCCommonLibs/TCBaseViewController.h>
 
 typedef NS_ENUM(NSInteger, TCPropertyRepairsType) {
     TCPropertyRepairsTypePipe = 0,    // 管件维修

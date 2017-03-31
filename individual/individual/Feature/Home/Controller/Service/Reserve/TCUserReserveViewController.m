@@ -11,10 +11,10 @@
 #import "TCUserReserveDetailViewController.h"
 #import "TCComponent.h"
 #import "TCBuluoApi.h"
-#import "TCImageURLSynthesizer.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import "TCRecommendHeader.h"
 #import "TCRecommendFooter.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 @interface TCUserReserveViewController ()
 

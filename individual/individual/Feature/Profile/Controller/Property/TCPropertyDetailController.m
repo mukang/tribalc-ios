@@ -8,8 +8,8 @@
 
 #import "TCPropertyDetailController.h"
 #import "TCPropertyManage.h"
-#import "TCImageURLSynthesizer.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <TCCommonLibs/UIImage+Category.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "TCPaymentView.h"
 #import "MBProgressHUD+Category.h"

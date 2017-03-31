@@ -9,10 +9,10 @@
 #import "TCPlaceOrderViewController.h"
 #import "TCBuluoApi.h"
 #import "TCOrderAddressView.h"
-#import "TCClientConfig.h"
+#import <TCCommonLibs/TCClientConfig.h>
 #import "TCUserOrderTableViewCell.h"
-#import "TCImageURLSynthesizer.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <TCCommonLibs/UIImage+Category.h>
 //#import "TCBalancePayView.h"
 #import "TCOrderViewController.h"
 #import "TCShippingAddressViewController.h"

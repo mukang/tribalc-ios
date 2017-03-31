@@ -17,15 +17,15 @@
 
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
-#import "TCPhotoModeView.h"
+#import <TCCommonLibs/TCPhotoModeView.h>
 
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 #import "MBProgressHUD+Category.h"
 
 #import "TCBuluoApi.h"
 #import "TCPhotoPicker.h"
-#import "TCImageCompressHandler.h"
-#import "TCImageURLSynthesizer.h"
+#import <TCCommonLibs/TCImageCompressHandler.h>
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
 
 #import <UIImageView+WebCache.h>
 

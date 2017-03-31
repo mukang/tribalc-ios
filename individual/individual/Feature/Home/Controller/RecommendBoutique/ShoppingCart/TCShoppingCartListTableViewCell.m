@@ -8,9 +8,9 @@
 
 #import "TCShoppingCartListTableViewCell.h"
 #import "TCComponent.h"
-#import "TCImageURLSynthesizer.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import "TCComputeView.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 @implementation TCShoppingCartListTableViewCell {
     UIButton *selectStandardBtn;

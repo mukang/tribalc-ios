@@ -79,10 +79,12 @@ EOM
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "AMap2DMap-NO-IDFA/MAMapKit.framework/AMap.bundle"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "$PODS_CONFIGURATION_BUILD_DIR/TCCommonLibs/TCCommonLibs.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "AMap2DMap-NO-IDFA/MAMapKit.framework/AMap.bundle"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "$PODS_CONFIGURATION_BUILD_DIR/TCCommonLibs/TCCommonLibs.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

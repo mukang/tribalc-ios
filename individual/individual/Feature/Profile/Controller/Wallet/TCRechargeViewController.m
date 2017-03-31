@@ -10,7 +10,7 @@
 
 #import "TCRechargeInputView.h"
 #import "TCRechargeMethodsView.h"
-#import "TCCommonButton.h"
+#import <TCCommonLibs/TCCommonButton.h>
 
 #import "TCBuluoApi.h"
 #import "WXApiManager.h"

@@ -11,7 +11,7 @@
 #import "TCLocksAndVisitorsViewController.h"
 #import "TCNavigationController.h"
 
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 #import "TCBuluoApi.h"
 #import "TCPropertyManageListController.h"
 #import "TCLoginViewController.h"

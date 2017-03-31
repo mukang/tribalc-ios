@@ -9,8 +9,8 @@
 #import "TCCommunityLocationViewCell.h"
 #import "TCCommunityDetailInfo.h"
 
-#import "TCImageURLSynthesizer.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <TCCommonLibs/UIImage+Category.h>
 
 #import <SDWebImage/UIImageView+WebCache.h>
 

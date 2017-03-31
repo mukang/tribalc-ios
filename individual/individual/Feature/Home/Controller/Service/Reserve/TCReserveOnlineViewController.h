@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TCReserveRadioBtnView.h"
-#import "TCBaseViewController.h"
+#import <TCCommonLibs/TCBaseViewController.h>
 
 @interface TCReserveOnlineViewController : TCBaseViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 
