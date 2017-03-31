@@ -18,11 +18,8 @@ default_platform :ios
 platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-<<<<<<< HEAD
     #cocoapods
-=======
     cocoapods(repo_update: true)
->>>>>>> f64721d4dd7418e280e325fee0062e8d459bddb7
     
   end
 
@@ -55,6 +52,7 @@ lane :to_firim do
     )
   # 上传ipa到fir.im服务器，在fir.im获取firim_api_token
   firim(firim_api_token: “150fc05a8dad7688751005a75f07c06d”)
+  git_increase_build_version(branch: "master")
 end
 
 lane :to_appstore do
@@ -82,6 +80,7 @@ lane :to_appstore do
 	   submit_for_review: true,
 	   submission_information: {add_id_info_serves_ads: false}
 	)
+  git_increase_build_version(branch: "master")
 end
 
 
