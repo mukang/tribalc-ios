@@ -8,7 +8,7 @@
 
 #import "TCRepairsCommitViewCell.h"
 
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 @interface TCRepairsCommitViewCell ()
 

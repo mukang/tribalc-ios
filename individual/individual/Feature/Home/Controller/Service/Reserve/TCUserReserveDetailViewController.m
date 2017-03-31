@@ -8,12 +8,12 @@
 
 #import "TCUserReserveDetailViewController.h"
 #import "TCComponent.h"
-#import "TCImageURLSynthesizer.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import "TCUserReserveTableViewCell.h"
 #import "TCReserveOnlineViewController.h"
 #import "TCBuluoApi.h"
 #import "TCOrderDetailAlertView.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 @interface TCUserReserveDetailViewController () {
 //    UITableView *reserveDetailTableView;

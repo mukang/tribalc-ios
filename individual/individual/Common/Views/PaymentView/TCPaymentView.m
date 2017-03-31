@@ -10,7 +10,7 @@
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
 #import "TCPaymentMethodView.h"
-#import "TCFunctions.h"
+#import <TCCommonLibs/TCFunctions.h>
 
 #import "TCNavigationController.h"
 #import "TCRechargeViewController.h"

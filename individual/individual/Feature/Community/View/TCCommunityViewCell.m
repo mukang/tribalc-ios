@@ -8,9 +8,9 @@
 
 #import "TCCommunityViewCell.h"
 #import "TCCommunity.h"
-#import "TCExtendButton.h"
-#import "TCImageURLSynthesizer.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/TCExtendButton.h>
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <TCCommonLibs/UIImage+Category.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TCCommunityViewCell ()

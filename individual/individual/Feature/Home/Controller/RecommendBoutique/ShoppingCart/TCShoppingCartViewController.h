@@ -11,12 +11,12 @@
 #import "TCGetNavigationItem.h"
 #import <MGSwipeTableCell/MGSwipeTableCell.h>
 #import "TCBuluoApi.h"
-#import "TCImageURLSynthesizer.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import "TCShoppingCartWrapper.h"
 #import "TCPlaceOrderViewController.h"
 #import "TCSelectStandardView.h"
 #import "TCShoppingCartListTableViewCell.h"
-#import "TCBaseViewController.h"
+#import <TCCommonLibs/TCBaseViewController.h>
 
 @interface TCShoppingCartViewController : TCBaseViewController <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, TCShoppingCartListTableViewCellDelegate, TCSelectStandardViewDelegate>
 

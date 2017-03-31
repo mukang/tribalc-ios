@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TCRecommendListViewController.h"
-#import "TCBaseViewController.h"
+#import <TCCommonLibs/TCBaseViewController.h>
 
 @interface TCHomeViewController : TCBaseViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 

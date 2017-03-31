@@ -9,8 +9,8 @@
 #import "TCGoodsOrderGoodsViewCell.h"
 #import "TCOrderItem.h"
 #import "TCGoods.h"
-#import "TCImageURLSynthesizer.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <TCCommonLibs/UIImage+Category.h>
 #import <UIImageView+WebCache.h>
 
 @interface TCGoodsOrderGoodsViewCell ()

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TCBaseViewController.h"
+#import <TCCommonLibs/TCBaseViewController.h>
 @class TCUserShippingAddress;
 
 typedef NS_ENUM(NSInteger, TCShippingAddressType) {

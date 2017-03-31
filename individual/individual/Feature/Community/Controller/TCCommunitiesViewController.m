@@ -10,11 +10,11 @@
 #import "TCCommunityDetailViewController.h"
 
 #import "TCCommunityViewCell.h"
-#import "TCRefreshHeader.h"
+#import <TCCommonLibs/TCRefreshHeader.h>
 
 #import "TCBuluoApi.h"
 
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 @interface TCCommunitiesViewController () <UICollectionViewDataSource, UICollectionViewDelegate, TCCommunityViewCellDelegate>
 

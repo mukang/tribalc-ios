@@ -7,7 +7,7 @@
 //
 
 #import "TCPaymentPasswordView.h"
-#import "TCExtendButton.h"
+#import <TCCommonLibs/TCExtendButton.h>
 
 @interface TCPaymentPasswordView () <MLBPasswordTextFieldDelegate>
 

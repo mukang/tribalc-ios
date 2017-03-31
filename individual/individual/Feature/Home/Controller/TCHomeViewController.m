@@ -21,11 +21,11 @@
 #import "TCBlurImageView.h"
 #import <MBProgressHUD.h>
 #import "TCQRCodeViewController.h"
-#import "TCImagePlayerView.h"
+#import <TCCommonLibs/TCImagePlayerView.h>
 
 #import "TCLocksAndVisitorsViewController.h"
 
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 @interface TCHomeViewController () {
     NSDictionary *homeInfoDic;

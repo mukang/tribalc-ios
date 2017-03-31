@@ -13,11 +13,11 @@
 #import "TCRepairsPhotosViewCell.h"
 #import "TCRepairsCommitViewCell.h"
 
-#import "TCDatePickerView.h"
+#import <TCCommonLibs/TCDatePickerView.h>
 #import "TCPhotoPicker.h"
 
-#import "TCImageURLSynthesizer.h"
-#import "TCImageCompressHandler.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <TCCommonLibs/TCImageCompressHandler.h>
 #import "TCBuluoApi.h"
 
 typedef NS_ENUM(NSInteger, TCInputCellType) {

@@ -7,8 +7,8 @@
 //
 
 #import "TCPaymentDetailView.h"
-#import "UIImage+Category.h"
-#import "TCExtendButton.h"
+#import <TCCommonLibs/UIImage+Category.h>
+#import <TCCommonLibs/TCExtendButton.h>
 
 @interface TCPaymentDetailView ()
 

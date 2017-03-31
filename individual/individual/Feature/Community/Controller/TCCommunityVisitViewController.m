@@ -9,13 +9,13 @@
 #import "TCCommunityVisitViewController.h"
 
 #import "TCCommonInputViewCell.h"
-#import "TCCommonButton.h"
-#import "TCDatePickerView.h"
+#import <TCCommonLibs/TCCommonButton.h>
+#import <TCCommonLibs/TCDatePickerView.h>
 
 #import "TCCommunityDetailInfo.h"
 #import "TCCommunityReservationInfo.h"
 
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 #import "TCBuluoApi.h"
 
 typedef NS_ENUM(NSInteger, TCInputCellType) {

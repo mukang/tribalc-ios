@@ -11,7 +11,7 @@
 #import <POP.h>
 #import "TCServiceListViewController.h"
 #import "TCRecommendListViewController.h"
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 @interface TCVicinityViewController ()
 

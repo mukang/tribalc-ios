@@ -7,10 +7,11 @@
 //
 
 #import "TCBuluoApi.h"
-#import "TCClient.h"
-#import "TCArchiveService.h"
-#import "NSObject+TCModel.h"
 #import "TCSipAPI.h"
+#import <TCCommonLibs/TCClient.h>
+#import <TCCommonLibs/TCFunctions.h>
+#import <TCCommonLibs/TCArchiveService.h>
+#import <TCCommonLibs/NSObject+TCModel.h>
 
 NSString *const TCBuluoApiNotificationUserDidLogin = @"TCBuluoApiNotificationUserDidLogin";
 NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUserDidLogout";

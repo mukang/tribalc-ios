@@ -11,14 +11,14 @@
 #import "TCServiceLocationViewController.h"
 #import "TCServiceFacilitiesViewController.h"
 
-#import "TCCommonButton.h"
+#import <TCCommonLibs/TCCommonButton.h>
 #import "TCServiceHeaderView.h"
 #import "TCServiceNameViewCell.h"
 #import "TCServiceAddressViewCell.h"
 #import "TCServiceRecommendViewCell.h"
 #import "TCServicePromptViewCell.h"
 
-#import "UIImage+Category.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 #import "TCBuluoApi.h"
 
