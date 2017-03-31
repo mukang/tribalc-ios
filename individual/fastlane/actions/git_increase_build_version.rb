@@ -1,7 +1,7 @@
 require 'cfpropertylist'
 module Fastlane
   module Actions
-    class TCIncreaseBuildVersionAction < Action
+    class GitIncreaseBuildVersionAction < Action
       def self.run(params)
         plist = CFPropertyList::List.new(:file => 'individual/individual/Info.plist')
         data = CFPropertyList.native_types(plist.value)
