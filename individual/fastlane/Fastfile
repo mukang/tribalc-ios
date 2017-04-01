@@ -61,6 +61,11 @@ lane :to_firim do
 end
 
 lane :to_appstore do
+
+  sh "git checkout master”
+
+  # 如果你用 pod install
+  cocoapods
   # 执行 pod instasll
   #cocoapods
   # 执行 carthage bootstrap
