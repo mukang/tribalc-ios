@@ -57,6 +57,7 @@
 		5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */; };
 		5513065D1E714045004DF32F /* TCOpenDoorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5513065C1E714045004DF32F /* TCOpenDoorController.m */; };
 		552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */; };
+		552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */; };
 		553DC7E91DFFE22E0018783E /* parser-impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 553DC0581DFFE22B0018783E /* parser-impl.cc */; };
 		553DC7EA1DFFE22E0018783E /* libantlr3c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 553DC17A1DFFE22B0018783E /* libantlr3c.a */; };
 		553DC7EB1DFFE22E0018783E /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 553DC17B1DFFE22B0018783E /* libavcodec.a */; };
@@ -871,6 +872,8 @@
 		5513065C1E714045004DF32F /* TCOpenDoorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOpenDoorController.m; sourceTree = "<group>"; };
 		552D6C201E94D6BF00CA4EA3 /* TCMyLockQRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMyLockQRCodeController.h; sourceTree = "<group>"; };
 		552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMyLockQRCodeController.m; sourceTree = "<group>"; };
+		552D6C261E973BB000CA4EA3 /* TCUnitySetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUnitySetUpViewController.h; sourceTree = "<group>"; };
+		552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUnitySetUpViewController.m; sourceTree = "<group>"; };
 		553DBFFE1DFFE22B0018783E /* antlr3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = antlr3.h; sourceTree = "<group>"; };
 		553DBFFF1DFFE22B0018783E /* antlr3baserecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = antlr3baserecognizer.h; sourceTree = "<group>"; };
 		553DC0001DFFE22B0018783E /* antlr3basetree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = antlr3basetree.h; sourceTree = "<group>"; };
@@ -7491,6 +7494,8 @@
 				55EC5BE31E24D7E700C5FB73 /* TCCallVideoViewController.m */,
 				7A0E00991E2DC1DE0028555D /* TCLaunchViewController.h */,
 				7A0E009A1E2DC1DE0028555D /* TCLaunchViewController.m */,
+				552D6C261E973BB000CA4EA3 /* TCUnitySetUpViewController.h */,
+				552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -9008,6 +9013,7 @@
 				7A381BC41DED5DC4008BDBF7 /* TCCommunityDetailInfo.m in Sources */,
 				7A384FA51E1124D600E6DB9E /* TCIDAuthViewController.m in Sources */,
 				7A2D2A961E1CF9820067D591 /* TCPaymentPasswordView.m in Sources */,
+				552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */,
 				7A16665B1DFAB01E007B5733 /* TCCompanyHeaderView.m in Sources */,
 				7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */,
 				7A2F7C721E768C36007B831D /* TCAddVisitorTimeViewCell.m in Sources */,

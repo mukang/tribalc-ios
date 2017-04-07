@@ -11,6 +11,8 @@
 #import "TCCallInViewController.h"
 #import "TCCallVideoViewController.h"
 #import "TCLaunchViewController.h"
+#import "TCUnitySetUpViewController.h"
+#import "TCNavigationController.h"
 
 #import "TCSipAPI.h"
 #import "WXApiManager.h"
@@ -177,6 +179,10 @@
     if ([url.absoluteString hasPrefix:@"wx"]) {
         return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
     }
+    if ([url.absoluteString hasPrefix:@"buluo"]) {
+        [self pushUnitySetUpViewController];
+        return YES;
+    }
     return NO;
 }
 
@@ -184,7 +190,23 @@
     if ([url.absoluteString hasPrefix:@"wx"]) {
         return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
     }
+    
+    if ([url.absoluteString hasPrefix:@"buluo"]) {
+        [self pushUnitySetUpViewController];
+        return YES;
+    }
+    
     return NO;
+}
+
+- (void)pushUnitySetUpViewController {
+    TCUnitySetUpViewController *setUpVC = [[TCUnitySetUpViewController alloc] init];
+    setUpVC.hidesBottomBarWhenPushed = YES;
+    TCTabBarController *tabVC = (TCTabBarController *)self.window.rootViewController;
+    TCNavigationController *navVC = tabVC.selectedViewController;
+    if (navVC) {
+        [navVC pushViewController:setUpVC animated:YES];
+    }
 }
 
 @end
