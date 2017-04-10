@@ -47,10 +47,11 @@
     [self loadData];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [self removeGetPasswordTimer];
 }
+
 
 #pragma mark - Private Methods
 
