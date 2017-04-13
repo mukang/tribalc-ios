@@ -60,7 +60,6 @@ platform :ios do
   end
 
   lane :to_appstore do
-
     sh "git checkout master"
     sh "git pull"
     # 如果你用 pod install
