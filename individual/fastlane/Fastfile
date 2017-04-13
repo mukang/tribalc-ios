@@ -52,8 +52,7 @@ lane :to_firim do
   # gym用来编译ipa
   gym(
     clean: true,
-    scheme: “individual”,
-    output_directory: ‘/Users/wangshuaifeng/Desktop/firim'
+    scheme: “individual”
     )
   # 上传ipa到fir.im服务器，在fir.im获取firim_api_token
   firim(firim_api_token: “150fc05a8dad7688751005a75f07c06d”)
