@@ -5,54 +5,57 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: Verifying required fastlane version" time="0.001368">
+      <testcase classname="fastlane.lanes" name="00: Verifying required fastlane version" time="0.001638">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: default_platform" time="0.001085">
+      <testcase classname="fastlane.lanes" name="01: default_platform" time="0.001268">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: git checkout master" time="0.074508">
+      <testcase classname="fastlane.lanes" name="02: git checkout master" time="0.156891">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: git pull" time="0.339851">
+      <testcase classname="fastlane.lanes" name="03: git pull" time="0.443889">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: cocoapods" time="6.633686">
+      <testcase classname="fastlane.lanes" name="04: cocoapods" time="4.652729">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: sigh" time="31.909822">
+      <testcase classname="fastlane.lanes" name="05: sigh" time="12.542853">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: increment_build_number_in_plist" time="4.671488">
+      <testcase classname="fastlane.lanes" name="06: increment_build_number_in_plist" time="4.683287">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="7: increment_version_number_in_plist" time="2.067973">
+      <testcase classname="fastlane.lanes" name="07: increment_version_number_in_plist" time="2.142788">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="8: git_increase_build_version" time="1.212102">
+      <testcase classname="fastlane.lanes" name="08: git_increase_build_version" time="1.227995">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="9: gym" time="125.865052">
+      <testcase classname="fastlane.lanes" name="09: gym" time="122.712206">
         
-          <failure message="/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/actions/actions_helper.rb:48:in `execute_action'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/runner.rb:230:in `block in execute_action'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/runner.rb:226:in `chdir'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/runner.rb:226:in `execute_action'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/runner.rb:148:in `trigger_action_by_name'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/fast_file.rb:146:in `method_missing'&#10;Fastfile:53:in `block (2 levels) in parsing_binding'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/lane.rb:33:in `call'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/runner.rb:49:in `block in execute'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/runner.rb:45:in `chdir'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/runner.rb:45:in `execute'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/lane_manager.rb:52:in `cruise_lane'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/command_line_handler.rb:30:in `handle'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/commands_generator.rb:104:in `block (2 levels) in run'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0@global/gems/commander-fastlane-4.4.4/lib/commander/command.rb:178:in `call'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0@global/gems/commander-fastlane-4.4.4/lib/commander/command.rb:153:in `run'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0@global/gems/commander-fastlane-4.4.4/lib/commander/runner.rb:476:in `run_active_command'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:38:in `run!'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0@global/gems/commander-fastlane-4.4.4/lib/commander/delegates.rb:15:in `run!'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/commands_generator.rb:303:in `run'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/commands_generator.rb:42:in `start'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/fastlane/lib/fastlane/cli_tools_distributor.rb:65:in `take_off'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/gems/fastlane-2.23.0/bin/fastlane:20:in `&lt;top (required)&gt;'&#10;/Users/mukang/.rvm/rubies/ruby-2.4.0/bin/fastlane:22:in `load'&#10;/Users/mukang/.rvm/rubies/ruby-2.4.0/bin/fastlane:22:in `&lt;main&gt;'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/bin/ruby_executable_hooks:15:in `eval'&#10;/Users/mukang/.rvm/gems/ruby-2.4.0/bin/ruby_executable_hooks:15:in `&lt;main&gt;'&#10;&#10;Permission denied @ dir_s_mkdir - /Users/wangshuaifeng" />
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="10: firim" time="30.174617">
         
       </testcase>
     

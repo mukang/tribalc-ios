@@ -8,7 +8,7 @@ module Fastlane
         builVersion = data['CFBundleVersion']
         version = data['CFBundleShortVersionString']
         sh 'git add .'
-        sh "git commit -m \"[更新]Update Version #{version} Update build version #{builVersion} \""
+        sh "git commit -m \"[更新] Update Version #{version} Update build version #{builVersion} \""
         sh "git push origin #{params[:branch]}"
       end
 
