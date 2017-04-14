@@ -120,7 +120,6 @@ platform :ios do
     # slack(
     #   message: "Successfully deployed new App Update."
     # )
-    git_increase_build_version(branch: "master")
   end
 
   error do |lane, exception|
