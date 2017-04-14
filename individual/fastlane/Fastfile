@@ -23,7 +23,7 @@ platform :ios do
     
   end
 
-  desc "Runs all the tests"
+  # desc "Runs all the tests"
   lane :test do
     scan
   end
@@ -55,7 +55,7 @@ platform :ios do
       scheme: "individual"
     )
     # 上传ipa到fir.im服务器，在fir.im获取firim_api_token
-    firim(firim_api_token: “150fc05a8dad7688751005a75f07c06d”)
+    firim(firim_api_token: "150fc05a8dad7688751005a75f07c06d")
   
   end
 
@@ -80,8 +80,8 @@ platform :ios do
     # 编译代码
     gym(
 	   clean: true,
-	   scheme: “individual”,
-	   configuration: ”Release”
+	   scheme: "individual",
+	   configuration: "Release"
 	  )
     # 发布到Apple Store
     deliver(
