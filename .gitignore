@@ -21,6 +21,7 @@ xcuserdata/
 *.moved-aside
 *.xcuserstate
 *.DS_Store
+*.mobileprovision
 
 ## Obj-C/Swift specific
 *.hmap
@@ -51,6 +52,7 @@ Carthage/Build
 # https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
 
 individual/fastlane/report.xml
+
 individual/fastlane/screenshots
 
 #Code Injection
