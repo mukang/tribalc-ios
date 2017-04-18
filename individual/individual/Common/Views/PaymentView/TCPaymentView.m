@@ -79,7 +79,8 @@ static CGFloat const duration = 0.25;
 - (void)show:(BOOL)animated {
     if (!sourceController) return;
     
-    UIView *superView = [UIApplication sharedApplication].keyWindow;
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIView *superView = keyWindow.rootViewController.view;
     [superView addSubview:self];
     [superView bringSubviewToFront:self];
     
