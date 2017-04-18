@@ -34,8 +34,8 @@
     // Do any additional setup after loading the view from its nib.
     
     weakSelf = self;
+    self.navigationItem.title = @"我的钱包";
     
-    [self setupNavBar];
     [self setupSubviews];
     [self fetchNetData];
     [self registerNotifications];
@@ -43,14 +43,6 @@
 
 - (void)dealloc {
     [self removeNotifications];
-}
-
-- (void)setupNavBar {
-    self.navigationItem.title = @"我的钱包";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleClickBackButton:)];
 }
 
 - (void)setupSubviews {
@@ -158,10 +150,6 @@
 - (void)handleWalletPasswordDidChangeNotification:(NSNotification *)notification {
     NSString *aNewPassword = notification.userInfo[TCWalletPasswordKey];
     self.walletAccount.password = aNewPassword;
-}
-
-- (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
