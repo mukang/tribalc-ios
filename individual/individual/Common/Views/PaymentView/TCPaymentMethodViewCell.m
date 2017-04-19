@@ -49,8 +49,9 @@
         make.centerY.equalTo(weakSelf.contentView.mas_centerY);
     }];
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(100, 21));
+        make.height.mas_equalTo(21);
         make.left.equalTo(logoImageView.mas_right).with.offset(11);
+        make.right.equalTo(selectedImageView.mas_left).with.offset(-11);
         make.centerY.equalTo(weakSelf.contentView.mas_centerY);
     }];
     [selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {

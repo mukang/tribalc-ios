@@ -950,7 +950,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [request setValue:verificationCode forKey:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.codeInResponse == 204) {
+            if (response.codeInResponse == 200) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
                 }

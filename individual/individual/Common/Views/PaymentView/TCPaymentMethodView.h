@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TCBankCard;
 @protocol TCPaymentMethodViewDelegate;
 
 typedef NS_ENUM(NSInteger, TCPaymentMethod) {
     TCPaymentMethodBalance = 0,
-    TCPaymentMethodWechat,
-    TCPaymentMethodAlipay
+//    TCPaymentMethodWechat,
+//    TCPaymentMethodAlipay,
+    TCPaymentMethodBankCard
 };
 
 
@@ -21,6 +23,11 @@ typedef NS_ENUM(NSInteger, TCPaymentMethod) {
 
 @property (nonatomic, readonly) TCPaymentMethod paymentMethod;
 @property (weak, nonatomic) id<TCPaymentMethodViewDelegate> delegate;
+
+/** 当前的银行卡信息（付款方式为TCPaymentMethodBankCard时必传） */
+@property (strong, nonatomic) TCBankCard *currentBankCard;
+/** 银行卡列表(需要先设置currentBankCard) */
+@property (copy, nonatomic) NSArray *bankCardList;
 
 - (instancetype)initWithPaymentMethod:(TCPaymentMethod)paymentMethod;
 
