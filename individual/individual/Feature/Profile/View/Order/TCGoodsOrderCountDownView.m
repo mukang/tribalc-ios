@@ -37,8 +37,8 @@
     
     __weak typeof(self) weakSelf = self;
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf).offset(20);
-        make.right.equalTo(weakSelf).offset(-20);
+        make.left.equalTo(weakSelf);
+        make.right.equalTo(weakSelf);
         make.height.mas_equalTo(12);
         make.bottom.equalTo(weakSelf);
     }];
