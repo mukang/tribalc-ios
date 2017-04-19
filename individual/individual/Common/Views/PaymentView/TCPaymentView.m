@@ -9,21 +9,24 @@
 #import "TCPaymentView.h"
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
+#import "TCPaymentBankCardView.h"
 #import "TCPaymentMethodView.h"
-#import <TCCommonLibs/TCFunctions.h>
 
 #import "TCNavigationController.h"
 #import "TCRechargeViewController.h"
 #import "TCWalletPasswordViewController.h"
 
+#import <TCCommonLibs/TCFunctions.h>
+
 static CGFloat const subviewHeight = 400;
 static CGFloat const duration = 0.25;
 
-@interface TCPaymentView () <TCPaymentDetailViewDelegate, TCPaymentPasswordViewDelegate, TCPaymentMethodViewDelegate>
+@interface TCPaymentView () <TCPaymentDetailViewDelegate, TCPaymentPasswordViewDelegate, TCPaymentMethodViewDelegate, TCPaymentBankCardViewDelegate>
 
 @property (nonatomic) CGFloat paymentAmount;
 @property (weak, nonatomic) TCPaymentDetailView *paymentDetailView;
 @property (weak, nonatomic) TCPaymentPasswordView *paymentPasswordView;
+@property (weak, nonatomic) TCPaymentBankCardView *bankCardView;
 @property (weak, nonatomic) TCPaymentMethodView *paymentMethodView;
 /** 钱包信息 */
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
@@ -158,6 +161,34 @@ static CGFloat const duration = 0.25;
 }
 
 /**
+ 显示银行卡付款页
+ */
+- (void)showBankCardView {
+    TCPaymentBankCardView *bankCardView = [[TCPaymentBankCardView alloc] initWithBankCard:self.currentBankCard];
+    bankCardView.frame = CGRectMake(TCScreenWidth, self.paymentDetailView.y, TCScreenWidth, subviewHeight);
+    bankCardView.delegate = self;
+    [self addSubview:bankCardView];
+    weakSelf.bankCardView = bankCardView;
+    
+    [UIView animateWithDuration:duration animations:^{
+        weakSelf.paymentDetailView.x = - TCScreenWidth;
+        weakSelf.bankCardView.x = 0;
+    }];
+}
+
+/**
+ 退出银行卡付款页
+ */
+- (void)dismissBankCardView {
+    [UIView animateWithDuration:duration animations:^{
+        weakSelf.paymentDetailView.x = 0;
+        weakSelf.bankCardView.x = TCScreenWidth;
+    } completion:^(BOOL finished) {
+        [weakSelf.bankCardView removeFromSuperview];
+    }];
+}
+
+/**
  显示选择支付方式页
  */
 - (void)showPaymentMethodViewWithBankCardList:(NSArray *)bankCardList {
@@ -222,6 +253,12 @@ static CGFloat const duration = 0.25;
     [self dismissPaymentPasswordView];
 }
 
+#pragma mark - TCPaymentBankCardViewDelegate
+
+- (void)didClickBackButtonInBankCardView:(TCPaymentBankCardView *)view {
+    [self dismissBankCardView];
+}
+
 #pragma mark - TCPaymentMethodViewDelegate
 
 - (void)paymentMethodView:(TCPaymentMethodView *)view didSlectedPaymentMethod:(TCPaymentMethod)paymentMethod {
@@ -269,6 +306,9 @@ static CGFloat const duration = 0.25;
     switch (self.currentPaymentMethod) {
         case TCPaymentMethodBalance:
             [self handlePaymentWithBalance];
+            break;
+        case TCPaymentMethodBankCard:
+            [self showBankCardView];
             break;
 //        case TCPaymentMethodWechat:
 //            [self handlePaymentWithWechat];
