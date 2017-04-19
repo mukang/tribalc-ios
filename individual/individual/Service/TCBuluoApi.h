@@ -207,6 +207,39 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
 - (void)deleteUserShippingAddress:(NSString *)shippingAddressID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
+ 查询公司绑定请求状态
+ 
+ @param resultBlock 结果回调，userCompanyInfo为nil时表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchCompanyBlindStatus:(void (^)(TCUserCompanyInfo *userCompanyInfo, NSError *error))resultBlock;
+
+/**
+ 用户绑定公司
+ 
+ @param userCompanyInfo TCUserCompanyInfo对象
+ @param resultBlock 结果回调，success为NO时表示绑定失败，失败原因见error的code和userInfo
+ */
+- (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
+
+/**
+ 认证用户身份
+ 
+ @param userIDAuthInfo TCUserIDAuthInfo对象
+ @param resultBlock 结果回调，认证状态请查看userInfo中的authorizedStatus字段，userInfo为nil时表示请求失败，原因见error的code和userInfo
+ */
+- (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
+
+/**
+ 社区参观预约
+ 
+ @param communityReservationInfo TCCommunityReservationInfo对象
+ @param resultBlock 结果回调，success为NO时表示预约失败，失败原因见error的code和userInfo
+ */
+- (void)reserveCommunity:(TCCommunityReservationInfo *)communityReservationInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+#pragma mark - 钱包资源
+
+/**
  获取用户钱包信息
 
  @param resultBlock 结果回调，walletAccount为nil时表示获取失败，失败原因见error的code和userInfo
@@ -250,43 +283,29 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
 - (void)addBankCard:(TCBankCard *)bankCard withVerificationCode:(NSString *)verificationCode result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
+ 准备添加银行卡信息
+
+ @param bankCard 银行卡信息
+ @param resultBlock 结果回调，bankCard为nil时表示添加失败，失败原因见error的code和userInfo
+ */
+- (void)prepareAddBankCard:(TCBankCard *)bankCard result:(void (^)(TCBankCard *card, NSError *error))resultBlock;
+
+/**
+ 确认添加银行卡信息
+
+ @param bankCardID 银行卡ID
+ @param verificationCode 验证码
+ @param resultBlock 结果回调，success为NO时表示添加失败，失败原因见error的code和userInfo
+ */
+- (void)confirmAddBankCardWithID:(NSString *)bankCardID verificationCode:(NSString *)verificationCode result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+/**
  删除银行卡
 
  @param bankCardID 银行卡ID
  @param resultBlock 结果回调，success为NO时表示删除失败，失败原因见error的code和userInfo
  */
 - (void)deleteBankCard:(NSString *)bankCardID result:(void (^)(BOOL success, NSError *error))resultBlock;
-
-/**
- 查询公司绑定请求状态
-
- @param resultBlock 结果回调，userCompanyInfo为nil时表示获取失败，失败原因见error的code和userInfo
- */
-- (void)fetchCompanyBlindStatus:(void (^)(TCUserCompanyInfo *userCompanyInfo, NSError *error))resultBlock;
-
-/**
- 用户绑定公司
-
- @param userCompanyInfo TCUserCompanyInfo对象
- @param resultBlock 结果回调，success为NO时表示绑定失败，失败原因见error的code和userInfo
- */
-- (void)bindCompanyWithUserCompanyInfo:(TCUserCompanyInfo *)userCompanyInfo result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
-
-/**
- 认证用户身份
-
- @param userIDAuthInfo TCUserIDAuthInfo对象
- @param resultBlock 结果回调，认证状态请查看userInfo中的authorizedStatus字段，userInfo为nil时表示请求失败，原因见error的code和userInfo
- */
-- (void)authorizeUserIdentity:(TCUserIDAuthInfo *)userIDAuthInfo result:(void (^)(TCUserInfo *userInfo, NSError *error))resultBlock;
-
-/**
- 社区参观预约
-
- @param communityReservationInfo TCCommunityReservationInfo对象
- @param resultBlock 结果回调，success为NO时表示预约失败，失败原因见error的code和userInfo
- */
-- (void)reserveCommunity:(TCCommunityReservationInfo *)communityReservationInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
  提交付款申请

@@ -37,14 +37,12 @@
 
 - (void)setupNavBar {
     self.navigationItem.title = @"银行卡";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleClickBackButton:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"管理"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(handleClickEditButton:)];
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15]}
+                                                          forState:UIControlStateNormal];
 }
 
 - (void)setupSubviews {
@@ -125,6 +123,9 @@
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(handleClickDoneButton:)];
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15]}
+                                                          forState:UIControlStateNormal];
+    
     if (self.dataList.count == 0) {
         return;
     }
@@ -139,6 +140,9 @@
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(handleClickEditButton:)];
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15]}
+                                                          forState:UIControlStateNormal];
+    
     if (self.dataList.count == 0) {
         return;
     }
@@ -160,10 +164,6 @@
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"银行卡删除失败，%@", reason]];
         }
     }];
-}
-
-- (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Override Methods
