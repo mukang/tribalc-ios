@@ -26,6 +26,7 @@
     UILabel *selectLab;
     UISegmentedControl *selectGoodInfoSegment;
     UIView *shopView;
+    UIView *titleImageView;
 }
 
 @property (strong, nonatomic) UIView *detailView;
@@ -81,6 +82,13 @@
 - (void)reloadDetailViewWithTouchGoodDetail:(TCGoodDetail *)goodDetail {
     if (goodDetail) {
         mGoodDetail = goodDetail;
+        titleImageView.hidden = YES;
+        
+        if ([mGoodDetail.pictures isKindOfClass:[NSArray class]]) {
+            if (mGoodDetail.pictures.count > 0) {
+                titleImageView.hidden = NO;
+            }
+        }
         [imageCollectionView reloadData];
         //    [goodTitleView setupTitleWithText:goodDetail.title];
         titleViewHeight = goodTitleView.height;
@@ -168,8 +176,19 @@
 
 - (void)initMainView {
     
-    UIView *titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(374))];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(374))];
+    imageView.image = [UIImage placeholderImageWithSize:CGSizeMake(self.view.width, TCRealValue(374))];
+    [mScrollView addSubview:imageView];
+    
+    titleImageView = [self createTitleImageViewWithFrame:CGRectMake(0, 0, self.view.width, TCRealValue(374))];
     [mScrollView addSubview:titleImageView];
+    titleImageView.hidden = YES;
+    
+    if ([mGoodDetail.pictures isKindOfClass:[NSArray class]]) {
+        if (mGoodDetail.pictures.count > 0) {
+            titleImageView.hidden = NO;
+        }
+    }
     
     goodTitleView = [[TCGoodTitleView alloc] initWithFrame:CGRectMake(0, titleImageView.y + titleImageView.height, self.view.width, TCRealValue(87)) WithTitle:mGoodDetail.title AndPrice:mGoodDetail.salePrice AndOriginPrice:mGoodDetail.originPrice AndTags:mGoodDetail.tags];
     [mScrollView addSubview:goodTitleView];
