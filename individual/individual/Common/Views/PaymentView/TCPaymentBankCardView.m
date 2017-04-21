@@ -24,6 +24,9 @@
 @property (weak, nonatomic) TCExtendButton * codeButton;
 @property (weak, nonatomic) TCCommonButton *paymentButton;
 
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic) NSInteger timeCount;
+
 @end
 
 @implementation TCPaymentBankCardView
@@ -39,12 +42,20 @@
     return self;
 }
 
+#pragma mark - Life Cycle
+
+- (void)dealloc {
+    [self removeGetSMSTimer];
+}
+
+#pragma mark - Private Methods
+
 - (void)setupSubviews {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapSuperview:)];
     [self addGestureRecognizer:tap];
     
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"选择付款方式";
+    titleLabel.text = @"输入短信验证码";
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = TCBlackColor;
     titleLabel.font = [UIFont systemFontOfSize:17];
@@ -95,7 +106,7 @@
     TCExtendButton * codeButton = [TCExtendButton buttonWithType:UIButtonTypeCustom];
     [codeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"获取验证码"
                                                                    attributes:@{
-                                                                                NSFontAttributeName: [UIFont systemFontOfSize:10],
+                                                                                NSFontAttributeName: [UIFont systemFontOfSize:12],
                                                                                 NSForegroundColorAttributeName: TCRGBColor(0, 0, 208),
                                                                                 NSUnderlineStyleAttributeName: @(1)
                                                                                 }]
@@ -105,7 +116,7 @@
     codeButton.hitTestSlop = UIEdgeInsetsMake(-20, -20, -20, -20);
     [self addSubview:codeButton];
     
-    TCCommonButton *paymentButton = [TCCommonButton buttonWithTitle:@"支  付"
+    TCCommonButton *paymentButton = [TCCommonButton buttonWithTitle:@"确  定"
                                                               color:TCCommonButtonColorBlue
                                                              target:self
                                                              action:@selector(handleClickPaymentButton:)];
@@ -119,6 +130,8 @@
     self.codeTextField = codeTextField;
     self.codeButton = codeButton;
     self.paymentButton = paymentButton;
+    
+    [self startCountDown];
 }
 
 - (void)setupConstraints {
@@ -173,7 +186,9 @@
 }
 
 - (void)handleClickCodeButton:(UIButton *)sender {
+    if (sender.isEnabled == NO) return;
     
+    [self startCountDown];
 }
 
 - (void)handleClickPaymentButton:(UIButton *)sender {
@@ -184,6 +199,49 @@
     if ([self.codeTextField isFirstResponder]) {
         [self.codeTextField resignFirstResponder];
     }
+}
+
+#pragma mark - Timer
+
+- (void)addGetSMSTimer {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(changeTimeLabel) userInfo:nil repeats:YES];
+}
+
+- (void)removeGetSMSTimer {
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+- (void)startCountDown {
+    self.timeCount = 60;
+    self.codeButton.enabled = NO;
+    [self.codeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"(%02zd)重新获取", self.timeCount]
+                                                                        attributes:@{
+                                                                                     NSFontAttributeName: [UIFont systemFontOfSize:12],
+                                                                                     NSForegroundColorAttributeName: TCGrayColor
+                                                                                     }]
+                               forState:UIControlStateDisabled];
+    [self addGetSMSTimer];
+}
+
+- (void)stopCountDown {
+    [self removeGetSMSTimer];
+    self.codeButton.enabled = YES;
+}
+
+- (void)changeTimeLabel {
+    self.timeCount --;
+    if (self.timeCount <= 0) {
+        [self removeGetSMSTimer];
+        self.codeButton.enabled = YES;
+        return;
+    }
+    [self.codeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"(%02zd)重新获取", self.timeCount]
+                                                                        attributes:@{
+                                                                                     NSFontAttributeName: [UIFont systemFontOfSize:12],
+                                                                                     NSForegroundColorAttributeName: TCGrayColor
+                                                                                     }]
+                               forState:UIControlStateDisabled];
 }
 
 @end

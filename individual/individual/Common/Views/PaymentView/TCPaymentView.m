@@ -408,7 +408,7 @@ static CGFloat const duration = 0.25;
  */
 - (void)handleShowRechargeViewController {
     TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
-    vc.balance = self.walletAccount.balance;
+    vc.walletAccount = self.walletAccount;
     vc.suggestMoney = self.paymentAmount - self.walletAccount.balance;
     vc.completionBlock = ^() {
         

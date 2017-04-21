@@ -7,23 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-@protocol TCRechargeMethodsViewDelegate;
+@class TCBankCard;
 
 typedef NS_ENUM(NSInteger, TCRechargeMethod) {
-    TCRechargeMethodWechat,
-    TCRechargeMethodAlipay
+//    TCRechargeMethodWechat,
+//    TCRechargeMethodAlipay
+    TCRechargeMethodBankCard = 0,
 };
 
 @interface TCRechargeMethodsView : UIView
 
 @property (nonatomic) TCRechargeMethod rechargeMethod;
-@property (weak, nonatomic) id<TCRechargeMethodsViewDelegate> delegate;
 
-@end
-
-@protocol TCRechargeMethodsViewDelegate <NSObject>
-
-@optional
-- (void)rechargeMethodsView:(TCRechargeMethodsView *)view didSelectedMethodButtonWithMethod:(TCRechargeMethod)rechargeMethod;
+@property (strong, nonatomic) TCBankCard *currentBankCard;
+@property (copy, nonatomic) NSArray *bankCardList;
 
 @end

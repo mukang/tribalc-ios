@@ -10,22 +10,35 @@
 
 #import "TCRechargeInputView.h"
 #import "TCRechargeMethodsView.h"
-#import <TCCommonLibs/TCCommonButton.h>
+#import "TCPaymentBankCardView.h"
 
 #import "TCBuluoApi.h"
 #import "WXApiManager.h"
 
-@interface TCRechargeViewController () <TCRechargeMethodsViewDelegate, UITextFieldDelegate, WXApiManagerDelegate>
+#import <TCCommonLibs/TCCommonButton.h>
+
+#define paymentBankCardViewH 400
+#define duration 0.25
+
+@interface TCRechargeViewController () <UITextFieldDelegate, WXApiManagerDelegate>
 
 @property (weak, nonatomic) UILabel *balanceLabel;
 
 @property (weak, nonatomic) UITextField *textField;
+
+@property (weak, nonatomic) TCRechargeMethodsView *methodsView;
+/** 银行卡logo及背景图数据 */
+@property (copy, nonatomic) NSDictionary *banksDic;
+
 /** 输入框里是否含有小数点 */
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
-
-@property (nonatomic) TCRechargeMethod rechargeMethod;
 /** 预支付ID，查询微信支付结果时使用 */
 @property (copy, nonatomic) NSString *prepayID;
+
+/** 银行卡验证码输入页面的背景 */
+@property (weak, nonatomic) UIView *bgView;
+/** 银行卡验证码输入页面 */
+@property (weak, nonatomic) TCPaymentBankCardView *paymentBankCardView;
 
 @end
 
@@ -41,8 +54,6 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapViewGesture:)];
     tapGesture.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapGesture];
-    
-    self.rechargeMethod = TCRechargeMethodWechat;
     
     [self setupNavBar];
     [self setupSubviews];
@@ -72,7 +83,7 @@
     balanceLabel.textAlignment = NSTextAlignmentCenter;
     balanceLabel.textColor = TCBlackColor;
     balanceLabel.font = [UIFont boldSystemFontOfSize:17];
-    balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", self.balance];
+    balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", self.walletAccount.balance];
     [self.view addSubview:balanceLabel];
     self.balanceLabel = balanceLabel;
     
@@ -88,9 +99,10 @@
     self.textField = inputView.textField;
     
     TCRechargeMethodsView *methodsView = [[TCRechargeMethodsView alloc] init];
-    methodsView.rechargeMethod = self.rechargeMethod;
-    methodsView.delegate = self;
+    methodsView.rechargeMethod = TCRechargeMethodBankCard;
+    methodsView.bankCardList = self.walletAccount.bankCards;
     [self.view addSubview:methodsView];
+    self.methodsView = methodsView;
     
     TCCommonButton *rechargeButton = [TCCommonButton buttonWithTitle:@"充  值" target:self action:@selector(handleClickRechargeButton:)];
     [self.view addSubview:rechargeButton];
@@ -114,8 +126,8 @@
     }];
     [methodsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(inputView.mas_bottom).with.offset(TCRealValue(58));
+        make.bottom.equalTo(rechargeButton.mas_top).with.offset(-40);
         make.left.right.equalTo(weakSelf.view);
-        make.height.mas_equalTo(130);
     }];
     [rechargeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view.mas_left).with.offset(30);
@@ -191,12 +203,6 @@
     return YES;
 }
 
-#pragma mark - TCRechargeMethodsViewDelegate
-
-- (void)rechargeMethodsView:(TCRechargeMethodsView *)view didSelectedMethodButtonWithMethod:(TCRechargeMethod)rechargeMethod {
-    self.rechargeMethod = rechargeMethod;
-}
-
 #pragma mark - WXApiManagerDelegate
 
 - (void)managerDidRecvPayResponse:(PayResp *)response {
@@ -229,6 +235,11 @@
         return;
     }
     double money = [self.textField.text doubleValue];
+    
+    
+    
+    
+    /*
     if (self.rechargeMethod == TCRechargeMethodWechat) {
         [MBProgressHUD showHUD:YES];
         [[TCBuluoApi api] fetchWechatRechargeInfoWithMoney:money result:^(TCWechatRechargeInfo *wechatRechargeInfo, NSError *error) {
@@ -243,6 +254,30 @@
     } else if (self.rechargeMethod == TCRechargeMethodAlipay) {
         // TODO:
     }
+     */
+}
+
+/**
+ 显示输入银行卡验证码页面
+ */
+- (void)showBankCardCodeView {
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIView *superView = keyWindow.rootViewController.view;
+    UIView *bgView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    bgView.backgroundColor = TCARGBColor(0, 0, 0, 0);
+    [superView addSubview:bgView];
+    [superView bringSubviewToFront:bgView];
+    self.bgView = bgView;
+    
+    TCPaymentBankCardView *paymentBankCardView = [[TCPaymentBankCardView alloc] init];
+    paymentBankCardView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, paymentBankCardViewH);
+    [bgView addSubview:paymentBankCardView];
+    self.paymentBankCardView = paymentBankCardView;
+    
+    [UIView animateWithDuration:duration animations:^{
+        bgView.backgroundColor = TCARGBColor(0, 0, 0, 0.62);
+        paymentBankCardView.y = TCScreenHeight - paymentBankCardViewH;
+    }];
 }
 
 /**
@@ -275,7 +310,7 @@
     [[TCBuluoApi api] fetchWechatRechargeResultWithPrepayID:self.prepayID result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD showHUDWithMessage:@"充值成功"];
-            weakSelf.balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", weakSelf.balance + [weakSelf.textField.text doubleValue]];
+            weakSelf.balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", weakSelf.walletAccount.balance + [weakSelf.textField.text doubleValue]];
             if (weakSelf.completionBlock) {
                 weakSelf.completionBlock();
             }
@@ -289,6 +324,27 @@
     }];
 }
 
+#pragma mark - Override Methods
+
+- (void)setWalletAccount:(TCWalletAccount *)walletAccount {
+    _walletAccount = walletAccount;
+    
+    for (TCBankCard *bankCard in walletAccount.bankCards) {
+        NSDictionary *bankInfo = self.banksDic[bankCard.bankName];
+        if (bankInfo) {
+            bankCard.logo = bankInfo[@"logo"];
+            bankCard.bgImage = bankInfo[@"bgImage"];
+        }
+    }
+}
+
+- (NSDictionary *)banksDic {
+    if (_banksDic == nil) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"bankCard" ofType:@"plist"];
+        _banksDic = [NSDictionary dictionaryWithContentsOfFile:path];
+    }
+    return _banksDic;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

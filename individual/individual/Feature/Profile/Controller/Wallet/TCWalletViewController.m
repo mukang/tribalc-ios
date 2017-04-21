@@ -93,8 +93,12 @@
         [MBProgressHUD showHUDWithMessage:@"暂时无法充值"];
         return;
     }
+    if (!self.walletAccount.bankCards.count) {
+        [MBProgressHUD showHUDWithMessage:@"绑定银行卡后才能充值"];
+        return;
+    }
     TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
-    vc.balance = self.walletAccount.balance;
+    vc.walletAccount = self.walletAccount;
     vc.completionBlock = ^() {
         [weakSelf fetchNetData];
     };

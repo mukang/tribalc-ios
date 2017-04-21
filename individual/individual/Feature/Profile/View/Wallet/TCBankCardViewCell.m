@@ -33,12 +33,7 @@
     self.bgImageView.image = [UIImage imageNamed:bankCard.bgImage];
     self.logoImageView.image = [UIImage imageNamed:bankCard.logo];
     self.bankNameLabel.text = bankCard.bankName;
-    NSInteger index = bankCard.bankCardNum.length;
-    if (index > 4) {
-        index = index - 4;
-    }
-    NSString *lastNum = [bankCard.bankCardNum substringFromIndex:index];
-    self.CardNumLabel.text = [NSString stringWithFormat:@"**** **** **** %@", lastNum];
+    self.CardNumLabel.text = bankCard.bankCardNum;
     self.deleteButton.hidden = !bankCard.showDelete;
 }
 
