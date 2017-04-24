@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TCWalletAccount;
 
 typedef void(^TCRechargeCompletionBlock)();
 
 @interface TCRechargeViewController : UIViewController
 
-/** 余额 */
-@property (nonatomic) CGFloat balance;
+/** 钱包信息 */
+@property (strong, nonatomic) TCWalletAccount *walletAccount;
 /** 建议金额 */
-@property (nonatomic) CGFloat suggestMoney;
+@property (nonatomic) double suggestMoney;
 /** 充值完成的回调 */
 @property (copy, nonatomic) TCRechargeCompletionBlock completionBlock;
 

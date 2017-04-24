@@ -7,14 +7,15 @@
 //
 
 #import "TCRechargeMethodsView.h"
-#import "TCRechargeMethodView.h"
+#import "TCRechargeMethodViewCell.h"
 
-@interface TCRechargeMethodsView ()
+#import "TCBuluoApi.h"
+
+@interface TCRechargeMethodsView () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) UILabel *methodLabel;
 @property (weak, nonatomic) UIView *topSeparatorView;
-@property (weak, nonatomic) TCRechargeMethodView *wechatView;
-@property (weak, nonatomic) TCRechargeMethodView *alipayView;
+@property (weak, nonatomic) UITableView *tableView;
 
 @end
 
@@ -30,6 +31,8 @@
     return self;
 }
 
+#pragma mark - Private Methods
+
 - (void)setupSubviews {
     UILabel *methodLabel = [[UILabel alloc] init];
     methodLabel.text = @"充值方式";
@@ -42,22 +45,19 @@
     topSeparatorView.backgroundColor = [UIColor whiteColor];
     [self addSubview:topSeparatorView];
     
-    TCRechargeMethodView *wechatView = [[TCRechargeMethodView alloc] init];
-    wechatView.imageView.image = [UIImage imageNamed:@"wechat_icon"];
-    wechatView.titleLabel.text = @"微信充值";
-    [wechatView.button addTarget:self action:@selector(handleClickWechatButton:) forControlEvents:UIControlEventTouchDown];
-    [self addSubview:wechatView];
-    
-//    TCRechargeMethodView *alipayView = [[TCRechargeMethodView alloc] init];
-//    alipayView.imageView.image = [UIImage imageNamed:@"alipay_icon"];
-//    alipayView.titleLabel.text = @"支付宝充值";
-//    [alipayView.button addTarget:self action:@selector(handleClickAlipayButton:) forControlEvents:UIControlEventTouchDown];
-//    [self addSubview:alipayView];
+    UITableView *tableView = [[UITableView alloc] init];
+    tableView.backgroundColor = [UIColor clearColor];
+    tableView.separatorColor = [UIColor whiteColor];
+    tableView.rowHeight = 40;
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    tableView.tableFooterView = [UIView new];
+    [tableView registerClass:[TCRechargeMethodViewCell class] forCellReuseIdentifier:@"TCRechargeMethodViewCell"];
+    [self addSubview:tableView];
     
     self.methodLabel = methodLabel;
     self.topSeparatorView = topSeparatorView;
-    self.wechatView = wechatView;
-//    self.alipayView = alipayView;
+    self.tableView = tableView;
 }
 
 - (void)setupConstraints {
@@ -74,49 +74,66 @@
         make.right.equalTo(weakSelf.mas_right).with.offset(-20);
         make.height.mas_equalTo(0.5);
     }];
-    [self.wechatView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.topSeparatorView.mas_bottom);
-        make.left.right.equalTo(weakSelf);
-        make.height.mas_equalTo(40);
+        make.left.right.bottom.equalTo(weakSelf);
     }];
-//    [self.alipayView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(weakSelf.wechatView.mas_bottom);
-//        make.left.right.equalTo(weakSelf);
-//        make.height.mas_equalTo(40);
-//    }];
 }
 
-- (void)setRechargeMethod:(TCRechargeMethod)rechargeMethod {
-    _rechargeMethod = rechargeMethod;
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.bankCardList.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TCRechargeMethodViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRechargeMethodViewCell" forIndexPath:indexPath];
+    TCBankCard *bankCard = self.bankCardList[indexPath.row];
+    NSString *bankCardNum = bankCard.bankCardNum;
+    NSString *lastNum;
+    if (bankCardNum.length >= 4) {
+        lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
+    }
+    cell.logoImageView.image = [UIImage imageNamed:bankCard.logo];
+    cell.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.currentBankCard = self.bankCardList[indexPath.row];
+}
+
+#pragma mark - Override Methods
+
+- (void)setBankCardList:(NSArray *)bankCardList {
+    _bankCardList = bankCardList;
     
-    switch (rechargeMethod) {
-        case TCRechargeMethodWechat:
-            self.wechatView.button.selected = YES;
-            self.alipayView.button.selected = NO;
-            break;
-        case TCRechargeMethodAlipay:
-            self.wechatView.button.selected = NO;
-            self.alipayView.button.selected = YES;
-            break;
-            
-        default:
-            break;
+    NSString *defaultBankCardID = [[TCBuluoApi api] currentUserSession].userInfo.defaultBankCardID;
+    BOOL hasDefaultBank = NO;
+    if (defaultBankCardID) {
+        for (int i=0; i<self.bankCardList.count; i++) {
+            TCBankCard *bankCard = self.bankCardList[i];
+            if ([bankCard.ID isEqualToString:defaultBankCardID]) {
+                hasDefaultBank = YES;
+                self.currentBankCard = bankCard;
+                [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]
+                                            animated:NO
+                                      scrollPosition:UITableViewScrollPositionNone];
+                break;
+            }
+        }
     }
-}
-
-#pragma mark - Actions
-
-- (void)handleClickWechatButton:(UIButton *)sender {
-    self.rechargeMethod = TCRechargeMethodWechat;
-    if ([self.delegate respondsToSelector:@selector(rechargeMethodsView:didSelectedMethodButtonWithMethod:)]) {
-        [self.delegate rechargeMethodsView:self didSelectedMethodButtonWithMethod:TCRechargeMethodWechat];
-    }
-}
-
-- (void)handleClickAlipayButton:(UIButton *)sender {
-    self.rechargeMethod = TCRechargeMethodAlipay;
-    if ([self.delegate respondsToSelector:@selector(rechargeMethodsView:didSelectedMethodButtonWithMethod:)]) {
-        [self.delegate rechargeMethodsView:self didSelectedMethodButtonWithMethod:TCRechargeMethodAlipay];
+    if (hasDefaultBank == NO) {
+        self.currentBankCard = self.bankCardList[0];
+        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                    animated:NO
+                              scrollPosition:UITableViewScrollPositionNone];
     }
 }
 

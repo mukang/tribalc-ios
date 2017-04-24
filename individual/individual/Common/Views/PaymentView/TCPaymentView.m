@@ -9,26 +9,33 @@
 #import "TCPaymentView.h"
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
+#import "TCPaymentBankCardView.h"
 #import "TCPaymentMethodView.h"
-#import <TCCommonLibs/TCFunctions.h>
 
 #import "TCNavigationController.h"
 #import "TCRechargeViewController.h"
 #import "TCWalletPasswordViewController.h"
 
+#import <TCCommonLibs/TCFunctions.h>
+
 static CGFloat const subviewHeight = 400;
 static CGFloat const duration = 0.25;
 
-@interface TCPaymentView () <TCPaymentDetailViewDelegate, TCPaymentPasswordViewDelegate, TCPaymentMethodViewDelegate>
+@interface TCPaymentView () <TCPaymentDetailViewDelegate, TCPaymentPasswordViewDelegate, TCPaymentMethodViewDelegate, TCPaymentBankCardViewDelegate>
 
 @property (nonatomic) CGFloat paymentAmount;
 @property (weak, nonatomic) TCPaymentDetailView *paymentDetailView;
 @property (weak, nonatomic) TCPaymentPasswordView *paymentPasswordView;
+@property (weak, nonatomic) TCPaymentBankCardView *bankCardView;
 @property (weak, nonatomic) TCPaymentMethodView *paymentMethodView;
 /** 钱包信息 */
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
-
+/** 银行卡logo及背景图数据 */
+@property (copy, nonatomic) NSDictionary *banksDic;
+/** 当前付款方式 */
 @property (nonatomic) TCPaymentMethod currentPaymentMethod;
+/** 当前的银行卡信息（付款方式为TCPaymentMethodBankCard时有值） */
+@property (strong, nonatomic) TCBankCard *currentBankCard;
 
 @end
 
@@ -154,10 +161,42 @@ static CGFloat const duration = 0.25;
 }
 
 /**
+ 显示银行卡付款页
+ */
+- (void)showBankCardView {
+    TCPaymentBankCardView *bankCardView = [[TCPaymentBankCardView alloc] initWithBankCard:self.currentBankCard];
+    bankCardView.frame = CGRectMake(TCScreenWidth, self.paymentDetailView.y, TCScreenWidth, subviewHeight);
+    bankCardView.delegate = self;
+    [self addSubview:bankCardView];
+    weakSelf.bankCardView = bankCardView;
+    
+    [UIView animateWithDuration:duration animations:^{
+        weakSelf.paymentDetailView.x = - TCScreenWidth;
+        weakSelf.bankCardView.x = 0;
+    }];
+}
+
+/**
+ 退出银行卡付款页
+ */
+- (void)dismissBankCardView {
+    [UIView animateWithDuration:duration animations:^{
+        weakSelf.paymentDetailView.x = 0;
+        weakSelf.bankCardView.x = TCScreenWidth;
+    } completion:^(BOOL finished) {
+        [weakSelf.bankCardView removeFromSuperview];
+    }];
+}
+
+/**
  显示选择支付方式页
  */
-- (void)showPaymentMethodView {
+- (void)showPaymentMethodViewWithBankCardList:(NSArray *)bankCardList {
     TCPaymentMethodView *paymentMethodView = [[TCPaymentMethodView alloc] initWithPaymentMethod:self.currentPaymentMethod];
+    if (self.currentPaymentMethod == TCPaymentMethodBankCard) {
+        paymentMethodView.currentBankCard = self.currentBankCard;
+    }
+    paymentMethodView.bankCardList = bankCardList;
     paymentMethodView.frame = CGRectMake(TCScreenWidth, self.paymentDetailView.y, TCScreenWidth, subviewHeight);
     paymentMethodView.delegate = self;
     [self addSubview:paymentMethodView];
@@ -201,7 +240,7 @@ static CGFloat const duration = 0.25;
 }
 
 - (void)didTapChangePaymentMethodViewInPaymentDetailView:(TCPaymentDetailView *)view {
-    [self showPaymentMethodView];
+    [self handleTapChangePaymentMethodView];
 }
 
 #pragma mark - TCPaymentPasswordViewDelegate
@@ -214,6 +253,12 @@ static CGFloat const duration = 0.25;
     [self dismissPaymentPasswordView];
 }
 
+#pragma mark - TCPaymentBankCardViewDelegate
+
+- (void)didClickBackButtonInBankCardView:(TCPaymentBankCardView *)view {
+    [self dismissBankCardView];
+}
+
 #pragma mark - TCPaymentMethodViewDelegate
 
 - (void)paymentMethodView:(TCPaymentMethodView *)view didSlectedPaymentMethod:(TCPaymentMethod)paymentMethod {
@@ -222,12 +267,24 @@ static CGFloat const duration = 0.25;
         case TCPaymentMethodBalance:
             self.paymentDetailView.methodLabel.text = @"余额支付";
             break;
-        case TCPaymentMethodWechat:
-            self.paymentDetailView.methodLabel.text = @"微信支付";
+        case TCPaymentMethodBankCard:
+        {
+            self.currentBankCard = view.currentBankCard;
+            TCBankCard *bankCard = view.currentBankCard;
+            NSString *bankCardNum = bankCard.bankCardNum;
+            NSString *lastNum;
+            if (bankCardNum.length >= 4) {
+                lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
+            }
+            self.paymentDetailView.methodLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+        }
             break;
-        case TCPaymentMethodAlipay:
-            self.paymentDetailView.methodLabel.text = @"支付宝支付";
-            break;
+//        case TCPaymentMethodWechat:
+//            self.paymentDetailView.methodLabel.text = @"微信支付";
+//            break;
+//        case TCPaymentMethodAlipay:
+//            self.paymentDetailView.methodLabel.text = @"支付宝支付";
+//            break;
             
         default:
             break;
@@ -250,16 +307,43 @@ static CGFloat const duration = 0.25;
         case TCPaymentMethodBalance:
             [self handlePaymentWithBalance];
             break;
-        case TCPaymentMethodWechat:
-            [self handlePaymentWithWechat];
+        case TCPaymentMethodBankCard:
+            [self showBankCardView];
             break;
-        case TCPaymentMethodAlipay:
-            [self handlePaymentWithAlipay];
-            break;
+//        case TCPaymentMethodWechat:
+//            [self handlePaymentWithWechat];
+//            break;
+//        case TCPaymentMethodAlipay:
+//            [self handlePaymentWithAlipay];
+//            break;
             
         default:
             break;
     }
+}
+
+/**
+ 点击了更换支付方式
+ */
+- (void)handleTapChangePaymentMethodView {
+    // 获取银行卡列表
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
+        if (error) {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取支付方式失败，%@", reason]];
+        } else {
+            [MBProgressHUD hideHUD:YES];
+            for (TCBankCard *bankCard in bankCardList) {
+                NSDictionary *bankInfo = weakSelf.banksDic[bankCard.bankName];
+                if (bankInfo) {
+                    bankCard.logo = bankInfo[@"logo"];
+                    bankCard.bgImage = bankInfo[@"bgImage"];
+                }
+            }
+            [weakSelf showPaymentMethodViewWithBankCardList:bankCardList];
+        }
+    }];
 }
 
 /**
@@ -324,7 +408,7 @@ static CGFloat const duration = 0.25;
  */
 - (void)handleShowRechargeViewController {
     TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
-    vc.balance = self.walletAccount.balance;
+    vc.walletAccount = self.walletAccount;
     vc.suggestMoney = self.paymentAmount - self.walletAccount.balance;
     vc.completionBlock = ^() {
         
@@ -399,6 +483,16 @@ static CGFloat const duration = 0.25;
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
         }
     }];
+}
+
+#pragma mark - Override Methods
+
+- (NSDictionary *)banksDic {
+    if (_banksDic == nil) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"bankCard" ofType:@"plist"];
+        _banksDic = [NSDictionary dictionaryWithContentsOfFile:path];
+    }
+    return _banksDic;
 }
 
 @end

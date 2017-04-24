@@ -79,4 +79,7 @@ typedef NS_ENUM(NSInteger, TCUserEmotionState) {
 /** sip信息 */
 @property (strong, nonatomic) TCUserSipInfo *sip;
 
+/** 默认银行卡ID */
+@property (copy, nonatomic) NSString *defaultBankCardID;
+
 @end

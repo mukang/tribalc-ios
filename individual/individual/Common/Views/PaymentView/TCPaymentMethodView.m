@@ -7,8 +7,11 @@
 //
 
 #import "TCPaymentMethodView.h"
-#import <TCCommonLibs/TCExtendButton.h>
 #import "TCPaymentMethodViewCell.h"
+
+#import "TCBankCard.h"
+
+#import <TCCommonLibs/TCExtendButton.h>
 
 @interface TCPaymentMethodView () <UITableViewDataSource, UITableViewDelegate>
 
@@ -58,7 +61,11 @@
     tableView.tableFooterView = [UIView new];
     [tableView registerClass:[TCPaymentMethodViewCell class] forCellReuseIdentifier:@"TCPaymentMethodViewCell"];
     [self addSubview:tableView];
-    [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.paymentMethod inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    if (self.paymentMethod != TCPaymentMethodBankCard) {
+        [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:self.paymentMethod]
+                               animated:NO
+                         scrollPosition:UITableViewScrollPositionNone];
+    }
     
     self.titleLabel = titleLabel;
     self.backButton = backButton;
@@ -92,13 +99,35 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    if (section == 0) {
+        return 1;
+    } else {
+        return self.bankCardList.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCPaymentMethodViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCPaymentMethodViewCell" forIndexPath:indexPath];
-    switch (indexPath.row) {
+    if (indexPath.section == 0) {
+        cell.logoImageView.image = [UIImage imageNamed:@"balance_icon"];
+        cell.titleLabel.text = @"余额支付";
+    } else {
+        TCBankCard *bankCard = self.bankCardList[indexPath.row];
+        NSString *bankCardNum = bankCard.bankCardNum;
+        NSString *lastNum;
+        if (bankCardNum.length >= 4) {
+            lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
+        }
+        cell.logoImageView.image = [UIImage imageNamed:bankCard.logo];
+        cell.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+    }
+    /*
+    switch (indexPath.section) {
         case TCPaymentMethodBalance:
             cell.logoImageView.image = [UIImage imageNamed:@"balance_icon"];
             cell.titleLabel.text = @"余额支付";
@@ -115,6 +144,7 @@
         default:
             break;
     }
+     */
     return cell;
 }
 
@@ -122,7 +152,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.delegate respondsToSelector:@selector(paymentMethodView:didSlectedPaymentMethod:)]) {
-        [self.delegate paymentMethodView:self didSlectedPaymentMethod:indexPath.row];
+        if (indexPath.section == TCPaymentMethodBankCard) {
+            self.currentBankCard = self.bankCardList[indexPath.row];
+        }
+        [self.delegate paymentMethodView:self didSlectedPaymentMethod:indexPath.section];
     }
 }
 
@@ -131,6 +164,26 @@
 - (void)handleClickBackButton:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(didClickBackButtonInPaymentMethodView:)]) {
         [self.delegate didClickBackButtonInPaymentMethodView:self];
+    }
+}
+
+#pragma mark - Override Methods
+
+- (void)setBankCardList:(NSArray *)bankCardList {
+    _bankCardList = bankCardList;
+    
+    if (self.paymentMethod != TCPaymentMethodBankCard) return;
+    if (self.bankCardList.count == 0) return;
+    
+    for (int i=0; i<bankCardList.count; i++) {
+        TCBankCard *bankCard = bankCardList[i];
+        if ([bankCard.ID isEqualToString:self.currentBankCard.ID]) {
+            self.currentBankCard = bankCard;
+            [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:self.paymentMethod]
+                                        animated:NO
+                                  scrollPosition:UITableViewScrollPositionNone];
+            break;
+        }
     }
 }
 
