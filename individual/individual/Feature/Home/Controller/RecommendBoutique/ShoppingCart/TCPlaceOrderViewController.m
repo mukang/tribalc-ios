@@ -145,7 +145,7 @@
 
 - (NSString *)getAllTotalFeeStr {
     
-    CGFloat totalFee;
+    CGFloat totalFee = 0.0;
     for (int i = 0; i < orderDetailList.count; i++) {
         TCOrder *order = orderDetailList[i];
         totalFee += order.totalFee;
