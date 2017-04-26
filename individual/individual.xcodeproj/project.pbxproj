@@ -606,10 +606,10 @@
 		7A384F9C1E10B9AF00E6DB9E /* TCUserSipInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384F9B1E10B9AF00E6DB9E /* TCUserSipInfo.m */; };
 		7A384FA51E1124D600E6DB9E /* TCIDAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384FA31E1124D600E6DB9E /* TCIDAuthViewController.m */; };
 		7A384FA61E1124D600E6DB9E /* TCIDAuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A384FA41E1124D600E6DB9E /* TCIDAuthViewController.xib */; };
-		7A45146B1DE582DA007D7193 /* bankCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A45146A1DE582DA007D7193 /* bankCard.plist */; };
 		7A4514881DD30C48009F170A /* TCModelImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514871DD30C48009F170A /* TCModelImport.m */; };
 		7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */; };
 		7A48A6AA1E5A93AF006CAB62 /* TCServiceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */; };
+		7A4BF1A71EB089C800DE1BF5 /* TCBankInfoList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A4BF1A61EB089C800DE1BF5 /* TCBankInfoList.plist */; };
 		7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E05071DEED401002371B0 /* TCCommunityVisitViewController.m */; };
 		7A4E050A1DEED401002371B0 /* TCCommunityVisitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4E05081DEED401002371B0 /* TCCommunityVisitViewController.xib */; };
 		7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E050C1DEEDC69002371B0 /* TCCommonInputViewCell.m */; };
@@ -2915,13 +2915,13 @@
 		7A384FA21E1124D600E6DB9E /* TCIDAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIDAuthViewController.h; sourceTree = "<group>"; };
 		7A384FA31E1124D600E6DB9E /* TCIDAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthViewController.m; sourceTree = "<group>"; };
 		7A384FA41E1124D600E6DB9E /* TCIDAuthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCIDAuthViewController.xib; sourceTree = "<group>"; };
-		7A45146A1DE582DA007D7193 /* bankCard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bankCard.plist; sourceTree = "<group>"; };
 		7A4514861DD30C48009F170A /* TCModelImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCModelImport.h; sourceTree = "<group>"; };
 		7A4514871DD30C48009F170A /* TCModelImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCModelImport.m; sourceTree = "<group>"; };
 		7A48A6A51E5A8EC2006CAB62 /* TCServiceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceDetailViewController.h; sourceTree = "<group>"; };
 		7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceDetailViewController.m; sourceTree = "<group>"; };
 		7A48A6A81E5A93AF006CAB62 /* TCServiceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceHeaderView.h; sourceTree = "<group>"; };
 		7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceHeaderView.m; sourceTree = "<group>"; };
+		7A4BF1A61EB089C800DE1BF5 /* TCBankInfoList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TCBankInfoList.plist; sourceTree = "<group>"; };
 		7A4E05061DEED401002371B0 /* TCCommunityVisitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityVisitViewController.h; sourceTree = "<group>"; };
 		7A4E05071DEED401002371B0 /* TCCommunityVisitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityVisitViewController.m; sourceTree = "<group>"; };
 		7A4E05081DEED401002371B0 /* TCCommunityVisitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunityVisitViewController.xib; sourceTree = "<group>"; };
@@ -8131,7 +8131,7 @@
 			isa = PBXGroup;
 			children = (
 				7AC2922A1DC8BEB300B2C7E8 /* citylist.data */,
-				7A45146A1DE582DA007D7193 /* bankCard.plist */,
+				7A4BF1A61EB089C800DE1BF5 /* TCBankInfoList.plist */,
 			);
 			path = BinaryFiles;
 			sourceTree = "<group>";
@@ -8497,6 +8497,7 @@
 				7A720AB71E13892200567216 /* downImage01.jpg in Resources */,
 				553DC87F1DFFE22F0018783E /* BcToolboxTargets-release.cmake in Resources */,
 				553DC87E1DFFE22F0018783E /* BcToolboxConfigVersion.cmake in Resources */,
+				7A4BF1A71EB089C800DE1BF5 /* TCBankInfoList.plist in Resources */,
 				7A4E050F1DEEDC69002371B0 /* TCCommonInputViewCell.xib in Resources */,
 				553DC89A1DFFE22F0018783E /* Mediastreamer2Targets.cmake in Resources */,
 				553DC81A1DFFE22E0018783E /* BcToolboxTargets.cmake in Resources */,
@@ -8733,7 +8734,6 @@
 				553DC9001DFFE2300018783E /* Mediastreamer2Targets.cmake in Resources */,
 				553DC9581DFFE2310018783E /* BZRTPConfigVersion.cmake in Resources */,
 				553DC8E21DFFE2300018783E /* vpx.pc in Resources */,
-				7A45146B1DE582DA007D7193 /* bankCard.plist in Resources */,
 				553DC8371DFFE22E0018783E /* ORTPTargets-release.cmake in Resources */,
 				553DC94A1DFFE2300018783E /* BcToolboxConfigVersion.cmake in Resources */,
 				7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */,

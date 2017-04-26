@@ -1870,6 +1870,113 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)prepareBankCardRechargeWithBankCardID:(NSString *)bankCardID totalFee:(double)totalFee result:(void (^)(NSString *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"recharge/bf_bankcard/prepare_order?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [request setValue:bankCardID forParam:@"bankCardId"];
+        [request setValue:[NSNumber numberWithDouble:totalFee] forParam:@"totalFee"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                NSDictionary *dataDic = response.data;
+                NSString *rechargeID = dataDic[@"result"];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(rechargeID, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+- (void)confirmBankCardRechargeWithRechargeID:(NSString *)rechargeID vCode:(NSString *)vCode result:(void (^)(TCBFPayResult, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"recharge/bf_bankcard/confirm_order?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [request setValue:rechargeID forParam:@"rechargeId"];
+        [request setValue:vCode forParam:@"vcode"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                NSDictionary *dataDic = response.data;
+                NSString *resultStr = dataDic[@"result"];
+                TCBFPayResult payResult = TCBFPayResultError;
+                if ([resultStr isEqualToString:@"1"]) {
+                    payResult = TCBFPayResultSucceed;
+                } else if ([resultStr isEqualToString:@"2"]) {
+                    payResult = TCBFPayResultFailure;
+                } else if ([resultStr isEqualToString:@"3"]) {
+                    payResult = TCBFPayResultProcessing;
+                } else if ([resultStr isEqualToString:@"4"]) {
+                    payResult = TCBFPayResultNotPay;
+                } else {
+                    payResult = TCBFPayResultError;
+                }
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(payResult, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(TCBFPayResultError, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(TCBFPayResultError, sessionError));
+        }
+    }
+}
+
+- (void)queryBankCardRechargeWithRechargeID:(NSString *)rechargeID result:(void (^)(TCBFPayResult, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"recharge/bf_bankcard/query_order?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [request setValue:rechargeID forParam:@"value"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                NSDictionary *dataDic = response.data;
+                NSString *resultStr = dataDic[@"result"];
+                TCBFPayResult payResult = TCBFPayResultError;
+                if ([resultStr isEqualToString:@"1"]) {
+                    payResult = TCBFPayResultSucceed;
+                } else if ([resultStr isEqualToString:@"2"]) {
+                    payResult = TCBFPayResultFailure;
+                } else if ([resultStr isEqualToString:@"3"]) {
+                    payResult = TCBFPayResultProcessing;
+                } else if ([resultStr isEqualToString:@"4"]) {
+                    payResult = TCBFPayResultNotPay;
+                } else {
+                    payResult = TCBFPayResultError;
+                }
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(payResult, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(TCBFPayResultError, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(TCBFPayResultError, sessionError));
+        }
+    }
+}
+
 #pragma mark - 门锁设备
 
 - (void)fetchMyLockListResult:(void (^)(NSArray *lockList, NSError *error))resultBlock {

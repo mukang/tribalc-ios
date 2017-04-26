@@ -26,6 +26,18 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
     TCPayPurposeMaintain,    // 维修
 };
 
+
+/**
+ 宝付支付结果
+ */
+typedef NS_ENUM(NSInteger, TCBFPayResult) {
+    TCBFPayResultError = 0,  // 错误
+    TCBFPayResultSucceed,    // 成功
+    TCBFPayResultFailure,    // 失败
+    TCBFPayResultProcessing, // 处理中
+    TCBFPayResultNotPay      // 未支付
+};
+
 @interface TCBuluoApi : NSObject
 
 /**
@@ -549,6 +561,32 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
  @param resultBlock 回调结果，success为NO时表示获取或充值失败，失败原因见error的code和userInfo
  */
 - (void)fetchWechatRechargeResultWithPrepayID:(NSString *)prepayID result:(void(^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 宝付预充值
+
+ @param bankCardID 银行卡id
+ @param totalFee 充值金额
+ @param resultBlock 回调结果，rechargeID为nil表示预充值失败，失败原因见error的code和userInfo
+ */
+- (void)prepareBankCardRechargeWithBankCardID:(NSString *)bankCardID totalFee:(double)totalFee result:(void(^)(NSString *rechargeID, NSError *error))resultBlock;
+
+/**
+ 宝付确认充值
+
+ @param rechargeID 预充值id
+ @param vCode 短信验证码
+ @param resultBlock 回调结果，rechargeID为nil表示充值失败，失败原因见error的code和userInfo
+ */
+- (void)confirmBankCardRechargeWithRechargeID:(NSString *)rechargeID vCode:(NSString *)vCode result:(void(^)(TCBFPayResult payResult, NSError *error))resultBlock;
+
+/**
+ 宝付查询充值
+
+ @param rechargeID 预充值id
+ @param resultBlock 回调结果，rechargeID为nil表示充值失败，失败原因见error的code和userInfo
+ */
+- (void)queryBankCardRechargeWithRechargeID:(NSString *)rechargeID result:(void(^)(TCBFPayResult payResult, NSError *error))resultBlock;
 
 #pragma mark - 门锁设备
 

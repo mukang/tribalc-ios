@@ -89,7 +89,7 @@
     
     UITextField *codeTextField = [[UITextField alloc] init];
     codeTextField.textColor = TCBlackColor;
-    codeTextField.textAlignment = NSTextAlignmentCenter;
+    codeTextField.textAlignment = NSTextAlignmentLeft;
     codeTextField.font = [UIFont systemFontOfSize:11];
     codeTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入短信验证码"
                                                                           attributes:@{
@@ -119,7 +119,7 @@
     TCCommonButton *paymentButton = [TCCommonButton buttonWithTitle:@"确  定"
                                                               color:TCCommonButtonColorBlue
                                                              target:self
-                                                             action:@selector(handleClickPaymentButton:)];
+                                                             action:@selector(handleClickConfirmButton:)];
     [self addSubview:paymentButton];
     
     self.titleLabel = titleLabel;
@@ -189,10 +189,21 @@
     if (sender.isEnabled == NO) return;
     
     [self startCountDown];
+    
+    if ([self.delegate respondsToSelector:@selector(didClickFetchCodeButtonInBankCardView:)]) {
+        [self.delegate didClickFetchCodeButtonInBankCardView:self];
+    }
 }
 
-- (void)handleClickPaymentButton:(UIButton *)sender {
+- (void)handleClickConfirmButton:(UIButton *)sender {
+    if (self.codeTextField.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请输入短信验证码"];
+        return;
+    };
     
+    if ([self.delegate respondsToSelector:@selector(bankCardView:didClickConfirmButtonWithCode:)]) {
+        [self.delegate bankCardView:self didClickConfirmButtonWithCode:self.codeTextField.text];
+    }
 }
 
 - (void)handleTapSuperview:(UITapGestureRecognizer *)gesture {

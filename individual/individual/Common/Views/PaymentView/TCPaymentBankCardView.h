@@ -17,6 +17,9 @@
 
 - (instancetype)initWithBankCard:(TCBankCard *)bankCard;
 
+- (void)startCountDown;
+- (void)stopCountDown;
+
 @end
 
 
@@ -24,6 +27,7 @@
 
 @optional
 - (void)didClickBackButtonInBankCardView:(TCPaymentBankCardView *)view;
-
+- (void)didClickFetchCodeButtonInBankCardView:(TCPaymentBankCardView *)view;
+- (void)bankCardView:(TCPaymentBankCardView *)view didClickConfirmButtonWithCode:(NSString *)code;
 
 @end

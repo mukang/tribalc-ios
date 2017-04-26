@@ -31,7 +31,7 @@ static CGFloat const duration = 0.25;
 /** 钱包信息 */
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
 /** 银行卡logo及背景图数据 */
-@property (copy, nonatomic) NSDictionary *banksDic;
+@property (copy, nonatomic) NSArray *bankInfoList;
 /** 当前付款方式 */
 @property (nonatomic) TCPaymentMethod currentPaymentMethod;
 /** 当前的银行卡信息（付款方式为TCPaymentMethodBankCard时有值） */
@@ -335,10 +335,11 @@ static CGFloat const duration = 0.25;
         } else {
             [MBProgressHUD hideHUD:YES];
             for (TCBankCard *bankCard in bankCardList) {
-                NSDictionary *bankInfo = weakSelf.banksDic[bankCard.bankName];
-                if (bankInfo) {
-                    bankCard.logo = bankInfo[@"logo"];
-                    bankCard.bgImage = bankInfo[@"bgImage"];
+                for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
+                    if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
+                        bankCard.logo = bankInfo[@"logo"];
+                        break;
+                    }
                 }
             }
             [weakSelf showPaymentMethodViewWithBankCardList:bankCardList];
@@ -487,12 +488,12 @@ static CGFloat const duration = 0.25;
 
 #pragma mark - Override Methods
 
-- (NSDictionary *)banksDic {
-    if (_banksDic == nil) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"bankCard" ofType:@"plist"];
-        _banksDic = [NSDictionary dictionaryWithContentsOfFile:path];
+- (NSArray *)bankInfoList {
+    if (_bankInfoList == nil) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"TCBankInfoList" ofType:@"plist"];
+        _bankInfoList = [NSArray arrayWithContentsOfFile:path];
     }
-    return _banksDic;
+    return _bankInfoList;
 }
 
 @end
