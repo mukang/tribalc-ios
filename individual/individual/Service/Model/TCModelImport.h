@@ -79,6 +79,9 @@
 #import "TCLockWrapper.h"
 #import "TCVisitorInfo.h"
 
+/*********** 支付相关 ***********/
+#import "TCBFPayInfo.h"
+
 @interface TCModelImport : NSObject
 
 @end

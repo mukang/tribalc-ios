@@ -563,30 +563,31 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
 - (void)fetchWechatRechargeResultWithPrepayID:(NSString *)prepayID result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 /**
- 宝付预充值
+ 宝付预支付
 
- @param bankCardID 银行卡id
- @param totalFee 充值金额
- @param resultBlock 回调结果，rechargeID为nil表示预充值失败，失败原因见error的code和userInfo
+ @param payInfo TCBFPayInfo对象
+ @param resultBlock 回调结果，payID为nil表示预支付失败，失败原因见error的code和userInfo
  */
-- (void)prepareBankCardRechargeWithBankCardID:(NSString *)bankCardID totalFee:(double)totalFee result:(void(^)(NSString *rechargeID, NSError *error))resultBlock;
+- (void)prepareBFPayWithInfo:(TCBFPayInfo *)payInfo result:(void(^)(NSString *payID, NSError *error))resultBlock;
 
 /**
- 宝付确认充值
+ 宝付确认支付
 
- @param rechargeID 预充值id
+ @param payID 支付id
  @param vCode 短信验证码
- @param resultBlock 回调结果，rechargeID为nil表示充值失败，失败原因见error的code和userInfo
+ @param resultBlock 回调结果
  */
-- (void)confirmBankCardRechargeWithRechargeID:(NSString *)rechargeID vCode:(NSString *)vCode result:(void(^)(TCBFPayResult payResult, NSError *error))resultBlock;
+- (void)confirmBFPayWithPayID:(NSString *)payID vCode:(NSString *)vCode result:(void(^)(TCBFPayResult payResult, NSError *error))resultBlock;
 
 /**
- 宝付查询充值
+ 宝付查询支付
 
- @param rechargeID 预充值id
- @param resultBlock 回调结果，rechargeID为nil表示充值失败，失败原因见error的code和userInfo
+ @param payID 支付id
+ @param resultBlock 回调结果
  */
-- (void)queryBankCardRechargeWithRechargeID:(NSString *)rechargeID result:(void(^)(TCBFPayResult payResult, NSError *error))resultBlock;
+- (void)queryBFPayWithPayID:(NSString *)payID result:(void(^)(TCBFPayResult payResult, NSError *error))resultBlock;
+
+
 
 #pragma mark - 门锁设备
 

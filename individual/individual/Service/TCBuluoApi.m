@@ -1898,12 +1898,42 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)confirmBankCardRechargeWithRechargeID:(NSString *)rechargeID vCode:(NSString *)vCode result:(void (^)(TCBFPayResult, NSError *))resultBlock {
+- (void)prepareBFPayWithInfo:(TCBFPayInfo *)payInfo result:(void (^)(NSString *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"recharge/bf_bankcard/prepare_order?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        request.token = self.currentUserSession.token;
+        NSDictionary *dic = [payInfo toObjectDictionary];
+        for (NSString *key in dic.allKeys) {
+            [request setValue:dic[key] forParam:key];
+        }
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                NSDictionary *dataDic = response.data;
+                NSString *payID = dataDic[@"result"];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(payID, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+- (void)confirmBFPayWithPayID:(NSString *)payID vCode:(NSString *)vCode result:(void (^)(TCBFPayResult, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"recharge/bf_bankcard/confirm_order?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-        [request setValue:rechargeID forParam:@"rechargeId"];
+        [request setValue:payID forParam:@"rechargeId"];
         [request setValue:vCode forParam:@"vcode"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
@@ -1938,12 +1968,12 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)queryBankCardRechargeWithRechargeID:(NSString *)rechargeID result:(void (^)(TCBFPayResult, NSError *))resultBlock {
+- (void)queryBFPayWithPayID:(NSString *)payID result:(void (^)(TCBFPayResult, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"recharge/bf_bankcard/query_order?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-        [request setValue:rechargeID forParam:@"value"];
+        [request setValue:payID forParam:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
                 NSDictionary *dataDic = response.data;

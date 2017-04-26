@@ -610,6 +610,7 @@
 		7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */; };
 		7A48A6AA1E5A93AF006CAB62 /* TCServiceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */; };
 		7A4BF1A71EB089C800DE1BF5 /* TCBankInfoList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A4BF1A61EB089C800DE1BF5 /* TCBankInfoList.plist */; };
+		7A4BF1AE1EB0BE2E00DE1BF5 /* TCBFPayInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4BF1AD1EB0BE2E00DE1BF5 /* TCBFPayInfo.m */; };
 		7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E05071DEED401002371B0 /* TCCommunityVisitViewController.m */; };
 		7A4E050A1DEED401002371B0 /* TCCommunityVisitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4E05081DEED401002371B0 /* TCCommunityVisitViewController.xib */; };
 		7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E050C1DEEDC69002371B0 /* TCCommonInputViewCell.m */; };
@@ -2922,6 +2923,8 @@
 		7A48A6A81E5A93AF006CAB62 /* TCServiceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceHeaderView.h; sourceTree = "<group>"; };
 		7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceHeaderView.m; sourceTree = "<group>"; };
 		7A4BF1A61EB089C800DE1BF5 /* TCBankInfoList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TCBankInfoList.plist; sourceTree = "<group>"; };
+		7A4BF1AC1EB0BE2E00DE1BF5 /* TCBFPayInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBFPayInfo.h; sourceTree = "<group>"; };
+		7A4BF1AD1EB0BE2E00DE1BF5 /* TCBFPayInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBFPayInfo.m; sourceTree = "<group>"; };
 		7A4E05061DEED401002371B0 /* TCCommunityVisitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityVisitViewController.h; sourceTree = "<group>"; };
 		7A4E05071DEED401002371B0 /* TCCommunityVisitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityVisitViewController.m; sourceTree = "<group>"; };
 		7A4E05081DEED401002371B0 /* TCCommunityVisitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommunityVisitViewController.xib; sourceTree = "<group>"; };
@@ -7767,6 +7770,15 @@
 			path = Recharge;
 			sourceTree = "<group>";
 		};
+		7A4BF1A81EB0BA1800DE1BF5 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				7A4BF1AC1EB0BE2E00DE1BF5 /* TCBFPayInfo.h */,
+				7A4BF1AD1EB0BE2E00DE1BF5 /* TCBFPayInfo.m */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
 		7A5F876F1DE2976900E4130B /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
@@ -8084,6 +8096,7 @@
 			children = (
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
+				7A4BF1A81EB0BA1800DE1BF5 /* Payment */,
 				55BB9EB71E72AF2D00B0FD94 /* OpenDoor */,
 				7A408FE31E1650F200761F4A /* Recharge */,
 				55F06EEF1E0396C500A849D7 /* Property */,
@@ -8820,7 +8833,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -9011,6 +9024,7 @@
 				7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */,
 				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
 				55BB9EC01E72B49100B0FD94 /* TCLockWrapper.m in Sources */,
+				7A4BF1AE1EB0BE2E00DE1BF5 /* TCBFPayInfo.m in Sources */,
 				0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */,
 				7AEB4CFC1E03AC5400F83A7C /* TCBioEditGenderViewController.m in Sources */,
 				7A8352841E5C2D8A003A8E76 /* TCServicePromptViewCell.m in Sources */,

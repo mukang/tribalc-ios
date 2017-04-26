@@ -34,8 +34,8 @@
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
 /** 预支付ID，查询微信支付结果时使用 */
 @property (copy, nonatomic) NSString *prepayID;
-/** 宝付预充值ID */
-@property (copy, nonatomic) NSString *rechargeID;
+/** 宝付支付ID */
+@property (copy, nonatomic) NSString *payID;
 
 /** 银行卡验证码输入页面的背景 */
 @property (weak, nonatomic) UIView *bgView;
@@ -47,7 +47,7 @@
 
 
 /** 宝付预充值 */
-- (void)prepareBankCardRecharge:(void(^)(NSString *rechargeID, NSError *error))resultBlock;
+- (void)prepareBFPay:(void(^)(NSString *payID, NSError *error))resultBlock;
 
 @end
 
@@ -245,9 +245,9 @@
 }
 
 - (void)didClickFetchCodeButtonInBankCardView:(TCPaymentBankCardView *)view {
-    [self prepareBankCardRecharge:^(NSString *rechargeID, NSError *error) {
-        if (rechargeID) {
-            weakSelf.rechargeID = rechargeID;
+    [self prepareBFPay:^(NSString *payID, NSError *error) {
+        if (payID) {
+            weakSelf.payID = payID;
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"充值失败，%@", reason]];
@@ -283,10 +283,10 @@
     
     if (self.methodsView.rechargeMethod == TCRechargeMethodBankCard) {
         [MBProgressHUD showHUD:YES];
-        [self prepareBankCardRecharge:^(NSString *rechargeID, NSError *error) {
-            if (rechargeID) {
+        [self prepareBFPay:^(NSString *payID, NSError *error) {
+            if (payID) {
                 [MBProgressHUD hideHUD:YES];
-                weakSelf.rechargeID = rechargeID;
+                weakSelf.payID = payID;
                 [weakSelf showBankCardCodeView];
             } else {
                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -407,11 +407,13 @@
 /**
  宝付预充值
  */
-- (void)prepareBankCardRecharge:(void (^)(NSString *, NSError *))resultBlock {
-    NSString *bankCardID = self.methodsView.currentBankCard.ID;
-    [[TCBuluoApi api] prepareBankCardRechargeWithBankCardID:bankCardID totalFee:self.totalFee result:^(NSString *rechargeID, NSError *error) {
+- (void)prepareBFPay:(void (^)(NSString *, NSError *))resultBlock {
+    TCBFPayInfo *payInfo = [[TCBFPayInfo alloc] init];
+    payInfo.bankCardId = self.methodsView.currentBankCard.ID;
+    payInfo.totalFee = self.totalFee;
+    [[TCBuluoApi api] prepareBFPayWithInfo:payInfo result:^(NSString *payID, NSError *error) {
         if (resultBlock) {
-            resultBlock(rechargeID, error);
+            resultBlock(payID, error);
         }
     }];
 }
@@ -421,7 +423,7 @@
  */
 - (void)confirmBankCardRechargeWithVCode:(NSString *)vCode {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] confirmBankCardRechargeWithRechargeID:self.rechargeID vCode:vCode result:^(TCBFPayResult payResult, NSError *error) {
+    [[TCBuluoApi api] confirmBFPayWithPayID:self.payID vCode:vCode result:^(TCBFPayResult payResult, NSError *error) {
         if (payResult == TCBFPayResultSucceed) {
             [weakSelf handleRechargeSucceed];
         } else if (payResult == TCBFPayResultProcessing) {
@@ -439,7 +441,7 @@
  宝付查询充值
  */
 - (void)queryBankCardRechargeWithVCode:(NSString *)vCode {
-    [[TCBuluoApi api] queryBankCardRechargeWithRechargeID:self.rechargeID result:^(TCBFPayResult payResult, NSError *error) {
+    [[TCBuluoApi api] queryBFPayWithPayID:self.payID result:^(TCBFPayResult payResult, NSError *error) {
         if (payResult == TCBFPayResultSucceed) {
             [weakSelf handleRechargeSucceed];
         } else if (payResult == TCBFPayResultProcessing) {
