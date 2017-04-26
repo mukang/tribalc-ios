@@ -19,6 +19,10 @@
 
 #import "TCBuluoApi.h"
 
+#import <Contacts/Contacts.h>
+#import <ContactsUI/ContactsUI.h>
+#import <AddressBookUI/AddressBookUI.h>
+
 @interface TCAddVisitorViewController ()
 <UITableViewDataSource,
 UITableViewDelegate,
@@ -26,7 +30,9 @@ TCCommonInputViewCellDelegate,
 TCAddVisitorTimeViewCellDelegate,
 TCAddVisitorDeviceViewCellDelegate,
 TCDatePickerViewDelegate,
-TCLockEquipPickerViewDelegate>
+TCLockEquipPickerViewDelegate,
+CNContactPickerDelegate,
+ABPeoplePickerNavigationControllerDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) TCLockKey *lockKey;
@@ -99,6 +105,13 @@ TCLockEquipPickerViewDelegate>
                 cell.placeholder = @"请填写姓名";
                 cell.content = self.lockKey.name;
                 cell.keyboardType = UIKeyboardTypeDefault;
+                
+                UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                addBtn.frame = CGRectMake(TCScreenWidth-55, 0, 45, 45);
+                [cell addSubview:addBtn];
+                [addBtn setImage:[UIImage imageNamed:@"addContact"] forState:UIControlStateNormal];
+                [addBtn addTarget:self action:@selector(addContact) forControlEvents:UIControlEventTouchUpInside];
+                
             } else {
                 cell.title = @"电话";
                 cell.placeholder = @"请填写电话";
@@ -223,7 +236,111 @@ TCLockEquipPickerViewDelegate>
     [self.tableView reloadData];
 }
 
+#pragma mark - CNContactPickerDelegate
+//- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContact:(CNContact *)contact{
+//
+//    NSLog(@"contact:%@",contact);
+//    //phoneNumbers 包含手机号和家庭电话等
+//    for (CNLabeledValue * labeledValue in contact.phoneNumbers) {
+//
+//        CNPhoneNumber * phoneNumber = labeledValue.value;
+//
+//        NSLog(@"phoneNum:%@", phoneNumber.stringValue);
+//
+//    }
+//}
+
+#pragma mark - 选中一个联系人属性
+- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperty:(CNContactProperty *)contactProperty{
+    
+//    NSLog(@"contactProperty:%@",contactProperty);
+    
+    NSString *key = contactProperty.key;
+    if ([key isKindOfClass:[NSString class]]) {
+        if ([key isEqualToString:@"phoneNumbers"]) {
+            CNContact *contact = contactProperty.contact;
+            if (contact.phoneNumbers) {
+                if (contact.phoneNumbers.count) {
+                    CNLabeledValue *labeledValue = contact.phoneNumbers[0];
+                    CNPhoneNumber *phoneNumber = labeledValue.value;
+                    NSString *name = [NSString stringWithFormat:@"%@%@",contact.familyName, contact.givenName];
+//                    NSLog(@"name:%@  phoneNum:%@",name, phoneNumber.stringValue);
+                    
+                    TCCommonInputViewCell *firstCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                    firstCell.content = name;
+                    
+                    TCCommonInputViewCell *secondCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                    secondCell.content = phoneNumber.stringValue;
+                }
+                
+            }
+
+        }
+    }
+}
+
+#pragma mark - ABPeoplePickerNavigationControllerDelegate
+//- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person {
+//
+//    NSLog(@"选中了person,%@",person);
+//}
+
+- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier{
+    
+//    NSLog(@"选中了属性,person:%@, property:%d,identifier:%d",person,property,identifier);
+    if (property == 3) {
+        ABMutableMultiValueRef phoneMulti = ABRecordCopyValue(person, kABPersonPhoneProperty);
+        NSString *firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+        if (firstName==nil) {
+            firstName = @" ";
+        }
+        NSString *lastName=(__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+        if (lastName==nil) {
+            lastName = @" ";
+        }
+        NSMutableArray *phones = [NSMutableArray arrayWithCapacity:0];
+        for (int i = 0; i < ABMultiValueGetCount(phoneMulti); i++) {
+            NSString *aPhone = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phoneMulti, i);
+            [phones addObject:aPhone];
+        }
+        NSString *phone = @"";
+        if (phones.count >= identifier) {
+            phone = [phones objectAtIndex:identifier];
+        }
+//        NSDictionary *dic = @{@"fullname": [NSString stringWithFormat:@"%@%@", firstName, lastName]
+//                              ,@"phone" : phone};
+//        NSLog(@"%@", dic);
+        
+        TCCommonInputViewCell *firstCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        firstCell.content = [NSString stringWithFormat:@"%@%@", firstName, lastName];
+        
+        TCCommonInputViewCell *secondCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        secondCell.content = phone;
+    }
+}
+
+
 #pragma mark - Actions
+
+- (void)addContact {
+    
+    NSString *phoneVersion = [[UIDevice currentDevice] systemVersion];
+    CGFloat version = [phoneVersion floatValue];
+    if (version < 9.0) {
+        ABPeoplePickerNavigationController *peoplePickerNav = [ABPeoplePickerNavigationController new];
+        
+        peoplePickerNav.peoplePickerDelegate = self;
+        
+        [self presentViewController:peoplePickerNav animated:YES completion:nil];
+
+    }else {
+        CNContactPickerViewController *contactPickerVc = [CNContactPickerViewController new];
+    
+        contactPickerVc.delegate = self;
+    
+        [self presentViewController:contactPickerVc animated:YES completion:nil];
+    }
+}
 
 - (void)handleClickGenerateButton:(TCCommonButton *)sender {
     [self.tableView endEditing:YES];
