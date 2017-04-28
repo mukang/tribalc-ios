@@ -20,7 +20,6 @@
 @property (weak, nonatomic) UIView *separatorView;
 @property (weak, nonatomic) UILabel *promptLabel;
 @property (weak, nonatomic) UILabel *codeLabel;
-@property (weak, nonatomic) UITextField *codeTextField;
 @property (weak, nonatomic) TCExtendButton * codeButton;
 @property (weak, nonatomic) TCCommonButton *paymentButton;
 

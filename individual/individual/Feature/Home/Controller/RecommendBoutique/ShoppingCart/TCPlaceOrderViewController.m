@@ -372,7 +372,7 @@
 }
 
 - (NSString *)getAllOrderTotalPrice {
-    CGFloat totalPrice;
+    CGFloat totalPrice = 0;
     for (int i = 0; i < orderDetailList.count; i++) {
         TCOrder *order = orderDetailList[i];
         totalPrice += order.totalFee;
@@ -491,7 +491,7 @@
         [orderIDs addObject:order.ID];
     }
     
-    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:paymentAmount fromController:self];
+    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithTotalFee:paymentAmount fromController:self];
     paymentView.orderIDs = orderIDs;
     paymentView.payPurpose = TCPayPurposeOrder;
     paymentView.delegate = self;

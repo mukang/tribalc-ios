@@ -1002,11 +1002,14 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             case TCPayChannelBalance:
                 [request setValue:@"BALANCE" forParam:@"payChannel"];
                 break;
+            case TCPayChannelBankCard:
+                [request setValue:@"BF_BANKCARD" forParam:@"payChannel"];
+                break;
                 
             default:
                 break;
         }
-        [request setValue:password forParam:@"password"];
+        if (password) [request setValue:password forParam:@"password"];
         [request setValue:orderIDs forParam:@"orderIds"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {

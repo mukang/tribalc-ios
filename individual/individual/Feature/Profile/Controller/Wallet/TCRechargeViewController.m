@@ -250,7 +250,7 @@
             weakSelf.payID = payID;
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"充值失败，%@", reason]];
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取验证码失败，%@", reason]];
             [weakSelf.paymentBankCardView stopCountDown];
         }
     }];

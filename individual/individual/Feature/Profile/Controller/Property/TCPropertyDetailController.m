@@ -233,7 +233,7 @@
 }
 
 - (IBAction)payBtnClick:(id)sender {
-    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:self.propertyManage.totalFee fromController:self];
+    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithTotalFee:self.propertyManage.totalFee fromController:self];
     paymentView.orderIDs = @[self.propertyManage.ID];
     paymentView.payPurpose = TCPayPurposeMaintain;
     paymentView.delegate = self;

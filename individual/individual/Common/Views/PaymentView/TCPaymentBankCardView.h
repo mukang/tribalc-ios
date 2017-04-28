@@ -12,6 +12,7 @@
 
 @interface TCPaymentBankCardView : UIView
 
+@property (weak, nonatomic) UITextField *codeTextField;
 @property (strong, nonatomic, readonly) TCBankCard *bankCard;
 @property (weak, nonatomic) id<TCPaymentBankCardViewDelegate> delegate;
 
