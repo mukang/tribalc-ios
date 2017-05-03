@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *dataList;
 
+@property (copy, nonatomic) NSArray *bankInfoList;
+
 @end
 
 @implementation TCBankCardViewController {
@@ -59,13 +61,13 @@
         if (bankCardList) {
             [weakSelf.dataList removeAllObjects];
             [weakSelf.dataList addObjectsFromArray:bankCardList];
-            NSString *path = [[NSBundle mainBundle] pathForResource:@"bankCard" ofType:@"plist"];
-            NSDictionary *banksDic = [NSDictionary dictionaryWithContentsOfFile:path];
             for (TCBankCard *bankCard in weakSelf.dataList) {
-                NSDictionary *bankInfo = banksDic[bankCard.bankName];
-                if (bankInfo) {
-                    bankCard.logo = bankInfo[@"logo"];
-                    bankCard.bgImage = bankInfo[@"bgImage"];
+                for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
+                    if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
+                        bankCard.logo = bankInfo[@"logo"];
+                        bankCard.bgImage = bankInfo[@"bgImage"];
+                        break;
+                    }
                 }
             }
             [weakSelf.tableView reloadData];
@@ -173,6 +175,14 @@
         _dataList = [NSMutableArray array];
     }
     return _dataList;
+}
+
+- (NSArray *)bankInfoList {
+    if (_bankInfoList == nil) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"TCBankInfoList" ofType:@"plist"];
+        _bankInfoList = [NSArray arrayWithContentsOfFile:path];
+    }
+    return _bankInfoList;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -425,7 +425,7 @@
  去付款
  */
 - (void)handlePaymentAction {
-    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithAmount:self.goodsOrder.totalFee fromController:self];
+    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithTotalFee:self.goodsOrder.totalFee fromController:self];
     paymentView.orderIDs = @[self.goodsOrder.ID];
     paymentView.payPurpose = TCPayPurposeOrder;
     paymentView.delegate = self;

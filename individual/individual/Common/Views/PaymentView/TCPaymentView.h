@@ -19,8 +19,15 @@
 
 @end
 
+
+
+/**
+ 支付页面，显示支付页面前需要先调用接口：获取用户钱包信息
+ */
 @interface TCPaymentView : UIView
 
+/** 总金额 */
+@property (nonatomic, readonly) double totalFee;
 /** 订单ID数组（类型为商品时，必填） */
 @property (copy, nonatomic) NSArray *orderIDs;
 /** 付款目的 */
@@ -31,11 +38,11 @@
 /**
  指定初始化方法
 
- @param amount 付款金额
+ @param totalFee 总金额
  @param controller 源控制器
- @return 返回TCPhotoPicker对象
+ @return 返回TCPaymentView对象
  */
-- (instancetype)initWithAmount:(CGFloat)amount fromController:(UIViewController *)controller;
+- (instancetype)initWithTotalFee:(double)totalFee fromController:(UIViewController *)controller;
 
 /**
  显示付款页面

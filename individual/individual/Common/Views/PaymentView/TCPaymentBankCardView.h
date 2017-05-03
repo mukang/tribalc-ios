@@ -12,10 +12,14 @@
 
 @interface TCPaymentBankCardView : UIView
 
+@property (weak, nonatomic) UITextField *codeTextField;
 @property (strong, nonatomic, readonly) TCBankCard *bankCard;
 @property (weak, nonatomic) id<TCPaymentBankCardViewDelegate> delegate;
 
 - (instancetype)initWithBankCard:(TCBankCard *)bankCard;
+
+- (void)startCountDown;
+- (void)stopCountDown;
 
 @end
 
@@ -24,6 +28,7 @@
 
 @optional
 - (void)didClickBackButtonInBankCardView:(TCPaymentBankCardView *)view;
-
+- (void)didClickFetchCodeButtonInBankCardView:(TCPaymentBankCardView *)view;
+- (void)bankCardView:(TCPaymentBankCardView *)view didClickConfirmButtonWithCode:(NSString *)code;
 
 @end

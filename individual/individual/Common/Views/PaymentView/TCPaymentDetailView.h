@@ -22,7 +22,7 @@
 @interface TCPaymentDetailView : UIView
 
 /** 需付金额 */
-@property (nonatomic) CGFloat paymentAmount;
+@property (nonatomic) double totalFee;
 /** 付款方式 */
 @property (weak, nonatomic) IBOutlet UILabel *methodLabel;
 

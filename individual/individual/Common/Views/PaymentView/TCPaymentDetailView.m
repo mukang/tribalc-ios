@@ -40,10 +40,10 @@
     [self.containerView addGestureRecognizer:tapGesture];
 }
 
-- (void)setPaymentAmount:(CGFloat)paymentAmount {
-    _paymentAmount = paymentAmount;
+- (void)setTotalFee:(double)totalFee {
+    _totalFee = totalFee;
     
-    self.amountLabel.text = [NSString stringWithFormat:@"%0.2f元", self.paymentAmount];
+    self.amountLabel.text = [NSString stringWithFormat:@"%0.2f元", totalFee];
 }
 
 - (IBAction)handleCickCloseButton:(UIButton *)sender {
