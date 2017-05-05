@@ -607,6 +607,9 @@
 		7A384FA51E1124D600E6DB9E /* TCIDAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384FA31E1124D600E6DB9E /* TCIDAuthViewController.m */; };
 		7A384FA61E1124D600E6DB9E /* TCIDAuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A384FA41E1124D600E6DB9E /* TCIDAuthViewController.xib */; };
 		7A4514881DD30C48009F170A /* TCModelImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514871DD30C48009F170A /* TCModelImport.m */; };
+		7A455D5E1EBC912400A2F9ED /* TCWithdrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A455D5D1EBC912400A2F9ED /* TCWithdrawViewController.m */; };
+		7A455D631EBC913900A2F9ED /* TCWithdrawAmountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A455D601EBC913900A2F9ED /* TCWithdrawAmountView.m */; };
+		7A455D641EBC913900A2F9ED /* TCWithdrawBankCardInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A455D621EBC913900A2F9ED /* TCWithdrawBankCardInfoView.m */; };
 		7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */; };
 		7A48A6AA1E5A93AF006CAB62 /* TCServiceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */; };
 		7A4BF1A71EB089C800DE1BF5 /* TCBankInfoList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A4BF1A61EB089C800DE1BF5 /* TCBankInfoList.plist */; };
@@ -2918,6 +2921,12 @@
 		7A384FA41E1124D600E6DB9E /* TCIDAuthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCIDAuthViewController.xib; sourceTree = "<group>"; };
 		7A4514861DD30C48009F170A /* TCModelImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCModelImport.h; sourceTree = "<group>"; };
 		7A4514871DD30C48009F170A /* TCModelImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCModelImport.m; sourceTree = "<group>"; };
+		7A455D5C1EBC912400A2F9ED /* TCWithdrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWithdrawViewController.h; sourceTree = "<group>"; };
+		7A455D5D1EBC912400A2F9ED /* TCWithdrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWithdrawViewController.m; sourceTree = "<group>"; };
+		7A455D5F1EBC913900A2F9ED /* TCWithdrawAmountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWithdrawAmountView.h; sourceTree = "<group>"; };
+		7A455D601EBC913900A2F9ED /* TCWithdrawAmountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWithdrawAmountView.m; sourceTree = "<group>"; };
+		7A455D611EBC913900A2F9ED /* TCWithdrawBankCardInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWithdrawBankCardInfoView.h; sourceTree = "<group>"; };
+		7A455D621EBC913900A2F9ED /* TCWithdrawBankCardInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWithdrawBankCardInfoView.m; sourceTree = "<group>"; };
 		7A48A6A51E5A8EC2006CAB62 /* TCServiceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceDetailViewController.h; sourceTree = "<group>"; };
 		7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceDetailViewController.m; sourceTree = "<group>"; };
 		7A48A6A81E5A93AF006CAB62 /* TCServiceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceHeaderView.h; sourceTree = "<group>"; };
@@ -8174,6 +8183,8 @@
 				55F06F0B1E078C2900A849D7 /* TCPaymentViewController.xib */,
 				7A64EA7E1E15016E008D0C12 /* TCRechargeViewController.h */,
 				7A64EA7F1E15016E008D0C12 /* TCRechargeViewController.m */,
+				7A455D5C1EBC912400A2F9ED /* TCWithdrawViewController.h */,
+				7A455D5D1EBC912400A2F9ED /* TCWithdrawViewController.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -8202,6 +8213,10 @@
 				7AB111D31E151CD3002B7259 /* TCRechargeMethodsView.m */,
 				7A27F9CD1EA8980C00B9BCFE /* TCRechargeMethodViewCell.h */,
 				7A27F9CE1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m */,
+				7A455D5F1EBC913900A2F9ED /* TCWithdrawAmountView.h */,
+				7A455D601EBC913900A2F9ED /* TCWithdrawAmountView.m */,
+				7A455D611EBC913900A2F9ED /* TCWithdrawBankCardInfoView.h */,
+				7A455D621EBC913900A2F9ED /* TCWithdrawBankCardInfoView.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -8980,6 +8995,7 @@
 				7A1F12901DEC0BDD00A9B58F /* TCCommunitiesViewController.m in Sources */,
 				0929D2951E0A25820099B1BD /* TCSelectSecondaryBtn.m in Sources */,
 				09222E791DEEC0920064C0DF /* TCOrderWrapper.m in Sources */,
+				7A455D641EBC913900A2F9ED /* TCWithdrawBankCardInfoView.m in Sources */,
 				7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */,
 				7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */,
 				0928B3411DF96F930085A182 /* TCSelectStandardView.m in Sources */,
@@ -8999,6 +9015,7 @@
 				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
 				559D84621E0BFA9600982697 /* TCLinphoneUtils.m in Sources */,
 				55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */,
+				7A455D631EBC913900A2F9ED /* TCWithdrawAmountView.m in Sources */,
 				7A8352ED1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m in Sources */,
 				7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */,
 				092C69731DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m in Sources */,
@@ -9072,6 +9089,7 @@
 				7AEB4CC21E03936300F83A7C /* TCBioEditNickViewController.m in Sources */,
 				7ACA4FE31DD5B8C2006634E8 /* TCUserPhoneInfo.m in Sources */,
 				55BB9EBA1E72AF5400B0FD94 /* TCLockEquip.m in Sources */,
+				7A455D5E1EBC912400A2F9ED /* TCWithdrawViewController.m in Sources */,
 				7AFEC4801E54056D00B0E754 /* TCGoodsOrderNoteViewCell.m in Sources */,
 				7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */,
 				7A2F7C691E763BB6007B831D /* TCVisitorInfo.m in Sources */,
