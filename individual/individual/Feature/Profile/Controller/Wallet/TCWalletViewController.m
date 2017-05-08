@@ -13,6 +13,7 @@
 #import "TCQRCodeViewController.h"
 #import "TCRechargeViewController.h"
 #import "TCNavigationController.h"
+#import "TCWithdrawViewController.h"
 
 #import "TCBuluoApi.h"
 
@@ -107,7 +108,19 @@
 }
 
 - (IBAction)handleClickWithdrawButton:(UIButton *)sender {
-    [self btnClickUnifyTips];
+    if (!self.walletAccount.bankCards.count) {
+        [MBProgressHUD showHUDWithMessage:@"绑定银行卡后才能提现"];
+        return;
+    }
+    if (!self.walletAccount.password) {
+        [MBProgressHUD showHUDWithMessage:@"您还没有设置密码，请先设置密码"];
+        return;
+    }
+    TCWithdrawViewController *vc = [[TCWithdrawViewController alloc] initWithWalletAccount:self.walletAccount];
+    vc.completionBlock = ^() {
+        [weakSelf fetchNetData];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)handleClickBankCardButton:(UIButton *)sender {
