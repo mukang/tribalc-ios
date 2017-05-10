@@ -16,15 +16,12 @@
 #import "TCPropertyManageListController.h"
 #import "TCLoginViewController.h"
 #import "TCQRCodeViewController.h"
-#import "TCOpenDoorController.h"
 #import "masonry.h"
 
-#import "TCBlurImageView.h"
 
 @interface TCToolsViewController ()
-@property (nonatomic, strong) UIImageView *imageV;
 
-@property (nonatomic, strong) TCBlurImageView *blurImageView;
+@property (nonatomic, strong) UIImageView *imageV;
 
 @end
 
@@ -147,12 +144,6 @@
     lockAndVisitorVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:lockAndVisitorVC animated:YES];
     
-//    if (_blurImageView == nil) {
-//        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
-//            _blurImageView = nil;
-//        }];
-//    }
-//    [_blurImageView show];
 }
 
 - (void)propertyTap {

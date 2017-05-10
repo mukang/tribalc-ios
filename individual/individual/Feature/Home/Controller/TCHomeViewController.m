@@ -18,7 +18,6 @@
 #import "TCLoginViewController.h"
 #import "TCRepairsViewController.h"
 
-#import "TCBlurImageView.h"
 #import <MBProgressHUD.h>
 #import "TCQRCodeViewController.h"
 #import <TCCommonLibs/TCImagePlayerView.h>
@@ -34,7 +33,6 @@
     NSTimer *titleScrollTimer;
 }
 
-@property (nonatomic, strong) TCBlurImageView *blurImageView;
 @property (nonatomic, strong) TCImagePlayerView *cycleImageView;
 
 @property (weak, nonatomic) UINavigationBar *navBar;
@@ -512,19 +510,6 @@
     TCLocksAndVisitorsViewController *lockAndVisitorVC = [[TCLocksAndVisitorsViewController alloc] initWithType:lockOrVisitor];
     lockAndVisitorVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:lockAndVisitorVC animated:YES];
-}
-
-- (void)showOpenDoorView {
-    [_cycleImageView stopPlaying];   //计时器停止
-    @WeakObj(self)
-    if (_blurImageView == nil) {
-        _blurImageView = [[TCBlurImageView alloc] initWithController:self.navigationController endBlock:^{
-            @StrongObj(self)
-            [self.cycleImageView startPlaying];
-            _blurImageView = nil;
-        }];
-    }
-    [_blurImageView show];
 }
 
 
