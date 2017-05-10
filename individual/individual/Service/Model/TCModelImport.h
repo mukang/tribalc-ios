@@ -81,6 +81,7 @@
 
 /*********** 支付相关 ***********/
 #import "TCBFPayInfo.h"
+#import "TCBFSessionInfo.h"
 
 @interface TCModelImport : NSObject
 

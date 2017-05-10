@@ -1899,19 +1899,22 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)prepareBankCardRechargeWithBankCardID:(NSString *)bankCardID totalFee:(double)totalFee result:(void (^)(NSString *, NSError *))resultBlock {
+- (void)fetchBFSessionInfoWithPaymentID:(NSString *)paymentID result:(void (^)(TCBFSessionInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"recharge/bf_bankcard/prepare_order?me=%@", self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"recharge/bf_bankcard/generate_session_id?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-        [request setValue:bankCardID forParam:@"bankCardId"];
-        [request setValue:[NSNumber numberWithDouble:totalFee] forParam:@"totalFee"];
+        if (paymentID) {
+            [request setValue:paymentID forParam:@"value"];
+        } else {
+            [request setValue:[NSNull null] forKey:@"value"];
+        }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
-                NSDictionary *dataDic = response.data;
-                NSString *rechargeID = dataDic[@"result"];
+                NSDictionary *dic = [response.data objectForKey:@"result"];
+                TCBFSessionInfo *sessionInfo = [[TCBFSessionInfo alloc] initWithObjectDictionary:dic];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(rechargeID, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(sessionInfo, nil));
                 }
             } else {
                 if (resultBlock) {
