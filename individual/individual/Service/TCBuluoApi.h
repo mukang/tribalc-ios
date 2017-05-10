@@ -572,6 +572,14 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
 - (void)fetchWechatRechargeResultWithPrepayID:(NSString *)prepayID result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 /**
+ 获取宝付SESSION_ID
+
+ @param paymentID 支付申请ID（参见POST /wallets/{id}/payments 返回值id属性），如果传递真实的ID，则完成扣款操作后，金额不再进入余额，而是直接抵扣对应账单金额，同时支付申请关闭并完成所有后继到账处理；如果传递null，则为账户余额充值
+ @param resultBlock 回调结果，sessionInfo为nil表示获取失败，失败原因见error的code和userInfo
+ */
+- (void)fetchBFSessionInfoWithPaymentID:(NSString *)paymentID result:(void(^)(TCBFSessionInfo *sessionInfo, NSError *error))resultBlock;
+
+/**
  宝付预支付
 
  @param payInfo TCBFPayInfo对象

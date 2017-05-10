@@ -17,11 +17,17 @@
 #import "TCWalletPasswordViewController.h"
 
 #import <TCCommonLibs/TCFunctions.h>
+#import <BaofuFuFingerSDK/BaofuFuFingerSDK.h>
 
 static CGFloat const subviewHeight = 400;
 static CGFloat const duration = 0.25;
 
-@interface TCPaymentView () <TCPaymentDetailViewDelegate, TCPaymentPasswordViewDelegate, TCPaymentMethodViewDelegate, TCPaymentBankCardViewDelegate>
+@interface TCPaymentView ()
+<TCPaymentDetailViewDelegate,
+TCPaymentPasswordViewDelegate,
+TCPaymentMethodViewDelegate,
+TCPaymentBankCardViewDelegate,
+BaofuFuFingerClientDelegate>
 
 @property (weak, nonatomic) TCPaymentDetailView *paymentDetailView;
 @property (weak, nonatomic) TCPaymentPasswordView *paymentPasswordView;
@@ -42,9 +48,9 @@ static CGFloat const duration = 0.25;
 /** 宝付支付ID */
 @property (copy, nonatomic) NSString *bfPayID;
 
-
-/** 宝付预支付 */
-- (void)prepareBFPay:(void(^)(NSString *payID, NSError *error))resultBlock;
+@property (strong, nonatomic) TCBFSessionInfo *bfSessionInfo;
+/** 是否是重新获取验证码 */
+@property (nonatomic, getter=isRefetchVCode) BOOL refetchVCode;
 
 @end
 
@@ -53,7 +59,7 @@ static CGFloat const duration = 0.25;
     __weak UIViewController *sourceController;
 }
 
-- (instancetype)initWithTotalFee:(CGFloat)totalFee fromController:(UIViewController *)controller {
+- (instancetype)initWithTotalFee:(double)totalFee fromController:(UIViewController *)controller {
     self = [super initWithFrame:[UIScreen mainScreen].bounds];
     if (self) {
         _totalFee = totalFee;
@@ -293,15 +299,7 @@ static CGFloat const duration = 0.25;
 }
 
 - (void)didClickFetchCodeButtonInBankCardView:(TCPaymentBankCardView *)view {
-    [self prepareBFPay:^(NSString *payID, NSError *error) {
-        if (payID) {
-            weakSelf.bfPayID = payID;
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取验证码失败，%@", reason]];
-            [weakSelf.bankCardView stopCountDown];
-        }
-    }];
+    [self fetchBFSessionInfoWithPaymentID:weakSelf.paymentID refetchVCode:YES];
 }
 
 - (void)bankCardView:(TCPaymentBankCardView *)view didClickConfirmButtonWithCode:(NSString *)code {
@@ -344,6 +342,16 @@ static CGFloat const duration = 0.25;
 
 - (void)didClickBackButtonInPaymentMethodView:(TCPaymentMethodView *)view {
     [self dismissPaymentMethodView];
+}
+
+#pragma mark - BaofuFuFingerClientDelegate
+
+-(void)initialSucess {
+    [self prepareBFPay];
+}
+
+-(void)initialfailed:(NSString*)errorMessage {
+    [weakSelf showErrorMessageHUD:errorMessage];
 }
 
 #pragma mark - Actions
@@ -445,16 +453,7 @@ static CGFloat const duration = 0.25;
 - (void)handlePaymentWithBankCard {
     if (self.paymentID) {
         [MBProgressHUD showHUD:YES];
-        [self prepareBFPay:^(NSString *payID, NSError *error) {
-            if (payID) {
-                [MBProgressHUD hideHUD:YES];
-                weakSelf.bfPayID = payID;
-                [weakSelf showBankCardView];
-            } else {
-                NSString *reason = error.localizedDescription ?: @"请稍后再试";
-                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
-            }
-        }];
+        [self fetchBFSessionInfoWithPaymentID:self.paymentID refetchVCode:NO];
     } else {
         [self commitBFPayRequest];
     }
@@ -544,40 +543,65 @@ static CGFloat const duration = 0.25;
     [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBankCard payPurpose:self.payPurpose password:nil orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             weakSelf.paymentID = userPayment.ID;
-            [weakSelf prepareBFPay:^(NSString *payID, NSError *error) {
-                if (payID) {
-                    [MBProgressHUD hideHUD:YES];
-                    weakSelf.bfPayID = payID;
-                    [weakSelf showBankCardView];
-                } else {
-                    NSString *reason = error.localizedDescription ?: @"请稍后再试";
-                    [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
-                }
-            }];
+            [weakSelf fetchBFSessionInfoWithPaymentID:userPayment.ID refetchVCode:NO];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"申请付款失败，%@", reason]];
         }
     }];
 }
 
 /**
- 宝付预充值
+ 宝付获取SESSION_ID
  */
-- (void)prepareBFPay:(void (^)(NSString *, NSError *))resultBlock {
+- (void)fetchBFSessionInfoWithPaymentID:(NSString *)paymentID refetchVCode:(BOOL)isRefetchVCode {
+    self.refetchVCode = isRefetchVCode;
+    if (isRefetchVCode) {
+        [MBProgressHUD showHUD:YES];
+    }
+    [[TCBuluoApi api] fetchBFSessionInfoWithPaymentID:paymentID result:^(TCBFSessionInfo *sessionInfo, NSError *error) {
+        if (sessionInfo) {
+            weakSelf.bfSessionInfo = sessionInfo;
+            [weakSelf fetchBFFingerWithSessionID:sessionInfo.sessionId];
+        } else {
+            [weakSelf showErrorMessageHUD:error.localizedDescription];
+        }
+    }];
+}
+
+/**
+ 宝付获取设备指纹
+ */
+- (void)fetchBFFingerWithSessionID:(NSString *)sessionID {
+    BaofuFuFingerClient *client = [[BaofuFuFingerClient alloc] initWithSessionId:sessionID andoperationalState:operational_true];
+    client.delegate = self;
+}
+
+/**
+ 宝付预支付
+ */
+- (void)prepareBFPay {
     TCBFPayInfo *payInfo = [[TCBFPayInfo alloc] init];
     payInfo.bankCardId = self.currentBankCard.ID;
     payInfo.totalFee = self.totalFee;
-    payInfo.paymentId = self.paymentID;
+    payInfo.paymentId = self.bfSessionInfo.paymentId;
     [[TCBuluoApi api] prepareBFPayWithInfo:payInfo result:^(NSString *payID, NSError *error) {
-        if (resultBlock) {
-            resultBlock(payID, error);
+        if (payID) {
+            [MBProgressHUD hideHUD:YES];
+            weakSelf.bfPayID = payID;
+            if (weakSelf.isRefetchVCode) {
+                [weakSelf.bankCardView startCountDown];
+            } else {
+                [weakSelf showBankCardView];
+            }
+        } else {
+            [weakSelf showErrorMessageHUD:error.localizedDescription];
         }
     }];
 }
 
 /**
- 宝付确认充值
+ 宝付确认支付
  */
 - (void)confirmBFPayWithVCode:(NSString *)vCode {
     [MBProgressHUD showHUD:YES];
@@ -623,6 +647,15 @@ static CGFloat const duration = 0.25;
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"支付失败，%@", reason]];
         }
     }];
+}
+
+/**
+ 显示错误HUD
+ */
+- (void)showErrorMessageHUD:(NSString *)errorMessage {
+    NSString *result = self.isRefetchVCode ? @"获取验证码失败" : @"申请付款失败";
+    NSString *reason = errorMessage ?: @"请稍后再试";
+    [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"%@，%@", result ,reason]];
 }
 
 #pragma mark - Override Methods

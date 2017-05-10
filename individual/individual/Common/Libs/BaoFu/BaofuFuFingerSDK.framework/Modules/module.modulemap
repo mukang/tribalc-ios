@@ -1,0 +1,6 @@
+framework module BaofuFuFingerSDK {
+  umbrella header "BaofuFuFingerSDK.h"
+
+  export *
+  module * { export * }
+}
