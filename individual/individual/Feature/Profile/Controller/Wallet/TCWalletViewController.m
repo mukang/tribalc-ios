@@ -116,6 +116,10 @@
         [MBProgressHUD showHUDWithMessage:@"您还没有设置密码，请先设置密码"];
         return;
     }
+    if (!self.walletAccount.balance) {
+        [MBProgressHUD showHUDWithMessage:@"您的钱包余额为0，无法提现"];
+        return;
+    }
     TCWithdrawViewController *vc = [[TCWithdrawViewController alloc] initWithWalletAccount:self.walletAccount];
     vc.completionBlock = ^() {
         [weakSelf fetchNetData];
@@ -125,6 +129,7 @@
 
 - (IBAction)handleClickBankCardButton:(UIButton *)sender {
     TCBankCardViewController *vc = [[TCBankCardViewController alloc] initWithNibName:@"TCBankCardViewController" bundle:[NSBundle mainBundle]];
+    vc.walletAccount = self.walletAccount;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
