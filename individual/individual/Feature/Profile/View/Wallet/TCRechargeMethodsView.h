@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class TCBankCard;
+@protocol TCRechargeMethodsViewDelegate;
 
 typedef NS_ENUM(NSInteger, TCRechargeMethod) {
 //    TCRechargeMethodWechat,
@@ -21,5 +22,17 @@ typedef NS_ENUM(NSInteger, TCRechargeMethod) {
 
 @property (strong, nonatomic) TCBankCard *currentBankCard;
 @property (copy, nonatomic) NSArray *bankCardList;
+
+@property (weak, nonatomic) id<TCRechargeMethodsViewDelegate> delegate;
+
+- (void)reloadBankCardList;
+
+@end
+
+
+@protocol TCRechargeMethodsViewDelegate <NSObject>
+
+@optional
+- (void)didSelectedAddBankCardInRechargeMethodsView:(TCRechargeMethodsView *)view;
 
 @end

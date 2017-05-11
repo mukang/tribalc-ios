@@ -7,6 +7,7 @@
 //
 
 #import "TCRechargeViewController.h"
+#import "TCBankCardAddViewController.h"
 
 #import "TCRechargeInputView.h"
 #import "TCRechargeMethodsView.h"
@@ -25,7 +26,8 @@
 <UITextFieldDelegate,
 WXApiManagerDelegate,
 TCPaymentBankCardViewDelegate,
-BaofuFuFingerClientDelegate>
+BaofuFuFingerClientDelegate,
+TCRechargeMethodsViewDelegate>
 
 @property (weak, nonatomic) UILabel *balanceLabel;
 
@@ -83,17 +85,22 @@ BaofuFuFingerClientDelegate>
 #pragma mark - Private Methods
 
 - (void)setupNavBar {
-    [self.navigationController.navigationBar setTranslucent:YES];
-    [self.navigationController.navigationBar setTintColor:TCBlackColor];
+    self.hideOriginalNavBar = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
+    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
     UIImage *barImage = [UIImage imageNamed:@"TransparentPixel"];
-    [self.navigationController.navigationBar setBackgroundImage:barImage forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:barImage];
+    [navBar setBackgroundImage:barImage forBarMetrics:UIBarMetricsDefault];
+    [navBar setShadowImage:barImage];
+    [self.view addSubview:navBar];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item_black"]
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(handleClickBackButton:)];
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"nav_back_item_black"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                                                 style:UIBarButtonItemStylePlain
+                                                                target:self
+                                                                action:@selector(handleClickBackButton:)];
+    navItem.leftBarButtonItem = leftItem;
+    [navBar setItems:@[navItem]];
 }
 
 - (void)setupSubviews {
@@ -122,6 +129,7 @@ BaofuFuFingerClientDelegate>
     TCRechargeMethodsView *methodsView = [[TCRechargeMethodsView alloc] init];
     methodsView.rechargeMethod = TCRechargeMethodBankCard;
     methodsView.bankCardList = self.walletAccount.bankCards;
+    methodsView.delegate = self;
     [self.view addSubview:methodsView];
     self.methodsView = methodsView;
     
@@ -258,6 +266,16 @@ BaofuFuFingerClientDelegate>
     [self dismissBankCardCodeView];
 }
 
+#pragma mark - TCRechargeMethodsViewDelegate
+
+- (void)didSelectedAddBankCardInRechargeMethodsView:(TCRechargeMethodsView *)view {
+    TCBankCardAddViewController *vc = [[TCBankCardAddViewController alloc] init];
+    vc.bankCardAddBlock = ^() {
+        [weakSelf handleLoadBankCardList];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - BaofuFuFingerClientDelegate
 
 -(void)initialSucess {
@@ -283,6 +301,10 @@ BaofuFuFingerClientDelegate>
 - (void)handleClickRechargeButton:(UIButton *)sender {
     if (self.textField.text.length == 0) {
         [MBProgressHUD showHUDWithMessage:@"请输入充值金额"];
+        return;
+    }
+    if (!self.walletAccount.bankCards.count) {
+        [MBProgressHUD showHUDWithMessage:@"添加银行卡后才能充值"];
         return;
     }
     self.totalFee = [self.textField.text doubleValue];
@@ -322,6 +344,33 @@ BaofuFuFingerClientDelegate>
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
     });
+}
+
+/**
+ 重新获取银行卡列表
+ */
+- (void)handleLoadBankCardList {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
+        if (bankCardList) {
+            [MBProgressHUD hideHUD:YES];
+            for (TCBankCard *bankCard in bankCardList) {
+                for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
+                    if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
+                        bankCard.logo = bankInfo[@"logo"];
+                        bankCard.bgImage = bankInfo[@"bgImage"];
+                        break;
+                    }
+                }
+            }
+            weakSelf.walletAccount.bankCards = bankCardList;
+            weakSelf.methodsView.bankCardList = bankCardList;
+            [weakSelf.methodsView reloadBankCardList];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取银行卡信息失败，%@", reason]];
+        }
+    }];
 }
 
 #pragma mark - Wechat Recharge
@@ -513,6 +562,12 @@ BaofuFuFingerClientDelegate>
         _bankInfoList = [NSArray arrayWithContentsOfFile:path];
     }
     return _bankInfoList;
+}
+
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleDefault;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -8,6 +8,7 @@
 
 #import "TCRechargeMethodsView.h"
 #import "TCRechargeMethodViewCell.h"
+#import "TCRechargeAddBankCardViewCell.h"
 
 #import "TCBuluoApi.h"
 
@@ -53,6 +54,7 @@
     tableView.delegate = self;
     tableView.tableFooterView = [UIView new];
     [tableView registerClass:[TCRechargeMethodViewCell class] forCellReuseIdentifier:@"TCRechargeMethodViewCell"];
+    [tableView registerClass:[TCRechargeAddBankCardViewCell class] forCellReuseIdentifier:@"TCRechargeAddBankCardViewCell"];
     [self addSubview:tableView];
     
     self.methodLabel = methodLabel;
@@ -80,6 +82,12 @@
     }];
 }
 
+#pragma mark - Public Methods
+
+- (void)reloadBankCardList {
+    [self.tableView reloadData];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -87,32 +95,45 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.bankCardList.count;
+    return self.bankCardList.count ?: 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TCRechargeMethodViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRechargeMethodViewCell" forIndexPath:indexPath];
-    TCBankCard *bankCard = self.bankCardList[indexPath.row];
-    NSString *bankCardNum = bankCard.bankCardNum;
-    NSString *lastNum;
-    if (bankCardNum.length >= 4) {
-        lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
+    if (self.bankCardList.count) {
+        TCRechargeMethodViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRechargeMethodViewCell" forIndexPath:indexPath];
+        TCBankCard *bankCard = self.bankCardList[indexPath.row];
+        NSString *bankCardNum = bankCard.bankCardNum;
+        NSString *lastNum;
+        if (bankCardNum.length >= 4) {
+            lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
+        }
+        cell.logoImageView.image = [UIImage imageNamed:bankCard.logo];
+        cell.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+        return cell;
+    } else {
+        TCRechargeAddBankCardViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRechargeAddBankCardViewCell" forIndexPath:indexPath];
+        return cell;
     }
-    cell.logoImageView.image = [UIImage imageNamed:bankCard.logo];
-    cell.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.currentBankCard = self.bankCardList[indexPath.row];
+    if (self.bankCardList.count) {
+        self.currentBankCard = self.bankCardList[indexPath.row];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(didSelectedAddBankCardInRechargeMethodsView:)]) {
+            [self.delegate didSelectedAddBankCardInRechargeMethodsView:self];
+        }
+    }
 }
 
 #pragma mark - Override Methods
 
 - (void)setBankCardList:(NSArray *)bankCardList {
     _bankCardList = bankCardList;
+    
+    if (!bankCardList.count) return;
     
     NSString *defaultBankCardID = [[TCBuluoApi api] currentUserSession].userInfo.defaultBankCardID;
     BOOL hasDefaultBank = NO;

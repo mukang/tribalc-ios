@@ -263,6 +263,7 @@
 		7AB03F1F1EC4459600DFB037 /* dfp_iossdk_lu_3.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AB03F1E1EC4459600DFB037 /* dfp_iossdk_lu_3.3.3.a */; };
 		7AB03F211EC445A000DFB037 /* libEgisDID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AB03F201EC445A000DFB037 /* libEgisDID.a */; };
 		7AB03F231EC445A700DFB037 /* BaofuFuFingerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AB03F221EC445A700DFB037 /* BaofuFuFingerSDK.framework */; };
+		7AB03F261EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB03F251EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m */; };
 		7AB111D41E151CD3002B7259 /* TCRechargeMethodsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB111D31E151CD3002B7259 /* TCRechargeMethodsView.m */; };
 		7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB29F2A1DD40D0F00564D93 /* MBProgressHUD+Category.m */; };
 		7AB29F341DD46EE600564D93 /* TCUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB29F331DD46EE600564D93 /* TCUserInfo.m */; };
@@ -811,6 +812,8 @@
 		7AB03F1E1EC4459600DFB037 /* dfp_iossdk_lu_3.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = dfp_iossdk_lu_3.3.3.a; sourceTree = "<group>"; };
 		7AB03F201EC445A000DFB037 /* libEgisDID.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEgisDID.a; sourceTree = "<group>"; };
 		7AB03F221EC445A700DFB037 /* BaofuFuFingerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaofuFuFingerSDK.framework; sourceTree = "<group>"; };
+		7AB03F241EC452B900DFB037 /* TCRechargeAddBankCardViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeAddBankCardViewCell.h; sourceTree = "<group>"; };
+		7AB03F251EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeAddBankCardViewCell.m; sourceTree = "<group>"; };
 		7AB111D21E151CD3002B7259 /* TCRechargeMethodsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeMethodsView.h; sourceTree = "<group>"; };
 		7AB111D31E151CD3002B7259 /* TCRechargeMethodsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeMethodsView.m; sourceTree = "<group>"; };
 		7AB29F291DD40D0F00564D93 /* MBProgressHUD+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Category.h"; sourceTree = "<group>"; };
@@ -2127,6 +2130,8 @@
 				7AB111D31E151CD3002B7259 /* TCRechargeMethodsView.m */,
 				7A27F9CD1EA8980C00B9BCFE /* TCRechargeMethodViewCell.h */,
 				7A27F9CE1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m */,
+				7AB03F241EC452B900DFB037 /* TCRechargeAddBankCardViewCell.h */,
+				7AB03F251EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m */,
 				7A455D5F1EBC913900A2F9ED /* TCWithdrawAmountView.h */,
 				7A455D601EBC913900A2F9ED /* TCWithdrawAmountView.m */,
 				7A455D611EBC913900A2F9ED /* TCWithdrawBankCardInfoView.h */,
@@ -2542,7 +2547,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2662,6 +2667,7 @@
 				7AFEC47F1E54056D00B0E754 /* TCGoodsOrderHeaderView.m in Sources */,
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
+				7AB03F261EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m in Sources */,
 				7A2F7C6F1E768BAF007B831D /* TCAddVisitorViewController.m in Sources */,
 				7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */,
 				7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */,

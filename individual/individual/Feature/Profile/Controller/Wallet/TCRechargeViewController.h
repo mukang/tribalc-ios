@@ -6,12 +6,12 @@
 //  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <TCCommonLibs/TCBaseViewController.h>
 @class TCWalletAccount;
 
 typedef void(^TCRechargeCompletionBlock)();
 
-@interface TCRechargeViewController : UIViewController
+@interface TCRechargeViewController : TCBaseViewController
 
 /** 钱包信息 */
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
