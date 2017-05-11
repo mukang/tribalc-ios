@@ -7,7 +7,6 @@
 //
 
 #import "TCBuluoApi.h"
-#import "TCSipAPI.h"
 #import <TCCommonLibs/TCClient.h>
 #import <TCCommonLibs/TCFunctions.h>
 #import <TCCommonLibs/TCArchiveService.h>
@@ -107,7 +106,6 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             userSession.userInfo = userInfo;
             [self setUserSession:userSession];
             [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
-            [[TCSipAPI api] login];
             if (userInfo.addressID) {
                 [self fetchUserDefaultShippingAddressWithAddressID:userInfo.addressID];
             }
