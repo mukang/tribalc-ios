@@ -28,6 +28,7 @@
 @property (nonatomic) NSInteger saleQuantity;
 /** 规格文本信息 */
 @property (nonatomic, copy) NSString *standardSnapshot;
-
+/** 运费 */
+@property (nonatomic) double expressFee;
 
 @end

@@ -215,7 +215,7 @@
             return self.goodsOrder.itemList.count;
             break;
         case 3:
-            return 3;
+            return 2;
             break;
         case 4:
             return 1;
@@ -261,9 +261,6 @@
         {
             TCGoodsOrderPriceViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCGoodsOrderPriceViewCell" forIndexPath:indexPath];
             if (indexPath.row == 0) {
-                cell.titleLabel.text = @"配送方式：";
-                cell.subtitleLabel.text = [self.goodsOrder.expressType isEqualToString:@"PAYPOSTAGE"] ? @"全国包邮" : @"不包邮";
-            } else if (indexPath.row == 1) {
                 cell.titleLabel.text = @"快递运费：";
                 cell.subtitleLabel.text = [NSString stringWithFormat:@"¥ %0.2f", self.goodsOrder.expressFee];
             } else {

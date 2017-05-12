@@ -100,7 +100,7 @@
     CGFloat height = 0;
     for(int i = 0; i < orderDetailList.count; i++) {
         TCOrder *order = orderDetailList[i];
-        height += TCRealValue(40) * 3 + TCRealValue(56) + TCRealValue(41) + order.itemList.count * TCRealValue(96.5);
+        height += TCRealValue(40) * 2 + TCRealValue(56) + TCRealValue(41) + order.itemList.count * TCRealValue(96.5);
     }
     
     return height;
@@ -189,25 +189,22 @@
     order.ownerId = userSession.userInfo.ID;
     order.address = [NSString stringWithFormat:@"%@|%@|%@%@%@%@", shippingAddress.name, shippingAddress.phone, shippingAddress.province, shippingAddress.city, shippingAddress.district, shippingAddress.address];
     order.addressId = userSession.userInfo.addressID;
-    order.expressType = @"NOT_PAYPOSTAGE";
-    order.expressFee = 7.0;
-    order.totalFee = [self getConfirmOrderViewTotalPriceWithItemList:order];
+//    order.expressType = @"NOT_PAYPOSTAGE";
     
+    double expressFee = 0.0;
+    double totalFee = 0.0;
+    for (TCOrderItem *orderItem in order.itemList) {
+        if (expressFee < orderItem.goods.expressFee) {
+            expressFee = orderItem.goods.expressFee;
+        }
+        totalFee += orderItem.amount * orderItem.goods.salePrice;
+    }
+    order.expressFee = expressFee;
+    order.totalFee = totalFee + expressFee;
     
     order.store = listShoppingCart.store;
     
     return order;
-}
-
-- (CGFloat)getConfirmOrderViewTotalPriceWithItemList:(TCOrder *)orderDetail {
-    NSArray *itemList = orderDetail.itemList;
-    CGFloat totalPrice = 0;
-    for (int i = 0; i < itemList.count; i++) {
-        TCOrderItem *orderItem = itemList[i];
-        totalPrice += orderItem.amount * orderItem.goods.salePrice;
-    }
-    
-    return  totalPrice;
 }
 
 #pragma mark - UITableViewDataSource
@@ -217,7 +214,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     TCOrder *order = orderDetailList[section];
-    return order.itemList.count + 3;
+    return order.itemList.count + 2;
 }
 
 
@@ -331,19 +328,24 @@
 
 
 - (UITableViewCell *)getOrderInfoTableViewCellWithIndexPath:(NSIndexPath *)indexPath AndTableView:(UITableView *)tableView{
-    NSString *identifier = [NSString stringWithFormat:@"%li", (long)indexPath.row];
+    NSString *identifier = @"kOrderInfoTableViewCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    for (UIView *subview in cell.contentView.subviews) {
+        [subview removeFromSuperview];
+    }
+    
     UIView *orderInfoView;
     TCOrder *order = orderDetailList[indexPath.section];
     NSArray *orderList = order.itemList;
+    
     if (indexPath.row == orderList.count) {
-        orderInfoView = [self getOrderInfoViewWithTitle:@"配送方式:" AndText:@"全国包邮"];
-    } else if (indexPath.row == orderList.count + 1) {
-        orderInfoView = [self getOrderInfoViewWithTitle:@"快递运费:" AndText:@"￥0.00"];
+        NSString *expressFeeStr = [NSString stringWithFormat:@"￥%0.2f", order.expressFee];
+        orderInfoView = [self getOrderInfoViewWithTitle:@"快递运费:" AndText:expressFeeStr];
     } else {
         NSString *totalStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", order.totalFee].floatValue)];
         orderInfoView = [self getOrderInfoViewWithTitle:@"价格合计:" AndText:totalStr];
