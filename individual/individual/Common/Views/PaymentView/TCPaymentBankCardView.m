@@ -187,8 +187,6 @@
 - (void)handleClickCodeButton:(UIButton *)sender {
     if (sender.isEnabled == NO) return;
     
-    [self startCountDown];
-    
     if ([self.delegate respondsToSelector:@selector(didClickFetchCodeButtonInBankCardView:)]) {
         [self.delegate didClickFetchCodeButtonInBankCardView:self];
     }

@@ -86,6 +86,9 @@ BaofuFuFingerClientDelegate>
 
 - (void)initPrivate {
     self.backgroundColor = TCARGBColor(0, 0, 0, 0);
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapSuperview:)];
+    tap.cancelsTouchesInView = NO;
+    [self addGestureRecognizer:tap];
     
     TCPaymentDetailView *paymentDetailView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentDetailView" owner:nil options:nil].lastObject;
     paymentDetailView.totalFee = _totalFee;
@@ -402,6 +405,15 @@ BaofuFuFingerClientDelegate>
             [weakSelf showPaymentMethodViewWithBankCardList:bankCardList];
         }
     }];
+}
+
+/**
+ 点击了背景
+ */
+- (void)handleTapSuperview:(UITapGestureRecognizer *)gesture {
+    if (self.bankCardView && [self.bankCardView.codeTextField isFirstResponder]) {
+        [self.bankCardView.codeTextField resignFirstResponder];
+    }
 }
 
 /**

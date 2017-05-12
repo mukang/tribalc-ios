@@ -373,6 +373,15 @@ TCRechargeMethodsViewDelegate>
     }];
 }
 
+/**
+ 点击了获取银行卡验证码背景页面
+ */
+- (void)handleTapBankCardCodeBgView:(UITapGestureRecognizer *)gesture {
+    if (self.paymentBankCardView && [self.paymentBankCardView.codeTextField isFirstResponder]) {
+        [self.paymentBankCardView.codeTextField resignFirstResponder];
+    }
+}
+
 #pragma mark - Wechat Recharge
 
 /**
@@ -424,6 +433,9 @@ TCRechargeMethodsViewDelegate>
     [superView addSubview:bgView];
     [superView bringSubviewToFront:bgView];
     self.bgView = bgView;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBankCardCodeBgView:)];
+    tap.cancelsTouchesInView = NO;
+    [bgView addGestureRecognizer:tap];
     
     TCPaymentBankCardView *paymentBankCardView = [[TCPaymentBankCardView alloc] initWithBankCard:self.methodsView.currentBankCard];
     paymentBankCardView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, paymentBankCardViewH);
