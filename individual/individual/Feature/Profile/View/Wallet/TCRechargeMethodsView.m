@@ -86,6 +86,12 @@
 
 - (void)reloadBankCardList {
     [self.tableView reloadData];
+    
+    if (!self.bankCardList.count) return;
+    self.currentBankCard = self.bankCardList[0];
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                animated:NO
+                          scrollPosition:UITableViewScrollPositionNone];
 }
 
 #pragma mark - UITableViewDataSource

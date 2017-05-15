@@ -134,6 +134,9 @@
     
     self.address = address;
     [self.tableView reloadData];
+    
+    self.pickerViewShow = NO;
+    [self handlePickerViewShow:self.pickerViewShow];
 }
 
 - (void)didClickCancelButtonInCityPickerView:(TCCityPickerView *)view {

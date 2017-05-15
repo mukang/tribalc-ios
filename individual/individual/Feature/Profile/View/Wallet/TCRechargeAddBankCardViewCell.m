@@ -14,7 +14,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        self.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 20);
+        self.separatorInset = UIEdgeInsetsMake(0, 1000, 0, -1000);
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupSubviews];
     }
