@@ -268,9 +268,11 @@ ABPeoplePickerNavigationControllerDelegate>
                     
                     TCCommonInputViewCell *firstCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
                     firstCell.content = name;
+                    self.lockKey.name = name;
                     
                     TCCommonInputViewCell *secondCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
                     secondCell.content = phoneNumber.stringValue;
+                    self.lockKey.phone = phoneNumber.stringValue;
                 }
                 
             }
@@ -310,12 +312,14 @@ ABPeoplePickerNavigationControllerDelegate>
 //        NSDictionary *dic = @{@"fullname": [NSString stringWithFormat:@"%@%@", firstName, lastName]
 //                              ,@"phone" : phone};
 //        NSLog(@"%@", dic);
-        
+        NSString *name = [NSString stringWithFormat:@"%@%@", firstName, lastName];
         TCCommonInputViewCell *firstCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        firstCell.content = [NSString stringWithFormat:@"%@%@", firstName, lastName];
+        firstCell.content = name;
+        self.lockKey.name = name;
         
         TCCommonInputViewCell *secondCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
         secondCell.content = phone;
+        self.lockKey.phone = phone;
     }
 }
 
