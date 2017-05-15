@@ -243,9 +243,9 @@
 #pragma mark - TCPaymentViewDelegate
 
 - (void)paymentView:(TCPaymentView *)view didFinishedPaymentWithStatus:(NSString *)status {
-    if (self.completionBlock) {
-        self.completionBlock();
-    }
+//    if (self.completionBlock) {
+//        self.completionBlock();
+//    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -198,7 +198,7 @@
 - (void)showPickerView {
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    UIView *superView = keyWindow.rootViewController.view;
+    UIView *superView = keyWindow;
     UIView *pickerBgView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     pickerBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
     [superView addSubview:pickerBgView];
