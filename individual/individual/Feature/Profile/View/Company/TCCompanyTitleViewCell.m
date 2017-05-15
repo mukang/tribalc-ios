@@ -25,7 +25,7 @@
     titleLabel.text = @"我的信息";
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = TCBlackColor;
-    titleLabel.font = [UIFont systemFontOfSize:14];
+    titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.contentView addSubview:titleLabel];
     
     __weak typeof(self) weakSelf = self;

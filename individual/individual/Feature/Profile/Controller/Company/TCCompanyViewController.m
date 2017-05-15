@@ -175,7 +175,7 @@
     if (section == 0) {
         return 1;
     } else {
-        return 4;
+        return 5;
     }
 }
 
@@ -202,17 +202,13 @@
                     cell.subtitleLabel.text = [[TCBuluoApi api] currentUserSession].userInfo.name;
                     break;
                 case 3:
-                    cell.titleLabel.text = @"呼叫编号";
-                    cell.subtitleLabel.text = [[TCBuluoApi api] currentUserSession].userInfo.sip.user;
+                    cell.titleLabel.text = @"部门";
+                    cell.subtitleLabel.text = self.userCompanyInfo.department;
                     break;
-//                case 4:
-//                    cell.titleLabel.text = @"职位";
-//                    cell.subtitleLabel.text = self.userCompanyInfo.position;
-//                    break;
-//                case 5:
-//                    cell.titleLabel.text = @"工号";
-//                    cell.subtitleLabel.text = self.userCompanyInfo.personNum;
-//                    break;
+                case 4:
+                    cell.titleLabel.text = @"职位";
+                    cell.subtitleLabel.text = self.userCompanyInfo.position;
+                    break;
                     
                 default:
                     break;
