@@ -143,10 +143,16 @@
 
 - (UILabel *)createTagLabelWithTag:(NSArray *)tags {
     NSArray *tagArr = tags;
-    NSString *tagStr = tagArr[0];
-    for (int i = 1; i < tagArr.count; i++) {
-        tagStr = [NSString stringWithFormat:@"%@/%@", tagStr, tagArr[i]];
+    NSString *tagStr = @"";
+    if ([tagArr isKindOfClass:[NSArray class]]) {
+        if (tagArr.count) {
+            tagStr = tagArr[0];
+            for (int i = 1; i < tagArr.count; i++) {
+                tagStr = [NSString stringWithFormat:@"%@/%@", tagStr, tagArr[i]];
+            }
+        }
     }
+    
     UILabel *label = [TCComponent createLabelWithText:tagStr AndFontSize:11];
     label.textColor = [UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1];
     [label setHeight:TCRealValue(17)];
