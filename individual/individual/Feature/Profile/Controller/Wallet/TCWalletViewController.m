@@ -38,8 +38,13 @@
     self.navigationItem.title = @"我的钱包";
     
     [self setupSubviews];
-    [self fetchNetData];
     [self registerNotifications];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self fetchNetData];
 }
 
 - (void)dealloc {
@@ -97,7 +102,7 @@
     TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
     vc.walletAccount = self.walletAccount;
     vc.completionBlock = ^() {
-        [weakSelf fetchNetData];
+//        [weakSelf fetchNetData];
     };
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
@@ -118,7 +123,7 @@
     }
     TCWithdrawViewController *vc = [[TCWithdrawViewController alloc] initWithWalletAccount:self.walletAccount];
     vc.completionBlock = ^() {
-        [weakSelf fetchNetData];
+//        [weakSelf fetchNetData];
     };
     [self.navigationController pushViewController:vc animated:YES];
 }
