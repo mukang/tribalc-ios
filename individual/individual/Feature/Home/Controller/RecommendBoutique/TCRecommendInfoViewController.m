@@ -531,7 +531,7 @@
 
 - (void)touchAddShopCartBtnInDetailView:(UIButton *) btn {
     
-    if (mGoodDetail.snapshot) {
+    if (mGoodDetail.snapshot || !mGoodDetail.published) {
         [MBProgressHUD showHUDWithMessage:@"该商品已下架，无法添加到购物车！" afterDelay:1.0];
         return;
     }
