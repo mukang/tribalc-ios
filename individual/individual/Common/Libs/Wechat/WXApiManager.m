@@ -8,8 +8,7 @@
 
 #import "WXApiManager.h"
 
-NSString *const kWXAppID = @"wx1906c6844a4273e2";
-NSString *const kWXAppSecret = @"";
+NSString *const kWXAppID = @"wx070832ea777c3ec0";
 
 @implementation WXApiManager
 
