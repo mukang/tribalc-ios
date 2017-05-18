@@ -11,6 +11,7 @@
 #import "TCRepairsViewController.h"
 #import "TCNavigationController.h"
 #import "TCServiceListViewController.h"
+#import "TCMyLockQRCodeController.h"
 #import "TCGoodSelectView.h"
 
 
@@ -473,45 +474,77 @@
 
 
 #pragma mark - click
+
+/**
+ 社区开锁
+ */
 - (void)touchCommunityUnlockBtn:(UIButton *)button {
-    
-//    if ([self checkUserNeedLogin]) return;
-//    
-//    if (![[TCBuluoApi api] currentUserSession].userInfo.companyID) {
-//        [MBProgressHUD showHUDWithMessage:@"绑定公司成功后才可使用开门功能"];
-//        return;
-//    }
-    
-//    [self showOpenDoorView];
-    [self toLocksOrVisitorsView:TCLocks];
-    
+    if ([self isThereLockPermissions:TCLocks]) {
+        [self toLocksView];
+    }
 }
 
-- (void)toLocksOrVisitorsView:(TCLocksOrVisitors)lockOrVisitor {
-    if ([self checkUserNeedLogin]) return;
-    
-    NSString *featureStr;
-    if (lockOrVisitor == TCLocks) {
-        featureStr = @"开门";
-    } else {
-        featureStr = @"授权";
+/**
+ 访客授权
+ */
+- (void)touchOfficeReserveBtn:(UIButton *)button {
+    if ([self isThereLockPermissions:TCVisitors]) {
+        [self toVisitorsView];
     }
+}
+
+/**
+ 是否有开锁权限
+ */
+- (BOOL)isThereLockPermissions:(TCLocksOrVisitors)lockOrVisitor {
+    if ([self checkUserNeedLogin]) return NO;
     
+    NSString *featureStr = (lockOrVisitor == TCLocks) ? @"开门" : @"授权";
     TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
     if (![userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
         [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"身份认证成功后才可使用%@功能", featureStr]];
-        return;
+        return NO;
     }
     if (!userInfo.companyID) {
         [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"绑定公司成功后才可使用%@功能", featureStr]];
-        return;
+        return NO;
     }
     
-    TCLocksAndVisitorsViewController *lockAndVisitorVC = [[TCLocksAndVisitorsViewController alloc] initWithType:lockOrVisitor];
+    return YES;
+}
+
+/**
+ 跳到个人锁设备列表
+ */
+- (void)toLocksView {
+    TCVisitorInfo *visitorInfo = [[TCVisitorInfo alloc] init];
+    visitorInfo.equipIds = [NSArray array];
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchMultiLockKeyWithVisitorInfo:visitorInfo result:^(TCMultiLockKey *multiLockKey, NSError *error) {
+        if (multiLockKey) {
+            // TODO:
+        } else {
+            if (error.code == 300) {
+                [MBProgressHUD hideHUD:YES];
+                TCLocksAndVisitorsViewController *lockAndVisitorVC = [[TCLocksAndVisitorsViewController alloc] initWithType:TCLocks];
+                lockAndVisitorVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:lockAndVisitorVC animated:YES];
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"开门失败，%@", reason]];
+            }
+        }
+    }];
+}
+
+/**
+ 跳到访客列表
+ */
+- (void)toVisitorsView {
+    TCLocksAndVisitorsViewController *lockAndVisitorVC = [[TCLocksAndVisitorsViewController alloc] initWithType:TCVisitors];
     lockAndVisitorVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:lockAndVisitorVC animated:YES];
 }
-
 
 - (void)touchEstateRepair:(UIButton *)button {
     if ([self checkUserNeedLogin]) return;
@@ -526,11 +559,6 @@
     TCQRCodeViewController *qrVC = [[TCQRCodeViewController alloc] init];
     qrVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:qrVC animated:YES];
-}
-
-- (void)touchOfficeReserveBtn:(UIButton *)button {
-    NSLog(@"点击办公预订");
-    [self toLocksOrVisitorsView:TCVisitors];
 }
 
 - (void)touchShoppingBtn:(id)sender {
