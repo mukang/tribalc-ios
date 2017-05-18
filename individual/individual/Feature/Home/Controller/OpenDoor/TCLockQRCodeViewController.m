@@ -184,9 +184,8 @@
     self.timeLabel.text = [NSString stringWithFormat:@"有效期截止：%@", endTimeStr];
     self.QRCodeView.codeImageView.image = [self generateQRCodeImageWithCodeString:lockKey.key size:CGSizeMake(TCRealValue(180), TCRealValue(180))];
     if (self.type == TCLockQRCodeTypeOneself) {
-//        self.QRCodeView.nameLabel.text = [NSString stringWithFormat:@"设备名称：%@", lockKey.equipName];
+
     } else {
-//        self.titleView.deviceLabel.text = [NSString stringWithFormat:@"设备名称：%@", lockKey.equipName];
         self.titleView.visitorLabel.text = [NSString stringWithFormat:@"访客姓名：%@", lockKey.name];
         self.titleView.phoneLabel.text = [NSString stringWithFormat:@"访客电话：%@", lockKey.phone];
     }
