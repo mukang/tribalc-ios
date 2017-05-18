@@ -609,7 +609,7 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
 #pragma mark - 门锁设备
 
 /**
- 获取自己的锁列表
+ 获取自己的锁列表（自己的锁设备列表）
 
  @param resultBlock 回调
  */
@@ -617,7 +617,7 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
 
 
 /**
- 获取激活的锁列表
+ 获取激活的锁列表（访客列表）
 
  @param resultBlock 回调
  */
@@ -638,5 +638,28 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
  @param resultBlock 结果回调
  */
 - (void)deleteLockKeyWithID:(NSString *)lockKeyID result:(void(^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 获取多锁二维码信息
+
+ @param visitorInfo TCVisitorInfo对象
+ @param resultBlock 结果回调
+ */
+- (void)fetchMultiLockKeyWithVisitorInfo:(TCVisitorInfo *)visitorInfo result:(void(^)(TCMultiLockKey *multiLockKey, NSError *error))resultBlock;
+
+/**
+ 清除多锁二维码
+ 
+ @param multiLockKeyID 多锁二维码id
+ @param resultBlock 结果回调
+ */
+- (void)deleteMultiLockKeyWithID:(NSString *)multiLockKeyID result:(void(^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 查询所有激活状态的设备访客二维码（多锁）
+
+ @param resultBlock 结果回调
+ */
+- (void)fetchVisitorMultiLockKeyWrapperList:(void(^)(NSArray *multiLockKeyWrapperList, NSError *error))resultBlock;
 
 @end
