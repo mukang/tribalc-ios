@@ -244,9 +244,6 @@
         if (multiLockKey) {
             [MBProgressHUD hideHUD:YES];
             [self reloadUIWithMultiLockKey:multiLockKey];
-            self.imageView.image = [UIImage imageNamed:@"myLockQRBackgroundImage"];
-            self.coverView.hidden = YES;
-            self.refreshBtn.hidden = YES;
         } else {
             self.refreshBtn.hidden = NO;
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -256,6 +253,9 @@
 }
 
 - (void)reloadUIWithMultiLockKey:(TCMultiLockKey *)multiLockKey {
+    self.imageView.image = [UIImage imageNamed:@"myLockQRBackgroundImage"];
+    self.coverView.hidden = YES;
+    self.refreshBtn.hidden = YES;
     self.second = (NSInteger)(multiLockKey.endTime/1000 - [[NSDate date] timeIntervalSince1970]);
     self.secondLabel.text = [NSString stringWithFormat:@"%ld",(long)self.second];
     self.deviceLabel.text = @"门锁二维码";
