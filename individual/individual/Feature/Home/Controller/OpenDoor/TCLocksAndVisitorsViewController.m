@@ -109,9 +109,10 @@
             }
         }];
     }else {
-        [[TCBuluoApi api] fetchMyLockKeysResult:^(NSArray *lockKeysList, NSError *error) {
-            if ([lockKeysList isKindOfClass:[NSArray class]]) {
-                weakSelf.lockArr = lockKeysList;
+        
+        [[TCBuluoApi api] fetchVisitorMultiLockKeyList:^(NSArray *multiLockKeyList, NSError *error) {
+            if ([multiLockKeyList isKindOfClass:[NSArray class]]) {
+                weakSelf.lockArr = multiLockKeyList;
                 [weakSelf.tableView reloadData];
                 [weakSelf checkLocksOrVisitors];
             }else {
@@ -218,55 +219,32 @@
     if ([cell isKindOfClass:[UITableViewCell class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         
-        TCLockWrapper *lockWrapper = self.lockArr[indexPath.section];
-        
-        NSArray *arr = lockWrapper.keys;
-        
-        if ([arr isKindOfClass:[NSArray class]]) {
-            TCLockKey *lockKey = arr[indexPath.row];
-            
-            [[TCBuluoApi api] deleteLockKeyWithID:lockKey.ID result:^(BOOL success, NSError *error) {
-                if (success) {
-                    
-                    if (arr.count == 1) {
-                        
-                        NSMutableArray *mutabelA = [NSMutableArray arrayWithArray:self.lockArr];
-                        [mutabelA removeObject:lockWrapper];
-                        self.lockArr = mutabelA;
-                        
-                    }else {
-                        NSMutableArray *mutableArr = [NSMutableArray arrayWithArray:lockWrapper.keys];
-                        [mutableArr removeObjectAtIndex:indexPath.row];
-                        lockWrapper.keys = mutableArr;
-                    }
-                    [self.tableView reloadData];
-                    [weakSelf checkLocksOrVisitors];
-                }
-            }];
-        }
-        
+        TCMultiLockKey *multiLockKey = self.lockArr[indexPath.section];
+        @WeakObj(self)
+        [[TCBuluoApi api] deleteMultiLockKeyWithID:multiLockKey.ID result:^(BOOL success, NSError *error) {
+            @StrongObj(self)
+            if (success) {
+                NSMutableArray *mutabelA = [NSMutableArray arrayWithArray:self.lockArr];
+                [mutabelA removeObject:multiLockKey];
+                self.lockArr = mutabelA;
+                [self.tableView reloadData];
+                [self checkLocksOrVisitors];
+            }else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"删除失败，%@", reason]];
+            }
+        }];
     }
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.locksOrVisitors == TCLocks) {
-        return 1;
-    }
-    return self.lockArr.count;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.locksOrVisitors == TCLocks) {
-        return self.lockArr.count;
-    }
-    
-    TCLockWrapper *lockWrapper = self.lockArr[section];
-    if ([lockWrapper.keys isKindOfClass:[NSArray class]]) {
-        return lockWrapper.keys.count;
-    }
-    return 0;
+    return self.lockArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -281,33 +259,19 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else {
-        
         TCVisitorLocksCell *cell = [tableView dequeueReusableCellWithIdentifier:kTCVisitorLockCellID];
         cell.imageView.image = [UIImage imageNamed:@"locks"];
         cell.delegate = self;
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        TCLockWrapper *wrapper = self.lockArr[indexPath.section];
-        if ([wrapper.keys isKindOfClass:[NSArray class]]) {
-            TCLockKey *key = wrapper.keys[indexPath.row];
-            cell.textLabel.text = key.equipName;
-        }
-        
+        TCMultiLockKey *lockKey = self.lockArr[indexPath.section];
+        cell.textLabel.text = lockKey.name;
         return cell;
     }
     
 }
 
 #pragma mark - UITableViewDelegate
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    TCLockWrapper *wrapper = self.lockArr[section];
-    
-    TCLockOrVisitorSectionHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kTCVisitorLockSectionHeaderID];
-    header.name = wrapper.name;
-    return header;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.locksOrVisitors == TCLocks) {
@@ -316,8 +280,7 @@
         vc.equipID = lockEquip.ID;
         [self.navigationController pushViewController:vc animated:YES];
     } else {
-        TCLockWrapper *wrapper = self.lockArr[indexPath.section];
-        TCLockKey *key = wrapper.keys[indexPath.row];
+        TCMultiLockKey *key = self.lockArr[indexPath.section];
        TCLockQRCodeViewController *vc = [[TCLockQRCodeViewController alloc] initWithLockQRCodeType:TCLockQRCodeTypeVisitor];
         vc.lockKey = key;
         [self.navigationController pushViewController:vc animated:YES];
@@ -325,6 +288,12 @@
     
 }
 
+- (NSArray *)lockArr {
+    if (_lockArr == nil) {
+        _lockArr = [[NSArray alloc] init];
+    }
+    return _lockArr;
+}
 
 - (UIImageView *)imageView {
     if (_imageView == nil) {

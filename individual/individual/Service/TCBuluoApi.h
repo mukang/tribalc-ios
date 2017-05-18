@@ -660,6 +660,6 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
 
  @param resultBlock 结果回调
  */
-- (void)fetchVisitorMultiLockKeyWrapperList:(void(^)(NSArray *multiLockKeyWrapperList, NSError *error))resultBlock;
+- (void)fetchVisitorMultiLockKeyList:(void(^)(NSArray *multiLockKeyList, NSError *error))resultBlock;
 
 @end

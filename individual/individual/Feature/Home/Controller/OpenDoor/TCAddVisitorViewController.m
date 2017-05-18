@@ -253,8 +253,6 @@ ABPeoplePickerNavigationControllerDelegate>
 #pragma mark - 选中一个联系人属性
 - (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperty:(CNContactProperty *)contactProperty{
     
-//    NSLog(@"contactProperty:%@",contactProperty);
-    
     NSString *key = contactProperty.key;
     if ([key isKindOfClass:[NSString class]]) {
         if ([key isEqualToString:@"phoneNumbers"]) {
@@ -264,7 +262,6 @@ ABPeoplePickerNavigationControllerDelegate>
                     CNLabeledValue *labeledValue = contact.phoneNumbers[0];
                     CNPhoneNumber *phoneNumber = labeledValue.value;
                     NSString *name = [NSString stringWithFormat:@"%@%@",contact.familyName, contact.givenName];
-//                    NSLog(@"name:%@  phoneNum:%@",name, phoneNumber.stringValue);
                     
                     TCCommonInputViewCell *firstCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
                     firstCell.content = name;
@@ -282,14 +279,9 @@ ABPeoplePickerNavigationControllerDelegate>
 }
 
 #pragma mark - ABPeoplePickerNavigationControllerDelegate
-//- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person {
-//
-//    NSLog(@"选中了person,%@",person);
-//}
 
 - (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier{
     
-//    NSLog(@"选中了属性,person:%@, property:%d,identifier:%d",person,property,identifier);
     if (property == 3) {
         ABMutableMultiValueRef phoneMulti = ABRecordCopyValue(person, kABPersonPhoneProperty);
         NSString *firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
@@ -309,9 +301,7 @@ ABPeoplePickerNavigationControllerDelegate>
         if (phones.count >= identifier) {
             phone = [phones objectAtIndex:identifier];
         }
-//        NSDictionary *dic = @{@"fullname": [NSString stringWithFormat:@"%@%@", firstName, lastName]
-//                              ,@"phone" : phone};
-//        NSLog(@"%@", dic);
+
         NSString *name = [NSString stringWithFormat:@"%@%@", firstName, lastName];
         TCCommonInputViewCell *firstCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         firstCell.content = name;
@@ -361,10 +351,7 @@ ABPeoplePickerNavigationControllerDelegate>
         [MBProgressHUD showHUDWithMessage:@"请选择结束时间"];
         return;
     }
-//    if (self.lockKey.equipName.length == 0) {
-//        [MBProgressHUD showHUDWithMessage:@"请选择门锁"];
-//        return;
-//    }
+
     TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
     if ([self.lockKey.phone isEqualToString:userInfo.phone]) {
         [MBProgressHUD showHUDWithMessage:@"不能添加自己的手机号"];
@@ -372,18 +359,17 @@ ABPeoplePickerNavigationControllerDelegate>
     }
     
     TCVisitorInfo *info = [[TCVisitorInfo alloc] init];
-//    info.equipId = self.lockKey.equipId;
     info.phone = self.lockKey.phone;
     info.name = self.lockKey.name;
     info.beginTime = [[NSDate date] timeIntervalSince1970] * 1000;
     info.endTime = self.lockKey.endTime;
-    [[TCBuluoApi api] fetchLockKeyWithVisitorInfo:info result:^(TCLockKey *lockKey, NSError *error) {
-        if (lockKey) {
+    [[TCBuluoApi api] fetchMultiLockKeyWithVisitorInfo:info result:^(TCMultiLockKey *multiLockKey, NSError *error) {
+        if (multiLockKey) {
             if (weakSelf.addVisitorCompletion) {
                 weakSelf.addVisitorCompletion();
             }
             TCLockQRCodeViewController *vc = [[TCLockQRCodeViewController alloc] initWithLockQRCodeType:TCLockQRCodeTypeVisitor];
-            vc.lockKey = lockKey;
+            vc.lockKey = multiLockKey;
             vc.fromController = weakSelf.fromController;
             [weakSelf.navigationController pushViewController:vc animated:YES];
         } else {
