@@ -363,7 +363,7 @@ ABPeoplePickerNavigationControllerDelegate>
     info.name = self.lockKey.name;
     info.beginTime = [[NSDate date] timeIntervalSince1970] * 1000;
     info.endTime = self.lockKey.endTime;
-    [[TCBuluoApi api] fetchMultiLockKeyWithVisitorInfo:info result:^(TCMultiLockKey *multiLockKey, NSError *error) {
+    [[TCBuluoApi api] fetchMultiLockKeyWithVisitorInfo:info result:^(TCMultiLockKey *multiLockKey, BOOL hasTooManyLocks, NSError *error) {
         if (multiLockKey) {
             if (weakSelf.addVisitorCompletion) {
                 weakSelf.addVisitorCompletion();
@@ -372,7 +372,7 @@ ABPeoplePickerNavigationControllerDelegate>
             vc.lockKey = multiLockKey;
             vc.fromController = weakSelf.fromController;
             [weakSelf.navigationController pushViewController:vc animated:YES];
-        } else {
+        } else if (error) {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"生成二维码失败，%@", reason]];
         }

@@ -2153,7 +2153,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchMultiLockKeyWithVisitorInfo:(TCVisitorInfo *)visitorInfo result:(void (^)(TCMultiLockKey *, NSError *))resultBlock {
+- (void)fetchMultiLockKeyWithVisitorInfo:(TCVisitorInfo *)visitorInfo result:(void (^)(TCMultiLockKey *, BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"keys?me=%@&type=owner&multi=true", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
@@ -2166,18 +2166,22 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             if (response.codeInResponse == 201) {
                 TCMultiLockKey *multiLockKey = [[TCMultiLockKey alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(multiLockKey, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(multiLockKey, NO, nil));
+                }
+            } else if (response.codeInResponse == 300) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, YES, nil));
                 }
             } else {
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, NO, response.error));
                 }
             }
         }];
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
-            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+            TC_CALL_ASYNC_MQ(resultBlock(nil, NO, sessionError));
         }
     }
 }
