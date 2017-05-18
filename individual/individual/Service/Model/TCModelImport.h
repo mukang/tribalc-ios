@@ -78,6 +78,8 @@
 #import "TCLockEquip.h"
 #import "TCLockWrapper.h"
 #import "TCVisitorInfo.h"
+#import "TCMultiLockKey.h"
+#import "TCMultiLockKeyWrapper.h"
 
 /*********** 支付相关 ***********/
 #import "TCBFPayInfo.h"
