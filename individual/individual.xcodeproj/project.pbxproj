@@ -149,6 +149,7 @@
 		7A21E43B1DD01F0400EF7427 /* TCProfileViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E4391DD01F0400EF7427 /* TCProfileViewCell.xib */; };
 		7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */; };
 		7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */; };
+		7A22D9151ECD94A4009A6A64 /* TCLockEquipViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A22D9141ECD94A4009A6A64 /* TCLockEquipViewCell.m */; };
 		7A27F9CF1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A27F9CE1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m */; };
 		7A2A77321E6D4426000CFAA8 /* intro_image_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */; };
 		7A2A77331E6D4426000CFAA8 /* intro_image_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A77301E6D4426000CFAA8 /* intro_image_02.png */; };
@@ -615,6 +616,8 @@
 		7A21E43C1DD02DEA00EF7427 /* TCProfileProcessViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileProcessViewCell.h; sourceTree = "<group>"; };
 		7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileProcessViewCell.m; sourceTree = "<group>"; };
 		7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileProcessViewCell.xib; sourceTree = "<group>"; };
+		7A22D9131ECD94A4009A6A64 /* TCLockEquipViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockEquipViewCell.h; sourceTree = "<group>"; };
+		7A22D9141ECD94A4009A6A64 /* TCLockEquipViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockEquipViewCell.m; sourceTree = "<group>"; };
 		7A27F9CD1EA8980C00B9BCFE /* TCRechargeMethodViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeMethodViewCell.h; sourceTree = "<group>"; };
 		7A27F9CE1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeMethodViewCell.m; sourceTree = "<group>"; };
 		7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_01.png; sourceTree = "<group>"; };
@@ -1356,6 +1359,8 @@
 				7A01916B1E7A92B500283822 /* TCLockQRCodeTitleView.m */,
 				55BB9EB11E728C7200B0FD94 /* TCVisitorLocksCell.h */,
 				55BB9EB21E728C7200B0FD94 /* TCVisitorLocksCell.m */,
+				7A22D9131ECD94A4009A6A64 /* TCLockEquipViewCell.h */,
+				7A22D9141ECD94A4009A6A64 /* TCLockEquipViewCell.m */,
 				55BB9EB41E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.h */,
 				55BB9EB51E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.m */,
 				7A2F7C701E768C35007B831D /* TCAddVisitorTimeViewCell.h */,
@@ -2673,6 +2678,7 @@
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
 				7AB03F261EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m in Sources */,
+				7A22D9151ECD94A4009A6A64 /* TCLockEquipViewCell.m in Sources */,
 				7A2F7C6F1E768BAF007B831D /* TCAddVisitorViewController.m in Sources */,
 				7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */,
 				7ACA4FDD1DD57D79006634E8 /* TCUserAddress.m in Sources */,

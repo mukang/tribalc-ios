@@ -522,7 +522,11 @@
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchMultiLockKeyWithVisitorInfo:visitorInfo result:^(TCMultiLockKey *multiLockKey, NSError *error) {
         if (multiLockKey) {
-            // TODO:
+            [MBProgressHUD hideHUD:YES];
+            TCMyLockQRCodeController *vc = [[TCMyLockQRCodeController alloc] initWithLockQRCodeType:TCQRCodeTypeSystem];
+            vc.multiLockKey = multiLockKey;
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         } else {
             if (error.code == 300) {
                 [MBProgressHUD hideHUD:YES];

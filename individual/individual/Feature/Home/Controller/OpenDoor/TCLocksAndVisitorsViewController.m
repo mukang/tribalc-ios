@@ -11,16 +11,19 @@
 #import "TCAddVisitorViewController.h"
 
 #import <TCCommonLibs/UIImage+Category.h>
+#import <TCCommonLibs/TCCommonButton.h>
+
 #import "TCVisitorLocksCell.h"
 #import "TCLockOrVisitorSectionHeader.h"
 #import "TCBuluoApi.h"
 #import "TCMyLockQRCodeController.h"
+#import "TCLockEquipViewCell.h"
 
 #define kTCLocksCellID @"TCLocksCell"
 #define kTCVisitorLockCellID @"TCVisitorLocksCell"
 #define kTCVisitorLockSectionHeaderID @"TCLockOrVisitorSectionHeader"
 
-@interface TCLocksAndVisitorsViewController ()<UITableViewDelegate,UITableViewDataSource,TCVisitorLocksCellDelegate>
+@interface TCLocksAndVisitorsViewController ()<UITableViewDelegate,UITableViewDataSource,TCVisitorLocksCellDelegate, TCLockEquipViewCellDelegate>
 
 @property (assign, nonatomic) TCLocksOrVisitors locksOrVisitors;
 
@@ -36,7 +39,12 @@
 
 @property (strong, nonatomic) UILabel *btnLabel;
 
+@property (strong, nonatomic) TCCommonButton *generateButton;
+
+
 @property (copy, nonatomic) NSArray *lockArr;
+/** 锁设备id容器 */
+@property (strong, nonatomic) NSMutableDictionary *lockEquipIDDic;
 
 @end
 
@@ -129,6 +137,7 @@
     [self.view addSubview:self.addBtn];
     [self.addBtn addSubview:self.btnImageView];
     [self.addBtn addSubview:self.btnLabel];
+    [self.view addSubview:self.generateButton];
     
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
@@ -159,6 +168,10 @@
         make.top.equalTo(self.btnImageView.mas_bottom).offset(5);
     }];
     
+    [self.generateButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.right.equalTo(self.view);
+        make.height.mas_equalTo(49);
+    }];
 }
 
 - (void)checkLocksOrVisitors {
@@ -237,6 +250,24 @@
     }
 }
 
+#pragma mark - TCLockEquipViewCellDelegate
+
+- (void)lockEquipViewCell:(TCLockEquipViewCell *)cell didSelectedLockEquip:(TCLockEquip *)lockEquip {
+    if (lockEquip.isMarked) { // 需要取消标记
+        lockEquip.marked = NO;
+        [self.lockEquipIDDic removeObjectForKey:lockEquip.ID];
+    } else { // 需要添加标记
+        if (self.lockEquipIDDic.count >= 4) {
+            [MBProgressHUD showHUDWithMessage:@"最多可选4个门锁设备"];
+            return;
+        }
+        lockEquip.marked = YES;
+        [self.lockEquipIDDic setObject:lockEquip.ID forKey:lockEquip.ID];
+    }
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -250,13 +281,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.locksOrVisitors == TCLocks) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTCLocksCellID];
-        cell.imageView.image = [UIImage imageNamed:@"locks"];
-        
-        TCLockEquip *lockE = self.lockArr[indexPath.row];
-        cell.textLabel.text = lockE.name;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        TCLockEquipViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kTCLocksCellID forIndexPath:indexPath];
+        cell.lockEquip = self.lockArr[indexPath.row];
+        cell.delegate = self;
         return cell;
     }else {
         TCVisitorLocksCell *cell = [tableView dequeueReusableCellWithIdentifier:kTCVisitorLockCellID];
@@ -274,18 +301,12 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.locksOrVisitors == TCLocks) {
-        TCLockEquip *lockEquip = self.lockArr[indexPath.row];
-       TCMyLockQRCodeController *vc = [[TCMyLockQRCodeController alloc] init];
-        vc.equipID = lockEquip.ID;
-        [self.navigationController pushViewController:vc animated:YES];
-    } else {
+    if (self.locksOrVisitors == TCVisitors) {
         TCMultiLockKey *key = self.lockArr[indexPath.section];
-       TCLockQRCodeViewController *vc = [[TCLockQRCodeViewController alloc] initWithLockQRCodeType:TCLockQRCodeTypeVisitor];
+        TCLockQRCodeViewController *vc = [[TCLockQRCodeViewController alloc] initWithLockQRCodeType:TCLockQRCodeTypeVisitor];
         vc.lockKey = key;
         [self.navigationController pushViewController:vc animated:YES];
     }
-    
 }
 
 - (NSArray *)lockArr {
@@ -323,7 +344,7 @@
         }else {
             _tableView.sectionHeaderHeight = 40.0;
         }
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kTCLocksCellID];
+        [_tableView registerClass:[TCLockEquipViewCell class] forCellReuseIdentifier:kTCLocksCellID];
         [_tableView registerClass:[TCVisitorLocksCell class] forCellReuseIdentifier:kTCVisitorLockCellID];
         [_tableView registerClass:[TCLockOrVisitorSectionHeader class] forHeaderFooterViewReuseIdentifier:kTCVisitorLockSectionHeaderID];
     }
@@ -362,12 +383,44 @@
     return _btnLabel;
 }
 
+- (TCCommonButton *)generateButton {
+    if (_generateButton == nil) {
+        _generateButton = [TCCommonButton bottomButtonWithTitle:@"生成二维码"
+                                                          color:TCCommonButtonColorBlue
+                                                         target:self
+                                                         action:@selector(handleClickGenerateButton:)];
+        if (self.locksOrVisitors == TCLocks) {
+            _generateButton.hidden = NO;
+        }else {
+            _generateButton.hidden = YES;
+        }
+    }
+    return _generateButton;
+}
+
+- (NSMutableDictionary *)lockEquipIDDic {
+    if (_lockEquipIDDic == nil) {
+        _lockEquipIDDic = [NSMutableDictionary dictionary];
+    }
+    return _lockEquipIDDic;
+}
+
 - (void)handleClickAddButton:(UIButton *)sender {
     TCAddVisitorViewController *vc = [[TCAddVisitorViewController alloc] init];
     vc.fromController = self;
     vc.addVisitorCompletion = ^() {
         [weakSelf loadData];
     };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleClickGenerateButton:(TCCommonButton *)sender {
+    if (self.lockEquipIDDic.count == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请选择门锁设备"];
+        return;
+    }
+    TCMyLockQRCodeController *vc = [[TCMyLockQRCodeController alloc] initWithLockQRCodeType:TCQRCodeTypeCustom];
+    vc.equipIDs = self.lockEquipIDDic.allKeys;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
