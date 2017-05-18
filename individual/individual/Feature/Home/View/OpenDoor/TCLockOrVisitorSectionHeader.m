@@ -76,7 +76,7 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = TCBlackColor;
         _titleLabel.font = [UIFont systemFontOfSize:15];
-        _titleLabel.text = @"张小花";
+        _titleLabel.text = @"";
     }
     return _titleLabel;
 }

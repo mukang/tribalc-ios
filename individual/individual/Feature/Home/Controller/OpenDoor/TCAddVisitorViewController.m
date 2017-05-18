@@ -89,7 +89,7 @@ ABPeoplePickerNavigationControllerDelegate>
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -361,10 +361,10 @@ ABPeoplePickerNavigationControllerDelegate>
         [MBProgressHUD showHUDWithMessage:@"请选择结束时间"];
         return;
     }
-    if (self.lockKey.equipName.length == 0) {
-        [MBProgressHUD showHUDWithMessage:@"请选择门锁"];
-        return;
-    }
+//    if (self.lockKey.equipName.length == 0) {
+//        [MBProgressHUD showHUDWithMessage:@"请选择门锁"];
+//        return;
+//    }
     TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
     if ([self.lockKey.phone isEqualToString:userInfo.phone]) {
         [MBProgressHUD showHUDWithMessage:@"不能添加自己的手机号"];
@@ -372,7 +372,7 @@ ABPeoplePickerNavigationControllerDelegate>
     }
     
     TCVisitorInfo *info = [[TCVisitorInfo alloc] init];
-    info.equipId = self.lockKey.equipId;
+//    info.equipId = self.lockKey.equipId;
     info.phone = self.lockKey.phone;
     info.name = self.lockKey.name;
     info.beginTime = [[NSDate date] timeIntervalSince1970] * 1000;
