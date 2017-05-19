@@ -662,4 +662,29 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
  */
 - (void)fetchVisitorMultiLockKeyList:(void(^)(NSArray *multiLockKeyList, NSError *error))resultBlock;
 
+#pragma mark - 系统初始化接口
+
+/**
+ 查询应用上下文信息
+
+ @param resultBlock 结果回调
+ */
+- (void)fetchAppInitializationInfo:(void(^)(TCAppInitializationInfo *info, NSError *error))resultBlock;
+
+#pragma mark - 线上活动
+
+/**
+ 每日签到
+
+ @param resultBlock 结果回调
+ */
+- (void)signinDaily:(void(^)(TCSigninRecordDay *signinRecordDay, NSError *error))resultBlock;
+
+/**
+ 查询当月签到记录
+
+ @param resultBlock 结果回调
+ */
+- (void)fetchSigninRecordMonth:(void(^)(TCSigninRecordMonth *signinRecordMonth, NSError *error))resultBlock;
+
 @end

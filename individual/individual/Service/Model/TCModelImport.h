@@ -84,6 +84,16 @@
 #import "TCBFPayInfo.h"
 #import "TCBFSessionInfo.h"
 
+/*********** 系统初始化相关 ***********/
+#import "TCAppConfigs.h"
+#import "TCPromotions.h"
+#import "TCFeatureSwitches.h"
+#import "TCAppInitializationInfo.h"
+
+/*********** 线上活动相关 ***********/
+#import "TCSigninRecordDay.h"
+#import "TCSigninRecordMonth.h"
+
 @interface TCModelImport : NSObject
 
 @end
