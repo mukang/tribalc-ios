@@ -57,6 +57,7 @@
 		5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */; };
 		552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */; };
 		552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */; };
+		5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */; };
 		559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */ = {isa = PBXBuildFile; fileRef = 559D84561E0BD24900982697 /* NSObject+TCNomal.m */; };
 		559D84671E0C007E00982697 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D84661E0C007E00982697 /* MessageUI.framework */; };
 		559D84691E0C008800982697 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D84681E0C008800982697 /* OpenGLES.framework */; };
@@ -467,6 +468,8 @@
 		552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMyLockQRCodeController.m; sourceTree = "<group>"; };
 		552D6C261E973BB000CA4EA3 /* TCUnitySetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUnitySetUpViewController.h; sourceTree = "<group>"; };
 		552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUnitySetUpViewController.m; sourceTree = "<group>"; };
+		5599A9591ECEF193002A61F9 /* TCSignInHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSignInHistoryViewController.h; sourceTree = "<group>"; };
+		5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSignInHistoryViewController.m; sourceTree = "<group>"; };
 		559D84551E0BD24900982697 /* NSObject+TCNomal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TCNomal.h"; sourceTree = "<group>"; };
 		559D84561E0BD24900982697 /* NSObject+TCNomal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TCNomal.m"; sourceTree = "<group>"; };
 		559D84661E0C007E00982697 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -1350,6 +1353,15 @@
 			path = OpenDoor;
 			sourceTree = "<group>";
 		};
+		5599A9581ECEF156002A61F9 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				5599A9591ECEF193002A61F9 /* TCSignInHistoryViewController.h */,
+				5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
 		55BB9EB01E714DE300B0FD94 /* OpenDoor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1546,6 +1558,7 @@
 				7AC346CB1E0142FA00E28EC9 /* Wallet */,
 				7A13EE9F1DF80C9700377869 /* Company */,
 				093D03151DE40498007A053C /* Order */,
+				5599A9581ECEF156002A61F9 /* SignIn */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2643,6 +2656,7 @@
 				7A381BD71DED7856008BDBF7 /* TCCommunityLocationViewCell.m in Sources */,
 				7AC346EA1E0144B500E28EC9 /* TCWalletBillDetailHeaderView.m in Sources */,
 				7AC346D41E01432D00E28EC9 /* TCWalletBillViewController.m in Sources */,
+				5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */,
 				7A8352EA1E5EE3C4003A8E76 /* TCServiceMapViewController.m in Sources */,
 				7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */,
 				5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */,

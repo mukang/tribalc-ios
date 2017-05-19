@@ -20,6 +20,7 @@
 #import "TCQRCodeViewController.h"
 #import "TCNavigationController.h"
 #import "TCOrderViewController.h"
+#import "TCSignInHistoryViewController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
@@ -307,6 +308,10 @@ TCPhotoModeViewDelegate>
             TCPropertyManageListController *propertyListVc = [[TCPropertyManageListController alloc] init];
             propertyListVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:propertyListVc animated:YES];
+        }else if (indexPath.row == 5) {
+            TCSignInHistoryViewController *signInHistoryVc = [[TCSignInHistoryViewController alloc] init];
+            signInHistoryVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:signInHistoryVc animated:YES];
         }
     }
 }
@@ -531,7 +536,8 @@ TCPhotoModeViewDelegate>
                            @{@"title": @"身份认证", @"icon": @"profile_identity_icon"},
                            @{@"title": @"我的预定", @"icon": @"profile_check_icon"},
                            @{@"title": @"我的公司", @"icon": @"profile_company_icon"},
-                           @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"}]
+                           @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"},
+                           @{@"title": @"我的签到", @"icon": @"profile_repairs_icon"}]
                          ];
     }
     return _fodderArray;
