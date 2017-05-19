@@ -109,6 +109,9 @@
 }
 
 - (IBAction)handleClickWithdrawButton:(UIButton *)sender {
+    [self btnClickUnifyTips];
+    
+    /*
     if (!self.walletAccount.bankCards.count) {
         [MBProgressHUD showHUDWithMessage:@"绑定银行卡后才能提现"];
         return;
@@ -126,6 +129,7 @@
 //        [weakSelf fetchNetData];
     };
     [self.navigationController pushViewController:vc animated:YES];
+     */
 }
 
 - (IBAction)handleClickBankCardButton:(UIButton *)sender {
