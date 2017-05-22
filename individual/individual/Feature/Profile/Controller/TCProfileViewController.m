@@ -63,6 +63,8 @@ TCPhotoModeViewDelegate>
     __weak TCProfileViewController *weakSelf;
 }
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -76,11 +78,19 @@ TCPhotoModeViewDelegate>
     [self registerNotifications];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self checkSigninStatus];
+}
+
 - (void)dealloc {
     self.tableView.dataSource = nil;
     self.tableView.delegate = nil;
     [self removeNotifications];
 }
+
+#pragma mark - Private Methods
 
 - (void)setupNavBar {
     self.hideOriginalNavBar = YES;
@@ -358,6 +368,21 @@ TCPhotoModeViewDelegate>
     [photoModeView show];
 }
 
+- (void)didClickSigninButtonInProfileHeaderView:(TCProfileHeaderView *)view {
+    if ([self checkUserNeedLogin]) return;
+    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] signinDaily:^(TCSigninRecordDay *signinRecordDay, NSError *error) {
+        if (signinRecordDay) {
+            [MBProgressHUD showHUDWithMessage:@"签到成功！" afterDelay:1.0];
+            view.signinButton.enabled = NO;
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"签到失败，%@", reason]];
+        }
+    }];
+}
+
 #pragma mark - TCPhotoModeViewDelegate
 
 - (void)didClickCameraButtonInPhotoModeView:(TCPhotoModeView *)view {
@@ -470,10 +495,12 @@ TCPhotoModeViewDelegate>
 
 - (void)handleUserDidLogin:(id)sender {
     [self updateHeaderView];
+    [self checkSigninStatus];
 }
 
 - (void)handleUserDidLogout:(id)sender {
     [self updateHeaderView];
+    [self checkSigninStatus];
 }
 
 - (void)handleUserInfoDidUpdate:(id)sender {
@@ -519,6 +546,22 @@ TCPhotoModeViewDelegate>
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+/**
+ 检查签到状态
+ */
+- (void)checkSigninStatus {
+    TCSigninRecordDay *signinRecordDay = [[TCBuluoApi api] currentUserSession].activities.signin;
+    if (signinRecordDay && signinRecordDay.lastTimestamp) {
+        NSTimeInterval timestamp = signinRecordDay.lastTimestamp / 1000.0;
+        NSDate *signinDate = [NSDate dateWithTimeIntervalSince1970:timestamp];
+        NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+        BOOL isEquel = [currentCalendar isDate:signinDate inSameDayAsDate:[NSDate date]];
+        
+        self.headerView.signinButton.enabled = !isEquel;
+    } else {
+        self.headerView.signinButton.enabled = YES;
+    }
+}
 
 #pragma mark - Override Methods
 

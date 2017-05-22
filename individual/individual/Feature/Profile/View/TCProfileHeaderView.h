@@ -17,6 +17,7 @@
 - (void)didClickCollectButtonInProfileHeaderView:(TCProfileHeaderView *)view;
 - (void)didClickGradeButtonInProfileHeaderView:(TCProfileHeaderView *)view;
 - (void)didClickPhotographButtonInProfileHeaderView:(TCProfileHeaderView *)view;
+- (void)didClickSigninButtonInProfileHeaderView:(TCProfileHeaderView *)view;
 - (void)didTapBioInProfileHeaderView:(TCProfileHeaderView *)view;
 
 @end
@@ -31,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nickLabel;
 @property (weak, nonatomic) IBOutlet UIButton *wantGradeButton;
 @property (weak, nonatomic) IBOutlet UIButton *photographButton;
+@property (weak, nonatomic) IBOutlet UIButton *signinButton;
 
 @property (weak, nonatomic) id<TCProfileHeaderViewDelegate> delegate;
 

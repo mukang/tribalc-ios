@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -173,6 +173,17 @@
                         <action selector="handleClickPhotographButton:" destination="r1i-KW-N4G" eventType="touchUpInside" id="UnJ-dY-2mU"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0x-e3-8qF">
+                    <rect key="frame" x="239" y="171" width="33" height="32"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="签到">
+                        <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="disabled" title="已签到"/>
+                    <connections>
+                        <action selector="handleClickSigninButton:" destination="r1i-KW-N4G" eventType="touchUpInside" id="2aA-yH-qef"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -187,9 +198,11 @@
                 <constraint firstAttribute="bottom" secondItem="Ifh-kR-Be8" secondAttribute="bottom" id="TLK-Ok-kq5"/>
                 <constraint firstItem="LWp-6G-WXp" firstAttribute="top" secondItem="r1i-KW-N4G" secondAttribute="top" id="cpQ-3c-auz"/>
                 <constraint firstItem="oxw-S1-5ch" firstAttribute="centerY" secondItem="lpS-qd-2HU" secondAttribute="centerY" id="f8I-oa-xff"/>
+                <constraint firstItem="f0x-e3-8qF" firstAttribute="centerY" secondItem="IQa-zS-8W0" secondAttribute="centerY" id="fqz-ov-kMW"/>
                 <constraint firstItem="Ifh-kR-Be8" firstAttribute="top" secondItem="IQa-zS-8W0" secondAttribute="bottom" constant="7.5" id="gpa-VW-e7A"/>
                 <constraint firstItem="oxw-S1-5ch" firstAttribute="leading" secondItem="CGM-6B-pes" secondAttribute="trailing" constant="8" id="kKP-hd-k2E"/>
                 <constraint firstItem="CGM-6B-pes" firstAttribute="centerY" secondItem="lpS-qd-2HU" secondAttribute="centerY" id="lcl-gg-Ayb"/>
+                <constraint firstItem="IQa-zS-8W0" firstAttribute="leading" secondItem="f0x-e3-8qF" secondAttribute="trailing" constant="8" id="li1-iO-lOY"/>
                 <constraint firstItem="lpS-qd-2HU" firstAttribute="leading" secondItem="r1i-KW-N4G" secondAttribute="leading" constant="20" id="oFk-bx-7Fh"/>
                 <constraint firstAttribute="bottom" secondItem="LWp-6G-WXp" secondAttribute="bottom" id="raI-u2-Ijh"/>
                 <constraint firstItem="CGM-6B-pes" firstAttribute="leading" secondItem="lpS-qd-2HU" secondAttribute="trailing" constant="14" id="u8M-1U-3zr"/>
@@ -206,6 +219,7 @@
                 <outlet property="nickBgView" destination="CGM-6B-pes" id="sse-9I-I13"/>
                 <outlet property="nickLabel" destination="JVM-0n-1jK" id="b6P-VQ-gy9"/>
                 <outlet property="photographButton" destination="IQa-zS-8W0" id="wsI-Re-OeO"/>
+                <outlet property="signinButton" destination="f0x-e3-8qF" id="kxF-jX-H3f"/>
                 <outlet property="wantGradeButton" destination="9f5-bU-Yy2" id="Lmz-ds-kzZ"/>
             </connections>
             <point key="canvasLocation" x="-151" y="-41"/>

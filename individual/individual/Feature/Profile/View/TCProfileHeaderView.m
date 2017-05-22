@@ -71,6 +71,12 @@
     }
 }
 
+- (IBAction)handleClickSigninButton:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(didClickSigninButtonInProfileHeaderView:)]) {
+        [self.delegate didClickSigninButtonInProfileHeaderView:self];
+    }
+}
+
 - (void)handleTapBio:(UITapGestureRecognizer *)gesture {
     if ([self.delegate respondsToSelector:@selector(didTapBioInProfileHeaderView:)]) {
         [self.delegate didTapBioInProfileHeaderView:self];
