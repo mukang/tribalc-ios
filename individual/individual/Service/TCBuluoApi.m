@@ -2270,6 +2270,9 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
                 TCSigninRecordDay *signinRecordDay = [[TCSigninRecordDay alloc] initWithObjectDictionary:response.data];
+                TCUserSession *userSession = self.currentUserSession;
+                userSession.activities.signin = signinRecordDay;
+                [self setUserSession:userSession];
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(signinRecordDay, nil));
                 }

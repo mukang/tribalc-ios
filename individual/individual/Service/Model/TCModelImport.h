@@ -93,6 +93,7 @@
 /*********** 线上活动相关 ***********/
 #import "TCSigninRecordDay.h"
 #import "TCSigninRecordMonth.h"
+#import "TCActivityInfo.h"
 
 @interface TCModelImport : NSObject
 
