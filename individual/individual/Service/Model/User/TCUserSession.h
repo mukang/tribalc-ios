@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TCUserInfo.h"
+@class TCActivityInfo;
 
 /** 已登录用户的session */
 @interface TCUserSession : NSObject 
@@ -20,5 +21,7 @@
 @property (nonatomic) NSInteger expired;
 /** 用户信息 */
 @property (strong, nonatomic) TCUserInfo *userInfo;
+/** 活动信息 */
+@property (strong, nonatomic) TCActivityInfo *activities;
 
 @end

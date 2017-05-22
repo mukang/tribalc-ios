@@ -8,12 +8,14 @@
 
 #import "TCUserSession.h"
 #import <TCCommonLibs/NSObject+TCModel.h>
+#import "TCActivityInfo.h"
 
 @implementation TCUserSession
 
 + (NSDictionary *)objectClassInDictionary {
     return @{
-             @"userInfo": [TCUserInfo class]
+             @"userInfo": [TCUserInfo class],
+             @"activities": [TCActivityInfo class]
              };
 }
 

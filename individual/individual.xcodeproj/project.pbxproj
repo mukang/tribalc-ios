@@ -260,6 +260,7 @@
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
 		7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEE91DB62011003D90C6 /* individualTests.m */; };
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
+		7AAB19FA1ED29F3A00EF5F69 /* TCActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB19F91ED29F3A00EF5F69 /* TCActivityInfo.m */; };
 		7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */; };
 		7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */; };
 		7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23761DCB5853002B81A5 /* TCBuluoApi.m */; };
@@ -821,6 +822,8 @@
 		7A9CCEF01DB62011003D90C6 /* individualUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = individualUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9CCEF41DB62011003D90C6 /* individualUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = individualUITests.m; sourceTree = "<group>"; };
 		7A9CCEF61DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7AAB19F81ED29F3A00EF5F69 /* TCActivityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCActivityInfo.h; sourceTree = "<group>"; };
+		7AAB19F91ED29F3A00EF5F69 /* TCActivityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCActivityInfo.m; sourceTree = "<group>"; };
 		7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeViewController.h; sourceTree = "<group>"; };
 		7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeViewController.m; sourceTree = "<group>"; };
 		7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCHomeViewController.xib; sourceTree = "<group>"; };
@@ -1654,6 +1657,8 @@
 				7A22D9401ECEF9CF009A6A64 /* TCSigninRecordDay.m */,
 				7A22D9421ECEFB18009A6A64 /* TCSigninRecordMonth.h */,
 				7A22D9431ECEFB18009A6A64 /* TCSigninRecordMonth.m */,
+				7AAB19F81ED29F3A00EF5F69 /* TCActivityInfo.h */,
+				7AAB19F91ED29F3A00EF5F69 /* TCActivityInfo.m */,
 			);
 			path = Activities;
 			sourceTree = "<group>";
@@ -2667,6 +2672,7 @@
 				0928B3381DF921AC0085A182 /* TCShoppingCartWrapper.m in Sources */,
 				098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */,
 				7AC346DE1E01434B00E28EC9 /* TCWalletPasswordViewController.m in Sources */,
+				7AAB19FA1ED29F3A00EF5F69 /* TCActivityInfo.m in Sources */,
 				7AC346EC1E0144B500E28EC9 /* TCWalletBillDetailViewCell.m in Sources */,
 				7A1A85521E66D64700BB5EDB /* TCServiceFilterView.m in Sources */,
 				7A8352811E5C249C003A8E76 /* TCServiceRecommendViewCell.m in Sources */,
