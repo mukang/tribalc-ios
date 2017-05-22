@@ -2243,7 +2243,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 #pragma mark - 系统初始化接口
 
 - (void)fetchAppInitializationInfo:(void (^)(TCAppInitializationInfo *, NSError *))resultBlock {
-    NSString *apiName = [NSString stringWithFormat:@"configs/init?uid=%@&version=%@", self.currentUserSession.assigned, TCGetAppVersion()];
+    NSString *apiName = [NSString stringWithFormat:@"configs/init?uid=%@&version=%@&os=ios", self.currentUserSession.assigned, TCGetAppVersion()];
     TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
     request.token = self.currentUserSession.token;
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
