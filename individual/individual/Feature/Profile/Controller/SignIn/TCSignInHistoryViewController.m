@@ -95,19 +95,35 @@
         make.top.equalTo(self.view).offset(250);
     }];
     
+    for (UIView *view in self.calendar.subviews) {
+        view.backgroundColor = [UIColor clearColor];
+    }
+    
 }
+
 
 #pragma mark FSCalendarDataSource
 - (UIImage *)calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date {
-    if ([[NSCalendar currentCalendar] isDateInToday:date]) {
-        return [UIImage imageNamed:@""];
-    }
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSString *str = [formatter stringFromDate:date];
+    if (self.signinRecordMonth) {
+        if ([self.signinRecordMonth.monthRecords isKindOfClass:[NSArray class]]) {
+            for (TCSigninRecordDay *signinRecordDay in self.signinRecordMonth.monthRecords) {
+                if ([signinRecordDay isKindOfClass:[TCSigninRecordDay class]]) {
+                    long long time = signinRecordDay.lastTimestamp;
+                    NSDate *signinDate = [NSDate dateWithTimeIntervalSince1970:time/1000];
+                    NSString *signinDateStr = [formatter stringFromDate:signinDate];
+                    if ([signinDateStr isEqualToString:str]) {
+                        return [UIImage imageNamed:@""];
+                    }
+                }
+            }
+        }
+    }
     
-    return nil;
+    return [UIImage imageNamed:@""];
 }
 
 
@@ -127,8 +143,10 @@
         _calendar.appearance.headerTitleColor = TCBlackColor;
         _calendar.appearance.caseOptions = FSCalendarCaseOptionsWeekdayUsesSingleUpperCase;
         _calendar.appearance.weekdayTextColor = TCBlackColor;
+        _calendar.appearance.separators = FSCalendarSeparatorBelowWeekdays;
         _calendar.placeholderType = FSCalendarPlaceholderTypeNone;
         _calendar.scrollDirection = FSCalendarScrollDirectionVertical;
+        _calendar.today = nil;
     }
     return _calendar;
 }
