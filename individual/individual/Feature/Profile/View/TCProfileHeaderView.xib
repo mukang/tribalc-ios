@@ -108,15 +108,8 @@
                         <constraint firstItem="JDr-W1-eaj" firstAttribute="centerX" secondItem="lpS-qd-2HU" secondAttribute="centerX" id="xyB-LA-Fyf"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_header_arrow_icon" translatesAutoresizingMaskIntoConstraints="NO" id="oxw-S1-5ch">
-                    <rect key="frame" x="289" y="118" width="11" height="15"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="15" id="IMN-da-jba"/>
-                        <constraint firstAttribute="width" constant="11" id="L2h-Ao-S0H"/>
-                    </constraints>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="注册 | 登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3jY-mw-uaj">
-                    <rect key="frame" x="98" y="115" width="122" height="21"/>
+                    <rect key="frame" x="98" y="115" width="69.5" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="qMn-oX-gcS"/>
                     </constraints>
@@ -125,10 +118,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CGM-6B-pes">
-                    <rect key="frame" x="98" y="93" width="183" height="64"/>
+                    <rect key="frame" x="98" y="93" width="140" height="64"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVM-0n-1jK">
-                            <rect key="frame" x="0.0" y="10" width="183" height="18"/>
+                            <rect key="frame" x="0.0" y="10" width="140" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="18" id="bsO-2x-P1Y"/>
                             </constraints>
@@ -174,12 +167,18 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0x-e3-8qF">
-                    <rect key="frame" x="239" y="171" width="33" height="32"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <rect key="frame" x="248" y="116.5" width="52" height="18.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="52" id="cjP-KL-LB7"/>
+                        <constraint firstAttribute="height" constant="18.5" id="tx9-a4-kOC"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="签到">
-                        <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.32941176470588235" green="0.54509803921568623" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
-                    <state key="disabled" title="已签到"/>
+                    <state key="disabled" title="已签到">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="handleClickSigninButton:" destination="r1i-KW-N4G" eventType="touchUpInside" id="2aA-yH-qef"/>
                     </connections>
@@ -187,9 +186,10 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="oxw-S1-5ch" firstAttribute="leading" secondItem="3jY-mw-uaj" secondAttribute="trailing" constant="69" id="3H8-UI-J4u"/>
+                <constraint firstAttribute="trailing" secondItem="f0x-e3-8qF" secondAttribute="trailing" constant="20" id="2d2-ro-vh7"/>
                 <constraint firstItem="Ifh-kR-Be8" firstAttribute="leading" secondItem="r1i-KW-N4G" secondAttribute="leading" id="7Q9-cC-SGh"/>
                 <constraint firstItem="3jY-mw-uaj" firstAttribute="leading" secondItem="lpS-qd-2HU" secondAttribute="trailing" constant="14" id="86Y-pr-NSn"/>
+                <constraint firstItem="f0x-e3-8qF" firstAttribute="leading" secondItem="CGM-6B-pes" secondAttribute="trailing" constant="10" id="8LN-qS-Oyc"/>
                 <constraint firstAttribute="trailing" secondItem="Ifh-kR-Be8" secondAttribute="trailing" id="A8c-MN-AMc"/>
                 <constraint firstItem="lpS-qd-2HU" firstAttribute="top" secondItem="r1i-KW-N4G" secondAttribute="top" constant="93" id="Ba0-m3-YO6"/>
                 <constraint firstAttribute="trailing" secondItem="IQa-zS-8W0" secondAttribute="trailing" constant="20" id="EA9-8j-arU"/>
@@ -197,16 +197,12 @@
                 <constraint firstItem="3jY-mw-uaj" firstAttribute="centerY" secondItem="lpS-qd-2HU" secondAttribute="centerY" id="KLj-f3-pSB"/>
                 <constraint firstAttribute="bottom" secondItem="Ifh-kR-Be8" secondAttribute="bottom" id="TLK-Ok-kq5"/>
                 <constraint firstItem="LWp-6G-WXp" firstAttribute="top" secondItem="r1i-KW-N4G" secondAttribute="top" id="cpQ-3c-auz"/>
-                <constraint firstItem="oxw-S1-5ch" firstAttribute="centerY" secondItem="lpS-qd-2HU" secondAttribute="centerY" id="f8I-oa-xff"/>
-                <constraint firstItem="f0x-e3-8qF" firstAttribute="centerY" secondItem="IQa-zS-8W0" secondAttribute="centerY" id="fqz-ov-kMW"/>
                 <constraint firstItem="Ifh-kR-Be8" firstAttribute="top" secondItem="IQa-zS-8W0" secondAttribute="bottom" constant="7.5" id="gpa-VW-e7A"/>
-                <constraint firstItem="oxw-S1-5ch" firstAttribute="leading" secondItem="CGM-6B-pes" secondAttribute="trailing" constant="8" id="kKP-hd-k2E"/>
                 <constraint firstItem="CGM-6B-pes" firstAttribute="centerY" secondItem="lpS-qd-2HU" secondAttribute="centerY" id="lcl-gg-Ayb"/>
-                <constraint firstItem="IQa-zS-8W0" firstAttribute="leading" secondItem="f0x-e3-8qF" secondAttribute="trailing" constant="8" id="li1-iO-lOY"/>
                 <constraint firstItem="lpS-qd-2HU" firstAttribute="leading" secondItem="r1i-KW-N4G" secondAttribute="leading" constant="20" id="oFk-bx-7Fh"/>
                 <constraint firstAttribute="bottom" secondItem="LWp-6G-WXp" secondAttribute="bottom" id="raI-u2-Ijh"/>
+                <constraint firstItem="f0x-e3-8qF" firstAttribute="centerY" secondItem="JDr-W1-eaj" secondAttribute="centerY" id="t5J-fM-4Tb"/>
                 <constraint firstItem="CGM-6B-pes" firstAttribute="leading" secondItem="lpS-qd-2HU" secondAttribute="trailing" constant="14" id="u8M-1U-3zr"/>
-                <constraint firstAttribute="trailing" secondItem="oxw-S1-5ch" secondAttribute="trailing" constant="20" id="w5a-8a-uua"/>
                 <constraint firstAttribute="trailing" secondItem="LWp-6G-WXp" secondAttribute="trailing" id="x7T-91-7D0"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -226,7 +222,6 @@
         </view>
     </objects>
     <resources>
-        <image name="profile_header_arrow_icon" width="11" height="15"/>
         <image name="profile_header_card_button" width="14" height="14"/>
         <image name="profile_header_collect_button" width="14" height="14"/>
         <image name="profile_header_grade_button" width="14" height="14"/>

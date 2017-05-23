@@ -9,6 +9,8 @@
 #import "TCProfileHeaderView.h"
 #import "TCUserInfo.h"
 
+#import <TCCommonLibs/UIImage+Category.h>
+
 @implementation TCProfileHeaderView
 
 - (void)awakeFromNib {
@@ -30,13 +32,19 @@
     self.bgImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.bgImageView.clipsToBounds = YES;
     
+    UIImage *normalImage = [UIImage imageWithColor:TCLightGrayColor];
+    [self.signinButton setBackgroundImage:normalImage forState:UIControlStateNormal];
+    [self.signinButton setBackgroundImage:normalImage forState:UIControlStateHighlighted];
+    UIImage *disabledImage = [UIImage imageWithColor:TCGrayColor];
+    [self.signinButton setBackgroundImage:disabledImage forState:UIControlStateDisabled];
+    self.signinButton.layer.cornerRadius = 2.5;
+    self.signinButton.layer.masksToBounds = YES;
+    
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBio:)];
-    self.bgImageView.userInteractionEnabled = YES;
-    [self.bgImageView addGestureRecognizer:tapGesture];
-    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBio:)];
     [self.avatarBgView addGestureRecognizer:tapGesture];
     tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBio:)];
-    [self.nickBgView addGestureRecognizer:tapGesture];
+    self.loginButton.userInteractionEnabled = YES;
+    [self.loginButton addGestureRecognizer:tapGesture];
 }
 
 - (void)updateConstraints {
