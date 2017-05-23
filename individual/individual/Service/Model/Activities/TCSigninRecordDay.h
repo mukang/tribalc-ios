@@ -14,5 +14,7 @@
 @property (nonatomic) long long lastTimestamp;
 /** 连续签到天数 */
 @property (nonatomic) NSInteger continuityDays;
+/* 签到日期 */
+@property (nonatomic) NSInteger dayNumber;
 
 @end

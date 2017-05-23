@@ -16,4 +16,6 @@
 /** 本月签到记录 */
 @property (copy, nonatomic) NSArray *monthRecords;
 
+@property (assign, nonatomic) NSInteger continuityDays;
+
 @end
