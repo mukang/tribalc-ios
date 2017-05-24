@@ -2280,6 +2280,9 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             if (response.codeInResponse == 200) {
                 TCSigninRecordDay *signinRecordDay = [[TCSigninRecordDay alloc] initWithObjectDictionary:response.data];
                 TCUserSession *userSession = self.currentUserSession;
+                if (!userSession.activities) {
+                    userSession.activities = [[TCActivityInfo alloc] init];
+                }
                 userSession.activities.signin = signinRecordDay;
                 [self setUserSession:userSession];
                 if (resultBlock) {

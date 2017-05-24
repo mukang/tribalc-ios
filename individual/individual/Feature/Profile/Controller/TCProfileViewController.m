@@ -306,22 +306,23 @@ TCPhotoModeViewDelegate>
             TCWalletViewController *vc = [[TCWalletViewController alloc] initWithNibName:@"TCWalletViewController" bundle:[NSBundle mainBundle]];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
-        } else if (indexPath.row == 1) { // 身份认证
-            [self handleDidSelectedIDAuthCell];
-        } else if (indexPath.row == 2) { // 我的预定
-            TCUserReserveViewController *userReserveViewController = [[TCUserReserveViewController alloc] init];
-            userReserveViewController.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:userReserveViewController animated:YES];
-        } else if (indexPath.row == 3) { // 我的公司
-            [self handleDidSelectedMyCompanyCell];
-        }else if (indexPath.row == 4) {
-            TCPropertyManageListController *propertyListVc = [[TCPropertyManageListController alloc] init];
-            propertyListVc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:propertyListVc animated:YES];
-        }else if (indexPath.row == 5) {
+        } else if (indexPath.row == 1) { // 我的签到
             TCSignInHistoryViewController *signInHistoryVc = [[TCSignInHistoryViewController alloc] init];
             signInHistoryVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:signInHistoryVc animated:YES];
+        } else if (indexPath.row == 2) { // 身份认证
+            [self handleDidSelectedIDAuthCell];
+        } else if (indexPath.row == 3) { // 我的预定
+            TCUserReserveViewController *userReserveViewController = [[TCUserReserveViewController alloc] init];
+            userReserveViewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:userReserveViewController animated:YES];
+        }else if (indexPath.row == 4) { // 我的公司
+             [self handleDidSelectedMyCompanyCell];
+        }else if (indexPath.row == 5) { //物业报修
+            TCPropertyManageListController *propertyListVc = [[TCPropertyManageListController alloc] init];
+            propertyListVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:propertyListVc animated:YES];
+            
         }
     }
 }
@@ -576,11 +577,11 @@ TCPhotoModeViewDelegate>
                          @[@{@"title": @"我的订单", @"icon": @"profile_order_icon"},
                            @{@"title": @"", @"icon": @""}],
                          @[@{@"title": @"我的钱包", @"icon": @"profile_wallet_icon"},
+                           @{@"title": @"我的签到", @"icon": @"profile_signin_icon"},
                            @{@"title": @"身份认证", @"icon": @"profile_identity_icon"},
                            @{@"title": @"我的预定", @"icon": @"profile_check_icon"},
                            @{@"title": @"我的公司", @"icon": @"profile_company_icon"},
-                           @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"},
-                           @{@"title": @"我的签到", @"icon": @"profile_repairs_icon"}]
+                           @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"}]
                          ];
     }
     return _fodderArray;

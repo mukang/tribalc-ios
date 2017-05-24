@@ -54,6 +54,10 @@
 		0990F19A1E07CA11002692F6 /* TCGoodShopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0990F1991E07CA11002692F6 /* TCGoodShopView.m */; };
 		09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */; };
 		09AE0F791DED462700F307D8 /* TCComputeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F781DED462700F307D8 /* TCComputeView.m */; };
+		550FB7401ED2F54E00D75E33 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */; };
+		550FB7411ED2F54E00D75E33 /* ReleaseNotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */; };
+		550FB7431ED2F5BB00D75E33 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */; };
+		550FB7451ED2F5E300D75E33 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB7441ED2F5E300D75E33 /* SystemConfiguration.framework */; };
 		5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */; };
 		552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */; };
 		552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */; };
@@ -472,6 +476,13 @@
 		09AE0F771DED462700F307D8 /* TCComputeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCComputeView.h; sourceTree = "<group>"; };
 		09AE0F781DED462700F307D8 /* TCComputeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCComputeView.m; sourceTree = "<group>"; };
 		39C5AA3FC54D84E58748E333 /* Pods-individual.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-individual.release.xcconfig"; path = "Pods/Target Support Files/Pods-individual/Pods-individual.release.xcconfig"; sourceTree = "<group>"; };
+		550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libXG-SDK.a"; sourceTree = "<group>"; };
+		550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReleaseNotes.txt; sourceTree = "<group>"; };
+		550FB73E1ED2F54E00D75E33 /* XGPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPush.h; sourceTree = "<group>"; };
+		550FB73F1ED2F54E00D75E33 /* XGSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGSetting.h; sourceTree = "<group>"; };
+		550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		550FB7441ED2F5E300D75E33 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		550FB7461ED2F60E00D75E33 /* individual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = individual.entitlements; sourceTree = "<group>"; };
 		551306581E714008004DF32F /* TCLocksAndVisitorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLocksAndVisitorsViewController.h; sourceTree = "<group>"; };
 		551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLocksAndVisitorsViewController.m; sourceTree = "<group>"; };
 		552D6C201E94D6BF00CA4EA3 /* TCMyLockQRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMyLockQRCodeController.h; sourceTree = "<group>"; };
@@ -998,9 +1009,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				550FB7451ED2F5E300D75E33 /* SystemConfiguration.framework in Frameworks */,
+				550FB7431ED2F5BB00D75E33 /* UserNotifications.framework in Frameworks */,
 				559D84911E0C019F00982697 /* libxml2.tbd in Frameworks */,
 				559D848F1E0C018300982697 /* AVFoundation.framework in Frameworks */,
 				559D848D1E0C017A00982697 /* libsqlite3.tbd in Frameworks */,
+				550FB7401ED2F54E00D75E33 /* libXG-SDK.a in Frameworks */,
 				559D848B1E0C016700982697 /* AudioToolbox.framework in Frameworks */,
 				559D84891E0C016000982697 /* VideoToolbox.framework in Frameworks */,
 				559D84871E0C015600982697 /* libz.tbd in Frameworks */,
@@ -1341,6 +1355,8 @@
 		3769491CE022BC9EEDD012C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				550FB7441ED2F5E300D75E33 /* SystemConfiguration.framework */,
+				550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */,
 				559D84901E0C019F00982697 /* libxml2.tbd */,
 				559D848E1E0C018300982697 /* AVFoundation.framework */,
 				559D848C1E0C017A00982697 /* libsqlite3.tbd */,
@@ -1366,6 +1382,17 @@
 				CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		550FB73B1ED2F54100D75E33 /* XGPush */ = {
+			isa = PBXGroup;
+			children = (
+				550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */,
+				550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */,
+				550FB73E1ED2F54E00D75E33 /* XGPush.h */,
+				550FB73F1ED2F54E00D75E33 /* XGSetting.h */,
+			);
+			path = XGPush;
 			sourceTree = "<group>";
 		};
 		551306571E713FA0004DF32F /* OpenDoor */ = {
@@ -1948,6 +1975,7 @@
 		7A9CCECE1DB62011003D90C6 /* individual */ = {
 			isa = PBXGroup;
 			children = (
+				550FB7461ED2F60E00D75E33 /* individual.entitlements */,
 				7A190AFD1DC0AB1300651905 /* TCAppDelegate.h */,
 				7A190AFE1DC0AB1300651905 /* TCAppDelegate.mm */,
 				7A9CCF081DB627A5003D90C6 /* Common */,
@@ -2052,6 +2080,7 @@
 		7A9CCF0A1DB627A5003D90C6 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				550FB73B1ED2F54100D75E33 /* XGPush */,
 				7AB03EFA1EC0759100DFB037 /* BaoFu */,
 				7A64EA751E14EC33008D0C12 /* Wechat */,
 				7A11F70F1DE43195005F3EAB /* MLBPasswordTextField */,
@@ -2459,6 +2488,14 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 452XNHBVYZ;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					7A9CCEE41DB62011003D90C6 = {
 						CreatedOnToolsVersion = 8.0;
@@ -2538,6 +2575,7 @@
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
 				7AEB4CCD1E03936300F83A7C /* TCShippingAddressViewController.xib in Resources */,
 				7A7E94241DF5723A006A47CE /* TCRepairsCommitViewCell.xib in Resources */,
+				550FB7411ED2F54E00D75E33 /* ReleaseNotes.txt in Resources */,
 				7A381BE21DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.xib in Resources */,
 				7A14FC591DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib in Resources */,
 				7AEB4CEE1E03944500F83A7C /* TCBiographyAvatarViewCell.xib in Resources */,
@@ -3056,6 +3094,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = individual/individual.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: kang mu (3KD2Q352NW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kang mu (3KD2Q352NW)";
 				CURRENT_PROJECT_VERSION = 7;
@@ -3089,6 +3128,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/individual/Common/Libs/Wechat",
 					"$(PROJECT_DIR)/individual/Common/Libs/BaoFu",
+					"$(PROJECT_DIR)/individual/Common/Libs/XGPush",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3131,6 +3171,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = individual/individual.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Tribal Commune Technology Co., Ltd. (452XNHBVYZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Tribal Commune Technology Co., Ltd. (452XNHBVYZ)";
 				CURRENT_PROJECT_VERSION = 7;
@@ -3164,6 +3205,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/individual/Common/Libs/Wechat",
 					"$(PROJECT_DIR)/individual/Common/Libs/BaoFu",
+					"$(PROJECT_DIR)/individual/Common/Libs/XGPush",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
