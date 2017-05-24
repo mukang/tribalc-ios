@@ -262,6 +262,9 @@
 		7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEE91DB62011003D90C6 /* individualTests.m */; };
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
 		7AAB19FA1ED29F3A00EF5F69 /* TCActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB19F91ED29F3A00EF5F69 /* TCActivityInfo.m */; };
+		7AAB1A001ED43CA900EF5F69 /* TCPromotionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB19FF1ED43CA900EF5F69 /* TCPromotionsManager.m */; };
+		7AAB1A031ED447EB00EF5F69 /* TCPromotionsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A021ED447EB00EF5F69 /* TCPromotionsWrapper.m */; };
+		7AAB1A061ED574EF00EF5F69 /* TCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */; };
 		7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */; };
 		7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */; };
 		7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23761DCB5853002B81A5 /* TCBuluoApi.m */; };
@@ -827,6 +830,12 @@
 		7A9CCEF61DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AAB19F81ED29F3A00EF5F69 /* TCActivityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCActivityInfo.h; sourceTree = "<group>"; };
 		7AAB19F91ED29F3A00EF5F69 /* TCActivityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCActivityInfo.m; sourceTree = "<group>"; };
+		7AAB19FE1ED43CA900EF5F69 /* TCPromotionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPromotionsManager.h; sourceTree = "<group>"; };
+		7AAB19FF1ED43CA900EF5F69 /* TCPromotionsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPromotionsManager.m; sourceTree = "<group>"; };
+		7AAB1A011ED447EB00EF5F69 /* TCPromotionsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPromotionsWrapper.h; sourceTree = "<group>"; };
+		7AAB1A021ED447EB00EF5F69 /* TCPromotionsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPromotionsWrapper.m; sourceTree = "<group>"; };
+		7AAB1A041ED574EF00EF5F69 /* TCWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWebViewController.h; sourceTree = "<group>"; };
+		7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWebViewController.m; sourceTree = "<group>"; };
 		7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeViewController.h; sourceTree = "<group>"; };
 		7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeViewController.m; sourceTree = "<group>"; };
 		7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCHomeViewController.xib; sourceTree = "<group>"; };
@@ -1465,6 +1474,8 @@
 				7A0E009A1E2DC1DE0028555D /* TCLaunchViewController.m */,
 				552D6C261E973BB000CA4EA3 /* TCUnitySetUpViewController.h */,
 				552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */,
+				7AAB1A041ED574EF00EF5F69 /* TCWebViewController.h */,
+				7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1659,6 +1670,8 @@
 				7A22D9391ECEF11B009A6A64 /* TCFeatureSwitches.m */,
 				7A22D93B1ECEF336009A6A64 /* TCAppInitializationInfo.h */,
 				7A22D93C1ECEF336009A6A64 /* TCAppInitializationInfo.m */,
+				7AAB1A011ED447EB00EF5F69 /* TCPromotionsWrapper.h */,
+				7AAB1A021ED447EB00EF5F69 /* TCPromotionsWrapper.m */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -2053,6 +2066,8 @@
 				7A1580301DD1DE8200B8F768 /* TCPhotoPicker.m */,
 				55F06F1E1E07EC6500A849D7 /* TCScanner.h */,
 				55F06F1F1E07EC6500A849D7 /* TCScanner.m */,
+				7AAB19FE1ED43CA900EF5F69 /* TCPromotionsManager.h */,
+				7AAB19FF1ED43CA900EF5F69 /* TCPromotionsManager.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -2739,6 +2754,7 @@
 				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
 				092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */,
 				7AEB4CF11E03944500F83A7C /* TCCityPickerView.m in Sources */,
+				7AAB1A061ED574EF00EF5F69 /* TCWebViewController.m in Sources */,
 				55BB9EB61E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.m in Sources */,
 				559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */,
 				098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */,
@@ -2824,6 +2840,7 @@
 				7A2D2A961E1CF9820067D591 /* TCPaymentPasswordView.m in Sources */,
 				552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */,
 				7A16665B1DFAB01E007B5733 /* TCCompanyHeaderView.m in Sources */,
+				7AAB1A031ED447EB00EF5F69 /* TCPromotionsWrapper.m in Sources */,
 				7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */,
 				7A2F7C721E768C36007B831D /* TCAddVisitorTimeViewCell.m in Sources */,
 				7AFEC4811E54056D00B0E754 /* TCGoodsOrderPriceViewCell.m in Sources */,
@@ -2865,6 +2882,7 @@
 				7AFEC4801E54056D00B0E754 /* TCGoodsOrderNoteViewCell.m in Sources */,
 				7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */,
 				7A2F7C691E763BB6007B831D /* TCVisitorInfo.m in Sources */,
+				7AAB1A001ED43CA900EF5F69 /* TCPromotionsManager.m in Sources */,
 				7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */,
 				096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */,
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,

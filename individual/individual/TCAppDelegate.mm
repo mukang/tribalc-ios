@@ -15,6 +15,8 @@
 #import "WXApiManager.h"
 #import <CoreLocation/CoreLocation.h>
 
+#import "TCBuluoApi.h"
+
 @interface TCAppDelegate ()<CLLocationManagerDelegate>
 
 @end
@@ -38,6 +40,10 @@
     [self.window makeKeyAndVisible];
     [self showLaunchWindow];
     application.statusBarHidden = NO;
+    
+    [[TCBuluoApi api] prepareForWorking:^(NSError *error) {
+        
+    }];
     
     // wechat
     [WXApi registerApp:kWXAppID];
@@ -103,7 +109,7 @@
     TCLaunchViewController *launchViewController = [[TCLaunchViewController alloc] init];
     self.launchWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.launchWindow.rootViewController = launchViewController;
-    self.launchWindow.windowLevel = UIWindowLevelNormal;
+    self.launchWindow.windowLevel = UIWindowLevelAlert;
     self.launchWindow.hidden = NO;
     launchViewController.launchWindow = self.launchWindow;
 }

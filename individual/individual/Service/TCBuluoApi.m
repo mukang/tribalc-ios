@@ -12,6 +12,8 @@
 #import <TCCommonLibs/TCArchiveService.h>
 #import <TCCommonLibs/NSObject+TCModel.h>
 
+#import "TCPromotionsManager.h"
+
 NSString *const TCBuluoApiNotificationUserDidLogin = @"TCBuluoApiNotificationUserDidLogin";
 NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUserDidLogout";
 NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificationUserInfoDidUpdate";
@@ -34,6 +36,13 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)prepareForWorking:(void (^)(NSError *))completion {
     _prepared = YES;
+    
+    // 获取初始化配置信息
+    [self fetchAppInitializationInfo:^(TCAppInitializationInfo *info, NSError *error) {
+        if (info.promotions) {
+            [[TCPromotionsManager sharedManager] storePromotionsAndLoadImageWithPromotions:info.promotions];
+        }
+    }];
     
     if (completion) {
         completion(nil);
