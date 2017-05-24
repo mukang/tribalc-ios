@@ -73,6 +73,7 @@
     
     [XGPush handleLaunching:launchOptions successCallback:^{
         NSLog(@"[XGDemo] Handle launching success");
+        [self handlePushNotiWithDic:launchOptions];
     } errorCallback:^{
         NSLog(@"[XGDemo] Handle launching error");
     }];
@@ -103,6 +104,7 @@
     [XGPush handleReceiveNotification:userInfo
                       successCallback:^{
                           NSLog(@"[XGDemo] Handle receive success");
+                          [self handlePushNotiWithDic:userInfo];
                       } errorCallback:^{
                           NSLog(@"[XGDemo] Handle receive error");
                       }];
@@ -122,6 +124,7 @@
     [XGPush handleReceiveNotification:userInfo
                       successCallback:^{
                           NSLog(@"[XGDemo] Handle receive success");
+                           [self handlePushNotiWithDic:userInfo];
                       } errorCallback:^{
                           NSLog(@"[XGDemo] Handle receive error");
                       }];
@@ -139,6 +142,8 @@
     [XGPush handleReceiveNotification:response.notification.request.content.userInfo
                       successCallback:^{
                           NSLog(@"[XGDemo] Handle receive success");
+                          NSLog(@"%@",response.notification.request.content.userInfo);
+                          [self handlePushNotiWithDic:response.notification.request.content.userInfo];
                       } errorCallback:^{
                           NSLog(@"[XGDemo] Handle receive error");
                       }];
@@ -153,6 +158,38 @@
 }
 #endif
 
+- (void)handlePushNotiWithDic:(NSDictionary *)dic {
+    if ([dic isKindOfClass:[NSDictionary class]]) {
+        NSString *str = dic[@"data"];
+        if ([str isKindOfClass:[NSString class]]) {
+            NSDictionary *parmsDic = [self dictionaryWithJsonStr:str];
+            if ([parmsDic isKindOfClass:[NSDictionary class]]) {
+                NSString *router = parmsDic[@"router"];
+                if ([router isKindOfClass:[NSString class]]) {
+                    if ([router isEqualToString:@"signin"]) {
+                        TCTabBarController *tabVC = (TCTabBarController *)self.window.rootViewController;
+                        TCNavigationController *navVC = tabVC.selectedViewController;
+                        if (navVC) {
+                            [navVC popToRootViewControllerAnimated:NO];
+                            tabVC.selectedIndex = 3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+- (NSDictionary *)dictionaryWithJsonStr:(NSString *)jsonStr
+{
+    
+    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    return [NSJSONSerialization JSONObjectWithData:jsonData
+                                           options:NSJSONReadingMutableContainers
+                                             error:&err];
+}
 
 - (void)registerAPNS {
     float sysVer = [[[UIDevice currentDevice] systemVersion] floatValue];

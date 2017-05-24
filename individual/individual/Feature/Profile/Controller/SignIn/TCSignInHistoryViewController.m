@@ -132,8 +132,52 @@
     
 }
 
+#pragma mark FSCalendarDelegateAppearance
+
+- (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(NSDate *)date {
+    
+    if ([[NSCalendar currentCalendar] isDateInToday:date]) {
+        return [UIColor whiteColor];
+    }
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *str = [formatter stringFromDate:date];
+    if (self.signinRecordMonth) {
+        if ([self.signinRecordMonth.monthRecords isKindOfClass:[NSArray class]]) {
+            for (TCSigninRecordDay *signinRecordDay in self.signinRecordMonth.monthRecords) {
+                if ([signinRecordDay isKindOfClass:[TCSigninRecordDay class]]) {
+                    NSArray *arr = [str componentsSeparatedByString:@"-"];
+                    if (arr.count >= 3) {
+                        NSString *month = arr[1];
+                        NSString *day = arr[2];
+                        
+                        if ([month isKindOfClass:[NSString class]]) {
+                            if (month.integerValue == self.signinRecordMonth.monthNumber) {
+                                if ([day isKindOfClass:[NSString class]]) {
+                                    if (signinRecordDay.dayNumber == day.integerValue) {
+                                        if ([[NSCalendar currentCalendar] isDateInToday:date]) {
+                                            return [UIColor whiteColor];
+                                        }else {
+                                            return TCRGBColor(237, 134, 40);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        
+                    }
+                }
+            }
+        }
+    }
+    return TCBlackColor;
+}
+
 
 #pragma mark FSCalendarDataSource
+
 - (UIImage *)calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date {
     
     FSCalendarCell *cell = [calendar cellForDate:date atMonthPosition:FSCalendarMonthPositionCurrent];
@@ -151,15 +195,20 @@
                     
                     NSArray *arr = [str componentsSeparatedByString:@"-"];
                     if (arr.count >= 3) {
+                        NSString *month = arr[1];
                         NSString *day = arr[2];
-                        if ([day isKindOfClass:[NSString class]]) {
-                            if (signinRecordDay.dayNumber == day.integerValue) {
-                                if ([[NSCalendar currentCalendar] isDateInToday:date]) {
-                                    cell.titleLabel.textColor = [UIColor whiteColor];
-                                    return [UIImage imageNamed:@"signinedToday"];
-                                }else {
-                                    cell.titleLabel.textColor = TCRGBColor(237, 134, 40);
-                                    return [UIImage imageNamed:@"signinedNoToday"];
+                        if ([month isKindOfClass:[NSString class]]) {
+                            if (month.integerValue == self.signinRecordMonth.monthNumber) {
+                                if ([day isKindOfClass:[NSString class]]) {
+                                    if (signinRecordDay.dayNumber == day.integerValue) {
+                                        if ([[NSCalendar currentCalendar] isDateInToday:date]) {
+                                            cell.preferredTitleDefaultColor = [UIColor whiteColor];
+                                            return [UIImage imageNamed:@"signinedToday"];
+                                        }else {
+                                            cell.preferredTitleDefaultColor = TCRGBColor(237, 134, 40);
+                                            return [UIImage imageNamed:@"signinedNoToday"];
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -169,8 +218,8 @@
         }
     }
     if ([[NSCalendar currentCalendar] isDateInToday:date]) {
-        cell.titleLabel.textColor = [UIColor whiteColor];
-        return [UIImage imageNamed:@""];
+        cell.preferredTitleDefaultColor = [UIColor whiteColor];
+        return [UIImage imageNamed:@"todayNoSignin"];
     }
     return nil;
 }
