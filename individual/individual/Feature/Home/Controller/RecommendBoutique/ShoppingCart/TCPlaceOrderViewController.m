@@ -29,6 +29,8 @@
     
 }
 
+@property (weak, nonatomic) UIButton *confirmPayBtn;
+
 @end
 
 @implementation TCPlaceOrderViewController {
@@ -118,6 +120,7 @@
     UIButton *confirmPayBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - TCScreenWidth / 2, 0, TCScreenWidth / 2, bottomView.height) AndTitle:@"去付款" AndFontSize:TCRealValue(16) AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
     [confirmPayBtn addTarget:self action:@selector(touchOrderPayBtn:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:confirmPayBtn];
+    self.confirmPayBtn = confirmPayBtn;
     UILabel *priceLab = [TCComponent createLabelWithFrame:CGRectMake(payMoneyLab.x + payMoneyLab.width, 0, confirmPayBtn.x - payMoneyLab.x - payMoneyLab.width, bottomView.height) AndFontSize:TCRealValue(14) AndTitle:[self getAllTotalFeeStr] AndTextColor:confirmPayBtn.backgroundColor];
     [bottomView addSubview:priceLab];
     UIView *lineView = [TCComponent createGrayLineWithFrame:CGRectMake(0, 0, bottomView.width, TCRealValue(0.5))];
@@ -408,6 +411,9 @@
         return;
     }
 //    [self filterPayMethod];
+    
+    self.confirmPayBtn.enabled = NO;
+    
     [self createOrder];
 }
 /*
@@ -478,6 +484,7 @@
             [weakSelf handleShowPaymentViewWithOrderList:orderList];
             [MBProgressHUD hideHUD:YES];
         } else {
+            weakSelf.confirmPayBtn.enabled = YES;
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
         }
