@@ -53,7 +53,9 @@
 
 - (void)loadData {
     @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchSigninRecordMonth:^(TCSigninRecordMonth *signinRecordMonth, NSError *error) {
+        [MBProgressHUD hideHUD:YES];
         @StrongObj(self)
         if (signinRecordMonth) {
             self.signinRecordMonth = signinRecordMonth;
@@ -140,6 +142,10 @@
 
 - (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(NSDate *)date {
     
+    if (!self.signinRecordMonth) {
+        return nil;
+    }
+    
     if ([[NSCalendar currentCalendar] isDateInToday:date]) {
         return [UIColor whiteColor];
     }
@@ -183,6 +189,9 @@
 #pragma mark FSCalendarDataSource
 
 - (UIImage *)calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date {
+    if (!self.signinRecordMonth) {
+        return nil;
+    }
     
     FSCalendarCell *cell = [calendar cellForDate:date atMonthPosition:FSCalendarMonthPositionCurrent];
     
