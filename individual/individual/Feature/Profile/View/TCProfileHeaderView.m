@@ -32,7 +32,7 @@
     self.bgImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.bgImageView.clipsToBounds = YES;
     
-    UIImage *normalImage = [UIImage imageWithColor:TCLightGrayColor];
+    UIImage *normalImage = [UIImage imageWithColor:TCBackgroundColor];
     [self.signinButton setBackgroundImage:normalImage forState:UIControlStateNormal];
     [self.signinButton setBackgroundImage:normalImage forState:UIControlStateHighlighted];
     UIImage *disabledImage = [UIImage imageWithColor:TCGrayColor];

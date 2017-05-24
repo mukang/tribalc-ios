@@ -11,6 +11,7 @@
 
 NSString *const TCLaunchWindowDidAppearNotification    = @"TCLaunchWindowDidAppearNotification";
 NSString *const TCLaunchWindowDidDisappearNotification = @"TCLaunchWindowDidDisappearNotification";
+NSString *const TCLaunchWindowDidTapAdViewNotification = @"TCLaunchWindowDidTapAdViewNotification";
 
 @interface TCLaunchViewController ()
 
@@ -206,8 +207,8 @@ NSString *const TCLaunchWindowDidDisappearNotification = @"TCLaunchWindowDidDisa
 #pragma mark - Actions
 
 - (void)handleTapAdImageView:(UITapGestureRecognizer *)sender {
-    [self removeCountTimer];
-    [self hideAdAnimated];
+//    [self removeCountTimer];
+//    [self hideAdAnimated];
     
     NSLog(@"点击了广告图");
 }

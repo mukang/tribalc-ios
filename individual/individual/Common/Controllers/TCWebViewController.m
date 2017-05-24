@@ -13,7 +13,9 @@
 
 @end
 
-@implementation TCWebViewController
+@implementation TCWebViewController {
+    UIBarButtonItem *_closeItem;
+}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,6 +34,56 @@
     _webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _webView.delegate = self;
     [self.view addSubview:_webView];
+    
+    _closeItem = [[UIBarButtonItem alloc] initWithTitle:@"关闭"
+                                                  style:UIBarButtonItemStylePlain
+                                                 target:self
+                                                 action:@selector(handleClickCloseItem:)];
+    
+    if (_url) {
+        [self loadURL:_url];
+    }
+    
+}
+
+#pragma mark - Private Methods
+
+- (void)loadURL:(NSURL *)url {
+    if (url) {
+        NSURLRequest * request = [NSURLRequest requestWithURL:url];
+        [_webView loadRequest:request];
+    }
+}
+
+#pragma mark - UIWebViewDelegate
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    self.navigationItem.title = @"正在加载...";
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    NSString * title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    self.navigationItem.title = title;
+}
+
+#pragma mark - Actions
+
+- (void)handleClickBackButton:(UIBarButtonItem *)sender {
+    if (self.showControls) {
+        if ([_webView canGoBack]) {
+            [_webView goBack];
+            UIBarButtonItem *backItem = self.navigationItem.leftBarButtonItem;
+            [self.navigationItem setLeftBarButtonItems:@[backItem, _closeItem]];
+        } else {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void)handleClickCloseItem:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
