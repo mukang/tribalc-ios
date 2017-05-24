@@ -280,6 +280,7 @@ TCDatePickerViewDelegate>
 #pragma mark - TCRepairsPhotosViewCellDelegate
 
 - (void)didClickAddButtonInRepairsPhotosViewCell:(TCRepairsPhotosViewCell *)cell {
+    [self.view endEditing:YES];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [weakSelf showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypeCamera];
