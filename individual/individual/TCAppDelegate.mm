@@ -150,20 +150,14 @@
 
 - (void)handlePushNotiWithDic:(NSDictionary *)dic {
     if ([dic isKindOfClass:[NSDictionary class]]) {
-        NSString *str = dic[@"data"];
+        NSString *str = dic[@"router"];
         if ([str isKindOfClass:[NSString class]]) {
-            NSDictionary *parmsDic = [self dictionaryWithJsonStr:str];
-            if ([parmsDic isKindOfClass:[NSDictionary class]]) {
-                NSString *router = parmsDic[@"router"];
-                if ([router isKindOfClass:[NSString class]]) {
-                    if ([router isEqualToString:@"signin"]) {
-                        TCTabBarController *tabVC = (TCTabBarController *)self.window.rootViewController;
-                        TCNavigationController *navVC = tabVC.selectedViewController;
-                        if (navVC) {
-                            [navVC popToRootViewControllerAnimated:NO];
-                            tabVC.selectedIndex = 3;
-                        }
-                    }
+            if ([str hasPrefix:@"signin://"]) {
+                TCTabBarController *tabVC = (TCTabBarController *)self.window.rootViewController;
+                TCNavigationController *navVC = tabVC.selectedViewController;
+                if (navVC) {
+                    [navVC popToRootViewControllerAnimated:NO];
+                    tabVC.selectedIndex = 3;
                 }
             }
         }
