@@ -66,31 +66,28 @@
     [XGPush startApp:2200259391 appKey:@"IWZ2X9187TVW"];
     
     [XGPush isPushOn:^(BOOL isPushOn) {
-        NSLog(@"[XGDemo] Push Is %@", isPushOn ? @"ON" : @"OFF");
     }];
     
     [self registerAPNS];
     
     [XGPush handleLaunching:launchOptions successCallback:^{
-        NSLog(@"[XGDemo] Handle launching success");
         [self handlePushNotiWithDic:launchOptions];
     } errorCallback:^{
-        NSLog(@"[XGDemo] Handle launching error");
     }];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     NSString *deviceTokenStr = [XGPush registerDevice:deviceToken account:@"buluoIndividual" successCallback:^{
-        NSLog(@"[XGDemo] register push success");
+        TCLog(@"[XGDemo] register push success");
     } errorCallback:^{
-        NSLog(@"[XGDemo] register push error");
+        TCLog(@"[XGDemo] register push error");
     }];
-    NSLog(@"[XGDemo] device token is %@", deviceTokenStr);
+    TCLog(@"[XGDemo] device token is %@", deviceTokenStr);
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    NSLog(@"[XGDemo] register APNS fail.\n[XGDemo] reason : %@", error);
+    TCLog(@"[XGDemo] register APNS fail.\n[XGDemo] reason : %@", error);
 }
 
 /**
@@ -100,13 +97,10 @@
  @param userInfo 推送时指定的参数
  */
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"[XGDemo] receive Notification");
     [XGPush handleReceiveNotification:userInfo
                       successCallback:^{
-                          NSLog(@"[XGDemo] Handle receive success");
                           [self handlePushNotiWithDic:userInfo];
                       } errorCallback:^{
-                          NSLog(@"[XGDemo] Handle receive error");
                       }];
 }
 
@@ -119,14 +113,10 @@
  @param completionHandler 完成回调
  */
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    NSLog(@"[XGDemo] receive slient Notification");
-    NSLog(@"[XGDemo] userinfo %@", userInfo);
     [XGPush handleReceiveNotification:userInfo
                       successCallback:^{
-                          NSLog(@"[XGDemo] Handle receive success");
                            [self handlePushNotiWithDic:userInfo];
                       } errorCallback:^{
-                          NSLog(@"[XGDemo] Handle receive error");
                       }];
     
     completionHandler(UIBackgroundFetchResultNewData);
@@ -138,14 +128,11 @@
 // App 用户点击通知的回调
 // 无论本地推送还是远程推送都会走这个回调
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler {
-    NSLog(@"[XGDemo] click notification");
     [XGPush handleReceiveNotification:response.notification.request.content.userInfo
                       successCallback:^{
-                          NSLog(@"[XGDemo] Handle receive success");
                           NSLog(@"%@",response.notification.request.content.userInfo);
                           [self handlePushNotiWithDic:response.notification.request.content.userInfo];
                       } errorCallback:^{
-                          NSLog(@"[XGDemo] Handle receive error");
                       }];
     
     completionHandler();
@@ -238,8 +225,6 @@
 
 - (void)registerPushBefore8{
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-    
-//    [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
 
