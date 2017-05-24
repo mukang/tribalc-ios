@@ -241,7 +241,8 @@
     TCOrder *orderDetail = orderDetailList[section];
     TCMarkStore *markStore = orderDetail.store;
     UIImageView *storeLogoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(TCRealValue(20), headerView.height / 2 - TCRealValue(17) / 2, TCRealValue(17), TCRealValue(17))];
-    NSURL *logoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, markStore.logo]];
+//    NSURL *logoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", TCCLIENT_RESOURCES_BASE_URL, markStore.logo]];
+    NSURL *logoUrl = [TCImageURLSynthesizer synthesizeImageURLWithPath:markStore.logo];
     UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCRealValue(17), TCRealValue(17))];
     [storeLogoImgView sd_setImageWithURL:logoUrl placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
@@ -456,6 +457,8 @@
  创建订单
  */
 - (void)createOrder {
+    [MBProgressHUD showHUD:YES];
+    
     NSMutableArray *itemList = [[NSMutableArray alloc] init];
     for (int i = 0; i< orderDetailList.count; i++) {
         TCOrder *order = orderDetailList[i];
@@ -466,15 +469,14 @@
         }
     }
     NSString *addressId = userAddressView.shippingAddress.ID;
-    [MBProgressHUD showHUD:YES];
+    
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
 //            payView = [[TCBalancePayView alloc] initWithPayPrice:[weakSelf getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
 //            payView.orderArr = orderList;
 //            [payView showPayView];
-            [MBProgressHUD hideHUD:YES];
             [weakSelf handleShowPaymentViewWithOrderList:orderList];
-            
+            [MBProgressHUD hideHUD:YES];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];

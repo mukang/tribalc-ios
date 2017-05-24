@@ -102,7 +102,6 @@ BaofuFuFingerClientDelegate>
 #pragma mark - Public Methods
 
 - (void)show:(BOOL)animated {
-    if (!sourceController) return;
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     UIView *superView = keyWindow.rootViewController.view;
