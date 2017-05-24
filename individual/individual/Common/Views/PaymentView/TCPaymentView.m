@@ -12,6 +12,7 @@
 #import "TCPaymentBankCardView.h"
 #import "TCPaymentMethodView.h"
 
+#import "TCTabBarController.h"
 #import "TCNavigationController.h"
 #import "TCRechargeViewController.h"
 #import "TCWalletPasswordViewController.h"
@@ -104,7 +105,15 @@ BaofuFuFingerClientDelegate>
 - (void)show:(BOOL)animated {
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    UIView *superView = keyWindow.rootViewController.view;
+    TCTabBarController *tabBarVC = (TCTabBarController *)keyWindow.rootViewController;
+    
+    UIView *superView = nil;
+    if (tabBarVC.presentedViewController) {
+        superView = tabBarVC.presentedViewController.view;
+    } else {
+        superView = tabBarVC.view;
+    }
+    
     [superView addSubview:self];
     [superView bringSubviewToFront:self];
     

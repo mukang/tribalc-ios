@@ -98,6 +98,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 - (void)handleClickVicinityButton:(NSNotification *)noti {
     TCVicinityViewController *vicinityVC = [[TCVicinityViewController alloc] init];
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vicinityVC];
+    nav.enableInteractivePopGesture = NO;
     nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:nav animated:YES completion:nil];
 }
