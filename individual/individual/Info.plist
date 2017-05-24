@@ -7,7 +7,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>嗨托邦</string>
 	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.buluo-gs.individual</string>
 	<key>CFBundleInfoDictionaryVersion</key>
