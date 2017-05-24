@@ -2269,6 +2269,29 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+- (void)fetchMainPageList:(void (^)(NSArray *, NSError *))resultBlock {
+    NSString *apiName = @"configs/mainpage";
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    request.token = self.currentUserSession.token;
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            NSArray *dicArray = [response.data objectForKey:@"banner"];
+            NSMutableArray *temp = [NSMutableArray array];
+            for (NSDictionary *dic in dicArray) {
+                TCMainPage *mainPage = [[TCMainPage alloc] initWithObjectDictionary:dic];
+                [temp addObject:mainPage];
+            }
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock([temp copy], nil));
+            }
+        }
+    }];
+}
+
 #pragma mark - 线上活动
 
 - (void)signinDaily:(void (^)(TCSigninRecordDay *, NSError *))resultBlock {

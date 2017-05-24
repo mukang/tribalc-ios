@@ -18,6 +18,7 @@
 #import "TCPropertyManageListController.h"
 #import "TCLoginViewController.h"
 #import "TCRepairsViewController.h"
+#import "TCWebViewController.h"
 
 #import <MBProgressHUD.h>
 #import "TCQRCodeViewController.h"
@@ -27,7 +28,7 @@
 
 #import <TCCommonLibs/UIImage+Category.h>
 
-@interface TCHomeViewController () {
+@interface TCHomeViewController () <TCImagePlayerViewDelegate> {
     NSDictionary *homeInfoDic;
     UIScrollView *titleScrollView;
     UIScrollView *homeScrollView;
@@ -40,6 +41,8 @@
 @property (weak, nonatomic) UINavigationItem *navItem;
 @property (nonatomic) BOOL needsLightContentStatusBar;
 
+@property (copy, nonatomic) NSArray *mainPageList;
+
 @end
 
 @implementation TCHomeViewController
@@ -51,6 +54,7 @@
     
     [self setupNavBar];
     [self forgeData];
+    [self loadNetData];
     
     homeScrollView = [self getHomeScrollViewWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight - self.tabBarController.tabBar.size.height)];
     [self.view insertSubview:homeScrollView belowSubview:self.navBar];
@@ -71,7 +75,49 @@
     
 }
 
+- (void)loadNetData {
+    __weak typeof(self) weakSelf = self;
+    [[TCBuluoApi api] fetchMainPageList:^(NSArray *mainPageList, NSError *error) {
+        if (mainPageList.count) {
+            weakSelf.mainPageList = mainPageList;
+            [weakSelf setImagePlayerWithMainPageList:mainPageList];
+        }
+    }];
+}
 
+- (void)setImagePlayerWithMainPageList:(NSArray *)mainPageList {
+    NSMutableArray *temp = [NSMutableArray array];
+    for (TCMainPage *mainPage in mainPageList) {
+        [temp addObject:mainPage.url];
+    }
+    
+    [_cycleImageView setPictures:[temp copy] isLocal:NO];
+    [_cycleImageView startPlaying];
+}
+
+#pragma mark - TCImagePlayerViewDelegate
+
+- (void)imagePlayerView:(TCImagePlayerView *)view didSelectedImageWithIndex:(NSInteger)index {
+    if (index < self.mainPageList.count) {
+        TCMainPage *mainPage = self.mainPageList[index];
+        if (mainPage.router) {
+            [self pushToWebViewWithUrl:mainPage.router];
+        }
+    }
+}
+
+- (void)didScrollToIndex:(NSInteger)index {
+    
+}
+
+- (void)pushToWebViewWithUrl:(NSString *)url {
+    if ([url hasPrefix:@"http://"]) {
+        TCWebViewController *vc = [[TCWebViewController alloc] init];
+        vc.url = [NSURL URLWithString:url];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
 
 - (UIScrollView *)getHomeScrollViewWithFrame:(CGRect)frame {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:frame];
@@ -93,8 +139,7 @@
 - (void)setupTitleImageScrollViewWithFrame:(CGRect)frame {
     
     TCImagePlayerView *scrollView = [[TCImagePlayerView alloc] initWithFrame:frame];
-    [scrollView setPictures:homeInfoDic[@"pictures"] isLocal:YES];
-    [scrollView startPlaying];
+    scrollView.delegate = self;
     _cycleImageView = scrollView;
 }
 

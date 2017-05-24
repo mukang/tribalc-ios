@@ -269,6 +269,7 @@
 		7AAB1A001ED43CA900EF5F69 /* TCPromotionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB19FF1ED43CA900EF5F69 /* TCPromotionsManager.m */; };
 		7AAB1A031ED447EB00EF5F69 /* TCPromotionsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A021ED447EB00EF5F69 /* TCPromotionsWrapper.m */; };
 		7AAB1A061ED574EF00EF5F69 /* TCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */; };
+		7AAB1A0C1ED5A4EC00EF5F69 /* TCMainPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A0B1ED5A4EC00EF5F69 /* TCMainPage.m */; };
 		7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */; };
 		7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */; };
 		7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23761DCB5853002B81A5 /* TCBuluoApi.m */; };
@@ -847,6 +848,8 @@
 		7AAB1A021ED447EB00EF5F69 /* TCPromotionsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPromotionsWrapper.m; sourceTree = "<group>"; };
 		7AAB1A041ED574EF00EF5F69 /* TCWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWebViewController.h; sourceTree = "<group>"; };
 		7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWebViewController.m; sourceTree = "<group>"; };
+		7AAB1A0A1ED5A4EC00EF5F69 /* TCMainPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMainPage.h; sourceTree = "<group>"; };
+		7AAB1A0B1ED5A4EC00EF5F69 /* TCMainPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMainPage.m; sourceTree = "<group>"; };
 		7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeViewController.h; sourceTree = "<group>"; };
 		7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeViewController.m; sourceTree = "<group>"; };
 		7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCHomeViewController.xib; sourceTree = "<group>"; };
@@ -1699,6 +1702,8 @@
 				7A22D93C1ECEF336009A6A64 /* TCAppInitializationInfo.m */,
 				7AAB1A011ED447EB00EF5F69 /* TCPromotionsWrapper.h */,
 				7AAB1A021ED447EB00EF5F69 /* TCPromotionsWrapper.m */,
+				7AAB1A0A1ED5A4EC00EF5F69 /* TCMainPage.h */,
+				7AAB1A0B1ED5A4EC00EF5F69 /* TCMainPage.m */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -2772,6 +2777,7 @@
 				7A2D2A921E1CF9820067D591 /* TCPaymentDetailView.m in Sources */,
 				7A22D9341ECEF0A1009A6A64 /* TCAppConfigs.m in Sources */,
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
+				7AAB1A0C1ED5A4EC00EF5F69 /* TCMainPage.m in Sources */,
 				7A22D9411ECEF9CF009A6A64 /* TCSigninRecordDay.m in Sources */,
 				7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */,
 				0929D2911E0A25820099B1BD /* TCGoodSelectTitleView.m in Sources */,

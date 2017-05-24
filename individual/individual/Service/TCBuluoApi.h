@@ -671,6 +671,13 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
  */
 - (void)fetchAppInitializationInfo:(void(^)(TCAppInitializationInfo *info, NSError *error))resultBlock;
 
+/**
+ 获取首页轮播图
+
+ @param resultBlock 结果回调
+ */
+- (void)fetchMainPageList:(void(^)(NSArray *mainPageList, NSError *error))resultBlock;
+
 #pragma mark - 线上活动
 
 /**

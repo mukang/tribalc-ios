@@ -89,6 +89,7 @@
 #import "TCPromotions.h"
 #import "TCFeatureSwitches.h"
 #import "TCAppInitializationInfo.h"
+#import "TCMainPage.h"
 
 /*********** 线上活动相关 ***********/
 #import "TCSigninRecordDay.h"
