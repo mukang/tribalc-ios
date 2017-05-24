@@ -24,6 +24,8 @@
 @end
 #endif
 
+#import "TCBuluoApi.h"
+
 @interface TCAppDelegate ()<CLLocationManagerDelegate>
 
 @end
@@ -36,17 +38,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    
     TCTabBarController *tabBarController = [[TCTabBarController alloc] init];
     self.window.rootViewController = tabBarController;
-    
-    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
     [self showLaunchWindow];
     application.statusBarHidden = NO;
+    
+    [[TCBuluoApi api] prepareForWorking:^(NSError *error) {
+        
+    }];
     
     // wechat
     [WXApi registerApp:kWXAppID];
@@ -284,7 +287,7 @@
     TCLaunchViewController *launchViewController = [[TCLaunchViewController alloc] init];
     self.launchWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.launchWindow.rootViewController = launchViewController;
-    self.launchWindow.windowLevel = UIWindowLevelNormal;
+    self.launchWindow.windowLevel = UIWindowLevelAlert;
     self.launchWindow.hidden = NO;
     launchViewController.launchWindow = self.launchWindow;
 }

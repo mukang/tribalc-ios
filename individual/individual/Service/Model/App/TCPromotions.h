@@ -22,4 +22,9 @@
 /** 自动跳过秒数 */
 @property (nonatomic) NSInteger skipSeconds;
 
+/** 推广开始时间 */
+@property (nonatomic) long long startTime;
+/** 推广结束时间 */
+@property (nonatomic) long long endTime;
+
 @end

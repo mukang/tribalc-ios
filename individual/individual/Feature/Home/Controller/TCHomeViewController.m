@@ -590,10 +590,7 @@
 
 - (void)forgeData {
     homeInfoDic = @{
-                    @"pictures":@[ @"home_Carousel",
-                                   @"home_Carousel",
-                                   @"home_Carousel",
-                                   @"home_Carousel",
+                    @"pictures":@[ @"home_promotion",
                                    @"home_Carousel"],
                     @"activity":@[  ],
                     @"shopping":@{
@@ -602,7 +599,7 @@
                             @"leftInfo":@{
                                     @"title":@"今日特惠",
                                     @"price":@"",
-                                    @"picture":@"home_shopping_left"
+                                    @"picture":@"home_ preference"
                                     },
                             @"rightTop":@{
                                     @"title":@"今日特惠",
