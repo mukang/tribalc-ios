@@ -58,6 +58,23 @@
 		550FB7411ED2F54E00D75E33 /* ReleaseNotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */; };
 		550FB7431ED2F5BB00D75E33 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */; };
 		550FB7451ED2F5E300D75E33 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB7441ED2F5E300D75E33 /* SystemConfiguration.framework */; };
+		550FB76D1ED5C18600D75E33 /* FSCalendar+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB74C1ED5C18600D75E33 /* FSCalendar+Deprecated.m */; };
+		550FB76E1ED5C18600D75E33 /* FSCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB74E1ED5C18600D75E33 /* FSCalendar.m */; };
+		550FB76F1ED5C18600D75E33 /* FSCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7501ED5C18600D75E33 /* FSCalendarAppearance.m */; };
+		550FB7701ED5C18600D75E33 /* FSCalendarCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7521ED5C18600D75E33 /* FSCalendarCalculator.m */; };
+		550FB7711ED5C18600D75E33 /* FSCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7541ED5C18600D75E33 /* FSCalendarCell.m */; };
+		550FB7721ED5C18600D75E33 /* FSCalendarCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7561ED5C18600D75E33 /* FSCalendarCollectionView.m */; };
+		550FB7731ED5C18600D75E33 /* FSCalendarCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7581ED5C18600D75E33 /* FSCalendarCollectionViewLayout.m */; };
+		550FB7741ED5C18600D75E33 /* FSCalendarConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB75A1ED5C18600D75E33 /* FSCalendarConstants.m */; };
+		550FB7751ED5C18700D75E33 /* FSCalendarDelegationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB75C1ED5C18600D75E33 /* FSCalendarDelegationFactory.m */; };
+		550FB7761ED5C18700D75E33 /* FSCalendarDelegationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB75E1ED5C18600D75E33 /* FSCalendarDelegationProxy.m */; };
+		550FB7771ED5C18700D75E33 /* FSCalendarExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7611ED5C18600D75E33 /* FSCalendarExtensions.m */; };
+		550FB7781ED5C18700D75E33 /* FSCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7631ED5C18600D75E33 /* FSCalendarHeaderView.m */; };
+		550FB7791ED5C18700D75E33 /* FSCalendarScopeHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7651ED5C18600D75E33 /* FSCalendarScopeHandle.m */; };
+		550FB77A1ED5C18700D75E33 /* FSCalendarStickyHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7671ED5C18600D75E33 /* FSCalendarStickyHeader.m */; };
+		550FB77B1ED5C18700D75E33 /* FSCalendarTransitionCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB7691ED5C18600D75E33 /* FSCalendarTransitionCoordinator.m */; };
+		550FB77C1ED5C18700D75E33 /* FSCalendarWeekdayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB76B1ED5C18600D75E33 /* FSCalendarWeekdayView.m */; };
+		550FB77D1ED5C18700D75E33 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 550FB76C1ED5C18600D75E33 /* Info.plist */; };
 		5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */; };
 		552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */; };
 		552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */; };
@@ -484,6 +501,39 @@
 		550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		550FB7441ED2F5E300D75E33 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		550FB7461ED2F60E00D75E33 /* individual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = individual.entitlements; sourceTree = "<group>"; };
+		550FB74C1ED5C18600D75E33 /* FSCalendar+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FSCalendar+Deprecated.m"; sourceTree = "<group>"; };
+		550FB74D1ED5C18600D75E33 /* FSCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendar.h; sourceTree = "<group>"; };
+		550FB74E1ED5C18600D75E33 /* FSCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendar.m; sourceTree = "<group>"; };
+		550FB74F1ED5C18600D75E33 /* FSCalendarAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarAppearance.h; sourceTree = "<group>"; };
+		550FB7501ED5C18600D75E33 /* FSCalendarAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarAppearance.m; sourceTree = "<group>"; };
+		550FB7511ED5C18600D75E33 /* FSCalendarCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCalculator.h; sourceTree = "<group>"; };
+		550FB7521ED5C18600D75E33 /* FSCalendarCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarCalculator.m; sourceTree = "<group>"; };
+		550FB7531ED5C18600D75E33 /* FSCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCell.h; sourceTree = "<group>"; };
+		550FB7541ED5C18600D75E33 /* FSCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarCell.m; sourceTree = "<group>"; };
+		550FB7551ED5C18600D75E33 /* FSCalendarCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionView.h; sourceTree = "<group>"; };
+		550FB7561ED5C18600D75E33 /* FSCalendarCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarCollectionView.m; sourceTree = "<group>"; };
+		550FB7571ED5C18600D75E33 /* FSCalendarCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarCollectionViewLayout.h; sourceTree = "<group>"; };
+		550FB7581ED5C18600D75E33 /* FSCalendarCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarCollectionViewLayout.m; sourceTree = "<group>"; };
+		550FB7591ED5C18600D75E33 /* FSCalendarConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarConstants.h; sourceTree = "<group>"; };
+		550FB75A1ED5C18600D75E33 /* FSCalendarConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarConstants.m; sourceTree = "<group>"; };
+		550FB75B1ED5C18600D75E33 /* FSCalendarDelegationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarDelegationFactory.h; sourceTree = "<group>"; };
+		550FB75C1ED5C18600D75E33 /* FSCalendarDelegationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarDelegationFactory.m; sourceTree = "<group>"; };
+		550FB75D1ED5C18600D75E33 /* FSCalendarDelegationProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarDelegationProxy.h; sourceTree = "<group>"; };
+		550FB75E1ED5C18600D75E33 /* FSCalendarDelegationProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarDelegationProxy.m; sourceTree = "<group>"; };
+		550FB75F1ED5C18600D75E33 /* FSCalendarDynamicHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarDynamicHeader.h; sourceTree = "<group>"; };
+		550FB7601ED5C18600D75E33 /* FSCalendarExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarExtensions.h; sourceTree = "<group>"; };
+		550FB7611ED5C18600D75E33 /* FSCalendarExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarExtensions.m; sourceTree = "<group>"; };
+		550FB7621ED5C18600D75E33 /* FSCalendarHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarHeaderView.h; sourceTree = "<group>"; };
+		550FB7631ED5C18600D75E33 /* FSCalendarHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarHeaderView.m; sourceTree = "<group>"; };
+		550FB7641ED5C18600D75E33 /* FSCalendarScopeHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarScopeHandle.h; sourceTree = "<group>"; };
+		550FB7651ED5C18600D75E33 /* FSCalendarScopeHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarScopeHandle.m; sourceTree = "<group>"; };
+		550FB7661ED5C18600D75E33 /* FSCalendarStickyHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarStickyHeader.h; sourceTree = "<group>"; };
+		550FB7671ED5C18600D75E33 /* FSCalendarStickyHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarStickyHeader.m; sourceTree = "<group>"; };
+		550FB7681ED5C18600D75E33 /* FSCalendarTransitionCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarTransitionCoordinator.h; sourceTree = "<group>"; };
+		550FB7691ED5C18600D75E33 /* FSCalendarTransitionCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarTransitionCoordinator.m; sourceTree = "<group>"; };
+		550FB76A1ED5C18600D75E33 /* FSCalendarWeekdayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarWeekdayView.h; sourceTree = "<group>"; };
+		550FB76B1ED5C18600D75E33 /* FSCalendarWeekdayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarWeekdayView.m; sourceTree = "<group>"; };
+		550FB76C1ED5C18600D75E33 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		551306581E714008004DF32F /* TCLocksAndVisitorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLocksAndVisitorsViewController.h; sourceTree = "<group>"; };
 		551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLocksAndVisitorsViewController.m; sourceTree = "<group>"; };
 		552D6C201E94D6BF00CA4EA3 /* TCMyLockQRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMyLockQRCodeController.h; sourceTree = "<group>"; };
@@ -1398,6 +1448,46 @@
 			path = XGPush;
 			sourceTree = "<group>";
 		};
+		550FB74B1ED5C18600D75E33 /* FSCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				550FB74C1ED5C18600D75E33 /* FSCalendar+Deprecated.m */,
+				550FB74D1ED5C18600D75E33 /* FSCalendar.h */,
+				550FB74E1ED5C18600D75E33 /* FSCalendar.m */,
+				550FB74F1ED5C18600D75E33 /* FSCalendarAppearance.h */,
+				550FB7501ED5C18600D75E33 /* FSCalendarAppearance.m */,
+				550FB7511ED5C18600D75E33 /* FSCalendarCalculator.h */,
+				550FB7521ED5C18600D75E33 /* FSCalendarCalculator.m */,
+				550FB7531ED5C18600D75E33 /* FSCalendarCell.h */,
+				550FB7541ED5C18600D75E33 /* FSCalendarCell.m */,
+				550FB7551ED5C18600D75E33 /* FSCalendarCollectionView.h */,
+				550FB7561ED5C18600D75E33 /* FSCalendarCollectionView.m */,
+				550FB7571ED5C18600D75E33 /* FSCalendarCollectionViewLayout.h */,
+				550FB7581ED5C18600D75E33 /* FSCalendarCollectionViewLayout.m */,
+				550FB7591ED5C18600D75E33 /* FSCalendarConstants.h */,
+				550FB75A1ED5C18600D75E33 /* FSCalendarConstants.m */,
+				550FB75B1ED5C18600D75E33 /* FSCalendarDelegationFactory.h */,
+				550FB75C1ED5C18600D75E33 /* FSCalendarDelegationFactory.m */,
+				550FB75D1ED5C18600D75E33 /* FSCalendarDelegationProxy.h */,
+				550FB75E1ED5C18600D75E33 /* FSCalendarDelegationProxy.m */,
+				550FB75F1ED5C18600D75E33 /* FSCalendarDynamicHeader.h */,
+				550FB7601ED5C18600D75E33 /* FSCalendarExtensions.h */,
+				550FB7611ED5C18600D75E33 /* FSCalendarExtensions.m */,
+				550FB7621ED5C18600D75E33 /* FSCalendarHeaderView.h */,
+				550FB7631ED5C18600D75E33 /* FSCalendarHeaderView.m */,
+				550FB7641ED5C18600D75E33 /* FSCalendarScopeHandle.h */,
+				550FB7651ED5C18600D75E33 /* FSCalendarScopeHandle.m */,
+				550FB7661ED5C18600D75E33 /* FSCalendarStickyHeader.h */,
+				550FB7671ED5C18600D75E33 /* FSCalendarStickyHeader.m */,
+				550FB7681ED5C18600D75E33 /* FSCalendarTransitionCoordinator.h */,
+				550FB7691ED5C18600D75E33 /* FSCalendarTransitionCoordinator.m */,
+				550FB76A1ED5C18600D75E33 /* FSCalendarWeekdayView.h */,
+				550FB76B1ED5C18600D75E33 /* FSCalendarWeekdayView.m */,
+				550FB76C1ED5C18600D75E33 /* Info.plist */,
+			);
+			path = FSCalendar;
+			sourceTree = "<group>";
+		};
 		551306571E713FA0004DF32F /* OpenDoor */ = {
 			isa = PBXGroup;
 			children = (
@@ -2085,6 +2175,7 @@
 		7A9CCF0A1DB627A5003D90C6 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				550FB74B1ED5C18600D75E33 /* FSCalendar */,
 				550FB73B1ED2F54100D75E33 /* XGPush */,
 				7AB03EFA1EC0759100DFB037 /* BaoFu */,
 				7A64EA751E14EC33008D0C12 /* Wechat */,
@@ -2578,6 +2669,7 @@
 				7AC346D01E01432000E28EC9 /* TCWalletViewController.xib in Resources */,
 				7AC2922B1DC8BEB300B2C7E8 /* citylist.data in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
+				550FB77D1ED5C18700D75E33 /* Info.plist in Resources */,
 				7AEB4CCD1E03936300F83A7C /* TCShippingAddressViewController.xib in Resources */,
 				7A7E94241DF5723A006A47CE /* TCRepairsCommitViewCell.xib in Resources */,
 				550FB7411ED2F54E00D75E33 /* ReleaseNotes.txt in Resources */,
@@ -2714,6 +2806,7 @@
 				7AB111D41E151CD3002B7259 /* TCRechargeMethodsView.m in Sources */,
 				7A8352871E5C3DEB003A8E76 /* TCServiceFacilityView.m in Sources */,
 				7A1A85561E66D64700BB5EDB /* TCServiceTabItemView.m in Sources */,
+				550FB76D1ED5C18600D75E33 /* FSCalendar+Deprecated.m in Sources */,
 				7A1A85541E66D64700BB5EDB /* TCServiceSortView.m in Sources */,
 				55F06F1D1E07EA2100A849D7 /* TCScannerMaskView.m in Sources */,
 				09222E7C1DEEC0D60064C0DF /* TCOrder.m in Sources */,
@@ -2724,6 +2817,7 @@
 				7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */,
 				7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */,
 				092C69801DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m in Sources */,
+				550FB7781ED5C18700D75E33 /* FSCalendarHeaderView.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
 				7A22D93A1ECEF11B009A6A64 /* TCFeatureSwitches.m in Sources */,
 				7A48A6AA1E5A93AF006CAB62 /* TCServiceHeaderView.m in Sources */,
@@ -2738,6 +2832,8 @@
 				7A8352E61E5EE3A6003A8E76 /* TCServiceAnnotation.m in Sources */,
 				7A14FC581DF6C09800DF3DDA /* TCRepairsPhotoViewCell.m in Sources */,
 				7AEB4CEF1E03944500F83A7C /* TCBiographyViewCell.m in Sources */,
+				550FB7791ED5C18700D75E33 /* FSCalendarScopeHandle.m in Sources */,
+				550FB77C1ED5C18700D75E33 /* FSCalendarWeekdayView.m in Sources */,
 				7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */,
 				7A13EEAD1DF8140A00377869 /* TCCompanyApplyDetailViewController.m in Sources */,
 				0928B3381DF921AC0085A182 /* TCShoppingCartWrapper.m in Sources */,
@@ -2748,6 +2844,7 @@
 				7A1A85521E66D64700BB5EDB /* TCServiceFilterView.m in Sources */,
 				7A8352811E5C249C003A8E76 /* TCServiceRecommendViewCell.m in Sources */,
 				09222E321DEE99860064C0DF /* TCReserveOnlineViewController.m in Sources */,
+				550FB7771ED5C18700D75E33 /* FSCalendarExtensions.m in Sources */,
 				7AC347001E01454100E28EC9 /* TCBankCardAddViewController.m in Sources */,
 				7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */,
 				092626861E0BAD1100F5A18C /* TCShoppingCartListTableViewCell.m in Sources */,
@@ -2761,6 +2858,7 @@
 				093048BC1DE57E56000FDCBF /* TCGoodDetail.m in Sources */,
 				7AFEC4991E55CF6800B0E754 /* TCUserOrderTableViewCell.m in Sources */,
 				09222E0E1DEE72550064C0DF /* TCServiceDetail.m in Sources */,
+				550FB7741ED5C18600D75E33 /* FSCalendarConstants.m in Sources */,
 				092559121DED791600EFA4FB /* TCListStore.m in Sources */,
 				7A1580311DD1DE8200B8F768 /* TCPhotoPicker.m in Sources */,
 				7A58C5F21E120F0300C55A2C /* TCIDAuthDetailViewCell.m in Sources */,
@@ -2772,6 +2870,7 @@
 				7A8352EA1E5EE3C4003A8E76 /* TCServiceMapViewController.m in Sources */,
 				7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */,
 				5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */,
+				550FB76F1ED5C18600D75E33 /* FSCalendarAppearance.m in Sources */,
 				7A64EA831E150D23008D0C12 /* TCRechargeInputView.m in Sources */,
 				7AC346F61E0144F300E28EC9 /* TCBankCardViewCell.m in Sources */,
 				7A2D2A921E1CF9820067D591 /* TCPaymentDetailView.m in Sources */,
@@ -2805,6 +2904,7 @@
 				7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */,
 				7A0EA7341E00F0F700823505 /* TCCommunityListInCity.m in Sources */,
 				7AFEC47F1E54056D00B0E754 /* TCGoodsOrderHeaderView.m in Sources */,
+				550FB7701ED5C18600D75E33 /* FSCalendarCalculator.m in Sources */,
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
 				7AB03F261EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m in Sources */,
@@ -2837,6 +2937,7 @@
 				7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */,
 				0929D2981E0A262A0099B1BD /* TCSelectButton.m in Sources */,
 				55BB9EB31E728C7200B0FD94 /* TCVisitorLocksCell.m in Sources */,
+				550FB76E1ED5C18600D75E33 /* FSCalendar.m in Sources */,
 				7A16665E1DFAC213007B5733 /* TCCompanyTitleViewCell.m in Sources */,
 				0928B3351DF8F7090085A182 /* TCReservationDetail.m in Sources */,
 				092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */,
@@ -2855,7 +2956,9 @@
 				0929D2941E0A25820099B1BD /* TCSelectPrimaryBtn.m in Sources */,
 				7A1A85531E66D64700BB5EDB /* TCServiceSelectItemView.m in Sources */,
 				7A13EEB71DF814BD00377869 /* TCCompanyListViewController.m in Sources */,
+				550FB77B1ED5C18700D75E33 /* FSCalendarTransitionCoordinator.m in Sources */,
 				7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */,
+				550FB77A1ED5C18700D75E33 /* FSCalendarStickyHeader.m in Sources */,
 				092626831E0BA44000F5A18C /* TCShoppingCartSelectButton.m in Sources */,
 				09222E111DEE732D0064C0DF /* TCDetailStore.m in Sources */,
 				7AEB4CCA1E03936300F83A7C /* TCShippingAddressEditViewController.m in Sources */,
@@ -2865,6 +2968,7 @@
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,
 				7AFEC48D1E54729100B0E754 /* TCGoodsOrderStoreViewCell.m in Sources */,
 				7A7E94001DF51712006A47CE /* TCToolsViewController.m in Sources */,
+				550FB7711ED5C18600D75E33 /* FSCalendarCell.m in Sources */,
 				7A1A85551E66D64700BB5EDB /* TCServiceTabBar.m in Sources */,
 				7A74674F1DF947EF00ACD815 /* TCCompanyInfo.m in Sources */,
 				7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */,
@@ -2895,6 +2999,7 @@
 				7AFEC47E1E54056D00B0E754 /* TCGoodsOrderGoodsViewCell.m in Sources */,
 				7AEB4CC51E03936300F83A7C /* TCBioEditSMSViewController.m in Sources */,
 				7AC3470C1E01717C00E28EC9 /* TCSettingNotificationViewCell.m in Sources */,
+				550FB7721ED5C18600D75E33 /* FSCalendarCollectionView.m in Sources */,
 				7AEB4D021E03E83800F83A7C /* TCBioEditEmotionViewController.m in Sources */,
 				7A2F5C2C1E71536E00174EB1 /* TCLockQRCodeViewController.m in Sources */,
 				7AC346D91E01433E00E28EC9 /* TCWalletBillDetailViewController.m in Sources */,
@@ -2914,6 +3019,7 @@
 				0990F19A1E07CA11002692F6 /* TCGoodShopView.m in Sources */,
 				7AEB4CF31E03944500F83A7C /* TCShippingAddressEditViewCell.m in Sources */,
 				7AEB4CC91E03936300F83A7C /* TCBiographyViewController.m in Sources */,
+				550FB7761ED5C18700D75E33 /* FSCalendarDelegationProxy.m in Sources */,
 				7A8352E71E5EE3A6003A8E76 /* TCServiceAnnotationView.m in Sources */,
 				7AFEC4961E555D2E00B0E754 /* TCGoodsOrderStatusViewCell.m in Sources */,
 				7AC347021E01454100E28EC9 /* TCBankCardViewController.m in Sources */,
@@ -2921,6 +3027,7 @@
 				7A720AC21E13BC9A00567216 /* TCUserAgreementViewController.m in Sources */,
 				7AEB4CC21E03936300F83A7C /* TCBioEditNickViewController.m in Sources */,
 				7ACA4FE31DD5B8C2006634E8 /* TCUserPhoneInfo.m in Sources */,
+				550FB7731ED5C18600D75E33 /* FSCalendarCollectionViewLayout.m in Sources */,
 				55BB9EBA1E72AF5400B0FD94 /* TCLockEquip.m in Sources */,
 				7A455D5E1EBC912400A2F9ED /* TCWithdrawViewController.m in Sources */,
 				7AFEC4801E54056D00B0E754 /* TCGoodsOrderNoteViewCell.m in Sources */,
@@ -2932,6 +3039,7 @@
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,
 				7A2F7C751E768C4E007B831D /* TCAddVisitorDeviceViewCell.m in Sources */,
 				552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */,
+				550FB7751ED5C18700D75E33 /* FSCalendarDelegationFactory.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
 				7A1A85471E66D61000BB5EDB /* TCServiceListViewController.m in Sources */,
 				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,

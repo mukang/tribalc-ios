@@ -7,7 +7,7 @@
 //
 
 #import "TCSignInHistoryViewController.h"
-#import <FSCalendar/FSCalendar.h>
+#import "FSCalendar.h"
 #import "TCBuluoApi.h"
 #import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import <UIImageView+WebCache.h>
@@ -133,6 +133,10 @@
 }
 
 #pragma mark FSCalendarDelegateAppearance
+
+- (CGPoint)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleOffsetForDate:(NSDate *)date {
+    return CGPointMake(0, 2);
+}
 
 - (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(NSDate *)date {
     

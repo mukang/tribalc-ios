@@ -25,7 +25,6 @@ PODS:
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
   - FLEX (2.4.0)
-  - FSCalendar (2.7.7)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - MGSwipeTableCell (1.5.6)
@@ -70,7 +69,6 @@ DEPENDENCIES:
   - AMapSearch-NO-IDFA
   - EAIntroView (~> 2.10.0)
   - FLEX (~> 2.0)
-  - FSCalendar
   - MBProgressHUD
   - MGSwipeTableCell (~> 1.5.6)
   - pop (~> 1.0.7)
@@ -87,7 +85,6 @@ SPEC CHECKSUMS:
   EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
-  FSCalendar: 8bda3534e8590b87124af9a236887314e0359a27
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MGSwipeTableCell: 616700eb0ffd1c611ba909066cb7fd739790a0a7
@@ -98,6 +95,6 @@ SPEC CHECKSUMS:
   UITableView+FDTemplateLayoutCell: 5c949b4a5059c404b442926c0e80f81d10a2d66f
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: a455c15e4cae605b41824b1ccfccb69c7d02e011
+PODFILE CHECKSUM: 682a0215ae964102c9b9562095c95121f6453fea
 
 COCOAPODS: 1.2.1
