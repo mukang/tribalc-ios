@@ -94,6 +94,9 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(fetchAppVersionInfo)
                                                  name:TCLaunchWindowDidDisappearNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(forceUpdate)
+                                                 name:TCClientNeedForceUpdateNotification object:nil];
 }
 
 - (void)removeNotifications {

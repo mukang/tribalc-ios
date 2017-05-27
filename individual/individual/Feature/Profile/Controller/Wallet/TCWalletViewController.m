@@ -16,6 +16,7 @@
 #import "TCWithdrawViewController.h"
 
 #import "TCBuluoApi.h"
+#import "TCUserDefaultsKeys.h"
 
 @interface TCWalletViewController ()
 
@@ -95,6 +96,11 @@
 #pragma mark - Actions
 
 - (IBAction)handleClickRechargeButton:(UIButton *)sender {
+    NSNumber *recharge = [[NSUserDefaults standardUserDefaults] objectForKey:TCUserDefaultsKeySwitchBfRecharge];
+    if ([recharge boolValue] == NO) {
+        [self btnClickUnifyTips];
+        return;
+    }
     if (!self.walletAccount) {
         [MBProgressHUD showHUDWithMessage:@"暂时无法充值"];
         return;
@@ -109,9 +115,13 @@
 }
 
 - (IBAction)handleClickWithdrawButton:(UIButton *)sender {
-    [self btnClickUnifyTips];
+    NSNumber *withdraw = [[NSUserDefaults standardUserDefaults] objectForKey:TCUserDefaultsKeySwitchBfWithdraw];
+    if ([withdraw boolValue] == NO) {
+        [self btnClickUnifyTips];
+        return;
+    }
     
-    /*
+    
     if (!self.walletAccount.bankCards.count) {
         [MBProgressHUD showHUDWithMessage:@"绑定银行卡后才能提现"];
         return;
@@ -129,7 +139,6 @@
 //        [weakSelf fetchNetData];
     };
     [self.navigationController pushViewController:vc animated:YES];
-     */
 }
 
 - (IBAction)handleClickBankCardButton:(UIButton *)sender {

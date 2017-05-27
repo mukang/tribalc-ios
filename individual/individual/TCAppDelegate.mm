@@ -288,6 +288,13 @@
         if (info.promotions) {
             [[TCPromotionsManager sharedManager] storePromotionsAndLoadImageWithPromotions:info.promotions];
         }
+        if (info.switches) {
+            BOOL recharge = YES, withdraw = YES;
+            recharge = info.switches.bf_recharge;
+            withdraw = info.switches.bf_withdraw;
+            [[NSUserDefaults standardUserDefaults] setObject:@(recharge) forKey:TCUserDefaultsKeySwitchBfRecharge];
+            [[NSUserDefaults standardUserDefaults] setObject:@(withdraw) forKey:TCUserDefaultsKeySwitchBfWithdraw];
+        }
     }];
 }
 
