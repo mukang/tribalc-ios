@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class TCAppConfigs;
+@class TCAppVersion;
 @class TCPromotions;
 @class TCFeatureSwitches;
 
@@ -17,7 +17,7 @@
 @interface TCAppInitializationInfo : NSObject
 
 /** 应用配置信息 */
-@property (strong, nonatomic) TCAppConfigs *app;
+@property (strong, nonatomic) TCAppVersion *app;
 /** 推广信息 */
 @property (strong, nonatomic) TCPromotions *promotions;
 /** 功能开关 */

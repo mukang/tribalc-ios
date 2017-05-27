@@ -172,7 +172,6 @@
 		7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A21E43D1DD02DEA00EF7427 /* TCProfileProcessViewCell.m */; };
 		7A21E4401DD02DEA00EF7427 /* TCProfileProcessViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */; };
 		7A22D9151ECD94A4009A6A64 /* TCLockEquipViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A22D9141ECD94A4009A6A64 /* TCLockEquipViewCell.m */; };
-		7A22D9341ECEF0A1009A6A64 /* TCAppConfigs.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A22D9331ECEF0A1009A6A64 /* TCAppConfigs.m */; };
 		7A22D9371ECEF0FA009A6A64 /* TCPromotions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A22D9361ECEF0FA009A6A64 /* TCPromotions.m */; };
 		7A22D93A1ECEF11B009A6A64 /* TCFeatureSwitches.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A22D9391ECEF11B009A6A64 /* TCFeatureSwitches.m */; };
 		7A22D93D1ECEF336009A6A64 /* TCAppInitializationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A22D93C1ECEF336009A6A64 /* TCAppInitializationInfo.m */; };
@@ -287,6 +286,7 @@
 		7AAB1A031ED447EB00EF5F69 /* TCPromotionsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A021ED447EB00EF5F69 /* TCPromotionsWrapper.m */; };
 		7AAB1A061ED574EF00EF5F69 /* TCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */; };
 		7AAB1A0C1ED5A4EC00EF5F69 /* TCMainPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A0B1ED5A4EC00EF5F69 /* TCMainPage.m */; };
+		7AAB1A101ED95E7E00EF5F69 /* TCAppVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A0F1ED95E7E00EF5F69 /* TCAppVersion.m */; };
 		7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */; };
 		7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */; };
 		7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23761DCB5853002B81A5 /* TCBuluoApi.m */; };
@@ -693,8 +693,6 @@
 		7A21E43E1DD02DEA00EF7427 /* TCProfileProcessViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCProfileProcessViewCell.xib; sourceTree = "<group>"; };
 		7A22D9131ECD94A4009A6A64 /* TCLockEquipViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockEquipViewCell.h; sourceTree = "<group>"; };
 		7A22D9141ECD94A4009A6A64 /* TCLockEquipViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockEquipViewCell.m; sourceTree = "<group>"; };
-		7A22D9321ECEF0A1009A6A64 /* TCAppConfigs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAppConfigs.h; sourceTree = "<group>"; };
-		7A22D9331ECEF0A1009A6A64 /* TCAppConfigs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAppConfigs.m; sourceTree = "<group>"; };
 		7A22D9351ECEF0FA009A6A64 /* TCPromotions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPromotions.h; sourceTree = "<group>"; };
 		7A22D9361ECEF0FA009A6A64 /* TCPromotions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPromotions.m; sourceTree = "<group>"; };
 		7A22D9381ECEF11B009A6A64 /* TCFeatureSwitches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCFeatureSwitches.h; sourceTree = "<group>"; };
@@ -900,6 +898,9 @@
 		7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWebViewController.m; sourceTree = "<group>"; };
 		7AAB1A0A1ED5A4EC00EF5F69 /* TCMainPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMainPage.h; sourceTree = "<group>"; };
 		7AAB1A0B1ED5A4EC00EF5F69 /* TCMainPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMainPage.m; sourceTree = "<group>"; };
+		7AAB1A0D1ED8142800EF5F69 /* TCUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserDefaultsKeys.h; sourceTree = "<group>"; };
+		7AAB1A0E1ED95E7E00EF5F69 /* TCAppVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAppVersion.h; sourceTree = "<group>"; };
+		7AAB1A0F1ED95E7E00EF5F69 /* TCAppVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAppVersion.m; sourceTree = "<group>"; };
 		7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeViewController.h; sourceTree = "<group>"; };
 		7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeViewController.m; sourceTree = "<group>"; };
 		7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCHomeViewController.xib; sourceTree = "<group>"; };
@@ -1782,8 +1783,8 @@
 		7A22D9311ECEF077009A6A64 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				7A22D9321ECEF0A1009A6A64 /* TCAppConfigs.h */,
-				7A22D9331ECEF0A1009A6A64 /* TCAppConfigs.m */,
+				7AAB1A0E1ED95E7E00EF5F69 /* TCAppVersion.h */,
+				7AAB1A0F1ED95E7E00EF5F69 /* TCAppVersion.m */,
 				7A22D9351ECEF0FA009A6A64 /* TCPromotions.h */,
 				7A22D9361ECEF0FA009A6A64 /* TCPromotions.m */,
 				7A22D9381ECEF11B009A6A64 /* TCFeatureSwitches.h */,
@@ -2193,6 +2194,7 @@
 				55F06F1F1E07EC6500A849D7 /* TCScanner.m */,
 				7AAB19FE1ED43CA900EF5F69 /* TCPromotionsManager.h */,
 				7AAB19FF1ED43CA900EF5F69 /* TCPromotionsManager.m */,
+				7AAB1A0D1ED8142800EF5F69 /* TCUserDefaultsKeys.h */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -2826,6 +2828,7 @@
 				09222E7F1DEEC2C70064C0DF /* TCOrderItem.m in Sources */,
 				55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */,
 				7A2D2A941E1CF9820067D591 /* TCPaymentMethodView.m in Sources */,
+				7AAB1A101ED95E7E00EF5F69 /* TCAppVersion.m in Sources */,
 				7AFEC47C1E54056D00B0E754 /* TCGoodsOrderAddressViewCell.m in Sources */,
 				55F06F0C1E078C2900A849D7 /* TCPaymentViewController.m in Sources */,
 				7AEB4CED1E03944400F83A7C /* TCBiographyAvatarViewCell.m in Sources */,
@@ -2874,7 +2877,6 @@
 				7A64EA831E150D23008D0C12 /* TCRechargeInputView.m in Sources */,
 				7AC346F61E0144F300E28EC9 /* TCBankCardViewCell.m in Sources */,
 				7A2D2A921E1CF9820067D591 /* TCPaymentDetailView.m in Sources */,
-				7A22D9341ECEF0A1009A6A64 /* TCAppConfigs.m in Sources */,
 				091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */,
 				7AAB1A0C1ED5A4EC00EF5F69 /* TCMainPage.m in Sources */,
 				7A22D9411ECEF9CF009A6A64 /* TCSigninRecordDay.m in Sources */,

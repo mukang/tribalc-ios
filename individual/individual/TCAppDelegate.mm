@@ -17,14 +17,18 @@
 #import "XGSetting.h"
 #import "XGPush.h"
 
+#import "TCBuluoApi.h"
+#import "TCPromotionsManager.h"
+
+#import "TCUserDefaultsKeys.h"
+#import <TCCommonLibs/TCFunctions.h>
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
 #import <UserNotifications/UserNotifications.h>
 @interface TCAppDelegate() <UNUserNotificationCenterDelegate>
 @end
 #endif
-
-#import "TCBuluoApi.h"
 
 @interface TCAppDelegate ()<CLLocationManagerDelegate>
 
@@ -47,9 +51,8 @@
     [self showLaunchWindow];
     application.statusBarHidden = NO;
     
-    [[TCBuluoApi api] prepareForWorking:^(NSError *error) {
-        
-    }];
+    // 获取应用初始化信息
+    [self setupAppInitializedInfo];
     
     // wechat
     [WXApi registerApp:kWXAppID];
@@ -62,7 +65,7 @@
     return YES;
 }
 
-#pragma mark 推送相关
+#pragma mark - 推送相关
 
 - (void)setUpXGPush:(NSDictionary *)launchOptions {
     [[XGSetting getInstance] enableDebug:YES];
@@ -184,9 +187,6 @@
     } else if (sysVer >= 8) {
         // iOS 8-9
         [self registerPush8to9];
-    } else {
-        // before iOS 8
-        [self registerPushBefore8];
     }
 #else
     if (sysVer < 8) {
@@ -220,11 +220,6 @@
     [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
-- (void)registerPushBefore8{
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-}
-
-
 #pragma mark - 定位相关
 
 - (void)startLocationAction
@@ -245,18 +240,18 @@
             [_locationManager stopUpdatingLocation];
             [_locationManager startUpdatingLocation];
             
-            [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"isAllowLocal"];
+            [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:TCUserDefaultsKeyAllowLocal];
         }else {
-            [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"isAllowLocal"];
+            [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:TCUserDefaultsKeyAllowLocal];
         }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     if (status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied) {
-        [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"isAllowLocal"];
+        [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:TCUserDefaultsKeyAllowLocal];
     }else {
-        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"isAllowLocal"];
+        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:TCUserDefaultsKeyAllowLocal];
     }
 }
 
@@ -284,6 +279,16 @@
     self.launchWindow.windowLevel = UIWindowLevelAlert;
     self.launchWindow.hidden = NO;
     launchViewController.launchWindow = self.launchWindow;
+}
+
+#pragma mark - 初始化信息
+
+- (void)setupAppInitializedInfo {
+    [[TCBuluoApi api] fetchAppInitializationInfo:^(TCAppInitializationInfo *info, NSError *error) {
+        if (info.promotions) {
+            [[TCPromotionsManager sharedManager] storePromotionsAndLoadImageWithPromotions:info.promotions];
+        }
+    }];
 }
 
 #pragma mark - 其它代理方法

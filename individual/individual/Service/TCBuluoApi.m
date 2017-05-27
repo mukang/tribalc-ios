@@ -12,8 +12,6 @@
 #import <TCCommonLibs/TCArchiveService.h>
 #import <TCCommonLibs/NSObject+TCModel.h>
 
-#import "TCPromotionsManager.h"
-
 NSString *const TCBuluoApiNotificationUserDidLogin = @"TCBuluoApiNotificationUserDidLogin";
 NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUserDidLogout";
 NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificationUserInfoDidUpdate";
@@ -36,13 +34,6 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)prepareForWorking:(void (^)(NSError *))completion {
     _prepared = YES;
-    
-    // 获取初始化配置信息
-    [self fetchAppInitializationInfo:^(TCAppInitializationInfo *info, NSError *error) {
-        if (info.promotions) {
-            [[TCPromotionsManager sharedManager] storePromotionsAndLoadImageWithPromotions:info.promotions];
-        }
-    }];
     
     if (completion) {
         completion(nil);
@@ -2264,6 +2255,24 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             TCAppInitializationInfo *info = [[TCAppInitializationInfo alloc] initWithObjectDictionary:response.data];
             if (resultBlock) {
                 TC_CALL_ASYNC_MQ(resultBlock(info, nil));
+            }
+        }
+    }];
+}
+
+- (void)fetchAppVersionInfo:(void (^)(TCAppVersion *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"configs/version?version=%@&os=ios", TCGetAppVersion()];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    request.token = self.currentUserSession.token;
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            TCAppVersion *versionInfo = [[TCAppVersion alloc] initWithObjectDictionary:response.data];
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(versionInfo, nil));
             }
         }
     }];

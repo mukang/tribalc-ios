@@ -672,6 +672,13 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
 - (void)fetchAppInitializationInfo:(void(^)(TCAppInitializationInfo *info, NSError *error))resultBlock;
 
 /**
+ 获取版本信息
+
+ @param resultBlock 结果回调
+ */
+- (void)fetchAppVersionInfo:(void(^)(TCAppVersion *versionInfo, NSError *error))resultBlock;
+
+/**
  获取首页轮播图
 
  @param resultBlock 结果回调

@@ -14,8 +14,12 @@
 #import "TCCommunitiesViewController.h"
 #import "TCToolsViewController.h"
 #import "TCLoginViewController.h"
+#import "TCLaunchViewController.h"
 
 #import "TCTabBar.h"
+
+#import "TCUserDefaultsKeys.h"
+
 #import <TCCommonLibs/TCFunctions.h>
 #import <EAIntroView/EAIntroView.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
@@ -87,6 +91,9 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleUnauthorizedNotification:)
                                                  name:TCClientUnauthorizedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchAppVersionInfo)
+                                                 name:TCLaunchWindowDidDisappearNotification object:nil];
 }
 
 - (void)removeNotifications {
@@ -166,6 +173,55 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 - (void)setupAMapServices {
     [AMapServices sharedServices].apiKey = AMapApiKey;
     [AMapServices sharedServices].enableHTTPS = YES;
+}
+
+#pragma mark - 检查版本
+
+- (void)fetchAppVersionInfo {
+    [[TCBuluoApi api] fetchAppVersionInfo:^(TCAppVersion *versionInfo, NSError *error) {
+        if (versionInfo) {
+            if (versionInfo.supported) {
+                [self forceUpdate];
+            } else {
+                [weakSelf checkAppVersionInfo:versionInfo];
+            }
+        }
+    }];
+}
+
+- (void)checkAppVersionInfo:(TCAppVersion *)versionInfo {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *lastVersion = versionInfo.lastVersion;
+    NSString *cachedVersion = [userDefaults objectForKey:TCUserDefaultsKeyAppVersion];
+    if (cachedVersion == nil) {
+        cachedVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    }
+    
+    // 截取lastVersion的前两个数字
+    NSRange range = [lastVersion rangeOfString:@"." options:NSBackwardsSearch];
+    NSString *subStr = [lastVersion substringToIndex:range.location];
+    
+    if ([cachedVersion hasPrefix:subStr]) return;
+    
+    NSString *title = @"检查到新版本，是否确认更新？";
+    NSString *message = versionInfo.releaseNote.count ? [versionInfo.releaseNote componentsJoinedByString:@"\n"] : nil;
+    UIAlertController *vc = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [userDefaults setObject:lastVersion forKey:TCUserDefaultsKeyAppVersion];
+    }];
+    UIAlertAction *updateAction = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [userDefaults setObject:lastVersion forKey:TCUserDefaultsKeyAppVersion];
+        NSString *appStoreUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TCBuluoAppStoreURL"];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreUrl]];
+    }];
+    [vc addAction:cancelAction];
+    [vc addAction:updateAction];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)forceUpdate {
+    // TODO:
 }
 
 - (void)didReceiveMemoryWarning {

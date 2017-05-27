@@ -7,7 +7,7 @@
 //
 
 #import "TCAppInitializationInfo.h"
-#import "TCAppConfigs.h"
+#import "TCAppVersion.h"
 #import "TCPromotions.h"
 #import "TCFeatureSwitches.h"
 
@@ -15,7 +15,7 @@
 
 + (NSDictionary *)objectClassInDictionary {
     return @{
-             @"app": [TCAppConfigs class],
+             @"app": [TCAppVersion class],
              @"promotions": [TCPromotions class],
              @"switches": [TCFeatureSwitches class]
              };
