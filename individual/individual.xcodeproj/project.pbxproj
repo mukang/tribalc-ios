@@ -330,6 +330,7 @@
 		7ACA4FE01DD59EF5006634E8 /* TCUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACA4FDF1DD59EF5006634E8 /* TCUserTests.m */; };
 		7ACA4FE31DD5B8C2006634E8 /* TCUserPhoneInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACA4FE21DD5B8C2006634E8 /* TCUserPhoneInfo.m */; };
 		7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */; };
+		7AD36DB71EDEAC3E00AB95FA /* TCForceUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
 		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
 		7AEB4CC21E03936300F83A7C /* TCBioEditNickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4CAE1E03936300F83A7C /* TCBioEditNickViewController.m */; };
@@ -970,6 +971,8 @@
 		7ACE57A61DC73BD9004B383A /* TCVicinityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVicinityViewController.h; sourceTree = "<group>"; };
 		7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVicinityViewController.m; sourceTree = "<group>"; };
 		7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCVicinityViewController.xib; sourceTree = "<group>"; };
+		7AD36DB51EDEAC3E00AB95FA /* TCForceUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCForceUpdateView.h; sourceTree = "<group>"; };
+		7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCForceUpdateView.m; sourceTree = "<group>"; };
 		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
 		7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetPasswordView.m; sourceTree = "<group>"; };
 		7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCGetPasswordView.xib; sourceTree = "<group>"; };
@@ -1619,6 +1622,8 @@
 				7A4E050D1DEEDC69002371B0 /* TCCommonInputViewCell.xib */,
 				7A7E93F21DF502E7006A47CE /* TCGenderPickerView.h */,
 				7A7E93F31DF502E7006A47CE /* TCGenderPickerView.m */,
+				7AD36DB51EDEAC3E00AB95FA /* TCForceUpdateView.h */,
+				7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2901,6 +2906,7 @@
 				7AEB4CF11E03944500F83A7C /* TCCityPickerView.m in Sources */,
 				7AAB1A061ED574EF00EF5F69 /* TCWebViewController.m in Sources */,
 				55BB9EB61E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.m in Sources */,
+				7AD36DB71EDEAC3E00AB95FA /* TCForceUpdateView.m in Sources */,
 				559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */,
 				098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */,
 				7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */,

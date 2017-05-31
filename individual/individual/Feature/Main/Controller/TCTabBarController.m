@@ -17,6 +17,7 @@
 #import "TCLaunchViewController.h"
 
 #import "TCTabBar.h"
+#import "TCForceUpdateView.h"
 
 #import "TCUserDefaultsKeys.h"
 
@@ -27,7 +28,11 @@
 static NSString *const kAppVersion = @"kAppVersion";
 static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 
-@interface TCTabBarController ()
+@interface TCTabBarController () <TCForceUpdateViewDelegate>
+
+@property (strong, nonatomic) UIWindow *updateWindow;
+/** 已经显示更新UI，防止重复显示 */
+@property (nonatomic) BOOL updateIsShow;
 
 @end
 
@@ -40,6 +45,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     // Do any additional setup after loading the view.
     
     weakSelf = self;
+    self.updateIsShow = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self addChildController:[[TCHomeViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
@@ -56,6 +62,8 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 
 - (void)dealloc {
     [self removeNotifications];
+    self.updateWindow.hidden = YES;
+    self.updateWindow = nil;
 }
 
 - (void)addChildController:(UIViewController *)childController title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selecteImage {
@@ -95,7 +103,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
                                              selector:@selector(fetchAppVersionInfo)
                                                  name:TCLaunchWindowDidDisappearNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(forceUpdate)
+                                             selector:@selector(fetchAppVersionInfo)
                                                  name:TCClientNeedForceUpdateNotification object:nil];
 }
 
@@ -181,13 +189,21 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 #pragma mark - 检查版本
 
 - (void)fetchAppVersionInfo {
+    if (self.updateIsShow) {
+        return;
+    }
+    
+    self.updateIsShow = YES;
     [[TCBuluoApi api] fetchAppVersionInfo:^(TCAppVersion *versionInfo, NSError *error) {
         if (versionInfo) {
             if (versionInfo.supported) {
-                [self forceUpdate];
+//                versionInfo.releaseNote = @[@"优化商品列表购物车的流程"];
+                [weakSelf forceUpdateWithVersionInfo:versionInfo];
             } else {
                 [weakSelf checkAppVersionInfo:versionInfo];
             }
+        } else {
+            weakSelf.updateIsShow = NO;
         }
     }];
 }
@@ -211,9 +227,11 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     NSString *message = versionInfo.releaseNote.count ? [versionInfo.releaseNote componentsJoinedByString:@"\n"] : nil;
     UIAlertController *vc = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        weakSelf.updateIsShow = NO;
         [userDefaults setObject:lastVersion forKey:TCUserDefaultsKeyAppVersion];
     }];
     UIAlertAction *updateAction = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        weakSelf.updateIsShow = NO;
         [userDefaults setObject:lastVersion forKey:TCUserDefaultsKeyAppVersion];
         NSString *appStoreUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TCBuluoAppStoreURL"];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreUrl]];
@@ -223,8 +241,26 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)forceUpdate {
-    // TODO:
+- (void)forceUpdateWithVersionInfo:(TCAppVersion *)versionInfo {
+    UIWindow *updateWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    updateWindow.windowLevel = UIWindowLevelAlert;
+    updateWindow.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.37];
+    updateWindow.hidden = NO;
+    self.updateWindow = updateWindow;
+    
+    TCForceUpdateView *updateView = [[TCForceUpdateView alloc] initWithVersionInfo:versionInfo];
+    updateView.delegate = self;
+    [updateWindow addSubview:updateView];
+    [updateView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(updateWindow);
+    }];
+}
+
+#pragma mark - TCForceUpdateViewDelegate
+
+- (void)didClickUpdateButtonInForceUpdateView:(TCForceUpdateView *)view {
+    NSString *appStoreUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"TCBuluoAppStoreURL"];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreUrl]];
 }
 
 - (void)didReceiveMemoryWarning {

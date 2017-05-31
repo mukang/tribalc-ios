@@ -48,6 +48,8 @@
     self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     
+    [self registerNotifications];
+    
     [self showLaunchWindow];
     application.statusBarHidden = NO;
     
@@ -296,6 +298,21 @@
             [[NSUserDefaults standardUserDefaults] setObject:@(withdraw) forKey:TCUserDefaultsKeySwitchBfWithdraw];
         }
     }];
+}
+
+#pragma mark - Notification
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleLaunchWindowDidDisappear)
+                                                 name:TCLaunchWindowDidDisappearNotification object:nil];
+}
+
+#pragma mark - Actions
+
+- (void)handleLaunchWindowDidDisappear {
+    self.launchWindow.rootViewController = nil;
+    self.launchWindow = nil;
 }
 
 #pragma mark - 其它代理方法

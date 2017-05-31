@@ -125,12 +125,14 @@ NSString *const TCLaunchWindowDidTapAdViewNotification = @"TCLaunchWindowDidTapA
             weakSelf.launchWindow.hidden = YES;
             weakSelf.launchImageView.alpha = 1.0;
             [[NSNotificationCenter defaultCenter] postNotificationName:TCLaunchWindowDidDisappearNotification object:nil];
-            weakSelf.launchWindow.rootViewController = nil;
         }];
     }];
 }
 
 - (void)hideAdAnimated {
+    
+    [self removeCountTimer];
+    
     [UIView animateWithDuration:0.3 animations:^{
         weakSelf.adImageView.alpha = 0.0;
         weakSelf.countButton.alpha = 0.0;
@@ -139,7 +141,6 @@ NSString *const TCLaunchWindowDidTapAdViewNotification = @"TCLaunchWindowDidTapA
         weakSelf.adImageView.alpha = 1.0;
         weakSelf.countButton.alpha = 1.0;
         [[NSNotificationCenter defaultCenter] postNotificationName:TCLaunchWindowDidDisappearNotification object:nil];
-        weakSelf.launchWindow.rootViewController = nil;
     }];
 }
 
@@ -158,10 +159,6 @@ NSString *const TCLaunchWindowDidTapAdViewNotification = @"TCLaunchWindowDidTapA
     [self.countButton setTitle:str forState:UIControlStateNormal];
     
     [self addCountTimer];
-}
-
-- (void)stopCountDown {
-    [self removeCountTimer];
 }
 
 - (void)addCountTimer {
