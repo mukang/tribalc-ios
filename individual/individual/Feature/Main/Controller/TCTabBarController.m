@@ -197,7 +197,6 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [[TCBuluoApi api] fetchAppVersionInfo:^(TCAppVersion *versionInfo, NSError *error) {
         if (versionInfo) {
             if (versionInfo.supported) {
-//                versionInfo.releaseNote = @[@"优化商品列表购物车的流程"];
                 [weakSelf forceUpdateWithVersionInfo:versionInfo];
             } else {
                 [weakSelf checkAppVersionInfo:versionInfo];

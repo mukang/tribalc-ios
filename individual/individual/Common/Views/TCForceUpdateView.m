@@ -92,7 +92,7 @@
         make.top.equalTo(weakSelf).offset(158);
         make.left.equalTo(weakSelf).offset(23);
         make.right.equalTo(weakSelf).offset(-23);
-        make.bottom.equalTo(weakSelf).offset(-103);
+        make.bottom.lessThanOrEqualTo(weakSelf).offset(-103);
     }];
     [self.messageLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [self.messageLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
