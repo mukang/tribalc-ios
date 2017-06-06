@@ -196,7 +196,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     self.updateIsShow = YES;
     [[TCBuluoApi api] fetchAppVersionInfo:^(TCAppVersion *versionInfo, NSError *error) {
         if (versionInfo) {
-            if (versionInfo.supported) {
+            if (!versionInfo.supported) {
                 [weakSelf forceUpdateWithVersionInfo:versionInfo];
             } else {
                 [weakSelf checkAppVersionInfo:versionInfo];
