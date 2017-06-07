@@ -7,6 +7,7 @@
 //
 
 #import "TCOrderDetailViewController.h"
+#import "TCPaymentViewController.h"
 
 #import <TCCommonLibs/TCCommonButton.h>
 #import "TCGoodsOrderCountDownView.h"
@@ -18,13 +19,12 @@
 #import "TCGoodsOrderStatusViewCell.h"
 
 #import "TCBuluoApi.h"
-#import "TCPaymentView.h"
 
 #import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import <TCCommonLibs/UIImage+Category.h>
 #import <UIImageView+WebCache.h>
 
-@interface TCOrderDetailViewController () <UITableViewDataSource, UITableViewDelegate, TCPaymentViewDelegate>
+@interface TCOrderDetailViewController () <UITableViewDataSource, UITableViewDelegate, TCPaymentViewControllerDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) UIView *bottomView;
@@ -332,8 +332,9 @@
     return 0.01;
 }
 
-#pragma mark - TCPaymentViewDelegate
-- (void)paymentView:(TCPaymentView *)view didFinishedPaymentWithStatus:(NSString *)status {
+#pragma mark - TCPaymentViewControllerDelegate
+
+- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithStatus:(NSString *)status {
     [self handleRemoveHederView];
     self.cancelButton.hidden = YES;
     [self.confirmButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"提醒发货"
@@ -422,11 +423,10 @@
  去付款
  */
 - (void)handlePaymentAction {
-    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithTotalFee:self.goodsOrder.totalFee fromController:self];
-    paymentView.orderIDs = @[self.goodsOrder.ID];
-    paymentView.payPurpose = TCPayPurposeOrder;
-    paymentView.delegate = self;
-    [paymentView show:YES];
+    TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:self.goodsOrder.totalFee payPurpose:TCPayPurposeOrder fromController:self];
+    vc.orderIDs = @[self.goodsOrder.ID];
+    vc.delegate = self;
+    [vc show:YES];
 }
 
 /**

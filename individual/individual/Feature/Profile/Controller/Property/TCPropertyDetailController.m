@@ -7,15 +7,16 @@
 //
 
 #import "TCPropertyDetailController.h"
+#import "TCPaymentViewController.h"
+
 #import "TCPropertyManage.h"
 #import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import <TCCommonLibs/UIImage+Category.h>
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "TCPaymentView.h"
 #import "MBProgressHUD+Category.h"
 #import "TCBuluoApi.h"
 
-@interface TCPropertyDetailController ()<UIAlertViewDelegate, TCPaymentViewDelegate>
+@interface TCPropertyDetailController ()<UIAlertViewDelegate, TCPaymentViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *communityNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *applyPersonNameLabel;
@@ -233,19 +234,15 @@
 }
 
 - (IBAction)payBtnClick:(id)sender {
-    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithTotalFee:self.propertyManage.totalFee fromController:self];
-    paymentView.orderIDs = @[self.propertyManage.ID];
-    paymentView.payPurpose = TCPayPurposeMaintain;
-    paymentView.delegate = self;
-    [paymentView show:YES];
+    TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:self.propertyManage.totalFee payPurpose:TCPayPurposeMaintain fromController:self];
+    vc.orderIDs = @[self.propertyManage.ID];
+    vc.delegate = self;
+    [vc show:YES];
 }
 
-#pragma mark - TCPaymentViewDelegate
+#pragma mark - TCPaymentViewControllerDelegate
 
-- (void)paymentView:(TCPaymentView *)view didFinishedPaymentWithStatus:(NSString *)status {
-//    if (self.completionBlock) {
-//        self.completionBlock();
-//    }
+- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithStatus:(NSString *)status {
     [self.navigationController popViewControllerAnimated:YES];
 }
 

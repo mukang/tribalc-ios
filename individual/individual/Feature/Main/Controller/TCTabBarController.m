@@ -116,7 +116,6 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 - (void)handleClickVicinityButton:(NSNotification *)noti {
     TCVicinityViewController *vicinityVC = [[TCVicinityViewController alloc] init];
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vicinityVC];
-    nav.enableInteractivePopGesture = NO;
     nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -196,8 +195,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     self.updateIsShow = YES;
     [[TCBuluoApi api] fetchAppVersionInfo:^(TCAppVersion *versionInfo, NSError *error) {
         if (versionInfo) {
-            if (versionInfo.supported) {
-//                versionInfo.releaseNote = @[@"优化商品列表购物车的流程"];
+            if (!versionInfo.supported) {
                 [weakSelf forceUpdateWithVersionInfo:versionInfo];
             } else {
                 [weakSelf checkAppVersionInfo:versionInfo];
