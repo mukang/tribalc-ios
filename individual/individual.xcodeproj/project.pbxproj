@@ -76,6 +76,7 @@
 		550FB77C1ED5C18700D75E33 /* FSCalendarWeekdayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB76B1ED5C18600D75E33 /* FSCalendarWeekdayView.m */; };
 		550FB77D1ED5C18700D75E33 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 550FB76C1ED5C18600D75E33 /* Info.plist */; };
 		5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */; };
+		551CF2651EE7DAAD00281637 /* TCPreparePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551CF2641EE7DAAD00281637 /* TCPreparePayViewController.m */; };
 		552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */; };
 		552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */; };
 		5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */; };
@@ -537,6 +538,8 @@
 		550FB76C1ED5C18600D75E33 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		551306581E714008004DF32F /* TCLocksAndVisitorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLocksAndVisitorsViewController.h; sourceTree = "<group>"; };
 		551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLocksAndVisitorsViewController.m; sourceTree = "<group>"; };
+		551CF2631EE7DAAD00281637 /* TCPreparePayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPreparePayViewController.h; sourceTree = "<group>"; };
+		551CF2641EE7DAAD00281637 /* TCPreparePayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPreparePayViewController.m; sourceTree = "<group>"; };
 		552D6C201E94D6BF00CA4EA3 /* TCMyLockQRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMyLockQRCodeController.h; sourceTree = "<group>"; };
 		552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMyLockQRCodeController.m; sourceTree = "<group>"; };
 		552D6C261E973BB000CA4EA3 /* TCUnitySetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUnitySetUpViewController.h; sourceTree = "<group>"; };
@@ -2323,6 +2326,8 @@
 				7A64EA7F1E15016E008D0C12 /* TCRechargeViewController.m */,
 				7A455D5C1EBC912400A2F9ED /* TCWithdrawViewController.h */,
 				7A455D5D1EBC912400A2F9ED /* TCWithdrawViewController.m */,
+				551CF2631EE7DAAD00281637 /* TCPreparePayViewController.h */,
+				551CF2641EE7DAAD00281637 /* TCPreparePayViewController.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -2954,6 +2959,7 @@
 				7AF972DE1E09174B009D26A3 /* TCPropertyRepairsInfo.m in Sources */,
 				7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */,
 				7A22D9371ECEF0FA009A6A64 /* TCPromotions.m in Sources */,
+				551CF2651EE7DAAD00281637 /* TCPreparePayViewController.m in Sources */,
 				55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */,
 				7A455D631EBC913900A2F9ED /* TCWithdrawAmountView.m in Sources */,
 				7A8352ED1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m in Sources */,

@@ -26,19 +26,19 @@
     [self setNeedsDisplay];
 }
 
-- (void)drawRect:(CGRect)rect {
-    
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    
-//    [[UIColor colorWithWhite:0.0 alpha:0.4] setFill];
-    [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.8] setFill];
-    CGContextFillRect(ctx, rect);
-    
-    CGContextClearRect(ctx, self.cropRect);
-    
-//    [[UIColor colorWithWhite:0.95 alpha:1.0] setStroke];
-//    [[UIColor colorWithWhite:0 alpha:1.0] setStroke];
-    CGContextStrokeRectWithWidth(ctx, CGRectInset(_cropRect, 1, 1), 1);
-}
+//- (void)drawRect:(CGRect)rect {
+//    
+//    CGContextRef ctx = UIGraphicsGetCurrentContext();
+//    
+////    [[UIColor colorWithWhite:0.0 alpha:0.4] setFill];
+//    [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.8] setFill];
+//    CGContextFillRect(ctx, rect);
+//    
+//    CGContextClearRect(ctx, self.cropRect);
+//    
+////    [[UIColor colorWithWhite:0.95 alpha:1.0] setStroke];
+////    [[UIColor colorWithWhite:0 alpha:1.0] setStroke];
+//    CGContextStrokeRectWithWidth(ctx, CGRectInset(_cropRect, 1, 1), 1);
+//}
 
 @end

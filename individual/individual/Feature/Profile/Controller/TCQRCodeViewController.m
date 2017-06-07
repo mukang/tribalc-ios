@@ -13,6 +13,7 @@
 #import "TCScannerMaskView.h"
 #import "TCScanner.h"
 #import "TCPhotoPicker.h"
+#import "TCPreparePayViewController.h"
 
 /// 控件间距
 #define kControlMargin  20.0
@@ -55,10 +56,28 @@
         @StrongObj(self)
         // 完成回调
 //        self.completion();
-        [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self handleScanerResultWithStr:stringValue];
+//        [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
+//        [self.navigationController popViewControllerAnimated:YES];
     }];
    
+}
+
+- (void)handleScanerResultWithStr:(NSString *)result {
+    if ([result isKindOfClass:[NSString class]]) {
+        if ([result hasPrefix:@"pay://"]) {
+            NSArray *arr = [result componentsSeparatedByString:@"://"];
+            if (arr.count > 1) {
+                NSString *storeId = arr[1];
+                TCPreparePayViewController *preparePayVC = [[TCPreparePayViewController alloc] init];
+                preparePayVC.storeId =storeId;
+                [self.navigationController pushViewController:preparePayVC animated:YES];
+                return;
+            }
+        }
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -168,9 +187,13 @@
         
         if (values.count > 0) {
             //            self.completionCallBack(values.firstObject);
-            [self dismissViewControllerAnimated:NO completion:^{
-                //                [self clickCloseButton];
-            }];
+            if ([values isKindOfClass:[NSArray class]] && [values.firstObject isKindOfClass:[NSString class]]) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    //                [self clickCloseButton];
+                    [self handleScanerResultWithStr:values.firstObject];
+                }];
+                
+            }
         } else {
             tipLabel.text = @"没有识别到二维码，请选择其他照片";
             
