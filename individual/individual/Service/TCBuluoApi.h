@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, TCPayChannel) {
 typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
     TCPayPurposeOrder = 0,   // 订单
     TCPayPurposeMaintain,    // 维修
+    TCPayPurposeFace2Face    // 面对面付款
 };
 
 

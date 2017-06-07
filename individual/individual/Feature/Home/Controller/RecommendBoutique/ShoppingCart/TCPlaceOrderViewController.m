@@ -13,13 +13,12 @@
 #import "TCUserOrderTableViewCell.h"
 #import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import <TCCommonLibs/UIImage+Category.h>
-//#import "TCBalancePayView.h"
+
 #import "TCOrderViewController.h"
 #import "TCShippingAddressViewController.h"
+#import "TCPaymentViewController.h"
 
-#import "TCPaymentView.h"
-
-@interface TCPlaceOrderViewController () <TCPaymentViewDelegate> {
+@interface TCPlaceOrderViewController () <TCPaymentViewControllerDelegate> {
     UIScrollView *mScrollView;
     NSMutableArray *orderDetailList;
     NSMutableArray *supplementFieldArr;
@@ -387,16 +386,16 @@
     return totalPriceStr;
 }
 
-#pragma mark - TCPaymentViewDelegate
+#pragma mark - TCPaymentViewControllerDelegate
 
-- (void)paymentView:(TCPaymentView *)view didFinishedPaymentWithStatus:(NSString *)status {
+- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithStatus:(NSString *)status {
     // 跳转至“全部”订单列表
     TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:TCGoodsOrderStatusAll];
     vc.fromController = self.fromController;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)didClickCloseButtonInPaymentView:(TCPaymentView *)view {
+- (void)didClickCloseButtonInPaymentViewController:(TCPaymentViewController *)controller {
     // 跳转至“待付款”订单列表
     TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:TCGoodsOrderStatusWaitPayment];
     vc.fromController = self.fromController;
@@ -502,11 +501,12 @@
         [orderIDs addObject:order.ID];
     }
     
-    TCPaymentView *paymentView = [[TCPaymentView alloc] initWithTotalFee:paymentAmount fromController:self];
-    paymentView.orderIDs = orderIDs;
-    paymentView.payPurpose = TCPayPurposeOrder;
-    paymentView.delegate = self;
-    [paymentView show:YES];
+    TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:paymentAmount
+                                                                         payPurpose:TCPayPurposeFace2Face
+                                                                     fromController:self];
+    vc.orderIDs = orderIDs;
+    vc.delegate = self;
+    [vc show:YES];
 }
 
 #pragma mark - Status Bar

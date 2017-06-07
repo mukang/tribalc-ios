@@ -1,21 +1,20 @@
 //
-//  TCPaymentView.m
+//  TCPaymentViewController.m
 //  individual
 //
-//  Created by 穆康 on 2016/12/1.
-//  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
+//  Created by 穆康 on 2017/6/7.
+//  Copyright © 2017年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCPaymentView.h"
+#import "TCPaymentViewController.h"
+#import "TCNavigationController.h"
+#import "TCRechargeViewController.h"
+#import "TCWalletPasswordViewController.h"
+
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
 #import "TCPaymentBankCardView.h"
 #import "TCPaymentMethodView.h"
-
-#import "TCTabBarController.h"
-#import "TCNavigationController.h"
-#import "TCRechargeViewController.h"
-#import "TCWalletPasswordViewController.h"
 
 #import <TCCommonLibs/TCFunctions.h>
 #import <BaofuFuFingerSDK/BaofuFuFingerSDK.h>
@@ -23,13 +22,18 @@
 static CGFloat const subviewHeight = 400;
 static CGFloat const duration = 0.25;
 
-@interface TCPaymentView ()
+@interface TCPaymentViewController ()
 <TCPaymentDetailViewDelegate,
 TCPaymentPasswordViewDelegate,
 TCPaymentMethodViewDelegate,
 TCPaymentBankCardViewDelegate,
-BaofuFuFingerClientDelegate>
+BaofuFuFingerClientDelegate
+>
 
+/** 显示的时候是否有动画 */
+@property (nonatomic) BOOL showAnimated;
+
+@property (weak, nonatomic) UIView *containerView;
 @property (weak, nonatomic) TCPaymentDetailView *paymentDetailView;
 @property (weak, nonatomic) TCPaymentPasswordView *paymentPasswordView;
 @property (weak, nonatomic) TCPaymentBankCardView *bankCardView;
@@ -55,119 +59,122 @@ BaofuFuFingerClientDelegate>
 
 @end
 
-@implementation TCPaymentView {
-    __weak TCPaymentView *weakSelf;
+@implementation TCPaymentViewController {
+    __weak TCPaymentViewController *weakSelf;
     __weak UIViewController *sourceController;
 }
 
-- (instancetype)initWithTotalFee:(double)totalFee fromController:(UIViewController *)controller {
-    self = [super initWithFrame:[UIScreen mainScreen].bounds];
+- (instancetype)initWithTotalFee:(double)totalFee payPurpose:(TCPayPurpose)payPurpose fromController:(UIViewController *)controller {
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _totalFee = totalFee;
+        _payPurpose = payPurpose;
         weakSelf = self;
         sourceController = controller;
-        [self initPrivate];
     }
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    @throw [NSException exceptionWithName:@"TCPaymentView初始化错误"
-                                   reason:@"请使用接口文件提供的初始化方法"
-                                 userInfo:nil];
-    return nil;
-}
-
 - (instancetype)init {
-    @throw [NSException exceptionWithName:@"TCPaymentView初始化错误"
+    @throw [NSException exceptionWithName:@"TCPaymentViewController初始化错误"
                                    reason:@"请使用接口文件提供的初始化方法"
                                  userInfo:nil];
     return nil;
 }
 
-- (void)initPrivate {
-    self.backgroundColor = TCARGBColor(0, 0, 0, 0);
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapSuperview:)];
-    tap.cancelsTouchesInView = NO;
-    [self addGestureRecognizer:tap];
+#pragma mark - Life Cycle
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
-    TCPaymentDetailView *paymentDetailView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentDetailView" owner:nil options:nil].lastObject;
-    paymentDetailView.totalFee = _totalFee;
-    paymentDetailView.methodLabel.text = @"余额支付";
-    paymentDetailView.delegate = self;
-    paymentDetailView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, subviewHeight);
-    [self addSubview:paymentDetailView];
-    self.paymentDetailView = paymentDetailView;
+    self.view.backgroundColor = TCARGBColor(0, 0, 0, 0);
+    
+    [self setupSubviews];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (self.showAnimated) {
+        [UIView animateWithDuration:duration animations:^{
+            weakSelf.view.backgroundColor = TCARGBColor(0, 0, 0, 0.62);
+            weakSelf.containerView.y = TCScreenHeight - subviewHeight;
+        }];
+    } else {
+        weakSelf.view.backgroundColor = TCARGBColor(0, 0, 0, 0.62);
+        weakSelf.containerView.y = TCScreenHeight - subviewHeight;
+    }
+}
+
+- (void)dealloc {
+    TCLog(@"%s", __func__);
 }
 
 #pragma mark - Public Methods
 
 - (void)show:(BOOL)animated {
+    self.showAnimated = animated;
     
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    TCTabBarController *tabBarVC = (TCTabBarController *)keyWindow.rootViewController;
-    
-    UIView *superView = nil;
-    if (tabBarVC.presentedViewController) {
-        superView = tabBarVC.presentedViewController.view;
-    } else {
-        superView = tabBarVC.view;
-    }
-    
-    [superView addSubview:self];
-    [superView bringSubviewToFront:self];
-    
-    if (animated) {
-        [UIView animateWithDuration:duration animations:^{
-            weakSelf.backgroundColor = TCARGBColor(0, 0, 0, 0.62);
-            weakSelf.paymentDetailView.y = TCScreenHeight - subviewHeight;
-        }];
-    } else {
-        weakSelf.backgroundColor = TCARGBColor(0, 0, 0, 0.62);
-        weakSelf.paymentDetailView.y = TCScreenHeight - subviewHeight;
-    }
-}
-
-- (void)dismiss:(BOOL)animated {
-    [self dismiss:animated completion:nil];
+    sourceController.definesPresentationContext = YES;
+    self.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [sourceController presentViewController:self animated:NO completion:nil];
 }
 
 - (void)dismiss:(BOOL)animated completion:(void (^)())completion {
     if (animated) {
         [UIView animateWithDuration:duration animations:^{
-            weakSelf.backgroundColor = TCARGBColor(0, 0, 0, 0);
-            weakSelf.paymentDetailView.y = TCScreenHeight;
+            weakSelf.view.backgroundColor = TCARGBColor(0, 0, 0, 0);
+            weakSelf.containerView.y = TCScreenHeight;
         } completion:^(BOOL finished) {
+            [weakSelf dismissViewControllerAnimated:NO completion:^{
+                if (completion) {
+                    completion();
+                }
+            }];
+        }];
+    } else {
+        self.view.backgroundColor = TCARGBColor(0, 0, 0, 0);
+        self.containerView.y = TCScreenHeight;
+        [weakSelf dismissViewControllerAnimated:NO completion:^{
             if (completion) {
                 completion();
             }
-            [weakSelf removeFromSuperview];
         }];
-    } else {
-        weakSelf.backgroundColor = TCARGBColor(0, 0, 0, 0);
-        weakSelf.paymentDetailView.y = TCScreenHeight;
-        if (completion) {
-            completion();
-        }
-        [weakSelf removeFromSuperview];
     }
 }
 
 #pragma mark - Private Methods
+
+- (void)setupSubviews {
+    UIView *containerView = [[UIView alloc] init];
+    containerView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, subviewHeight);
+    [self.view addSubview:containerView];
+    self.containerView = containerView;
+    
+    TCPaymentDetailView *paymentDetailView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentDetailView" owner:nil options:nil].lastObject;
+    paymentDetailView.totalFee = self.totalFee;
+    paymentDetailView.methodLabel.text = @"余额支付";
+    paymentDetailView.delegate = self;
+    paymentDetailView.frame = containerView.bounds;
+    [containerView addSubview:paymentDetailView];
+    self.paymentDetailView = paymentDetailView;
+}
 
 /**
  显示输入密码页
  */
 - (void)showPaymentPasswordView {
     TCPaymentPasswordView *paymentPasswordView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentPasswordView" owner:nil options:nil].lastObject;
-    paymentPasswordView.frame = CGRectMake(TCScreenWidth, self.paymentDetailView.y, TCScreenWidth, subviewHeight);
+    paymentPasswordView.frame = CGRectMake(self.containerView.width, 0, self.containerView.width, self.containerView.height);
     paymentPasswordView.delegate = self;
     paymentPasswordView.textField.centerX = paymentPasswordView.width / 2;
-    [self addSubview:paymentPasswordView];
+    [self.containerView addSubview:paymentPasswordView];
     self.paymentPasswordView = paymentPasswordView;
     
     [UIView animateWithDuration:duration animations:^{
-        weakSelf.paymentDetailView.x = - TCScreenWidth;
+        weakSelf.paymentDetailView.x = - weakSelf.containerView.width;
         weakSelf.paymentPasswordView.x = 0;
     } completion:^(BOOL finished) {
         [weakSelf.paymentPasswordView.textField becomeFirstResponder];
@@ -180,7 +187,7 @@ BaofuFuFingerClientDelegate>
 - (void)dismissPaymentPasswordView {
     [UIView animateWithDuration:duration animations:^{
         weakSelf.paymentDetailView.x = 0;
-        weakSelf.paymentPasswordView.x = TCScreenWidth;
+        weakSelf.paymentPasswordView.x = weakSelf.containerView.width;
     } completion:^(BOOL finished) {
         [weakSelf.paymentPasswordView removeFromSuperview];
     }];
@@ -191,13 +198,13 @@ BaofuFuFingerClientDelegate>
  */
 - (void)showBankCardView {
     TCPaymentBankCardView *bankCardView = [[TCPaymentBankCardView alloc] initWithBankCard:self.currentBankCard];
-    bankCardView.frame = CGRectMake(TCScreenWidth, self.paymentDetailView.y, TCScreenWidth, subviewHeight);
+    bankCardView.frame = CGRectMake(self.containerView.width, 0, self.containerView.width, self.containerView.height);
     bankCardView.delegate = self;
-    [self addSubview:bankCardView];
+    [self.containerView addSubview:bankCardView];
     weakSelf.bankCardView = bankCardView;
     
     [UIView animateWithDuration:duration animations:^{
-        weakSelf.paymentDetailView.x = - TCScreenWidth;
+        weakSelf.paymentDetailView.x = - weakSelf.containerView.width;
         weakSelf.bankCardView.x = 0;
     }];
 }
@@ -208,7 +215,7 @@ BaofuFuFingerClientDelegate>
 - (void)dismissBankCardView {
     [UIView animateWithDuration:duration animations:^{
         weakSelf.paymentDetailView.x = 0;
-        weakSelf.bankCardView.x = TCScreenWidth;
+        weakSelf.bankCardView.x = weakSelf.containerView.width;
     } completion:^(BOOL finished) {
         [weakSelf.bankCardView removeFromSuperview];
     }];
@@ -223,13 +230,13 @@ BaofuFuFingerClientDelegate>
         paymentMethodView.currentBankCard = self.currentBankCard;
     }
     paymentMethodView.bankCardList = bankCardList;
-    paymentMethodView.frame = CGRectMake(TCScreenWidth, self.paymentDetailView.y, TCScreenWidth, subviewHeight);
+    paymentMethodView.frame = CGRectMake(self.containerView.width, 0, self.containerView.width, self.containerView.height);
     paymentMethodView.delegate = self;
-    [self addSubview:paymentMethodView];
+    [self.containerView addSubview:paymentMethodView];
     self.paymentMethodView = paymentMethodView;
     
     [UIView animateWithDuration:duration animations:^{
-        weakSelf.paymentDetailView.x = - TCScreenWidth;
+        weakSelf.paymentDetailView.x = - weakSelf.containerView.width;
         weakSelf.paymentMethodView.x = 0;
     }];
 }
@@ -240,7 +247,7 @@ BaofuFuFingerClientDelegate>
 - (void)dismissPaymentMethodView {
     [UIView animateWithDuration:duration animations:^{
         weakSelf.paymentDetailView.x = 0;
-        weakSelf.paymentMethodView.x = TCScreenWidth;
+        weakSelf.paymentMethodView.x = weakSelf.containerView.width;
     } completion:^(BOOL finished) {
         [weakSelf.paymentMethodView removeFromSuperview];
     }];
@@ -257,7 +264,7 @@ BaofuFuFingerClientDelegate>
         
     };
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
-    [sourceController presentViewController:nav animated:YES completion:nil];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 /**
@@ -267,20 +274,19 @@ BaofuFuFingerClientDelegate>
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFirstTimeInputPassword];
     vc.modalMode = YES;
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
-    [sourceController presentViewController:nav animated:YES completion:nil];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - TCPaymentDetailViewDelegate
 
 - (void)didClickConfirmButtonInPaymentDetailView:(TCPaymentDetailView *)view {
-//    [weakSelf showPaymentPasswordView];
     [self handleClickConfirmButton];
 }
 
 - (void)didClickCloseButtonInPaymentDetailView:(TCPaymentDetailView *)view {
     [self dismiss:YES completion:^{
-        if ([weakSelf.delegate respondsToSelector:@selector(didClickCloseButtonInPaymentView:)]) {
-            [weakSelf.delegate didClickCloseButtonInPaymentView:self];
+        if ([weakSelf.delegate respondsToSelector:@selector(didClickCloseButtonInPaymentViewController:)]) {
+            [weakSelf.delegate didClickCloseButtonInPaymentViewController:weakSelf];
         }
     }];
 }
@@ -337,12 +343,12 @@ BaofuFuFingerClientDelegate>
             self.paymentDetailView.methodLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
         }
             break;
-//        case TCPaymentMethodWechat:
-//            self.paymentDetailView.methodLabel.text = @"微信支付";
-//            break;
-//        case TCPaymentMethodAlipay:
-//            self.paymentDetailView.methodLabel.text = @"支付宝支付";
-//            break;
+            //        case TCPaymentMethodWechat:
+            //            self.paymentDetailView.methodLabel.text = @"微信支付";
+            //            break;
+            //        case TCPaymentMethodAlipay:
+            //            self.paymentDetailView.methodLabel.text = @"支付宝支付";
+            //            break;
             
         default:
             break;
@@ -416,15 +422,6 @@ BaofuFuFingerClientDelegate>
 }
 
 /**
- 点击了背景
- */
-- (void)handleTapSuperview:(UITapGestureRecognizer *)gesture {
-    if (self.bankCardView && [self.bankCardView.codeTextField isFirstResponder]) {
-        [self.bankCardView.codeTextField resignFirstResponder];
-    }
-}
-
-/**
  使用余额付款
  */
 - (void)handlePaymentWithBalance {
@@ -443,7 +440,7 @@ BaofuFuFingerClientDelegate>
                 }];
                 [alertController addAction:cancelAction];
                 [alertController addAction:confirmAction];
-                [sourceController presentViewController:alertController animated:YES completion:nil];
+                [weakSelf presentViewController:alertController animated:YES completion:nil];
                 return;
             }
             
@@ -455,7 +452,7 @@ BaofuFuFingerClientDelegate>
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
                 [alertController addAction:confirmAction];
                 [alertController addAction:cancelAction];
-                [sourceController presentViewController:alertController animated:YES completion:nil];
+                [weakSelf presentViewController:alertController animated:YES completion:nil];
                 return;
             }
             
@@ -499,8 +496,8 @@ BaofuFuFingerClientDelegate>
 - (void)handlePaymentSucceedWithPayment:(TCUserPayment *)payment {
     [MBProgressHUD hideHUD:YES];
     [weakSelf dismiss:YES completion:^{
-        if ([weakSelf.delegate respondsToSelector:@selector(paymentView:didFinishedPaymentWithStatus:)]) {
-            [weakSelf.delegate paymentView:weakSelf didFinishedPaymentWithStatus:payment.status];
+        if ([weakSelf.delegate respondsToSelector:@selector(paymentViewController:didFinishedPaymentWithStatus:)]) {
+            [weakSelf.delegate paymentViewController:weakSelf didFinishedPaymentWithStatus:payment.status];
         }
     }];
 }
@@ -687,5 +684,20 @@ BaofuFuFingerClientDelegate>
     }
     return _bankInfoList;
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end
