@@ -502,7 +502,7 @@
     }
     
     TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:paymentAmount
-                                                                         payPurpose:TCPayPurposeFace2Face
+                                                                         payPurpose:TCPayPurposeOrder
                                                                      fromController:self];
     vc.orderIDs = orderIDs;
     vc.delegate = self;

@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MLBPasswordTextField.h"
 @class TCBankCard;
 @protocol TCPaymentBankCardViewDelegate;
 
 @interface TCPaymentBankCardView : UIView
 
-@property (weak, nonatomic) UITextField *codeTextField;
+@property (weak, nonatomic) MLBPasswordTextField *codeTextField;
 @property (strong, nonatomic, readonly) TCBankCard *bankCard;
 @property (weak, nonatomic) id<TCPaymentBankCardViewDelegate> delegate;
 

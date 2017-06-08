@@ -17,7 +17,7 @@ UIKIT_EXTERN NSUInteger const kMLBPasswordTextFieldDefaultNumberOfDigit;
 @property (nonatomic, assign) CGFloat mlb_rBorderWidth; // default is 0.5
 
 // dot
-@property (nonatomic, assign) NSUInteger mlb_rNumberOfDot; //  // default is 6, DO NOT modify directly, instead use textField's mlb_numberOfDigit
+@property (nonatomic, assign, readonly) NSUInteger mlb_rNumberOfDot; //  // default is 6, DO NOT modify directly, instead use textField's mlb_numberOfDigit
 @property (nonatomic, assign) NSUInteger mlb_rCurrentNumberOfDot; // default is 0
 
 @property (nonatomic, strong) UIColor *mlb_rDotColor; // default is black
@@ -29,5 +29,16 @@ UIKIT_EXTERN NSUInteger const kMLBPasswordTextFieldDefaultNumberOfDigit;
 @property (nonatomic, assign) CGFloat mlb_rCursorHeight; // default is 20
 
 @property (nonatomic, assign) BOOL mlb_rShowCursor; // default is NO
+
+@property (nonatomic) BOOL mlb_rSecureTextEntry; // default is YES
+@property (strong, nonatomic) UIFont *mlb_rFont; // default is font 20 pt
+@property (strong, nonatomic) UIColor *mlb_rTextColor; // default is 42, 42, 42
+
+@property (copy, nonatomic) NSString *mlb_rCurrentText;
+
+/**
+ 初始化方法
+ */
+- (instancetype)initWithNumberOfDigit:(NSInteger)num;
 
 @end

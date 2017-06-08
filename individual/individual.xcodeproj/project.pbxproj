@@ -127,8 +127,6 @@
 		7A0E009B1E2DC1DE0028555D /* TCLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E009A1E2DC1DE0028555D /* TCLaunchViewController.m */; };
 		7A0EA7341E00F0F700823505 /* TCCommunityListInCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0EA7331E00F0F700823505 /* TCCommunityListInCity.m */; };
 		7A11F6EC1DE3E39B005F3EAB /* TCVicinityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */; };
-		7A11F7141DE43195005F3EAB /* MLBPasswordRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A11F7111DE43195005F3EAB /* MLBPasswordRenderView.m */; };
-		7A11F7151DE43195005F3EAB /* MLBPasswordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A11F7131DE43195005F3EAB /* MLBPasswordTextField.m */; };
 		7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A11F7171DE46894005F3EAB /* TCBankCard.m */; };
 		7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EBE1DDC12DF00FCAB95 /* TCGoods.m */; };
 		7A133EC21DDC3F5C00FCAB95 /* TCGoodsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A133EC11DDC3F5C00FCAB95 /* TCGoodsWrapper.m */; };
@@ -286,6 +284,8 @@
 		7AADCC751EE80154004AA1DA /* TCPaymentPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC6E1EE80154004AA1DA /* TCPaymentPasswordView.m */; };
 		7AADCC761EE80154004AA1DA /* TCPaymentPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AADCC6F1EE80154004AA1DA /* TCPaymentPasswordView.xib */; };
 		7AADCC791EE80BF1004AA1DA /* TCPaymentRequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC781EE80BF1004AA1DA /* TCPaymentRequestInfo.m */; };
+		7AADCC871EE93A58004AA1DA /* MLBPasswordRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC841EE93A58004AA1DA /* MLBPasswordRenderView.m */; };
+		7AADCC881EE93A58004AA1DA /* MLBPasswordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC861EE93A58004AA1DA /* MLBPasswordTextField.m */; };
 		7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */; };
 		7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */; };
 		7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23761DCB5853002B81A5 /* TCBuluoApi.m */; };
@@ -612,10 +612,6 @@
 		7A0E009A1E2DC1DE0028555D /* TCLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLaunchViewController.m; sourceTree = "<group>"; };
 		7A0EA7321E00F0F700823505 /* TCCommunityListInCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommunityListInCity.h; sourceTree = "<group>"; };
 		7A0EA7331E00F0F700823505 /* TCCommunityListInCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommunityListInCity.m; sourceTree = "<group>"; };
-		7A11F7101DE43195005F3EAB /* MLBPasswordRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLBPasswordRenderView.h; sourceTree = "<group>"; };
-		7A11F7111DE43195005F3EAB /* MLBPasswordRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLBPasswordRenderView.m; sourceTree = "<group>"; };
-		7A11F7121DE43195005F3EAB /* MLBPasswordTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLBPasswordTextField.h; sourceTree = "<group>"; };
-		7A11F7131DE43195005F3EAB /* MLBPasswordTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLBPasswordTextField.m; sourceTree = "<group>"; };
 		7A11F7161DE46894005F3EAB /* TCBankCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBankCard.h; sourceTree = "<group>"; };
 		7A11F7171DE46894005F3EAB /* TCBankCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBankCard.m; sourceTree = "<group>"; };
 		7A133EBD1DDC12DF00FCAB95 /* TCGoods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoods.h; sourceTree = "<group>"; };
@@ -901,6 +897,10 @@
 		7AADCC771EE80BF1004AA1DA /* TCPaymentRequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentRequestInfo.h; sourceTree = "<group>"; };
 		7AADCC781EE80BF1004AA1DA /* TCPaymentRequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentRequestInfo.m; sourceTree = "<group>"; };
 		7AADCC7A1EE81977004AA1DA /* TCEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCEnum.h; sourceTree = "<group>"; };
+		7AADCC831EE93A58004AA1DA /* MLBPasswordRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLBPasswordRenderView.h; sourceTree = "<group>"; };
+		7AADCC841EE93A58004AA1DA /* MLBPasswordRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLBPasswordRenderView.m; sourceTree = "<group>"; };
+		7AADCC851EE93A58004AA1DA /* MLBPasswordTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLBPasswordTextField.h; sourceTree = "<group>"; };
+		7AADCC861EE93A58004AA1DA /* MLBPasswordTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLBPasswordTextField.m; sourceTree = "<group>"; };
 		7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeViewController.h; sourceTree = "<group>"; };
 		7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeViewController.m; sourceTree = "<group>"; };
 		7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCHomeViewController.xib; sourceTree = "<group>"; };
@@ -1626,17 +1626,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		7A11F70F1DE43195005F3EAB /* MLBPasswordTextField */ = {
-			isa = PBXGroup;
-			children = (
-				7A11F7101DE43195005F3EAB /* MLBPasswordRenderView.h */,
-				7A11F7111DE43195005F3EAB /* MLBPasswordRenderView.m */,
-				7A11F7121DE43195005F3EAB /* MLBPasswordTextField.h */,
-				7A11F7131DE43195005F3EAB /* MLBPasswordTextField.m */,
-			);
-			path = MLBPasswordTextField;
-			sourceTree = "<group>";
-		};
 		7A133EBC1DDC12BF00FCAB95 /* Goods */ = {
 			isa = PBXGroup;
 			children = (
@@ -2161,11 +2150,11 @@
 		7A9CCF0A1DB627A5003D90C6 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				7AADCC821EE93A58004AA1DA /* MLBPasswordTextField */,
 				550FB74B1ED5C18600D75E33 /* FSCalendar */,
 				550FB73B1ED2F54100D75E33 /* XGPush */,
 				7AB03EFA1EC0759100DFB037 /* BaoFu */,
 				7A64EA751E14EC33008D0C12 /* Wechat */,
-				7A11F70F1DE43195005F3EAB /* MLBPasswordTextField */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -2219,6 +2208,17 @@
 				7AADCC6F1EE80154004AA1DA /* TCPaymentPasswordView.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		7AADCC821EE93A58004AA1DA /* MLBPasswordTextField */ = {
+			isa = PBXGroup;
+			children = (
+				7AADCC831EE93A58004AA1DA /* MLBPasswordRenderView.h */,
+				7AADCC841EE93A58004AA1DA /* MLBPasswordRenderView.m */,
+				7AADCC851EE93A58004AA1DA /* MLBPasswordTextField.h */,
+				7AADCC861EE93A58004AA1DA /* MLBPasswordTextField.m */,
+			);
+			path = MLBPasswordTextField;
 			sourceTree = "<group>";
 		};
 		7AAF236E1DCAE7EB002B81A5 /* Home */ = {
@@ -2821,7 +2821,6 @@
 				7AC346CF1E01432000E28EC9 /* TCWalletViewController.m in Sources */,
 				7AADCC701EE80154004AA1DA /* TCPaymentBankCardView.m in Sources */,
 				559D88261E0D17AF00982697 /* TCAboutUSViewController.m in Sources */,
-				7A11F7151DE43195005F3EAB /* MLBPasswordTextField.m in Sources */,
 				7A83527E1E5C1CF1003A8E76 /* TCServiceAddressViewCell.m in Sources */,
 				7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */,
 				7AB111D41E151CD3002B7259 /* TCRechargeMethodsView.m in Sources */,
@@ -2855,6 +2854,7 @@
 				550FB7791ED5C18700D75E33 /* FSCalendarScopeHandle.m in Sources */,
 				550FB77C1ED5C18700D75E33 /* FSCalendarWeekdayView.m in Sources */,
 				7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */,
+				7AADCC881EE93A58004AA1DA /* MLBPasswordTextField.m in Sources */,
 				7A13EEAD1DF8140A00377869 /* TCCompanyApplyDetailViewController.m in Sources */,
 				0928B3381DF921AC0085A182 /* TCShoppingCartWrapper.m in Sources */,
 				098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */,
@@ -2919,6 +2919,7 @@
 				7AAB1A061ED574EF00EF5F69 /* TCWebViewController.m in Sources */,
 				55BB9EB61E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.m in Sources */,
 				7AD36DB71EDEAC3E00AB95FA /* TCForceUpdateView.m in Sources */,
+				7AADCC871EE93A58004AA1DA /* MLBPasswordRenderView.m in Sources */,
 				559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */,
 				7AADCC741EE80154004AA1DA /* TCPaymentMethodViewCell.m in Sources */,
 				098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */,
@@ -2936,7 +2937,6 @@
 				7A944BA41E5BE53B00E79C31 /* TCServiceNameViewCell.m in Sources */,
 				7A2F7C781E76BFCC007B831D /* TCLockEquipPickerView.m in Sources */,
 				7AFEC4931E55446D00B0E754 /* TCGoodsOrderCountDownView.m in Sources */,
-				7A11F7141DE43195005F3EAB /* MLBPasswordRenderView.m in Sources */,
 				7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */,
 				7A1A857B1E6800B200BB5EDB /* TCServiceFacilitiesViewController.m in Sources */,
 				7AB29F341DD46EE600564D93 /* TCUserInfo.m in Sources */,

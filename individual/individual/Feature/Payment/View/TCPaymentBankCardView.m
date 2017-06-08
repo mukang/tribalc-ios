@@ -13,15 +13,13 @@
 #import <TCCommonLibs/TCExtendButton.h>
 #import <TCCommonLibs/TCCommonButton.h>
 
-@interface TCPaymentBankCardView ()
+@interface TCPaymentBankCardView () <MLBPasswordTextFieldDelegate>
 
 @property (weak, nonatomic) UILabel *titleLabel;
 @property (weak, nonatomic) TCExtendButton *backButton;
 @property (weak, nonatomic) UIView *separatorView;
 @property (weak, nonatomic) UILabel *promptLabel;
-@property (weak, nonatomic) UILabel *codeLabel;
 @property (weak, nonatomic) TCExtendButton * codeButton;
-@property (weak, nonatomic) TCCommonButton *paymentButton;
 
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic) NSInteger timeCount;
@@ -50,8 +48,6 @@
 #pragma mark - Private Methods
 
 - (void)setupSubviews {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapSuperview:)];
-    [self addGestureRecognizer:tap];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"输入短信验证码";
@@ -80,26 +76,10 @@
     promptLabel.font = [UIFont systemFontOfSize:10];
     [self addSubview:promptLabel];
     
-    UILabel *codeLabel = [[UILabel alloc] init];
-    codeLabel.text = @"验证码";
-    codeLabel.textColor = TCBlackColor;
-    codeLabel.font = [UIFont systemFontOfSize:14];
-    [self addSubview:codeLabel];
-    
-    UITextField *codeTextField = [[UITextField alloc] init];
-    codeTextField.textColor = TCBlackColor;
-    codeTextField.textAlignment = NSTextAlignmentLeft;
-    codeTextField.font = [UIFont systemFontOfSize:11];
-    codeTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入短信验证码"
-                                                                          attributes:@{
-                                                                                       NSFontAttributeName: [UIFont systemFontOfSize:11],
-                                                                                       NSForegroundColorAttributeName: TCGrayColor
-                                                                                       }];
-    codeTextField.keyboardType = UIKeyboardTypeNumberPad;
-    codeTextField.layer.borderColor = TCSeparatorLineColor.CGColor;
-    codeTextField.layer.borderWidth = 0.5;
-    codeTextField.layer.cornerRadius = 0.25;
-    codeTextField.layer.masksToBounds = YES;
+    MLBPasswordTextField *codeTextField = [[MLBPasswordTextField alloc] initWithNumberOfDigit:6];
+    codeTextField.mlb_secureTextEntry = NO;
+    codeTextField.mlb_borderColor = TCSeparatorLineColor;
+    codeTextField.mlb_delegate = self;
     [self addSubview:codeTextField];
     
     TCExtendButton * codeButton = [TCExtendButton buttonWithType:UIButtonTypeCustom];
@@ -115,20 +95,12 @@
     codeButton.hitTestSlop = UIEdgeInsetsMake(-20, -20, -20, -20);
     [self addSubview:codeButton];
     
-    TCCommonButton *paymentButton = [TCCommonButton buttonWithTitle:@"确  定"
-                                                              color:TCCommonButtonColorBlue
-                                                             target:self
-                                                             action:@selector(handleClickConfirmButton:)];
-    [self addSubview:paymentButton];
-    
     self.titleLabel = titleLabel;
     self.backButton = backButton;
     self.separatorView = separatorView;
     self.promptLabel = promptLabel;
-    self.codeLabel = codeLabel;
     self.codeTextField = codeTextField;
     self.codeButton = codeButton;
-    self.paymentButton = paymentButton;
     
     [self startCountDown];
 }
@@ -153,27 +125,25 @@
     }];
     [self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf).offset(20);
-        make.top.equalTo(weakSelf.separatorView.mas_bottom).offset(12);
-    }];
-    [self.codeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.promptLabel);
-        make.top.equalTo(weakSelf.separatorView.mas_bottom).offset(40);
-    }];
-    [self.codeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(100, 26));
-        make.centerY.equalTo(weakSelf.codeLabel);
-        make.left.equalTo(weakSelf.codeLabel.mas_right).offset(10);
+        make.top.equalTo(weakSelf.separatorView.mas_bottom).offset(14);
     }];
     [self.codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf).offset(-20);
-        make.centerY.equalTo(weakSelf.codeLabel);
+        make.centerY.equalTo(weakSelf.promptLabel);
     }];
-    [self.paymentButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(40);
-        make.left.equalTo(weakSelf).offset(30);
-        make.right.equalTo(weakSelf).offset(-30);
-        make.bottom.equalTo(weakSelf).offset(-38);
+    [self.codeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(TCRealValue(337), 49.5));
+        make.top.equalTo(weakSelf.separatorView.mas_bottom).offset(35);
+        make.centerX.equalTo(weakSelf);
     }];
+}
+
+#pragma mark - MLBPasswordTextFieldDelegate
+
+- (void)mlb_passwordTextField:(MLBPasswordTextField *)pwdTextField didFilledPassword:(NSString *)password {
+    if ([self.delegate respondsToSelector:@selector(bankCardView:didClickConfirmButtonWithCode:)]) {
+        [self.delegate bankCardView:self didClickConfirmButtonWithCode:self.codeTextField.text];
+    }
 }
 
 #pragma mark - Actions
@@ -189,23 +159,6 @@
     
     if ([self.delegate respondsToSelector:@selector(didClickFetchCodeButtonInBankCardView:)]) {
         [self.delegate didClickFetchCodeButtonInBankCardView:self];
-    }
-}
-
-- (void)handleClickConfirmButton:(UIButton *)sender {
-    if (self.codeTextField.text.length == 0) {
-        [MBProgressHUD showHUDWithMessage:@"请输入短信验证码"];
-        return;
-    };
-    
-    if ([self.delegate respondsToSelector:@selector(bankCardView:didClickConfirmButtonWithCode:)]) {
-        [self.delegate bankCardView:self didClickConfirmButtonWithCode:self.codeTextField.text];
-    }
-}
-
-- (void)handleTapSuperview:(UITapGestureRecognizer *)gesture {
-    if ([self.codeTextField isFirstResponder]) {
-        [self.codeTextField resignFirstResponder];
     }
 }
 

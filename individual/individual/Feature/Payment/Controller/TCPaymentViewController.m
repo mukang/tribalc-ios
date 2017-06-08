@@ -185,6 +185,7 @@ BaofuFuFingerClientDelegate
  退出输入密码页
  */
 - (void)dismissPaymentPasswordView {
+    [self.paymentPasswordView.textField resignFirstResponder];
     [UIView animateWithDuration:duration animations:^{
         weakSelf.paymentDetailView.x = 0;
         weakSelf.paymentPasswordView.x = weakSelf.containerView.width;
@@ -206,6 +207,8 @@ BaofuFuFingerClientDelegate
     [UIView animateWithDuration:duration animations:^{
         weakSelf.paymentDetailView.x = - weakSelf.containerView.width;
         weakSelf.bankCardView.x = 0;
+    } completion:^(BOOL finished) {
+        [weakSelf.bankCardView.codeTextField becomeFirstResponder];
     }];
 }
 
@@ -495,7 +498,13 @@ BaofuFuFingerClientDelegate
  */
 - (void)handlePaymentSucceedWithPayment:(TCUserPayment *)payment {
     [MBProgressHUD hideHUD:YES];
-    [weakSelf dismiss:YES completion:^{
+    if ([self.paymentPasswordView.textField isFirstResponder]) {
+        [self.paymentPasswordView.textField resignFirstResponder];
+    }
+    if ([self.bankCardView.codeTextField isFirstResponder]) {
+        [self.bankCardView.codeTextField resignFirstResponder];
+    }
+    [self dismiss:YES completion:^{
         if ([weakSelf.delegate respondsToSelector:@selector(paymentViewController:didFinishedPaymentWithStatus:)]) {
             [weakSelf.delegate paymentViewController:weakSelf didFinishedPaymentWithStatus:payment.status];
         }
@@ -519,6 +528,7 @@ BaofuFuFingerClientDelegate
     requestInfo.payChannel = TCPayChannelBalance;
     requestInfo.orderIds = self.orderIDs;
     requestInfo.totalFee = self.totalFee;
+    requestInfo.targetId = self.targetID;
     [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             if ([userPayment.status isEqualToString:@"CREATED"]) { // 正在处理中
@@ -566,6 +576,7 @@ BaofuFuFingerClientDelegate
     requestInfo.payChannel = TCPayChannelBankCard;
     requestInfo.targetId = self.targetID;
     requestInfo.totalFee = self.totalFee;
+    requestInfo.orderIds = self.orderIDs;
     [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             weakSelf.paymentID = userPayment.ID;
@@ -639,7 +650,6 @@ BaofuFuFingerClientDelegate
                 [weakSelf queryBFPayWithVCode:vCode];
             });
         } else {
-            weakSelf.bankCardView.codeTextField.text = @"";
             [weakSelf.bankCardView stopCountDown];
             NSString *reason = nil;
             if (error.localizedDescription) {
