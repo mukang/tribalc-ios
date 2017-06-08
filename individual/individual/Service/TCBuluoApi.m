@@ -990,15 +990,39 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel payPurpose:(TCPayPurpose)payPurpose password:(NSString *)password orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *, NSError *))resultBlock {
+- (void)commitPaymentRequest:(TCPaymentRequestInfo *)paymentRequestInfo payPurpose:(TCPayPurpose)payPurpose result:(void (^)(TCUserPayment *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *purpose = payPurpose ? @"maintain" : @"order";
+        NSString *purpose = nil;
+        switch (payPurpose) {
+            case TCPayPurposeOrder:
+                purpose = @"order";
+                break;
+            case TCPayPurposeMaintain:
+                purpose = @"maintain";
+                break;
+            case TCPayPurposeFace2Face:
+                purpose = @"face2face";
+                break;
+                
+            default:
+                break;
+        }
         NSString *apiName = [NSString stringWithFormat:@"wallets/%@/payments?type=%@", self.currentUserSession.assigned, purpose];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-        switch (payChannel) {
+        NSDictionary *dic = [paymentRequestInfo toObjectDictionary];
+        for (NSString *key in dic.allKeys) {
+            [request setValue:dic[key] forParam:key];
+        }
+        switch (paymentRequestInfo.payChannel) {
             case TCPayChannelBalance:
                 [request setValue:@"BALANCE" forParam:@"payChannel"];
+                break;
+            case TCPayChannelAlipay:
+                [request setValue:@"ALIPAY" forParam:@"payChannel"];
+                break;
+            case TCPayChannelWechat:
+                [request setValue:@"WECHAT" forParam:@"payChannel"];
                 break;
             case TCPayChannelBankCard:
                 [request setValue:@"BF_BANKCARD" forParam:@"payChannel"];
@@ -1007,8 +1031,6 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             default:
                 break;
         }
-        if (password) [request setValue:password forParam:@"password"];
-        [request setValue:orderIDs forParam:@"orderIds"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
                 TCUserPayment *payment = [[TCUserPayment alloc] initWithObjectDictionary:response.data];

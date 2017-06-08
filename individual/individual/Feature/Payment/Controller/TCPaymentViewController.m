@@ -514,7 +514,12 @@ BaofuFuFingerClientDelegate
     }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBalance payPurpose:self.payPurpose password:password orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
+    TCPaymentRequestInfo *requestInfo = [[TCPaymentRequestInfo alloc] init];
+    requestInfo.password = password;
+    requestInfo.payChannel = TCPayChannelBalance;
+    requestInfo.orderIds = self.orderIDs;
+    requestInfo.totalFee = self.totalFee;
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             if ([userPayment.status isEqualToString:@"CREATED"]) { // 正在处理中
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -557,7 +562,11 @@ BaofuFuFingerClientDelegate
  */
 - (void)commitBFPayRequest {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] commitPaymentWithPayChannel:TCPayChannelBankCard payPurpose:self.payPurpose password:nil orderIDs:self.orderIDs result:^(TCUserPayment *userPayment, NSError *error) {
+    TCPaymentRequestInfo *requestInfo = [[TCPaymentRequestInfo alloc] init];
+    requestInfo.payChannel = TCPayChannelBankCard;
+    requestInfo.targetId = self.targetID;
+    requestInfo.totalFee = self.totalFee;
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             weakSelf.paymentID = userPayment.ID;
             [weakSelf fetchBFSessionInfoWithPaymentID:userPayment.ID refetchVCode:NO];
