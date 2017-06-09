@@ -31,6 +31,7 @@
     if (self) {
         sourceController = controller;
         weakSelf = self;
+        _allowsEditing = YES;
     }
     return self;
 }
@@ -130,7 +131,7 @@
     UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
     pickerController.sourceType = sourceType;
     pickerController.mediaTypes = @[(NSString *)kUTTypeImage];
-    pickerController.allowsEditing = YES;
+    pickerController.allowsEditing = self.allowsEditing;
     pickerController.delegate = self;
     pickerController.navigationBar.tintColor = TCBlackColor;
     [sourceController presentViewController:pickerController animated:YES completion:nil];
