@@ -702,4 +702,13 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
  */
 - (void)fetchSigninRecordMonth:(void(^)(TCSigninRecordMonth *signinRecordMonth, NSError *error))resultBlock;
 
+
+/**
+ 获取店铺详情
+
+ @param storeId 店铺id
+ @param resultBlock 返回店铺信息
+ */
+- (void)fetchStoreDetailInfoWithStoreId:(NSString *)storeId result:(void (^)(TCStoreDetailInfo *, NSError *))resultBlock;
+
 @end

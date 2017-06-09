@@ -602,7 +602,7 @@
 
 
 - (void)touchScanPayBtn:(UIButton *)button {
-    
+    if ([self checkUserNeedLogin]) return;
     TCQRCodeViewController *qrVC = [[TCQRCodeViewController alloc] init];
     qrVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:qrVC animated:YES];

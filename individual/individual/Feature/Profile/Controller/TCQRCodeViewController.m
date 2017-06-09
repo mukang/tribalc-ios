@@ -105,31 +105,6 @@
                                                                  style:UIBarButtonItemStylePlain
                                                                 target:self
                                                                 action:@selector(handleClickBackButton:)];
-    
-    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0,0,115,30)];
-    
-    UIButton *photoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [photoBtn setBackgroundImage:[UIImage imageNamed:@"qrPhotos"] forState:UIControlStateNormal];
-    //    [photoBtn setImage:[UIImage imageNamed:@"qrPhotos"] forState:UIControlStateNormal];
-    photoBtn.frame = CGRectMake(15, 0, 30, 30);
-    [rightView addSubview:photoBtn];
-    [photoBtn addTarget:self action:@selector(clickAlbumButton) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *flashBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    [flashBtn setImage:[UIImage imageNamed:@"qrFlashLight"] forState:UIControlStateNormal];
-    [flashBtn setBackgroundImage:[UIImage imageNamed:@"qrFlashLight"] forState:UIControlStateNormal];
-    flashBtn.frame = CGRectMake(50, 0, 30, 30);
-    [rightView addSubview:flashBtn];
-    [flashBtn addTarget:self action:@selector(torchOnFlashBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    [moreBtn setImage:[UIImage imageNamed:@"qrMore"] forState:UIControlStateNormal];
-    [moreBtn setBackgroundImage:[UIImage imageNamed:@"qrMore"] forState:UIControlStateNormal];
-    
-    moreBtn.frame = CGRectMake(85, 0, 30, 30);
-    [rightView addSubview:moreBtn];
-    
-    navItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightView];
 }
 
 
@@ -263,18 +238,43 @@
     
     [self.view addSubview:tipLabel];
     
-    // 2> 名片按钮
-    UIButton *cardButton = [[UIButton alloc] init];
+//    // 2> 名片按钮
+//    UIButton *cardButton = [[UIButton alloc] init];
+//    
+//    [cardButton setTitle:@"我的二维码" forState:UIControlStateNormal];
+//    cardButton.titleLabel.font = [UIFont systemFontOfSize:12];
+//    [cardButton setTitleColor:TCRGBColor(88, 191, 200) forState:UIControlStateNormal];
+//    
+//    [cardButton sizeToFit];
+//    cardButton.center = CGPointMake(tipLabel.center.x, CGRectGetMaxY(tipLabel.frame) + kControlMargin);
+//    
+//    [self.view addSubview:cardButton];
     
-    [cardButton setTitle:@"我的二维码" forState:UIControlStateNormal];
-    cardButton.titleLabel.font = [UIFont systemFontOfSize:12];
-    [cardButton setTitleColor:TCRGBColor(88, 191, 200) forState:UIControlStateNormal];
     
-    [cardButton sizeToFit];
-    cardButton.center = CGPointMake(tipLabel.center.x, CGRectGetMaxY(tipLabel.frame) + kControlMargin);
+    UIButton *photoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [photoBtn setBackgroundImage:[UIImage imageNamed:@"album"] forState:UIControlStateNormal];
+    //    [photoBtn setImage:[UIImage imageNamed:@"qrPhotos"] forState:UIControlStateNormal];
+//    photoBtn.frame = CGRectMake(15, 0, 30, 30);
+    [self.view addSubview:photoBtn];
+    [photoBtn addTarget:self action:@selector(clickAlbumButton) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:cardButton];
+    UIButton *flashBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    [flashBtn setImage:[UIImage imageNamed:@"qrFlashLight"] forState:UIControlStateNormal];
+    [flashBtn setBackgroundImage:[UIImage imageNamed:@"flashLight"] forState:UIControlStateNormal];
+//    flashBtn.frame = CGRectMake(50, 0, 30, 30);
+    [self.view addSubview:flashBtn];
+    [flashBtn addTarget:self action:@selector(torchOnFlashBtn:) forControlEvents:UIControlEventTouchUpInside];
     
+    [photoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view).offset(-(TCRealValue(49)));
+        make.width.height.equalTo(@33);
+        make.centerX.equalTo(self.view).offset(-33);
+    }];
+    
+    [flashBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.width.height.equalTo(photoBtn);
+        make.centerX.equalTo(self.view).offset(33);
+    }];
 }
 
 /// 准备扫描框

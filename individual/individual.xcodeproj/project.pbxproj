@@ -109,6 +109,7 @@
 		55BB9EBA1E72AF5400B0FD94 /* TCLockEquip.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EB91E72AF5400B0FD94 /* TCLockEquip.m */; };
 		55BB9EBD1E72AF7800B0FD94 /* TCLockKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EBC1E72AF7800B0FD94 /* TCLockKey.m */; };
 		55BB9EC01E72B49100B0FD94 /* TCLockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EBF1E72B49100B0FD94 /* TCLockWrapper.m */; };
+		55BD1E071EE8FF39008C1E02 /* TCStoreDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BD1E061EE8FF39008C1E02 /* TCStoreDetailInfo.m */; };
 		55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */; };
 		55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */; };
 		55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */; };
@@ -580,6 +581,8 @@
 		55BB9EBC1E72AF7800B0FD94 /* TCLockKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockKey.m; sourceTree = "<group>"; };
 		55BB9EBE1E72B49100B0FD94 /* TCLockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockWrapper.h; sourceTree = "<group>"; };
 		55BB9EBF1E72B49100B0FD94 /* TCLockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockWrapper.m; sourceTree = "<group>"; };
+		55BD1E051EE8FF39008C1E02 /* TCStoreDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStoreDetailInfo.h; sourceTree = "<group>"; };
+		55BD1E061EE8FF39008C1E02 /* TCStoreDetailInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreDetailInfo.m; sourceTree = "<group>"; };
 		55F06EEC1E03911400A849D7 /* TCPropertyManageListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageListController.h; sourceTree = "<group>"; };
 		55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageListController.m; sourceTree = "<group>"; };
 		55F06EF01E03977000A849D7 /* TCPropertyManageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageWrapper.h; sourceTree = "<group>"; };
@@ -1554,6 +1557,15 @@
 			path = OpenDoor;
 			sourceTree = "<group>";
 		};
+		55BD1E041EE8FF12008C1E02 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				55BD1E051EE8FF39008C1E02 /* TCStoreDetailInfo.h */,
+				55BD1E061EE8FF39008C1E02 /* TCStoreDetailInfo.m */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
 		55F06EEA1E03902000A849D7 /* Property */ = {
 			isa = PBXGroup;
 			children = (
@@ -2269,6 +2281,7 @@
 				7A133EBC1DDC12BF00FCAB95 /* Goods */,
 				09AE0F6F1DED2A6200F307D8 /* Service */,
 				0930F3F51DF5024800769439 /* ShoppingCart */,
+				55BD1E041EE8FF12008C1E02 /* Store */,
 				7AAF237C1DCB5BF1002B81A5 /* User */,
 			);
 			path = Model;
@@ -3016,6 +3029,7 @@
 				7A16665B1DFAB01E007B5733 /* TCCompanyHeaderView.m in Sources */,
 				7AAB1A031ED447EB00EF5F69 /* TCPromotionsWrapper.m in Sources */,
 				7A21E43A1DD01F0400EF7427 /* TCProfileViewCell.m in Sources */,
+				55BD1E071EE8FF39008C1E02 /* TCStoreDetailInfo.m in Sources */,
 				7A2F7C721E768C36007B831D /* TCAddVisitorTimeViewCell.m in Sources */,
 				7AFEC4811E54056D00B0E754 /* TCGoodsOrderPriceViewCell.m in Sources */,
 				7A74674B1DF90F8300ACD815 /* TCCompanyIntroViewCell.m in Sources */,

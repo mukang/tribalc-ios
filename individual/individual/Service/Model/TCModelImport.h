@@ -29,6 +29,7 @@
 #import "TCGoodDetail.h"
 #import "TCGoodStandards.h"
 #import "TCStoreInfo.h"
+#import "TCStoreDetailInfo.h"
 
 /********** 服务相关 **********/
 #import "TCServiceWrapper.h"
