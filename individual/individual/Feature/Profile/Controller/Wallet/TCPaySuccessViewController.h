@@ -10,6 +10,11 @@
 
 @interface TCPaySuccessViewController : TCBaseViewController
 
+/** 金额 */
+@property (nonatomic) double totalAmount;
+/** 商家名称 */
+@property (copy, nonatomic) NSString *storeName;
+
 @property (weak, nonatomic) UIViewController *fromController;
 
 @end

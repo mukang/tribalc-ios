@@ -20,7 +20,7 @@
 /** 支付方式 Default BALANCE From { BALANCE, ALIPAY, WECHAT, BANKCARD } */
 @property (copy, nonatomic) NSString *payChannel;
 /** 支付总金额 */
-@property (nonatomic) CGFloat totalAmount;
+@property (nonatomic) double totalAmount;
 /** 备注信息 */
 @property (copy, nonatomic) NSString *note;
 

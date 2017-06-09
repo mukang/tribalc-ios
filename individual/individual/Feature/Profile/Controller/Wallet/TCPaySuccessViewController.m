@@ -69,11 +69,28 @@
     containerView.layer.cornerRadius = 2.5;
     [self.view addSubview:containerView];
     
+    NSString *str = [NSString stringWithFormat:@"收款人 %@", self.storeName];
+    NSRange nameRange = [str rangeOfString:self.storeName];
+    NSRange titleRange = NSMakeRange(0, str.length - nameRange.length);
+    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:str];
+    [attStr addAttributes:@{
+                            NSFontAttributeName: [UIFont systemFontOfSize:16],
+                            NSForegroundColorAttributeName: TCGrayColor
+                            }
+                    range:titleRange];
+    [attStr addAttributes:@{
+                            NSFontAttributeName: [UIFont systemFontOfSize:16],
+                            NSForegroundColorAttributeName: TCBlackColor
+                            }
+                    range:nameRange];
+    
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.textAlignment = NSTextAlignmentCenter;
+    nameLabel.attributedText = attStr;
     [containerView addSubview:nameLabel];
     
     UILabel *totalFeeLabel = [[UILabel alloc] init];
+    totalFeeLabel.text = [NSString stringWithFormat:@"¥ %0.2f", self.totalAmount];
     totalFeeLabel.textColor = TCBlackColor;
     totalFeeLabel.textAlignment = NSTextAlignmentCenter;
     totalFeeLabel.font = [UIFont boldSystemFontOfSize:30];
@@ -115,7 +132,11 @@
 }
 
 - (void)back {
-    
+    if (self.fromController) {
+        [self.navigationController popToViewController:self.fromController animated:YES];
+    } else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
