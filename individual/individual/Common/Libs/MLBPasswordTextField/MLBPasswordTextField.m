@@ -22,28 +22,37 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (instancetype)init {
-    if (self = [super init]) {
+- (instancetype)initWithNumberOfDigit:(NSInteger)num {
+    self = [super initWithFrame:CGRectZero];
+    if (self) {
+        if (num <= 0) num = kMLBPasswordTextFieldDefaultNumberOfDigit;
+        _mlb_numberOfDigit = num;
+        _mlb_showCursor = NO;
+        _mlb_secureTextEntry = YES;
         [self mlb_setup];
     }
-    
     return self;
+}
+
+- (instancetype)init {
+    @throw [NSException exceptionWithName:@"MLBPasswordTextField初始化错误"
+                                   reason:@"请使用接口文件提供的初始化方法"
+                                 userInfo:nil];
+    return nil;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-        [self mlb_setup];
-    }
-    
-    return self;
+    @throw [NSException exceptionWithName:@"MLBPasswordTextField初始化错误"
+                                   reason:@"请使用接口文件提供的初始化方法"
+                                 userInfo:nil];
+    return nil;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        [self mlb_setup];
-    }
-    
-    return self;
+    @throw [NSException exceptionWithName:@"MLBPasswordTextField初始化错误"
+                                   reason:@"请使用接口文件提供的初始化方法"
+                                 userInfo:nil];
+    return nil;
 }
 
 #pragma mark - Parent Methods
@@ -53,12 +62,6 @@
 }
 
 #pragma mark - Private Methods
-
-- (void)inspectableDefaults {
-    _mlb_numberOfDigit = kMLBPasswordTextFieldDefaultNumberOfDigit;
-    _mlb_showCursor = NO;
-}
-
 - (void)mlb_setup {
     if (!self.mlb_pwdRenderView) {
         self.backgroundColor = [UIColor whiteColor];
@@ -70,13 +73,11 @@
         self.enablesReturnKeyAutomatically = YES;
         self.clearsOnBeginEditing = NO;
         
-        [self inspectableDefaults];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidBeginEditing:) name:UITextFieldTextDidBeginEditingNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidEndEditing:) name:UITextFieldTextDidEndEditingNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChanged:) name:UITextFieldTextDidChangeNotification object:nil];
         
-        self.mlb_pwdRenderView = [[MLBPasswordRenderView alloc] init];
+        self.mlb_pwdRenderView = [[MLBPasswordRenderView alloc] initWithNumberOfDigit:_mlb_numberOfDigit];
         [self addSubview:self.mlb_pwdRenderView];
         [self sendSubviewToBack:self.mlb_pwdRenderView];
         
@@ -94,13 +95,6 @@
 }
 
 #pragma mark - Setter
-
-- (void)setMlb_numberOfDigit:(NSUInteger)mlb_numberOfDigit {
-    if (_mlb_numberOfDigit != mlb_numberOfDigit) {
-        _mlb_numberOfDigit = mlb_numberOfDigit;
-        self.mlb_pwdRenderView.mlb_rNumberOfDot = _mlb_numberOfDigit;
-    }
-}
 
 - (void)setMlb_borderColor:(UIColor *)mlb_borderColor {
     if (_mlb_borderColor != mlb_borderColor) {
@@ -151,6 +145,27 @@
     }
 }
 
+- (void)setMlb_secureTextEntry:(BOOL)mlb_secureTextEntry {
+    if (_mlb_secureTextEntry != mlb_secureTextEntry) {
+        _mlb_secureTextEntry = mlb_secureTextEntry;
+        self.mlb_pwdRenderView.mlb_rSecureTextEntry = _mlb_secureTextEntry;
+    }
+}
+
+- (void)setMlb_font:(UIFont *)mlb_font {
+    if (_mlb_font != mlb_font) {
+        _mlb_font = mlb_font;
+        self.mlb_pwdRenderView.mlb_rFont = _mlb_font;
+    }
+}
+
+- (void)setMlb_textColor:(UIColor *)mlb_textColor {
+    if (_mlb_textColor != mlb_textColor) {
+        _mlb_textColor = mlb_textColor;
+        self.mlb_pwdRenderView.mlb_rTextColor = _mlb_textColor;
+    }
+}
+
 #pragma mark - Notifications
 
 - (void)textDidBeginEditing:(NSNotification *)notification {
@@ -177,6 +192,7 @@
         if (textField.text.length > _mlb_numberOfDigit && textField.markedTextRange == nil) {
             textField.text = [textField.text substringWithRange: NSMakeRange(0, _mlb_numberOfDigit)];
         } else {
+            self.mlb_pwdRenderView.mlb_rCurrentText = textField.text;
             self.mlb_pwdRenderView.mlb_rCurrentNumberOfDot = textField.text.length;
         }
         

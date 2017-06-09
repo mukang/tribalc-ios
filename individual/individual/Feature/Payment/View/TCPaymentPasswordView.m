@@ -20,7 +20,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    MLBPasswordTextField *textField = [[MLBPasswordTextField alloc] init];
+    MLBPasswordTextField *textField = [[MLBPasswordTextField alloc] initWithNumberOfDigit:6];
     textField.mlb_borderColor = TCSeparatorLineColor;
     textField.mlb_dotColor = TCBlackColor;
     textField.mlb_dotRadius = 7;

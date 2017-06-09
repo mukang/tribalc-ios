@@ -7,19 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "TCModelImport.h"
+#import "TCEnum.h"
 
 extern NSString *const TCBuluoApiNotificationUserDidLogin;
 extern NSString *const TCBuluoApiNotificationUserDidLogout;
 extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
-
-typedef NS_ENUM(NSInteger, TCPayChannel) {
-    TCPayChannelBalance = 0,  // 余额
-    TCPayChannelAlipay,       // 支付宝
-    TCPayChannelWechat,       // 微信
-    TCPayChannelBankCard      // 银行卡
-};
 
 typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
     TCPayPurposeOrder = 0,   // 订单
@@ -323,11 +316,11 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
 /**
  提交付款申请
 
- @param payChannel 支付方式
- @param orderIDs 订单ID列表
- @param resultBlock 结果回调，userPayment为nil时表示提交失败，失败原因见error的code和userInfo
+ @param paymentRequestInfo 付款申请信息
+ @param payPurpose 付款目的
+ @param resultBlock 结果回调
  */
-- (void)commitPaymentWithPayChannel:(TCPayChannel)payChannel payPurpose:(TCPayPurpose)payPurpose password:(NSString *)password orderIDs:(NSArray *)orderIDs result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
+- (void)commitPaymentRequest:(TCPaymentRequestInfo *)paymentRequestInfo payPurpose:(TCPayPurpose)payPurpose result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
 
 /**
  查询付款申请

@@ -126,8 +126,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     [self.view addSubview:titleLabel];
     self.titleLabel = titleLabel;
     
-    MLBPasswordTextField *textField = [[MLBPasswordTextField alloc] init];
-    textField.mlb_numberOfDigit = 6;
+    MLBPasswordTextField *textField = [[MLBPasswordTextField alloc] initWithNumberOfDigit:6];
     textField.mlb_borderColor = TCSeparatorLineColor;
     textField.mlb_borderWidth = 0.5;
     textField.mlb_dotColor = TCBlackColor;

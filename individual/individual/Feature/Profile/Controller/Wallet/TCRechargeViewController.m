@@ -249,12 +249,7 @@ TCRechargeMethodsViewDelegate>
 #pragma mark - TCPaymentBankCardViewDelegate
 
 - (void)didClickBackButtonInBankCardView:(TCPaymentBankCardView *)view {
-    [UIView animateWithDuration:duration animations:^{
-        weakSelf.bgView.backgroundColor = TCARGBColor(0, 0, 0, 0);
-        weakSelf.paymentBankCardView.y = TCScreenHeight;
-    } completion:^(BOOL finished) {
-        [weakSelf.bgView removeFromSuperview];
-    }];
+    [self dismissBankCardCodeView];
 }
 
 - (void)didClickFetchCodeButtonInBankCardView:(TCPaymentBankCardView *)view {
@@ -446,6 +441,8 @@ TCRechargeMethodsViewDelegate>
     [UIView animateWithDuration:duration animations:^{
         bgView.backgroundColor = TCARGBColor(0, 0, 0, 0.62);
         paymentBankCardView.y = TCScreenHeight - paymentBankCardViewH;
+    } completion:^(BOOL finished) {
+        [paymentBankCardView.codeTextField becomeFirstResponder];
     }];
 }
 
@@ -453,6 +450,9 @@ TCRechargeMethodsViewDelegate>
  退出输入银行卡验证码页面
  */
 - (void)dismissBankCardCodeView {
+    if ([self.paymentBankCardView.codeTextField isFirstResponder]) {
+        [self.paymentBankCardView.codeTextField resignFirstResponder];
+    }
     [UIView animateWithDuration:duration animations:^{
         weakSelf.bgView.backgroundColor = TCARGBColor(0, 0, 0, 0);
         weakSelf.paymentBankCardView.y = TCScreenHeight;
