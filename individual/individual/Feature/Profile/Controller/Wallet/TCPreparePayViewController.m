@@ -10,8 +10,9 @@
 #import "TCBuluoApi.h"
 #import "TCImageURLSynthesizer.h"
 #import <UIImageView+WebCache.h>
+#import "TCPaymentViewController.h"
 
-@interface TCPreparePayViewController ()
+@interface TCPreparePayViewController ()<TCPaymentViewControllerDelegate>
 
 @property (strong, nonatomic) UIImageView *iconView;
 
@@ -105,6 +106,23 @@
 }
 
 - (void)pay {
+    if (self.textField.text.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请输入金额"];
+        return;
+    }
+    
+    TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:[self.textField.text doubleValue]
+                                                                         payPurpose:TCPayPurposeFace2Face
+                                                                     fromController:self];
+    vc.delegate = self;
+    vc.targetID = self.storeDetailInfo.ID;
+    [vc show:YES];
+    
+}
+
+#pragma TCPaymentViewControllerDelegate
+
+- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithStatus:(NSString *)status {
     
 }
 
