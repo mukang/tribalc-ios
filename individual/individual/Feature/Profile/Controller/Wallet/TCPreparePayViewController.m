@@ -11,8 +11,9 @@
 #import "TCImageURLSynthesizer.h"
 #import <UIImageView+WebCache.h>
 #import "TCPaymentViewController.h"
+#import "TCPaySuccessViewController.h"
 
-@interface TCPreparePayViewController ()<TCPaymentViewControllerDelegate>
+@interface TCPreparePayViewController ()<TCPaymentViewControllerDelegate,UITextFieldDelegate>
 
 @property (strong, nonatomic) UIImageView *iconView;
 
@@ -28,6 +29,7 @@
 
 @property (strong, nonatomic) TCStoreDetailInfo *storeDetailInfo;
 
+@property (assign, nonatomic, getter=isHavePoint) BOOL havePoint;
 @end
 
 @implementation TCPreparePayViewController
@@ -120,10 +122,81 @@
     
 }
 
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    /*
+     * 不能输入.0-9以外的字符
+     * 设置输入框输入的内容格式
+     * 只能有一个小数点
+     * 小数点后最多能输入两位
+     * 如果第一位是.则前面加上0.
+     * 如果第一位是0则后面必须输入点，否则不能输入。
+     */
+    
+    // 判断是否有小数点
+    if ([textField.text containsString:@"."]) {
+        self.havePoint = YES;
+    } else {
+        self.havePoint = NO;
+    }
+    
+    if (string.length > 0) {
+        // 当前输入的字符
+        unichar character = [string characterAtIndex:0];
+        TCLog(@"single = %c",character);
+        
+        // 不能输入.0-9以外的字符
+        if (((character < '0') || (character > '9')) && (character != '.')) {
+            return NO;
+        }
+        
+        // 只能有一个小数点
+        if (self.isHavePoint && character == '.') {
+            return NO;
+        }
+        
+        // 如果第一位是.则前面加上0
+        if (textField.text.length == 0 && character == '.') {
+            textField.text = @"0";
+        }
+        
+        // 如果第一位是0则后面必须输入点，否则不能输入
+        if ([textField.text hasPrefix:@"0"]) {
+            if (textField.text.length > 1) {
+                NSString *secondCharacter = [textField.text substringWithRange:NSMakeRange(1, 1)];
+                if (![secondCharacter isEqualToString:@"."]) {
+                    return NO;
+                }
+            } else {
+                if (![string isEqualToString:@"."]) {
+                    return NO;
+                }
+            }
+        }
+        
+        // 小数点后最多能输入两位
+        if (self.isHavePoint) {
+            NSRange pointRange = [textField.text rangeOfString:@"."];
+            if (range.location > pointRange.location) {
+                if ([textField.text pathExtension].length > 1) {
+                    return NO;
+                }
+            }
+        }
+    }
+    return YES;
+}
+
+
 #pragma TCPaymentViewControllerDelegate
 
 - (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
-    
+    TCPaySuccessViewController *paySuccessVC = [[TCPaySuccessViewController alloc] init];
+    paySuccessVC.totalAmount = payment.totalAmount;
+    paySuccessVC.storeName = self.storeDetailInfo.name;
+    paySuccessVC.fromController = self.fromController;
+    [self.navigationController pushViewController:paySuccessVC animated:YES];
 }
 
 - (UIButton *)payBtn {
@@ -175,6 +248,7 @@
     if (_textField == nil) {
         _textField = [[UITextField alloc] init];
         _textField.keyboardType = UIKeyboardTypeDecimalPad;
+        _textField.delegate = self;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 30)];
         label.text = @"¥";
         label.font = [UIFont systemFontOfSize:20];

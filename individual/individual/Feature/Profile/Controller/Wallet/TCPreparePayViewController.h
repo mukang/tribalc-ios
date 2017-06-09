@@ -12,4 +12,6 @@
 
 @property (copy, nonatomic) NSString *storeId;
 
+@property (weak, nonatomic) UIViewController *fromController;
+
 @end

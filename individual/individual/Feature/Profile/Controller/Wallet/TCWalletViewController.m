@@ -150,6 +150,7 @@
 - (IBAction)handleClickSweepCodeButton:(UIButton *)sender {
 //    [self btnClickUnifyTips];
     TCQRCodeViewController *qrVc = [[TCQRCodeViewController alloc] init];
+    qrVc.fromController = self;
     [self.navigationController pushViewController:qrVc animated:YES];
 }
 - (IBAction)handleClickWalletBillButton:(UIButton *)sender {

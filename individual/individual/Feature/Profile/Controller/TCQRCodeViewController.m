@@ -67,6 +67,7 @@
             if (arr.count > 1) {
                 NSString *storeId = arr[1];
                 TCPreparePayViewController *preparePayVC = [[TCPreparePayViewController alloc] init];
+                preparePayVC.fromController = self.fromController;
                 preparePayVC.storeId =storeId;
                 [self.navigationController pushViewController:preparePayVC animated:YES];
                 return;
@@ -141,7 +142,6 @@
     
     TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
     photoPicker.delegate = self;
-//    photoPicker.allowsEditing = NO;
     _photoPicker = photoPicker;
     [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     
@@ -159,10 +159,8 @@
     [TCScanner scaneImage:image completion:^(NSArray *values) {
         
         if (values.count > 0) {
-            //            self.completionCallBack(values.firstObject);
             if ([values isKindOfClass:[NSArray class]] && [values.firstObject isKindOfClass:[NSString class]]) {
                 [self dismissViewControllerAnimated:YES completion:^{
-                    //                [self clickCloseButton];
                     [self handleScanerResultWithStr:values.firstObject];
                 }];
                 
@@ -236,30 +234,13 @@
     
     [self.view addSubview:tipLabel];
     
-//    // 2> 名片按钮
-//    UIButton *cardButton = [[UIButton alloc] init];
-//    
-//    [cardButton setTitle:@"我的二维码" forState:UIControlStateNormal];
-//    cardButton.titleLabel.font = [UIFont systemFontOfSize:12];
-//    [cardButton setTitleColor:TCRGBColor(88, 191, 200) forState:UIControlStateNormal];
-//    
-//    [cardButton sizeToFit];
-//    cardButton.center = CGPointMake(tipLabel.center.x, CGRectGetMaxY(tipLabel.frame) + kControlMargin);
-//    
-//    [self.view addSubview:cardButton];
-    
-    
     UIButton *photoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [photoBtn setBackgroundImage:[UIImage imageNamed:@"album"] forState:UIControlStateNormal];
-    //    [photoBtn setImage:[UIImage imageNamed:@"qrPhotos"] forState:UIControlStateNormal];
-//    photoBtn.frame = CGRectMake(15, 0, 30, 30);
     [self.view addSubview:photoBtn];
     [photoBtn addTarget:self action:@selector(clickAlbumButton) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *flashBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    [flashBtn setImage:[UIImage imageNamed:@"qrFlashLight"] forState:UIControlStateNormal];
     [flashBtn setBackgroundImage:[UIImage imageNamed:@"flashLight"] forState:UIControlStateNormal];
-//    flashBtn.frame = CGRectMake(50, 0, 30, 30);
     [self.view addSubview:flashBtn];
     [flashBtn addTarget:self action:@selector(torchOnFlashBtn:) forControlEvents:UIControlEventTouchUpInside];
     

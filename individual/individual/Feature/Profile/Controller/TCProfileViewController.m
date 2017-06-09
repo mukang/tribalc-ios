@@ -483,6 +483,7 @@ TCPhotoModeViewDelegate>
     TCLog(@"点击了扫码按钮");
     if ([self checkUserNeedLogin]) return;
     TCQRCodeViewController *qrVc = [[TCQRCodeViewController alloc] init];
+    qrVc.fromController = self;
     qrVc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:qrVc animated:YES];
 }

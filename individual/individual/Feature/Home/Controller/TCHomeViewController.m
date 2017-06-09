@@ -605,6 +605,7 @@
     if ([self checkUserNeedLogin]) return;
     TCQRCodeViewController *qrVC = [[TCQRCodeViewController alloc] init];
     qrVC.hidesBottomBarWhenPushed = YES;
+    qrVC.fromController = self;
     [self.navigationController pushViewController:qrVC animated:YES];
 }
 
