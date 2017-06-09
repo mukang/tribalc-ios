@@ -55,10 +55,7 @@
     scanner = [TCScanner scanerWithView:self.view scanFrame:scannerBorder.frame completion:^(NSString *stringValue) {
         @StrongObj(self)
         // 完成回调
-//        self.completion();
         [self handleScanerResultWithStr:stringValue];
-//        [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！"];
-//        [self.navigationController popViewControllerAnimated:YES];
     }];
    
 }
@@ -144,6 +141,7 @@
     
     TCPhotoPicker *photoPicker = [[TCPhotoPicker alloc] initWithSourceController:self];
     photoPicker.delegate = self;
+//    photoPicker.allowsEditing = NO;
     _photoPicker = photoPicker;
     [photoPicker showPhotoPikerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     
