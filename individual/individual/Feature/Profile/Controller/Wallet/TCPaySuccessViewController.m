@@ -114,6 +114,14 @@
         make.right.equalTo(self.view).offset(-17);
         make.height.mas_equalTo(108);
     }];
+    [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(containerView).offset(20);
+        make.left.right.equalTo(containerView);
+    }];
+    [totalFeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(containerView).offset(-22);
+        make.left.right.equalTo(containerView);
+    }];
     [completionButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(TCRealValue(315), 40));
         make.top.equalTo(containerView.mas_bottom).offset(36);
