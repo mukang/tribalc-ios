@@ -334,7 +334,7 @@
 
 #pragma mark - TCPaymentViewControllerDelegate
 
-- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithStatus:(NSString *)status {
+- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
     [self handleRemoveHederView];
     self.cancelButton.hidden = YES;
     [self.confirmButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"提醒发货"

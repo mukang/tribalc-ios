@@ -48,8 +48,9 @@ BaofuFuFingerClientDelegate
 /** 当前的银行卡信息（付款方式为TCPaymentMethodBankCard时有值） */
 @property (strong, nonatomic) TCBankCard *currentBankCard;
 
-/** 付款id */
-@property (copy, nonatomic) NSString *paymentID;
+
+@property (strong, nonatomic) TCUserPayment *payment;
+
 /** 宝付支付ID */
 @property (copy, nonatomic) NSString *bfPayID;
 
@@ -319,7 +320,7 @@ BaofuFuFingerClientDelegate
 }
 
 - (void)didClickFetchCodeButtonInBankCardView:(TCPaymentBankCardView *)view {
-    [self fetchBFSessionInfoWithPaymentID:weakSelf.paymentID refetchVCode:YES];
+    [self fetchBFSessionInfoWithPaymentID:weakSelf.payment.ID refetchVCode:YES];
 }
 
 - (void)bankCardView:(TCPaymentBankCardView *)view didClickConfirmButtonWithCode:(NSString *)code {
@@ -471,9 +472,9 @@ BaofuFuFingerClientDelegate
  使用宝付付款
  */
 - (void)handlePaymentWithBankCard {
-    if (self.paymentID) {
+    if (self.payment) {
         [MBProgressHUD showHUD:YES];
-        [self fetchBFSessionInfoWithPaymentID:self.paymentID refetchVCode:NO];
+        [self fetchBFSessionInfoWithPaymentID:self.payment.ID refetchVCode:NO];
     } else {
         [self commitBFPayRequest];
     }
@@ -505,8 +506,9 @@ BaofuFuFingerClientDelegate
         [self.bankCardView.codeTextField resignFirstResponder];
     }
     [self dismiss:YES completion:^{
-        if ([weakSelf.delegate respondsToSelector:@selector(paymentViewController:didFinishedPaymentWithStatus:)]) {
-            [weakSelf.delegate paymentViewController:weakSelf didFinishedPaymentWithStatus:payment.status];
+        if ([weakSelf.delegate respondsToSelector:@selector(paymentViewController:didFinishedPaymentWithPayment:)]) {
+            TCUserPayment *userPayment = payment ?: weakSelf.payment;
+            [weakSelf.delegate paymentViewController:weakSelf didFinishedPaymentWithPayment:userPayment];
         }
     }];
 }
@@ -579,7 +581,7 @@ BaofuFuFingerClientDelegate
     requestInfo.orderIds = self.orderIDs;
     [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
-            weakSelf.paymentID = userPayment.ID;
+            weakSelf.payment = userPayment;
             [weakSelf fetchBFSessionInfoWithPaymentID:userPayment.ID refetchVCode:NO];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";

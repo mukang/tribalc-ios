@@ -13,7 +13,7 @@
 @protocol TCPaymentViewControllerDelegate <NSObject>
 
 @optional
-- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithStatus:(NSString *)status;
+- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment;
 - (void)didClickCloseButtonInPaymentViewController:(TCPaymentViewController *)controller;
 
 @end

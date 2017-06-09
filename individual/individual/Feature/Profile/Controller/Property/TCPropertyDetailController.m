@@ -242,7 +242,7 @@
 
 #pragma mark - TCPaymentViewControllerDelegate
 
-- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithStatus:(NSString *)status {
+- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
     [self.navigationController popViewControllerAnimated:YES];
 }
 

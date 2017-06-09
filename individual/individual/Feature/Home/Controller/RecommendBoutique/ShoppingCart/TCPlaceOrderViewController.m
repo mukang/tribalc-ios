@@ -388,7 +388,7 @@
 
 #pragma mark - TCPaymentViewControllerDelegate
 
-- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithStatus:(NSString *)status {
+- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
     // 跳转至“全部”订单列表
     TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:TCGoodsOrderStatusAll];
     vc.fromController = self.fromController;
