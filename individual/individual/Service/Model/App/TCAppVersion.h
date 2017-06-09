@@ -12,9 +12,9 @@
 
 /** 最新版本号 */
 @property (copy, nonatomic) NSString *lastVersion;
+/** 支持最小版本号 */
+@property (copy, nonatomic) NSString *minVersion;
 /** 更新日志 */
 @property (copy, nonatomic) NSArray *releaseNote;
-/** 当前版本是否仍被支持 */
-@property (nonatomic) BOOL supported;
 
 @end
