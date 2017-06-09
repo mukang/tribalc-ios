@@ -12,6 +12,7 @@
 #import <UIImageView+WebCache.h>
 #import "TCPaymentViewController.h"
 #import "TCPaySuccessViewController.h"
+#import <UIImage+Category.h>
 
 @interface TCPreparePayViewController ()<TCPaymentViewControllerDelegate,UITextFieldDelegate>
 
@@ -39,6 +40,7 @@
     self.title = @"向商家付款";
     self.view.backgroundColor = TCRGBColor(240, 241, 242);
     [self loadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange) name:@"UITextFieldTextDidChangeNotification" object:nil];
 }
 
 - (void)loadData {
@@ -108,6 +110,9 @@
 }
 
 - (void)pay {
+    
+    [self.view endEditing:YES];
+    
     if (self.textField.text.length == 0) {
         [MBProgressHUD showHUDWithMessage:@"请输入金额"];
         return;
@@ -120,6 +125,14 @@
     vc.targetID = self.storeDetailInfo.ID;
     [vc show:YES];
     
+}
+
+- (void)textDidChange {
+    if (self.textField.text.length) {
+        self.payBtn.enabled = YES;
+    }else {
+        self.payBtn.enabled = NO;
+    }
 }
 
 #pragma mark - UITextFieldDelegate
@@ -135,6 +148,7 @@
      */
     
     // 判断是否有小数点
+    
     if ([textField.text containsString:@"."]) {
         self.havePoint = YES;
     } else {
@@ -202,11 +216,14 @@
 - (UIButton *)payBtn {
     if (_payBtn == nil) {
         _payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_payBtn setTitle:@"付 款" forState:UIControlStateNormal];
+        [_payBtn setTitle:@"付  款" forState:UIControlStateNormal];
         [_payBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _payBtn.layer.cornerRadius = 4.0;
         _payBtn.clipsToBounds = YES;
-        _payBtn.backgroundColor = TCRGBColor(218, 216, 217);
+        _payBtn.enabled = NO;
+        [_payBtn setBackgroundImage:[UIImage imageWithColor:TCRGBColor(218, 216, 217)] forState:UIControlStateDisabled];
+        [_payBtn setBackgroundImage:[UIImage imageWithColor:TCRGBColor(81, 199, 209)] forState:UIControlStateNormal];
+        [_payBtn setBackgroundImage:[UIImage imageWithColor:TCRGBColor(10, 164, 177)] forState:UIControlStateHighlighted];
         [_payBtn addTarget:self action:@selector(pay) forControlEvents:UIControlEventTouchUpInside];
     }
     return _payBtn;
