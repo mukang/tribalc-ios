@@ -11,7 +11,6 @@
 #import "TCBuluoApi.h"
 
 #import <TCCommonLibs/TCExtendButton.h>
-#import <TCCommonLibs/TCCommonButton.h>
 
 @interface TCPaymentBankCardView () <MLBPasswordTextFieldDelegate>
 

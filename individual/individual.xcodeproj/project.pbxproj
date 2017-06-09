@@ -288,6 +288,7 @@
 		7AADCC791EE80BF1004AA1DA /* TCPaymentRequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC781EE80BF1004AA1DA /* TCPaymentRequestInfo.m */; };
 		7AADCC871EE93A58004AA1DA /* MLBPasswordRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC841EE93A58004AA1DA /* MLBPasswordRenderView.m */; };
 		7AADCC881EE93A58004AA1DA /* MLBPasswordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC861EE93A58004AA1DA /* MLBPasswordTextField.m */; };
+		7AADCC8B1EEA3E6B004AA1DA /* TCPaySuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC8A1EEA3E6B004AA1DA /* TCPaySuccessViewController.m */; };
 		7AAF23731DCAE80D002B81A5 /* TCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */; };
 		7AAF23741DCAE80D002B81A5 /* TCHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */; };
 		7AAF23771DCB5853002B81A5 /* TCBuluoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAF23761DCB5853002B81A5 /* TCBuluoApi.m */; };
@@ -907,6 +908,8 @@
 		7AADCC841EE93A58004AA1DA /* MLBPasswordRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLBPasswordRenderView.m; sourceTree = "<group>"; };
 		7AADCC851EE93A58004AA1DA /* MLBPasswordTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLBPasswordTextField.h; sourceTree = "<group>"; };
 		7AADCC861EE93A58004AA1DA /* MLBPasswordTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLBPasswordTextField.m; sourceTree = "<group>"; };
+		7AADCC891EEA3E6B004AA1DA /* TCPaySuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaySuccessViewController.h; sourceTree = "<group>"; };
+		7AADCC8A1EEA3E6B004AA1DA /* TCPaySuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaySuccessViewController.m; sourceTree = "<group>"; };
 		7AAF23701DCAE80D002B81A5 /* TCHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeViewController.h; sourceTree = "<group>"; };
 		7AAF23711DCAE80D002B81A5 /* TCHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeViewController.m; sourceTree = "<group>"; };
 		7AAF23721DCAE80D002B81A5 /* TCHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCHomeViewController.xib; sourceTree = "<group>"; };
@@ -2356,6 +2359,8 @@
 				7A455D5D1EBC912400A2F9ED /* TCWithdrawViewController.m */,
 				551CF2631EE7DAAD00281637 /* TCPreparePayViewController.h */,
 				551CF2641EE7DAAD00281637 /* TCPreparePayViewController.m */,
+				7AADCC891EEA3E6B004AA1DA /* TCPaySuccessViewController.h */,
+				7AADCC8A1EEA3E6B004AA1DA /* TCPaySuccessViewController.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -3051,6 +3056,7 @@
 				7AEB4D051E03F02F00F83A7C /* TCBioEditBirthdateViewController.m in Sources */,
 				7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */,
 				7A13EEA31DF8114E00377869 /* TCCompanyViewController.m in Sources */,
+				7AADCC8B1EEA3E6B004AA1DA /* TCPaySuccessViewController.m in Sources */,
 				7A64EA801E15016E008D0C12 /* TCRechargeViewController.m in Sources */,
 				7A381C041DEDA5CE008BDBF7 /* TCStoreInfo.m in Sources */,
 				7A3368631ECC6263008EAC84 /* TCMultiLockKey.m in Sources */,
