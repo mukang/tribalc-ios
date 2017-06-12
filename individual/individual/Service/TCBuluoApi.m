@@ -2381,6 +2381,8 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+#pragma mark - 商铺资源
+
 - (void)fetchStoreDetailInfoWithStoreId:(NSString *)storeId result:(void (^)(TCStoreDetailInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"stores/%@?me=%@",storeId,[TCBuluoApi api].currentUserSession.assigned];

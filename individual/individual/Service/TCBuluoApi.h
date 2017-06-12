@@ -695,6 +695,7 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
  */
 - (void)fetchSigninRecordMonth:(void(^)(TCSigninRecordMonth *signinRecordMonth, NSError *error))resultBlock;
 
+#pragma mark - 商铺资源
 
 /**
  获取店铺详情
