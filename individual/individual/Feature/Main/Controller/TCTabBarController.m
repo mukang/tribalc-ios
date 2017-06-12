@@ -195,11 +195,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     self.updateIsShow = YES;
     [[TCBuluoApi api] fetchAppVersionInfo:^(TCAppVersion *versionInfo, NSError *error) {
         if (versionInfo) {
-            if (!versionInfo.supported) {
-                [weakSelf forceUpdateWithVersionInfo:versionInfo];
-            } else {
-                [weakSelf checkAppVersionInfo:versionInfo];
-            }
+            [weakSelf checkAppVersionInfo:versionInfo];
         } else {
             weakSelf.updateIsShow = NO;
         }
@@ -207,12 +203,38 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 }
 
 - (void)checkAppVersionInfo:(TCAppVersion *)versionInfo {
+    
+    /** 强制更新 */
+    NSString *currentVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *minVersion = versionInfo.minVersion;
+    
+    NSArray *currentVersionParts = [currentVersion componentsSeparatedByString:@"."];
+    NSArray *minVersionParts = [minVersion componentsSeparatedByString:@"."];
+    
+    if (currentVersionParts.count > 2 && minVersionParts.count > 2) {
+        BOOL force = NO;
+        for (int i=0; i<3; i++) {
+            NSInteger currentVersionPart = [currentVersionParts[i] integerValue];
+            NSInteger minVersionPart = [minVersionParts[i] integerValue];
+            if (currentVersionPart < minVersionPart) {
+                force = YES;
+                break;
+            }
+        }
+        
+        if (force) {
+            [self forceUpdateWithVersionInfo:versionInfo];
+            return;
+        }
+    }
+    
+    /** 建议更新 */
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     NSString *lastVersion = versionInfo.lastVersion;
     NSString *cachedVersion = [userDefaults objectForKey:TCUserDefaultsKeyAppVersion];
     if (cachedVersion == nil) {
-        cachedVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        cachedVersion = currentVersion;
     }
     
     // 截取lastVersion的前两个数字
