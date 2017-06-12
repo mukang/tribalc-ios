@@ -43,6 +43,8 @@
         self.leftImageView = leftImageView;
         
         UILabel *titleLab = [TCComponent createLabelWithFrame:CGRectNull AndFontSize:TCRealValue(12) AndTitle:@""];
+        titleLab.numberOfLines = 2;
+        [titleLab sizeToFit];
         [_backView addSubview:titleLab];
         self.titleLab = titleLab;
         
@@ -85,7 +87,17 @@
     _backView.frame = CGRectMake(TCRealValue(20), height / 2 - TCRealValue(79) / 2, screenRect.size.width - TCRealValue(40), height);
     _backView.backgroundColor = [UIColor whiteColor];
     self.leftImageView.frame = CGRectMake(TCRealValue(8), 0, TCRealValue(79), TCRealValue(79));
-    self.titleLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(9), self.leftImageView.y + TCRealValue(7), screenRect.size.width - self.leftImageView.x - self.leftImageView.width - TCRealValue(13) - TCRealValue(60), TCRealValue(14));
+    
+    CGFloat x = CGRectGetMaxX(self.leftImageView.frame);
+    CGFloat width = screenRect.size.width - x - TCRealValue(9) - TCRealValue(40);
+    NSString *name = self.orderItem.goods.name;
+    CGSize size = [name boundingRectWithSize:CGSizeMake(width, 9999.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:TCRealValue(12)]} context:nil].size;
+    CGFloat h = size.height;
+    if (h > TCRealValue(29)) {
+        h = TCRealValue(29);
+    }
+    self.titleLab.frame = CGRectMake(CGRectGetMaxX(self.leftImageView.frame) + TCRealValue(9), self.leftImageView.y + TCRealValue(5), size.width, ceil(h));
+    //self.titleLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(9), self.leftImageView.y + TCRealValue(7), screenRect.size.width - self.leftImageView.x - self.leftImageView.width - TCRealValue(13) - TCRealValue(60), TCRealValue(14));
     [self setBoldNumberLabel:_orderItem.amount];
     self.priceLab.frame = CGRectMake(self.leftImageView.x + self.leftImageView.width + TCRealValue(1), self.titleLab.y + self.titleLab.height + TCRealValue(5), TCScreenWidth - TCRealValue(40) - self.leftImageView.x - self.leftImageView.width - TCRealValue(1), TCRealValue(14));
 
@@ -199,23 +211,23 @@
 }
 
 - (void)setTitleLabWithText:(NSString *)text {
-    self.titleLab.lineBreakMode = NSLineBreakByWordWrapping;
-    self.titleLab.numberOfLines = TCRealValue(2);
-    self.titleLab.font = [UIFont systemFontOfSize:self.titleLab.height];
-    NSString *salePriceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", _orderItem.goods.salePrice].floatValue)];
-    CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: self.titleLab.font}];
-    CGSize priceSize = [salePriceStr sizeWithAttributes:@{NSFontAttributeName: self.priceLab.font}];
-    if (size.width + 2 > self.titleLab.width) {
-        [self.titleLab setHeight:TCRealValue((self.titleLab.height * 2) + TCRealValue(5))];
-    }
-    if (size.width + 2 > self.titleLab.width * 2 - priceSize.width) {
-        self.priceLab.y = self.titleLab.y + self.titleLab.height;
-    }
-    NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-    NSRange range = NSMakeRange(0, text.length);
-    [textAttr addAttribute:NSParagraphStyleAttributeName value:style range:range];
-    self.titleLab.attributedText = textAttr;
+//    self.titleLab.lineBreakMode = NSLineBreakByWordWrapping;
+//    self.titleLab.numberOfLines = 2;
+//    self.titleLab.font = [UIFont systemFontOfSize:TCRealValue(12)];
+//    NSString *salePriceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", _orderItem.goods.salePrice].floatValue)];
+//    CGSize size = [text sizeWithAttributes:@{NSFontAttributeName: self.titleLab.font}];
+//    CGSize priceSize = [salePriceStr sizeWithAttributes:@{NSFontAttributeName: self.priceLab.font}];
+//    if (size.width + 2 > self.titleLab.width) {
+//        [self.titleLab setHeight:TCRealValue((self.titleLab.height * 2) + TCRealValue(5))];
+//    }
+//    if (size.width + 2 > self.titleLab.width * 2 - priceSize.width) {
+//        self.priceLab.y = self.titleLab.y + self.titleLab.height;
+//    }
+//    NSMutableAttributedString *textAttr = [[NSMutableAttributedString alloc] initWithString:text];
+//    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+//    NSRange range = NSMakeRange(0, text.length);
+//    [textAttr addAttribute:NSParagraphStyleAttributeName value:style range:range];
+    self.titleLab.text = text;
     
 }
 
