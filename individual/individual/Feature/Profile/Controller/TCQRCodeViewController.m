@@ -62,8 +62,8 @@
 
 - (void)handleScanerResultWithStr:(NSString *)result {
     if ([result isKindOfClass:[NSString class]]) {
-        if ([result hasPrefix:@"pay://"]) {
-            NSArray *arr = [result componentsSeparatedByString:@"://"];
+        if ([result hasPrefix:@"pay://stores/"]) {
+            NSArray *arr = [result componentsSeparatedByString:@"://stores/"];
             if (arr.count > 1) {
                 NSString *storeId = arr[1];
                 TCPreparePayViewController *preparePayVC = [[TCPreparePayViewController alloc] init];
