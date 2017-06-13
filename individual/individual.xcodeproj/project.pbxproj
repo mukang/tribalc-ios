@@ -3266,6 +3266,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/individual/Common/Libs/BaoFu",
+					"$(PROJECT_DIR)/individual/Common/Libs/BaoFuSimulator",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
@@ -3343,6 +3344,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/individual/Common/Libs/BaoFu",
+					"$(PROJECT_DIR)/individual/Common/Libs/BaoFuSimulator",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
