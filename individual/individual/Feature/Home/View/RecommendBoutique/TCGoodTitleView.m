@@ -103,10 +103,10 @@
 }
 
 - (UILabel *)getOriginPriceLabelWithFrame:(CGRect)frame AndOriginPrice:(float)originalPrice {
-    NSString *originalPriceStr = [NSString stringWithFormat:@"￥%@", @([NSString stringWithFormat:@"%f", originalPrice].floatValue)];
+    NSString *originalPriceStr = [NSString stringWithFormat:@"¥%@", @([NSString stringWithFormat:@"%f", originalPrice].floatValue)];
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.font = [UIFont systemFontOfSize:TCRealValue(12)];
-    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:originalPriceStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:frame.size.height], NSForegroundColorAttributeName:TCLightGrayColor, NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle|NSUnderlinePatternSolid), NSStrikethroughColorAttributeName:TCLightGrayColor}];
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:originalPriceStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:TCRealValue(12)], NSForegroundColorAttributeName:TCLightGrayColor, NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle | NSUnderlinePatternSolid),NSBaselineOffsetAttributeName : @(NSUnderlineStyleSingle), NSStrikethroughColorAttributeName:TCLightGrayColor}];
     label.attributedText = attrStr;
     [label sizeToFit];
     
