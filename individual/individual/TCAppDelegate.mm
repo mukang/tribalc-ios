@@ -23,6 +23,8 @@
 #import "TCUserDefaultsKeys.h"
 #import <TCCommonLibs/TCFunctions.h>
 
+#import <Bugly/Bugly.h>
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
 #import <UserNotifications/UserNotifications.h>
@@ -39,6 +41,7 @@
     BOOL _isRequest;
 }
 
+static NSString *const kBuglyAppID = @"900059019";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -58,6 +61,9 @@
     
     // wechat
     [WXApi registerApp:kWXAppID];
+    
+    // Bugly
+    [Bugly startWithAppId:kBuglyAppID];
     
     [self startLocationAction];
     

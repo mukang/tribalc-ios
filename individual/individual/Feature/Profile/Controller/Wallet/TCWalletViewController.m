@@ -97,7 +97,7 @@
 
 - (IBAction)handleClickRechargeButton:(UIButton *)sender {
     NSNumber *recharge = [[NSUserDefaults standardUserDefaults] objectForKey:TCUserDefaultsKeySwitchBfRecharge];
-    if ([recharge boolValue] == NO) {
+    if (recharge && [recharge boolValue] == NO) {
         [self btnClickUnifyTips];
         return;
     }
@@ -116,7 +116,7 @@
 
 - (IBAction)handleClickWithdrawButton:(UIButton *)sender {
     NSNumber *withdraw = [[NSUserDefaults standardUserDefaults] objectForKey:TCUserDefaultsKeySwitchBfWithdraw];
-    if ([withdraw boolValue] == NO) {
+    if (withdraw && [withdraw boolValue] == NO) {
         [self btnClickUnifyTips];
         return;
     }
