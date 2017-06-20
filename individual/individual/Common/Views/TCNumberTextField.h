@@ -14,6 +14,7 @@
  */
 @interface TCNumberTextField : UITextField
 
+@property (weak, nonatomic) UIToolbar *toolBar;
 @property (weak, nonatomic) id<TCNumberTextFieldDelegate> numDelegate;
 
 @end

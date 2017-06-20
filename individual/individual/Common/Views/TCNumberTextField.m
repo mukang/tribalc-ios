@@ -26,6 +26,7 @@
                             forState:UIControlStateNormal];
     toolBar.items = @[spaceItem, doneItem];
     self.inputAccessoryView = toolBar;
+    self.toolBar = toolBar;
 }
 
 - (void)handleClickDoneItem:(id)sender {
