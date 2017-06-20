@@ -265,6 +265,7 @@
 		7A8352E71E5EE3A6003A8E76 /* TCServiceAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8352E51E5EE3A6003A8E76 /* TCServiceAnnotationView.m */; };
 		7A8352EA1E5EE3C4003A8E76 /* TCServiceMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8352E91E5EE3C4003A8E76 /* TCServiceMapViewController.m */; };
 		7A8352ED1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8352EC1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m */; };
+		7A8675211EF8D64F006E2742 /* TCNumberTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8675201EF8D64F006E2742 /* TCNumberTextField.m */; };
 		7A944BA41E5BE53B00E79C31 /* TCServiceNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A944BA31E5BE53B00E79C31 /* TCServiceNameViewCell.m */; };
 		7A9CCED11DB62011003D90C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCED01DB62011003D90C6 /* main.m */; };
 		7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */; };
@@ -861,6 +862,8 @@
 		7A8352E91E5EE3C4003A8E76 /* TCServiceMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceMapViewController.m; sourceTree = "<group>"; };
 		7A8352EB1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeCommodityTableViewCell.h; sourceTree = "<group>"; };
 		7A8352EC1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeCommodityTableViewCell.m; sourceTree = "<group>"; };
+		7A86751F1EF8D64F006E2742 /* TCNumberTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCNumberTextField.h; sourceTree = "<group>"; };
+		7A8675201EF8D64F006E2742 /* TCNumberTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCNumberTextField.m; sourceTree = "<group>"; };
 		7A944BA21E5BE53B00E79C31 /* TCServiceNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceNameViewCell.h; sourceTree = "<group>"; };
 		7A944BA31E5BE53B00E79C31 /* TCServiceNameViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceNameViewCell.m; sourceTree = "<group>"; };
 		7A9CCECC1DB62011003D90C6 /* individual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = individual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1640,6 +1643,8 @@
 				7A7E93F31DF502E7006A47CE /* TCGenderPickerView.m */,
 				7AD36DB51EDEAC3E00AB95FA /* TCForceUpdateView.h */,
 				7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */,
+				7A86751F1EF8D64F006E2742 /* TCNumberTextField.h */,
+				7A8675201EF8D64F006E2742 /* TCNumberTextField.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2912,6 +2917,7 @@
 				5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */,
 				7A8352EA1E5EE3C4003A8E76 /* TCServiceMapViewController.m in Sources */,
 				7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */,
+				7A8675211EF8D64F006E2742 /* TCNumberTextField.m in Sources */,
 				5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */,
 				550FB76F1ED5C18600D75E33 /* FSCalendarAppearance.m in Sources */,
 				7A64EA831E150D23008D0C12 /* TCRechargeInputView.m in Sources */,

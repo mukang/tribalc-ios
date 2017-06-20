@@ -29,7 +29,7 @@
     amountLabel.font = [UIFont boldSystemFontOfSize:14];
     [self addSubview:amountLabel];
     
-    UITextField *textField = [[UITextField alloc] init];
+    TCNumberTextField *textField = [[TCNumberTextField alloc] init];
     textField.textAlignment = NSTextAlignmentRight;
     textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入充值金额"
                                                                       attributes:@{

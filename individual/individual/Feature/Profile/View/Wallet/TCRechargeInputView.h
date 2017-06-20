@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCNumberTextField.h"
 
 @interface TCRechargeInputView : UIView
 
-@property (weak, nonatomic) UITextField *textField;
+@property (weak, nonatomic) TCNumberTextField *textField;
 
 @end
