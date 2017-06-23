@@ -1003,6 +1003,9 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             case TCPayPurposeFace2Face:
                 purpose = @"face2face";
                 break;
+            case TCPayPurposeRent:
+                purpose = @"rent";
+                break;
                 
             default:
                 break;

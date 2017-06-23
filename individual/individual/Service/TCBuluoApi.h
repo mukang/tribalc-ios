@@ -17,7 +17,8 @@ extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
 typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
     TCPayPurposeOrder = 0,   // 订单
     TCPayPurposeMaintain,    // 维修
-    TCPayPurposeFace2Face    // 面对面付款
+    TCPayPurposeFace2Face,   // 面对面付款
+    TCPayPurposeRent         // 租金
 };
 
 
