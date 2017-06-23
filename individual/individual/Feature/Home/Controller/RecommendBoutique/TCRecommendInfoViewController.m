@@ -489,7 +489,7 @@
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] createShoppingCartWithAmount:amount goodsId:goodDetail.ID result:^(BOOL result, NSError *error) {
         if (result) {
-            [MBProgressHUD showHUDWithMessage:@"加入购物车成功"];
+            [MBProgressHUD showHUDWithMessage:@"加入购物车成功" afterDelay:0.5];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加入购物车失败, %@", reason]];

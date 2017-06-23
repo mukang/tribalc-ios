@@ -22,7 +22,7 @@
 }
 
 + (void)showHUDWithMessage:(NSString *)message {
-    [self showHUDWithMessage:@"温馨提示" detailsMessage:message afterDelay:2.0];
+    [self showHUDWithMessage:@"温馨提示" detailsMessage:message afterDelay:1.0];
 }
 
 + (void)showHUDWithMessage:(NSString *)message afterDelay:(CGFloat)delay{
