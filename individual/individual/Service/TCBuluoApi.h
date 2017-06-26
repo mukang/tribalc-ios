@@ -706,4 +706,21 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
  */
 - (void)fetchStoreDetailInfoWithStoreId:(NSString *)storeId result:(void (^)(TCStoreDetailInfo *, NSError *))resultBlock;
 
+#pragma mark - 租赁资源
+
+/**
+ 查询自己的租赁协议列表
+
+ @param resultBlock 结果回调
+ */
+- (void)fetchRentProtocolList:(void(^)(NSArray *rentProtocolList, NSError *error))resultBlock;
+
+/**
+ 查询缴租协议的计划项列表
+
+ @param protocolID 协议ID
+ @param resultBlock 结果回调
+ */
+- (void)fetchRentPlanItemListByRentProtocolID:(NSString *)protocolID result:(void(^)(NSArray *rentPlanItemList, NSError *error))resultBlock;
+
 @end

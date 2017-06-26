@@ -98,6 +98,10 @@
 #import "TCSigninRecordMonth.h"
 #import "TCActivityInfo.h"
 
+/*********** 租赁相关 ***********/
+#import "TCRentProtocol.h"
+#import "TCRentPlanItem.h"
+
 @interface TCModelImport : NSObject
 
 @end
