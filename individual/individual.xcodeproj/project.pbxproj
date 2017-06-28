@@ -307,6 +307,8 @@
 		7AB29F341DD46EE600564D93 /* TCUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB29F331DD46EE600564D93 /* TCUserInfo.m */; };
 		7ABA7E441F00BCAB00DCC2D0 /* TCRentPlanItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA7E431F00BCAB00DCC2D0 /* TCRentPlanItem.m */; };
 		7ABA7E471F00F78A00DCC2D0 /* TCRentProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA7E461F00F78A00DCC2D0 /* TCRentProtocol.m */; };
+		7ABA7E6E1F0391E100DCC2D0 /* TCRentPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA7E6D1F0391E100DCC2D0 /* TCRentPayViewController.m */; };
+		7ABA7E721F03971A00DCC2D0 /* TCRentPayTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA7E711F03971A00DCC2D0 /* TCRentPayTabView.m */; };
 		7AC2922B1DC8BEB300B2C7E8 /* citylist.data in Resources */ = {isa = PBXBuildFile; fileRef = 7AC2922A1DC8BEB300B2C7E8 /* citylist.data */; };
 		7AC346CF1E01432000E28EC9 /* TCWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC346CD1E01432000E28EC9 /* TCWalletViewController.m */; };
 		7AC346D01E01432000E28EC9 /* TCWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AC346CE1E01432000E28EC9 /* TCWalletViewController.xib */; };
@@ -942,6 +944,10 @@
 		7ABA7E431F00BCAB00DCC2D0 /* TCRentPlanItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentPlanItem.m; sourceTree = "<group>"; };
 		7ABA7E451F00F78A00DCC2D0 /* TCRentProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentProtocol.h; sourceTree = "<group>"; };
 		7ABA7E461F00F78A00DCC2D0 /* TCRentProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentProtocol.m; sourceTree = "<group>"; };
+		7ABA7E6C1F0391E100DCC2D0 /* TCRentPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentPayViewController.h; sourceTree = "<group>"; };
+		7ABA7E6D1F0391E100DCC2D0 /* TCRentPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentPayViewController.m; sourceTree = "<group>"; };
+		7ABA7E701F03971A00DCC2D0 /* TCRentPayTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentPayTabView.h; sourceTree = "<group>"; };
+		7ABA7E711F03971A00DCC2D0 /* TCRentPayTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentPayTabView.m; sourceTree = "<group>"; };
 		7ABF57B41DB70E2D002E40A0 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		7AC2922A1DC8BEB300B2C7E8 /* citylist.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = citylist.data; sourceTree = "<group>"; };
 		7AC346CC1E01432000E28EC9 /* TCWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletViewController.h; sourceTree = "<group>"; };
@@ -1725,6 +1731,7 @@
 				7A190B101DC0CC9800651905 /* TCProfileViewController.xib */,
 				55F06F0E1E07D0AA00A849D7 /* TCQRCodeViewController.h */,
 				55F06F0F1E07D0AA00A849D7 /* TCQRCodeViewController.m */,
+				7ABA7E6B1F0390E200DCC2D0 /* Rent */,
 				7A384FA01E1124A600E6DB9E /* IDAuth */,
 				7A3321951E0D07E1003049DB /* Setting */,
 				55F06EEA1E03902000A849D7 /* Property */,
@@ -2347,6 +2354,24 @@
 			path = Rents;
 			sourceTree = "<group>";
 		};
+		7ABA7E6B1F0390E200DCC2D0 /* Rent */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA7E6C1F0391E100DCC2D0 /* TCRentPayViewController.h */,
+				7ABA7E6D1F0391E100DCC2D0 /* TCRentPayViewController.m */,
+			);
+			path = Rent;
+			sourceTree = "<group>";
+		};
+		7ABA7E6F1F03923F00DCC2D0 /* Rent */ = {
+			isa = PBXGroup;
+			children = (
+				7ABA7E701F03971A00DCC2D0 /* TCRentPayTabView.h */,
+				7ABA7E711F03971A00DCC2D0 /* TCRentPayTabView.m */,
+			);
+			path = Rent;
+			sourceTree = "<group>";
+		};
 		7AC292291DC8BEA900B2C7E8 /* BinaryFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -2509,6 +2534,7 @@
 				55F06F191E07E9FA00A849D7 /* TCScannerBorder.m */,
 				55F06F1B1E07EA2100A849D7 /* TCScannerMaskView.h */,
 				55F06F1C1E07EA2100A849D7 /* TCScannerMaskView.m */,
+				7ABA7E6F1F03923F00DCC2D0 /* Rent */,
 				7A384FA11E1124B000E6DB9E /* IDAuth */,
 				55F06EEB1E03906B00A849D7 /* Property */,
 				7AEB4CCE1E03944400F83A7C /* Biography */,
@@ -2959,6 +2985,7 @@
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
 				55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */,
 				55BB9EBD1E72AF7800B0FD94 /* TCLockKey.m in Sources */,
+				7ABA7E721F03971A00DCC2D0 /* TCRentPayTabView.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,
 				7A1A857C1E6800B200BB5EDB /* TCServiceLocationViewController.m in Sources */,
 				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
@@ -2987,6 +3014,7 @@
 				7AFEC4931E55446D00B0E754 /* TCGoodsOrderCountDownView.m in Sources */,
 				7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */,
 				7A1A857B1E6800B200BB5EDB /* TCServiceFacilitiesViewController.m in Sources */,
+				7ABA7E6E1F0391E100DCC2D0 /* TCRentPayViewController.m in Sources */,
 				7AB29F341DD46EE600564D93 /* TCUserInfo.m in Sources */,
 				7A58C5EF1E120D5E00C55A2C /* TCIDAuthDetailViewController.m in Sources */,
 				09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */,
