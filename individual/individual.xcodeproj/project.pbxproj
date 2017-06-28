@@ -54,6 +54,8 @@
 		0990F19A1E07CA11002692F6 /* TCGoodShopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0990F1991E07CA11002692F6 /* TCGoodShopView.m */; };
 		09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */; };
 		09AE0F791DED462700F307D8 /* TCComputeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F781DED462700F307D8 /* TCComputeView.m */; };
+		550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923011F039DCC00B007C8 /* TCApartmentViewController.m */; };
+		550923051F03A67400B007C8 /* TCApartmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923041F03A67400B007C8 /* TCApartmentCell.m */; };
 		550FB7401ED2F54E00D75E33 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */; };
 		550FB7411ED2F54E00D75E33 /* ReleaseNotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */; };
 		550FB7431ED2F5BB00D75E33 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */; };
@@ -502,6 +504,10 @@
 		09AE0F771DED462700F307D8 /* TCComputeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCComputeView.h; sourceTree = "<group>"; };
 		09AE0F781DED462700F307D8 /* TCComputeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCComputeView.m; sourceTree = "<group>"; };
 		39C5AA3FC54D84E58748E333 /* Pods-individual.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-individual.release.xcconfig"; path = "Pods/Target Support Files/Pods-individual/Pods-individual.release.xcconfig"; sourceTree = "<group>"; };
+		550923001F039DCC00B007C8 /* TCApartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentViewController.h; sourceTree = "<group>"; };
+		550923011F039DCC00B007C8 /* TCApartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentViewController.m; sourceTree = "<group>"; };
+		550923031F03A67400B007C8 /* TCApartmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentCell.h; sourceTree = "<group>"; };
+		550923041F03A67400B007C8 /* TCApartmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentCell.m; sourceTree = "<group>"; };
 		550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libXG-SDK.a"; sourceTree = "<group>"; };
 		550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReleaseNotes.txt; sourceTree = "<group>"; };
 		550FB73E1ED2F54E00D75E33 /* XGPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPush.h; sourceTree = "<group>"; };
@@ -2359,6 +2365,8 @@
 			children = (
 				7ABA7E6C1F0391E100DCC2D0 /* TCRentPayViewController.h */,
 				7ABA7E6D1F0391E100DCC2D0 /* TCRentPayViewController.m */,
+				550923001F039DCC00B007C8 /* TCApartmentViewController.h */,
+				550923011F039DCC00B007C8 /* TCApartmentViewController.m */,
 			);
 			path = Rent;
 			sourceTree = "<group>";
@@ -2368,6 +2376,8 @@
 			children = (
 				7ABA7E701F03971A00DCC2D0 /* TCRentPayTabView.h */,
 				7ABA7E711F03971A00DCC2D0 /* TCRentPayTabView.m */,
+				550923031F03A67400B007C8 /* TCApartmentCell.h */,
+				550923041F03A67400B007C8 /* TCApartmentCell.m */,
 			);
 			path = Rent;
 			sourceTree = "<group>";
@@ -2962,6 +2972,7 @@
 				5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */,
 				7A8352EA1E5EE3C4003A8E76 /* TCServiceMapViewController.m in Sources */,
 				7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */,
+				550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */,
 				7A8675211EF8D64F006E2742 /* TCNumberTextField.m in Sources */,
 				5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */,
 				550FB76F1ED5C18600D75E33 /* FSCalendarAppearance.m in Sources */,
@@ -3024,6 +3035,7 @@
 				0929D2951E0A25820099B1BD /* TCSelectSecondaryBtn.m in Sources */,
 				09222E791DEEC0920064C0DF /* TCOrderWrapper.m in Sources */,
 				7A455D641EBC913900A2F9ED /* TCWithdrawBankCardInfoView.m in Sources */,
+				550923051F03A67400B007C8 /* TCApartmentCell.m in Sources */,
 				7AB03F051EC1ACD000DFB037 /* TCBFSessionInfo.m in Sources */,
 				7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */,
 				7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */,
