@@ -8,9 +8,6 @@
 
 #import "TCApartmentCell.h"
 
-#define kScale ([UIScreen mainScreen].bounds.size.width > 375 ? 3.0 : 2.0)
-#define kLineColor TCRGBColor(221, 221, 221)
-
 @interface TCApartmentCell ()
 
 @property (strong, nonatomic) UIView *lineView;
@@ -63,9 +60,14 @@
     }
 }
 
+- (void)checkContract {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickCheckContractWithPictures:)]) {
+        [self.delegate didClickCheckContractWithPictures:self.rentProtocol.pictures];
+    }
+}
+
 - (void)setUpViews {
     
-    [self.contentView addSubview:self.lineView];
     [self.contentView addSubview:self.grayView];
     [self.contentView addSubview:self.lineView1];
     [self.contentView addSubview:self.apartmentNumLabel];
@@ -78,17 +80,12 @@
     [self.contentView addSubview:self.lineView3];
     [self.contentView addSubview:self.contractBtn];
     [self.contentView addSubview:self.payPlanBtn];
+    [self.contentView addSubview:self.lineView4];
     
     [self.contractBtn addSubview:self.verticalLineView];
     
-    [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.equalTo(self.contentView);
-        make.height.equalTo(@(1/kScale));
-    }];
-    
     [self.grayView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.lineView.mas_bottom);
-        make.left.right.equalTo(self.contentView);
+        make.top.left.right.equalTo(self.contentView);
         make.height.equalTo(@(TCRealValue(15)));
     }];
     
@@ -113,7 +110,7 @@
     
     [self.apartmentNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.apartmentNumLabel);
-        make.top.equalTo(self.lineView2.mas_bottom);
+        make.top.equalTo(self.lineView2.mas_bottom).offset(TCRealValue(5));
     }];
     
     [self.apartmentFeeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -156,6 +153,12 @@
         make.width.height.top.equalTo(self.contractBtn);
     }];
     
+    [self.lineView4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.contentView);
+        make.top.equalTo(self.payPlanBtn.mas_bottom);
+        make.height.equalTo(@(1/kScale));
+    }];
+    
     [self.verticalLineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.right.equalTo(self.contractBtn);
         make.height.equalTo(@(TCRealValue(37)));
@@ -163,15 +166,29 @@
     }];
 }
 
+- (UIView *)verticalLineView {
+    if (_verticalLineView == nil) {
+        _verticalLineView = [[UIView alloc] init];
+        _verticalLineView.backgroundColor = kLineColor;
+    }
+    return _verticalLineView;
+}
+
+- (UIView *)lineView4 {
+    if (_lineView4 == nil) {
+        _lineView4 = [[UIView alloc] init];
+        _lineView4.backgroundColor = kLineColor;
+    }
+    return _lineView4;
+}
+
 - (UIButton *)payPlanBtn {
     if (_payPlanBtn == nil) {
         _payPlanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_payPlanBtn setTitle:@"还款计划" forState: UIControlStateNormal];
+        [_payPlanBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
+        _payPlanBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         [_payPlanBtn setImage:[UIImage imageNamed:@"apartmenPayPlanImage"] forState:UIControlStateNormal];
-        _payPlanBtn.layer.cornerRadius = TCRealValue(12);
-        _payPlanBtn.clipsToBounds = YES;
-        _payPlanBtn.layer.borderColor = kLineColor.CGColor;
-        _payPlanBtn.layer.borderWidth = 1/kScale;
     }
     return _payPlanBtn;
 }
@@ -179,14 +196,13 @@
 - (UIButton *)contractBtn {
     if (_contractBtn == nil) {
         _contractBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_apartmentCheckElecBtn setTitle:@"我的合同" forState: UIControlStateNormal];
-        [_apartmentCheckElecBtn setImage:[UIImage imageNamed:@"apartmenContractImage"] forState:UIControlStateNormal];
-        _apartmentCheckElecBtn.layer.cornerRadius = TCRealValue(12);
-        _apartmentCheckElecBtn.clipsToBounds = YES;
-        _apartmentCheckElecBtn.layer.borderColor = kLineColor.CGColor;
-        _apartmentCheckElecBtn.layer.borderWidth = 1/kScale;
+        [_contractBtn setTitle:@"我的合同" forState: UIControlStateNormal];
+        [_contractBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
+        _contractBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+        [_contractBtn setImage:[UIImage imageNamed:@"apartmenContractImage"] forState:UIControlStateNormal];
+        [_contractBtn addTarget:self action:@selector(checkContract) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _apartmentCheckElecBtn;
+    return _contractBtn;
 }
 
 - (UIView *)lineView3 {
@@ -201,8 +217,10 @@
     if (_apartmentCheckElecBtn == nil) {
         _apartmentCheckElecBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_apartmentCheckElecBtn setTitle:@"查看门锁电量" forState: UIControlStateNormal];
+        [_apartmentCheckElecBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
         [_apartmentCheckElecBtn setImage:[UIImage imageNamed:@"apartmenCheckElecImage"] forState:UIControlStateNormal];
-        _apartmentCheckElecBtn.layer.cornerRadius = TCRealValue(12);
+        _apartmentCheckElecBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+        _apartmentCheckElecBtn.layer.cornerRadius = TCRealValue(14);
         _apartmentCheckElecBtn.clipsToBounds = YES;
         _apartmentCheckElecBtn.layer.borderColor = kLineColor.CGColor;
         _apartmentCheckElecBtn.layer.borderWidth = 1/kScale;
@@ -215,10 +233,12 @@
         _apartmentCheckPwdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_apartmentCheckPwdBtn setTitle:@"查看临时密码" forState: UIControlStateNormal];
         [_apartmentCheckPwdBtn setImage:[UIImage imageNamed:@"apartmenModifyPwdImage"] forState:UIControlStateNormal];
-        _apartmentCheckPwdBtn.layer.cornerRadius = TCRealValue(12);
+        [_apartmentCheckPwdBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
+        _apartmentCheckPwdBtn.layer.cornerRadius = TCRealValue(14);
         _apartmentCheckPwdBtn.clipsToBounds = YES;
         _apartmentCheckPwdBtn.layer.borderColor = kLineColor.CGColor;
         _apartmentCheckPwdBtn.layer.borderWidth = 1/kScale;
+        _apartmentCheckPwdBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     }
     return _apartmentCheckPwdBtn;
 }
@@ -228,10 +248,13 @@
         _apartmentModifyPwdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_apartmentModifyPwdBtn setTitle:@"修改门锁密码" forState: UIControlStateNormal];
         [_apartmentModifyPwdBtn setImage:[UIImage imageNamed:@"apartmenModifyPwdImage"] forState:UIControlStateNormal];
-        _apartmentModifyPwdBtn.layer.cornerRadius = TCRealValue(12);
+        [_apartmentModifyPwdBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
+        _apartmentModifyPwdBtn.layer.cornerRadius = TCRealValue(14);
         _apartmentModifyPwdBtn.clipsToBounds = YES;
         _apartmentModifyPwdBtn.layer.borderColor = kLineColor.CGColor;
         _apartmentModifyPwdBtn.layer.borderWidth = 1/kScale;
+        _apartmentModifyPwdBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+
     }
     return _apartmentModifyPwdBtn;
 }
@@ -241,10 +264,12 @@
         _apartmentFeeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_apartmentFeeBtn setTitle:@"我的房屋缴费" forState: UIControlStateNormal];
         [_apartmentFeeBtn setImage:[UIImage imageNamed:@"apartmenFeeImage"] forState:UIControlStateNormal];
-        _apartmentFeeBtn.layer.cornerRadius = TCRealValue(12);
+        [_apartmentFeeBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
+        _apartmentFeeBtn.layer.cornerRadius = TCRealValue(14);
         _apartmentFeeBtn.clipsToBounds = YES;
         _apartmentFeeBtn.layer.borderColor = kLineColor.CGColor;
         _apartmentFeeBtn.layer.borderWidth = 1/kScale;
+        _apartmentFeeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     }
     return _apartmentFeeBtn;
 }
@@ -290,14 +315,6 @@
         _grayView.backgroundColor = TCRGBColor(244, 244, 244);
     }
     return _grayView;
-}
-
-- (UIView *)lineView {
-    if (_lineView == nil) {
-        _lineView = [[UIView alloc] init];
-        _lineView.backgroundColor = kLineColor;
-    }
-    return _lineView;
 }
 
 - (void)awakeFromNib {

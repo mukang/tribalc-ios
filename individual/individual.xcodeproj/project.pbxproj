@@ -56,6 +56,7 @@
 		09AE0F791DED462700F307D8 /* TCComputeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F781DED462700F307D8 /* TCComputeView.m */; };
 		550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923011F039DCC00B007C8 /* TCApartmentViewController.m */; };
 		550923051F03A67400B007C8 /* TCApartmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923041F03A67400B007C8 /* TCApartmentCell.m */; };
+		550AA7661F03C76600509F0D /* TCContractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550AA7651F03C76500509F0D /* TCContractViewController.m */; };
 		550FB7401ED2F54E00D75E33 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */; };
 		550FB7411ED2F54E00D75E33 /* ReleaseNotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */; };
 		550FB7431ED2F5BB00D75E33 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */; };
@@ -508,6 +509,8 @@
 		550923011F039DCC00B007C8 /* TCApartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentViewController.m; sourceTree = "<group>"; };
 		550923031F03A67400B007C8 /* TCApartmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentCell.h; sourceTree = "<group>"; };
 		550923041F03A67400B007C8 /* TCApartmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentCell.m; sourceTree = "<group>"; };
+		550AA7641F03C76500509F0D /* TCContractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCContractViewController.h; sourceTree = "<group>"; };
+		550AA7651F03C76500509F0D /* TCContractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCContractViewController.m; sourceTree = "<group>"; };
 		550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libXG-SDK.a"; sourceTree = "<group>"; };
 		550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReleaseNotes.txt; sourceTree = "<group>"; };
 		550FB73E1ED2F54E00D75E33 /* XGPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPush.h; sourceTree = "<group>"; };
@@ -2367,6 +2370,8 @@
 				7ABA7E6D1F0391E100DCC2D0 /* TCRentPayViewController.m */,
 				550923001F039DCC00B007C8 /* TCApartmentViewController.h */,
 				550923011F039DCC00B007C8 /* TCApartmentViewController.m */,
+				550AA7641F03C76500509F0D /* TCContractViewController.h */,
+				550AA7651F03C76500509F0D /* TCContractViewController.m */,
 			);
 			path = Rent;
 			sourceTree = "<group>";
@@ -3154,6 +3159,7 @@
 				552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */,
 				550FB7751ED5C18700D75E33 /* FSCalendarDelegationFactory.m in Sources */,
 				7AADCC711EE80154004AA1DA /* TCPaymentDetailView.m in Sources */,
+				550AA7661F03C76600509F0D /* TCContractViewController.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
 				7A1A85471E66D61000BB5EDB /* TCServiceListViewController.m in Sources */,
 				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,
@@ -3388,7 +3394,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8dd63c32-c6dc-4d7a-a962-ee2232915699";
+				PROVISIONING_PROFILE = "97438d62-f327-462b-a20e-14e3e76dab48";
 				PROVISIONING_PROFILE_SPECIFIER = "Individual Development";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -3466,7 +3472,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1e052cd7-e3a5-4b85-ae31-5f1d8eabbcf1";
+				PROVISIONING_PROFILE = "2457aadd-6198-465f-a5f1-5a94516d911e";
 				PROVISIONING_PROFILE_SPECIFIER = "Individual Distribution";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
