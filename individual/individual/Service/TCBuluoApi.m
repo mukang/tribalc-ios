@@ -2326,6 +2326,39 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+- (void)fetchBFSupportedBankListByType:(TCBFSupportedBankType)type result:(void (^)(NSArray *, NSError *))resultBlock {
+    NSString *typeStr = nil;
+    switch (type) {
+        case TCBFSupportedBankTypeWithhold:
+            typeStr = @"WITHHOLD";
+            break;
+            
+        default:
+            typeStr = @"WITHHOLD";
+            break;
+    }
+    NSString *apiName = [NSString stringWithFormat:@"configs/bf_supported_bank?type=%@", typeStr];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    request.token = self.currentUserSession.token;
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            NSArray *dicArray = [response.data objectForKey:@"banner"];
+            NSMutableArray *temp = [NSMutableArray array];
+            for (NSDictionary *dic in dicArray) {
+                TCBankCard *bankCard = [[TCBankCard alloc] initWithObjectDictionary:dic];
+                [temp addObject:bankCard];
+            }
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock([temp copy], nil));
+            }
+        }
+    }];
+}
+
 #pragma mark - 线上活动
 
 - (void)signinDaily:(void (^)(TCSigninRecordDay *, NSError *))resultBlock {

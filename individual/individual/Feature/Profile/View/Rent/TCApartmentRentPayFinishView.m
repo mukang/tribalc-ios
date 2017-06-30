@@ -47,6 +47,7 @@
     [attText yy_setTextHighlight:highlight range:[totalStr rangeOfString:partStr]];
     
     YYLabel *label = [[YYLabel alloc] init];
+    label.textAlignment = NSTextAlignmentCenter;
     label.numberOfLines = 2;
     label.attributedText = attText;
     [self addSubview:label];
