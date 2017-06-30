@@ -2415,7 +2415,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)fetchRentProtocolList:(void (^)(NSArray *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"rent_protocols?me=%@&ownerId=%@", self.currentUserSession.assigned, self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"rent_protocols?me=%@&ownerId=%@", @"59257f5e0cf27b75250fdd62", @"59257f5e0cf27b75250fdd62"];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {

@@ -31,6 +31,7 @@
 #import <TCCommonLibs/TCImageCompressHandler.h>
 #import "TCPhotoPicker.h"
 #import "TCBuluoApi.h"
+#import "TCApartmentViewController.h"
 
 #import <TCCommonLibs/UIImage+Category.h>
 
@@ -323,6 +324,11 @@ TCPhotoModeViewDelegate>
             propertyListVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:propertyListVc animated:YES];
             
+        }else if (indexPath.row == 6) { //我的公寓
+            TCApartmentViewController *propertyListVc = [[TCApartmentViewController alloc] init];
+            propertyListVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:propertyListVc animated:YES];
+            
         }
     }
 }
@@ -582,7 +588,8 @@ TCPhotoModeViewDelegate>
                            @{@"title": @"身份认证", @"icon": @"profile_identity_icon"},
                            @{@"title": @"我的预定", @"icon": @"profile_check_icon"},
                            @{@"title": @"我的公司", @"icon": @"profile_company_icon"},
-                           @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"}]
+                           @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"},
+                           @{@"title": @"我的钱包", @"icon": @"profile_wallet_icon"}]
                          ];
     }
     return _fodderArray;
