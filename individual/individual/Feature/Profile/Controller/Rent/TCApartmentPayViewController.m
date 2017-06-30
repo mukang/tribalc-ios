@@ -71,13 +71,17 @@
     [self.view addSubview:lifePayContainerView];
     self.lifePayContainerView = lifePayContainerView;
     
+    [tabView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(self.view);
+        make.height.mas_equalTo(TCRealValue(41));
+    }];
     [rentPayContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(tabView.mas_bottom);
-        make.left.bottom.right.equalTo(weakSelf);
+        make.left.bottom.right.equalTo(self.view);
     }];
     [lifePayContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(tabView.mas_bottom);
-        make.left.bottom.right.equalTo(weakSelf);
+        make.left.bottom.right.equalTo(self.view);
     }];
     
     [self setupRentPayContainerView];
@@ -125,7 +129,7 @@
     [rentPayDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.tabView.mas_bottom).offset(TCRealValue(8));
         make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(TCRealValue(409));
+        make.height.mas_equalTo(TCRealValue(309));
     }];
     [guideWithholdView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.rentPayDetailView.mas_bottom).offset(TCRealValue(8));
@@ -169,14 +173,14 @@
         self.withholdInfoView.withholdInfo = self.withholdInfo;
         self.guideWithholdView.hidden = YES;
         [self.payPlanButton mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self);
+            make.centerX.equalTo(self.view);
             make.top.equalTo(self.withholdInfoView.mas_bottom).offset(TCRealValue(18));
         }];
     } else {
         self.guideWithholdView.hidden = NO;
         self.withholdInfoView.hidden = YES;
         [self.payPlanButton mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self);
+            make.centerX.equalTo(self.view);
             make.top.equalTo(self.guideWithholdView.mas_bottom).offset(TCRealValue(18));
         }];
     }

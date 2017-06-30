@@ -43,10 +43,12 @@
     UIView *topLine = [[UIView alloc] init];
     topLine.backgroundColor = TCSeparatorLineColor;
     [self addSubview:topLine];
+    self.topLine = topLine;
     
     UIView *bottomLine = [[UIView alloc] init];
     bottomLine.backgroundColor = TCSeparatorLineColor;
     [self addSubview:bottomLine];
+    self.bottomLine = bottomLine;
     
     UIView *containerView = [[UIView alloc] init];
     containerView.layer.borderWidth = 0.5;
@@ -54,6 +56,7 @@
     containerView.layer.cornerRadius = 2.5;
     containerView.layer.masksToBounds = YES;
     [self addSubview:containerView];
+    self.containerView = containerView;
     
     self.numLabel = [self createLabel];
     self.nameLabel = [self createLabel];
@@ -83,7 +86,7 @@
         make.height.mas_equalTo(TCRealValue(218));
     }];
     
-    CGFloat labelMargin = TCRealValue(18);
+    CGFloat labelMargin = TCRealValue(12);
     [self.numLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.containerView).offset(TCRealValue(23));
         make.leading.equalTo(self.containerView).offset(TCRealValue(10));

@@ -13,6 +13,7 @@
 #import "TCApartmentCell.h"
 #import "TCContractViewController.h"
 #import "TCModifyPwdViewController.h"
+#import "TCApartmentPayViewController.h"
 
 @interface TCApartmentViewController ()<UITableViewDelegate,UITableViewDataSource,TCApartmentCellDelegate>
 
@@ -64,7 +65,9 @@
 
 //缴费
 - (void)didClickFeeWithRentProtocol:(TCRentProtocol *)rentProtocol {
-    
+    TCApartmentPayViewController *vc = [[TCApartmentPayViewController alloc] init];
+    vc.sourceID = rentProtocol.sourceId;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 //查看电量

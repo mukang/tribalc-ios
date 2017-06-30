@@ -2415,7 +2415,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 
 - (void)fetchRentProtocolList:(void (^)(NSArray *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"rent_protocols?me=%@&ownerId=%@", @"59257f5e0cf27b75250fdd62", @"59257f5e0cf27b75250fdd62"];
+        NSString *apiName = [NSString stringWithFormat:@"rent_protocols?me=%@&ownerId=%@", self.currentUserSession.assigned, self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
@@ -2454,7 +2454,10 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                     TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             } else {
-                TCRentProtocol *rentProtocol = [[TCRentProtocol alloc] initWithObjectDictionary:response.data];
+                TCRentProtocol *rentProtocol = nil;
+                if (response.data && ![response.data isEqual:[NSNull null]]) {
+                    rentProtocol = [[TCRentProtocol alloc] initWithObjectDictionary:response.data];
+                }
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(rentProtocol, nil));
                 }
@@ -2533,7 +2536,10 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.statusCode == 200) {
-                TCRentProtocolWithholdInfo *info = [[TCRentProtocolWithholdInfo alloc] initWithObjectDictionary:response.data];
+                TCRentProtocolWithholdInfo *info = nil;
+                if (response.data && ![response.data isEqual:[NSNull null]]) {
+                    info = [[TCRentProtocolWithholdInfo alloc] initWithObjectDictionary:response.data];
+                }
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(info, nil));
                 }
