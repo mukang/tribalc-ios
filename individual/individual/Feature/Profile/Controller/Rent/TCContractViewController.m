@@ -83,7 +83,7 @@
         return;
     }
     
-    NSInteger MAX_INDEX = (scrollView.contentSize.width + TCRealValue(20))/(self.view.frame.size.width + TCRealValue(20)) - 1;
+    NSInteger MAX_INDEX = (scrollView.contentSize.width + TCRealValue(20))/(self.view.frame.size.width + TCRealValue(20));
     NSInteger MIN_INDEX = 0;
     
     NSInteger index = contentOffsetX/(self.view.frame.size.width + TCRealValue(20));

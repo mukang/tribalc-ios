@@ -14,7 +14,23 @@
 
 @protocol TCApartmentCellDelegate <NSObject>
 
-- (void)didClickCheckContractWithPictures:(NSString *)pictures;
+/** 缴费 */
+- (void)didClickFeeWithRentProtocol:(TCRentProtocol *)rentProtocol;
+
+/** 点击我的合同 */
+- (void)didClickCheckContractWithRentProtocol:(TCRentProtocol *)rentProtocol;
+
+/** 修改密码 */
+- (void)didClickModifyPwdWithRentProtocol:(TCRentProtocol *)rentProtocol;
+
+/** 查看临时密码 */
+- (void)didClickCheckPwdWithRentProtocol:(TCRentProtocol *)rentProtocol;
+
+/** 查看电量 */
+- (void)didClickCheckElecWithRentProtocol:(TCRentProtocol *)rentProtocol;
+
+/** 还款计划 */
+- (void)didClickCheckPayPlanWithRentProtocol:(TCRentProtocol *)rentProtocol;
 
 @end
 

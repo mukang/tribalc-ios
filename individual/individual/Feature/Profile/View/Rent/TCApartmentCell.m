@@ -60,9 +60,39 @@
     }
 }
 
+- (void)checkPayPlan {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickCheckPayPlanWithRentProtocol:)]) {
+        [self.delegate didClickCheckPayPlanWithRentProtocol:self.rentProtocol];
+    }
+}
+
+- (void)fee {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickFeeWithRentProtocol:)]) {
+        [self.delegate didClickFeeWithRentProtocol:self.rentProtocol];
+    }
+}
+
 - (void)checkContract {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickCheckContractWithPictures:)]) {
-        [self.delegate didClickCheckContractWithPictures:self.rentProtocol.pictures];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickCheckContractWithRentProtocol:)]) {
+        [self.delegate didClickCheckContractWithRentProtocol:self.rentProtocol];
+    }
+}
+
+- (void)checkElec {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickCheckElecWithRentProtocol:)]) {
+        [self.delegate didClickCheckElecWithRentProtocol:self.rentProtocol];
+    }
+}
+
+- (void)checkPwd {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickCheckPwdWithRentProtocol:)]) {
+        [self.delegate didClickCheckPwdWithRentProtocol:self.rentProtocol];
+    }
+}
+
+- (void)modifyPwd {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickModifyPwdWithRentProtocol:)]) {
+        [self.delegate didClickModifyPwdWithRentProtocol:self.rentProtocol];
     }
 }
 
@@ -189,6 +219,7 @@
         [_payPlanBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
         _payPlanBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         [_payPlanBtn setImage:[UIImage imageNamed:@"apartmenPayPlanImage"] forState:UIControlStateNormal];
+        [_payPlanBtn addTarget:self action:@selector(checkPayPlan) forControlEvents:UIControlEventTouchUpInside];
     }
     return _payPlanBtn;
 }
@@ -219,6 +250,7 @@
         [_apartmentCheckElecBtn setTitle:@"查看门锁电量" forState: UIControlStateNormal];
         [_apartmentCheckElecBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
         [_apartmentCheckElecBtn setImage:[UIImage imageNamed:@"apartmenCheckElecImage"] forState:UIControlStateNormal];
+        [_apartmentCheckElecBtn addTarget:self action:@selector(checkElec) forControlEvents:UIControlEventTouchUpInside];
         _apartmentCheckElecBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         _apartmentCheckElecBtn.layer.cornerRadius = TCRealValue(14);
         _apartmentCheckElecBtn.clipsToBounds = YES;
@@ -233,6 +265,7 @@
         _apartmentCheckPwdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_apartmentCheckPwdBtn setTitle:@"查看临时密码" forState: UIControlStateNormal];
         [_apartmentCheckPwdBtn setImage:[UIImage imageNamed:@"apartmenModifyPwdImage"] forState:UIControlStateNormal];
+        [_apartmentCheckPwdBtn addTarget:self action:@selector(checkPwd) forControlEvents:UIControlEventTouchUpInside];
         [_apartmentCheckPwdBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
         _apartmentCheckPwdBtn.layer.cornerRadius = TCRealValue(14);
         _apartmentCheckPwdBtn.clipsToBounds = YES;
@@ -248,6 +281,7 @@
         _apartmentModifyPwdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_apartmentModifyPwdBtn setTitle:@"修改门锁密码" forState: UIControlStateNormal];
         [_apartmentModifyPwdBtn setImage:[UIImage imageNamed:@"apartmenModifyPwdImage"] forState:UIControlStateNormal];
+        [_apartmentModifyPwdBtn addTarget:self action:@selector(modifyPwd) forControlEvents:UIControlEventTouchUpInside];
         [_apartmentModifyPwdBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
         _apartmentModifyPwdBtn.layer.cornerRadius = TCRealValue(14);
         _apartmentModifyPwdBtn.clipsToBounds = YES;
@@ -265,6 +299,7 @@
         [_apartmentFeeBtn setTitle:@"我的房屋缴费" forState: UIControlStateNormal];
         [_apartmentFeeBtn setImage:[UIImage imageNamed:@"apartmenFeeImage"] forState:UIControlStateNormal];
         [_apartmentFeeBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
+        [_apartmentFeeBtn addTarget:self action:@selector(fee) forControlEvents:UIControlEventTouchUpInside];
         _apartmentFeeBtn.layer.cornerRadius = TCRealValue(14);
         _apartmentFeeBtn.clipsToBounds = YES;
         _apartmentFeeBtn.layer.borderColor = kLineColor.CGColor;

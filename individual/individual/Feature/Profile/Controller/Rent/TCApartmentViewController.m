@@ -12,6 +12,7 @@
 #import <UIImageView+WebCache.h>
 #import "TCApartmentCell.h"
 #import "TCContractViewController.h"
+#import "TCModifyPwdViewController.h"
 
 @interface TCApartmentViewController ()<UITableViewDelegate,UITableViewDataSource,TCApartmentCellDelegate>
 
@@ -39,10 +40,36 @@
 
 #pragma mark TCApartmentCellDelegate 
 
-- (void)didClickCheckContractWithPictures:(NSString *)pictures {
-    NSString *str = @"oss://5919aac90cf223abd9dffa1d/1494855230696_detail0?scale=1.34,oss://5919aac90cf223abd9dffa1d/1494855249450_detail1?scale=0.53";
-    TCContractViewController *contractVC = [[TCContractViewController alloc] initWithPictures:str];
+// 我的合同
+- (void)didClickCheckContractWithRentProtocol:(TCRentProtocol *)rentProtocol {
+//    NSString *str = @"oss://5919aac90cf223abd9dffa1d/1494855230696_detail0?scale=1.34,oss://5919aac90cf223abd9dffa1d/1494855249450_detail1?scale=0.53,oss://5919aac90cf223abd9dffa1d/1494855230696_detail0?scale=1.34,oss://5919aac90cf223abd9dffa1d/1494855249450_detail1?scale=0.53";
+    TCContractViewController *contractVC = [[TCContractViewController alloc] initWithPictures:rentProtocol.pictures];
     [self.navigationController pushViewController:contractVC animated:YES];
+}
+
+//修改密码
+- (void)didClickModifyPwdWithRentProtocol:(TCRentProtocol *)rentProtocol {
+    
+}
+
+//查看临时密码
+- (void)didClickCheckPwdWithRentProtocol:(TCRentProtocol *)rentProtocol {
+
+}
+
+//还款计划
+- (void)didClickCheckPayPlanWithRentProtocol:(TCRentProtocol *)rentProtocol {
+
+}
+
+//缴费
+- (void)didClickFeeWithRentProtocol:(TCRentProtocol *)rentProtocol {
+    
+}
+
+//查看电量
+- (void)didClickCheckElecWithRentProtocol:(TCRentProtocol *)rentProtocol {
+    
 }
 
 #pragma mark UITableViewDelegate
@@ -60,6 +87,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCApartmentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCApartmentCell" forIndexPath:indexPath];
     cell.rentProtocol = self.rentProtocolArr[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     return cell;
 }

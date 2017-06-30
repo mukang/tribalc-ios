@@ -80,6 +80,7 @@
 		550FB77D1ED5C18700D75E33 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 550FB76C1ED5C18600D75E33 /* Info.plist */; };
 		5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */; };
 		551CF2651EE7DAAD00281637 /* TCPreparePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551CF2641EE7DAAD00281637 /* TCPreparePayViewController.m */; };
+		5526A5CD1F05FA2900A8D410 /* TCModifyPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5526A5CC1F05FA2900A8D410 /* TCModifyPwdViewController.m */; };
 		552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */; };
 		552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */; };
 		5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */; };
@@ -555,6 +556,8 @@
 		551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLocksAndVisitorsViewController.m; sourceTree = "<group>"; };
 		551CF2631EE7DAAD00281637 /* TCPreparePayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPreparePayViewController.h; sourceTree = "<group>"; };
 		551CF2641EE7DAAD00281637 /* TCPreparePayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPreparePayViewController.m; sourceTree = "<group>"; };
+		5526A5CB1F05FA2900A8D410 /* TCModifyPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCModifyPwdViewController.h; sourceTree = "<group>"; };
+		5526A5CC1F05FA2900A8D410 /* TCModifyPwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCModifyPwdViewController.m; sourceTree = "<group>"; };
 		552D6C201E94D6BF00CA4EA3 /* TCMyLockQRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMyLockQRCodeController.h; sourceTree = "<group>"; };
 		552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMyLockQRCodeController.m; sourceTree = "<group>"; };
 		552D6C261E973BB000CA4EA3 /* TCUnitySetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUnitySetUpViewController.h; sourceTree = "<group>"; };
@@ -2372,6 +2375,8 @@
 				550923011F039DCC00B007C8 /* TCApartmentViewController.m */,
 				550AA7641F03C76500509F0D /* TCContractViewController.h */,
 				550AA7651F03C76500509F0D /* TCContractViewController.m */,
+				5526A5CB1F05FA2900A8D410 /* TCModifyPwdViewController.h */,
+				5526A5CC1F05FA2900A8D410 /* TCModifyPwdViewController.m */,
 			);
 			path = Rent;
 			sourceTree = "<group>";
@@ -3050,6 +3055,7 @@
 				091D30461DFFC02E00112417 /* TCCartItem.m in Sources */,
 				7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */,
 				0929D2981E0A262A0099B1BD /* TCSelectButton.m in Sources */,
+				5526A5CD1F05FA2900A8D410 /* TCModifyPwdViewController.m in Sources */,
 				55BB9EB31E728C7200B0FD94 /* TCVisitorLocksCell.m in Sources */,
 				550FB76E1ED5C18600D75E33 /* FSCalendar.m in Sources */,
 				7A16665E1DFAC213007B5733 /* TCCompanyTitleViewCell.m in Sources */,
