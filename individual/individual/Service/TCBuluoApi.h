@@ -716,11 +716,43 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
 - (void)fetchRentProtocolList:(void(^)(NSArray *rentProtocolList, NSError *error))resultBlock;
 
 /**
+ 查询指定房源当前租赁协议
+
+ @param sourceID 房源ID
+ @param resultBlock 结果回调
+ */
+- (void)fetchCurrentRentProtocolBySourceID:(NSString *)sourceID result:(void(^)(TCRentProtocol *rentProtocol, NSError *error))resultBlock;
+
+/**
  查询缴租协议的计划项列表
 
  @param protocolID 协议ID
  @param resultBlock 结果回调
  */
 - (void)fetchRentPlanItemListByRentProtocolID:(NSString *)protocolID result:(void(^)(NSArray *rentPlanItemList, NSError *error))resultBlock;
+
+/**
+ 修改代扣信息
+
+ @param withholdInfo 改代扣信息
+ @param resultBlock 结果回调
+ */
+- (void)modifyRentProtocolWithholdByRentProtocolID:(NSString *)protocolID withholdInfo:(TCRentProtocolWithholdInfo *)withholdInfo result:(void(^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 查询代扣信息
+
+ @param protocolID 协议ID
+ @param resultBlock 结果回调
+ */
+- (void)fetchRentProtocolWithholdInfoByRentProtocolID:(NSString *)protocolID result:(void(^)(TCRentProtocolWithholdInfo *withholdInfo, NSError *error))resultBlock;
+
+/**
+ 清除代扣信息
+ 
+ @param protocolID 协议ID
+ @param resultBlock 结果回调
+ */
+- (void)deleteRentProtocolWithholdByRentProtocolID:(NSString *)protocolID result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 @end

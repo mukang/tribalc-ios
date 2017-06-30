@@ -16,11 +16,13 @@
 @property (copy, nonatomic) NSString *ID;
 /** 社区ID */
 @property (copy, nonatomic) NSString *communityId;
+/** 房源ID */
+@property (copy, nonatomic) NSString *sourceId;
 /** 租户ID */
 @property (copy, nonatomic) NSString *ownerId;
 /** 协议类型 Default OFFICE From { OFFICE, APARTMENT } Means { 办公、公寓 } */
 @property (copy, nonatomic) NSString *type;
-/** 付款日期 */
+/** 协议创建日期 */
 @property (nonatomic) long long createTime;
 /** 房间号 */
 @property (copy, nonatomic) NSString *roomNum;

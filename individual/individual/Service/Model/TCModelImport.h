@@ -101,6 +101,7 @@
 /*********** 租赁相关 ***********/
 #import "TCRentProtocol.h"
 #import "TCRentPlanItem.h"
+#import "TCRentProtocolWithholdInfo.h"
 
 @interface TCModelImport : NSObject
 
