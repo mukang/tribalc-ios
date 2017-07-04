@@ -8,6 +8,10 @@
 
 #import <TCCommonLibs/TCBaseViewController.h>
 
+@class TCRentProtocol;
+
 @interface TCModifyPwdViewController : TCBaseViewController
+
+- (instancetype)initWithRentProtocol:(TCRentProtocol *)rentProtocol;
 
 @end
