@@ -27,6 +27,7 @@
     UISegmentedControl *selectGoodInfoSegment;
     UIView *shopView;
     UIView *titleImageView;
+    UIButton *shopCarBtn;
 }
 
 @property (strong, nonatomic) UIView *detailView;
@@ -112,6 +113,11 @@
         
         selectGoodInfoSegment.hidden = YES;
         mScrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(shopView.frame));
+        if (mGoodDetail.repertory) {
+            shopCarBtn.backgroundColor = TCRGBColor(81, 199, 209);;
+        }else {
+            shopCarBtn.backgroundColor = TCGrayColor;
+        }
         [self updateSelectedLabel:goodDetail.standardSnapshot];
     }else {
         [self updateSelectedLabel:nil];
@@ -355,9 +361,13 @@
     UIButton *shopCarImgBtn = [self createBottomLogoBtnWithFrame:CGRectMake(collectionView.width, 0, frame.size.width / 4, frame.size.height) AndImageName:@"good_shoppingcar_gray" AndText:@"购物车" AndAction:@selector(touchShopCarBtn:)];
     [view addSubview:shopCarImgBtn];
     
-    UIButton *shopCarBtn = [TCComponent createButtonWithFrame:CGRectMake(shopCarImgBtn. x + shopCarImgBtn.width, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:TCRealValue(18)];
+    shopCarBtn = [TCComponent createButtonWithFrame:CGRectMake(shopCarImgBtn. x + shopCarImgBtn.width, 0, frame.size.width / 2, frame.size.height) AndTitle:@"加入购物车" AndFontSize:TCRealValue(18)];
     [shopCarBtn addTarget:self action:@selector(touchAddShopCartBtnInDetailView:) forControlEvents:UIControlEventTouchUpInside];
-    shopCarBtn.backgroundColor = TCRGBColor(81, 199, 209);
+    if (mGoodDetail.repertory) {
+        shopCarBtn.backgroundColor = TCRGBColor(81, 199, 209);;
+    }else {
+        shopCarBtn.backgroundColor = TCGrayColor;
+    }
     [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [view addSubview:shopCarBtn];
     
@@ -536,10 +546,16 @@
         return;
     }
     
+    if (!mGoodDetail.repertory) {
+        [MBProgressHUD showHUDWithMessage:@"库存不足！" afterDelay:1.0];
+        return;
+    }
+    
     if (mGoodDetail.standardId == nil) {
         [weakSelf showStandardView:nil];
         return ;
     }
+    
     TCBuluoApi *api = [TCBuluoApi api];
     [MBProgressHUD showHUD:YES];
     [api fetchGoodStandards:mGoodDetail.standardId result:^(TCGoodStandards *result, NSError *error) {

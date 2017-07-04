@@ -317,14 +317,14 @@ TCPhotoModeViewDelegate>
             TCUserReserveViewController *userReserveViewController = [[TCUserReserveViewController alloc] init];
             userReserveViewController.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:userReserveViewController animated:YES];
-        }else if (indexPath.row == 4) { // 我的公司
+        }else if (indexPath.row == 5) { // 我的公司
              [self handleDidSelectedMyCompanyCell];
-        }else if (indexPath.row == 5) { //物业报修
+        }else if (indexPath.row == 6) { //物业报修
             TCPropertyManageListController *propertyListVc = [[TCPropertyManageListController alloc] init];
             propertyListVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:propertyListVc animated:YES];
             
-        }else if (indexPath.row == 6) { //我的公寓
+        }else if (indexPath.row == 4) { //我的公寓
             TCApartmentViewController *propertyListVc = [[TCApartmentViewController alloc] init];
             propertyListVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:propertyListVc animated:YES];
@@ -587,9 +587,9 @@ TCPhotoModeViewDelegate>
                            @{@"title": @"我的签到", @"icon": @"profile_signin_icon"},
                            @{@"title": @"身份认证", @"icon": @"profile_identity_icon"},
                            @{@"title": @"我的预定", @"icon": @"profile_check_icon"},
+                           @{@"title": @"我的公寓", @"icon": @"profile_apartment_icon"},
                            @{@"title": @"我的公司", @"icon": @"profile_company_icon"},
-                           @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"},
-                           @{@"title": @"我的钱包", @"icon": @"profile_wallet_icon"}]
+                           @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"}]
                          ];
     }
     return _fodderArray;

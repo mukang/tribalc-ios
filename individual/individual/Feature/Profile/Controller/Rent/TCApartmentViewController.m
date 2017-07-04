@@ -15,6 +15,7 @@
 #import "TCModifyPwdViewController.h"
 #import "TCApartmentPayViewController.h"
 #import "TCRentPlanItemsViewController.h"
+#import "TCCheckPwdViewController.h"
 
 @interface TCApartmentViewController ()<UITableViewDelegate,UITableViewDataSource,TCApartmentCellDelegate>
 
@@ -51,12 +52,15 @@
 
 //修改密码
 - (void)didClickModifyPwdWithRentProtocol:(TCRentProtocol *)rentProtocol {
-    
+    TCModifyPwdViewController *modifyVC = [[TCModifyPwdViewController alloc] initWithRentProtocol:rentProtocol];
+    [self.navigationController pushViewController:modifyVC animated:YES];
 }
 
 //查看临时密码
 - (void)didClickCheckPwdWithRentProtocol:(TCRentProtocol *)rentProtocol {
-
+    TCCheckPwdViewController *checkPwdVC = [[TCCheckPwdViewController alloc] init];
+    checkPwdVC.rentProtocol = rentProtocol;
+    [self.navigationController pushViewController:checkPwdVC animated:YES];
 }
 
 //还款计划

@@ -81,6 +81,7 @@
 		5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551306591E714008004DF32F /* TCLocksAndVisitorsViewController.m */; };
 		551CF2651EE7DAAD00281637 /* TCPreparePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551CF2641EE7DAAD00281637 /* TCPreparePayViewController.m */; };
 		5526A5CD1F05FA2900A8D410 /* TCModifyPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5526A5CC1F05FA2900A8D410 /* TCModifyPwdViewController.m */; };
+		5526A5D01F08D83500A8D410 /* TCCheckPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5526A5CF1F08D83500A8D410 /* TCCheckPwdViewController.m */; };
 		552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */; };
 		552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */; };
 		5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */; };
@@ -572,6 +573,8 @@
 		551CF2641EE7DAAD00281637 /* TCPreparePayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPreparePayViewController.m; sourceTree = "<group>"; };
 		5526A5CB1F05FA2900A8D410 /* TCModifyPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCModifyPwdViewController.h; sourceTree = "<group>"; };
 		5526A5CC1F05FA2900A8D410 /* TCModifyPwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCModifyPwdViewController.m; sourceTree = "<group>"; };
+		5526A5CE1F08D83500A8D410 /* TCCheckPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCheckPwdViewController.h; sourceTree = "<group>"; };
+		5526A5CF1F08D83500A8D410 /* TCCheckPwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCheckPwdViewController.m; sourceTree = "<group>"; };
 		552D6C201E94D6BF00CA4EA3 /* TCMyLockQRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMyLockQRCodeController.h; sourceTree = "<group>"; };
 		552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMyLockQRCodeController.m; sourceTree = "<group>"; };
 		552D6C261E973BB000CA4EA3 /* TCUnitySetUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUnitySetUpViewController.h; sourceTree = "<group>"; };
@@ -2428,6 +2431,8 @@
 				550AA7651F03C76500509F0D /* TCContractViewController.m */,
 				5526A5CB1F05FA2900A8D410 /* TCModifyPwdViewController.h */,
 				5526A5CC1F05FA2900A8D410 /* TCModifyPwdViewController.m */,
+				5526A5CE1F08D83500A8D410 /* TCCheckPwdViewController.h */,
+				5526A5CF1F08D83500A8D410 /* TCCheckPwdViewController.m */,
 			);
 			path = Rent;
 			sourceTree = "<group>";
@@ -3247,6 +3252,7 @@
 				552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */,
 				550FB7751ED5C18700D75E33 /* FSCalendarDelegationFactory.m in Sources */,
 				7AADCC711EE80154004AA1DA /* TCPaymentDetailView.m in Sources */,
+				5526A5D01F08D83500A8D410 /* TCCheckPwdViewController.m in Sources */,
 				550AA7661F03C76600509F0D /* TCContractViewController.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
 				7A1A85471E66D61000BB5EDB /* TCServiceListViewController.m in Sources */,
@@ -3482,7 +3488,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "97438d62-f327-462b-a20e-14e3e76dab48";
+				PROVISIONING_PROFILE = "024bd276-a03a-4e36-af8b-cd95d9191115";
 				PROVISIONING_PROFILE_SPECIFIER = "Individual Development";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
