@@ -7,6 +7,8 @@
 //
 
 #import "TCApartmentPayViewController.h"
+#import "TCPaymentViewController.h"
+#import "TCApartmentRentPaySuccessViewController.h"
 
 #import "TCApartmentPayTabView.h"
 #import "TCApartmentRentPayDetailView.h"
@@ -18,9 +20,15 @@
 
 #import "TCBuluoApi.h"
 
-@interface TCApartmentPayViewController () <TCApartmentPayTabViewDelegate, TCApartmentRentPayDetailViewDelegate, TCApartmentWithholdInfoViewDelegate, TCApartmentRentPayFinishViewDelegate>
+@interface TCApartmentPayViewController ()
+<TCApartmentPayTabViewDelegate,
+TCApartmentRentPayDetailViewDelegate,
+TCApartmentWithholdInfoViewDelegate,
+TCApartmentRentPayFinishViewDelegate,
+TCPaymentViewControllerDelegate>
 
 @property (nonatomic) TCApartmentPayType payType;
+@property (strong, nonatomic) TCRentProtocol *rentProtocol;
 @property (strong, nonatomic) TCRentProtocolWithholdInfo *withholdInfo;
 
 @property (weak, nonatomic) TCApartmentPayTabView *tabView;
@@ -239,7 +247,12 @@
 #pragma mark - TCApartmentRentPayDetailViewDelegate
 
 - (void)didClickPayButtonInApartmentRentPayDetailView:(TCApartmentRentPayDetailView *)view {
-    
+    TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:self.rentProtocol.monthlyRent
+                                                                         payPurpose:TCPayPurposeRent
+                                                                     fromController:self];
+    vc.targetID = self.rentProtocol.ID;
+    vc.delegate = self;
+    [vc show:YES];
 }
 
 #pragma mark - TCApartmentWithholdInfoViewDelegate
@@ -252,6 +265,17 @@
 
 - (void)didClickPayPlanInApartmentRentPayFinishView:(TCApartmentRentPayFinishView *)view {
     
+}
+
+#pragma mark - TCPaymentViewControllerDelegate
+
+- (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
+    TCApartmentRentPaySuccessViewController *vc = [[TCApartmentRentPaySuccessViewController alloc] init];
+    vc.payCycle = self.rentProtocol.payCycle;
+    vc.paySuccess = ^{
+        [weakSelf loadRentPayProtocol];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Actions

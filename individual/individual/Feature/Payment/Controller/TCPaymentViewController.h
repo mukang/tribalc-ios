@@ -32,7 +32,8 @@
  （payPurpose为TCPayPurposeOrder时，必填） */
 @property (copy, nonatomic) NSArray *orderIDs;
 /** 目标商户ID
- （payPurpose为TCPayPurposeFace2Face时，必填） */
+ （payPurpose为TCPayPurposeFace2Face和TCPayPurposeRent时，必填；
+ 当为TCPayPurposeRent时，targetID是租赁协议ID） */
 @property (copy, nonatomic) NSString *targetID;
 
 @property (weak, nonatomic) id<TCPaymentViewControllerDelegate> delegate;

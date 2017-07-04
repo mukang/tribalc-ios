@@ -33,6 +33,10 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
     TCBFPayResultNotPay      // 未支付
 };
 
+typedef NS_ENUM(NSInteger, TCBFSupportedBankType) {
+    TCBFSupportedBankTypeWithhold = 0 // 代付
+};
+
 @interface TCBuluoApi : NSObject
 
 /**
@@ -679,6 +683,14 @@ typedef NS_ENUM(NSInteger, TCBFPayResult) {
  @param resultBlock 结果回调
  */
 - (void)fetchMainPageList:(void(^)(NSArray *mainPageList, NSError *error))resultBlock;
+
+/**
+ 获取宝付业务支持的银行信息
+
+ @param type 类型
+ @param resultBlock 结果回调
+ */
+- (void)fetchBFSupportedBankListByType:(TCBFSupportedBankType)type result:(void(^)(NSArray *bankCardList, NSError *error))resultBlock;
 
 #pragma mark - 线上活动
 

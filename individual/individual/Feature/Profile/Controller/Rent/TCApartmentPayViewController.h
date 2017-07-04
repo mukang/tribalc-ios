@@ -7,11 +7,9 @@
 //
 
 #import <TCCommonLibs/TCBaseViewController.h>
-@class TCRentProtocol;
 
 @interface TCApartmentPayViewController : TCBaseViewController
 
-@property (strong, nonatomic) TCRentProtocol *rentProtocol;
 @property (copy, nonatomic) NSString *sourceID;
 
 @end
