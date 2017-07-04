@@ -587,7 +587,7 @@ TCPhotoModeViewDelegate>
                            @{@"title": @"我的签到", @"icon": @"profile_signin_icon"},
                            @{@"title": @"身份认证", @"icon": @"profile_identity_icon"},
                            @{@"title": @"我的预定", @"icon": @"profile_check_icon"},
-                           @{@"title": @"我的公寓", @"icon": @"profile_wallet_icon"},
+                           @{@"title": @"我的公寓", @"icon": @"profile_apartment_icon"},
                            @{@"title": @"我的公司", @"icon": @"profile_company_icon"},
                            @{@"title": @"物业报修", @"icon": @"profile_repairs_icon"}]
                          ];

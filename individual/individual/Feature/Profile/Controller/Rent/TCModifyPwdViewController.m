@@ -112,7 +112,7 @@
         make.left.equalTo(self.apartmentNameTitle.mas_right);
         make.top.equalTo(self.apartmentNameTitle);
         make.right.equalTo(self.topView).offset(-20);
-        make.height.equalTo(@(rect.size.height >= 20 ? (rect.size.height + 15.0) : 40));
+        make.height.equalTo(@(rect.size.height >= 20 ? (rect.size.height + 15.0) : TCRealValue(40)));
     }];
     
     [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -283,8 +283,8 @@
         _apartmentNameLabel = [[UILabel alloc] init];
         _apartmentNameLabel.textColor = TCBlackColor;
         _apartmentNameLabel.numberOfLines = 0;
-//        _apartmentNameLabel.text = self.rentProtocol.sourceName;
-        _apartmentNameLabel.text = @"凄凄切切群群群群凄凄切切群我wwwwwwwwwwww我问问xxx惺惺惜惺惺休息休息呜呜呜呜我问问看";
+        _apartmentNameLabel.text = self.rentProtocol.sourceName;
+//        _apartmentNameLabel.text = @"凄凄切切群群群群凄凄切切群我wwwwwwwwwww";
         _apartmentNameLabel.font = [UIFont systemFontOfSize:14];
     }
     return _apartmentNameLabel;
