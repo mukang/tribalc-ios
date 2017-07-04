@@ -32,5 +32,9 @@
 @property (nonatomic) long long startTime;
 /** 租期结束时间 */
 @property (nonatomic) long long endTime;
+/** 是否是当前需要缴租的项 */
+@property (nonatomic, getter=isCurrentItem) BOOL currentItem;
+/** 第几期 */
+@property (nonatomic) NSInteger itemNum;
 
 @end

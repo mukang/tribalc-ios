@@ -9,6 +9,8 @@
 #import "TCApartmentPayViewController.h"
 #import "TCPaymentViewController.h"
 #import "TCApartmentRentPaySuccessViewController.h"
+#import "TCApartmentAddWithholdViewController.h"
+#import "TCRentPlanItemsViewController.h"
 
 #import "TCApartmentPayTabView.h"
 #import "TCApartmentRentPayDetailView.h"
@@ -28,7 +30,7 @@ TCApartmentRentPayFinishViewDelegate,
 TCPaymentViewControllerDelegate>
 
 @property (nonatomic) TCApartmentPayType payType;
-@property (strong, nonatomic) TCRentProtocol *rentProtocol;
+@property (strong, nonatomic) TCRentPlanItem *rentPlanItem;
 @property (strong, nonatomic) TCRentProtocolWithholdInfo *withholdInfo;
 
 @property (weak, nonatomic) TCApartmentPayTabView *tabView;
@@ -58,7 +60,7 @@ TCPaymentViewControllerDelegate>
     
     [self setupSubviews];
     [self.tabView clickApartmentPayTabWithType:TCApartmentPayTypeRent];
-    [self loadRentPayProtocol];
+    [self loadRentPlanItems];
 }
 
 #pragma mark - Private Methods
@@ -107,6 +109,8 @@ TCPaymentViewControllerDelegate>
     guideWithholdView.hidden = YES;
     [self.rentPayContainerView addSubview:guideWithholdView];
     self.guideWithholdView = guideWithholdView;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGuideWithholdView)];
+    [guideWithholdView addGestureRecognizer:tap];
     
     TCApartmentWithholdInfoView *withholdInfoView = [[TCApartmentWithholdInfoView alloc] init];
     withholdInfoView.hidden = YES;
@@ -159,22 +163,22 @@ TCPaymentViewControllerDelegate>
     
 }
 
+- (void)showRentPlanItemsFinishView {
+    self.rentPayDetailView.hidden = YES;
+    self.guideWithholdView.hidden = YES;
+    self.withholdInfoView.hidden = YES;
+    self.payPlanButton.hidden = YES;
+    self.payFinishView.hidden = NO;
+    [self.rentPayContainerView layoutIfNeeded];
+}
+
 - (void)reloadRentPayContainerView {
-    if (!self.rentProtocol) return;
-    
-    if (self.rentProtocol.imminentPayTime == 0) {
-        self.rentPayDetailView.hidden = YES;
-        self.guideWithholdView.hidden = YES;
-        self.withholdInfoView.hidden = YES;
-        self.payPlanButton.hidden = YES;
-        self.payFinishView.hidden = NO;
-        [self.rentPayContainerView layoutIfNeeded];
-        return;
-    }
+    if (!self.rentPlanItem) return;
     
     self.payFinishView.hidden = YES;
     self.rentPayDetailView.hidden = NO;
     self.rentPayDetailView.rentProtocol = self.rentProtocol;
+    self.rentPayDetailView.planItem = self.rentPlanItem;
     self.payPlanButton.hidden = NO;
     if (self.withholdInfo) {
         self.withholdInfoView.hidden = NO;
@@ -199,24 +203,44 @@ TCPaymentViewControllerDelegate>
     
 }
 
+- (void)analysizeRentPlanItems:(NSArray *)rentPlanItems {
+    TCRentPlanItem *lastPlanItem = [rentPlanItems lastObject];
+    if (lastPlanItem.finished) {
+        [MBProgressHUD hideHUD:YES];
+        [self showRentPlanItemsFinishView];
+        return;
+    }
+    
+    lastPlanItem = nil;
+    for (int i=0; i<rentPlanItems.count; i++) {
+        TCRentPlanItem *planItem = rentPlanItems[i];
+        if (planItem.finished == NO && (lastPlanItem.finished || !lastPlanItem)) {
+            planItem.itemNum = i;
+            planItem.currentItem = YES;
+            self.rentPlanItem = planItem;
+            break;
+        }
+        lastPlanItem = planItem;
+    }
+    [self loadRentPayProtocolWithhold];
+}
+
 #pragma mark - Net Request
 
-- (void)loadRentPayProtocol {
+- (void)loadRentPlanItems {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchCurrentRentProtocolBySourceID:self.sourceID result:^(TCRentProtocol *rentProtocol, NSError *error) {
-        if (error) {
+    [[TCBuluoApi api] fetchRentPlanItemListByRentProtocolID:self.rentProtocol.ID result:^(NSArray *rentPlanItemList, NSError *error) {
+        if (rentPlanItemList) {
+            [weakSelf analysizeRentPlanItems:rentPlanItemList];
+        } else {
             NSString *reason = error.localizedDescription ?: @"请退出重试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
-        } else {
-            if (rentProtocol) {
-                weakSelf.rentProtocol = rentProtocol;
-                [weakSelf loadRentPayProtocolWithhold];
-            }
         }
     }];
 }
 
 - (void)loadRentPayProtocolWithhold {
+    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchRentProtocolWithholdInfoByRentProtocolID:self.rentProtocol.ID result:^(TCRentProtocolWithholdInfo *withholdInfo, NSError *error) {
         if (error) {
             NSString *reason = error.localizedDescription ?: @"请退出重试";
@@ -258,22 +282,25 @@ TCPaymentViewControllerDelegate>
 #pragma mark - TCApartmentWithholdInfoViewDelegate
 
 - (void)didClickEditButtonInApartmentWithholdInfoView:(TCApartmentWithholdInfoView *)view {
-    
+    [self showAddWithholeViewControllerWithWithholdInfo:self.withholdInfo];
 }
 
 #pragma mark - TCApartmentRentPayFinishViewDelegate
 
 - (void)didClickPayPlanInApartmentRentPayFinishView:(TCApartmentRentPayFinishView *)view {
-    
+    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] init];
+    vc.rentProtocol = self.rentProtocol;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - TCPaymentViewControllerDelegate
 
 - (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
     TCApartmentRentPaySuccessViewController *vc = [[TCApartmentRentPaySuccessViewController alloc] init];
-    vc.payCycle = self.rentProtocol.payCycle;
+    vc.itemNum = self.rentPlanItem.itemNum;
+    vc.rentProtocol = self.rentProtocol;
     vc.paySuccess = ^{
-        [weakSelf loadRentPayProtocol];
+        [weakSelf loadRentPlanItems];
     };
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -281,7 +308,33 @@ TCPaymentViewControllerDelegate>
 #pragma mark - Actions
 
 - (void)handleClickPayPlanButton:(id)sender {
-    
+    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] init];
+    vc.rentProtocol = self.rentProtocol;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleTapGuideWithholdView {
+    [self showAddWithholeViewControllerWithWithholdInfo:nil];
+}
+
+- (void)showAddWithholeViewControllerWithWithholdInfo:(TCRentProtocolWithholdInfo *)withholdInfo {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchBFSupportedBankListByType:TCBFSupportedBankTypeWithhold result:^(NSArray *bankCardList, NSError *error) {
+        if (bankCardList) {
+            [MBProgressHUD hideHUD:YES];
+            TCApartmentAddWithholdViewController *vc = [[TCApartmentAddWithholdViewController alloc] init];
+            vc.isEdit = withholdInfo ? NO : YES;
+            vc.withholdInfo = withholdInfo;
+            vc.banks = bankCardList;
+            vc.addWithholdSuccess = ^{
+                [weakSelf loadRentPayProtocolWithhold];
+            };
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

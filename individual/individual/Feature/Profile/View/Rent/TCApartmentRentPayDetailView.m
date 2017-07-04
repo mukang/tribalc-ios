@@ -9,6 +9,7 @@
 #import "TCApartmentRentPayDetailView.h"
 #import <TCCommonLibs/TCCommonButton.h>
 #import "TCRentProtocol.h"
+#import "TCRentPlanItem.h"
 
 @interface TCApartmentRentPayDetailView ()
 
@@ -139,17 +140,21 @@
     self.numLabel.text = [NSString stringWithFormat:@"编号：%@", rentProtocol.sourceNum];
     
     self.nameLabel.text = [NSString stringWithFormat:@"公寓：%@", rentProtocol.sourceName];
+}
+
+- (void)setPlanItem:(TCRentPlanItem *)planItem {
+    _planItem = planItem;
     
-    NSDate *beginDate = [NSDate dateWithTimeIntervalSince1970:(rentProtocol.beginTime / 1000.0)];
-    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:(rentProtocol.endTime / 1000.0)];
+    NSDate *beginDate = [NSDate dateWithTimeIntervalSince1970:(planItem.startTime / 1000.0)];
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:(planItem.endTime / 1000.0)];
     self.beginAndEndDateLabel.text = [NSString stringWithFormat:@"租赁日期：%@ 至 %@", [self.dateFormatter stringFromDate:beginDate], [self.dateFormatter stringFromDate:endDate]];
     
-    self.periodLabel.text = [NSString stringWithFormat:@"当前缴费周期：第%zd期", rentProtocol.payCycle];
+    self.periodLabel.text = [NSString stringWithFormat:@"当前缴费周期：第%zd期", planItem.plannedRental];
     
-    NSDate *imminentDate = [NSDate dateWithTimeIntervalSince1970:(rentProtocol.imminentPayTime / 1000.0)];
+    NSDate *imminentDate = [NSDate dateWithTimeIntervalSince1970:(planItem.plannedTime / 1000.0)];
     self.imminentDateLabel.text = [NSString stringWithFormat:@"缴费日期：%@", [self.dateFormatter stringFromDate:imminentDate]];
     
-    NSString *amountStr = [NSString stringWithFormat:@"%0.2f", rentProtocol.monthlyRent];
+    NSString *amountStr = [NSString stringWithFormat:@"%0.2f", planItem.plannedRental];
     NSString *unitStr = @"元";
     NSString *totalStr = [NSString stringWithFormat:@"缴费金额：%@%@", amountStr, unitStr];
     NSRange amountRange = [totalStr rangeOfString:amountStr];
