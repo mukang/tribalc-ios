@@ -7,12 +7,14 @@
 //
 
 #import <TCCommonLibs/TCBaseViewController.h>
+@class TCRentProtocol;
 
 typedef void(^TCApartmentRentPaySuccess)();
 
 @interface TCApartmentRentPaySuccessViewController : TCBaseViewController
 
-@property (nonatomic) NSUInteger payCycle;
+@property (nonatomic) NSInteger itemNum;
+@property (strong, nonatomic) TCRentProtocol *rentProtocol;
 @property (copy, nonatomic) TCApartmentRentPaySuccess paySuccess;
 
 @end

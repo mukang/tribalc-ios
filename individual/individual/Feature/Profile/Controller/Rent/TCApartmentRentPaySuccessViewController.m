@@ -7,6 +7,10 @@
 //
 
 #import "TCApartmentRentPaySuccessViewController.h"
+#import "TCRentPlanItemsViewController.h"
+
+#import "TCRentProtocol.h"
+
 #import <YYText.h>
 #import <TCCommonLibs/TCCommonButton.h>
 
@@ -34,7 +38,7 @@
     [self.view addSubview:imageView];
     
     NSString *partStr = @"全部付款计划";
-    NSString *totalStr = [NSString stringWithFormat:@"恭喜，第%zd期房租已缴纳成功，可在%@/n中进行查看", self.payCycle, partStr];
+    NSString *totalStr = [NSString stringWithFormat:@"恭喜，第%zd期房租已缴纳成功，可在%@/n中进行查看", self.itemNum, partStr];
     NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:totalStr];
     [attText setAttributes:@{
                              NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(12.5)],
@@ -77,7 +81,9 @@
 }
 
 - (void)handleClickPayPlan {
-    
+    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] init];
+    vc.rentProtocol = self.rentProtocol;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleClickBackButton:(id)sender {

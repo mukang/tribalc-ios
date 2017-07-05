@@ -13,7 +13,10 @@
 
 + (void)showHUD:(BOOL)animated {
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    [MBProgressHUD showHUDAddedTo:keyWindow animated:animated];
+    MBProgressHUD *hud = [MBProgressHUD HUDForView:keyWindow];
+    if (!hud) {
+        [MBProgressHUD showHUDAddedTo:keyWindow animated:animated];
+    }
 }
 
 + (void)hideHUD:(BOOL)animated {

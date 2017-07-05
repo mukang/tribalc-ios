@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class TCRentProtocol;
+@class TCRentPlanItem;
 
 @protocol TCApartmentRentPayDetailViewDelegate;
 /**
@@ -16,6 +17,7 @@
 @interface TCApartmentRentPayDetailView : UIView
 
 @property (strong, nonatomic) TCRentProtocol *rentProtocol;
+@property (strong, nonatomic) TCRentPlanItem *planItem;
 @property (weak, nonatomic) id<TCApartmentRentPayDetailViewDelegate> delegate;
 
 @end

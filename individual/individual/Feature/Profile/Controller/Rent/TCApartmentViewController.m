@@ -14,6 +14,7 @@
 #import "TCContractViewController.h"
 #import "TCModifyPwdViewController.h"
 #import "TCApartmentPayViewController.h"
+#import "TCRentPlanItemsViewController.h"
 #import "TCCheckPwdViewController.h"
 
 @interface TCApartmentViewController ()<UITableViewDelegate,UITableViewDataSource,TCApartmentCellDelegate>
@@ -64,13 +65,15 @@
 
 //还款计划
 - (void)didClickCheckPayPlanWithRentProtocol:(TCRentProtocol *)rentProtocol {
-
+    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] init];
+    vc.rentProtocol = rentProtocol;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 //缴费
 - (void)didClickFeeWithRentProtocol:(TCRentProtocol *)rentProtocol {
     TCApartmentPayViewController *vc = [[TCApartmentPayViewController alloc] init];
-    vc.sourceID = rentProtocol.sourceId;
+    vc.rentProtocol = rentProtocol;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

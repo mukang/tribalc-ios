@@ -282,6 +282,13 @@
 		7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDD1DB62011003D90C6 /* LaunchScreen.storyboard */; };
 		7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEE91DB62011003D90C6 /* individualTests.m */; };
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
+		7AA643B61F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */; };
+		7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BB1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m */; };
+		7AA643BF1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BE1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m */; };
+		7AA643C21F0A48A300DD421F /* TCBankPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643C11F0A48A300DD421F /* TCBankPickerViewController.m */; };
+		7AA643C51F0B760900DD421F /* TCRentPlanItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643C41F0B760900DD421F /* TCRentPlanItemsViewController.m */; };
+		7AA643C81F0B78F900DD421F /* TCRentPlanItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643C71F0B78F900DD421F /* TCRentPlanItemViewCell.m */; };
+		7AA643CB1F0B945000DD421F /* TCRentPlanItemsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643CA1F0B945000DD421F /* TCRentPlanItemsHeaderView.m */; };
 		7AAB19FA1ED29F3A00EF5F69 /* TCActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB19F91ED29F3A00EF5F69 /* TCActivityInfo.m */; };
 		7AAB1A001ED43CA900EF5F69 /* TCPromotionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB19FF1ED43CA900EF5F69 /* TCPromotionsManager.m */; };
 		7AAB1A031ED447EB00EF5F69 /* TCPromotionsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A021ED447EB00EF5F69 /* TCPromotionsWrapper.m */; };
@@ -912,6 +919,20 @@
 		7A9CCEF01DB62011003D90C6 /* individualUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = individualUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9CCEF41DB62011003D90C6 /* individualUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = individualUITests.m; sourceTree = "<group>"; };
 		7A9CCEF61DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7AA643B41F09DD4E00DD421F /* TCApartmentAddWithholdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentAddWithholdViewController.h; sourceTree = "<group>"; };
+		7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentAddWithholdViewController.m; sourceTree = "<group>"; };
+		7AA643BA1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentWithholdAddNameViewCell.h; sourceTree = "<group>"; };
+		7AA643BB1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentWithholdAddNameViewCell.m; sourceTree = "<group>"; };
+		7AA643BD1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentWithholdConfirmViewCell.h; sourceTree = "<group>"; };
+		7AA643BE1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentWithholdConfirmViewCell.m; sourceTree = "<group>"; };
+		7AA643C01F0A48A300DD421F /* TCBankPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBankPickerViewController.h; sourceTree = "<group>"; };
+		7AA643C11F0A48A300DD421F /* TCBankPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBankPickerViewController.m; sourceTree = "<group>"; };
+		7AA643C31F0B760900DD421F /* TCRentPlanItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentPlanItemsViewController.h; sourceTree = "<group>"; };
+		7AA643C41F0B760900DD421F /* TCRentPlanItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentPlanItemsViewController.m; sourceTree = "<group>"; };
+		7AA643C61F0B78F900DD421F /* TCRentPlanItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentPlanItemViewCell.h; sourceTree = "<group>"; };
+		7AA643C71F0B78F900DD421F /* TCRentPlanItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentPlanItemViewCell.m; sourceTree = "<group>"; };
+		7AA643C91F0B945000DD421F /* TCRentPlanItemsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentPlanItemsHeaderView.h; sourceTree = "<group>"; };
+		7AA643CA1F0B945000DD421F /* TCRentPlanItemsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentPlanItemsHeaderView.m; sourceTree = "<group>"; };
 		7AAB19F81ED29F3A00EF5F69 /* TCActivityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCActivityInfo.h; sourceTree = "<group>"; };
 		7AAB19F91ED29F3A00EF5F69 /* TCActivityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCActivityInfo.m; sourceTree = "<group>"; };
 		7AAB19FE1ED43CA900EF5F69 /* TCPromotionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPromotionsManager.h; sourceTree = "<group>"; };
@@ -1667,6 +1688,8 @@
 				552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */,
 				7AAB1A041ED574EF00EF5F69 /* TCWebViewController.h */,
 				7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */,
+				7AA643C01F0A48A300DD421F /* TCBankPickerViewController.h */,
+				7AA643C11F0A48A300DD421F /* TCBankPickerViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2398,6 +2421,10 @@
 				7ABA7E771F03A3F400DCC2D0 /* TCApartmentPayViewController.m */,
 				7A5899111F0657D20013E07A /* TCApartmentRentPaySuccessViewController.h */,
 				7A5899121F0657D20013E07A /* TCApartmentRentPaySuccessViewController.m */,
+				7AA643B41F09DD4E00DD421F /* TCApartmentAddWithholdViewController.h */,
+				7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */,
+				7AA643C31F0B760900DD421F /* TCRentPlanItemsViewController.h */,
+				7AA643C41F0B760900DD421F /* TCRentPlanItemsViewController.m */,
 				550923001F039DCC00B007C8 /* TCApartmentViewController.h */,
 				550923011F039DCC00B007C8 /* TCApartmentViewController.m */,
 				550AA7641F03C76500509F0D /* TCContractViewController.h */,
@@ -2423,6 +2450,14 @@
 				7A2CD74B1F04E2D800CEEF29 /* TCApartmentGuideWithholdView.m */,
 				7A2CD74D1F04EB3800CEEF29 /* TCApartmentWithholdInfoView.h */,
 				7A2CD74E1F04EB3800CEEF29 /* TCApartmentWithholdInfoView.m */,
+				7AA643BA1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.h */,
+				7AA643BB1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m */,
+				7AA643BD1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.h */,
+				7AA643BE1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m */,
+				7AA643C61F0B78F900DD421F /* TCRentPlanItemViewCell.h */,
+				7AA643C71F0B78F900DD421F /* TCRentPlanItemViewCell.m */,
+				7AA643C91F0B945000DD421F /* TCRentPlanItemsHeaderView.h */,
+				7AA643CA1F0B945000DD421F /* TCRentPlanItemsHeaderView.m */,
 				550923031F03A67400B007C8 /* TCApartmentCell.h */,
 				550923041F03A67400B007C8 /* TCApartmentCell.m */,
 			);
@@ -2939,10 +2974,13 @@
 				7A13EEB21DF814AD00377869 /* TCCommunityListViewController.m in Sources */,
 				7AEB4CCC1E03936300F83A7C /* TCShippingAddressViewController.m in Sources */,
 				091AABA41DE7CE1B003A4192 /* TCGoodTitleView.m in Sources */,
+				7AA643BF1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m in Sources */,
 				092626801E0BA3F300F5A18C /* TCShoppingCartBottom.m in Sources */,
 				55F06F101E07D0AA00A849D7 /* TCQRCodeViewController.m in Sources */,
 				55F06F1A1E07E9FA00A849D7 /* TCScannerBorder.m in Sources */,
 				7AADCC631EE7A33D004AA1DA /* TCPaymentViewController.m in Sources */,
+				7AA643C21F0A48A300DD421F /* TCBankPickerViewController.m in Sources */,
+				7AA643C81F0B78F900DD421F /* TCRentPlanItemViewCell.m in Sources */,
 				7A22D93D1ECEF336009A6A64 /* TCAppInitializationInfo.m in Sources */,
 				7AFEC4841E54056E00B0E754 /* TCGoodsOrderViewCell.m in Sources */,
 				7AEB4CC31E03936300F83A7C /* TCBioEditPhoneViewController.m in Sources */,
@@ -3081,6 +3119,7 @@
 				09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */,
 				7AFEC47D1E54056D00B0E754 /* TCGoodsOrderFooterView.m in Sources */,
 				7A0E009B1E2DC1DE0028555D /* TCLaunchViewController.m in Sources */,
+				7AA643CB1F0B945000DD421F /* TCRentPlanItemsHeaderView.m in Sources */,
 				7A1F12901DEC0BDD00A9B58F /* TCCommunitiesViewController.m in Sources */,
 				0929D2951E0A25820099B1BD /* TCSelectSecondaryBtn.m in Sources */,
 				09222E791DEEC0920064C0DF /* TCOrderWrapper.m in Sources */,
@@ -3113,6 +3152,7 @@
 				7A8352ED1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m in Sources */,
 				7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */,
 				7A22D9441ECEFB18009A6A64 /* TCSigninRecordMonth.m in Sources */,
+				7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */,
 				092C69731DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m in Sources */,
 				7A21E43F1DD02DEA00EF7427 /* TCProfileProcessViewCell.m in Sources */,
 				0929D2941E0A25820099B1BD /* TCSelectPrimaryBtn.m in Sources */,
@@ -3147,6 +3187,7 @@
 				7A8352841E5C2D8A003A8E76 /* TCServicePromptViewCell.m in Sources */,
 				7AC3470F1E0171B100E28EC9 /* TCSettingCacheViewCell.m in Sources */,
 				7A1F129E1DEC551400A9B58F /* TCCommunityDetailViewController.m in Sources */,
+				7AA643C51F0B760900DD421F /* TCRentPlanItemsViewController.m in Sources */,
 				7A381BC41DED5DC4008BDBF7 /* TCCommunityDetailInfo.m in Sources */,
 				7A384FA51E1124D600E6DB9E /* TCIDAuthViewController.m in Sources */,
 				552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */,
@@ -3184,6 +3225,7 @@
 				7AADCC751EE80154004AA1DA /* TCPaymentPasswordView.m in Sources */,
 				098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */,
 				7A7E941E1DF57136006A47CE /* TCRepairsPhotosViewCell.m in Sources */,
+				7AA643B61F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m in Sources */,
 				0990F19A1E07CA11002692F6 /* TCGoodShopView.m in Sources */,
 				7AEB4CF31E03944500F83A7C /* TCShippingAddressEditViewCell.m in Sources */,
 				7AEB4CC91E03936300F83A7C /* TCBiographyViewController.m in Sources */,
