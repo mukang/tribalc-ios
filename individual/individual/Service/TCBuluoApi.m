@@ -2346,7 +2346,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
             }
         } else {
-            NSArray *dicArray = [response.data objectForKey:@"banner"];
+            NSArray *dicArray = response.data;
             NSMutableArray *temp = [NSMutableArray array];
             for (NSDictionary *dic in dicArray) {
                 TCBankCard *bankCard = [[TCBankCard alloc] initWithObjectDictionary:dic];

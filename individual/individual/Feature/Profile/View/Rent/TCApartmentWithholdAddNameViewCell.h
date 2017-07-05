@@ -10,7 +10,7 @@
 @protocol TCApartmentWithholdAddNameViewCellDelegate;
 @interface TCApartmentWithholdAddNameViewCell : UITableViewCell
 
-@property (copy, nonatomic) UITextField *textField;
+@property (weak, nonatomic) UITextField *textField;
 @property (weak, nonatomic) id<TCApartmentWithholdAddNameViewCellDelegate> delegate;
 
 @end

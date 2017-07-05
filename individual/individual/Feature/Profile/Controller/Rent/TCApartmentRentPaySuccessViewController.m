@@ -37,29 +37,38 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"apartment_rent_pay_success"]];
     [self.view addSubview:imageView];
     
+    UILabel *firstLabel = [[UILabel alloc] init];
+    firstLabel.text = [NSString stringWithFormat:@"恭喜，第%zd期房租已缴纳成功，可在", self.itemNum];
+    firstLabel.textAlignment = NSTextAlignmentCenter;
+    firstLabel.textColor = TCGrayColor;
+    firstLabel.font = [UIFont systemFontOfSize:TCRealValue(12.5)];
+    [self.view addSubview:firstLabel];
+    
     NSString *partStr = @"全部付款计划";
-    NSString *totalStr = [NSString stringWithFormat:@"恭喜，第%zd期房租已缴纳成功，可在%@/n中进行查看", self.itemNum, partStr];
+    NSString *totalStr = [NSString stringWithFormat:@"%@中进行查看", partStr];
     NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:totalStr];
     [attText setAttributes:@{
                              NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(12.5)],
                              NSForegroundColorAttributeName: TCGrayColor
                              }
                      range:NSMakeRange(0, totalStr.length)];
-    YYTextHighlight *highlight = [YYTextHighlight highlightWithAttributes:@{
-                                                                            NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(12.5)],
-                                                                            NSForegroundColorAttributeName: TCRGBColor(74, 119, 250),
-                                                                            NSUnderlineStyleAttributeName: @(1)
-                                                                            }];
+    NSRange highlightRange = [totalStr rangeOfString:partStr];
+    [attText setAttributes:@{
+                             NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(12.5)],
+                             NSForegroundColorAttributeName: TCRGBColor(74, 119, 250),
+                             NSUnderlineStyleAttributeName: @(1)
+                             }
+                     range:highlightRange];
+    YYTextHighlight *highlight = [[YYTextHighlight alloc] init];
     highlight.tapAction = ^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         [self handleClickPayPlan];
     };
-    [attText yy_setTextHighlight:highlight range:[totalStr rangeOfString:partStr]];
+    [attText yy_setTextHighlight:highlight range:highlightRange];
     
-    YYLabel *label = [[YYLabel alloc] init];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.numberOfLines = 2;
-    label.attributedText = attText;
-    [self.view addSubview:label];
+    YYLabel *secondLabel = [[YYLabel alloc] init];
+    secondLabel.textAlignment = NSTextAlignmentCenter;
+    secondLabel.attributedText = attText;
+    [self.view addSubview:secondLabel];
     
     TCCommonButton *backButton = [TCCommonButton buttonWithTitle:@"返  回" target:self action:@selector(handleClickBackButton:)];
     [self.view addSubview:backButton];
@@ -69,13 +78,17 @@
         make.centerX.equalTo(self.view);
         make.top.equalTo(self.view).offset(TCRealValue(159.5));
     }];
-    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+    [firstLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(imageView.mas_bottom).offset(TCRealValue(27));
+        make.centerX.equalTo(self.view);
+    }];
+    [secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(firstLabel.mas_bottom).offset(TCRealValue(2));
         make.centerX.equalTo(self.view);
     }];
     [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(TCRealValue(161), TCRealValue(40)));
-        make.top.equalTo(label.mas_bottom).offset(TCRealValue(95));
+        make.top.equalTo(secondLabel.mas_bottom).offset(TCRealValue(95));
         make.centerX.equalTo(self.view);
     }];
 }

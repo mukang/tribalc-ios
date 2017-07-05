@@ -35,6 +35,6 @@
 /** 是否是当前需要缴租的项 */
 @property (nonatomic, getter=isCurrentItem) BOOL currentItem;
 /** 第几期 */
-@property (nonatomic) NSInteger itemNum;
+@property (nonatomic) NSInteger num;
 
 @end

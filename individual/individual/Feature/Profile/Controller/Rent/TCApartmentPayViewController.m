@@ -144,12 +144,12 @@ TCPaymentViewControllerDelegate>
         make.height.mas_equalTo(TCRealValue(309));
     }];
     [guideWithholdView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.rentPayDetailView.mas_bottom).offset(TCRealValue(8));
+        make.top.equalTo(rentPayDetailView.mas_bottom).offset(TCRealValue(8));
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(TCRealValue(45));
     }];
     [withholdInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.guideWithholdView.mas_bottom).offset(TCRealValue(8));
+        make.top.equalTo(rentPayDetailView.mas_bottom).offset(TCRealValue(8));
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(TCRealValue(169));
     }];
@@ -215,7 +215,6 @@ TCPaymentViewControllerDelegate>
     for (int i=0; i<rentPlanItems.count; i++) {
         TCRentPlanItem *planItem = rentPlanItems[i];
         if (planItem.finished == NO && (lastPlanItem.finished || !lastPlanItem)) {
-            planItem.itemNum = i;
             planItem.currentItem = YES;
             self.rentPlanItem = planItem;
             break;
@@ -271,7 +270,7 @@ TCPaymentViewControllerDelegate>
 #pragma mark - TCApartmentRentPayDetailViewDelegate
 
 - (void)didClickPayButtonInApartmentRentPayDetailView:(TCApartmentRentPayDetailView *)view {
-    TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:self.rentProtocol.monthlyRent
+    TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:self.rentPlanItem.plannedRental
                                                                          payPurpose:TCPayPurposeRent
                                                                      fromController:self];
     vc.targetID = self.rentProtocol.ID;
@@ -297,7 +296,7 @@ TCPaymentViewControllerDelegate>
 
 - (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
     TCApartmentRentPaySuccessViewController *vc = [[TCApartmentRentPaySuccessViewController alloc] init];
-    vc.itemNum = self.rentPlanItem.itemNum;
+    vc.itemNum = self.rentPlanItem.num;
     vc.rentProtocol = self.rentProtocol;
     vc.paySuccess = ^{
         [weakSelf loadRentPlanItems];
@@ -323,7 +322,7 @@ TCPaymentViewControllerDelegate>
         if (bankCardList) {
             [MBProgressHUD hideHUD:YES];
             TCApartmentAddWithholdViewController *vc = [[TCApartmentAddWithholdViewController alloc] init];
-            vc.isEdit = withholdInfo ? NO : YES;
+            vc.isEdit = withholdInfo ? YES : NO;
             vc.withholdInfo = withholdInfo;
             vc.banks = bankCardList;
             vc.addWithholdSuccess = ^{

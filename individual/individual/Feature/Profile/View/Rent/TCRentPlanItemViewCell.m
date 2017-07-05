@@ -161,7 +161,7 @@
 - (void)setPlanItem:(TCRentPlanItem *)planItem {
     _planItem = planItem;
     
-    self.titleLabel.text = [NSString stringWithFormat:@"第%zd期付款计划", planItem.itemNum];
+    self.titleLabel.text = [NSString stringWithFormat:@"第%zd期付款计划", planItem.num];
     
     NSDate *planDate = [NSDate dateWithTimeIntervalSince1970:(planItem.plannedTime / 1000.0)];
     self.planTimeLabel.text = [NSString stringWithFormat:@"付款日：%@", [self.dateFormatter stringFromDate:planDate]];

@@ -29,28 +29,37 @@
     [self addSubview:imageView];
     
     NSString *partStr = @"全部付款计划";
-    NSString *totalStr = [NSString stringWithFormat:@"您已缴纳了全部房租，可在%@/n中查看房租缴纳状态", partStr];
+    NSString *totalStr = [NSString stringWithFormat:@"您已缴纳了全部房租，可在%@", partStr];
     NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:totalStr];
     [attText setAttributes:@{
                              NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(12.5)],
                              NSForegroundColorAttributeName: TCGrayColor
                              }
                      range:NSMakeRange(0, totalStr.length)];
-    YYTextHighlight *highlight = [YYTextHighlight highlightWithAttributes:@{
-                                                                            NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(12.5)],
-                                                                            NSForegroundColorAttributeName: TCRGBColor(74, 119, 250),
-                                                                            NSUnderlineStyleAttributeName: @(1)
-                                                                            }];
+    NSRange highlightRange = [totalStr rangeOfString:partStr];
+    [attText setAttributes:@{
+                             NSFontAttributeName: [UIFont systemFontOfSize:TCRealValue(12.5)],
+                             NSForegroundColorAttributeName: TCRGBColor(74, 119, 250),
+                             NSUnderlineStyleAttributeName: @(1)
+                             }
+                     range:highlightRange];
+    YYTextHighlight *highlight = [[YYTextHighlight alloc] init];
     highlight.tapAction = ^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         [self handleClickPayPlan];
     };
-    [attText yy_setTextHighlight:highlight range:[totalStr rangeOfString:partStr]];
+    [attText yy_setTextHighlight:highlight range:highlightRange];
     
-    YYLabel *label = [[YYLabel alloc] init];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.numberOfLines = 2;
-    label.attributedText = attText;
-    [self addSubview:label];
+    YYLabel *firstLabel = [[YYLabel alloc] init];
+    firstLabel.textAlignment = NSTextAlignmentCenter;
+    firstLabel.attributedText = attText;
+    [self addSubview:firstLabel];
+    
+    UILabel *secondLabel = [[UILabel alloc] init];
+    secondLabel.text = @"中查看房租缴纳状态";
+    secondLabel.textAlignment = NSTextAlignmentCenter;
+    secondLabel.textColor = TCGrayColor;
+    secondLabel.font = [UIFont systemFontOfSize:TCRealValue(12.5)];
+    [self addSubview:secondLabel];
     
     [topLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(0.5);
@@ -61,8 +70,12 @@
         make.centerX.equalTo(self);
         make.top.equalTo(topLine.mas_bottom).offset(TCRealValue(117.5));
     }];
-    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+    [firstLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(imageView.mas_bottom).offset(TCRealValue(27));
+        make.centerX.equalTo(self);
+    }];
+    [secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(firstLabel.mas_bottom).offset(TCRealValue(2));
         make.centerX.equalTo(self);
     }];
 }

@@ -31,10 +31,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     weakSelf = self;
-    self.navigationItem.title = @"缴费";
+    self.navigationItem.title = @"付款计划";
     self.view.backgroundColor = TCBackgroundColor;
     
     [self setupSubviews];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [self loadRentPlanItems];
 }
 
@@ -69,7 +74,6 @@
             TCRentPlanItem *lastPlanItem = nil;
             for (int i=0; i<rentPlanItemList.count; i++) {
                 TCRentPlanItem *planItem = rentPlanItemList[i];
-                planItem.itemNum = i;
                 if (planItem.finished == NO && (lastPlanItem.finished || !lastPlanItem)) {
                     planItem.currentItem = YES;
                 } else {

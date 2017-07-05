@@ -113,6 +113,9 @@ static CGFloat const duration = 0.25;
 #pragma mark - Private Methods
 
 - (void)setupSubviews {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBgView)];
+    [self.view addGestureRecognizer:tap];
+    
     UIView *containerView = [[UIView alloc] init];
     containerView.backgroundColor = [UIColor whiteColor];
     containerView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, subviewHeight);
@@ -120,6 +123,7 @@ static CGFloat const duration = 0.25;
     self.containerView = containerView;
     
     UIPickerView *pickerView = [[UIPickerView alloc] init];
+    pickerView.backgroundColor = TCRGBColor(242, 242, 242);
     pickerView.delegate = self;
     pickerView.dataSource = self;
     [containerView addSubview:pickerView];
@@ -204,6 +208,10 @@ static CGFloat const duration = 0.25;
         TCBankCard *bankCard = [self getCurrentSelectedInfo];
         [self.delegate bankPickerViewController:self didClickConfirmButtonWithBankCard:bankCard];
     }
+    [self dismiss:YES completion:nil];
+}
+
+- (void)handleTapBgView {
     [self dismiss:YES completion:nil];
 }
 

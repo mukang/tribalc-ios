@@ -149,7 +149,7 @@
     NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:(planItem.endTime / 1000.0)];
     self.beginAndEndDateLabel.text = [NSString stringWithFormat:@"租赁日期：%@ 至 %@", [self.dateFormatter stringFromDate:beginDate], [self.dateFormatter stringFromDate:endDate]];
     
-    self.periodLabel.text = [NSString stringWithFormat:@"当前缴费周期：第%zd期", planItem.plannedRental];
+    self.periodLabel.text = [NSString stringWithFormat:@"当前缴费周期：第%zd期", planItem.num];
     
     NSDate *imminentDate = [NSDate dateWithTimeIntervalSince1970:(planItem.plannedTime / 1000.0)];
     self.imminentDateLabel.text = [NSString stringWithFormat:@"缴费日期：%@", [self.dateFormatter stringFromDate:imminentDate]];

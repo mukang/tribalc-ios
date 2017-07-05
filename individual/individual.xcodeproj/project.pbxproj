@@ -289,6 +289,7 @@
 		7AA643C51F0B760900DD421F /* TCRentPlanItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643C41F0B760900DD421F /* TCRentPlanItemsViewController.m */; };
 		7AA643C81F0B78F900DD421F /* TCRentPlanItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643C71F0B78F900DD421F /* TCRentPlanItemViewCell.m */; };
 		7AA643CB1F0B945000DD421F /* TCRentPlanItemsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643CA1F0B945000DD421F /* TCRentPlanItemsHeaderView.m */; };
+		7AA643CD1F0C92E200DD421F /* TCBankPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AA643CC1F0C92E200DD421F /* TCBankPickerViewController.xib */; };
 		7AAB19FA1ED29F3A00EF5F69 /* TCActivityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB19F91ED29F3A00EF5F69 /* TCActivityInfo.m */; };
 		7AAB1A001ED43CA900EF5F69 /* TCPromotionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB19FF1ED43CA900EF5F69 /* TCPromotionsManager.m */; };
 		7AAB1A031ED447EB00EF5F69 /* TCPromotionsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A021ED447EB00EF5F69 /* TCPromotionsWrapper.m */; };
@@ -933,6 +934,7 @@
 		7AA643C71F0B78F900DD421F /* TCRentPlanItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentPlanItemViewCell.m; sourceTree = "<group>"; };
 		7AA643C91F0B945000DD421F /* TCRentPlanItemsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentPlanItemsHeaderView.h; sourceTree = "<group>"; };
 		7AA643CA1F0B945000DD421F /* TCRentPlanItemsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentPlanItemsHeaderView.m; sourceTree = "<group>"; };
+		7AA643CC1F0C92E200DD421F /* TCBankPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBankPickerViewController.xib; sourceTree = "<group>"; };
 		7AAB19F81ED29F3A00EF5F69 /* TCActivityInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCActivityInfo.h; sourceTree = "<group>"; };
 		7AAB19F91ED29F3A00EF5F69 /* TCActivityInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCActivityInfo.m; sourceTree = "<group>"; };
 		7AAB19FE1ED43CA900EF5F69 /* TCPromotionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPromotionsManager.h; sourceTree = "<group>"; };
@@ -1690,6 +1692,7 @@
 				7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */,
 				7AA643C01F0A48A300DD421F /* TCBankPickerViewController.h */,
 				7AA643C11F0A48A300DD421F /* TCBankPickerViewController.m */,
+				7AA643CC1F0C92E200DD421F /* TCBankPickerViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2835,6 +2838,7 @@
 				7A2A77341E6D4426000CFAA8 /* intro_image_03.png in Resources */,
 				7A7C19DC1DCF29B60092AEA1 /* TCProfileHeaderView.xib in Resources */,
 				7AC346F91E0144F300E28EC9 /* TCBankPickerView.xib in Resources */,
+				7AA643CD1F0C92E200DD421F /* TCBankPickerViewController.xib in Resources */,
 				7AC346EB1E0144B500E28EC9 /* TCWalletBillDetailHeaderView.xib in Resources */,
 				7AB03F101EC3017100DFB037 /* HD4.7''.png in Resources */,
 				7A190B0B1DC0CBFE00651905 /* TCLoginViewController.xib in Resources */,
