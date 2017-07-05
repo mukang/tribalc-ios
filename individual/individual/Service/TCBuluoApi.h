@@ -767,4 +767,21 @@ typedef NS_ENUM(NSInteger, TCBFSupportedBankType) {
  */
 - (void)deleteRentProtocolWithholdByRentProtocolID:(NSString *)protocolID result:(void(^)(BOOL success, NSError *error))resultBlock;
 
+
+/**
+ 创建密码
+
+ @param sn 设备号
+ @param sourceId 房源Id
+ */
+- (void)createSmartLockPasswordWithSN:(NSString *)sn sourceId:(NSString *)sourceId password:(NSString *)password result:(void(^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 查看临时密码
+
+ @param sn 设备号
+ @param sourceId 房源id
+ */
+- (void)checkSmartLockTemporaryPasswordWithSN:(NSString *)sn sourceId:(NSString *)sourceId result:(void(^)(NSString * password, NSError *error))resultBlock;
+
 @end

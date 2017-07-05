@@ -10,11 +10,12 @@
 #import "TCRentProtocol.h"
 #import "TCNumberTextField.h"
 #import <TCCommonLibs/TCCommonButton.h>
+#import "TCBuluoApi.h"
 
 #define kLineColor TCRGBColor(221, 221, 221)
 #define kScale ([UIScreen mainScreen].bounds.size.width > 375 ? 3.0 : 2.0)
 
-@interface TCModifyPwdViewController ()
+@interface TCModifyPwdViewController ()<UITextFieldDelegate>
 
 @property (strong, nonatomic) UIView *topView;
 
@@ -64,6 +65,10 @@
     self.view.backgroundColor = TCBackgroundColor;
     [self setUpSubViews];
 }
+
+#pragma mark UITextFieldDelegate
+
+
 
 - (void)setUpSubViews {
     
@@ -151,10 +156,8 @@
     }];
     
     [self.mutiPwdLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.height.equalTo(self.pwdLabel);
-        make.left.equalTo(self.downView).offset(20);
+        make.left.height.equalTo(self.pwdLabel);
         make.top.equalTo(self.lineView3.mas_bottom);
-        make.height.equalTo(@(TCRealValue(40)));
     }];
     
     [self.mutiPwdTextField mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -183,6 +186,9 @@
 }
 
 - (void)modify {
+    
+    [self.view endEditing:YES];
+    
     if (self.pwdTextField.text.length == 0) {
         [MBProgressHUD showHUDWithMessage:@"请输入新密码" afterDelay:1.0];
         return;
@@ -193,11 +199,31 @@
         return;
     }
     
+    if (self.pwdTextField.text.length > 10 || self.pwdTextField.text.length < 6) {
+        [MBProgressHUD showHUDWithMessage:@"请输入6到10位密码" afterDelay:1.0];
+        [self.pwdTextField becomeFirstResponder];
+        return;
+    }
+    
     if (![self.pwdTextField.text isEqualToString:self.mutiPwdTextField.text]) {
         [MBProgressHUD showHUDWithMessage:@"新密码和重复新密码不一样" afterDelay:1.0];
         return;
     }
-    
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] createSmartLockPasswordWithSN:self.rentProtocol.sn sourceId:self.rentProtocol.sourceId password:self.pwdTextField.text result:^(BOOL success, NSError *error) {
+        @StrongObj(self)
+        if (success) {
+            [MBProgressHUD showHUDWithMessage:@"修改成功" afterDelay:1.0];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"修改失败，%@", reason]];
+        }
+    }];
     
 }
 
@@ -228,6 +254,7 @@
     if (_mutiPwdTextField == nil) {
         _mutiPwdTextField = [[TCNumberTextField alloc] init];
         _mutiPwdTextField.font = [UIFont systemFontOfSize:14];
+        _mutiPwdTextField.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _mutiPwdTextField;
 }
@@ -255,6 +282,8 @@
     if (_pwdTextField == nil) {
         _pwdTextField = [[TCNumberTextField alloc] init];
         _pwdTextField.font = [UIFont systemFontOfSize:14];
+        _pwdTextField.keyboardType = UIKeyboardTypeNumberPad;
+        _pwdTextField.delegate = self;
     }
     return _pwdTextField;
 }
@@ -333,6 +362,10 @@
         _topView.backgroundColor = [UIColor whiteColor];
     }
     return _topView;
+}
+
+- (void)dealloc {
+    NSLog(@"%s",__func__);
 }
 
 - (void)didReceiveMemoryWarning {

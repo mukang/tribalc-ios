@@ -2614,4 +2614,54 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)createSmartLockPasswordWithSN:(NSString *)sn sourceId:(NSString *)sourceId password:(NSString *)password result:(void (^)(BOOL, NSError *))resultBlock{
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"smart_locks/password?me=%@&sourceId=%@", self.currentUserSession.assigned,sourceId];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [request setValue:sn forParam:@"sn"];
+        [request setValue:password forKey:@"password"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 201) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+}
+
+- (void)checkSmartLockTemporaryPasswordWithSN:(NSString *)sn sourceId:(NSString *)sourceId result:(void (^)(NSString *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"smart_locks/apply_temporary_password?me=%@&sourceId=%@&sn=%@", self.currentUserSession.assigned,sourceId, sn];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(response.data, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 @end
