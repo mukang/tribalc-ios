@@ -64,5 +64,7 @@
 @property (copy, nonatomic) NSString *rentPhone;
 /** 租客身份证号 */
 @property (copy, nonatomic) NSString *rentIdNo;
+/** 锁设备号 */
+@property (copy, nonatomic) NSString *sn;
 
 @end

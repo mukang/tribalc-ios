@@ -8,6 +8,7 @@
 
 #import "TCCheckPwdViewController.h"
 #import "TCRentProtocol.h"
+#import "TCBuluoApi.h"
 
 @interface TCCheckPwdViewController ()
 
@@ -25,17 +26,38 @@
 
 @property (strong, nonatomic) UILabel *pwdLabel;
 
+@property (copy, nonatomic) NSString *password;
+
 @end
 
 @implementation TCCheckPwdViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = TCRGBColor(224, 248, 253);
-    [self setUpViews];
+    
+    [self loadData];
+}
+
+- (void)loadData {
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] checkSmartLockTemporaryPasswordWithSN:self.rentProtocol.sn sourceId:self.rentProtocol.sourceId result:^(NSString *password, NSError *error) {
+        @StrongObj(self)
+        if ([password isKindOfClass:[NSString class]]) {
+            [MBProgressHUD hideHUD:YES];
+            self.password = password;
+            [self setUpViews];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
+        }
+    }];
 }
 
 - (void)setUpViews {
+    
+    self.view.backgroundColor = TCRGBColor(224, 248, 253);
+    
     [self.view addSubview:self.bgView];
     [self.view addSubview:self.imageView];
     [self.view addSubview:self.apartmentNumLabel];
@@ -89,7 +111,7 @@
         _pwdLabel = [[UILabel alloc] init];
         _pwdLabel.font = [UIFont systemFontOfSize:16];
         _pwdLabel.textColor = TCBlackColor;
-        _pwdLabel.text = [NSString stringWithFormat:@"公寓密码：%@",@"1234567890"];
+        _pwdLabel.text = [NSString stringWithFormat:@"公寓密码：%@",self.password];
     }
     return _pwdLabel;
 }
