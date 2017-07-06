@@ -215,7 +215,7 @@
 - (UIButton *)payPlanBtn {
     if (_payPlanBtn == nil) {
         _payPlanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_payPlanBtn setTitle:@"还款计划" forState: UIControlStateNormal];
+        [_payPlanBtn setTitle:@"付款计划" forState: UIControlStateNormal];
         [_payPlanBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
         _payPlanBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         [_payPlanBtn setImage:[UIImage imageNamed:@"apartmenPayPlanImage"] forState:UIControlStateNormal];

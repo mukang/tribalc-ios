@@ -170,13 +170,13 @@
     NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:(planItem.endTime / 1000.0)];
     self.tenancyLabel.text = [NSString stringWithFormat:@"租期：%@ 至 %@", [self.dateFormatter stringFromDate:beginDate], [self.dateFormatter stringFromDate:endDate]];
     
-    self.planPayLabel.text = [NSString stringWithFormat:@"需还款：%0.2f", planItem.plannedRental];
+    self.planPayLabel.text = [NSString stringWithFormat:@"需付款：%0.2f", planItem.plannedRental];
     
     if (planItem.finished) {
         self.actualPayLabel.hidden = NO;
         self.statusImageView.hidden = NO;
         self.payButton.hidden = YES;
-        self.actualPayLabel.text = [NSString stringWithFormat:@"已还款：%0.2f", planItem.actualPay];
+        self.actualPayLabel.text = [NSString stringWithFormat:@"已付款：%0.2f", planItem.actualPay];
         self.statusImageView.image = [UIImage imageNamed:@"rent_plan_finish"];
     } else {
         self.actualPayLabel.hidden = YES;
