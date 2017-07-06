@@ -16,6 +16,7 @@
 #import "TCApartmentPayViewController.h"
 #import "TCRentPlanItemsViewController.h"
 #import "TCCheckPwdViewController.h"
+#import <TCCommonLibs/UIImage+Category.h>
 
 @interface TCApartmentViewController ()<UITableViewDelegate,UITableViewDataSource,TCApartmentCellDelegate>
 
@@ -29,6 +30,8 @@
 
 @property (strong, nonatomic) UIImageView *downImageView;
 
+@property (assign, nonatomic) BOOL needsLightContentStatusBar;
+
 @end
 
 @implementation TCApartmentViewController
@@ -37,7 +40,7 @@
     [super viewDidLoad];
     
     [self setupNavBar];
-    [self setUpDownView];
+//    [self setUpDownView];
     [self loadData];
 }
 
@@ -79,7 +82,42 @@
 
 //查看电量
 - (void)didClickCheckElecWithRentProtocol:(TCRentProtocol *)rentProtocol {
+    [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！" afterDelay:1.0];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self updateNavigationBar];
+}
+
+- (void)updateNavigationBar {
+    CGFloat offsetY = self.tableView.contentOffset.y;
+    CGFloat alpha = offsetY / (TCRealValue(280) - 64.0);
+    if (alpha > 1.0) alpha = 1.0;
+    if (alpha < 0.0) alpha = 0.0;
+    [self updateNavigationBarWithAlpha:alpha];
+}
+
+- (void)updateNavigationBarWithAlpha:(CGFloat)alpha {
+    UIColor *tintColor = nil, *titleColor = nil;
+    if (alpha > 0.7) {
+        self.needsLightContentStatusBar = YES;
+        tintColor = [UIColor whiteColor];
+        titleColor = [UIColor whiteColor];
+    } else {
+        self.needsLightContentStatusBar = NO;
+        tintColor = TCBlackColor;
+        titleColor = [UIColor clearColor];
+    }
+    [self.navBar setTintColor:tintColor];
+//    self.navBar.titleTextAttributes = @{
+//                                        NSFontAttributeName : [UIFont systemFontOfSize:16],
+//                                        NSForegroundColorAttributeName : titleColor
+//                                        };
     
+    UIImage *bgImage = [UIImage imageWithColor:TCARGBColor(42, 42, 42, alpha)];
+    [self.navBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
 }
 
 #pragma mark UITableViewDelegate
@@ -142,7 +180,8 @@
 }
 
 - (void)setUpDownView {
-    [self.view addSubview:self.downImageView];
+//    [self.view addSubview:self.downImageView];
+    [self.view insertSubview:self.downImageView belowSubview:self.navBar];
     [self.downImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
         make.height.equalTo(@(TCRealValue(58)));
@@ -155,13 +194,15 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
-        _tableView.rowHeight = TCRealValue(299) + 5 * (1 / ([UIScreen mainScreen].bounds.size.width > 375 ? 3.0 : 2.0));
+        _tableView.rowHeight = TCRealValue(300) + 4 * (1 / ([UIScreen mainScreen].bounds.size.width > 375 ? 3.0 : 2.0));
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerClass:[TCApartmentCell class] forCellReuseIdentifier:@"TCApartmentCell"];
         
         UIImageView *headerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.size.width, TCRealValue(280))];
         headerView.image = [UIImage imageNamed:@"apartmenHeaderImage"];
         _tableView.tableHeaderView = headerView;
+        _tableView.tableFooterView = self.downImageView;
+        self.downImageView.frame = CGRectMake(0, 0, self.view.size.width, TCRealValue(58));
         
         UIImageView *iconImageView = [[UIImageView alloc] init];
         iconImageView.layer.cornerRadius = TCRealValue(64)/2;
