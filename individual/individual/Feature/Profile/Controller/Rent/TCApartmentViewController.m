@@ -82,7 +82,7 @@
 
 //查看电量
 - (void)didClickCheckElecWithRentProtocol:(TCRentProtocol *)rentProtocol {
-    
+    [MBProgressHUD showHUDWithMessage:@"此功能暂未开放，敬请期待！" afterDelay:1.0];
 }
 
 #pragma mark - UIScrollViewDelegate
