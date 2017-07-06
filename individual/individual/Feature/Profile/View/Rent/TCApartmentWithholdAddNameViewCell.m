@@ -33,6 +33,7 @@
     UITextField *textField = [[UITextField alloc] init];
     textField.textColor = TCBlackColor;
     textField.font = [UIFont systemFontOfSize:14];
+    textField.returnKeyType = UIReturnKeyDone;
     textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请填写开户名称"
                                                                       attributes:@{
                                                                                    NSFontAttributeName: [UIFont systemFontOfSize:14],
@@ -44,6 +45,7 @@
     TCExtendButton *button = [TCExtendButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:[UIImage imageNamed:@"apartment_withhold_card"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(handleClickButton:) forControlEvents:UIControlEventTouchUpInside];
+    button.hitTestSlop = UIEdgeInsetsMake(-10, -10, -10, -10);
     [self.contentView addSubview:button];
     
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -135,6 +135,14 @@ TCBankPickerViewControllerDelegate>
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return CGFLOAT_MIN;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return CGFLOAT_MIN;
+}
+
 #pragma makr - UITextFieldDelegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -235,6 +243,8 @@ TCBankPickerViewControllerDelegate>
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
     if (indexPath.row == 1) {
+        [self.tableView endEditing:YES];
+        
         TCBankPickerViewController *vc = [[TCBankPickerViewController alloc] initWithBankPickerType:TCBankPickerTypeAddWithhold fromController:self];
         vc.banks = self.banks;
         vc.delegate = self;
