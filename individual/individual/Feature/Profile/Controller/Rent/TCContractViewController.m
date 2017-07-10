@@ -44,6 +44,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"我的合同";
     self.view.backgroundColor = TCRGBColor(113, 114, 115);
 }
 
