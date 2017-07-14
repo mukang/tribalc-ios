@@ -274,7 +274,6 @@
 		7A8352E61E5EE3A6003A8E76 /* TCServiceAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8352E31E5EE3A6003A8E76 /* TCServiceAnnotation.m */; };
 		7A8352E71E5EE3A6003A8E76 /* TCServiceAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8352E51E5EE3A6003A8E76 /* TCServiceAnnotationView.m */; };
 		7A8352EA1E5EE3C4003A8E76 /* TCServiceMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8352E91E5EE3C4003A8E76 /* TCServiceMapViewController.m */; };
-		7A8352ED1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8352EC1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m */; };
 		7A8675211EF8D64F006E2742 /* TCNumberTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8675201EF8D64F006E2742 /* TCNumberTextField.m */; };
 		7A8743EB1F17143B00A5ED9D /* TCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8743EA1F17143B00A5ED9D /* TCHomeViewController.m */; };
 		7A8743EE1F171C2D00A5ED9D /* TCHomeSearchBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8743ED1F171C2D00A5ED9D /* TCHomeSearchBarView.m */; };
@@ -906,8 +905,6 @@
 		7A8352E51E5EE3A6003A8E76 /* TCServiceAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceAnnotationView.m; sourceTree = "<group>"; };
 		7A8352E81E5EE3C4003A8E76 /* TCServiceMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceMapViewController.h; sourceTree = "<group>"; };
 		7A8352E91E5EE3C4003A8E76 /* TCServiceMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceMapViewController.m; sourceTree = "<group>"; };
-		7A8352EB1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeCommodityTableViewCell.h; sourceTree = "<group>"; };
-		7A8352EC1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeCommodityTableViewCell.m; sourceTree = "<group>"; };
 		7A86751F1EF8D64F006E2742 /* TCNumberTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCNumberTextField.h; sourceTree = "<group>"; };
 		7A8675201EF8D64F006E2742 /* TCNumberTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCNumberTextField.m; sourceTree = "<group>"; };
 		7A8743E91F17143B00A5ED9D /* TCHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeViewController.h; sourceTree = "<group>"; };
@@ -1369,8 +1366,6 @@
 		092CD40A1DD9A07C0073A9C1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7A8352EB1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.h */,
-				7A8352EC1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m */,
 				7A8743EC1F171C2D00A5ED9D /* TCHomeSearchBarView.h */,
 				7A8743ED1F171C2D00A5ED9D /* TCHomeSearchBarView.m */,
 				7A8743EF1F1725BF00A5ED9D /* TCHomeToolBarView.h */,
@@ -3171,7 +3166,6 @@
 				551CF2651EE7DAAD00281637 /* TCPreparePayViewController.m in Sources */,
 				55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */,
 				7A455D631EBC913900A2F9ED /* TCWithdrawAmountView.m in Sources */,
-				7A8352ED1E5EE43D003A8E76 /* TCHomeCommodityTableViewCell.m in Sources */,
 				7A7C19DA1DCF29930092AEA1 /* TCProfileHeaderView.m in Sources */,
 				7A22D9441ECEFB18009A6A64 /* TCSigninRecordMonth.m in Sources */,
 				7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */,

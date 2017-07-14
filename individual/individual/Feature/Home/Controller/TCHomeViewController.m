@@ -25,7 +25,7 @@ TCHomeSearchBarViewDelegate,
 TCHomeToolBarViewDelegate,
 TCHomeToolsViewDelegate>
 
-@property (weak, nonatomic) UINavigationBar *navBar;
+@property (weak, nonatomic) UIView *navBarView;
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) TCHomeSearchBarView *searchBarView;
 @property (weak, nonatomic) TCHomeToolBarView *toolBarView;
@@ -68,23 +68,21 @@ TCHomeToolsViewDelegate>
     self.hideOriginalNavBar = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
-    [navBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
-    UIImage *bgImage = [UIImage imageWithColor:TCRGBColor(151, 171, 234)];
-    [navBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
-    [self.view addSubview:navBar];
-    self.navBar = navBar;
+    UIView *navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+    navBarView.backgroundColor = TCRGBColor(151, 171, 234);
+    [self.view addSubview:navBarView];
+    self.navBarView = navBarView;
     
-    TCHomeSearchBarView *searchBarView = [[TCHomeSearchBarView alloc] initWithFrame:navBar.bounds];
+    TCHomeSearchBarView *searchBarView = [[TCHomeSearchBarView alloc] initWithFrame:navBarView.frame];
     searchBarView.delegate = self;
     searchBarView.titleLabel.text = @"热门电影：乘风破浪";
-    [navBar addSubview:searchBarView];
+    [self.view addSubview:searchBarView];
     self.searchBarView = searchBarView;
     
-    TCHomeToolBarView *toolBarView = [[TCHomeToolBarView alloc] initWithFrame:navBar.bounds];
+    TCHomeToolBarView *toolBarView = [[TCHomeToolBarView alloc] initWithFrame:navBarView.frame];
     toolBarView.delegate = self;
     toolBarView.alpha = 0.0;
-    [navBar addSubview:toolBarView];
+    [self.view insertSubview:toolBarView belowSubview:searchBarView];
     self.toolBarView = toolBarView;
 }
 
@@ -95,11 +93,12 @@ TCHomeToolsViewDelegate>
     tableView.backgroundColor = TCRGBColor(242, 242, 242);
     tableView.dataSource = self;
     tableView.delegate = self;
+    tableView.clipsToBounds = NO;
     tableView.contentInset = UIEdgeInsetsMake(insetTop, 0, 0, 0);
     tableView.scrollIndicatorInsets = UIEdgeInsetsMake(insetTop, 0, 0, 0);
     [tableView setContentOffset:CGPointMake(0, -insetTop)];
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
-    [self.view insertSubview:tableView belowSubview:self.navBar];
+    [self.view insertSubview:tableView belowSubview:self.toolBarView];
     self.tableView = tableView;
     
     TCHomeToolsView *toolsView = [[TCHomeToolsView alloc] init];
@@ -114,7 +113,7 @@ TCHomeToolsViewDelegate>
     
     
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.navBar.mas_bottom);
+        make.top.equalTo(self.navBarView.mas_bottom);
         make.left.bottom.right.equalTo(self.view);
     }];
 }
@@ -203,7 +202,7 @@ TCHomeToolsViewDelegate>
     }
     
     if (offsetY >= minOffsetY) {
-        self.toolsView.y = minOffsetY + (offsetY - minOffsetY) * 0.3;
+        self.toolsView.y = minOffsetY + (offsetY - minOffsetY) * 0.4;
         self.bannerView.y = -bannerViewH;
     } else {
         self.toolsView.y = offsetY;
