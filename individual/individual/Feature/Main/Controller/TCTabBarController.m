@@ -20,6 +20,7 @@
 #import "TCForceUpdateView.h"
 
 #import "TCUserDefaultsKeys.h"
+#import "TCBuluoApi.h"
 
 #import <TCCommonLibs/TCFunctions.h>
 #import <EAIntroView/EAIntroView.h>
