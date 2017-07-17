@@ -100,7 +100,7 @@
 
     [self.calendar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.width.height.equalTo(@300);
+        make.width.height.equalTo(@(TCRealValue(300)));
         make.top.equalTo(self.view).offset(TCRealValue(150));
     }];
     
