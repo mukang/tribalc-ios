@@ -718,6 +718,18 @@ typedef NS_ENUM(NSInteger, TCBFSupportedBankType) {
  */
 - (void)fetchStoreDetailInfoWithStoreId:(NSString *)storeId result:(void (^)(TCStoreDetailInfo *, NSError *))resultBlock;
 
+
+/**
+ 获取店铺列表
+
+ @param sellingPointId sellingPointId
+ @param limitSize 条数
+ @param sortSkip sortSkip
+ @param sort 排序
+ @param resultBlock 回调
+ */
+- (void)fetchStoreListWithSellingPointId:(NSString *)sellingPointId limitSize:(NSInteger)limitSize sortSkip:(NSInteger)sortSkip sort:(NSString *)sort result:(void(^)(TCStoreWrapper *storeWrapper, NSError *error))resultBlock;
+
 #pragma mark - 租赁资源
 
 /**

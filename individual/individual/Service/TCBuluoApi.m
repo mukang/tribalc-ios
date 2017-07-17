@@ -2444,6 +2444,35 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchStoreListWithSellingPointId:(NSString *)sellingPointId limitSize:(NSInteger)limitSize sortSkip:(NSInteger)sortSkip sort:(NSString *)sort result:(void(^)(TCStoreWrapper *storeWrapper, NSError *error))resultBlock {
+    NSString *selfId = [self isUserSessionValid] ? [NSString stringWithFormat:@"selfId=%@",self.currentUserSession.assigned] : @"";
+    NSString *sellingPointIdStr = sellingPointId ? [NSString stringWithFormat:@"&sellingPointId=%@",sellingPointId] : @"";
+    NSString *limitSizeStr = limitSize ? [NSString stringWithFormat:@"&limitSize=%ld",(long)limitSize] : @"";
+    NSString *sortSkipStr = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%ld",(long)sortSkip] : @"";
+    NSString *sortStr = sort ? [NSString stringWithFormat:@"&sort=%@",sort] : @"";
+    NSString *apiName = [NSString stringWithFormat:@"stores?%@%@%@%@%@", selfId, sellingPointIdStr, limitSizeStr, sortSkipStr, sortStr];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    request.token = self.currentUserSession.token;
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            TCStoreWrapper *storeWrapper = [[TCStoreWrapper alloc] initWithObjectDictionary:response.data];
+//            NSArray *dics = response.data;
+//            NSMutableArray *temp = [NSMutableArray arrayWithCapacity:dics.count];
+//            for (NSDictionary *dic in dics) {
+//                TCRentProtocol *item = [[TCRentProtocol alloc] initWithObjectDictionary:dic];
+//                [temp addObject:item];
+//            }
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(storeWrapper, nil));
+            }
+        }
+    }];
+}
+
 #pragma mark - 租赁资源
 
 - (void)fetchRentProtocolList:(void (^)(NSArray *, NSError *))resultBlock {

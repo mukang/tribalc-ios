@@ -45,5 +45,19 @@
 
 /** 距离 */
 @property (nonatomic) double distance;
+/** 背景图 */
+@property (copy, nonatomic) NSArray *pictures;
+/** 卖点 */
+@property (copy, nonatomic) NSArray *sellingPoint;
+/** 人均消费 */
+@property (assign, nonatomic) CGFloat avgprice;
+/** 店铺描述 */
+@property (copy, nonatomic) NSString *desc;
+/** 营业时间 */
+@property (copy, nonatomic) NSString *businessHours;
+/** 电话 */
+@property (copy, nonatomic) NSString *phone;
+/** 优惠信息 */
+@property (copy, nonatomic) NSArray *privilege;
 
 @end

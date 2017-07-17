@@ -7,6 +7,7 @@
 //
 
 #import "TCListStore.h"
+#import "TCPrivilege.h"
 
 @implementation TCListStore
 
@@ -18,6 +19,10 @@
         CLLocationDegrees longitude = [coordinate[0] doubleValue];
         self.coordinate2D = CLLocationCoordinate2DMake(latitude, longitude);
     }
+}
+
++ (NSDictionary *)objectClassInArray {
+    return @{@"privilege": [TCPrivilege class]};
 }
 
 @end

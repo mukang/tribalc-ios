@@ -38,6 +38,7 @@
 #import "TCMarkStore.h"
 #import "TCListStore.h"
 #import "TCDetailStore.h"
+#import "TCStoreWrapper.h"
 
 /********** 订单相关 **********/
 #import "TCOrderWrapper.h"
