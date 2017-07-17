@@ -280,6 +280,8 @@
 		7A8743F11F1725BF00A5ED9D /* TCHomeToolBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8743F01F1725BF00A5ED9D /* TCHomeToolBarView.m */; };
 		7A8743F41F1758EB00A5ED9D /* TCHomeToolsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8743F31F1758EB00A5ED9D /* TCHomeToolsView.m */; };
 		7A8743F71F17775400A5ED9D /* TCHomeBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8743F61F17775400A5ED9D /* TCHomeBannerView.m */; };
+		7A925DAA1F1C99B400D697DE /* TCSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A925DA91F1C99B400D697DE /* TCSearchViewController.m */; };
+		7A925DAD1F1CA5E000D697DE /* TCSearchBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A925DAC1F1CA5E000D697DE /* TCSearchBarView.m */; };
 		7A944BA41E5BE53B00E79C31 /* TCServiceNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A944BA31E5BE53B00E79C31 /* TCServiceNameViewCell.m */; };
 		7A9CCED11DB62011003D90C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCED01DB62011003D90C6 /* main.m */; };
 		7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */; };
@@ -917,6 +919,10 @@
 		7A8743F31F1758EB00A5ED9D /* TCHomeToolsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeToolsView.m; sourceTree = "<group>"; };
 		7A8743F51F17775400A5ED9D /* TCHomeBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeBannerView.h; sourceTree = "<group>"; };
 		7A8743F61F17775400A5ED9D /* TCHomeBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeBannerView.m; sourceTree = "<group>"; };
+		7A925DA81F1C99B400D697DE /* TCSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSearchViewController.h; sourceTree = "<group>"; };
+		7A925DA91F1C99B400D697DE /* TCSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSearchViewController.m; sourceTree = "<group>"; };
+		7A925DAB1F1CA5E000D697DE /* TCSearchBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSearchBarView.h; sourceTree = "<group>"; };
+		7A925DAC1F1CA5E000D697DE /* TCSearchBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSearchBarView.m; sourceTree = "<group>"; };
 		7A944BA21E5BE53B00E79C31 /* TCServiceNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceNameViewCell.h; sourceTree = "<group>"; };
 		7A944BA31E5BE53B00E79C31 /* TCServiceNameViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceNameViewCell.m; sourceTree = "<group>"; };
 		7A9CCECC1DB62011003D90C6 /* individual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = individual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1374,6 +1380,8 @@
 				7A8743F31F1758EB00A5ED9D /* TCHomeToolsView.m */,
 				7A8743F51F17775400A5ED9D /* TCHomeBannerView.h */,
 				7A8743F61F17775400A5ED9D /* TCHomeBannerView.m */,
+				7A925DAB1F1CA5E000D697DE /* TCSearchBarView.h */,
+				7A925DAC1F1CA5E000D697DE /* TCSearchBarView.m */,
 				55BB9EB01E714DE300B0FD94 /* OpenDoor */,
 				09222E1C1DEE98550064C0DF /* Service */,
 				09AE0F761DED45FB00F307D8 /* ShoppingCar */,
@@ -2345,6 +2353,8 @@
 			children = (
 				7A8743E91F17143B00A5ED9D /* TCHomeViewController.h */,
 				7A8743EA1F17143B00A5ED9D /* TCHomeViewController.m */,
+				7A925DA81F1C99B400D697DE /* TCSearchViewController.h */,
+				7A925DA91F1C99B400D697DE /* TCSearchViewController.m */,
 				551306571E713FA0004DF32F /* OpenDoor */,
 				09222E121DEE98490064C0DF /* Service */,
 				092CD3F91DD99F9F0073A9C1 /* RecommendBoutique */,
@@ -3039,6 +3049,7 @@
 				7A8743EE1F171C2D00A5ED9D /* TCHomeSearchBarView.m in Sources */,
 				7AEB4CEF1E03944500F83A7C /* TCBiographyViewCell.m in Sources */,
 				550FB7791ED5C18700D75E33 /* FSCalendarScopeHandle.m in Sources */,
+				7A925DAD1F1CA5E000D697DE /* TCSearchBarView.m in Sources */,
 				550FB77C1ED5C18700D75E33 /* FSCalendarWeekdayView.m in Sources */,
 				7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */,
 				7AADCC881EE93A58004AA1DA /* MLBPasswordTextField.m in Sources */,
@@ -3122,6 +3133,7 @@
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
 				7AB03F261EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m in Sources */,
+				7A925DAA1F1C99B400D697DE /* TCSearchViewController.m in Sources */,
 				7A22D9151ECD94A4009A6A64 /* TCLockEquipViewCell.m in Sources */,
 				7A2F7C6F1E768BAF007B831D /* TCAddVisitorViewController.m in Sources */,
 				7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */,

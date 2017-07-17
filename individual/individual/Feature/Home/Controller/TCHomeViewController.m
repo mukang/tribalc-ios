@@ -7,6 +7,8 @@
 //
 
 #import "TCHomeViewController.h"
+#import "TCSearchViewController.h"
+#import "TCNavigationController.h"
 
 #import "TCHomeSearchBarView.h"
 #import "TCHomeToolBarView.h"
@@ -152,6 +154,7 @@ TCHomeToolsViewDelegate>
 
 - (void)didClickSearchBarInHomeSearchBarView:(TCHomeSearchBarView *)view {
     NSLog(@"%s", __func__);
+    [self showSearchViewController];
 }
 
 #pragma mark - TCHomeToolBarViewDelegate
@@ -170,6 +173,7 @@ TCHomeToolsViewDelegate>
 
 - (void)didClickSearchButtonInHomeToolBarView:(TCHomeToolBarView *)view {
     NSLog(@"%s", __func__);
+    [self showSearchViewController];
 }
 
 #pragma mark - TCHomeToolsViewDelegate
@@ -255,6 +259,14 @@ TCHomeToolsViewDelegate>
     } else {
         *targetContentOffset = CGPointMake(targetOffsetX, minOffsetY);
     }
+}
+
+#pragma mark - Actions
+
+- (void)showSearchViewController {
+    TCSearchViewController *vc = [[TCSearchViewController alloc] init];
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:NO completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
