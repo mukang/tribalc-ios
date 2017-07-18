@@ -2664,4 +2664,93 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+#pragma mark - 消息服务
+
+- (void)fetchHomeMessageWrapperByPullType:(TCDataListPullType)pullType count:(NSInteger)count sinceTime:(int64_t)sinceTime result:(void (^)(TCHomeMessageWrapper *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = nil;
+        switch (pullType) {
+            case TCDataListPullFirstTime:
+                apiName = [NSString stringWithFormat:@"members/%@/homeMessages?limit=%zd", self.currentUserSession.assigned, count];
+                break;
+            case TCDataListPullOlderList:
+                apiName = [NSString stringWithFormat:@"members/%@/homeMessages?limit=%zd&sinceTime=%zd&isNew=false", self.currentUserSession.assigned, count, sinceTime];
+                break;
+            case TCDataListPullNewerList:
+                apiName = [NSString stringWithFormat:@"members/%@/homeMessages?limit=%zd&sinceTime=%zd&isNew=true", self.currentUserSession.assigned, count, sinceTime];
+                break;
+                
+            default:
+                break;
+        }
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                TCHomeMessageWrapper *messageWrapper = [[TCHomeMessageWrapper alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(messageWrapper, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+- (void)ignoreAHomeMessageByMessageID:(NSString *)messageID result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"members/%@/homeMessages/%@/state", self.currentUserSession.assigned, messageID];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+}
+
+- (void)ignoreAParticularTypeHomeMessageByMessageType:(NSString *)messageType result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"members/%@/homeMessageTypeShield/%@", self.currentUserSession.assigned, messageType];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+}
+
 @end

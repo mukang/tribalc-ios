@@ -103,6 +103,10 @@
 #import "TCRentPlanItem.h"
 #import "TCRentProtocolWithholdInfo.h"
 
+/*********** 消息服务 ***********/
+#import "TCHomeMessageWrapper.h"
+
+
 @interface TCModelImport : NSObject
 
 @end

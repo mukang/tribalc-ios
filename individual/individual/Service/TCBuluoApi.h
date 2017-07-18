@@ -37,6 +37,12 @@ typedef NS_ENUM(NSInteger, TCBFSupportedBankType) {
     TCBFSupportedBankTypeWithhold = 0 // 代付
 };
 
+typedef NS_ENUM(NSInteger, TCDataListPullType) {
+    TCDataListPullFirstTime = 0,  // 首次拉去数据
+    TCDataListPullOlderList,      // 拉取老数据
+    TCDataListPullNewerList       // 拉取更数据
+};
+
 @interface TCBuluoApi : NSObject
 
 /**
@@ -783,5 +789,33 @@ typedef NS_ENUM(NSInteger, TCBFSupportedBankType) {
  @param sourceId 房源id
  */
 - (void)checkSmartLockTemporaryPasswordWithSN:(NSString *)sn sourceId:(NSString *)sourceId result:(void(^)(NSString * password, NSError *error))resultBlock;
+
+#pragma mark - 消息服务
+
+/**
+ 获取首页消息列表
+
+ @param pullType 拉取方式
+ @param count 拉取条数
+ @param sinceTime 消息查询时间（获取新消息时传第一条消息的createDate，获取旧消息时传最后一条消息的createDate，第一次获取消息时传0）
+ @param resultBlock 结果回调
+ */
+- (void)fetchHomeMessageWrapperByPullType:(TCDataListPullType)pullType count:(NSInteger)count sinceTime:(int64_t)sinceTime result:(void(^)(TCHomeMessageWrapper *messageWrapper, NSError *error))resultBlock;
+
+/**
+ 忽略某一条消息
+
+ @param messageID 消息ID
+ @param resultBlock 结果回调
+ */
+- (void)ignoreAHomeMessageByMessageID:(NSString *)messageID result:(void(^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 忽略某一类型消息
+
+ @param messageType 消息类型
+ @param resultBlock 结果回调
+ */
+- (void)ignoreAParticularTypeHomeMessageByMessageType:(NSString *)messageType result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 @end
