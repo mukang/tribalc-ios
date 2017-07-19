@@ -7,7 +7,6 @@
 //
 
 #import "TCListStore.h"
-#import "TCPrivilege.h"
 
 @implementation TCListStore
 

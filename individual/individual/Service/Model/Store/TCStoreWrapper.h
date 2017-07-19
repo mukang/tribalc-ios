@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TCListStore.h"
 
 @interface TCStoreWrapper : NSObject
 
@@ -20,7 +21,7 @@
 @property (copy, nonatomic) NSString *nextSkip;
 /** 是否还有条目待获取 */
 @property (nonatomic) BOOL hasMore;
-/** 服务列表，TCService对象数组 */
+/** 服务列表，TCListStore对象数组 */
 @property (copy, nonatomic) NSArray *content;
 
 @end

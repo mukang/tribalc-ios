@@ -7,7 +7,6 @@
 //
 
 #import "TCStoreWrapper.h"
-#import "TCListStore.h"
 
 @implementation TCStoreWrapper
 

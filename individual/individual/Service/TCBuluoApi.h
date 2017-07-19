@@ -726,7 +726,7 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
 
 
 /**
- 获取店铺列表
+ 获取店铺列表（新版接口）
 
  @param sellingPointId sellingPointId
  @param limitSize 条数
@@ -735,6 +735,23 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param resultBlock 回调
  */
 - (void)fetchStoreListWithSellingPointId:(NSString *)sellingPointId limitSize:(NSInteger)limitSize sortSkip:(NSInteger)sortSkip sort:(NSString *)sort result:(void(^)(TCStoreWrapper *storeWrapper, NSError *error))resultBlock;
+
+/**
+ 获取店铺信息（新版接口）
+
+ @param storeID 店铺id
+ @param resultBlock 回调结果
+ */
+- (void)fetchStoreInfoByStoreID:(NSString *)storeID result:(void(^)(TCListStore *storeInfo, NSError *error))resultBlock;
+
+/**
+ 获取店铺优惠信息（新版接口）
+
+ @param storeID 店铺id
+ @param isValid 获取有效优惠还是全部优惠
+ @param resultBlock 回调结果
+ */
+- (void)fetchStorePrivilegeListByStoreID:(NSString *)storeID isValid:(BOOL)isValid result:(void(^)(NSArray *privilegeList, NSError *error))resultBlock;
 
 #pragma mark - 租赁资源
 

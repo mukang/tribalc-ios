@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "TCPrivilege.h"
 
 @interface TCListStore : NSObject
 
