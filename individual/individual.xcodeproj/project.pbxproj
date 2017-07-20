@@ -300,6 +300,10 @@
 		7A925DE41F1F400800D697DE /* TCStorePayViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A925DE31F1F400800D697DE /* TCStorePayViewCell.m */; };
 		7A925DED1F1F6A7100D697DE /* TCStoreTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A925DEC1F1F6A7100D697DE /* TCStoreTagView.m */; };
 		7A925DF01F2046DD00D697DE /* TCStoreHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A925DEF1F2046DD00D697DE /* TCStoreHeaderView.m */; };
+		7A925DF31F2091C400D697DE /* TCStorePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A925DF21F2091C400D697DE /* TCStorePayViewController.m */; };
+		7A925DF61F20949500D697DE /* TCStorePayInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A925DF51F20949500D697DE /* TCStorePayInputViewCell.m */; };
+		7A925DF91F2094C200D697DE /* TCStorePayPrivilegeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A925DF81F2094C200D697DE /* TCStorePayPrivilegeViewCell.m */; };
+		7A925DFC1F20950A00D697DE /* TCStorePayRealAmountViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A925DFB1F20950A00D697DE /* TCStorePayRealAmountViewCell.m */; };
 		7A944BA41E5BE53B00E79C31 /* TCServiceNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A944BA31E5BE53B00E79C31 /* TCServiceNameViewCell.m */; };
 		7A9CCED11DB62011003D90C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCED01DB62011003D90C6 /* main.m */; };
 		7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCEDB1DB62011003D90C6 /* Assets.xcassets */; };
@@ -977,6 +981,14 @@
 		7A925DEC1F1F6A7100D697DE /* TCStoreTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreTagView.m; sourceTree = "<group>"; };
 		7A925DEE1F2046DD00D697DE /* TCStoreHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStoreHeaderView.h; sourceTree = "<group>"; };
 		7A925DEF1F2046DD00D697DE /* TCStoreHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreHeaderView.m; sourceTree = "<group>"; };
+		7A925DF11F2091C400D697DE /* TCStorePayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStorePayViewController.h; sourceTree = "<group>"; };
+		7A925DF21F2091C400D697DE /* TCStorePayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStorePayViewController.m; sourceTree = "<group>"; };
+		7A925DF41F20949500D697DE /* TCStorePayInputViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStorePayInputViewCell.h; sourceTree = "<group>"; };
+		7A925DF51F20949500D697DE /* TCStorePayInputViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStorePayInputViewCell.m; sourceTree = "<group>"; };
+		7A925DF71F2094C100D697DE /* TCStorePayPrivilegeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStorePayPrivilegeViewCell.h; sourceTree = "<group>"; };
+		7A925DF81F2094C200D697DE /* TCStorePayPrivilegeViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStorePayPrivilegeViewCell.m; sourceTree = "<group>"; };
+		7A925DFA1F20950A00D697DE /* TCStorePayRealAmountViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStorePayRealAmountViewCell.h; sourceTree = "<group>"; };
+		7A925DFB1F20950A00D697DE /* TCStorePayRealAmountViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStorePayRealAmountViewCell.m; sourceTree = "<group>"; };
 		7A944BA21E5BE53B00E79C31 /* TCServiceNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceNameViewCell.h; sourceTree = "<group>"; };
 		7A944BA31E5BE53B00E79C31 /* TCServiceNameViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceNameViewCell.m; sourceTree = "<group>"; };
 		7A9CCECC1DB62011003D90C6 /* individual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = individual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1699,6 +1711,12 @@
 				7A925DEC1F1F6A7100D697DE /* TCStoreTagView.m */,
 				7A925DEE1F2046DD00D697DE /* TCStoreHeaderView.h */,
 				7A925DEF1F2046DD00D697DE /* TCStoreHeaderView.m */,
+				7A925DF41F20949500D697DE /* TCStorePayInputViewCell.h */,
+				7A925DF51F20949500D697DE /* TCStorePayInputViewCell.m */,
+				7A925DF71F2094C100D697DE /* TCStorePayPrivilegeViewCell.h */,
+				7A925DF81F2094C200D697DE /* TCStorePayPrivilegeViewCell.m */,
+				7A925DFA1F20950A00D697DE /* TCStorePayRealAmountViewCell.h */,
+				7A925DFB1F20950A00D697DE /* TCStorePayRealAmountViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2261,6 +2279,8 @@
 				7A925DC71F1E077B00D697DE /* TCShopViewController.m */,
 				7A925DD61F1F3B9600D697DE /* TCStoreDetailViewController.h */,
 				7A925DD71F1F3B9600D697DE /* TCStoreDetailViewController.m */,
+				7A925DF11F2091C400D697DE /* TCStorePayViewController.h */,
+				7A925DF21F2091C400D697DE /* TCStorePayViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3278,9 +3298,11 @@
 				7A944BA41E5BE53B00E79C31 /* TCServiceNameViewCell.m in Sources */,
 				7A2F7C781E76BFCC007B831D /* TCLockEquipPickerView.m in Sources */,
 				7AFEC4931E55446D00B0E754 /* TCGoodsOrderCountDownView.m in Sources */,
+				7A925DFC1F20950A00D697DE /* TCStorePayRealAmountViewCell.m in Sources */,
 				7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */,
 				7A1A857B1E6800B200BB5EDB /* TCServiceFacilitiesViewController.m in Sources */,
 				7AB29F341DD46EE600564D93 /* TCUserInfo.m in Sources */,
+				7A925DF61F20949500D697DE /* TCStorePayInputViewCell.m in Sources */,
 				7A58C5EF1E120D5E00C55A2C /* TCIDAuthDetailViewController.m in Sources */,
 				09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */,
 				7AFEC47D1E54056D00B0E754 /* TCGoodsOrderFooterView.m in Sources */,
@@ -3295,6 +3317,7 @@
 				7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */,
 				7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */,
 				7A925DC41F1DF31100D697DE /* TCHomeMessageWrapper.m in Sources */,
+				7A925DF91F2094C200D697DE /* TCStorePayPrivilegeViewCell.m in Sources */,
 				0928B3411DF96F930085A182 /* TCSelectStandardView.m in Sources */,
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
 				0928B33B1DF921B80085A182 /* TCListShoppingCart.m in Sources */,
@@ -3351,6 +3374,7 @@
 				7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */,
 				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
 				55BB9EC01E72B49100B0FD94 /* TCLockWrapper.m in Sources */,
+				7A925DF31F2091C400D697DE /* TCStorePayViewController.m in Sources */,
 				7A4BF1AE1EB0BE2E00DE1BF5 /* TCBFPayInfo.m in Sources */,
 				7A2CD74F1F04EB3800CEEF29 /* TCApartmentWithholdInfoView.m in Sources */,
 				0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */,

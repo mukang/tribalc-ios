@@ -7,6 +7,7 @@
 //
 
 #import "TCStoreDetailViewController.h"
+#import "TCStorePayViewController.h"
 
 #import "TCStoreHeaderView.h"
 #import "TCStoreDescViewCell.h"
@@ -265,7 +266,9 @@
 #pragma mark - TCStorePayViewCellDelegate
 
 - (void)didClickPayButtonInStorePayViewCell:(TCStorePayViewCell *)cell {
-    
+    TCStorePayViewController *vc = [[TCStorePayViewController alloc] init];
+    vc.storeID = self.storeID;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
