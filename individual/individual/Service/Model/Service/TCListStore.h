@@ -59,6 +59,6 @@
 /** 电话 */
 @property (copy, nonatomic) NSString *phone;
 /** 优惠信息 */
-@property (copy, nonatomic) NSArray *privilege;
+@property (copy, nonatomic) NSArray *privileges;
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "TCShopViewController.h"
+#import "TCStoreDetailViewController.h"
+
 #import "TCBuluoApi.h"
 #import "TCStoreCell.h"
 #import "TCStoreWrapper.h"
@@ -85,6 +87,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
     return self.stores.count;
 }
 
@@ -92,6 +95,13 @@
     TCStoreCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCStoreCell" forIndexPath:indexPath];
     cell.store = self.stores[indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    TCListStore *store = self.stores[indexPath.row];
+    TCStoreDetailViewController *vc = [[TCStoreDetailViewController alloc] init];
+    vc.storeID = store.ID;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)setupTableViewRefreshView {

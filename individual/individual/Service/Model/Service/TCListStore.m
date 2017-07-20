@@ -21,7 +21,7 @@
 }
 
 + (NSDictionary *)objectClassInArray {
-    return @{@"privilege": [TCPrivilege class]};
+    return @{@"privileges": [TCPrivilege class]};
 }
 
 @end

@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, TCPrivilegeType) {
+    TCPrivilegeTypeDiscount = 0,  // 折扣
+    TCPrivilegeTypeReduce,        // 满减
+    TCPrivilegeTypeAliquot        // 叠加满减
+};
+
 @interface TCPrivilege : NSObject
 
 /** 优惠id */
@@ -16,6 +22,8 @@
 @property (copy, nonatomic) NSString *ownerId;
 /** Default DISCOUNT From ｛ DISCOUNT(折扣类型), REDUCE(满减), ALIQUOT(满减叠加)} */
 @property (copy, nonatomic) NSString *type;
+/** 枚举 */
+@property (nonatomic) TCPrivilegeType privilegeType;
 /** 要满足的金额 */
 @property (assign, nonatomic) double condition;
 /** 折扣 或 满减金额 */
