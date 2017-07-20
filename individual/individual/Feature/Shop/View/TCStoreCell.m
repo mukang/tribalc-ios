@@ -46,7 +46,7 @@
             if ([str isKindOfClass:[NSString class]]) {
                 NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:str];
                 UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCScreenWidth, TCRealValue(252))];
-                [self.imageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
+                [self.bgImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
             }
         }
         
@@ -58,7 +58,7 @@
         }
         
         self.desLabel.text = store.desc;
-        self.tagsLabel.text = [NSString stringWithFormat:@"%@ | %@", store.brand, store.markPlace];
+        self.tagsLabel.text = [NSString stringWithFormat:@"%@ | %@", store.category, store.markPlace];
         NSString *moneyStr = [NSString stringWithFormat:@"¥%.0f",store.avgprice];
         NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
         [attStr setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, 1)];
@@ -67,6 +67,7 @@
 }
 
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.bgImageView];
     [self.contentView addSubview:self.iconImageView];
     [self.contentView addSubview:self.desLabel];
@@ -87,16 +88,18 @@
     [self.desLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(TCRealValue(10));
         make.right.equalTo(self.contentView).offset(-TCRealValue(10));
-        make.bottom.equalTo(self.contentView).offset(TCRealValue(42));
+        make.bottom.equalTo(self.contentView).offset(-TCRealValue(50));
     }];
     
     [self.locationImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(TCRealValue(15));
         make.top.equalTo(self.desLabel.mas_bottom).offset(TCRealValue(15));
+        make.width.equalTo(@(TCRealValue(10)));
+        make.height.equalTo(@(TCRealValue(12)));
     }];
     
     [self.tagsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.locationImageView);
+        make.top.equalTo(self.locationImageView).offset(-TCRealValue(2));
         make.left.equalTo(self.locationImageView.mas_right).offset(TCRealValue(5));
         make.width.equalTo(@(TCRealValue(220)));
     }];
@@ -114,6 +117,7 @@
         _moneyLabel.textColor = [UIColor whiteColor];
         _moneyLabel.font = [UIFont systemFontOfSize:31];
         _moneyLabel.textAlignment = NSTextAlignmentRight;
+        _moneyLabel.baselineAdjustment = UIBaselineAdjustmentNone;
     }
     return _moneyLabel;
 }
@@ -121,6 +125,8 @@
 - (UILabel *)tagsLabel {
     if (_tagsLabel == nil) {
         _tagsLabel = [[UILabel alloc] init];
+        _tagsLabel.font = [UIFont systemFontOfSize:12];
+        _tagsLabel.textColor = [UIColor whiteColor];
     }
     return _tagsLabel;
 }
@@ -128,6 +134,7 @@
 - (UIImageView *)locationImageView {
     if (_locationImageView == nil) {
         _locationImageView = [[UIImageView alloc] init];
+        _locationImageView.image = [UIImage imageNamed:@"location"];
     }
     return _locationImageView;
 }

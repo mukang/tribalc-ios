@@ -13,6 +13,7 @@
 #import <TCCommonLibs/TCRefreshHeader.h>
 #import <TCCommonLibs/TCRefreshFooter.h>
 
+
 @interface TCShopViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
@@ -35,8 +36,8 @@
 - (void)setUpViews {
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.equalTo(self.view);
-        make.bottom.equalTo(self.view).offset(-49);
+        make.left.top.right.bottom.equalTo(self.view);
+//        make.bottom.equalTo(self.view).offset(-49);
     }];
 }
 
@@ -122,12 +123,13 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.rowHeight = TCRealValue(252);
         [_tableView registerClass:[TCStoreCell class] forCellReuseIdentifier:@"TCStoreCell"];
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, TCRealValue(48))];
         _tableView.tableHeaderView = headerView;
         
         UILabel *label1 = [[UILabel alloc] init];
-        label1.text = @"向你推荐";
+        label1.text = @"向·你·推·荐";
         label1.font = [UIFont systemFontOfSize:12];
         label1.textColor = TCGrayColor;
         label1.textAlignment = NSTextAlignmentCenter;
