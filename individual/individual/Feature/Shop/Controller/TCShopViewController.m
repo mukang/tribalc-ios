@@ -14,7 +14,7 @@
 #import "TCStoreWrapper.h"
 #import <TCCommonLibs/TCRefreshHeader.h>
 #import <TCCommonLibs/TCRefreshFooter.h>
-
+#import "TCStoreDetailViewController.h"
 
 @interface TCShopViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -30,16 +30,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = nil;
     [self setUpViews];
     [self loadDataIsMore:NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)setUpViews {
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.bottom.equalTo(self.view);
-//        make.bottom.equalTo(self.view).offset(-49);
     }];
 }
 
@@ -102,6 +105,7 @@
     TCListStore *store = self.stores[indexPath.row];
     TCStoreDetailViewController *vc = [[TCStoreDetailViewController alloc] init];
     vc.storeID = store.ID;
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
