@@ -10,4 +10,16 @@
 
 @implementation TCPrivilege
 
+- (void)setType:(NSString *)type {
+    _type = type;
+    
+    if ([type isEqualToString:@"DISCOUNT"]) {
+        _privilegeType = TCPrivilegeTypeDiscount;
+    } else if ([type isEqualToString:@"REDUCE"]) {
+        _privilegeType = TCPrivilegeTypeReduce;
+    } else if ([type isEqualToString:@"ALIQUOT"]) {
+        _privilegeType = TCPrivilegeTypeAliquot;
+    }
+}
+
 @end
