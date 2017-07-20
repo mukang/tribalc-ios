@@ -191,7 +191,7 @@ TCHomeCoverViewDelegate>
 
 - (void)didClickMoreActionBtnWithMessageCell:(UITableViewCell *)cell {
     TCHomeMessageCell *messageCell = (TCHomeMessageCell *)cell;
-    CGRect rect = [messageCell convertRect:messageCell.bounds toView:self.navigationController.view];
+    CGRect rect = [messageCell convertRect:messageCell.bounds toView:self.tabBarController.view];
     NSLog(@"%@", NSStringFromCGRect(rect));
     self.coverView.rect = rect;
     self.coverView.currentCell = (TCHomeMessageCell *)cell;
@@ -279,6 +279,23 @@ TCHomeCoverViewDelegate>
     }];
 }
 
+- (void)tap {
+    self.coverView.hidden = YES;
+    self.coverView.homeMessage = nil;
+}
+
+
+- (TCHomeCoverView *)coverView {
+    if (_coverView == nil) {
+        _coverView = [[TCHomeCoverView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight)];
+        _coverView.hidden = YES;
+        _coverView.delegate = self;
+        UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
+        [_coverView addGestureRecognizer:tapG];
+        [self.tabBarController.view addSubview:_coverView];
+    }
+    return _coverView;
+}
 
 #pragma mark - UITableViewDelegate
 
