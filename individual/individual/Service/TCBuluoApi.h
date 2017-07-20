@@ -751,6 +751,8 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param isValid 获取有效优惠还是全部优惠
  @param resultBlock 回调结果
  */
+- (void)fetchStorePrivilegeByStoreID:(NSString *)storeID isValid:(BOOL)isValid result:(void(^)(TCListStore *storeInfo, NSError *error))resultBlock;
+
 - (void)fetchStorePrivilegeListByStoreID:(NSString *)storeID isValid:(BOOL)isValid result:(void(^)(NSArray *privilegeList, NSError *error))resultBlock;
 
 #pragma mark - 租赁资源

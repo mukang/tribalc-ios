@@ -2498,6 +2498,32 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchStorePrivilegeByStoreID:(NSString *)storeID isValid:(BOOL)isValid result:(void (^)(TCListStore *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *isValidStr = isValid ? @"true" : @"false";
+        NSString *apiName = [NSString stringWithFormat:@"stores/%@/privilege?me=%@&active=%@", storeID, self.currentUserSession.assigned, isValidStr];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                TCListStore *listStore = [[TCListStore alloc] initWithObjectDictionary:response.data];
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(listStore, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 - (void)fetchStorePrivilegeListByStoreID:(NSString *)storeID isValid:(BOOL)isValid result:(void (^)(NSArray *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *isValidStr = isValid ? @"true" : @"false";

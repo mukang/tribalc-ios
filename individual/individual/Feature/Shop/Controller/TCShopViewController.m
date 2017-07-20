@@ -100,6 +100,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     TCListStore *store = self.stores[indexPath.row];
     TCStoreDetailViewController *vc = [[TCStoreDetailViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
     vc.storeID = store.ID;
     [self.navigationController pushViewController:vc animated:YES];
 }

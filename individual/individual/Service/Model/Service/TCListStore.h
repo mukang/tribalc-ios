@@ -61,4 +61,7 @@
 /** 优惠信息 */
 @property (copy, nonatomic) NSArray *privileges;
 
+/** 商铺名称(在获取优惠信息接口里使用) */
+@property (copy, nonatomic) NSString *storeName;
+
 @end

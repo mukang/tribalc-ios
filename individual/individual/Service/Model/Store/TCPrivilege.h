@@ -35,4 +35,9 @@ typedef NS_ENUM(NSInteger, TCPrivilegeType) {
 /** 结束日期 */
 @property (assign, nonatomic) int64_t endDate;
 
+/** UI上被选中 */
+@property (nonatomic) BOOL selected;
+/** UI上减免的金额 */
+@property (nonatomic) double deductibleValue;
+
 @end
