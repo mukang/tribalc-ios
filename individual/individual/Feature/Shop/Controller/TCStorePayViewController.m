@@ -8,6 +8,7 @@
 
 #import "TCStorePayViewController.h"
 #import "TCPaymentViewController.h"
+#import "TCPrivilegeInstructionViewController.h"
 
 #import "TCStorePayInputViewCell.h"
 #import "TCStorePayPrivilegeViewCell.h"
@@ -28,7 +29,7 @@
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
 
 @property (weak, nonatomic) UITableView *tableView;
-@property (weak, nonatomic) TCCommonButton *confirmButton;
+@property (strong, nonatomic) TCCommonButton *confirmButton;
 
 @end
 
@@ -217,7 +218,7 @@
                                                                   color:TCCommonButtonColorPurple
                                                                  target:self
                                                                  action:@selector(handleClickConfirmButton:)];
-        [confirmButton setImage:[UIImage imageWithColor:TCRGBColor(217, 217, 217)] forState:UIControlStateDisabled];
+        [confirmButton setBackgroundImage:[UIImage imageWithColor:TCRGBColor(217, 217, 217)] forState:UIControlStateDisabled];
         confirmButton.enabled = NO;
         [containerView addSubview:confirmButton];
         self.confirmButton = confirmButton;
@@ -360,10 +361,13 @@
 }
 
 - (void)handleClickInstructionItem:(id)sender {
-    
+    TCPrivilegeInstructionViewController *vc = [[TCPrivilegeInstructionViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleClickConfirmButton:(id)sender {
+    [self.tableView endEditing:YES];
+    
     TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:self.amount
                                                                          payPurpose:TCPayPurposeFace2Face
                                                                      fromController:self];
