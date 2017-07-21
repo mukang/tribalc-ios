@@ -10,4 +10,6 @@
 
 @interface TCPrivilegeInstructionViewController : TCBaseViewController
 
+@property (copy, nonatomic) NSString *storeID;
+
 @end

@@ -8,6 +8,7 @@
 
 #import "TCStorePayViewController.h"
 #import "TCPaymentViewController.h"
+#import "TCPaySuccessViewController.h"
 #import "TCPrivilegeInstructionViewController.h"
 
 #import "TCStorePayInputViewCell.h"
@@ -29,7 +30,9 @@
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
 
 @property (weak, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) TCCommonButton *confirmButton;
+@property (strong, nonatomic) UIView *footerView;
+@property (weak, nonatomic) TCCommonButton *confirmButton;
+@property (weak, nonatomic) TCNumberTextField *textField;
 
 @end
 
@@ -93,22 +96,11 @@
 
 - (void)loadNetData {
     [MBProgressHUD showHUD:YES];
-//    [[TCBuluoApi api] fetchStorePrivilegeByStoreID:self.storeID isValid:YES result:^(TCListStore *storeInfo, NSError *error) {
-//        if (storeInfo) {
-//            [MBProgressHUD hideHUD:YES];
-//            weakSelf.navigationItem.title = storeInfo.storeName;
-//            weakSelf.privilegeList = [weakSelf filterPrivilege:storeInfo.privileges];
-//            [weakSelf.tableView reloadData];
-//        } else {
-//            NSString *reason = error.localizedDescription ?: @"请退出该页面重试";
-//            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
-//        }
-//    }];
-    
-    [[TCBuluoApi api] fetchStorePrivilegeListByStoreID:self.storeID isValid:YES result:^(NSArray *privilegeList, NSError *error) {
-        if (privilegeList) {
+    [[TCBuluoApi api] fetchStorePrivilegeByStoreID:self.storeID isValid:YES result:^(TCListStore *storeInfo, NSError *error) {
+        if (storeInfo) {
             [MBProgressHUD hideHUD:YES];
-            weakSelf.privilegeList = [weakSelf filterPrivilege:privilegeList];
+            weakSelf.navigationItem.title = storeInfo.storeName;
+            weakSelf.privilegeList = [weakSelf filterPrivilege:storeInfo.privileges];
             [weakSelf.tableView reloadData];
         } else {
             NSString *reason = error.localizedDescription ?: @"请退出该页面重试";
@@ -145,11 +137,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return self.privilegeList.count ? 3 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 1) {
+    if (self.privilegeList.count && section == 1) {
         return self.privilegeList.count;
     } else {
         return 1;
@@ -158,31 +150,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *currentCell;
-    switch (indexPath.section) {
-        case 0:
-        {
-            TCStorePayInputViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCStorePayInputViewCell" forIndexPath:indexPath];
-            cell.textField.delegate = self;
-            currentCell = cell;
-        }
-            break;
-        case 1:
-        {
+    if (indexPath.section == 0) {
+        TCStorePayInputViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCStorePayInputViewCell" forIndexPath:indexPath];
+        cell.textField.delegate = self;
+        self.textField = cell.textField;
+        currentCell = cell;
+    } else {
+        if (self.privilegeList.count && indexPath.section == 1) {
             TCStorePayPrivilegeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCStorePayPrivilegeViewCell" forIndexPath:indexPath];
             cell.privilege = self.privilegeList[indexPath.row];
             currentCell = cell;
-        }
-            break;
-        case 2:
-        {
+        } else {
             TCStorePayRealAmountViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCStorePayRealAmountViewCell" forIndexPath:indexPath];
             cell.realAmount = self.realAmount;
             currentCell = cell;
         }
-            break;
-            
-        default:
-            break;
     }
     return currentCell;
 }
@@ -190,7 +172,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1) {
+    if (self.privilegeList.count && indexPath.section == 1) {
         return 40;
     } else {
         return 60;
@@ -202,7 +184,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 2) {
+    if (section == 2 || (self.privilegeList.count == 0 && section == 1)) {
         return 100;
     } else {
         return CGFLOAT_MIN;
@@ -210,26 +192,8 @@
 }
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section; {
-    if (section == 2) {
-        UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 100)];
-        containerView.backgroundColor = [UIColor clearColor];
-        
-        TCCommonButton *confirmButton = [TCCommonButton buttonWithTitle:@"确认买单"
-                                                                  color:TCCommonButtonColorPurple
-                                                                 target:self
-                                                                 action:@selector(handleClickConfirmButton:)];
-        [confirmButton setBackgroundImage:[UIImage imageWithColor:TCRGBColor(217, 217, 217)] forState:UIControlStateDisabled];
-        confirmButton.enabled = NO;
-        [containerView addSubview:confirmButton];
-        self.confirmButton = confirmButton;
-        
-        [confirmButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.size.mas_equalTo(CGSizeMake(TCRealValue(315), 40));
-            make.top.equalTo(containerView).offset(26.5);
-            make.centerX.equalTo(containerView);
-        }];
-        
-        return containerView;
+    if (section == 2 || (self.privilegeList.count == 0 && section == 1)) {
+        return self.footerView;
     }
     return nil;
 }
@@ -303,12 +267,11 @@
 #pragma mark - TCPaymentViewControllerDelegate
 
 - (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
-    NSLog(@"支付成功");
-//    TCPaySuccessViewController *paySuccessVC = [[TCPaySuccessViewController alloc] init];
-//    paySuccessVC.totalAmount = payment.totalAmount;
-//    paySuccessVC.storeName = self.storeDetailInfo.name;
-//    paySuccessVC.fromController = self.fromController;
-//    [self.navigationController pushViewController:paySuccessVC animated:YES];
+    TCPaySuccessViewController *paySuccessVC = [[TCPaySuccessViewController alloc] init];
+    paySuccessVC.totalAmount = payment.totalAmount;
+    paySuccessVC.storeName = self.navigationItem.title;
+    paySuccessVC.fromController = self.fromController;
+    [self.navigationController pushViewController:paySuccessVC animated:YES];
 }
 
 #pragma mark - Notifications
@@ -325,6 +288,11 @@
 
 - (void)handleTextFieldTextDidChangeNotification:(NSNotification *)notification {
     TCNumberTextField *textField = (TCNumberTextField *)notification.object;
+    
+    if (![textField isEqual:self.textField]) {
+        return;
+    }
+    
     double value = [textField.text doubleValue];
     self.amount = value;
     
@@ -357,16 +325,21 @@
         self.confirmButton.enabled = NO;
     }
     
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)] withRowAnimation:UITableViewRowAnimationNone];
+    NSUInteger length = self.privilegeList.count ? 2 : 1;
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, length)]
+                  withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)handleClickInstructionItem:(id)sender {
+    [self.textField resignFirstResponder];
+    
     TCPrivilegeInstructionViewController *vc = [[TCPrivilegeInstructionViewController alloc] init];
+    vc.storeID = self.storeID;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleClickConfirmButton:(id)sender {
-    [self.tableView endEditing:YES];
+    [self.textField resignFirstResponder];
     
     TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:self.amount
                                                                          payPurpose:TCPayPurposeFace2Face
@@ -374,6 +347,39 @@
     vc.delegate = self;
     vc.targetID = self.storeID;
     [vc show:YES];
+}
+
+- (void)handleClickBackButton:(UIBarButtonItem *)sender {
+    [self.textField resignFirstResponder];
+    
+    [super handleClickBackButton:sender];
+}
+
+#pragma mark - Override Methods
+
+- (UIView *)footerView {
+    if (_footerView == nil) {
+        UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 100)];
+        containerView.backgroundColor = [UIColor clearColor];
+        
+        TCCommonButton *confirmButton = [TCCommonButton buttonWithTitle:@"确认买单"
+                                                                  color:TCCommonButtonColorPurple
+                                                                 target:self
+                                                                 action:@selector(handleClickConfirmButton:)];
+        [confirmButton setBackgroundImage:[UIImage imageWithColor:TCRGBColor(217, 217, 217)] forState:UIControlStateDisabled];
+        confirmButton.enabled = NO;
+        [containerView addSubview:confirmButton];
+        self.confirmButton = confirmButton;
+        
+        [confirmButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(TCRealValue(315), 40));
+            make.top.equalTo(containerView).offset(26.5);
+            make.centerX.equalTo(containerView);
+        }];
+        
+        _footerView = containerView;
+    }
+    return _footerView;
 }
 
 - (void)didReceiveMemoryWarning {

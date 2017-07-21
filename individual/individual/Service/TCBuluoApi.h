@@ -753,8 +753,6 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  */
 - (void)fetchStorePrivilegeByStoreID:(NSString *)storeID isValid:(BOOL)isValid result:(void(^)(TCListStore *storeInfo, NSError *error))resultBlock;
 
-- (void)fetchStorePrivilegeListByStoreID:(NSString *)storeID isValid:(BOOL)isValid result:(void(^)(NSArray *privilegeList, NSError *error))resultBlock;
-
 #pragma mark - 租赁资源
 
 /**

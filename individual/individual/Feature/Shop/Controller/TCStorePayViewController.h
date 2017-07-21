@@ -11,5 +11,6 @@
 @interface TCStorePayViewController : TCBaseViewController
 
 @property (copy, nonatomic) NSString *storeID;
+@property (weak, nonatomic) UIViewController *fromController;
 
 @end

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TCPrivilege;
 
 @interface TCPrivilegeViewCell : UITableViewCell
+
+@property (strong, nonatomic) TCPrivilege *privilege;
 
 @end

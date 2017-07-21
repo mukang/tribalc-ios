@@ -82,10 +82,10 @@
             self.titleLabel.text = [NSString stringWithFormat:@"满%0.0f元%0.2f折", privilege.condition, privilege.value * 10];
             break;
         case TCPrivilegeTypeReduce:
-            self.titleLabel.text = [NSString stringWithFormat:@"满%0.0f元减%0.00f元", privilege.condition, privilege.value];
+            self.titleLabel.text = [NSString stringWithFormat:@"满%0.0f元减%0.0f元", privilege.condition, privilege.value];
             break;
         case TCPrivilegeTypeAliquot:
-            self.titleLabel.text = [NSString stringWithFormat:@"每满%0.0f元减%0.00f元", privilege.condition, privilege.value];
+            self.titleLabel.text = [NSString stringWithFormat:@"每满%0.0f元减%0.0f元", privilege.condition, privilege.value];
             break;
             
         default:

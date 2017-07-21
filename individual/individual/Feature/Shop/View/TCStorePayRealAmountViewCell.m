@@ -59,7 +59,7 @@
     }];
     [symbolLable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(amountLabel.mas_left).offset(-2);
-        make.bottom.equalTo(amountLabel);
+        make.bottom.equalTo(amountLabel).offset(-2);
     }];
 }
 

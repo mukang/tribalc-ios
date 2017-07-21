@@ -10,4 +10,6 @@
 
 @interface TCPrivilegeInstructionViewCell : UITableViewCell
 
+@property (copy, nonatomic) NSString *instructionStr;
+
 @end
