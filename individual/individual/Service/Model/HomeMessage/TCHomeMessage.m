@@ -10,8 +10,10 @@
 
 @implementation TCHomeMessage
 
-+ (NSDictionary *)objectClassInArray {
-    return @{@"messageBody": [TCHomeMessageBody class]};
++ (NSDictionary *)objectClassInDictionary {
+    return @{
+             @"messageBody":[TCHomeMessageBody class]
+             };
 }
 
 @end
