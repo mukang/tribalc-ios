@@ -184,6 +184,7 @@
 		7A22D9411ECEF9CF009A6A64 /* TCSigninRecordDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A22D9401ECEF9CF009A6A64 /* TCSigninRecordDay.m */; };
 		7A22D9441ECEFB18009A6A64 /* TCSigninRecordMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A22D9431ECEFB18009A6A64 /* TCSigninRecordMonth.m */; };
 		7A27F9CF1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A27F9CE1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m */; };
+		7A2966761F220EA70073E632 /* TCWalletCreditLimitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2966751F220EA70073E632 /* TCWalletCreditLimitView.m */; };
 		7A2A77321E6D4426000CFAA8 /* intro_image_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */; };
 		7A2A77331E6D4426000CFAA8 /* intro_image_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A77301E6D4426000CFAA8 /* intro_image_02.png */; };
 		7A2A77341E6D4426000CFAA8 /* intro_image_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A77311E6D4426000CFAA8 /* intro_image_03.png */; };
@@ -775,6 +776,8 @@
 		7A22D9431ECEFB18009A6A64 /* TCSigninRecordMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSigninRecordMonth.m; sourceTree = "<group>"; };
 		7A27F9CD1EA8980C00B9BCFE /* TCRechargeMethodViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeMethodViewCell.h; sourceTree = "<group>"; };
 		7A27F9CE1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeMethodViewCell.m; sourceTree = "<group>"; };
+		7A2966741F220EA70073E632 /* TCWalletCreditLimitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletCreditLimitView.h; sourceTree = "<group>"; };
+		7A2966751F220EA70073E632 /* TCWalletCreditLimitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletCreditLimitView.m; sourceTree = "<group>"; };
 		7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_01.png; sourceTree = "<group>"; };
 		7A2A77301E6D4426000CFAA8 /* intro_image_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_02.png; sourceTree = "<group>"; };
 		7A2A77311E6D4426000CFAA8 /* intro_image_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_03.png; sourceTree = "<group>"; };
@@ -2702,6 +2705,8 @@
 				7AC346E71E0144B500E28EC9 /* TCWalletBillViewCell.h */,
 				7AC346E81E0144B500E28EC9 /* TCWalletBillViewCell.m */,
 				7AC346E91E0144B500E28EC9 /* TCWalletBillViewCell.xib */,
+				7A2966741F220EA70073E632 /* TCWalletCreditLimitView.h */,
+				7A2966751F220EA70073E632 /* TCWalletCreditLimitView.m */,
 				7AC346E11E0144B500E28EC9 /* TCWalletBillDetailHeaderView.h */,
 				7AC346E21E0144B500E28EC9 /* TCWalletBillDetailHeaderView.m */,
 				7AC346E31E0144B500E28EC9 /* TCWalletBillDetailHeaderView.xib */,
@@ -3305,6 +3310,7 @@
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
 				7AB03F261EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m in Sources */,
+				7A2966761F220EA70073E632 /* TCWalletCreditLimitView.m in Sources */,
 				7A925DAA1F1C99B400D697DE /* TCSearchViewController.m in Sources */,
 				7A22D9151ECD94A4009A6A64 /* TCLockEquipViewCell.m in Sources */,
 				7A2F7C6F1E768BAF007B831D /* TCAddVisitorViewController.m in Sources */,
