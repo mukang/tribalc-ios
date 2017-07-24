@@ -268,6 +268,7 @@
 - (void)didClickPayButtonInStorePayViewCell:(TCStorePayViewCell *)cell {
     TCStorePayViewController *vc = [[TCStorePayViewController alloc] init];
     vc.storeID = self.storeID;
+    vc.fromController = self;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

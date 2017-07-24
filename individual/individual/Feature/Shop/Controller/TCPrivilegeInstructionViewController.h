@@ -1,5 +1,5 @@
 //
-//  TCStorePayViewController.h
+//  TCPrivilegeInstructionViewController.h
 //  individual
 //
 //  Created by 穆康 on 2017/7/20.
@@ -8,9 +8,8 @@
 
 #import <TCCommonLibs/TCBaseViewController.h>
 
-@interface TCStorePayViewController : TCBaseViewController
+@interface TCPrivilegeInstructionViewController : TCBaseViewController
 
 @property (copy, nonatomic) NSString *storeID;
-@property (weak, nonatomic) UIViewController *fromController;
 
 @end

@@ -2524,37 +2524,6 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchStorePrivilegeListByStoreID:(NSString *)storeID isValid:(BOOL)isValid result:(void (^)(NSArray *, NSError *))resultBlock {
-    if ([self isUserSessionValid]) {
-        NSString *isValidStr = isValid ? @"true" : @"false";
-        NSString *apiName = [NSString stringWithFormat:@"stores/%@/privilege?me=%@&active=%@", storeID, self.currentUserSession.assigned, isValidStr];
-        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
-        request.token = self.currentUserSession.token;
-        [[TCClient client] send:request finish:^(TCClientResponse *response) {
-            if (response.codeInResponse == 200) {
-                NSArray *dics = response.data;
-                NSMutableArray *temp = [NSMutableArray arrayWithCapacity:dics.count];
-                for (int i=0; i<dics.count; i++) {
-                    TCPrivilege *privilege = [[TCPrivilege alloc] initWithObjectDictionary:dics[i]];
-                    [temp addObject:privilege];
-                }
-                if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock([temp copy], nil));
-                }
-            } else {
-                if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
-                }
-            }
-        }];
-    } else {
-        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
-        if (resultBlock) {
-            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
-        }
-    }
-}
-
 #pragma mark - 租赁资源
 
 - (void)fetchRentProtocolList:(void (^)(NSArray *, NSError *))resultBlock {

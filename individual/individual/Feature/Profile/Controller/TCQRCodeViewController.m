@@ -14,6 +14,7 @@
 #import "TCScanner.h"
 #import "TCPhotoPicker.h"
 #import "TCPreparePayViewController.h"
+#import "TCStorePayViewController.h"
 
 /// 控件间距
 #define kControlMargin  20.0
@@ -66,10 +67,16 @@
             NSArray *arr = [result componentsSeparatedByString:@"://stores/"];
             if (arr.count > 1) {
                 NSString *storeId = arr[1];
+                /*
                 TCPreparePayViewController *preparePayVC = [[TCPreparePayViewController alloc] init];
                 preparePayVC.fromController = self.fromController;
                 preparePayVC.storeId =storeId;
                 [self.navigationController pushViewController:preparePayVC animated:YES];
+                 */
+                TCStorePayViewController *vc = [[TCStorePayViewController alloc] init];
+                vc.fromController = self.fromController;
+                vc.storeID = storeId;
+                [self.navigationController pushViewController:vc animated:YES];
                 return;
             }
         }
