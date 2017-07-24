@@ -2,8 +2,8 @@
 //  TCWalletViewController.m
 //  individual
 //
-//  Created by 穆康 on 2016/11/18.
-//  Copyright © 2016年 杭州部落公社科技有限公司. All rights reserved.
+//  Created by 穆康 on 2017/7/24.
+//  Copyright © 2017年 杭州部落公社科技有限公司. All rights reserved.
 //
 
 #import "TCWalletViewController.h"
@@ -15,13 +15,16 @@
 #import "TCNavigationController.h"
 #import "TCWithdrawViewController.h"
 
+#import "TCWalletBalanceView.h"
+#import "TCWalletFeaturesView.h"
+
 #import "TCBuluoApi.h"
 #import "TCUserDefaultsKeys.h"
 
-@interface TCWalletViewController ()
+@interface TCWalletViewController () <TCWalletFeaturesViewDelegate>
 
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *functionButtons;
-@property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
+@property (weak, nonatomic) UINavigationBar *navBar;
+@property (weak, nonatomic) TCWalletBalanceView *balanceView;
 
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
 
@@ -31,13 +34,15 @@
     __weak TCWalletViewController *weakSelf;
 }
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
+    // Do any additional setup after loading the view.
     weakSelf = self;
-    self.navigationItem.title = @"我的钱包";
+    self.view.backgroundColor = TCRGBColor(239, 244, 245);
     
+    [self setupNavBar];
     [self setupSubviews];
     [self registerNotifications];
 }
@@ -52,16 +57,51 @@
     [self removeNotifications];
 }
 
-- (void)setupSubviews {
+#pragma mark - Private Methods
+
+- (void)setupNavBar {
+    self.hideOriginalNavBar = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
-    CGFloat originSpace = 1, space = 12;
-    CGSize imageViewSize, labelSize;
-    for (UIButton *button in self.functionButtons) {
-        imageViewSize = button.imageView.size;
-        labelSize = button.titleLabel.size;
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, labelSize.height + space, -labelSize.width + originSpace);
-        button.titleEdgeInsets = UIEdgeInsetsMake(imageViewSize.height + space, -imageViewSize.width + originSpace, 0, 0);
-    }
+    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
+    [navBar setBackgroundImage:[UIImage imageNamed:@"TransparentPixel"] forBarMetrics:UIBarMetricsDefault];
+    [navBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
+    [self.view addSubview:navBar];
+    
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"钱包"];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item_white"]
+                                                                 style:UIBarButtonItemStylePlain
+                                                                target:self
+                                                                action:@selector(handleClickBackButton:)];
+    navItem.leftBarButtonItem = leftItem;
+    [navBar setItems:@[navItem]];
+    
+    [navBar setTintColor:[UIColor whiteColor]];
+    navBar.titleTextAttributes = @{
+                                   NSFontAttributeName : [UIFont systemFontOfSize:16],
+                                   NSForegroundColorAttributeName : [UIColor whiteColor]
+                                   };
+    
+    self.navBar = navBar;
+}
+
+- (void)setupSubviews {
+    TCWalletBalanceView *balanceView = [[TCWalletBalanceView alloc] init];
+    [self.view insertSubview:balanceView belowSubview:self.navBar];
+    self.balanceView = balanceView;
+    
+    TCWalletFeaturesView *featuresView = [[TCWalletFeaturesView alloc] init];
+    featuresView.delegate = self;
+    [self.view addSubview:featuresView];
+    
+    [balanceView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(self.view);
+        make.height.mas_equalTo(TCRealValue(282));
+    }];
+    [featuresView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(balanceView.mas_bottom).offset(TCRealValue(9));
+        make.left.bottom.right.equalTo(self.view);
+    }];
 }
 
 - (void)fetchNetData {
@@ -70,17 +110,11 @@
         if (walletAccount) {
             [MBProgressHUD hideHUD:YES];
             weakSelf.walletAccount = walletAccount;
-            weakSelf.balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", walletAccount.balance];
+            weakSelf.balanceView.walletAccount = walletAccount;
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取钱包信息失败！"];
         }
     }];
-}
-
-#pragma mark - Status Bar
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - Notifications
@@ -93,9 +127,51 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)handleWalletPasswordDidChangeNotification:(NSNotification *)notification {
+    NSString *aNewPassword = notification.userInfo[TCWalletPasswordKey];
+    self.walletAccount.password = aNewPassword;
+}
+
+#pragma mark - TCWalletFeaturesViewDelegate
+
+- (void)walletFeaturesView:(TCWalletFeaturesView *)view didClickFeatureButtonWithType:(TCWalletFeatureType)type {
+    switch (type) {
+        case TCWalletFeatureTypeRecharge:
+            [self handleClickRechargeButton:nil];
+            break;
+        case TCWalletFeatureTypeWithdraw:
+            [self handleClickWithdrawButton:nil];
+            break;
+        case TCWalletFeatureTypeCredit:
+            [self handleClickCreditButton:nil];
+            break;
+        case TCWalletFeatureTypeBankCard:
+            [self handleClickBankCardButton:nil];
+            break;
+        case TCWalletFeatureTypeSweepCode:
+            [self handleClickSweepCodeButton:nil];
+            break;
+        case TCWalletFeatureTypeStatement:
+            [self handleClickStatementButton:nil];
+            break;
+        case TCWalletFeatureTypeCoupon:
+            [self handleClickCouponButton:nil];
+            break;
+        case TCWalletFeatureTypeFinance:
+            [self handleClickFinanceButton:nil];
+            break;
+        case TCWalletFeatureTypePassword:
+            [self handleClickPasswordButton:nil];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - Actions
 
-- (IBAction)handleClickRechargeButton:(UIButton *)sender {
+- (void)handleClickRechargeButton:(id)sender {
     NSNumber *recharge = [[NSUserDefaults standardUserDefaults] objectForKey:TCUserDefaultsKeySwitchBfRecharge];
     if (recharge && [recharge boolValue] == NO) {
         [self btnClickUnifyTips];
@@ -107,14 +183,11 @@
     }
     TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
     vc.walletAccount = self.walletAccount;
-    vc.completionBlock = ^() {
-//        [weakSelf fetchNetData];
-    };
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (IBAction)handleClickWithdrawButton:(UIButton *)sender {
+- (void)handleClickWithdrawButton:(id)sender {
     NSNumber *withdraw = [[NSUserDefaults standardUserDefaults] objectForKey:TCUserDefaultsKeySwitchBfWithdraw];
     if (withdraw && [withdraw boolValue] == NO) {
         [self btnClickUnifyTips];
@@ -135,38 +208,39 @@
         return;
     }
     TCWithdrawViewController *vc = [[TCWithdrawViewController alloc] initWithWalletAccount:self.walletAccount];
-    vc.completionBlock = ^() {
-//        [weakSelf fetchNetData];
-    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (IBAction)handleClickBankCardButton:(UIButton *)sender {
+- (void)handleClickCreditButton:(id)sender {
+    
+}
+
+- (void)handleClickBankCardButton:(id)sender {
     TCBankCardViewController *vc = [[TCBankCardViewController alloc] initWithNibName:@"TCBankCardViewController" bundle:[NSBundle mainBundle]];
     vc.walletAccount = self.walletAccount;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (IBAction)handleClickSweepCodeButton:(UIButton *)sender {
-//    [self btnClickUnifyTips];
+- (void)handleClickSweepCodeButton:(id)sender {
     TCQRCodeViewController *qrVc = [[TCQRCodeViewController alloc] init];
     qrVc.fromController = self;
     [self.navigationController pushViewController:qrVc animated:YES];
 }
-- (IBAction)handleClickWalletBillButton:(UIButton *)sender {
+
+- (void)handleClickStatementButton:(id)sender {
     TCWalletBillViewController *vc = [[TCWalletBillViewController alloc] initWithNibName:@"TCWalletBillViewController" bundle:[NSBundle mainBundle]];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (IBAction)handleClickCouponButton:(UIButton *)sender {
+- (void)handleClickCouponButton:(id)sender {
     [self btnClickUnifyTips];
 }
 
-- (IBAction)handleClickFinanceButton:(UIButton *)sender {
+- (void)handleClickFinanceButton:(id)sender {
     [self btnClickUnifyTips];
 }
 
-- (IBAction)handleClickPasswordButton:(UIButton *)sender {
+- (void)handleClickPasswordButton:(id)sender {
     if (!self.walletAccount) {
         [MBProgressHUD showHUDWithMessage:@"暂时无法设置支付密码"];
         return;
@@ -184,9 +258,10 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)handleWalletPasswordDidChangeNotification:(NSNotification *)notification {
-    NSString *aNewPassword = notification.userInfo[TCWalletPasswordKey];
-    self.walletAccount.password = aNewPassword;
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)didReceiveMemoryWarning {
