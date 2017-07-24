@@ -85,6 +85,8 @@
 		552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C211E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m */; };
 		552D6C281E973BB000CA4EA3 /* TCUnitySetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */; };
 		5546F9481F21DE5800E9A9B0 /* TCCreditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546F9471F21DE5800E9A9B0 /* TCCreditViewController.m */; };
+		5546F94B1F25A93E00E9A9B0 /* TCCreditBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546F94A1F25A93E00E9A9B0 /* TCCreditBillViewController.m */; };
+		5546F94E1F25DA2800E9A9B0 /* TCCreditBillViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546F94D1F25DA2800E9A9B0 /* TCCreditBillViewCell.m */; };
 		5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */; };
 		559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */ = {isa = PBXBuildFile; fileRef = 559D84561E0BD24900982697 /* NSObject+TCNomal.m */; };
 		559D84671E0C007E00982697 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D84661E0C007E00982697 /* MessageUI.framework */; };
@@ -613,6 +615,10 @@
 		552D6C271E973BB000CA4EA3 /* TCUnitySetUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUnitySetUpViewController.m; sourceTree = "<group>"; };
 		5546F9461F21DE5800E9A9B0 /* TCCreditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCreditViewController.h; sourceTree = "<group>"; };
 		5546F9471F21DE5800E9A9B0 /* TCCreditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCreditViewController.m; sourceTree = "<group>"; };
+		5546F9491F25A93E00E9A9B0 /* TCCreditBillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCreditBillViewController.h; sourceTree = "<group>"; };
+		5546F94A1F25A93E00E9A9B0 /* TCCreditBillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCreditBillViewController.m; sourceTree = "<group>"; };
+		5546F94C1F25DA2800E9A9B0 /* TCCreditBillViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCreditBillViewCell.h; sourceTree = "<group>"; };
+		5546F94D1F25DA2800E9A9B0 /* TCCreditBillViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCreditBillViewCell.m; sourceTree = "<group>"; };
 		5599A9591ECEF193002A61F9 /* TCSignInHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSignInHistoryViewController.h; sourceTree = "<group>"; };
 		5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSignInHistoryViewController.m; sourceTree = "<group>"; };
 		559D84551E0BD24900982697 /* NSObject+TCNomal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TCNomal.h"; sourceTree = "<group>"; };
@@ -2700,6 +2706,8 @@
 				7AADCC8A1EEA3E6B004AA1DA /* TCPaySuccessViewController.m */,
 				5546F9461F21DE5800E9A9B0 /* TCCreditViewController.h */,
 				5546F9471F21DE5800E9A9B0 /* TCCreditViewController.m */,
+				5546F9491F25A93E00E9A9B0 /* TCCreditBillViewController.h */,
+				5546F94A1F25A93E00E9A9B0 /* TCCreditBillViewController.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -2736,6 +2744,8 @@
 				7A455D601EBC913900A2F9ED /* TCWithdrawAmountView.m */,
 				7A455D611EBC913900A2F9ED /* TCWithdrawBankCardInfoView.h */,
 				7A455D621EBC913900A2F9ED /* TCWithdrawBankCardInfoView.m */,
+				5546F94C1F25DA2800E9A9B0 /* TCCreditBillViewCell.h */,
+				5546F94D1F25DA2800E9A9B0 /* TCCreditBillViewCell.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -3186,6 +3196,7 @@
 				7A925DD51F1F0A0500D697DE /* TCPrivilege.m in Sources */,
 				7AEB4CC31E03936300F83A7C /* TCBioEditPhoneViewController.m in Sources */,
 				7AC346EE1E0144B500E28EC9 /* TCWalletBillViewCell.m in Sources */,
+				5546F94B1F25A93E00E9A9B0 /* TCCreditBillViewController.m in Sources */,
 				7A7E94231DF5723A006A47CE /* TCRepairsCommitViewCell.m in Sources */,
 				7A01916E1E7A92B500283822 /* TCLockQRCodeTitleView.m in Sources */,
 				7A8352E11E5EDEC9003A8E76 /* TCService.m in Sources */,
@@ -3478,6 +3489,7 @@
 				7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */,
 				096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */,
 				7AF972DB1E08E0FA009D26A3 /* TCUserIDAuthInfo.m in Sources */,
+				5546F94E1F25DA2800E9A9B0 /* TCCreditBillViewCell.m in Sources */,
 				7A2F7C751E768C4E007B831D /* TCAddVisitorDeviceViewCell.m in Sources */,
 				552D6C221E94D6BF00CA4EA3 /* TCMyLockQRCodeController.m in Sources */,
 				550FB7751ED5C18700D75E33 /* FSCalendarDelegationFactory.m in Sources */,

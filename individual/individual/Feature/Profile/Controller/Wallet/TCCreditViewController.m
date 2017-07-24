@@ -7,12 +7,14 @@
 //
 
 #import "TCCreditViewController.h"
+#import "TCWalletAccount.h"
+#import "TCCreditBillViewController.h"
 
 @interface TCCreditViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
 
-@property (strong, nonatomic) UIImageView *headerView;
+@property (strong, nonatomic) UIView *headerView;
 
 @property (strong, nonatomic) UIBezierPath *trackPath;
 
@@ -24,6 +26,8 @@
 
 @property (strong, nonatomic) CAGradientLayer *gradientLayer;
 
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation TCCreditViewController
@@ -33,9 +37,10 @@
     // Do any additional setup after loading the view.
     [self setUpViews];
     [self setUpNav];
-    [self createBezierPath:CGRectMake(0, -200, 150, 150)];
+    [self createBezierPath:CGRectMake(0, 0, 150, 150)];
     
-    
+    ;
+    ;
     
 //    [self.view.layer addSublayer:self.gradientLayer];
 //    
@@ -55,6 +60,12 @@
 
 #pragma mark UITableViewDataSource
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = TCRGBColor(239, 245, 245);
+    return view;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
@@ -72,21 +83,29 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"UITableViewCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.textColor = TCBlackColor;
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
+        cell.detailTextLabel.textColor = TCBlackColor;
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
     }
     
     if (indexPath.section == 0) {
         cell.textLabel.text = @"本期账单";
         cell.imageView.image = [UIImage imageNamed:@"currentBill"];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",self.walletAccount.creditBalance];
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"授信额度";
             cell.imageView.image = [UIImage imageNamed:@"creditLimit"];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",self.walletAccount.creditLimit];
         }else if (indexPath.row == 1) {
             cell.textLabel.text = @"账单日";
             cell.imageView.image = [UIImage imageNamed:@"billDay"];
+            cell.detailTextLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.walletAccount.billDay]];
         }else {
             cell.textLabel.text = @"还款日";
             cell.imageView.image = [UIImage imageNamed:@"repaymentDay"];
+            cell.detailTextLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.walletAccount.repayDay]];
         }
     }
     
@@ -103,7 +122,8 @@
 }
 
 - (void)log {
-    
+    TCCreditBillViewController *billVC = [[TCCreditBillViewController alloc] init];
+    [self.navigationController pushViewController:billVC animated:YES];
 }
 
 - (void)setUpNav {
@@ -131,20 +151,17 @@
         
         _gradientLayer             = [CAGradientLayer layer];
         
-        _gradientLayer.frame       = CGRectMake(0, 0, 250, 250);
+//        _gradientLayer.frame       = CGRectMake(0, 0, 250, 250);
         
-        _gradientLayer.position    = self.view.center;
         
-        _gradientLayer.borderWidth = 1.f;
+//        _gradientLayer.borderWidth = 1.f;
         
         
         // 设置颜色
         
-        _gradientLayer.colors = @[(__bridge id)[UIColor redColor].CGColor,
+        _gradientLayer.colors = @[(__bridge id)TCRGBColor(130, 207, 246).CGColor,
                                   
-                                  (__bridge id)[UIColor greenColor].CGColor,
-                                  
-                                  (__bridge id)[UIColor blueColor].CGColor];
+                                  (__bridge id)TCRGBColor(126, 152, 226).CGColor];
         
         
         
@@ -152,7 +169,7 @@
         
         _gradientLayer.startPoint = CGPointMake(0, 0);
         
-        _gradientLayer.endPoint   = CGPointMake(1, 0);
+        _gradientLayer.endPoint = CGPointMake(0, 1);
         
         
         
@@ -170,7 +187,7 @@
 -(void)createBezierPath:(CGRect)mybound
 {
     //外圆
-    _trackPath = [UIBezierPath bezierPathWithArcCenter:self.view.center radius:(mybound.size.width - 0.7)/ 2 startAngle:0 endAngle:M_PI * 2 clockwise:YES];;
+    _trackPath = [UIBezierPath bezierPathWithArcCenter:self.tableView.tableHeaderView.center radius:(mybound.size.width - 0.7)/ 2 startAngle:0 endAngle:M_PI * 2 clockwise:YES];
     
     _trackLayer = [CAShapeLayer new];
     [self.tableView.tableHeaderView.layer addSublayer:_trackLayer];
@@ -180,18 +197,34 @@
     _trackLayer.lineWidth=5;
     _trackLayer.frame = mybound;
     
+    [self.tableView.tableHeaderView.layer addSublayer:self.gradientLayer];
+    self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
+    
+    
+    
     //内圆
-    _progressPath = [UIBezierPath bezierPathWithArcCenter:self.view.center radius:(mybound.size.width - 0.7)/ 2 startAngle:- M_PI_2 endAngle:(M_PI * 2) * 0.7 - M_PI_2 clockwise:YES];
+//    _progressPath = [UIBezierPath bezierPathWithArcCenter:self.view.center radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_4 endAngle:(M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit) + M_PI_4 clockwise:YES];
+    _progressPath = [UIBezierPath bezierPathWithArcCenter:self.tableView.tableHeaderView.center radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
     
     _progressLayer = [CAShapeLayer new];
-    [self.tableView.tableHeaderView.layer addSublayer:_progressLayer];
-    _progressLayer.fillColor = nil;
-    _progressLayer.strokeColor=[UIColor redColor].CGColor;
+//    [self.tableView.tableHeaderView.layer addSublayer:_progressLayer];
+    _progressLayer.fillColor = [UIColor clearColor].CGColor;
+    _progressLayer.strokeColor=TCRGBColor(129, 184, 238).CGColor;
     _progressLayer.lineCap = kCALineCapRound;
     _progressLayer.path = _progressPath.CGPath;
     _progressLayer.lineWidth=10;
-    _progressLayer.frame = mybound;
+    _progressLayer.frame = CGRectMake(-75, -15, 150, 150);
     
+    self.gradientLayer.mask = _progressLayer;
+    
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateFormat:@"MM/dd"];
+    }
+    return _dateFormatter;
 }
 
 - (UITableView *)tableView {
@@ -203,15 +236,20 @@
         _tableView.sectionHeaderHeight = 8;
         _tableView.sectionFooterHeight = CGFLOAT_MIN;
         _tableView.rowHeight = 45;
-        self.headerView.frame = CGRectMake(0, 0, TCScreenWidth, 200);
+        _tableView.backgroundColor = TCRGBColor(239, 245, 245);
+        self.headerView.frame = CGRectMake(0, 0, TCScreenWidth, 208);
     }
     return _tableView;
 }
 
-- (UIImageView *)headerView {
+- (UIView *)headerView {
     if (_headerView == nil) {
-        _headerView = [[UIImageView alloc] init];
-        _headerView.image = [UIImage imageNamed:@"creditHeader"];
+        _headerView = [[UIView alloc] init];
+        _headerView.backgroundColor = TCRGBColor(239, 245, 245);
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.frame = CGRectMake(0, 0, TCScreenWidth, 200);
+        imageView.image = [UIImage imageNamed:@"creditHeader"];
+        [_headerView addSubview:imageView];
     }
     return _headerView;
 }
