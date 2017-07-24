@@ -304,7 +304,7 @@ TCPhotoModeViewDelegate>
         [self.navigationController pushViewController:vc animated:YES];
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) { // 我的钱包
-            TCWalletViewController *vc = [[TCWalletViewController alloc] initWithNibName:@"TCWalletViewController" bundle:[NSBundle mainBundle]];
+            TCWalletViewController *vc = [[TCWalletViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } else if (indexPath.row == 1) { // 我的签到
