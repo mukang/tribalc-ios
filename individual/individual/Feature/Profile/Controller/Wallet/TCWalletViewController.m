@@ -14,6 +14,7 @@
 #import "TCRechargeViewController.h"
 #import "TCNavigationController.h"
 #import "TCWithdrawViewController.h"
+#import "TCCreditViewController.h"
 
 #import "TCBuluoApi.h"
 #import "TCUserDefaultsKeys.h"
@@ -159,7 +160,9 @@
 }
 
 - (IBAction)handleClickCouponButton:(UIButton *)sender {
-    [self btnClickUnifyTips];
+//    [self btnClickUnifyTips];
+    TCCreditViewController *creditVC = [[TCCreditViewController alloc] init];
+    [self.navigationController pushViewController:creditVC animated:YES];
 }
 
 - (IBAction)handleClickFinanceButton:(UIButton *)sender {
