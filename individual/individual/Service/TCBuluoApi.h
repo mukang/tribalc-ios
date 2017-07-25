@@ -356,7 +356,7 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
 
  @param resultBlock 结果回调
  */
-- (void)fetchCreditBillList:(void (^)(TCCreditBill *creditBill, NSError *error))resultBlock;
+- (void)fetchCreditBillListWithLimit:(NSInteger)limit sinceTime:(NSString *)sinceTime result:(void (^)(TCCreditBillWrapper *creditBillWrapper, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 

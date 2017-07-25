@@ -29,6 +29,8 @@
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
+@property (strong, nonatomic) UILabel *moneyLabel;
+
 @end
 
 @implementation TCCreditViewController
@@ -63,8 +65,6 @@
     [self.tableView.layer addSublayer:self.gradientLayer];
     self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
     
-    
-    
     //内圆
     //    _progressPath = [UIBezierPath bezierPathWithArcCenter:self.view.center radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_4 endAngle:(M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit) + M_PI_4 clockwise:YES];
     _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
@@ -76,7 +76,7 @@
     _progressLayer.lineCap = kCALineCapRound;
     _progressLayer.path = _progressPath.CGPath;
     _progressLayer.lineWidth=10;
-    _progressLayer.frame = CGRectMake(-75, -15, 150, 150);
+    _progressLayer.frame = CGRectMake(-(TCScreenWidth-170)/2, -15, 150, 150);
     
     self.gradientLayer.mask = _progressLayer;
     
@@ -162,7 +162,6 @@
 }
 
 
-
 #pragma mark - Getter methods
 
 - (CAGradientLayer *)gradientLayer {
@@ -177,7 +176,7 @@
         _gradientLayer.startPoint = CGPointMake(0, 0);
         _gradientLayer.endPoint = CGPointMake(0, 1);
         // 设置颜色分割点
-        _gradientLayer.locations  = @[@(0.25), @(0.5), @(0.75)];
+        _gradientLayer.locations  = @[@(0.5), @(0.75)];
     }
     return _gradientLayer;
 }
@@ -219,6 +218,27 @@
         imageView.frame = CGRectMake(0, 0, TCScreenWidth, 200);
         imageView.image = [UIImage imageNamed:@"creditHeader"];
         [_headerView addSubview:imageView];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((TCScreenWidth-100)/2, 60, 100, 20)];
+        label.text = @"可用额度";
+        label.textColor = TCBlackColor;
+        label.font = [UIFont systemFontOfSize:14];
+        label.textAlignment = NSTextAlignmentCenter;
+        [_headerView addSubview:label];
+        
+        _moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake((TCScreenWidth-140)/2, 85, 140, 30)];
+        _moneyLabel.textAlignment = NSTextAlignmentCenter;
+        _moneyLabel.textColor = [UIColor blackColor];
+        _moneyLabel.font = [UIFont systemFontOfSize:27];
+        [_headerView addSubview:_moneyLabel];
+        
+        NSString *str = [NSString stringWithFormat:@"¥%.2f",(self.walletAccount.creditLimit-self.walletAccount.creditBalance)];
+        str = @"¥200.00";
+        NSMutableAttributedString *mutableAtt = [[NSMutableAttributedString alloc] initWithString:str];
+        [mutableAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, 1)];
+        [mutableAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(str.length-2, 2)];
+        _moneyLabel.attributedText = mutableAtt;
+        
     }
     return _headerView;
 }

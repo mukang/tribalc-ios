@@ -88,6 +88,7 @@
 		5546F94B1F25A93E00E9A9B0 /* TCCreditBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546F94A1F25A93E00E9A9B0 /* TCCreditBillViewController.m */; };
 		5546F94E1F25DA2800E9A9B0 /* TCCreditBillViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546F94D1F25DA2800E9A9B0 /* TCCreditBillViewCell.m */; };
 		5546F9511F26141A00E9A9B0 /* TCCreditBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546F9501F26141A00E9A9B0 /* TCCreditBill.m */; };
+		5546F9541F2721B300E9A9B0 /* TCCreditBillWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546F9531F2721B300E9A9B0 /* TCCreditBillWrapper.m */; };
 		5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */; };
 		559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */ = {isa = PBXBuildFile; fileRef = 559D84561E0BD24900982697 /* NSObject+TCNomal.m */; };
 		559D84671E0C007E00982697 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D84661E0C007E00982697 /* MessageUI.framework */; };
@@ -623,6 +624,8 @@
 		5546F94D1F25DA2800E9A9B0 /* TCCreditBillViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCreditBillViewCell.m; sourceTree = "<group>"; };
 		5546F94F1F26141A00E9A9B0 /* TCCreditBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCreditBill.h; sourceTree = "<group>"; };
 		5546F9501F26141A00E9A9B0 /* TCCreditBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCreditBill.m; sourceTree = "<group>"; };
+		5546F9521F2721B300E9A9B0 /* TCCreditBillWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCreditBillWrapper.h; sourceTree = "<group>"; };
+		5546F9531F2721B300E9A9B0 /* TCCreditBillWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCreditBillWrapper.m; sourceTree = "<group>"; };
 		5599A9591ECEF193002A61F9 /* TCSignInHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSignInHistoryViewController.h; sourceTree = "<group>"; };
 		5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSignInHistoryViewController.m; sourceTree = "<group>"; };
 		559D84551E0BD24900982697 /* NSObject+TCNomal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TCNomal.h"; sourceTree = "<group>"; };
@@ -2161,6 +2164,8 @@
 				7A11F7171DE46894005F3EAB /* TCBankCard.m */,
 				5546F94F1F26141A00E9A9B0 /* TCCreditBill.h */,
 				5546F9501F26141A00E9A9B0 /* TCCreditBill.m */,
+				5546F9521F2721B300E9A9B0 /* TCCreditBillWrapper.h */,
+				5546F9531F2721B300E9A9B0 /* TCCreditBillWrapper.m */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -3269,6 +3274,7 @@
 				7A1A85441E66D4B900BB5EDB /* TCServiceListCell.m in Sources */,
 				7A190B111DC0CC9800651905 /* TCProfileViewController.m in Sources */,
 				7A7467521DF961AD00ACD815 /* TCUserCompanyInfo.m in Sources */,
+				5546F9541F2721B300E9A9B0 /* TCCreditBillWrapper.m in Sources */,
 				55F06EF81E03BF5E00A849D7 /* TCPropertyManageCell.m in Sources */,
 				7A1F129A1DEC28F900A9B58F /* TCCommunity.m in Sources */,
 				7A2CD74C1F04E2D800CEEF29 /* TCApartmentGuideWithholdView.m in Sources */,
