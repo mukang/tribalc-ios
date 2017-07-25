@@ -14,6 +14,7 @@
 #import "TCRechargeViewController.h"
 #import "TCNavigationController.h"
 #import "TCWithdrawViewController.h"
+#import "TCCreditViewController.h"
 
 #import "TCWalletBalanceView.h"
 #import "TCWalletFeaturesView.h"
@@ -212,7 +213,8 @@
 }
 
 - (void)handleClickCreditButton:(id)sender {
-    
+    TCCreditViewController *creditVC = [[TCCreditViewController alloc] init];
+    [self.navigationController pushViewController:creditVC animated:YES];
 }
 
 - (void)handleClickBankCardButton:(id)sender {
@@ -232,7 +234,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)handleClickCouponButton:(id)sender {
+- (IBAction)handleClickCouponButton:(UIButton *)sender {
     [self btnClickUnifyTips];
 }
 

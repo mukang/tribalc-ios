@@ -86,6 +86,7 @@
 #import "TCBFPayInfo.h"
 #import "TCBFSessionInfo.h"
 #import "TCPaymentRequestInfo.h"
+#import "TCCreditBill.h"
 
 /*********** 系统初始化相关 ***********/
 #import "TCAppVersion.h"
