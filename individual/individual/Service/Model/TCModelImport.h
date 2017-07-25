@@ -22,6 +22,7 @@
 #import "TCUserCompanyInfo.h"
 #import "TCUserIDAuthInfo.h"
 #import "TCUserPayment.h"
+#import "TCCreditBillWrapper.h"
 
 /********** 商业相关 **********/
 #import "TCGoods.h"

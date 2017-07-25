@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCCreditBill;
+
 @interface TCCreditBillViewCell : UITableViewCell
+
+@property (strong, nonatomic) TCCreditBill *creditBill;
 
 @end

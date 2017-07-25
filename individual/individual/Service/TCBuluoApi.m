@@ -1105,16 +1105,18 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchCreditBillList:(void (^)(TCCreditBill *creditBill, NSError *error))resultBlock {
+- (void)fetchCreditBillListWithLimit:(NSInteger)limit sinceTime:(NSString *)sinceTime result:(void (^)(TCCreditBillWrapper *creditBillWrapper, NSError *error))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/credits/activated", self.currentUserSession.assigned];
+        NSString *limitStr = limit ? [NSString stringWithFormat:@"limit=%ld",(long)limit] : @"";
+        NSString *sinceTimeStr = sinceTime ? [NSString stringWithFormat:@"&sinceTime=%@",sinceTime] : @"";
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/credits?%@%@", self.currentUserSession.assigned,limitStr,sinceTimeStr];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
                 if (resultBlock) {
-                    TCCreditBill *bill = [[TCCreditBill alloc] initWithObjectDictionary:response.data];
-                    TC_CALL_ASYNC_MQ(resultBlock(bill, nil));
+                    TCCreditBillWrapper *billWrapper = [[TCCreditBillWrapper alloc] initWithObjectDictionary:response.data];
+                    TC_CALL_ASYNC_MQ(resultBlock(billWrapper, nil));
                 }
             } else {
                 if (resultBlock) {

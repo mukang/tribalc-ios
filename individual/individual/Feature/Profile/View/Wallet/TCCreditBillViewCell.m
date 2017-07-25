@@ -7,6 +7,7 @@
 //
 
 #import "TCCreditBillViewCell.h"
+#import "TCCreditBill.h"
 
 @interface TCCreditBillViewCell ()
 
@@ -18,6 +19,8 @@
 
 @property (strong, nonatomic) UILabel *moneyLabel;
 
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation TCCreditBillViewCell
@@ -27,6 +30,14 @@
         [self setUpViews];
     }
     return self;
+}
+
+- (void)setCreditBill:(TCCreditBill *)creditBill {
+    _creditBill = creditBill;
+    
+    self.titleLabel.text = [NSString stringWithFormat:@"%@账单",creditBill.monthDate];
+    self.subTitleLabel.text = [NSString stringWithFormat:@"%@-%@",[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:creditBill.zeroDate]],[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:creditBill.billDate]]];
+    self.moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",creditBill.amount];
 }
 
 - (void)setUpViews {
@@ -59,6 +70,14 @@
         make.centerY.equalTo(self.contentView);
         make.height.equalTo(@30);
     }];
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateFormat:@"yyyy/MM/dd"];
+    }
+    return _dateFormatter;
 }
 
 - (UILabel *)moneyLabel {
