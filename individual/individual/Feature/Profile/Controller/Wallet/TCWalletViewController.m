@@ -213,7 +213,8 @@
 }
 
 - (void)handleClickCreditButton:(id)sender {
-    
+    TCCreditViewController *creditVC = [[TCCreditViewController alloc] init];
+    [self.navigationController pushViewController:creditVC animated:YES];
 }
 
 - (void)handleClickBankCardButton:(id)sender {
@@ -234,9 +235,7 @@
 }
 
 - (IBAction)handleClickCouponButton:(UIButton *)sender {
-//    [self btnClickUnifyTips];
-    TCCreditViewController *creditVC = [[TCCreditViewController alloc] init];
-    [self.navigationController pushViewController:creditVC animated:YES];
+    [self btnClickUnifyTips];
 }
 
 - (void)handleClickFinanceButton:(id)sender {

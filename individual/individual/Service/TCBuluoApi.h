@@ -350,6 +350,14 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  */
 - (void)commitWithdrawReqWithAmount:(double)amount bankCardID:(NSString *)bankCardID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+
+/**
+ 获取信用账单
+
+ @param resultBlock 结果回调
+ */
+- (void)fetchCreditBillList:(void (^)(TCCreditBill *creditBill, NSError *error))resultBlock;
+
 #pragma mark - 验证码资源
 
 /**

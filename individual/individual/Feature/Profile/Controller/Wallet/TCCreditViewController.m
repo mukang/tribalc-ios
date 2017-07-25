@@ -9,6 +9,7 @@
 #import "TCCreditViewController.h"
 #import "TCWalletAccount.h"
 #import "TCCreditBillViewController.h"
+#import <TCCommonLibs/TCCommonButton.h>
 
 @interface TCCreditViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -38,24 +39,47 @@
     [self setUpViews];
     [self setUpNav];
     [self createBezierPath:CGRectMake(0, 0, 150, 150)];
-    
-    ;
-    ;
-    
-//    [self.view.layer addSublayer:self.gradientLayer];
-//    
-//    
-//    
-//    // 延时3秒执行，实现分割点动画（隐式动画）
-//    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        
-//        // 颜色分割点效果
-//        
-//        self.gradientLayer.locations = @[@(0.4), @(0.5), @(0.6)];
-//        
-//    });
 
+}
+
+- (void)repay {
+    
+}
+
+//画两个圆形
+-(void)createBezierPath:(CGRect)mybound
+{
+    //外圆
+    _trackPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:0 endAngle:M_PI * 2 clockwise:YES];
+    
+    _trackLayer = [CAShapeLayer new];
+    [self.tableView.layer addSublayer:_trackLayer];
+    _trackLayer.fillColor = nil;
+    _trackLayer.strokeColor=[UIColor grayColor].CGColor;
+    _trackLayer.path = _trackPath.CGPath;
+    _trackLayer.lineWidth=5;
+    _trackLayer.frame = mybound;
+    
+    [self.tableView.layer addSublayer:self.gradientLayer];
+    self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
+    
+    
+    
+    //内圆
+    //    _progressPath = [UIBezierPath bezierPathWithArcCenter:self.view.center radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_4 endAngle:(M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit) + M_PI_4 clockwise:YES];
+    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
+    
+    _progressLayer = [CAShapeLayer new];
+    //    [self.tableView.tableHeaderView.layer addSublayer:_progressLayer];
+    _progressLayer.fillColor = [UIColor clearColor].CGColor;
+    _progressLayer.strokeColor=TCRGBColor(129, 184, 238).CGColor;
+    _progressLayer.lineCap = kCALineCapRound;
+    _progressLayer.path = _progressPath.CGPath;
+    _progressLayer.lineWidth=10;
+    _progressLayer.frame = CGRectMake(-75, -15, 150, 150);
+    
+    self.gradientLayer.mask = _progressLayer;
+    
 }
 
 #pragma mark UITableViewDataSource
@@ -141,82 +165,21 @@
 
 #pragma mark - Getter methods
 
-
-
 - (CAGradientLayer *)gradientLayer {
     
     if (!_gradientLayer) {
-        
-        // 初始化并创建
-        
         _gradientLayer             = [CAGradientLayer layer];
-        
-//        _gradientLayer.frame       = CGRectMake(0, 0, 250, 250);
-        
-        
-//        _gradientLayer.borderWidth = 1.f;
-        
-        
         // 设置颜色
-        
         _gradientLayer.colors = @[(__bridge id)TCRGBColor(130, 207, 246).CGColor,
                                   
                                   (__bridge id)TCRGBColor(126, 152, 226).CGColor];
-        
-        
-        
         // 设置颜色渐变方向
-        
         _gradientLayer.startPoint = CGPointMake(0, 0);
-        
         _gradientLayer.endPoint = CGPointMake(0, 1);
-        
-        
-        
         // 设置颜色分割点
-        
         _gradientLayer.locations  = @[@(0.25), @(0.5), @(0.75)];
-        
     }
-    
     return _gradientLayer;
-    
-}
-
-//画两个圆形
--(void)createBezierPath:(CGRect)mybound
-{
-    //外圆
-    _trackPath = [UIBezierPath bezierPathWithArcCenter:self.tableView.tableHeaderView.center radius:(mybound.size.width - 0.7)/ 2 startAngle:0 endAngle:M_PI * 2 clockwise:YES];
-    
-    _trackLayer = [CAShapeLayer new];
-    [self.tableView.tableHeaderView.layer addSublayer:_trackLayer];
-    _trackLayer.fillColor = nil;
-    _trackLayer.strokeColor=[UIColor grayColor].CGColor;
-    _trackLayer.path = _trackPath.CGPath;
-    _trackLayer.lineWidth=5;
-    _trackLayer.frame = mybound;
-    
-    [self.tableView.tableHeaderView.layer addSublayer:self.gradientLayer];
-    self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
-    
-    
-    
-    //内圆
-//    _progressPath = [UIBezierPath bezierPathWithArcCenter:self.view.center radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_4 endAngle:(M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit) + M_PI_4 clockwise:YES];
-    _progressPath = [UIBezierPath bezierPathWithArcCenter:self.tableView.tableHeaderView.center radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
-    
-    _progressLayer = [CAShapeLayer new];
-//    [self.tableView.tableHeaderView.layer addSublayer:_progressLayer];
-    _progressLayer.fillColor = [UIColor clearColor].CGColor;
-    _progressLayer.strokeColor=TCRGBColor(129, 184, 238).CGColor;
-    _progressLayer.lineCap = kCALineCapRound;
-    _progressLayer.path = _progressPath.CGPath;
-    _progressLayer.lineWidth=10;
-    _progressLayer.frame = CGRectMake(-75, -15, 150, 150);
-    
-    self.gradientLayer.mask = _progressLayer;
-    
 }
 
 - (NSDateFormatter *)dateFormatter {
@@ -238,6 +201,12 @@
         _tableView.rowHeight = 45;
         _tableView.backgroundColor = TCRGBColor(239, 245, 245);
         self.headerView.frame = CGRectMake(0, 0, TCScreenWidth, 208);
+        
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 67)];
+        _tableView.tableFooterView = footerView;
+        TCCommonButton *repayBtn = [TCCommonButton buttonWithTitle:@"还  款" color:TCCommonButtonColorPurple target:self action:@selector(repay)];
+        repayBtn.frame = CGRectMake(30, 27, TCScreenWidth-60, 40);
+        [footerView addSubview:repayBtn];
     }
     return _tableView;
 }
