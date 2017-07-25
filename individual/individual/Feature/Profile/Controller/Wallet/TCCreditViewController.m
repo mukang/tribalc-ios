@@ -7,8 +7,10 @@
 //
 
 #import "TCCreditViewController.h"
-#import "TCWalletAccount.h"
 #import "TCCreditBillViewController.h"
+#import "TCRepaymentViewController.h"
+
+#import "TCWalletAccount.h"
 #import <TCCommonLibs/TCCommonButton.h>
 
 @interface TCCreditViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -43,7 +45,9 @@
 }
 
 - (void)repay {
-    
+    TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];
+    vc.walletAccount = self.walletAccount;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 //画两个圆形
