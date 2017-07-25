@@ -304,9 +304,7 @@ TCPhotoModeViewDelegate>
         [self.navigationController pushViewController:vc animated:YES];
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) { // 我的钱包
-            TCWalletViewController *vc = [[TCWalletViewController alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
+            [self handleDidSelectedWalletCell];
         } else if (indexPath.row == 1) { // 我的签到
             TCSignInHistoryViewController *signInHistoryVc = [[TCSignInHistoryViewController alloc] init];
             signInHistoryVc.hidesBottomBarWhenPushed = YES;
@@ -548,6 +546,32 @@ TCPhotoModeViewDelegate>
     }
     currentVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:currentVC animated:YES];
+}
+
+- (void)handleDidSelectedWalletCell {
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+    if ([userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+        TCWalletViewController *vc = [[TCWalletViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示"
+                                                                                 message:@"未进行身份认证，暂不能使用“钱包”功能"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *authAction = [UIAlertAction actionWithTitle:@"身份认证"
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * _Nonnull action) {
+                                                               TCIDAuthViewController *vc = [[TCIDAuthViewController alloc] initWithNibName:@"TCIDAuthViewController" bundle:[NSBundle mainBundle]];
+                                                               vc.hidesBottomBarWhenPushed = YES;
+                                                               [weakSelf.navigationController pushViewController:vc animated:YES];
+                                                           }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:nil];
+        [alertController addAction:cancelAction];
+        [alertController addAction:authAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 - (void)touchOrderButton:(UIButton *)button {

@@ -191,7 +191,7 @@
     }
 }
 
-- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section; {
+- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section == 2 || (self.privilegeList.count == 0 && section == 1)) {
         return self.footerView;
     }
