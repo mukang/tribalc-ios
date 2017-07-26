@@ -20,10 +20,18 @@ typedef NS_ENUM(NSInteger, TCWalletFeatureType) {
     TCWalletFeatureTypePassword
 };
 
+typedef NS_ENUM(NSInteger, TCWalletFeaturesViewType) {
+    TCWalletFeaturesViewTypeIndividual = 0,
+    TCWalletFeaturesViewTypeCompany
+};
+
 @protocol TCWalletFeaturesViewDelegate;
 @interface TCWalletFeaturesView : UIView
 
+@property (nonatomic, readonly) TCWalletFeaturesViewType type;
 @property (weak, nonatomic) id<TCWalletFeaturesViewDelegate> delegate;
+
+- (instancetype)initWithType:(TCWalletFeaturesViewType)type;
 
 @end
 
@@ -31,6 +39,6 @@ typedef NS_ENUM(NSInteger, TCWalletFeatureType) {
 @protocol TCWalletFeaturesViewDelegate <NSObject>
 
 @optional
-- (void)walletFeaturesView:(TCWalletFeaturesView *)view didClickFeatureButtonWithType:(TCWalletFeatureType)type;
+- (void)walletFeaturesView:(TCWalletFeaturesView *)view didClickFeatureButtonWithIndex:(NSInteger)index;
 
 @end

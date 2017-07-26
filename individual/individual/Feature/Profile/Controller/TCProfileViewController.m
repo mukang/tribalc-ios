@@ -21,6 +21,7 @@
 #import "TCNavigationController.h"
 #import "TCOrderViewController.h"
 #import "TCSignInHistoryViewController.h"
+#import "TCCompanyWalletViewController.h"
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
@@ -520,14 +521,20 @@ TCPhotoModeViewDelegate>
 
 - (void)handleDidSelectedMyCompanyCell {
     TCUserInfo *userInfo = [TCBuluoApi api].currentUserSession.userInfo;
-    if (userInfo.companyID) {
-        TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
+    if ([userInfo.role isEqualToString:@"ADMINISTRATOR"]) {
+        TCCompanyWalletViewController *vc = [[TCCompanyWalletViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     } else {
-        TCCompanyApplyViewController *vc = [[TCCompanyApplyViewController alloc] initWithCompanyApplyStatus:TCCompanyApplyStatusNotApply];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+        if (userInfo.companyID) {
+            TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } else {
+            TCCompanyApplyViewController *vc = [[TCCompanyApplyViewController alloc] initWithCompanyApplyStatus:TCCompanyApplyStatusNotApply];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 

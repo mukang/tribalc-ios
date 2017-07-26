@@ -1157,7 +1157,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         NSString *apiName = [NSString stringWithFormat:@"oss_authorization/picture?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-        [request setValue:@"iOS_image.jpg" forParam:@"key"];
+        [request setValue:@"icon.jpg" forParam:@"key"];
         [request setValue:@"image/jpeg" forParam:@"contentType"];
         [request setValue:TCDigestMD5ToData(imageData) forParam:@"contentMD5"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {

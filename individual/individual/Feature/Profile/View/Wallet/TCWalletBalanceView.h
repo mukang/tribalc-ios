@@ -9,8 +9,16 @@
 #import <UIKit/UIKit.h>
 @class TCWalletAccount;
 
+typedef NS_ENUM(NSInteger, TCWalletBalanceViewType) {
+    TCWalletBalanceViewTypeIndividual = 0,
+    TCWalletBalanceViewTypeCompany
+};
+
 @interface TCWalletBalanceView : UIView
 
+@property (nonatomic, readonly) TCWalletBalanceViewType type;
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
+
+- (instancetype)initWithType:(TCWalletBalanceViewType)type;
 
 @end
