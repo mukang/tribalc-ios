@@ -13,6 +13,8 @@
 
 /** 企业id，有值则代表是企业授信 */
 @property (copy, nonatomic) NSString *companyID;
+/** 账单id */
+@property (copy, nonatomic) NSString *creditBillID;
 /** 钱包信息 */
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
 

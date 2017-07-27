@@ -8,22 +8,28 @@
 
 #import "TCRepaymentViewController.h"
 #import "TCBankCardAddViewController.h"
+#import "TCRechargeViewController.h"
+#import "TCWalletPasswordViewController.h"
+#import "TCNavigationController.h"
 
 #import "TCRepaymentInputViewCell.h"
 #import "TCRechargeMethodViewCell.h"
 #import "TCRechargeAddBankCardViewCell.h"
 #import "TCPaymentBankCardView.h"
+#import "TCPaymentPasswordView.h"
 
 #import "TCBuluoApi.h"
 
 #import <TCCommonLibs/TCCommonButton.h>
 #import <TCCommonLibs/UIImage+Category.h>
+#import <TCCommonLibs/TCFunctions.h>
 #import <BaofuFuFingerSDK/BaofuFuFingerSDK.h>
 
+#define passwordViewH 400
 #define paymentBankCardViewH 400
 #define duration 0.25
 
-@interface TCRepaymentViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BaofuFuFingerClientDelegate, TCPaymentBankCardViewDelegate>
+@interface TCRepaymentViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BaofuFuFingerClientDelegate, TCPaymentBankCardViewDelegate, TCPaymentPasswordViewDelegate>
 
 @property (nonatomic) double amount;
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
@@ -41,10 +47,16 @@
 /** 是否是重新获取验证码 */
 @property (nonatomic, getter=isRefetchVCode) BOOL refetchVCode;
 
+@property (strong, nonatomic) TCUserPayment *payment;
+
+
+
 /** 银行卡验证码输入页面的背景 */
 @property (weak, nonatomic) UIView *bgView;
 /** 银行卡验证码输入页面 */
 @property (weak, nonatomic) TCPaymentBankCardView *paymentBankCardView;
+/** 密码输入页面 */
+@property (weak, nonatomic) TCPaymentPasswordView *passwordView;
 
 @property (weak, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UIView *footerView;
@@ -66,6 +78,7 @@
     self.navigationItem.title = self.companyID ? @"企业还款" : @"个人还款";
     
     [self setupSubviews];
+    [self registerPasswordChangeNotifications];
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
 }
 
@@ -83,6 +96,10 @@
     [super viewWillDisappear:animated];
     
     [self removeNotifications];
+}
+
+- (void)dealloc {
+    [self removePasswordChangeNotifications];
 }
 
 #pragma mark - Private Methods
@@ -283,7 +300,7 @@
 }
 
 - (void)didClickFetchCodeButtonInBankCardView:(TCPaymentBankCardView *)view {
-    [self fetchBFSessionInfoWithPaymentID:nil refetchVCode:YES];
+    [self fetchBFSessionInfoWithPaymentID:self.payment.ID refetchVCode:YES];
 }
 
 - (void)bankCardView:(TCPaymentBankCardView *)view didClickConfirmButtonWithCode:(NSString *)code {
@@ -291,6 +308,15 @@
     [self dismissBankCardCodeView];
 }
 
+#pragma mark - TCPaymentPasswordViewDelegate
+
+- (void)paymentPasswordView:(TCPaymentPasswordView *)view didFilledPassword:(NSString *)password {
+    [self handleRepaymentWithPassword:password];
+}
+
+- (void)didClickBackButtonInPaymentPasswordView:(TCPaymentPasswordView *)view {
+    [self dismissPasswordView];
+}
 
 #pragma mark - Notifications
 
@@ -300,6 +326,19 @@
 
 - (void)removeNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)registerPasswordChangeNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWalletPasswordDidChangeNotification:) name:TCWalletPasswordDidChangeNotification object:nil];
+}
+
+- (void)removePasswordChangeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)handleWalletPasswordDidChangeNotification:(NSNotification *)notification {
+    NSString *aNewPassword = notification.userInfo[TCWalletPasswordKey];
+    self.walletAccount.password = aNewPassword;
 }
 
 #pragma mark - Actions
@@ -371,10 +410,178 @@
     [self.textField resignFirstResponder];
     
     if (self.selectedIndexPath.row == 0) {
-        
+        [self handleRepaymentWithBalance];
     } else {
-        [self fetchBFSessionInfoWithPaymentID:nil refetchVCode:NO];
+        if (self.payment) {
+            [self fetchBFSessionInfoWithPaymentID:self.payment.ID refetchVCode:NO];
+        } else {
+            [self commitBFPayRequest];
+        }
     }
+}
+
+#pragma mark - 余额还款
+
+/**
+ 使用余额付款
+ */
+- (void)handleRepaymentWithBalance {
+    // 校验钱包信息
+    if (!self.walletAccount.password) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码\n请先设置支付密码，再进行还款" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self showPasswordViewController];
+        }];
+        [alertController addAction:cancelAction];
+        [alertController addAction:confirmAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return;
+    }
+    
+    if (self.amount > self.walletAccount.balance) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您的钱包余额不足，请充值" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self showRechargeViewController];
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:confirmAction];
+        [alertController addAction:cancelAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return;
+    }
+    
+    [self showPasswordView];
+}
+
+- (void)handleRepaymentWithPassword:(NSString *)password {
+    if (![self.walletAccount.password isEqualToString:TCDigestMD5(password)]) {
+        [MBProgressHUD showHUDWithMessage:@"密码错误，请重新输入"];
+        return;
+    }
+    
+    [MBProgressHUD showHUD:YES];
+    [self.passwordView.textField resignFirstResponder];
+    [self dismissPasswordView];
+    
+    TCPaymentRequestInfo *requestInfo = [[TCPaymentRequestInfo alloc] init];
+    requestInfo.password = password;
+    requestInfo.payChannel = TCPayChannelBalance;
+    requestInfo.totalFee = self.amount;
+    requestInfo.targetId = self.creditBillID;
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:TCPayPurposeCredit walletID:self.walletAccount.ID result:^(TCUserPayment *userPayment, NSError *error) {
+        if (userPayment) {
+            if ([userPayment.status isEqualToString:@"CREATED"]) { // 正在处理中
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf handleQueryRepaymentStatusWithPaymentID:userPayment.ID];
+                });
+            } else if ([userPayment.status isEqualToString:@"FAILURE"]) { // 错误（余额不足）
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", userPayment.note]];
+            } else { // 还款成功
+                [weakSelf handleRepaymentSucceed];
+            }
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", reason]];
+        }
+    }];
+}
+
+/**
+ 查询还款状态
+ */
+- (void)handleQueryRepaymentStatusWithPaymentID:(NSString *)paymentID {
+    [[TCBuluoApi api] fetchUserPaymentByWalletID:self.walletAccount.ID paymentID:paymentID result:^(TCUserPayment *userPayment, NSError *error) {
+        if (userPayment) {
+            if ([userPayment.status isEqualToString:@"FAILURE"]) {
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", userPayment.note]];
+            } else {
+                [weakSelf handleRepaymentSucceed];
+            }
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", reason]];
+        }
+    }];
+}
+
+/**
+ 显示余额充值页面
+ */
+- (void)showRechargeViewController {
+    TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
+    vc.walletAccount = self.walletAccount;
+    vc.suggestMoney = self.amount - self.walletAccount.balance;
+    vc.completionBlock = ^() {
+        [weakSelf reloadWalletAccountInfo];
+    };
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+/**
+ 显示设置支付密码页面
+ */
+- (void)showPasswordViewController {
+    TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFirstTimeInputPassword];
+    vc.walletID = self.walletAccount.ID;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - Password View
+
+- (void)showPasswordView {
+    UIView *superView = self.tabBarController.view;
+    UIView *bgView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    bgView.backgroundColor = TCARGBColor(0, 0, 0, 0);
+    [superView addSubview:bgView];
+    [superView bringSubviewToFront:bgView];
+    self.bgView = bgView;
+    
+    TCPaymentPasswordView *passwordView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentPasswordView" owner:nil options:nil].lastObject;
+    passwordView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, passwordViewH);
+    passwordView.delegate = self;
+    [bgView addSubview:passwordView];
+    self.passwordView = passwordView;
+    
+    [UIView animateWithDuration:duration animations:^{
+        bgView.backgroundColor = TCARGBColor(0, 0, 0, 0.62);
+        passwordView.y = TCScreenHeight - passwordViewH;
+    } completion:^(BOOL finished) {
+        [passwordView.textField becomeFirstResponder];
+    }];
+}
+
+- (void)dismissPasswordView {
+    [UIView animateWithDuration:duration animations:^{
+        weakSelf.bgView.backgroundColor = TCARGBColor(0, 0, 0, 0);
+        weakSelf.passwordView.y = TCScreenHeight;
+    } completion:^(BOOL finished) {
+        [weakSelf.passwordView removeFromSuperview];
+        [weakSelf.bgView removeFromSuperview];
+    }];
+}
+
+#pragma mark - 宝付银行卡还款
+
+/**
+ 提交付款申请
+ */
+- (void)commitBFPayRequest {
+    [MBProgressHUD showHUD:YES];
+    TCPaymentRequestInfo *requestInfo = [[TCPaymentRequestInfo alloc] init];
+    requestInfo.payChannel = TCPayChannelBankCard;
+    requestInfo.targetId = self.creditBillID;
+    requestInfo.totalFee = self.amount;
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:TCPayPurposeCredit walletID:self.walletAccount.ID result:^(TCUserPayment *userPayment, NSError *error) {
+        if (userPayment) {
+            weakSelf.payment = userPayment;
+            [weakSelf fetchBFSessionInfoWithPaymentID:userPayment.ID refetchVCode:NO];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"申请还款失败，%@", reason]];
+        }
+    }];
 }
 
 /**
@@ -431,14 +638,14 @@
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] confirmBFPayWithPayID:self.payID vCode:vCode result:^(TCBFPayResult payResult, NSError *error) {
         if (payResult == TCBFPayResultSucceed) {
-            [weakSelf handleRechargeSucceed];
+            [weakSelf handleRepaymentSucceed];
         } else if (payResult == TCBFPayResultProcessing) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf queryBankCardRechargeWithVCode:vCode];
             });
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"充值失败，%@", reason]];
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", reason]];
         }
     }];
 }
@@ -449,12 +656,12 @@
 - (void)queryBankCardRechargeWithVCode:(NSString *)vCode {
     [[TCBuluoApi api] queryBFPayWithPayID:self.payID result:^(TCBFPayResult payResult, NSError *error) {
         if (payResult == TCBFPayResultSucceed) {
-            [weakSelf handleRechargeSucceed];
+            [weakSelf handleRepaymentSucceed];
         } else if (payResult == TCBFPayResultProcessing) {
-            [MBProgressHUD showHUDWithMessage:@"充值处理中，请稍后在“我的钱包”中查询"];
+            [MBProgressHUD showHUDWithMessage:@"还款处理中，请稍后在“授信”中查询"];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"充值失败，%@", reason]];
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", reason]];
         }
     }];
 }
@@ -504,24 +711,10 @@
 }
 
 /**
- 还款成功
- */
-- (void)handleRechargeSucceed {
-    [MBProgressHUD showHUDWithMessage:@"充值成功"];
-//    self.balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", self.walletAccount.balance + [self.textField.text doubleValue]];
-//    if (self.completionBlock) {
-//        self.completionBlock();
-//    }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
-    });
-}
-
-/**
  显示错误HUD
  */
 - (void)showErrorMessageHUD:(NSString *)errorMessage {
-    NSString *result = self.isRefetchVCode ? @"获取验证码失败" : @"申请付款失败";
+    NSString *result = self.isRefetchVCode ? @"获取验证码失败" : @"申请还款失败";
     NSString *reason = errorMessage ?: @"请稍后再试";
     [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"%@，%@", result ,reason]];
 }
@@ -532,6 +725,45 @@
 - (void)handleTapBankCardCodeBgView:(UITapGestureRecognizer *)gesture {
     if (self.paymentBankCardView && [self.paymentBankCardView.codeTextField isFirstResponder]) {
         [self.paymentBankCardView.codeTextField resignFirstResponder];
+    }
+}
+
+#pragma mark - 还款成功
+
+/**
+ 还款成功
+ */
+- (void)handleRepaymentSucceed {
+    [MBProgressHUD showHUDWithMessage:@"还款成功"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf.navigationController popToViewController:weakSelf.navigationController.childViewControllers[1] animated:YES];
+    });
+}
+
+#pragma mark - 重新获取钱包信息
+
+- (void)reloadWalletAccountInfo {
+    [MBProgressHUD showHUD:YES];
+    if (self.companyID) {
+        [[TCBuluoApi api] fetchCompanyWalletAccountInfoByCompanyID:self.companyID result:^(TCWalletAccount *walletAccount, NSError *error) {
+            if (walletAccount) {
+                [MBProgressHUD hideHUD:YES];
+                weakSelf.walletAccount = walletAccount;
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
+            }
+        }];
+    } else {
+        [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
+            if (walletAccount) {
+                [MBProgressHUD hideHUD:YES];
+                weakSelf.walletAccount = walletAccount;
+            } else {
+                NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
+            }
+        }];
     }
 }
 
