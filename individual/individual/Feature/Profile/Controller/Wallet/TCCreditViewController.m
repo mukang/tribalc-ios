@@ -39,7 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     [self setUpViews];
     [self setUpNav];
     [self createBezierPath:CGRectMake(0, 0, 150, 150)];
@@ -70,8 +70,8 @@
     self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
     
     //内圆
-    //    _progressPath = [UIBezierPath bezierPathWithArcCenter:self.view.center radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_4 endAngle:(M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit) + M_PI_4 clockwise:YES];
-    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
+    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_4 endAngle:(M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit) + M_PI_4 clockwise:YES];
+//    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
     
     _progressLayer = [CAShapeLayer new];
     //    [self.tableView.tableHeaderView.layer addSublayer:_progressLayer];
@@ -82,8 +82,9 @@
     _progressLayer.lineWidth=10;
     _progressLayer.frame = CGRectMake(-(TCScreenWidth-170)/2, -15, 150, 150);
     
-    self.gradientLayer.mask = _progressLayer;
-    
+    [UIView animateWithDuration:1.0 animations:^{
+        self.gradientLayer.mask = _progressLayer;
+    }];
 }
 
 #pragma mark UITableViewDataSource
@@ -237,7 +238,6 @@
         [_headerView addSubview:_moneyLabel];
         
         NSString *str = [NSString stringWithFormat:@"¥%.2f",(self.walletAccount.creditLimit-self.walletAccount.creditBalance)];
-        str = @"¥200.00";
         NSMutableAttributedString *mutableAtt = [[NSMutableAttributedString alloc] initWithString:str];
         [mutableAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, 1)];
         [mutableAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(str.length-2, 2)];
