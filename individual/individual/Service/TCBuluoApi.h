@@ -18,7 +18,8 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
     TCPayPurposeOrder = 0,   // 订单
     TCPayPurposeMaintain,    // 维修
     TCPayPurposeFace2Face,   // 面对面付款
-    TCPayPurposeRent         // 租金
+    TCPayPurposeRent,        // 租金
+    TCPayPurposeCredit       // 信用账单还款
 };
 
 
@@ -264,6 +265,14 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
 - (void)fetchWalletAccountInfo:(void (^)(TCWalletAccount *walletAccount, NSError *error))resultBlock;
 
 /**
+ 获取企业钱包信息
+
+ @param companyID 企业id
+ @param resultBlock 结果回调
+ */
+- (void)fetchCompanyWalletAccountInfoByCompanyID:(NSString *)companyID result:(void (^)(TCWalletAccount *walletAccount, NSError *error))resultBlock;
+
+/**
  获取用户钱包明细
 
  @param tradingType 交易类型，传nil表示获取全部类型的账单
@@ -271,33 +280,24 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param sortSkip 默认查询止步的时间和跳过条数，以逗号分隔，如“1478513563773,3”表示查询早于时间1478513563773并跳过后3条记录，首次获取数据和下拉刷新数据时该参数传nil，上拉获取更多数据时该参数传上一次从服务器获取到的TCWalletBillWrapper对象中属性nextSkip的值
  @param resultBlock 结果回调，walletBillWrapper为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchWalletBillWrapper:(NSString *)tradingType count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCWalletBillWrapper *walletBillWrapper, NSError *error))resultBlock;
+- (void)fetchWalletBillWrapperByWalletID:(NSString *)walletID tradingType:(NSString *)tradingType count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCWalletBillWrapper *walletBillWrapper, NSError *error))resultBlock;
 
 /**
- 修改用户钱包支付密码（首次设置：messageCode和anOldPassword传nil，重置密码：messageCode传nil，找回密码：anOldPassword传nil）
+ 修改钱包支付密码（首次设置：messageCode和anOldPassword传nil，重置密码：messageCode传nil，找回密码：anOldPassword传nil）
 
  @param messageCode 短信验证码，找回密码时使用
  @param anOldPassword 旧密码，重置密码时使用
  @param aNewPassword 新密码
  @param resultBlock 结果回调，success为NO时表示修改失败，失败原因见error的code和userInfo
  */
-- (void)changeWalletPassword:(NSString *)messageCode anOldPassword:(NSString *)anOldPassword aNewPassword:(NSString *)aNewPassword result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)changeWalletPasswordByWalletID:(NSString *)walletID messageCode:(NSString *)messageCode anOldPassword:(NSString *)anOldPassword aNewPassword:(NSString *)aNewPassword result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
  获取银行卡列表
 
  @param resultBlock 结果回调，bankCardList为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchBankCardList:(void (^)(NSArray *bankCardList, NSError *error))resultBlock;
-
-/**
- 添加银行卡
-
- @param bankCard 银行卡信息
- @param verificationCode 手机验证码
- @param resultBlock 结果回调，success为NO时表示添加失败，失败原因见error的code和userInfo
- */
-- (void)addBankCard:(TCBankCard *)bankCard withVerificationCode:(NSString *)verificationCode result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)fetchBankCardListByWalletID:(NSString *)walletID result:(void (^)(NSArray *bankCardList, NSError *error))resultBlock;
 
 /**
  准备添加银行卡信息
@@ -305,7 +305,7 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param bankCard 银行卡信息
  @param resultBlock 结果回调，bankCard为nil时表示添加失败，失败原因见error的code和userInfo
  */
-- (void)prepareAddBankCard:(TCBankCard *)bankCard result:(void (^)(TCBankCard *card, NSError *error))resultBlock;
+- (void)prepareAddBankCard:(TCBankCard *)bankCard walletID:(NSString *)walletID result:(void (^)(TCBankCard *card, NSError *error))resultBlock;
 
 /**
  确认添加银行卡信息
@@ -314,7 +314,7 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param verificationCode 验证码
  @param resultBlock 结果回调，success为NO时表示添加失败，失败原因见error的code和userInfo
  */
-- (void)confirmAddBankCardWithID:(NSString *)bankCardID verificationCode:(NSString *)verificationCode result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)confirmAddBankCardWithID:(NSString *)bankCardID verificationCode:(NSString *)verificationCode walletID:(NSString *)walletID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
  删除银行卡
@@ -322,7 +322,7 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param bankCardID 银行卡ID
  @param resultBlock 结果回调，success为NO时表示删除失败，失败原因见error的code和userInfo
  */
-- (void)deleteBankCard:(NSString *)bankCardID result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)deleteBankCard:(NSString *)bankCardID walletID:(NSString *)walletID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
  提交付款申请
@@ -331,7 +331,7 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param payPurpose 付款目的
  @param resultBlock 结果回调
  */
-- (void)commitPaymentRequest:(TCPaymentRequestInfo *)paymentRequestInfo payPurpose:(TCPayPurpose)payPurpose result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
+- (void)commitPaymentRequest:(TCPaymentRequestInfo *)paymentRequestInfo payPurpose:(TCPayPurpose)payPurpose walletID:(NSString *)walletID result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
 
 /**
  查询付款申请
@@ -339,7 +339,7 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param paymentID 付款ID
  @param resultBlock 结果回调，userPayment为nil时表示查询失败，失败原因见error的code和userInfo
  */
-- (void)fetchUserPayment:(NSString *)paymentID result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
+- (void)fetchUserPaymentByWalletID:(NSString *)walletID paymentID:(NSString *)paymentID result:(void (^)(TCUserPayment *userPayment, NSError *error))resultBlock;
 
 /**
  提交银行卡提现请求
@@ -348,15 +348,22 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param bankCardID 银行卡id
  @param resultBlock 结果回调，success为NO时表示提交申请失败，失败原因见error的code和userInfo
  */
-- (void)commitWithdrawReqWithAmount:(double)amount bankCardID:(NSString *)bankCardID result:(void (^)(BOOL success, NSError *error))resultBlock;
+- (void)commitWithdrawReqWithAmount:(double)amount bankCardID:(NSString *)bankCardID walletID:(NSString *)walletID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 获取当前信用账单
+
+ @param walletID 拥有者id，个人即为个人id，企业即为企业id
+ @param resultBlock 结果回调
+ */
+- (void)fetchCurrentCreditBillByWalletID:(NSString *)walletID result:(void (^)(TCCreditBill *creditBill, NSError *error))resultBlock;
 
 /**
  获取信用账单
 
  @param resultBlock 结果回调
  */
-- (void)fetchCreditBillListWithLimit:(NSInteger)limit sinceTime:(NSString *)sinceTime result:(void (^)(TCCreditBillWrapper *creditBillWrapper, NSError *error))resultBlock;
+- (void)fetchCreditBillListByWalletID:(NSString *)walletID limit:(NSInteger)limit sinceTime:(NSString *)sinceTime result:(void (^)(TCCreditBillWrapper *creditBillWrapper, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 

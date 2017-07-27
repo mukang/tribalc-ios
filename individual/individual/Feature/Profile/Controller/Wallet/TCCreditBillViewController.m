@@ -37,7 +37,7 @@
     @WeakObj(self)
     [MBProgressHUD showHUD:YES];
     
-    [[TCBuluoApi api] fetchCreditBillListWithLimit:20 sinceTime:nil result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchCreditBillListByWalletID:self.walletID limit:20 sinceTime:nil result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
         @StrongObj(self)
         if (creditBillWrapper) {
             [MBProgressHUD hideHUD:YES];
@@ -72,7 +72,7 @@
 
 - (void)loadNewData {
     @WeakObj(self)
-    [[TCBuluoApi api] fetchCreditBillListWithLimit:20 sinceTime:nil result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchCreditBillListByWalletID:self.walletID limit:20 sinceTime:nil result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_header endRefreshing];
         if (creditBillWrapper) {
@@ -102,14 +102,12 @@
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取帐单失败！"];
         }
-
     }];
 }
 
 - (void)loadOldData {
     @WeakObj(self)
-    
-    [[TCBuluoApi api] fetchCreditBillListWithLimit:20 sinceTime:self.sortSkip result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchCreditBillListByWalletID:self.walletID limit:20 sinceTime:self.sortSkip result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_footer endRefreshing];
         if (creditBillWrapper) {
@@ -138,7 +136,6 @@
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取帐单失败！"];
         }
-
     }];
 }
 

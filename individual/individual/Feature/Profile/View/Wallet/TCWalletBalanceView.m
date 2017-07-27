@@ -19,9 +19,10 @@
 
 @implementation TCWalletBalanceView
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+- (instancetype)initWithType:(TCWalletBalanceViewType)type {
+    self = [super initWithFrame:CGRectZero];
     if (self) {
+        _type = type;
         self.backgroundColor = [UIColor whiteColor];
         [self setupSubviews];
     }
@@ -29,7 +30,7 @@
 }
 
 - (void)setupSubviews {
-    UIImageView *balanceBgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"wallet_balance_bg_image"]];
+    UIImageView *balanceBgView = [[UIImageView alloc] init];
     [self addSubview:balanceBgView];
     
     UILabel *balanceLabel = [[UILabel alloc] init];
@@ -46,12 +47,41 @@
     self.balanceLabel = balanceLabel;
     self.creditLimitView = creditLimitView;
     
+    CGFloat balanceBgViewH = 0;
+    CGFloat balanceLabelOffset = 0;
+    if (_type == TCWalletBalanceViewTypeIndividual) {
+        balanceBgView.image = [UIImage imageNamed:@"wallet_balance_bg_image"];
+        balanceBgViewH = TCRealValue(216);
+        balanceLabelOffset = TCRealValue(112);
+        creditLimitView.creditIcon.image = [UIImage imageNamed:@"wallet_credit_icon"];
+        creditLimitView.validIcon.image = [UIImage imageNamed:@"wallet_vaild_credit_icon"];
+    } else {
+        balanceBgView.image = [UIImage imageNamed:@"company_balance_bg_image"];
+        balanceBgViewH = TCRealValue(156);
+        balanceLabelOffset = TCRealValue(56);
+        creditLimitView.creditIcon.image = [UIImage imageNamed:@"company_credit_icon"];
+        creditLimitView.validIcon.image = [UIImage imageNamed:@"company_vaild_credit_icon"];
+        
+        UILabel *companyLabel = [[UILabel alloc] init];
+        companyLabel.text = @"公司余额";
+        companyLabel.textColor = [UIColor whiteColor];
+        companyLabel.textAlignment = NSTextAlignmentRight;
+        companyLabel.font = [UIFont systemFontOfSize:11];
+        [self addSubview:companyLabel];
+        
+        [companyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self).offset(TCRealValue(-30));
+            make.top.equalTo(balanceBgView).offset(7);
+        }];
+    }
+    
     [balanceBgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self);
-        make.height.mas_equalTo(TCRealValue(216));
+        make.height.mas_equalTo(balanceBgViewH);
     }];
     [balanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(balanceBgView);
+        make.centerX.equalTo(balanceBgView);
+        make.centerY.equalTo(balanceBgView.mas_top).offset(balanceLabelOffset);
     }];
     [creditLimitView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(TCRealValue(88));
@@ -68,7 +98,7 @@
 - (void)setWalletAccount:(TCWalletAccount *)walletAccount {
     _walletAccount = walletAccount;
     
-    NSString *title = @"余额  ¥";
+    NSString *title = (_type == TCWalletBalanceViewTypeIndividual) ? @"余额  ¥" : @"¥";
     NSString *balance = [NSString stringWithFormat:@"%0.2f", walletAccount.balance];
     NSString *str = [NSString stringWithFormat:@"%@%@", title, balance];
     NSRange titleRange = [str rangeOfString:title];

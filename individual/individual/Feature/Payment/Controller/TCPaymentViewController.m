@@ -276,6 +276,7 @@ BaofuFuFingerClientDelegate
  */
 - (void)showPasswordViewController {
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFirstTimeInputPassword];
+    vc.walletID = self.walletAccount.ID;
     vc.modalMode = YES;
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
@@ -406,7 +407,7 @@ BaofuFuFingerClientDelegate
 - (void)handleTapChangePaymentMethodView {
     // 获取银行卡列表
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
+    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletAccount.ID result:^(NSArray *bankCardList, NSError *error) {
         if (error) {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取支付方式失败，%@", reason]];
@@ -531,7 +532,7 @@ BaofuFuFingerClientDelegate
     requestInfo.orderIds = self.orderIDs;
     requestInfo.totalFee = self.totalFee;
     requestInfo.targetId = self.targetID;
-    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose walletID:self.walletAccount.ID result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             if ([userPayment.status isEqualToString:@"CREATED"]) { // 正在处理中
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -544,7 +545,12 @@ BaofuFuFingerClientDelegate
             }
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
+            if (error.code == 412 && weakSelf.payPurpose == TCPayPurposeFace2Face) { // 当时面对面付款申请时，错误码412表示平台向商户充值的会员卡余额不足
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf showLackOfBalanceWithMessage:reason];
+            } else {
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
+            }
         }
     }];
 }
@@ -553,7 +559,7 @@ BaofuFuFingerClientDelegate
  查询付款状态
  */
 - (void)handleQueryPaymentStatusWithPaymentID:(NSString *)paymentID {
-    [[TCBuluoApi api] fetchUserPayment:paymentID result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] fetchUserPaymentByWalletID:self.walletAccount.ID paymentID:paymentID result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             if ([userPayment.status isEqualToString:@"FAILURE"]) {
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", userPayment.note]];
@@ -579,13 +585,18 @@ BaofuFuFingerClientDelegate
     requestInfo.targetId = self.targetID;
     requestInfo.totalFee = self.totalFee;
     requestInfo.orderIds = self.orderIDs;
-    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose walletID:self.walletAccount.ID result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             weakSelf.payment = userPayment;
             [weakSelf fetchBFSessionInfoWithPaymentID:userPayment.ID refetchVCode:NO];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"申请付款失败，%@", reason]];
+            if (error.code == 412 && weakSelf.payPurpose == TCPayPurposeFace2Face) { // 当时面对面付款申请时，错误码412表示平台向商户充值的会员卡余额不足
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf showLackOfBalanceWithMessage:reason];
+            } else {
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"申请付款失败，%@", reason]];
+            }
         }
     }];
 }
@@ -694,6 +705,26 @@ BaofuFuFingerClientDelegate
     NSString *result = self.isRefetchVCode ? @"获取验证码失败" : @"申请付款失败";
     NSString *reason = errorMessage ?: @"请稍后再试";
     [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"%@，%@", result ,reason]];
+}
+
+/**
+ 当时面对面付款申请时，错误码412表示平台向商户充值的会员卡余额不足
+ */
+- (void)showLackOfBalanceWithMessage:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示"
+                                                                             message:@"今日优惠买单金额已达上限，暂不可用优惠买单进行支付！"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([weakSelf.paymentPasswordView.textField isFirstResponder]) {
+            [weakSelf.paymentPasswordView.textField resignFirstResponder];
+        }
+        if ([weakSelf.bankCardView.codeTextField isFirstResponder]) {
+            [weakSelf.bankCardView.codeTextField resignFirstResponder];
+        }
+        [weakSelf dismiss:YES completion:nil];
+    }];
+    [alertController addAction:action];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - Override Methods

@@ -229,6 +229,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
 
 - (void)handleClickForgetButton:(UIButton *)sender {
     TCBioEditSMSViewController *vc = [[TCBioEditSMSViewController alloc] initWithMessageCodeType:TCMessageCodeTypeFindPassword];
+    vc.walletID = self.walletID;
     vc.phone = [[TCBuluoApi api] currentUserSession].userInfo.phone;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -240,6 +241,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     }
     
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFirstTimeConfirmPassword];
+    vc.walletID = self.walletID;
     vc.aNewPassword = self.password;
     vc.modalMode = self.isModalMode;
     [self.navigationController pushViewController:vc animated:YES];
@@ -258,6 +260,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     NSString *digestStr = TCDigestMD5(self.password);
     if ([digestStr isEqualToString:self.oldPassword]) {
         TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeResetInputNewPassword];
+        vc.walletID = self.walletID;
         vc.oldPassword = self.password;
         [self.navigationController pushViewController:vc animated:YES];
     } else {
@@ -272,6 +275,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     }
     
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeResetConfirmPassword];
+    vc.walletID = self.walletID;
     vc.aNewPassword = self.password;
     vc.oldPassword = self.oldPassword;
     [self.navigationController pushViewController:vc animated:YES];
@@ -288,6 +292,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     }
     
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFindConfirmPassword];
+    vc.walletID = self.walletID;
     vc.aNewPassword = self.password;
     vc.messageCode = self.messageCode;
     [self.navigationController pushViewController:vc animated:YES];
@@ -304,7 +309,7 @@ NSString *const TCWalletPasswordDidChangeNotification = @"TCWalletPasswordDidCha
     }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] changeWalletPassword:self.messageCode anOldPassword:self.oldPassword aNewPassword:self.aNewPassword result:^(BOOL success, NSError *error) {
+    [[TCBuluoApi api] changeWalletPasswordByWalletID:self.walletID messageCode:self.messageCode anOldPassword:self.oldPassword aNewPassword:self.aNewPassword result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD showHUDWithMessage:@"设置成功"];
             [[NSNotificationCenter defaultCenter] postNotificationName:TCWalletPasswordDidChangeNotification object:nil userInfo:@{TCWalletPasswordKey: TCDigestMD5(weakSelf.aNewPassword)}];

@@ -62,7 +62,7 @@
 
 - (void)loadDataFirstTime {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchWalletBillWrapper:nil count:20 sortSkip:nil result:^(TCWalletBillWrapper *walletBillWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchWalletBillWrapperByWalletID:self.walletID tradingType:nil count:20 sortSkip:nil result:^(TCWalletBillWrapper *walletBillWrapper, NSError *error) {
         if (walletBillWrapper) {
             [MBProgressHUD hideHUD:YES];
             weakSelf.sortSkip = walletBillWrapper.nextSkip;
@@ -95,7 +95,7 @@
 }
 
 - (void)loadNewData {
-    [[TCBuluoApi api] fetchWalletBillWrapper:nil count:20 sortSkip:nil result:^(TCWalletBillWrapper *walletBillWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchWalletBillWrapperByWalletID:self.walletID tradingType:nil count:20 sortSkip:nil result:^(TCWalletBillWrapper *walletBillWrapper, NSError *error) {
         [weakSelf.tableView.mj_header endRefreshing];
         if (walletBillWrapper) {
             weakSelf.sortSkip = walletBillWrapper.nextSkip;
@@ -128,7 +128,7 @@
 }
 
 - (void)loadOldData {
-    [[TCBuluoApi api] fetchWalletBillWrapper:nil count:20 sortSkip:self.sortSkip result:^(TCWalletBillWrapper *walletBillWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchWalletBillWrapperByWalletID:self.walletID tradingType:nil count:20 sortSkip:self.sortSkip result:^(TCWalletBillWrapper *walletBillWrapper, NSError *error) {
         [weakSelf.tableView.mj_footer endRefreshing];
         if (walletBillWrapper) {
             weakSelf.sortSkip = walletBillWrapper.nextSkip;

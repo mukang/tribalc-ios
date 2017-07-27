@@ -39,8 +39,8 @@
     [self addSubview:lineView];
     
     UIImageView *creditIcon = [[UIImageView alloc] init];
-    creditIcon.image = [UIImage imageNamed:@"wallet_credit_icon"];
     [self addSubview:creditIcon];
+    self.creditIcon = creditIcon;
     
     UILabel *creditLabel = [[UILabel alloc] init];
     creditLabel.text = @"授信额度";
@@ -55,8 +55,8 @@
     [self addSubview:limitLabel];
     
     UIImageView *validIcon = [[UIImageView alloc] init];
-    validIcon.image = [UIImage imageNamed:@"wallet_vaild_credit_icon"];
     [self addSubview:validIcon];
+    self.validIcon = validIcon;
     
     UILabel *validLabel = [[UILabel alloc] init];
     validLabel.text = @"可用额度";

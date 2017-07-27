@@ -24,6 +24,9 @@ typedef void(^TCEditPhoneBlock)(BOOL isEdit);
 /** 编辑新手机号回调 */
 @property (copy, nonatomic) TCEditPhoneBlock editPhoneBlock;
 
+/** 钱包id，当修改钱包支付密码时使用 */
+@property (copy, nonatomic) NSString *walletID;
+
 - (instancetype)initWithMessageCodeType:(TCMessageCodeType)messageCodeType;
 
 @end

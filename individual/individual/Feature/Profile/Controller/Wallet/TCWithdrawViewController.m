@@ -53,7 +53,7 @@
     if (self) {
         weakSelf = self;
         _walletAccount = walletAccount;
-        _enabledAmount = walletAccount.balance - walletAccount.withdrawCharge;
+        _enabledAmount = walletAccount.balance - walletAccount.limitedBalance - walletAccount.withdrawCharge;
         if (_enabledAmount < 0.0) {
             _enabledAmount = 0.0;
         }
@@ -268,7 +268,7 @@
     [self.passwordView.textField resignFirstResponder];
     [self dismissPasswordView];
     double amount = [self.amountView.amountTextField.text doubleValue];
-    [[TCBuluoApi api] commitWithdrawReqWithAmount:amount bankCardID:self.currentBankCard.ID result:^(BOOL success, NSError *error) {
+    [[TCBuluoApi api] commitWithdrawReqWithAmount:amount bankCardID:self.currentBankCard.ID walletID:self.walletAccount.ID result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD showHUDWithMessage:@"申请提现成功，资金将在48小时内到账，请注意查收"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

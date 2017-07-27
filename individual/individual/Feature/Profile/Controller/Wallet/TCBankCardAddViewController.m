@@ -122,7 +122,7 @@
     bankCard.bankName = self.bankNameTextField.text;
     bankCard.bankCardNum = self.cardNumTextField.text;
     bankCard.phone = self.phoneTextField.text;
-    [[TCBuluoApi api] prepareAddBankCard:bankCard result:^(TCBankCard *card, NSError *error) {
+    [[TCBuluoApi api] prepareAddBankCard:bankCard walletID:self.walletID result:^(TCBankCard *card, NSError *error) {
         if (card) {
             weakSelf.bankCardID = card.ID;
         } else {
@@ -160,7 +160,7 @@
     }
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] confirmAddBankCardWithID:self.bankCardID verificationCode:self.codeTextField.text result:^(BOOL success, NSError *error) {
+    [[TCBuluoApi api] confirmAddBankCardWithID:self.bankCardID verificationCode:self.codeTextField.text walletID:self.walletID result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD hideHUD:YES];
             if (weakSelf.bankCardAddBlock) {

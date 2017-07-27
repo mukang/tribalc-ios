@@ -87,11 +87,11 @@
 }
 
 - (void)setupSubviews {
-    TCWalletBalanceView *balanceView = [[TCWalletBalanceView alloc] init];
+    TCWalletBalanceView *balanceView = [[TCWalletBalanceView alloc] initWithType:TCWalletBalanceViewTypeIndividual];
     [self.view insertSubview:balanceView belowSubview:self.navBar];
     self.balanceView = balanceView;
     
-    TCWalletFeaturesView *featuresView = [[TCWalletFeaturesView alloc] init];
+    TCWalletFeaturesView *featuresView = [[TCWalletFeaturesView alloc] initWithType:TCWalletFeaturesViewTypeIndividual];
     featuresView.delegate = self;
     [self.view addSubview:featuresView];
     
@@ -135,33 +135,33 @@
 
 #pragma mark - TCWalletFeaturesViewDelegate
 
-- (void)walletFeaturesView:(TCWalletFeaturesView *)view didClickFeatureButtonWithType:(TCWalletFeatureType)type {
-    switch (type) {
-        case TCWalletFeatureTypeRecharge:
+- (void)walletFeaturesView:(TCWalletFeaturesView *)view didClickFeatureButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
             [self handleClickRechargeButton:nil];
             break;
-        case TCWalletFeatureTypeWithdraw:
+        case 1:
             [self handleClickWithdrawButton:nil];
             break;
-        case TCWalletFeatureTypeCredit:
+        case 2:
             [self handleClickCreditButton:nil];
             break;
-        case TCWalletFeatureTypeBankCard:
+        case 3:
             [self handleClickBankCardButton:nil];
             break;
-        case TCWalletFeatureTypeSweepCode:
+        case 4:
             [self handleClickSweepCodeButton:nil];
             break;
-        case TCWalletFeatureTypeStatement:
+        case 5:
             [self handleClickStatementButton:nil];
             break;
-        case TCWalletFeatureTypeCoupon:
+        case 6:
             [self handleClickCouponButton:nil];
             break;
-        case TCWalletFeatureTypeFinance:
+        case 7:
             [self handleClickFinanceButton:nil];
             break;
-        case TCWalletFeatureTypePassword:
+        case 8:
             [self handleClickPasswordButton:nil];
             break;
             
@@ -256,6 +256,7 @@
         passwordType = TCWalletPasswordTypeFirstTimeInputPassword;
     }
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:passwordType];
+    vc.walletID = self.walletAccount.ID;
     vc.oldPassword = oldPassword;
     [self.navigationController pushViewController:vc animated:YES];
 }

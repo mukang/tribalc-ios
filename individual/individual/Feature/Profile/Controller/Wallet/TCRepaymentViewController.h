@@ -11,6 +11,8 @@
 
 @interface TCRepaymentViewController : TCBaseViewController
 
+/** 企业id，有值则代表是企业授信 */
+@property (copy, nonatomic) NSString *companyID;
 /** 钱包信息 */
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
 

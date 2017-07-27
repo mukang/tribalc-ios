@@ -138,6 +138,7 @@
     
     if (self.messageCodeType == TCMessageCodeTypeFindPassword) {
         TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFindInputNewPassword];
+        vc.walletID = self.walletID;
         vc.messageCode = code;
         [self.navigationController pushViewController:vc animated:YES];
     } else {

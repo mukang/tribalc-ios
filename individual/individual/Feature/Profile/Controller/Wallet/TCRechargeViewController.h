@@ -20,4 +20,7 @@ typedef void(^TCRechargeCompletionBlock)();
 /** 充值完成的回调 */
 @property (copy, nonatomic) TCRechargeCompletionBlock completionBlock;
 
+/** 企业id，企业充值时使用，当companyID有值时表示是企业充值 */
+@property (copy, nonatomic) NSString *companyID;
+
 @end

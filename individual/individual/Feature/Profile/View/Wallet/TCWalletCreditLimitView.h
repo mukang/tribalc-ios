@@ -13,4 +13,7 @@
 
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
 
+@property (weak, nonatomic) UIImageView *creditIcon;
+@property (weak, nonatomic) UIImageView *validIcon;
+
 @end

@@ -10,4 +10,6 @@
 
 @interface TCWalletBillViewController : TCBaseViewController
 
+@property (copy, nonatomic) NSString *walletID;
+
 @end
