@@ -32,6 +32,8 @@ extern NSString *const TCWalletPasswordDidChangeNotification;
 @property (copy, nonatomic) NSString *messageCode;
 /** 是否是以模态形式展示 */
 @property (nonatomic, getter=isModalMode) BOOL modalMode;
+/** 钱包id，当修改支付密码时使用 */
+@property (copy, nonatomic) NSString *walletID;
 
 /**
  指定初始化方法

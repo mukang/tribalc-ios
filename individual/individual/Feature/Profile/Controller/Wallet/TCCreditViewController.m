@@ -48,6 +48,7 @@
 
 - (void)repay {
     TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];
+    vc.companyID = self.companyID;
     vc.walletAccount = self.walletAccount;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -151,10 +152,13 @@
 
 - (void)log {
     TCCreditBillViewController *billVC = [[TCCreditBillViewController alloc] init];
+    billVC.walletID = self.walletAccount.ID;
     [self.navigationController pushViewController:billVC animated:YES];
 }
 
 - (void)setUpNav {
+    self.navigationItem.title = self.companyID ? @"企业授信" : @"授信";
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"历史账单" forState:UIControlStateNormal];
     btn.frame = CGRectMake(0, 0, 60, 30);

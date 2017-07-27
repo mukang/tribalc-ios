@@ -37,7 +37,7 @@
     @WeakObj(self)
     [MBProgressHUD showHUD:YES];
     
-    [[TCBuluoApi api] fetchCreditBillListByOwnerID:self.ownerID limit:20 sinceTime:nil result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchCreditBillListByWalletID:self.walletID limit:20 sinceTime:nil result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
         @StrongObj(self)
         if (creditBillWrapper) {
             [MBProgressHUD hideHUD:YES];
@@ -72,7 +72,7 @@
 
 - (void)loadNewData {
     @WeakObj(self)
-    [[TCBuluoApi api] fetchCreditBillListByOwnerID:self.ownerID limit:20 sinceTime:nil result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchCreditBillListByWalletID:self.walletID limit:20 sinceTime:nil result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_header endRefreshing];
         if (creditBillWrapper) {
@@ -107,7 +107,7 @@
 
 - (void)loadOldData {
     @WeakObj(self)
-    [[TCBuluoApi api] fetchCreditBillListByOwnerID:self.ownerID limit:20 sinceTime:self.sortSkip result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchCreditBillListByWalletID:self.walletID limit:20 sinceTime:self.sortSkip result:^(TCCreditBillWrapper *creditBillWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_footer endRefreshing];
         if (creditBillWrapper) {

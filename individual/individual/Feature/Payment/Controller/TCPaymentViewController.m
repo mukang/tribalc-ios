@@ -276,6 +276,7 @@ BaofuFuFingerClientDelegate
  */
 - (void)showPasswordViewController {
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:TCWalletPasswordTypeFirstTimeInputPassword];
+    vc.walletID = self.walletAccount.ID;
     vc.modalMode = YES;
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
@@ -406,7 +407,7 @@ BaofuFuFingerClientDelegate
 - (void)handleTapChangePaymentMethodView {
     // 获取银行卡列表
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
+    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletAccount.ID result:^(NSArray *bankCardList, NSError *error) {
         if (error) {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取支付方式失败，%@", reason]];
@@ -531,7 +532,7 @@ BaofuFuFingerClientDelegate
     requestInfo.orderIds = self.orderIDs;
     requestInfo.totalFee = self.totalFee;
     requestInfo.targetId = self.targetID;
-    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose walletID:self.walletAccount.ID result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             if ([userPayment.status isEqualToString:@"CREATED"]) { // 正在处理中
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -558,7 +559,7 @@ BaofuFuFingerClientDelegate
  查询付款状态
  */
 - (void)handleQueryPaymentStatusWithPaymentID:(NSString *)paymentID {
-    [[TCBuluoApi api] fetchUserPayment:paymentID result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] fetchUserPaymentByWalletID:self.walletAccount.ID paymentID:paymentID result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             if ([userPayment.status isEqualToString:@"FAILURE"]) {
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", userPayment.note]];
@@ -584,7 +585,7 @@ BaofuFuFingerClientDelegate
     requestInfo.targetId = self.targetID;
     requestInfo.totalFee = self.totalFee;
     requestInfo.orderIds = self.orderIDs;
-    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose walletID:self.walletAccount.ID result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             weakSelf.payment = userPayment;
             [weakSelf fetchBFSessionInfoWithPaymentID:userPayment.ID refetchVCode:NO];

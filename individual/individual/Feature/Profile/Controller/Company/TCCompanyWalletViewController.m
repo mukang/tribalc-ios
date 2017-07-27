@@ -9,6 +9,8 @@
 #import "TCCompanyWalletViewController.h"
 #import "TCNavigationController.h"
 #import "TCRechargeViewController.h"
+#import "TCCreditViewController.h"
+#import "TCWalletBillViewController.h"
 
 #import "TCCompanyWalletTitleView.h"
 #import "TCWalletBalanceView.h"
@@ -95,6 +97,10 @@
 #pragma mark - TCWalletFeaturesViewDelegate
 
 - (void)walletFeaturesView:(TCWalletFeaturesView *)view didClickFeatureButtonWithIndex:(NSInteger)index {
+    if (!self.walletAccount) {
+        [MBProgressHUD showHUDWithMessage:@"获取钱包信息失败，暂不能操作，请退出此页面重试"];
+        return;
+    }
     switch (index) {
         case 0:
             [self handleClickRechargeButton];
@@ -126,10 +132,6 @@
 }
 
 - (void)handleClickRechargeButton {
-    if (!self.walletAccount) {
-        [MBProgressHUD showHUDWithMessage:@"暂时无法充值"];
-        return;
-    }
     TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
     vc.companyID = self.companyID;
     vc.walletAccount = self.walletAccount;
@@ -138,11 +140,16 @@
 }
 
 - (void)handleClickStatementButton {
-    
+    TCWalletBillViewController *vc = [[TCWalletBillViewController alloc] init];
+    vc.walletID = self.walletAccount.ID;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleClickCreditButton {
-    
+    TCCreditViewController *vc = [[TCCreditViewController alloc] init];
+    vc.companyID = self.companyID;
+    vc.walletAccount = self.walletAccount;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleClickRentButton {

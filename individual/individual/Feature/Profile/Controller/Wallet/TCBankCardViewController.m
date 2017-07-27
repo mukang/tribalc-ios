@@ -65,7 +65,7 @@
 }
 
 - (void)loadNetData {
-    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
+    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletAccount.ID result:^(NSArray *bankCardList, NSError *error) {
         if (bankCardList) {
             [weakSelf.dataList removeAllObjects];
             [weakSelf.dataList addObjectsFromArray:bankCardList];
@@ -127,6 +127,7 @@
 
 - (IBAction)handleClickAddBankCardButton:(UIButton *)sender {
     TCBankCardAddViewController *vc = [[TCBankCardAddViewController alloc] initWithNibName:@"TCBankCardAddViewController" bundle:[NSBundle mainBundle]];
+    vc.walletID = self.walletAccount.ID;
     vc.bankCardAddBlock = ^() {
         [weakSelf loadNetData];
     };
@@ -169,7 +170,7 @@
 
 - (void)handleDeleteBankCard:(TCBankCard *)bankCard {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] deleteBankCard:bankCard.ID result:^(BOOL success, NSError *error) {
+    [[TCBuluoApi api] deleteBankCard:bankCard.ID walletID:self.walletAccount.ID result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD hideHUD:YES];
             [weakSelf.dataList removeObject:bankCard];

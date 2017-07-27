@@ -63,7 +63,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     weakSelf = self;
-    self.navigationItem.title = @"个人还款";
+    self.navigationItem.title = self.companyID ? @"企业还款" : @"个人还款";
     
     [self setupSubviews];
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
@@ -329,6 +329,7 @@
 
 - (void)handleSelectAddBankCardCell {
     TCBankCardAddViewController *vc = [[TCBankCardAddViewController alloc] init];
+    vc.walletID = self.walletAccount.ID;
     vc.bankCardAddBlock = ^() {
         [weakSelf handleLoadBankCardList];
     };
@@ -340,7 +341,7 @@
  */
 - (void)handleLoadBankCardList {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
+    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletAccount.ID result:^(NSArray *bankCardList, NSError *error) {
         if (bankCardList) {
             [MBProgressHUD hideHUD:YES];
             for (TCBankCard *bankCard in bankCardList) {

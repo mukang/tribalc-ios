@@ -256,6 +256,7 @@
         passwordType = TCWalletPasswordTypeFirstTimeInputPassword;
     }
     TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:passwordType];
+    vc.walletID = self.walletAccount.ID;
     vc.oldPassword = oldPassword;
     [self.navigationController pushViewController:vc animated:YES];
 }
