@@ -12,6 +12,7 @@
 
 #import "TCWalletAccount.h"
 #import <TCCommonLibs/TCCommonButton.h>
+#import "TCCreditBill.h"
 
 @interface TCCreditViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -33,6 +34,8 @@
 
 @property (strong, nonatomic) UILabel *moneyLabel;
 
+@property (strong, nonatomic) TCCreditBill *creditBill;
+
 @end
 
 @implementation TCCreditViewController
@@ -47,9 +50,14 @@
 }
 
 - (void)repay {
-    TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];
-    vc.walletAccount = self.walletAccount;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if (![self.creditBill.status isEqualToString:@"PAID"]) {
+        TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];
+        vc.walletAccount = self.walletAccount;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        [MBProgressHUD showHUDWithMessage:@"账单已还清" afterDelay:1.0];
+    }
 }
 
 //画两个圆形
@@ -121,7 +129,18 @@
     if (indexPath.section == 0) {
         cell.textLabel.text = @"本期账单";
         cell.imageView.image = [UIImage imageNamed:@"currentBill"];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",self.walletAccount.creditBalance];
+        
+        if ([self.creditBill.status isEqualToString:@"PAID"]) {
+            UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(TCScreenWidth-100, 15, 80, 15)];
+            statusLabel.layer.borderColor = TCRGBColor(151, 171, 234).CGColor;
+            statusLabel.layer.borderWidth = 0.5;
+            statusLabel.text = @"账单已还清";
+            statusLabel.font = [UIFont systemFontOfSize:12];
+            statusLabel.textColor = TCRGBColor(151, 171, 234);
+            [cell addSubview:statusLabel];
+        }else{
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",self.walletAccount.creditBalance];
+        }
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"授信额度";
@@ -211,6 +230,11 @@
         TCCommonButton *repayBtn = [TCCommonButton buttonWithTitle:@"还  款" color:TCCommonButtonColorPurple target:self action:@selector(repay)];
         repayBtn.frame = CGRectMake(30, 27, TCScreenWidth-60, 40);
         [footerView addSubview:repayBtn];
+        
+        if ([self.creditBill.status isEqualToString:@"PAID"]) {
+            [repayBtn setTitle:@"已还清" forState:UIControlStateNormal];
+            repayBtn.enabled = NO;
+        }
     }
     return _tableView;
 }
