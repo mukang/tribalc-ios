@@ -42,19 +42,19 @@
 
 - (void)setUpViews {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self.contentView addSubview:self.iconImageView];
+//    [self.contentView addSubview:self.iconImageView];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.subTitleLabel];
     [self.contentView addSubview:self.moneyLabel];
     
-    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView).offset(TCRealValue(15));
-        make.centerY.equalTo(self.contentView);
-        make.width.height.equalTo(@44);
-    }];
+//    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.contentView).offset(TCRealValue(15));
+//        make.centerY.equalTo(self.contentView);
+//        make.width.height.equalTo(@44);
+//    }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.iconImageView.mas_right).offset(TCRealValue(20));
+        make.left.equalTo(self.contentView).offset(TCRealValue(20));
         make.top.equalTo(self.iconImageView).offset(3);
         make.width.equalTo(@155);
     }];

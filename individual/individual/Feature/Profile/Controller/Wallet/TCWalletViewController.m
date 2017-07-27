@@ -214,6 +214,7 @@
 
 - (void)handleClickCreditButton:(id)sender {
     TCCreditViewController *creditVC = [[TCCreditViewController alloc] init];
+    creditVC.walletAccount = self.walletAccount;
     [self.navigationController pushViewController:creditVC animated:YES];
 }
 

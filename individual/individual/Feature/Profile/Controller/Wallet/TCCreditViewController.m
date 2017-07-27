@@ -12,6 +12,8 @@
 
 #import "TCWalletAccount.h"
 #import <TCCommonLibs/TCCommonButton.h>
+#import "TCCreditBill.h"
+#import "TCBuluoApi.h"
 
 @interface TCCreditViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -29,9 +31,9 @@
 
 @property (strong, nonatomic) CAGradientLayer *gradientLayer;
 
-@property (strong, nonatomic) NSDateFormatter *dateFormatter;
-
 @property (strong, nonatomic) UILabel *moneyLabel;
+
+@property (strong, nonatomic) TCCreditBill *creditBill;
 
 @end
 
@@ -39,18 +41,38 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     [self setUpViews];
     [self setUpNav];
-    [self createBezierPath:CGRectMake(0, 0, 150, 150)];
+    [self loadData];
+}
 
+- (void)loadData {
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchCurrentCreditBillByWalletID:self.walletAccount.ID result:^(TCCreditBill *creditBill, NSError *error) {
+        @StrongObj(self)
+        [MBProgressHUD hideHUD:YES];
+        if (creditBill) {
+            self.creditBill = creditBill;
+            [self.tableView reloadData];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
+        }
+    }];
 }
 
 - (void)repay {
-    TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];
-    vc.companyID = self.companyID;
-    vc.walletAccount = self.walletAccount;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if (![self.creditBill.status isEqualToString:@"PAID"]) {
+        TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];
+        vc.walletAccount = self.walletAccount;
+        vc.companyID = self.companyID;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        [MBProgressHUD showHUDWithMessage:@"账单已还清" afterDelay:1.0];
+    }
 }
 
 //画两个圆形
@@ -71,8 +93,8 @@
     self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
     
     //内圆
-    //    _progressPath = [UIBezierPath bezierPathWithArcCenter:self.view.center radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_4 endAngle:(M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit) + M_PI_4 clockwise:YES];
-    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
+    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_4 endAngle:(M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit) + M_PI_4 clockwise:YES];
+//    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
     
     _progressLayer = [CAShapeLayer new];
     //    [self.tableView.tableHeaderView.layer addSublayer:_progressLayer];
@@ -83,8 +105,9 @@
     _progressLayer.lineWidth=10;
     _progressLayer.frame = CGRectMake(-(TCScreenWidth-170)/2, -15, 150, 150);
     
-    self.gradientLayer.mask = _progressLayer;
-    
+    [UIView animateWithDuration:1.0 animations:^{
+        self.gradientLayer.mask = _progressLayer;
+    }];
 }
 
 #pragma mark UITableViewDataSource
@@ -121,7 +144,22 @@
     if (indexPath.section == 0) {
         cell.textLabel.text = @"本期账单";
         cell.imageView.image = [UIImage imageNamed:@"currentBill"];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",self.walletAccount.creditBalance];
+        if (self.creditBill) {
+            if ([self.creditBill.status isEqualToString:@"PAID"]) {
+                UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(TCScreenWidth-100, 15, 80, 15)];
+                statusLabel.layer.borderColor = TCRGBColor(151, 171, 234).CGColor;
+                statusLabel.layer.borderWidth = 0.5;
+                statusLabel.text = @"账单已还清";
+                statusLabel.font = [UIFont systemFontOfSize:12];
+                statusLabel.textColor = TCRGBColor(151, 171, 234);
+                [cell addSubview:statusLabel];
+            }else{
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",self.creditBill.amount];
+            }
+        }else {
+            cell.detailTextLabel.text = @"0.00";
+        }
+        
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"授信额度";
@@ -130,11 +168,11 @@
         }else if (indexPath.row == 1) {
             cell.textLabel.text = @"账单日";
             cell.imageView.image = [UIImage imageNamed:@"billDay"];
-            cell.detailTextLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.walletAccount.billDay]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"每月%d日",self.walletAccount.billDay];
         }else {
             cell.textLabel.text = @"还款日";
             cell.imageView.image = [UIImage imageNamed:@"repaymentDay"];
-            cell.detailTextLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.walletAccount.repayDay]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"每月%d日",self.walletAccount.repayDay];
         }
     }
     
@@ -148,6 +186,8 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+    
+    [self createBezierPath:CGRectMake(0, 0, 150, 150)];
 }
 
 - (void)log {
@@ -189,14 +229,6 @@
     return _gradientLayer;
 }
 
-- (NSDateFormatter *)dateFormatter {
-    if (_dateFormatter == nil) {
-        _dateFormatter = [[NSDateFormatter alloc] init];
-        [_dateFormatter setDateFormat:@"MM/dd"];
-    }
-    return _dateFormatter;
-}
-
 - (UITableView *)tableView {
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
@@ -214,6 +246,11 @@
         TCCommonButton *repayBtn = [TCCommonButton buttonWithTitle:@"还  款" color:TCCommonButtonColorPurple target:self action:@selector(repay)];
         repayBtn.frame = CGRectMake(30, 27, TCScreenWidth-60, 40);
         [footerView addSubview:repayBtn];
+        
+        if ([self.creditBill.status isEqualToString:@"PAID"]) {
+            [repayBtn setTitle:@"已还清" forState:UIControlStateNormal];
+            repayBtn.enabled = NO;
+        }
     }
     return _tableView;
 }
@@ -241,7 +278,6 @@
         [_headerView addSubview:_moneyLabel];
         
         NSString *str = [NSString stringWithFormat:@"¥%.2f",(self.walletAccount.creditLimit-self.walletAccount.creditBalance)];
-        str = @"¥200.00";
         NSMutableAttributedString *mutableAtt = [[NSMutableAttributedString alloc] initWithString:str];
         [mutableAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, 1)];
         [mutableAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(str.length-2, 2)];

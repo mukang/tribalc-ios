@@ -186,6 +186,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.rowHeight = 70;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.sectionFooterHeight = CGFLOAT_MIN;
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, CGFLOAT_MIN)];
         _tableView.tableHeaderView = headerView;
