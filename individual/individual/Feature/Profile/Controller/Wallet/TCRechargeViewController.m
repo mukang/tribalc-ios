@@ -494,6 +494,7 @@ TCRechargeMethodsViewDelegate>
     payInfo.bankCardId = self.methodsView.currentBankCard.ID;
     payInfo.totalFee = self.totalFee;
     payInfo.paymentId = self.bfSessionInfo.paymentId;
+    payInfo.targetId = self.companyID ?: nil;
     [[TCBuluoApi api] prepareBFPayWithInfo:payInfo result:^(NSString *payID, NSError *error) {
         if (payID) {
             [MBProgressHUD hideHUD:YES];

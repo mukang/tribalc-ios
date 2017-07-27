@@ -7,12 +7,19 @@
 //
 
 #import "TCCompanyWalletViewController.h"
+#import "TCNavigationController.h"
+#import "TCRechargeViewController.h"
 
 #import "TCCompanyWalletTitleView.h"
 #import "TCWalletBalanceView.h"
 #import "TCWalletFeaturesView.h"
 
+#import "TCBuluoApi.h"
+#import "TCUserDefaultsKeys.h"
+
 @interface TCCompanyWalletViewController () <TCWalletFeaturesViewDelegate>
+
+@property (strong, nonatomic) TCWalletAccount *walletAccount;
 
 @property (weak, nonatomic) TCCompanyWalletTitleView *titleView;
 @property (weak, nonatomic) TCWalletBalanceView *balanceView;
@@ -33,6 +40,12 @@
     self.view.backgroundColor = TCRGBColor(239, 244, 245);
     
     [self setupSubviews];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self fetchNetData];
 }
 
 #pragma mark - Private Methods
@@ -63,6 +76,19 @@
     [featuresView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(balanceView.mas_bottom).offset(TCRealValue(9));
         make.left.bottom.right.equalTo(self.view);
+    }];
+}
+
+- (void)fetchNetData {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchCompanyWalletAccountInfoByCompanyID:self.companyID result:^(TCWalletAccount *walletAccount, NSError *error) {
+        if (walletAccount) {
+            [MBProgressHUD hideHUD:YES];
+            weakSelf.walletAccount = walletAccount;
+            weakSelf.balanceView.walletAccount = walletAccount;
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"获取钱包信息失败！"];
+        }
     }];
 }
 
@@ -100,7 +126,15 @@
 }
 
 - (void)handleClickRechargeButton {
-    
+    if (!self.walletAccount) {
+        [MBProgressHUD showHUDWithMessage:@"暂时无法充值"];
+        return;
+    }
+    TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
+    vc.companyID = self.companyID;
+    vc.walletAccount = self.walletAccount;
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)handleClickStatementButton {

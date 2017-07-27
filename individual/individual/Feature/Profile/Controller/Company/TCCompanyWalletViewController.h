@@ -10,4 +10,6 @@
 
 @interface TCCompanyWalletViewController : TCBaseViewController
 
+@property (copy, nonatomic) NSString *companyID;
+
 @end

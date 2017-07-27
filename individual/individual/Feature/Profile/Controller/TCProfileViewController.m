@@ -521,8 +521,9 @@ TCPhotoModeViewDelegate>
 
 - (void)handleDidSelectedMyCompanyCell {
     TCUserInfo *userInfo = [TCBuluoApi api].currentUserSession.userInfo;
-    if ([userInfo.role isEqualToString:@"ADMINISTRATOR"]) {
+    if ([userInfo.roles containsObject:@"AGENT"]) {
         TCCompanyWalletViewController *vc = [[TCCompanyWalletViewController alloc] init];
+        vc.companyID = userInfo.companyID;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     } else {

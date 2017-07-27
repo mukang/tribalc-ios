@@ -10,4 +10,6 @@
 
 @interface TCCreditBillViewController : TCBaseViewController
 
+@property (copy, nonatomic) NSString *ownerID;
+
 @end

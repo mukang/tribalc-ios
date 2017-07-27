@@ -18,7 +18,8 @@ typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
     TCPayPurposeOrder = 0,   // 订单
     TCPayPurposeMaintain,    // 维修
     TCPayPurposeFace2Face,   // 面对面付款
-    TCPayPurposeRent         // 租金
+    TCPayPurposeRent,        // 租金
+    TCPayPurposeCredit       // 信用账单还款
 };
 
 
@@ -264,6 +265,14 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
 - (void)fetchWalletAccountInfo:(void (^)(TCWalletAccount *walletAccount, NSError *error))resultBlock;
 
 /**
+ 获取企业钱包信息
+
+ @param companyID 企业id
+ @param resultBlock 结果回调
+ */
+- (void)fetchCompanyWalletAccountInfoByCompanyID:(NSString *)companyID result:(void (^)(TCWalletAccount *walletAccount, NSError *error))resultBlock;
+
+/**
  获取用户钱包明细
 
  @param tradingType 交易类型，传nil表示获取全部类型的账单
@@ -350,13 +359,20 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  */
 - (void)commitWithdrawReqWithAmount:(double)amount bankCardID:(NSString *)bankCardID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 获取当前信用账单
+
+ @param ownerID 拥有者id，个人即为个人id，企业即为企业id
+ @param resultBlock 结果回调
+ */
+- (void)fetchCurrentCreditBillByOwnerID:(NSString *)ownerID result:(void (^)(TCCreditBill *creditBill, NSError *error))resultBlock;
 
 /**
  获取信用账单
 
  @param resultBlock 结果回调
  */
-- (void)fetchCreditBillListWithLimit:(NSInteger)limit sinceTime:(NSString *)sinceTime result:(void (^)(TCCreditBillWrapper *creditBillWrapper, NSError *error))resultBlock;
+- (void)fetchCreditBillListByOwnerID:(NSString *)ownerID limit:(NSInteger)limit sinceTime:(NSString *)sinceTime result:(void (^)(TCCreditBillWrapper *creditBillWrapper, NSError *error))resultBlock;
 
 #pragma mark - 验证码资源
 

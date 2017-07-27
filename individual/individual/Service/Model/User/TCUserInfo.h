@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, TCUserEmotionState) {
 /** 公司名称 */
 @property (copy, nonatomic) NSString *companyName;
 /** Default ADMINISTRATOR From { ADMINISTRATOR(管理员), CLERK(普通员工) }  */
-@property (copy, nonatomic) NSString *role;
+@property (copy, nonatomic) NSArray *roles;
 /** sip信息 */
 @property (strong, nonatomic) TCUserSipInfo *sip;
 

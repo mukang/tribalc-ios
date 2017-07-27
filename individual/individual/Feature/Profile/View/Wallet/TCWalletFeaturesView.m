@@ -125,6 +125,16 @@
         make.height.left.right.equalTo(firstHorizontalLine);
         make.centerY.equalTo(containerView.mas_bottom).multipliedBy(2/3.0f);
     }];
+    
+    
+    if (_type == TCWalletFeaturesViewTypeCompany) {
+        UIButton *button = [self.buttons lastObject];
+        button.hidden = YES;
+        firstVerticalLine.hidden = YES;
+        secondVerticalLine.hidden = YES;
+        firstHorizontalLine.hidden = YES;
+        secondHorizontalLine.hidden = YES;
+    }
 }
 
 - (UIView *)creatLineView {

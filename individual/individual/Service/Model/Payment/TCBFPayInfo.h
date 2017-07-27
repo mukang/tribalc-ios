@@ -16,5 +16,7 @@
 @property (nonatomic) double totalFee;
 /** generate_session_id 接口返回的 paymentId */
 @property (copy, nonatomic) NSString *paymentId;
+/** 充值目标账户，主要用于企业身份充值（个人），传递企业账户ID. 个人充值传递个人账户ID，当此值为 null 时，默认为充值者个人账 */
+@property (copy, nonatomic) NSString *targetId;
 
 @end
