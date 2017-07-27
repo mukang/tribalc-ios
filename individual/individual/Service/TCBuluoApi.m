@@ -1112,7 +1112,10 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
-                TCCreditBill *creditBill = [[TCCreditBill alloc] initWithObjectDictionary:response.data];
+                TCCreditBill *creditBill;
+                if (response.data && ![response.data isEqual:[NSNull null]]) {
+                    creditBill = [[TCCreditBill alloc] initWithObjectDictionary:response.data];
+                }
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(creditBill, nil));
                 }
