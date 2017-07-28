@@ -8,13 +8,12 @@
 
 #import <TCCommonLibs/TCBaseViewController.h>
 @class TCWalletAccount;
+@class TCCreditBill;
 
 @interface TCRepaymentViewController : TCBaseViewController
 
-/** 企业id，有值则代表是企业授信 */
-@property (copy, nonatomic) NSString *companyID;
-/** 账单id */
-@property (copy, nonatomic) NSString *creditBillID;
+/** 信用账单 */
+@property (strong, nonatomic) TCCreditBill *creditBill;
 /** 钱包信息 */
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
 

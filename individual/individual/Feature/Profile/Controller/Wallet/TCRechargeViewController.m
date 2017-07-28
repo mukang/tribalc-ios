@@ -80,6 +80,7 @@ TCRechargeMethodsViewDelegate>
     
     [self setupNavBar];
     [self setupSubviews];
+    [self handleLoadBankCardList];
 }
 
 #pragma mark - Private Methods
@@ -128,7 +129,7 @@ TCRechargeMethodsViewDelegate>
     
     TCRechargeMethodsView *methodsView = [[TCRechargeMethodsView alloc] init];
     methodsView.rechargeMethod = TCRechargeMethodBankCard;
-    methodsView.bankCardList = self.walletAccount.bankCards;
+//    methodsView.bankCardList = self.walletAccount.bankCards;
     methodsView.delegate = self;
     [self.view addSubview:methodsView];
     self.methodsView = methodsView;
@@ -347,7 +348,8 @@ TCRechargeMethodsViewDelegate>
  */
 - (void)handleLoadBankCardList {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletAccount.ID result:^(NSArray *bankCardList, NSError *error) {
+    NSString *userID = [[TCBuluoApi api] currentUserSession].assigned;
+    [[TCBuluoApi api] fetchBankCardListByWalletID:userID result:^(NSArray *bankCardList, NSError *error) {
         if (bankCardList) {
             [MBProgressHUD hideHUD:YES];
             for (TCBankCard *bankCard in bankCardList) {
@@ -359,7 +361,6 @@ TCRechargeMethodsViewDelegate>
                     }
                 }
             }
-            weakSelf.walletAccount.bankCards = bankCardList;
             weakSelf.methodsView.bankCardList = bankCardList;
             [weakSelf.methodsView reloadBankCardList];
         } else {
