@@ -1,21 +1,18 @@
 //
-//  TCRepaymentViewController.m
+//  TCCompanyRepaymentViewController.m
 //  individual
 //
-//  Created by 穆康 on 2017/7/24.
+//  Created by 穆康 on 2017/7/28.
 //  Copyright © 2017年 杭州部落公社科技有限公司. All rights reserved.
 //
 
-#import "TCRepaymentViewController.h"
-#import "TCBankCardAddViewController.h"
+#import "TCCompanyRepaymentViewController.h"
 #import "TCRechargeViewController.h"
 #import "TCWalletPasswordViewController.h"
 #import "TCNavigationController.h"
 
 #import "TCRepaymentInputViewCell.h"
 #import "TCRechargeMethodViewCell.h"
-#import "TCRechargeAddBankCardViewCell.h"
-#import "TCPaymentBankCardView.h"
 #import "TCPaymentPasswordView.h"
 
 #import "TCBuluoApi.h"
@@ -23,34 +20,18 @@
 #import <TCCommonLibs/TCCommonButton.h>
 #import <TCCommonLibs/UIImage+Category.h>
 #import <TCCommonLibs/TCFunctions.h>
-#import <BaofuFuFingerSDK/BaofuFuFingerSDK.h>
 
 #define passwordViewH 400
-#define paymentBankCardViewH 400
 #define duration 0.25
 
-@interface TCRepaymentViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, BaofuFuFingerClientDelegate, TCPaymentBankCardViewDelegate, TCPaymentPasswordViewDelegate>
+@interface TCCompanyRepaymentViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, TCPaymentPasswordViewDelegate, TCRechargeMethodViewCellDelegate>
 
 @property (nonatomic) double amount;
-@property (strong, nonatomic) NSIndexPath *selectedIndexPath;
-/** 银行卡logo及背景图数据 */
-@property (copy, nonatomic) NSArray *bankInfoList;
 /** 输入框里是否含有小数点 */
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
-/** 宝付支付ID */
-@property (copy, nonatomic) NSString *payID;
 
-@property (strong, nonatomic) TCBFSessionInfo *bfSessionInfo;
-/** 是否是重新获取验证码 */
-@property (nonatomic, getter=isRefetchVCode) BOOL refetchVCode;
-
-@property (strong, nonatomic) TCUserPayment *payment;
-
-
-/** 银行卡验证码输入页面的背景 */
+/** 密码输入页面的背景 */
 @property (weak, nonatomic) UIView *bgView;
-/** 银行卡验证码输入页面 */
-@property (weak, nonatomic) TCPaymentBankCardView *paymentBankCardView;
 /** 密码输入页面 */
 @property (weak, nonatomic) TCPaymentPasswordView *passwordView;
 
@@ -61,8 +42,8 @@
 
 @end
 
-@implementation TCRepaymentViewController {
-    __weak TCRepaymentViewController *weakSelf;
+@implementation TCCompanyRepaymentViewController {
+    __weak TCCompanyRepaymentViewController *weakSelf;
 }
 
 #pragma mark - Life Cycle
@@ -71,20 +52,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     weakSelf = self;
-    self.navigationItem.title = @"个人还款";
+    self.navigationItem.title = @"企业还款";
     
     [self setupSubviews];
     [self registerPasswordChangeNotifications];
-    self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self registerNotifications];
-    [self.tableView selectRowAtIndexPath:self.selectedIndexPath
-                                animated:NO
-                          scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -107,7 +84,7 @@
     tableView.delegate = self;
     [tableView registerClass:[TCRepaymentInputViewCell class] forCellReuseIdentifier:@"TCRepaymentInputViewCell"];
     [tableView registerClass:[TCRechargeMethodViewCell class] forCellReuseIdentifier:@"TCRechargeMethodViewCell"];
-    [tableView registerClass:[TCRechargeAddBankCardViewCell class] forCellReuseIdentifier:@"TCRechargeAddBankCardViewCell"];
+    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
@@ -124,7 +101,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 1) {
-        return self.walletAccount.bankCards.count;
+        return 2;
     } else {
         return 1;
     }
@@ -140,28 +117,25 @@
         self.textField = cell.textField;
         currentCell = cell;
     } else {
-        if (indexPath.row == self.walletAccount.bankCards.count + 1) {
-            TCRechargeAddBankCardViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRechargeAddBankCardViewCell" forIndexPath:indexPath];
-            cell.backgroundColor = [UIColor whiteColor];
+        if (indexPath.row == 0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
             cell.contentView.backgroundColor = [UIColor whiteColor];
+            cell.textLabel.text = @"支付方式";
+            cell.textLabel.textColor = TCBlackColor;
+            cell.textLabel.font = [UIFont systemFontOfSize:12];
+            cell.separatorInset = UIEdgeInsetsZero;
+            cell.textLabel.x = 20;
+            cell.textLabel.centerY = 22.5;
             currentCell = cell;
         } else {
             TCRechargeMethodViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRechargeMethodViewCell" forIndexPath:indexPath];
             cell.backgroundColor = [UIColor whiteColor];
             cell.contentView.backgroundColor = [UIColor whiteColor];
-            if (indexPath.row == 0) {
-                cell.logoImageView.image = [UIImage imageNamed:@"balance_icon"];
-                cell.titleLabel.text = @"余额";
-            } else {
-                TCBankCard *bankCard = self.walletAccount.bankCards[indexPath.row - 1];
-                NSString *bankCardNum = bankCard.bankCardNum;
-                NSString *lastNum;
-                if (bankCardNum.length >= 4) {
-                    lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
-                }
-                cell.logoImageView.image = [UIImage imageNamed:bankCard.logo];
-                cell.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
-            }
+            cell.logoImageView.image = [UIImage imageNamed:@"balance_icon"];
+            cell.titleLabel.text = [NSString stringWithFormat:@"企业余额（人民币%0.2f）", self.walletAccount.balance];
+            cell.hideMarkIcon = YES;
+            cell.showRechargeButton = (self.walletAccount.balance < (self.creditBill.amount - self.creditBill.paidAmount));
+            cell.delegate = self;
             currentCell = cell;
         }
     }
@@ -196,18 +170,6 @@
         return nil;
     }
     return self.footerView;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1) {
-        [self.textField resignFirstResponder];
-        
-        if (indexPath.row == self.walletAccount.bankCards.count + 1) {
-            [self handleSelectAddBankCardCell];
-        } else {
-            self.selectedIndexPath = indexPath;
-        }
-    }
 }
 
 #pragma mark - UITextFieldDelegate
@@ -276,6 +238,14 @@
     return YES;
 }
 
+#pragma mark - TCRechargeMethodViewCellDelegate
+
+- (void)didClickRechargeButtonInRechargeMethodViewCell:(TCRechargeMethodViewCell *)cell {
+    [self.textField resignFirstResponder];
+    
+    [self showRechargeViewController];
+}
+
 #pragma mark - TCPaymentPasswordViewDelegate
 
 - (void)paymentPasswordView:(TCPaymentPasswordView *)view didFilledPassword:(NSString *)password {
@@ -284,31 +254,6 @@
 
 - (void)didClickBackButtonInPaymentPasswordView:(TCPaymentPasswordView *)view {
     [self dismissPasswordView];
-}
-
-#pragma mark - BaofuFuFingerClientDelegate
-
--(void)initialSucess {
-    [self prepareBFPay];
-}
-
--(void)initialfailed:(NSString*)errorMessage {
-    [weakSelf showErrorMessageHUD:errorMessage];
-}
-
-#pragma mark - TCPaymentBankCardViewDelegate
-
-- (void)didClickBackButtonInBankCardView:(TCPaymentBankCardView *)view {
-    [self dismissBankCardCodeView];
-}
-
-- (void)didClickFetchCodeButtonInBankCardView:(TCPaymentBankCardView *)view {
-    [self fetchBFSessionInfoWithPaymentID:self.payment.ID refetchVCode:YES];
-}
-
-- (void)bankCardView:(TCPaymentBankCardView *)view didClickConfirmButtonWithCode:(NSString *)code {
-    [self confirmBankCardRechargeWithVCode:code];
-    [self dismissBankCardCodeView];
 }
 
 #pragma mark - Notifications
@@ -366,29 +311,12 @@
     [super handleClickBackButton:sender];
 }
 
-- (void)handleSelectAddBankCardCell {
-    TCBankCardAddViewController *vc = [[TCBankCardAddViewController alloc] init];
-    vc.walletID = self.walletAccount.ID;
-    vc.bankCardAddBlock = ^() {
-        [weakSelf handleLoadBankCardList];
-    };
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 #pragma mark - Repayment
 
 - (void)handleClickConfirmButton:(id)sender {
     [self.textField resignFirstResponder];
     
-    if (self.selectedIndexPath.row == 0) {
-        [self handleRepaymentWithBalance];
-    } else {
-        if (self.payment) {
-            [self fetchBFSessionInfoWithPaymentID:self.payment.ID refetchVCode:NO];
-        } else {
-            [self commitBFPayRequest];
-        }
-    }
+    [self handleRepaymentWithBalance];
 }
 
 #pragma mark - 余额还款
@@ -480,126 +408,6 @@
     }];
 }
 
-
-
-#pragma mark - 宝付银行卡还款
-
-/**
- 提交付款申请
- */
-- (void)commitBFPayRequest {
-    [MBProgressHUD showHUD:YES];
-    TCPaymentRequestInfo *requestInfo = [[TCPaymentRequestInfo alloc] init];
-    requestInfo.payChannel = TCPayChannelBankCard;
-    requestInfo.targetId = self.creditBill.ID;
-    requestInfo.totalFee = self.amount;
-    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:TCPayPurposeCredit walletID:self.walletAccount.ID result:^(TCUserPayment *userPayment, NSError *error) {
-        if (userPayment) {
-            weakSelf.payment = userPayment;
-            [weakSelf fetchBFSessionInfoWithPaymentID:userPayment.ID refetchVCode:NO];
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"申请还款失败，%@", reason]];
-        }
-    }];
-}
-
-/**
- 宝付获取SESSION_ID
- */
-- (void)fetchBFSessionInfoWithPaymentID:(NSString *)paymentID refetchVCode:(BOOL)isRefetchVCode {
-    self.refetchVCode = isRefetchVCode;
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchBFSessionInfoWithPaymentID:paymentID result:^(TCBFSessionInfo *sessionInfo, NSError *error) {
-        if (sessionInfo) {
-            weakSelf.bfSessionInfo = sessionInfo;
-            [weakSelf fetchBFFingerWithSessionID:sessionInfo.sessionId];
-        } else {
-            [weakSelf showErrorMessageHUD:error.localizedDescription];
-        }
-    }];
-}
-
-/**
- 宝付获取设备指纹SDK
- */
-- (void)fetchBFFingerWithSessionID:(NSString *)sessionID {
-    BaofuFuFingerClient *client = [[BaofuFuFingerClient alloc] initWithSessionId:sessionID andoperationalState:operational_true];
-    client.delegate = self;
-}
-
-/**
- 宝付预充值
- */
-- (void)prepareBFPay {
-    TCBankCard *bankCard = self.walletAccount.bankCards[self.selectedIndexPath.row - 1];
-    TCBFPayInfo *payInfo = [[TCBFPayInfo alloc] init];
-    payInfo.bankCardId = bankCard.ID;
-    payInfo.totalFee = self.amount;
-    payInfo.paymentId = self.bfSessionInfo.paymentId;
-    [[TCBuluoApi api] prepareBFPayWithInfo:payInfo result:^(NSString *payID, NSError *error) {
-        if (payID) {
-            [MBProgressHUD hideHUD:YES];
-            weakSelf.payID = payID;
-            if (weakSelf.isRefetchVCode) {
-                [weakSelf.paymentBankCardView startCountDown];
-            } else {
-                [weakSelf showBankCardCodeView];
-            }
-        } else {
-            [weakSelf showErrorMessageHUD:error.localizedDescription];
-        }
-    }];
-}
-
-/**
- 宝付确认充值
- */
-- (void)confirmBankCardRechargeWithVCode:(NSString *)vCode {
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] confirmBFPayWithPayID:self.payID vCode:vCode result:^(TCBFPayResult payResult, NSError *error) {
-        if (payResult == TCBFPayResultSucceed) {
-            [weakSelf handleRepaymentSucceed];
-        } else if (payResult == TCBFPayResultProcessing) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf queryBankCardRechargeWithVCode:vCode];
-            });
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", reason]];
-        }
-    }];
-}
-
-/**
- 宝付查询充值
- */
-- (void)queryBankCardRechargeWithVCode:(NSString *)vCode {
-    [[TCBuluoApi api] queryBFPayWithPayID:self.payID result:^(TCBFPayResult payResult, NSError *error) {
-        if (payResult == TCBFPayResultSucceed) {
-            [weakSelf handleRepaymentSucceed];
-        } else if (payResult == TCBFPayResultProcessing) {
-            [MBProgressHUD showHUDWithMessage:@"还款处理中，请稍后在“授信”中查询"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf.navigationController popToViewController:weakSelf.navigationController.childViewControllers[1] animated:YES];
-            });
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", reason]];
-        }
-        
-    }];
-}
-
-/**
- 显示错误HUD
- */
-- (void)showErrorMessageHUD:(NSString *)errorMessage {
-    NSString *result = self.isRefetchVCode ? @"获取验证码失败" : @"申请还款失败";
-    NSString *reason = errorMessage ?: @"请稍后再试";
-    [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"%@，%@", result ,reason]];
-}
-
 #pragma mark - 还款相关页面
 
 /**
@@ -665,48 +473,6 @@
     }];
 }
 
-/**
- 显示输入银行卡验证码页面
- */
-- (void)showBankCardCodeView {
-    UIView *superView = self.navigationController.view;
-    UIView *bgView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    bgView.backgroundColor = TCARGBColor(0, 0, 0, 0);
-    [superView addSubview:bgView];
-    [superView bringSubviewToFront:bgView];
-    self.bgView = bgView;
-    
-    TCBankCard *bankCard = self.walletAccount.bankCards[self.selectedIndexPath.row - 1];
-    TCPaymentBankCardView *paymentBankCardView = [[TCPaymentBankCardView alloc] initWithBankCard:bankCard];
-    paymentBankCardView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, paymentBankCardViewH);
-    paymentBankCardView.delegate = self;
-    [bgView addSubview:paymentBankCardView];
-    self.paymentBankCardView = paymentBankCardView;
-    
-    [UIView animateWithDuration:duration animations:^{
-        bgView.backgroundColor = TCARGBColor(0, 0, 0, 0.62);
-        paymentBankCardView.y = TCScreenHeight - paymentBankCardViewH;
-    } completion:^(BOOL finished) {
-        [paymentBankCardView.codeTextField becomeFirstResponder];
-    }];
-}
-
-/**
- 退出输入银行卡验证码页面
- */
-- (void)dismissBankCardCodeView {
-    if ([self.paymentBankCardView.codeTextField isFirstResponder]) {
-        [self.paymentBankCardView.codeTextField resignFirstResponder];
-    }
-    [UIView animateWithDuration:duration animations:^{
-        weakSelf.bgView.backgroundColor = TCARGBColor(0, 0, 0, 0);
-        weakSelf.paymentBankCardView.y = TCScreenHeight;
-    } completion:^(BOOL finished) {
-        [weakSelf.paymentBankCardView removeFromSuperview];
-        [weakSelf.bgView removeFromSuperview];
-    }];
-}
-
 #pragma mark - 重新获取数据
 
 /**
@@ -725,35 +491,6 @@
     }];
 }
 
-/**
- 重新获取银行卡列表
- */
-- (void)handleLoadBankCardList {
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletAccount.ID result:^(NSArray *bankCardList, NSError *error) {
-        if (bankCardList) {
-            [MBProgressHUD hideHUD:YES];
-            for (TCBankCard *bankCard in bankCardList) {
-                for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
-                    if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
-                        bankCard.logo = bankInfo[@"logo"];
-                        bankCard.bgImage = bankInfo[@"bgImage"];
-                        break;
-                    }
-                }
-            }
-            weakSelf.walletAccount.bankCards = bankCardList;
-            [weakSelf.tableView reloadData];
-            [weakSelf.tableView selectRowAtIndexPath:weakSelf.selectedIndexPath
-                                            animated:NO
-                                      scrollPosition:UITableViewScrollPositionNone];
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取银行卡信息失败，%@", reason]];
-        }
-    }];
-}
-
 #pragma mark - 还款成功或还款处理中
 
 /**
@@ -768,36 +505,15 @@
 
 #pragma mark - Override Methods
 
-- (void)setWalletAccount:(TCWalletAccount *)walletAccount {
-    _walletAccount = walletAccount;
-    
-    for (TCBankCard *bankCard in walletAccount.bankCards) {
-        for (NSDictionary *bankInfo in self.bankInfoList) {
-            if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
-                bankCard.logo = bankInfo[@"logo"];
-                break;
-            }
-        }
-    }
-}
-
-- (NSArray *)bankInfoList {
-    if (_bankInfoList == nil) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"TCBankInfoList" ofType:@"plist"];
-        _bankInfoList = [NSArray arrayWithContentsOfFile:path];
-    }
-    return _bankInfoList;
-}
-
 - (UIView *)footerView {
     if (_footerView == nil) {
         UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 100)];
         containerView.backgroundColor = [UIColor clearColor];
         
         TCCommonButton *repaymentButton = [TCCommonButton buttonWithTitle:@"还  款"
-                                                                  color:TCCommonButtonColorPurple
-                                                                 target:self
-                                                                 action:@selector(handleClickConfirmButton:)];
+                                                                    color:TCCommonButtonColorPurple
+                                                                   target:self
+                                                                   action:@selector(handleClickConfirmButton:)];
         [repaymentButton setBackgroundImage:[UIImage imageWithColor:TCRGBColor(217, 217, 217)] forState:UIControlStateDisabled];
         repaymentButton.enabled = NO;
         [containerView addSubview:repaymentButton];

@@ -9,6 +9,7 @@
 #import "TCCreditViewController.h"
 #import "TCCreditBillViewController.h"
 #import "TCRepaymentViewController.h"
+#import "TCCompanyRepaymentViewController.h"
 
 #import "TCWalletAccount.h"
 #import <TCCommonLibs/TCCommonButton.h>
@@ -66,10 +67,17 @@
 - (void)repay {
     
     if (![self.creditBill.status isEqualToString:@"PAID"]) {
-        TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];
-        vc.walletAccount = self.walletAccount;
-        vc.companyID = self.companyID;
-        [self.navigationController pushViewController:vc animated:YES];
+        if (self.companyID) {
+            TCCompanyRepaymentViewController *vc = [[TCCompanyRepaymentViewController alloc] init];
+            vc.walletAccount = self.walletAccount;
+            vc.creditBill = self.creditBill;
+            [self.navigationController pushViewController:vc animated:YES];
+        } else {
+            TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];
+            vc.walletAccount = self.walletAccount;
+            vc.creditBill = self.creditBill;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }else {
         [MBProgressHUD showHUDWithMessage:@"账单已还清" afterDelay:1.0];
     }
@@ -167,11 +175,11 @@
         }else if (indexPath.row == 1) {
             cell.textLabel.text = @"账单日";
             cell.imageView.image = [UIImage imageNamed:@"billDay"];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"每月%d日",self.walletAccount.billDay];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"每月%zd日",self.walletAccount.billDay];
         }else {
             cell.textLabel.text = @"还款日";
             cell.imageView.image = [UIImage imageNamed:@"repaymentDay"];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"每月%d日",self.walletAccount.repayDay];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"每月%zd日",self.walletAccount.repayDay];
         }
     }
     

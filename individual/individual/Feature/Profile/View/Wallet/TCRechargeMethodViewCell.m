@@ -7,6 +7,7 @@
 //
 
 #import "TCRechargeMethodViewCell.h"
+#import <TCCommonLibs/TCExtendButton.h>
 
 #define NormalImage   [UIImage imageNamed:@"profile_common_address_button_normal"]
 #define SelectedImage [UIImage imageNamed:@"profile_common_address_button_selected"]
@@ -14,6 +15,7 @@
 @interface TCRechargeMethodViewCell ()
 
 @property (weak, nonatomic) UIImageView *markImageView;
+@property (weak, nonatomic) TCExtendButton *rechargeButton;
 
 @end
 
@@ -25,6 +27,8 @@
         self.backgroundColor = [UIColor clearColor];
         self.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20);
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        _hideMarkIcon = NO;
+        _showRechargeButton = NO;
         [self setupSubviews];
     }
     return self;
@@ -43,8 +47,23 @@
     
     UIImageView *markImageView = [[UIImageView alloc] init];
     markImageView.image = NormalImage;
+    markImageView.hidden = _hideMarkIcon;
     [self.contentView addSubview:markImageView];
     self.markImageView = markImageView;
+    
+    TCExtendButton *rechargeButton = [TCExtendButton buttonWithType:UIButtonTypeCustom];
+    [rechargeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"充值"
+                                                                       attributes:@{
+                                                                                    NSFontAttributeName: [UIFont systemFontOfSize:11],
+                                                                                    NSForegroundColorAttributeName: TCRGBColor(39, 65, 201),
+                                                                                    NSUnderlineStyleAttributeName: @(1)
+                                                                                    }]
+                              forState:UIControlStateNormal];
+    [rechargeButton addTarget:self action:@selector(handleClickRechargeButton:) forControlEvents:UIControlEventTouchUpInside];
+    rechargeButton.hitTestSlop = UIEdgeInsetsMake(-5, -10, -5, -10);
+    rechargeButton.hidden = !_showRechargeButton;
+    [self.contentView addSubview:rechargeButton];
+    self.rechargeButton = rechargeButton;
     
     __weak typeof(self) weakSelf = self;
     [logoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -63,6 +82,28 @@
         make.right.equalTo(weakSelf.contentView.mas_right).with.offset(-20);
         make.centerY.equalTo(weakSelf.contentView.mas_centerY);
     }];
+    [rechargeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.contentView).offset(-20);
+        make.centerY.equalTo(weakSelf.contentView);
+    }];
+}
+
+- (void)handleClickRechargeButton:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(didClickRechargeButtonInRechargeMethodViewCell:)]) {
+        [self.delegate didClickRechargeButtonInRechargeMethodViewCell:self];
+    }
+}
+
+- (void)setHideMarkIcon:(BOOL)hideMarkIcon {
+    _hideMarkIcon = hideMarkIcon;
+    
+    self.markImageView.hidden = hideMarkIcon;
+}
+
+- (void)setShowRechargeButton:(BOOL)showRechargeButton {
+    _showRechargeButton = showRechargeButton;
+    
+    self.rechargeButton.hidden = !showRechargeButton;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
