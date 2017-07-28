@@ -69,6 +69,8 @@
     if (![self.creditBill.status isEqualToString:@"PAID"]) {
         if (self.companyID) {
             TCCompanyRepaymentViewController *vc = [[TCCompanyRepaymentViewController alloc] init];
+            vc.walletAccount = self.walletAccount;
+            vc.creditBill = self.creditBill;
             [self.navigationController pushViewController:vc animated:YES];
         } else {
             TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];

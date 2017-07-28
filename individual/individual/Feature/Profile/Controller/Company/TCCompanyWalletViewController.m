@@ -54,6 +54,7 @@
 
 - (void)setupSubviews {
     TCCompanyWalletTitleView *titleView = [[TCCompanyWalletTitleView alloc] init];
+    titleView.nameLabel.text = [[TCBuluoApi api] currentUserSession].userInfo.companyName;
     [titleView.closeButton addTarget:self action:@selector(handleClickCloseTitleButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:titleView];
     self.titleView = titleView;

@@ -7,7 +7,14 @@
 //
 
 #import <TCCommonLibs/TCBaseViewController.h>
+@class TCWalletAccount;
+@class TCCreditBill;
 
 @interface TCCompanyRepaymentViewController : TCBaseViewController
+
+/** 信用账单 */
+@property (strong, nonatomic) TCCreditBill *creditBill;
+/** 钱包信息 */
+@property (strong, nonatomic) TCWalletAccount *walletAccount;
 
 @end
