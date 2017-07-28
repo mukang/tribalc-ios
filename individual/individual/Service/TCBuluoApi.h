@@ -44,6 +44,11 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
     TCDataListPullNewerList       // 拉取更数据
 };
 
+typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
+    TCUploadImageTypeNormal = 0,  // 常规的
+    TCUploadImageTypeSpecial      // 特殊的（例如：头像和背景图）
+};
+
 @interface TCBuluoApi : NSObject
 
 /**
@@ -381,7 +386,7 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param imageData 图片数据
  @param resultBlock 回调结果，uploadInfo是上传图片数据所需的信息，uploadInfo为nil时表示认证失败，失败原因见error的code和userInfo
  */
-- (void)authorizeImageData:(NSData *)imageData result:(void (^)(TCUploadInfo *uploadInfo, NSError *error))resultBlock;
+- (void)authorizeImageData:(NSData *)imageData imageType:(TCUploadImageType)imageType result:(void (^)(TCUploadInfo *uploadInfo, NSError *error))resultBlock;
 
 #pragma mark - 商品类资源
 
@@ -501,6 +506,15 @@ typedef NS_ENUM(NSInteger, TCDataListPullType) {
  @param resultBlock 结果回调，success为NO时表示上传失败，失败原因见error的code和userInfo
  */
 - (void)uploadImageData:(NSData *)imageData progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, TCUploadInfo *uploadInfo, NSError *error))resultBlock;
+
+/**
+ 上传头像图片资源
+ 
+ @param imageData 要上传的图片数据
+ @param progress 上传进度
+ @param resultBlock 结果回调，success为NO时表示上传失败，失败原因见error的code和userInfo
+ */
+- (void)uploadAvatarImageData:(NSData *)imageData progress:(void (^)(NSProgress *progress))progress result:(void (^)(BOOL success, TCUploadInfo *uploadInfo, NSError *error))resultBlock;
 
 #pragma mark - 社区资源
 
