@@ -31,6 +31,7 @@
     self.title = @"历史账单";
     // Do any additional setup after loading the view.
     [self setUpViews];
+    [self loadDataFirstTime];
 }
 
 - (void)loadDataFirstTime {
@@ -53,8 +54,8 @@
                     [temp addObject:creditBill];
                     [self.dataList addObject:temp];
                 } else {
-                    TCWalletBill *lastBill = [temp lastObject];
-                    if ([creditBill.monthDate isEqualToString:lastBill.monthDate]) {
+                    TCCreditBill *lastBill = [temp lastObject];
+                    if ([creditBill.yearDate isEqualToString:lastBill.yearDate]) {
                         [temp addObject:creditBill];
                     } else {
                         NSMutableArray *newTemp = [NSMutableArray array];
@@ -88,8 +89,8 @@
                     [temp addObject:creditBill];
                     [self.dataList addObject:temp];
                 } else {
-                    TCWalletBill *lastBill = [temp lastObject];
-                    if ([creditBill.monthDate isEqualToString:lastBill.monthDate]) {
+                    TCCreditBill *lastBill = [temp lastObject];
+                    if ([creditBill.yearDate isEqualToString:lastBill.yearDate]) {
                         [temp addObject:creditBill];
                     } else {
                         NSMutableArray *newTemp = [NSMutableArray array];
@@ -122,8 +123,8 @@
                     [temp addObject:creditBill];
                     [self.dataList addObject:temp];
                 } else {
-                    TCWalletBill *lastBill = [temp lastObject];
-                    if ([creditBill.monthDate isEqualToString:lastBill.monthDate]) {
+                    TCCreditBill *lastBill = [temp lastObject];
+                    if ([creditBill.yearDate isEqualToString:lastBill.yearDate]) {
                         [temp addObject:creditBill];
                     } else {
                         NSMutableArray *newTemp = [NSMutableArray array];
@@ -178,6 +179,13 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+}
+
+- (NSMutableArray *)dataList {
+    if (_dataList == nil) {
+        _dataList = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _dataList;
 }
 
 - (UITableView *)tableView {
