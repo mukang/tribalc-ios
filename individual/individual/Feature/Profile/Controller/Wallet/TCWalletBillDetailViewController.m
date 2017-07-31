@@ -51,9 +51,7 @@
 
 #pragma mark - Status Bar
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 
 #pragma makr - UITableViewDataSource
 

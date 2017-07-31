@@ -185,12 +185,6 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-#pragma mark - Status Bar
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 
 - (IBAction)handleClickRepairsButton:(id)sender {
     TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];

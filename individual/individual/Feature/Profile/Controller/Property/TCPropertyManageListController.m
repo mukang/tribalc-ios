@@ -183,9 +183,7 @@
 
 #pragma mark - Status Bar
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 
 - (void)dealloc {
     TCLog(@"TCPropertyManageListController--dealloc");

@@ -498,9 +498,7 @@
 
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 
 - (void)refreshTableViewWithSection:(NSInteger)section {
     if ([self judgeIsSelectedAllOrderItem]) {
