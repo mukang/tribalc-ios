@@ -153,7 +153,7 @@
         TCBiographyAvatarViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyAvatarViewCell" forIndexPath:indexPath];
         UIImage *currentAvatarImage = cell.avatarImageView.image;
         NSString *userID = [[TCBuluoApi api] currentUserSession].assigned;
-        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userID];
+        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userID needTimestamp:YES];
         UIImage *placeholderImage = [UIImage imageNamed:@"profile_default_avatar_icon"];
         if (currentAvatarImage) {
             placeholderImage = currentAvatarImage;

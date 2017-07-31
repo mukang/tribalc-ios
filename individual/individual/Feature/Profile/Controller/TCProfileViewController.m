@@ -155,7 +155,7 @@ TCPhotoModeViewDelegate>
         TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
         self.headerView.nickLabel.text = userInfo.nickname;
         
-        NSURL *avatarURL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userInfo.ID];
+        NSURL *avatarURL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userInfo.ID needTimestamp:YES];
         UIImage *avatarPlaceholderImage = self.headerView.avatarImageView.image ?: [UIImage imageNamed:@"profile_default_avatar_icon"];
         [self.headerView.avatarImageView sd_setImageWithURL:avatarURL placeholderImage:avatarPlaceholderImage options:SDWebImageRetryFailed];
         
