@@ -186,13 +186,8 @@ TCHomeCoverViewDelegate>
         @StrongObj(self)
         [self.tableView.mj_header endRefreshing];
         if (messageWrapper) {
-            if (messageWrapper.hasMore) {
-                self.tableView.mj_footer.hidden = NO;
-            }
             if ([messageWrapper.content isKindOfClass:[NSArray class]] && messageWrapper.content.count>0) {
-                NSMutableArray *arr = [NSMutableArray arrayWithArray:messageWrapper.content];
-                [arr addObjectsFromArray:self.messageArr];
-                self.messageArr = arr;
+                [self.messageArr addObjectsFromArray:self.messageArr];
                 NSMutableArray *mutableArr = [NSMutableArray arrayWithCapacity:0];
                 for (int i = 0; i < messageWrapper.content.count; i++) {
                     [mutableArr addObject: [NSIndexPath indexPathForRow:i inSection:0]];
