@@ -62,6 +62,12 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [self setupAMapServices];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self checkUserNeedLogin];
+}
+
 - (void)dealloc {
     [self removeNotifications];
     self.updateWindow.hidden = YES;
@@ -135,6 +141,12 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [[TCBuluoApi api] logout:^(BOOL success, NSError *error) {
         [weakSelf showLoginViewController];
     }];
+}
+
+- (void)checkUserNeedLogin {
+    if ([[TCBuluoApi api] needLogin]) {
+        [self showLoginViewController];
+    }
 }
 
 #pragma mark - Show Login View Controller
