@@ -9,19 +9,23 @@
 #import "TCHomeViewController.h"
 #import "TCSearchViewController.h"
 #import "TCNavigationController.h"
+#import "TCQRCodeViewController.h"
+#import "TCMyLockQRCodeController.h"
+#import "TCLocksAndVisitorsViewController.h"
+#import "TCRepairsViewController.h"
 
 #import "TCHomeSearchBarView.h"
 #import "TCHomeToolBarView.h"
 #import "TCHomeToolsView.h"
 #import "TCHomeBannerView.h"
-
-#import <TCCommonLibs/UIImage+Category.h>
-#import "TCBuluoApi.h"
 #import "TCHomeCoverView.h"
 #import "TCHomeMessageCell.h"
+
+#import "TCBuluoApi.h"
+
+#import <TCCommonLibs/UIImage+Category.h>
+#import <MJRefresh/MJRefresh.h>
 #import <UITableView+FDTemplateLayoutCell.h>
-#import <TCCommonLibs/TCRefreshHeader.h>
-#import <TCCommonLibs/TCRefreshFooter.h>
 
 #define toolsViewH     96
 #define bannerViewH    (TCRealValue(75) + 7.5)
@@ -42,13 +46,12 @@ TCHomeCoverViewDelegate>
 @property (weak, nonatomic) TCHomeToolsView *toolsView;
 @property (weak, nonatomic) TCHomeBannerView *bannerView;
 
-@property (strong, nonatomic) TCHomeMessageWrapper *messgaeWrapper;
 
 @property (assign, nonatomic) int64_t sinceTime;
 
 @property (strong, nonatomic) TCHomeCoverView *coverView;
 
-@property (copy, nonatomic) NSArray *messageArr;
+@property (strong, nonatomic) NSMutableArray *messageArr;
 
 @end
 
@@ -67,6 +70,7 @@ TCHomeCoverViewDelegate>
     [self setupNavBar];
     [self setupSubviews];
     [self loadData];
+    [self registerNotifications];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -81,148 +85,11 @@ TCHomeCoverViewDelegate>
     [self.bannerView imagePlayerStopPlaying];
 }
 
+- (void)dealloc {
+    [self removeNotifications];
+}
+
 #pragma mark - Private Methods
-
-- (void)loadData {
-    @WeakObj(self)
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullFirstTime count:20 sinceTime:0 result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
-        @StrongObj(self)
-        if (messageWrapper) {
-            [MBProgressHUD hideHUD:YES];
-            self.messgaeWrapper = messageWrapper;
-            self.messageArr = messageWrapper.content;
-            [self.tableView reloadData];
-            if (messageWrapper.hasMore) {
-                self.tableView.mj_footer.hidden = NO;
-            }
-        }else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
-        }
-    }];
-}
-
-- (void)loadNewData {
-    @WeakObj(self)
-    TCHomeMessage *firstMessage = (TCHomeMessage *)self.messageArr.firstObject;
-    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullFirstTime count:20 sinceTime:firstMessage.createDate result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
-        @StrongObj(self)
-        [self.tableView.mj_header endRefreshing];
-        if (messageWrapper) {
-            self.messgaeWrapper = messageWrapper;
-            if (messageWrapper.hasMore) {
-                self.tableView.mj_footer.hidden = NO;
-            }
-            NSMutableArray *arr = [NSMutableArray arrayWithArray:messageWrapper.content];
-            [arr addObjectsFromArray:self.messageArr];
-            self.messageArr = arr;
-            [self.tableView reloadData];
-        }else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
-        }
-    }];
-}
-
-- (void)loadOldData {
-    @WeakObj(self)
-    TCHomeMessage *lastMessage = (TCHomeMessage *)self.messageArr.lastObject;
-    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullFirstTime count:20 sinceTime:lastMessage.createDate result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
-        @StrongObj(self)
-        [self.tableView.mj_footer endRefreshing];
-        if (messageWrapper) {
-            self.messgaeWrapper = messageWrapper;
-            if (!messageWrapper.hasMore) {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            }
-            NSMutableArray *arr = [NSMutableArray arrayWithArray:self.messageArr];
-            [arr addObjectsFromArray:messageWrapper.content];
-            self.messageArr = arr;
-            [self.tableView reloadData];
-        }else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
-        }
-    }];
-}
-
-
-#pragma mark TCHomeCoverViewDelegate
-
-- (void)didClickNeverShowMessage:(TCHomeMessage *)message {
-    @WeakObj(self)
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] ignoreAParticularTypeHomeMessageByMessageType:message.messageBody.homeMessageType.homeMessageTypeEnum result:^(BOOL success, NSError *error) {
-        @StrongObj(self)
-        if (success) {
-            self.coverView.hidden = YES;
-            [MBProgressHUD showHUDWithMessage:@"忽略成功" afterDelay:0.5];
-            [self loadData];
-        }else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
-        }
-    }];
-}
-
-- (void)didClickOverLookMessage:(TCHomeMessage *)message currentCell:(TCHomeMessageCell *)cell{
-    @WeakObj(self)
-    [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] ignoreAHomeMessageByMessageID:message.ID result:^(BOOL success, NSError *error) {
-        @StrongObj(self)
-        if (success) {
-            self.coverView.hidden = YES;
-            [MBProgressHUD hideHUD:YES];
-            NSMutableArray *arr = [NSMutableArray arrayWithArray:self.messageArr];
-            [arr removeObject:message];
-            self.messageArr = arr;
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            NSArray *indexPathArr = [NSArray arrayWithObjects:indexPath, nil];
-            [self.tableView deleteRowsAtIndexPaths:indexPathArr withRowAnimation:UITableViewRowAnimationFade];
-        }else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"忽略失败，%@", reason]];
-        }
-    }];
-}
-
-#pragma mark TCHomeMessageCellDelegate
-
-- (void)didClickMoreActionBtnWithMessageCell:(UITableViewCell *)cell {
-    TCHomeMessageCell *messageCell = (TCHomeMessageCell *)cell;
-    CGRect rect = [messageCell convertRect:messageCell.bounds toView:self.tabBarController.view];
-    NSLog(@"%@", NSStringFromCGRect(rect));
-    self.coverView.rect = rect;
-    self.coverView.currentCell = (TCHomeMessageCell *)cell;
-    self.coverView.homeMessage = messageCell.homeMessage;
-    self.coverView.hidden = NO;
-}
-
-#pragma mark UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.messageArr.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TCHomeMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageCell" forIndexPath:indexPath];
-    cell.homeMessage = self.messageArr[indexPath.row];
-    cell.delegate = self;
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView fd_heightForCellWithIdentifier:@"TCHomeMessageCell" configuration:^(TCHomeMessageCell *cell) {
-        cell.homeMessage = self.messageArr[indexPath.row];
-    }];
-}
-
-
 
 - (void)setupNavBar {
     self.hideOriginalNavBar = YES;
@@ -262,6 +129,21 @@ TCHomeCoverViewDelegate>
     [self.view insertSubview:tableView belowSubview:self.toolBarView];
     self.tableView = tableView;
     
+    
+    MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadOldData)];
+    refreshFooter.stateLabel.textColor = TCBlackColor;
+    refreshFooter.stateLabel.font = [UIFont systemFontOfSize:14];
+    refreshFooter.automaticallyHidden = YES;
+    [refreshFooter setTitle:@"-我是有底线的-" forState:MJRefreshStateNoMoreData];
+    tableView.mj_footer = refreshFooter;
+    
+    MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    refreshHeader.stateLabel.textColor = TCBlackColor;
+    refreshHeader.stateLabel.font = [UIFont systemFontOfSize:14];
+    refreshHeader.lastUpdatedTimeLabel.textColor = TCBlackColor;
+    refreshHeader.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:14];
+    tableView.mj_header = refreshHeader;
+    
     TCHomeToolsView *toolsView = [[TCHomeToolsView alloc] init];
     toolsView.frame = CGRectMake(0, -insetTop, TCScreenWidth, toolsViewH);
     toolsView.delegate = self;
@@ -279,65 +161,172 @@ TCHomeCoverViewDelegate>
     }];
 }
 
-- (void)tap {
-    self.coverView.hidden = YES;
-    self.coverView.homeMessage = nil;
+#pragma mark - Load Data
+
+- (void)loadData {
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullFirstTime count:20 sinceTime:0 result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
+        @StrongObj(self)
+        if (messageWrapper) {
+            [MBProgressHUD hideHUD:YES];
+            [self.messageArr addObjectsFromArray:messageWrapper.content];
+            [self.tableView reloadData];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
+        }
+    }];
 }
 
+- (void)loadNewData {
+    @WeakObj(self)
+    TCHomeMessage *firstMessage = (TCHomeMessage *)self.messageArr.firstObject;
+    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullFirstTime count:20 sinceTime:firstMessage.createDate result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
+        @StrongObj(self)
+        [self.tableView.mj_header endRefreshing];
+        if (messageWrapper) {
+            [self.messageArr insertObjects:messageWrapper.content atIndexes:[NSIndexSet indexSetWithIndex:0]];
+            [self.tableView reloadData];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
+        }
+    }];
+}
 
-- (TCHomeCoverView *)coverView {
-    if (_coverView == nil) {
-        _coverView = [[TCHomeCoverView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight)];
-        _coverView.hidden = YES;
-        _coverView.delegate = self;
-        UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
-        [_coverView addGestureRecognizer:tapG];
-        [self.tabBarController.view addSubview:_coverView];
-    }
-    return _coverView;
+- (void)loadOldData {
+    @WeakObj(self)
+    TCHomeMessage *lastMessage = (TCHomeMessage *)self.messageArr.lastObject;
+    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullFirstTime count:20 sinceTime:lastMessage.createDate result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
+        @StrongObj(self)
+        [self.tableView.mj_footer endRefreshing];
+        if (messageWrapper) {
+            if (!messageWrapper.hasMore) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            [self.messageArr addObjectsFromArray:messageWrapper.content];
+            [self.tableView reloadData];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
+        }
+    }];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.messageArr.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TCHomeMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageCell" forIndexPath:indexPath];
+    cell.homeMessage = self.messageArr[indexPath.row];
+    cell.delegate = self;
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [tableView fd_heightForCellWithIdentifier:@"TCHomeMessageCell" configuration:^(TCHomeMessageCell *cell) {
+        cell.homeMessage = self.messageArr[indexPath.row];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
 
 
+#pragma mark - TCHomeMessageCellDelegate
+
+- (void)didClickMoreActionBtnWithMessageCell:(UITableViewCell *)cell {
+    TCHomeMessageCell *messageCell = (TCHomeMessageCell *)cell;
+    CGRect rect = [messageCell convertRect:messageCell.bounds toView:self.tabBarController.view];
+    NSLog(@"%@", NSStringFromCGRect(rect));
+    self.coverView.rect = rect;
+    self.coverView.currentCell = (TCHomeMessageCell *)cell;
+    self.coverView.homeMessage = messageCell.homeMessage;
+    self.coverView.hidden = NO;
+}
+
+#pragma mark - TCHomeCoverViewDelegate
+
+- (void)didClickNeverShowMessage:(TCHomeMessage *)message {
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] ignoreAParticularTypeHomeMessageByMessageType:message.messageBody.homeMessageType.homeMessageTypeEnum result:^(BOOL success, NSError *error) {
+        @StrongObj(self)
+        if (success) {
+            self.coverView.hidden = YES;
+            [MBProgressHUD showHUDWithMessage:@"忽略成功" afterDelay:0.5];
+            [self loadData];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
+        }
+    }];
+}
+
+- (void)didClickOverLookMessage:(TCHomeMessage *)message currentCell:(TCHomeMessageCell *)cell{
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] ignoreAHomeMessageByMessageID:message.ID result:^(BOOL success, NSError *error) {
+        @StrongObj(self)
+        if (success) {
+            self.coverView.hidden = YES;
+            [MBProgressHUD hideHUD:YES];
+            NSMutableArray *arr = [NSMutableArray arrayWithArray:self.messageArr];
+            [arr removeObject:message];
+            self.messageArr = arr;
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            NSArray *indexPathArr = [NSArray arrayWithObjects:indexPath, nil];
+            [self.tableView deleteRowsAtIndexPaths:indexPathArr withRowAnimation:UITableViewRowAnimationFade];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"忽略失败，%@", reason]];
+        }
+    }];
+}
+
 #pragma mark - TCHomeSearchBarViewDelegate
 
 - (void)didClickSearchBarInHomeSearchBarView:(TCHomeSearchBarView *)view {
-    NSLog(@"%s", __func__);
     [self showSearchViewController];
 }
 
 #pragma mark - TCHomeToolBarViewDelegate
 
 - (void)didClickScanButtonInHomeToolBarView:(TCHomeToolBarView *)view {
-    NSLog(@"%s", __func__);
+    [self handleClickScanButton];
 }
 
 - (void)didClickUnlockButtonInHomeToolBarView:(TCHomeToolBarView *)view {
-    NSLog(@"%s", __func__);
+    [self handleClickUnlockButton];
 }
 
 - (void)didClickMaintainButtonInHomeToolBarView:(TCHomeToolBarView *)view {
-    NSLog(@"%s", __func__);
+    [self handleClickMaintainButton];
 }
 
 - (void)didClickSearchButtonInHomeToolBarView:(TCHomeToolBarView *)view {
-    NSLog(@"%s", __func__);
     [self showSearchViewController];
 }
 
 #pragma mark - TCHomeToolsViewDelegate
 
 - (void)didClickScanButtonInHomeToolsView:(TCHomeToolsView *)view {
-    NSLog(@"%s", __func__);
+    [self handleClickScanButton];
 }
 
 - (void)didClickUnlockButtonInHomeToolsView:(TCHomeToolsView *)view {
-    NSLog(@"%s", __func__);
+    [self handleClickUnlockButton];
 }
 
 - (void)didClickMaintainButtonInHomeToolsView:(TCHomeToolsView *)view {
-    NSLog(@"%s", __func__);
+    [self handleClickMaintainButton];
 }
 
 - (void)didClickMeetingButtonInHomeToolsView:(TCHomeToolsView *)view {
@@ -411,12 +400,114 @@ TCHomeCoverViewDelegate>
     }
 }
 
+#pragma mark - CoverView
+
+- (void)tap {
+    self.coverView.hidden = YES;
+    self.coverView.homeMessage = nil;
+}
+
+
+- (TCHomeCoverView *)coverView {
+    if (_coverView == nil) {
+        _coverView = [[TCHomeCoverView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight)];
+        _coverView.hidden = YES;
+        _coverView.delegate = self;
+        UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
+        [_coverView addGestureRecognizer:tapG];
+        [self.tabBarController.view addSubview:_coverView];
+    }
+    return _coverView;
+}
+
+#pragma mark - Notification
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleUserDidLogin:)
+                                                 name:TCBuluoApiNotificationUserDidLogin
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleUserDidLogout:)
+                                                 name:TCBuluoApiNotificationUserDidLogout
+                                               object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Actions
 
 - (void)showSearchViewController {
     TCSearchViewController *vc = [[TCSearchViewController alloc] init];
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:NO completion:nil];
+}
+
+- (void)handleClickScanButton {
+    TCQRCodeViewController *vc = [[TCQRCodeViewController alloc] init];
+    vc.fromController = self;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleClickUnlockButton {
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+    if (![userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+        [MBProgressHUD showHUDWithMessage:@"身份认证成功后才可使用开门功能"];
+        return;
+    }
+    if (!userInfo.companyID) {
+        [MBProgressHUD showHUDWithMessage:@"绑定公司成功后才可使用开门功能"];
+        return;
+    }
+    
+    TCVisitorInfo *visitorInfo = [[TCVisitorInfo alloc] init];
+    visitorInfo.equipIds = [NSArray array];
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchMultiLockKeyWithVisitorInfo:visitorInfo result:^(TCMultiLockKey *multiLockKey, BOOL hasTooManyLocks, NSError *error) {
+        if (multiLockKey) {
+            [MBProgressHUD hideHUD:YES];
+            TCMyLockQRCodeController *vc = [[TCMyLockQRCodeController alloc] initWithLockQRCodeType:TCQRCodeTypeSystem];
+            vc.multiLockKey = multiLockKey;
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } else if (hasTooManyLocks) {
+            [MBProgressHUD hideHUD:YES];
+            TCLocksAndVisitorsViewController *lockAndVisitorVC = [[TCLocksAndVisitorsViewController alloc] initWithType:TCLocks];
+            lockAndVisitorVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:lockAndVisitorVC animated:YES];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"开门失败，%@", reason]];
+        }
+    }];
+}
+
+- (void)handleClickMaintainButton {
+    TCRepairsViewController *vc = [[TCRepairsViewController alloc] initWithNibName:@"TCRepairsViewController" bundle:[NSBundle mainBundle]];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleUserDidLogin:(NSNotification *)noti {
+    [self.messageArr removeAllObjects];
+    [self loadData];
+}
+
+- (void)handleUserDidLogout:(NSNotification *)noti {
+    [self.messageArr removeAllObjects];
+    [self.tableView reloadData];
+}
+
+#pragma mark - Override Methods
+
+- (NSMutableArray *)messageArr {
+    if (_messageArr == nil) {
+        _messageArr = [NSMutableArray array];
+    }
+    return _messageArr;
 }
 
 - (void)didReceiveMemoryWarning {
