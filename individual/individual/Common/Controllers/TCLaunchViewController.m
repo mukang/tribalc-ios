@@ -193,9 +193,7 @@ NSString *const TCLaunchWindowDidTapAdViewNotification = @"TCLaunchWindowDidTapA
     return NO;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
     return UIStatusBarAnimationFade;

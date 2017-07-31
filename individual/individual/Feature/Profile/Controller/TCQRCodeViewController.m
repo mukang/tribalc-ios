@@ -221,9 +221,7 @@
     [scanner stopScan];
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 
 /// 准备提示标签和名片按钮
 - (void)prepareOtherControls {
