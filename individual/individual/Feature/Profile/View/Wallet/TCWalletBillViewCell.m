@@ -9,6 +9,9 @@
 #import "TCWalletBillViewCell.h"
 #import "TCWalletBill.h"
 
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+
 @interface TCWalletBillViewCell ()
 
 @property (weak, nonatomic) IBOutlet UILabel *weekdayLabel;
@@ -33,6 +36,10 @@
     self.detailTimeLabel.text = walletBill.detailTime;
     self.amountLabel.text = [NSString stringWithFormat:@"%0.2f", walletBill.amount];
     self.titleLabel.text = walletBill.title;
+    
+    NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:walletBill.annotherId needTimestamp:NO];
+    UIImage *placeholderImage = [UIImage imageNamed:@"profile_default_avatar_icon"];
+    [self.iconImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -50,12 +50,8 @@
             }
         }
         
-        if ([store.logo isKindOfClass:[NSString class]]) {
-            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:store.logo];
-            [self.iconImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
-        }else {
-            [self.iconImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
-        }
+        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:store.ID needTimestamp:NO];
+        [self.iconImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
         
         self.desLabel.text = store.desc;
         self.tagsLabel.text = [NSString stringWithFormat:@"%@ | %@", store.category, store.markPlace];
