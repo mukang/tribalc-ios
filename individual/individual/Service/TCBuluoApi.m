@@ -1180,12 +1180,17 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
-- (void)authorizeImageData:(NSData *)imageData result:(void (^)(TCUploadInfo *, NSError *))resultBlock {
+- (void)authorizeImageData:(NSData *)imageData imageType:(TCUploadImageType)imageType result:(void (^)(TCUploadInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"oss_authorization/picture?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-        [request setValue:@"icon.jpg" forParam:@"key"];
+        if (imageType == TCUploadImageTypeNormal) {
+            int64_t timestamp = [[NSDate date] timeIntervalSince1970] * 1000;
+            [request setValue:[NSString stringWithFormat:@"%zd/picture.jpg", timestamp] forParam:@"key"];
+        } else {
+            [request setValue:@"icon.jpg" forParam:@"key"];
+        }
         [request setValue:@"image/jpeg" forParam:@"contentType"];
         [request setValue:TCDigestMD5ToData(imageData) forParam:@"contentMD5"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
@@ -1690,7 +1695,32 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 #pragma mark - 上传图片资源
 
 - (void)uploadImageData:(NSData *)imageData progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, TCUploadInfo *, NSError *))resultBlock {
-    [self authorizeImageData:imageData result:^(TCUploadInfo *uploadInfo, NSError *error) {
+    [self authorizeImageData:imageData imageType:TCUploadImageTypeNormal result:^(TCUploadInfo *uploadInfo, NSError *error) {
+        if (error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(NO, nil, error));
+            }
+        } else {
+            NSString *uploadURLString = uploadInfo.url;
+            TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut uploadURLString:uploadURLString];
+            [request setImageData:imageData];
+            [[TCClient client] upload:request progress:progress finish:^(TCClientResponse *response) {
+                if (response.statusCode == 200) {
+                    if (resultBlock) {
+                        TC_CALL_ASYNC_MQ(resultBlock(YES, uploadInfo, nil));
+                    }
+                } else {
+                    if (resultBlock) {
+                        TC_CALL_ASYNC_MQ(resultBlock(NO, nil, response.error));
+                    }
+                }
+            }];
+        }
+    }];
+}
+
+- (void)uploadAvatarImageData:(NSData *)imageData progress:(void (^)(NSProgress *))progress result:(void (^)(BOOL, TCUploadInfo *, NSError *))resultBlock {
+    [self authorizeImageData:imageData imageType:TCUploadImageTypeSpecial result:^(TCUploadInfo *uploadInfo, NSError *error) {
         if (error) {
             if (resultBlock) {
                 TC_CALL_ASYNC_MQ(resultBlock(NO, nil, error));

@@ -61,6 +61,11 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
+            <key>pictures.buluo-gs.com</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
 			<key>dev-app-services.buluo-gs.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
