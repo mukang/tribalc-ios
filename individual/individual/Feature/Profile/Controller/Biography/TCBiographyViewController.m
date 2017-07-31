@@ -133,12 +133,6 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Status Bar
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -157,14 +151,14 @@
     UITableViewCell *currentCell = nil;
     if (indexPath.section == 0 && indexPath.row == 0) {
         TCBiographyAvatarViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyAvatarViewCell" forIndexPath:indexPath];
-        NSString *picture = [[TCBuluoApi api] currentUserSession].userInfo.picture;
-        if (picture) {
-            UIImage *currentAvatarImage = cell.avatarImageView.image;
-            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:picture];
-            [cell.avatarImageView sd_setImageWithURL:URL placeholderImage:currentAvatarImage options:SDWebImageRetryFailed];
-        } else {
-            [cell.avatarImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
+        UIImage *currentAvatarImage = cell.avatarImageView.image;
+        NSString *userID = [[TCBuluoApi api] currentUserSession].assigned;
+        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userID];
+        UIImage *placeholderImage = [UIImage imageNamed:@"profile_default_avatar_icon"];
+        if (currentAvatarImage) {
+            placeholderImage = currentAvatarImage;
         }
+        [cell.avatarImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
         currentCell = cell;
     } else {
         TCBiographyViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyViewCell" forIndexPath:indexPath];
@@ -267,7 +261,7 @@
     
     [MBProgressHUD showHUD:YES];
     NSData *imageData = [TCImageCompressHandler compressImage:avatarImage toByte:100 * 1000];
-    [[TCBuluoApi api] uploadImageData:imageData progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
+    [[TCBuluoApi api] uploadAvatarImageData:imageData progress:nil result:^(BOOL success, TCUploadInfo *uploadInfo, NSError *error) {
         if (success) {
             [weakSelf handleUserAvatarChangedWithName:uploadInfo.objectKey];
         } else {
