@@ -48,6 +48,33 @@
     [self loadData];
 }
 
+- (void)startAnimate {
+    CABasicAnimation*pathAnimation;
+    
+    pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+    pathAnimation.duration=1.0;
+
+    pathAnimation.repeatCount=1;
+    
+    pathAnimation.removedOnCompletion=NO;
+    
+    pathAnimation.timingFunction= [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    
+    pathAnimation.fromValue= [NSNumber numberWithInt:1.0];
+        
+    pathAnimation.toValue= [NSNumber numberWithInt:0.5];
+    
+//    pathAnimation.delegate=self;
+    
+    [_progressLayer addAnimation:pathAnimation forKey:@"strokeStart"];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+//    [self startAnimate];
+}
+
 - (void)loadData {
     @WeakObj(self)
     [MBProgressHUD showHUD:YES];
@@ -97,22 +124,20 @@
     _trackLayer.lineWidth=5;
     _trackLayer.frame = mybound;
     
-    [self.tableView.layer addSublayer:self.gradientLayer];
-    self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
-    
     //内圆
-    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:(M_PI * 2) * ((self.walletAccount.creditLimit-self.walletAccount.creditBalance)/self.walletAccount.creditLimit)-M_PI_2 clockwise:YES];
+    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:-((M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit))-M_PI_2 + (M_PI * 2) clockwise:YES];
 //    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
     
     _progressLayer = [CAShapeLayer new];
-    //    [self.tableView.tableHeaderView.layer addSublayer:_progressLayer];
     _progressLayer.fillColor = [UIColor clearColor].CGColor;
     _progressLayer.strokeColor=TCRGBColor(129, 184, 238).CGColor;
     _progressLayer.lineCap = kCALineCapRound;
-    _progressLayer.path = _progressPath.CGPath;
     _progressLayer.lineWidth=10;
+    _progressLayer.path = _progressPath.CGPath;
     _progressLayer.frame = CGRectMake(-(TCScreenWidth-170)/2, -15, 150, 150);
     self.gradientLayer.mask = _progressLayer;
+    [self.tableView.layer addSublayer:self.gradientLayer];
+    self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
 }
 
 #pragma mark UITableViewDataSource
