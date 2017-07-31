@@ -33,10 +33,18 @@
     self.navigationItem.leftBarButtonItem = nil;
     [self setUpViews];
     [self loadDataIsMore:NO];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessOrFail) name:TCBuluoApiNotificationUserDidLogin object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessOrFail) name:TCBuluoApiNotificationUserDidLogout object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+}
+
+#pragma mark private action
+
+- (void)loginSuccessOrFail {
+    [self loadDataIsMore:NO];
 }
 
 - (void)setUpViews {
@@ -110,6 +118,8 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark Getter
+
 - (void)setupTableViewRefreshView {
     @WeakObj(self)
     TCRefreshHeader *refreshHeader = [TCRefreshHeader headerWithRefreshingBlock:^(void) {
@@ -140,6 +150,7 @@
         _tableView.dataSource = self;
         _tableView.rowHeight = TCRealValue(252);
         [_tableView registerClass:[TCStoreCell class] forCellReuseIdentifier:@"TCStoreCell"];
+        [self setupTableViewRefreshView];
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, TCRealValue(48))];
         _tableView.tableHeaderView = headerView;
         
@@ -157,6 +168,7 @@
         label2.text = @"美味就是要分享";
         label2.font = [UIFont systemFontOfSize:9];
         [headerView addSubview:label2];
+        
     }
     return _tableView;
 }
