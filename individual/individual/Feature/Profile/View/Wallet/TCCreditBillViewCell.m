@@ -21,6 +21,8 @@
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
+@property (strong, nonatomic) UIView *lineView;
+
 @end
 
 @implementation TCCreditBillViewCell
@@ -36,7 +38,7 @@
     _creditBill = creditBill;
     
     self.titleLabel.text = [NSString stringWithFormat:@"%@账单",creditBill.monthDate];
-    self.subTitleLabel.text = [NSString stringWithFormat:@"%@-%@",[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:creditBill.zeroDate]],[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:creditBill.billDate]]];
+    self.subTitleLabel.text = [NSString stringWithFormat:@"%@-%@",[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:creditBill.zeroDate/1000]],[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:creditBill.billDate/1000]]];
     self.moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",creditBill.amount];
 }
 
@@ -46,6 +48,7 @@
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.subTitleLabel];
     [self.contentView addSubview:self.moneyLabel];
+    [self.contentView addSubview:self.lineView];
     
 //    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.left.equalTo(self.contentView).offset(TCRealValue(15));
@@ -55,7 +58,7 @@
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(TCRealValue(20));
-        make.top.equalTo(self.iconImageView).offset(3);
+        make.top.equalTo(self.contentView).offset(15);
         make.width.equalTo(@155);
     }];
     
@@ -70,6 +73,21 @@
         make.centerY.equalTo(self.contentView);
         make.height.equalTo(@30);
     }];
+    
+    [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).offset(TCRealValue(20));
+        make.right.equalTo(self.contentView).offset(-TCRealValue(20));
+        make.bottom.equalTo(self.contentView).offset(-0.5);
+        make.height.equalTo(@0.5);
+    }];
+}
+
+- (UIView *)lineView {
+    if (_lineView == nil) {
+        _lineView = [[UIView alloc] init];
+        _lineView.backgroundColor = TCSeparatorLineColor;
+    }
+    return _lineView;
 }
 
 - (NSDateFormatter *)dateFormatter {

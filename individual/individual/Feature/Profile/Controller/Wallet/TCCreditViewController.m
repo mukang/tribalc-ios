@@ -48,6 +48,33 @@
     [self loadData];
 }
 
+- (void)startAnimate {
+    CABasicAnimation*pathAnimation;
+    
+    pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+    pathAnimation.duration=1.0;
+
+    pathAnimation.repeatCount=1;
+    
+    pathAnimation.removedOnCompletion=NO;
+    
+    pathAnimation.timingFunction= [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    
+    pathAnimation.fromValue= [NSNumber numberWithInt:1.0];
+        
+    pathAnimation.toValue= [NSNumber numberWithInt:0.5];
+    
+//    pathAnimation.delegate=self;
+    
+    [_progressLayer addAnimation:pathAnimation forKey:@"strokeStart"];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+//    [self startAnimate];
+}
+
 - (void)loadData {
     @WeakObj(self)
     [MBProgressHUD showHUD:YES];
@@ -92,30 +119,25 @@
     _trackLayer = [CAShapeLayer new];
     [self.tableView.layer addSublayer:_trackLayer];
     _trackLayer.fillColor = nil;
-    _trackLayer.strokeColor=[UIColor grayColor].CGColor;
+    _trackLayer.strokeColor=TCRGBColor(223, 219, 223).CGColor;
     _trackLayer.path = _trackPath.CGPath;
     _trackLayer.lineWidth=5;
     _trackLayer.frame = mybound;
     
-    [self.tableView.layer addSublayer:self.gradientLayer];
-    self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
-    
     //内圆
-    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_4 endAngle:(M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit) + M_PI_4 clockwise:YES];
+    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:-((M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit))-M_PI_2 + (M_PI * 2) clockwise:YES];
 //    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:M_PI_2 endAngle:(M_PI * 2) * 0.6 + M_PI_2 clockwise:YES];
     
     _progressLayer = [CAShapeLayer new];
-    //    [self.tableView.tableHeaderView.layer addSublayer:_progressLayer];
     _progressLayer.fillColor = [UIColor clearColor].CGColor;
     _progressLayer.strokeColor=TCRGBColor(129, 184, 238).CGColor;
     _progressLayer.lineCap = kCALineCapRound;
-    _progressLayer.path = _progressPath.CGPath;
     _progressLayer.lineWidth=10;
+    _progressLayer.path = _progressPath.CGPath;
     _progressLayer.frame = CGRectMake(-(TCScreenWidth-170)/2, -15, 150, 150);
-    
-    [UIView animateWithDuration:1.0 animations:^{
-        self.gradientLayer.mask = _progressLayer;
-    }];
+    self.gradientLayer.mask = _progressLayer;
+    [self.tableView.layer addSublayer:self.gradientLayer];
+    self.gradientLayer.frame = CGRectMake((TCScreenWidth-170)/2, (200-170)/2, 170, 170);
 }
 
 #pragma mark UITableViewDataSource
@@ -154,13 +176,15 @@
         cell.imageView.image = [UIImage imageNamed:@"currentBill"];
         if (self.creditBill) {
             if ([self.creditBill.status isEqualToString:@"PAID"]) {
-                UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(TCScreenWidth-100, 15, 80, 15)];
+                UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(TCScreenWidth-90, 15, 70, 15)];
                 statusLabel.layer.borderColor = TCRGBColor(151, 171, 234).CGColor;
                 statusLabel.layer.borderWidth = 0.5;
                 statusLabel.text = @"账单已还清";
+                statusLabel.textAlignment = NSTextAlignmentCenter;
                 statusLabel.font = [UIFont systemFontOfSize:12];
                 statusLabel.textColor = TCRGBColor(151, 171, 234);
                 [cell addSubview:statusLabel];
+                cell.detailTextLabel.text = nil;
             }else{
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",self.creditBill.amount];
             }

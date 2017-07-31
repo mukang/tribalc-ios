@@ -24,7 +24,7 @@
 /** 还款日期 */
 @property (assign, nonatomic) int64_t repayDate;
 /** 创建日期 */
-@property (assign, nonatomic) int64_t createDate;
+@property (assign, nonatomic) int64_t createTime;
 /** 提现状态 */
 @property (copy, nonatomic) NSString *status;
 
