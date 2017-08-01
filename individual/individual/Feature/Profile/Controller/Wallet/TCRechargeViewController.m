@@ -361,6 +361,7 @@ TCRechargeMethodsViewDelegate>
                     }
                 }
             }
+            weakSelf.walletAccount.bankCards = bankCardList;
             weakSelf.methodsView.bankCardList = bankCardList;
             [weakSelf.methodsView reloadBankCardList];
         } else {

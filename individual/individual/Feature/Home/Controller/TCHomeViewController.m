@@ -131,7 +131,7 @@ TCHomeCoverViewDelegate>
     
     
     MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadOldData)];
-    refreshFooter.stateLabel.textColor = TCBlackColor;
+    refreshFooter.stateLabel.textColor = TCGrayColor;
     refreshFooter.stateLabel.font = [UIFont systemFontOfSize:14];
     refreshFooter.automaticallyHidden = YES;
     [refreshFooter setTitle:@"-我是有底线的-" forState:MJRefreshStateNoMoreData];

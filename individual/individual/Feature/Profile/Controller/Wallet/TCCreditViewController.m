@@ -93,7 +93,7 @@
 
 - (void)repay {
     
-    if (![self.creditBill.status isEqualToString:@"PAID"]) {
+    if (self.creditBill && ![self.creditBill.status isEqualToString:@"PAID"]) {
         if (self.companyID) {
             TCCompanyRepaymentViewController *vc = [[TCCompanyRepaymentViewController alloc] init];
             vc.walletAccount = self.walletAccount;
@@ -106,7 +106,7 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     }else {
-        [MBProgressHUD showHUDWithMessage:@"账单已还清" afterDelay:1.0];
+        [MBProgressHUD showHUDWithMessage:@"账单未出或已还清" afterDelay:1.0];
     }
 }
 
