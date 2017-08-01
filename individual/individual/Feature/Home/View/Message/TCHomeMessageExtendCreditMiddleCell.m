@@ -101,7 +101,6 @@
         make.top.equalTo(self.leftSubTitleLabel.mas_bottom).offset(5);
         
     }];
-
 }
 
 

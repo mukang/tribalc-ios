@@ -189,12 +189,12 @@ TCHomeCoverViewDelegate>
 - (void)loadNewData {
     @WeakObj(self)
     TCHomeMessage *firstMessage = (TCHomeMessage *)self.messageArr.firstObject;
-    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullFirstTime count:20 sinceTime:firstMessage.createDate result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullNewerList count:20 sinceTime:firstMessage.createTime result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_header endRefreshing];
         if (messageWrapper) {
             if ([messageWrapper.content isKindOfClass:[NSArray class]] && messageWrapper.content.count>0) {
-                [self.messageArr addObjectsFromArray:self.messageArr];
+                [self.messageArr insertObjects:messageWrapper.content atIndexes:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(0, messageWrapper.content.count)]];
                 NSMutableArray *mutableArr = [NSMutableArray arrayWithCapacity:0];
                 for (int i = 0; i < messageWrapper.content.count; i++) {
                     [mutableArr addObject: [NSIndexPath indexPathForRow:i inSection:0]];
@@ -211,7 +211,7 @@ TCHomeCoverViewDelegate>
 - (void)loadOldData {
     @WeakObj(self)
     TCHomeMessage *lastMessage = (TCHomeMessage *)self.messageArr.lastObject;
-    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullFirstTime count:20 sinceTime:lastMessage.createDate result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullOlderList count:20 sinceTime:lastMessage.createTime result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_footer endRefreshing];
         if (messageWrapper) {
@@ -271,9 +271,9 @@ TCHomeCoverViewDelegate>
     }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment) {
         return baseH+102;
     }else if (type == TCMessageTypeRentCheckIn) {
-        return baseH+143;
-    }else {
         return baseH+62;
+    }else {
+        return baseH+143;
     }
     
 //    return [tableView fd_heightForCellWithIdentifier:@"TCHomeMessageCell" configuration:^(TCHomeMessageCell *cell) {

@@ -49,6 +49,7 @@
         make.height.equalTo(@20);
         make.right.equalTo(self.middleView).offset(-20);
     }];
+
 }
 
 

@@ -35,9 +35,9 @@
 - (void)setHomeMessage:(TCHomeMessage *)homeMessage {
     [super setHomeMessage:homeMessage];
     
-    NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:homeMessage.messageBody.avatar];
+    NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:homeMessage.messageBody.avatar needTimestamp:NO];
     [self.iconImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
-    self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",homeMessage.messageBody.repaymentAmount];
+    self.moneyLabel.text = homeMessage.messageBody.body;
     self.moneyDesLabel.text = homeMessage.messageBody.desc;
     if (homeMessage.messageBody.applicationTime) {
         self.moneySubTitleLabel.text = [NSString stringWithFormat:@"申请日期:%@",[self.dataFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:homeMessage.messageBody.applicationTime/1000]]];

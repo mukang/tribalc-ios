@@ -2833,10 +2833,10 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
                 apiName = [NSString stringWithFormat:@"members/%@/homeMessages?limit=%zd", self.currentUserSession.assigned, count];
                 break;
             case TCDataListPullOlderList:
-                apiName = [NSString stringWithFormat:@"members/%@/homeMessages?limit=%zd&sinceTime=%zd&isNew=false", self.currentUserSession.assigned, count, sinceTime];
+                apiName = [NSString stringWithFormat:@"members/%@/homeMessages?limit=%zd&sinceTime=%lld&isNew=false", self.currentUserSession.assigned, count, sinceTime];
                 break;
             case TCDataListPullNewerList:
-                apiName = [NSString stringWithFormat:@"members/%@/homeMessages?limit=%zd&sinceTime=%zd&isNew=true", self.currentUserSession.assigned, count, sinceTime];
+                apiName = [NSString stringWithFormat:@"members/%@/homeMessages?limit=%zd&sinceTime=%lld&isNew=true", self.currentUserSession.assigned, count, sinceTime];
                 break;
                 
             default:

@@ -62,7 +62,7 @@
         self.titleLabel.text = homeMessage.messageBody.homeMessageType.homeMessageTypeCategory;
         
         NSString *dateStr;
-        NSDate *createDate = [NSDate dateWithTimeIntervalSince1970:homeMessage.createDate/1000];
+        NSDate *createDate = [NSDate dateWithTimeIntervalSince1970:homeMessage.createTime/1000];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"MM-dd"];
         NSString *str1 = [formatter stringFromDate:[NSDate date]];
