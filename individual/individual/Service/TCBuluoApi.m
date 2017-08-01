@@ -2530,7 +2530,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
 }
 
 - (void)fetchStoreListWithSellingPointId:(NSString *)sellingPointId limitSize:(NSInteger)limitSize sortSkip:(NSInteger)sortSkip sort:(NSString *)sort result:(void(^)(TCStoreWrapper *storeWrapper, NSError *error))resultBlock {
-    NSString *selfId = [self isUserSessionValid] ? [NSString stringWithFormat:@"selfId=%@",self.currentUserSession.assigned] : @"";
+    NSString *selfId = [self isUserSessionValid] ? [NSString stringWithFormat:@"me=%@",self.currentUserSession.assigned] : @"";
     NSString *sellingPointIdStr = sellingPointId ? [NSString stringWithFormat:@"&sellingPointId=%@",sellingPointId] : @"";
     NSString *limitSizeStr = limitSize ? [NSString stringWithFormat:@"&limitSize=%ld",(long)limitSize] : @"";
     NSString *sortSkipStr = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%ld",(long)sortSkip] : @"";
@@ -2545,12 +2545,6 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
             }
         } else {
             TCStoreWrapper *storeWrapper = [[TCStoreWrapper alloc] initWithObjectDictionary:response.data];
-//            NSArray *dics = response.data;
-//            NSMutableArray *temp = [NSMutableArray arrayWithCapacity:dics.count];
-//            for (NSDictionary *dic in dics) {
-//                TCRentProtocol *item = [[TCRentProtocol alloc] initWithObjectDictionary:dic];
-//                [temp addObject:item];
-//            }
             if (resultBlock) {
                 TC_CALL_ASYNC_MQ(resultBlock(storeWrapper, nil));
             }

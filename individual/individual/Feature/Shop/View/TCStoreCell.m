@@ -53,7 +53,7 @@
         NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:store.ID needTimestamp:NO];
         [self.iconImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
         
-        self.desLabel.text = store.desc;
+        self.desLabel.text = store.name;
         self.tagsLabel.text = [NSString stringWithFormat:@"%@ | %@", store.category, store.markPlace];
         NSString *moneyStr = [NSString stringWithFormat:@"¥%.0f",store.avgprice];
         NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
