@@ -58,6 +58,8 @@ BaofuFuFingerClientDelegate
 /** 是否是重新获取验证码 */
 @property (nonatomic, getter=isRefetchVCode) BOOL refetchVCode;
 
+@property (copy, nonatomic) NSString *walletID;
+
 @end
 
 @implementation TCPaymentViewController {
@@ -407,7 +409,7 @@ BaofuFuFingerClientDelegate
 - (void)handleTapChangePaymentMethodView {
     // 获取银行卡列表
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletAccount.ID result:^(NSArray *bankCardList, NSError *error) {
+    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletID result:^(NSArray *bankCardList, NSError *error) {
         if (error) {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取支付方式失败，%@", reason]];
@@ -436,6 +438,7 @@ BaofuFuFingerClientDelegate
         if (walletAccount) {
             [MBProgressHUD hideHUD:YES];
             weakSelf.walletAccount = walletAccount;
+            weakSelf.walletID = walletAccount.ID;
             
             if (!walletAccount.password) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未设置支付密码\n请先设置支付密码，再进行付款" preferredStyle:UIAlertControllerStyleAlert];
@@ -595,7 +598,7 @@ BaofuFuFingerClientDelegate
     requestInfo.targetId = self.targetID;
     requestInfo.totalFee = self.totalFee;
     requestInfo.orderIds = self.orderIDs;
-    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose walletID:self.walletAccount.ID result:^(TCUserPayment *userPayment, NSError *error) {
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose walletID:self.walletID result:^(TCUserPayment *userPayment, NSError *error) {
         if (userPayment) {
             weakSelf.payment = userPayment;
             [weakSelf fetchBFSessionInfoWithPaymentID:userPayment.ID refetchVCode:NO];
@@ -745,6 +748,14 @@ BaofuFuFingerClientDelegate
         _bankInfoList = [NSArray arrayWithContentsOfFile:path];
     }
     return _bankInfoList;
+}
+
+- (NSString *)walletID {
+    if (_walletID == nil) {
+        // 钱包id和用户id一样
+        _walletID = [[TCBuluoApi api] currentUserSession].assigned;
+    }
+    return _walletID;
 }
 
 - (void)didReceiveMemoryWarning {
