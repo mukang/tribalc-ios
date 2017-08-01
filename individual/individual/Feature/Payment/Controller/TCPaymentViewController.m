@@ -449,7 +449,17 @@ BaofuFuFingerClientDelegate
                 return;
             }
             
-            if (weakSelf.totalFee > walletAccount.balance) {
+            BOOL needRecharge = NO;
+            if ([walletAccount.creditStatus isEqualToString:@"NORMAL"]) {
+                if (weakSelf.totalFee > (walletAccount.balance + walletAccount.creditLimit - walletAccount.creditBalance)) {
+                    needRecharge = YES;
+                }
+            } else {
+                if (weakSelf.totalFee > walletAccount.balance) {
+                    needRecharge = YES;
+                }
+            }
+            if (needRecharge) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您的钱包余额不足，请充值" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     [weakSelf showRechargeViewController];

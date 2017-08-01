@@ -13,7 +13,7 @@
 /** 与用户id一致 */
 @property (copy, nonatomic) NSString *ID;
 /** 账户余额 */
-@property (nonatomic) CGFloat balance;
+@property (nonatomic) double balance;
 /** 账户余额中不可提现金额 */
 @property (nonatomic) double limitedBalance;
 /** 账户类型 Default PROTOCOL From {
