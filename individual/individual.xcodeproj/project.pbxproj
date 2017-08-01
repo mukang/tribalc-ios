@@ -201,6 +201,9 @@
 		7A243F351F288EB700192E22 /* TCCompanyWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A243F341F288EB700192E22 /* TCCompanyWalletViewController.m */; };
 		7A243F3B1F28934800192E22 /* TCCompanyWalletTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A243F3A1F28934800192E22 /* TCCompanyWalletTitleView.m */; };
 		7A27F9CF1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A27F9CE1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m */; };
+		7A29366B1F3087CA002ACE31 /* BaofuFuFingerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A2936671F3087CA002ACE31 /* BaofuFuFingerSDK.framework */; };
+		7A29366C1F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A2936681F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a */; };
+		7A29366E1F3087CA002ACE31 /* libEgisDID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A29366A1F3087CA002ACE31 /* libEgisDID.a */; };
 		7A2966761F220EA70073E632 /* TCWalletCreditLimitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2966751F220EA70073E632 /* TCWalletCreditLimitView.m */; };
 		7A2A77321E6D4426000CFAA8 /* intro_image_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */; };
 		7A2A77331E6D4426000CFAA8 /* intro_image_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A77301E6D4426000CFAA8 /* intro_image_02.png */; };
@@ -363,9 +366,6 @@
 		7AB03F0F1EC3017100DFB037 /* HD4.0''.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB03F0C1EC3017100DFB037 /* HD4.0''.png */; };
 		7AB03F101EC3017100DFB037 /* HD4.7''.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB03F0D1EC3017100DFB037 /* HD4.7''.png */; };
 		7AB03F111EC3017100DFB037 /* HD5.5''.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB03F0E1EC3017100DFB037 /* HD5.5''.png */; };
-		7AB03F1F1EC4459600DFB037 /* dfp_iossdk_lu_3.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AB03F1E1EC4459600DFB037 /* dfp_iossdk_lu_3.3.3.a */; };
-		7AB03F211EC445A000DFB037 /* libEgisDID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AB03F201EC445A000DFB037 /* libEgisDID.a */; };
-		7AB03F231EC445A700DFB037 /* BaofuFuFingerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AB03F221EC445A700DFB037 /* BaofuFuFingerSDK.framework */; };
 		7AB03F261EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB03F251EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m */; };
 		7AB111D41E151CD3002B7259 /* TCRechargeMethodsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB111D31E151CD3002B7259 /* TCRechargeMethodsView.m */; };
 		7AB29F2B1DD40D0F00564D93 /* MBProgressHUD+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB29F2A1DD40D0F00564D93 /* MBProgressHUD+Category.m */; };
@@ -825,6 +825,9 @@
 		7A243F3A1F28934800192E22 /* TCCompanyWalletTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyWalletTitleView.m; sourceTree = "<group>"; };
 		7A27F9CD1EA8980C00B9BCFE /* TCRechargeMethodViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeMethodViewCell.h; sourceTree = "<group>"; };
 		7A27F9CE1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeMethodViewCell.m; sourceTree = "<group>"; };
+		7A2936671F3087CA002ACE31 /* BaofuFuFingerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaofuFuFingerSDK.framework; sourceTree = "<group>"; };
+		7A2936681F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = dfp_iossdk_lu_3.3.3.a; sourceTree = "<group>"; };
+		7A29366A1F3087CA002ACE31 /* libEgisDID.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEgisDID.a; sourceTree = "<group>"; };
 		7A2966741F220EA70073E632 /* TCWalletCreditLimitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletCreditLimitView.h; sourceTree = "<group>"; };
 		7A2966751F220EA70073E632 /* TCWalletCreditLimitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletCreditLimitView.m; sourceTree = "<group>"; };
 		7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_01.png; sourceTree = "<group>"; };
@@ -1123,9 +1126,6 @@
 		7AB03F0C1EC3017100DFB037 /* HD4.0''.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD4.0''.png"; sourceTree = "<group>"; };
 		7AB03F0D1EC3017100DFB037 /* HD4.7''.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD4.7''.png"; sourceTree = "<group>"; };
 		7AB03F0E1EC3017100DFB037 /* HD5.5''.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HD5.5''.png"; sourceTree = "<group>"; };
-		7AB03F1E1EC4459600DFB037 /* dfp_iossdk_lu_3.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = dfp_iossdk_lu_3.3.3.a; sourceTree = "<group>"; };
-		7AB03F201EC445A000DFB037 /* libEgisDID.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEgisDID.a; sourceTree = "<group>"; };
-		7AB03F221EC445A700DFB037 /* BaofuFuFingerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaofuFuFingerSDK.framework; sourceTree = "<group>"; };
 		7AB03F241EC452B900DFB037 /* TCRechargeAddBankCardViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeAddBankCardViewCell.h; sourceTree = "<group>"; };
 		7AB03F251EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRechargeAddBankCardViewCell.m; sourceTree = "<group>"; };
 		7AB111D21E151CD3002B7259 /* TCRechargeMethodsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeMethodsView.h; sourceTree = "<group>"; };
@@ -1285,6 +1285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				550FB7451ED2F5E300D75E33 /* SystemConfiguration.framework in Frameworks */,
+				7A29366C1F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a in Frameworks */,
 				550FB7431ED2F5BB00D75E33 /* UserNotifications.framework in Frameworks */,
 				559D84911E0C019F00982697 /* libxml2.tbd in Frameworks */,
 				559D848F1E0C018300982697 /* AVFoundation.framework in Frameworks */,
@@ -1304,16 +1305,15 @@
 				559D84751E0C00C700982697 /* CoreAudio.framework in Frameworks */,
 				559D84731E0C00BB00982697 /* CoreMedia.framework in Frameworks */,
 				559D84711E0C00B200982697 /* CoreTelephony.framework in Frameworks */,
+				7A29366E1F3087CA002ACE31 /* libEgisDID.a in Frameworks */,
 				559D846F1E0C00A700982697 /* CoreVideo.framework in Frameworks */,
 				559D846D1E0C009B00982697 /* CoreLocation.framework in Frameworks */,
 				559D846B1E0C009300982697 /* QuartzCore.framework in Frameworks */,
+				7A29366B1F3087CA002ACE31 /* BaofuFuFingerSDK.framework in Frameworks */,
 				559D84691E0C008800982697 /* OpenGLES.framework in Frameworks */,
 				559D84671E0C007E00982697 /* MessageUI.framework in Frameworks */,
-				7AB03F231EC445A700DFB037 /* BaofuFuFingerSDK.framework in Frameworks */,
 				D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */,
 				7A64EA7A1E14EC55008D0C12 /* libWeChatSDK.a in Frameworks */,
-				7AB03F1F1EC4459600DFB037 /* dfp_iossdk_lu_3.3.3.a in Frameworks */,
-				7AB03F211EC445A000DFB037 /* libEgisDID.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2651,9 +2651,9 @@
 		7AB03EFA1EC0759100DFB037 /* BaoFu */ = {
 			isa = PBXGroup;
 			children = (
-				7AB03F1E1EC4459600DFB037 /* dfp_iossdk_lu_3.3.3.a */,
-				7AB03F201EC445A000DFB037 /* libEgisDID.a */,
-				7AB03F221EC445A700DFB037 /* BaofuFuFingerSDK.framework */,
+				7A2936671F3087CA002ACE31 /* BaofuFuFingerSDK.framework */,
+				7A2936681F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a */,
+				7A29366A1F3087CA002ACE31 /* libEgisDID.a */,
 			);
 			path = BaoFu;
 			sourceTree = "<group>";
@@ -3750,7 +3750,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/individual/Common/Libs/BaoFu",
-					"$(PROJECT_DIR)/individual/Common/Libs/BaoFuSimulator",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
@@ -3828,7 +3827,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/individual/Common/Libs/BaoFu",
-					"$(PROJECT_DIR)/individual/Common/Libs/BaoFuSimulator",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = individual/PrefixHeader.pch;
