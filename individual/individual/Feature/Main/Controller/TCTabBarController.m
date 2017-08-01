@@ -58,7 +58,6 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [self setValue:[[TCTabBar alloc] init] forKey:@"tabBar"];
     
     [self registerNotifications];
-    [self handleShowIntroView];
     [self setupAMapServices];
 }
 
@@ -66,6 +65,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [super viewDidAppear:animated];
     
     [self checkUserNeedLogin];
+    [self handleShowIntroView];
 }
 
 - (void)dealloc {
@@ -173,11 +173,11 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
         EAIntroPage *introPage = [EAIntroPage pageWithCustomView:imageView];
         [tempArray addObject:introPage];
     }
-    EAIntroView *introView = [[EAIntroView alloc] initWithFrame:self.view.bounds andPages:tempArray];
+    EAIntroView *introView = [[EAIntroView alloc] initWithFrame:[UIScreen mainScreen].bounds andPages:tempArray];
     introView.skipButton.hidden = YES;
     introView.pageControl.hidden = YES;
     introView.scrollView.bounces = NO;
-    [introView showInView:self.view animateDuration:0];
+    [introView showInView:[UIApplication sharedApplication].keyWindow animateDuration:0];
 }
 
 - (BOOL)isFirstLaunch {
