@@ -20,12 +20,15 @@
 #import "TCHomeBannerView.h"
 #import "TCHomeCoverView.h"
 #import "TCHomeMessageCell.h"
+#import "TCHomeMessageSubTitleCell.h"
+#import "TCHomeMessageMoneyMiddleCell.h"
+#import "TCHomeMessageExtendCreditMiddleCell.h"
+#import "TCHomeMessageOnlyMainTitleMiddleCell.h"
 
 #import "TCBuluoApi.h"
 
 #import <TCCommonLibs/UIImage+Category.h>
 #import <MJRefresh/MJRefresh.h>
-#import <UITableView+FDTemplateLayoutCell.h>
 
 #define toolsViewH     96
 #define bannerViewH    (TCRealValue(75) + 7.5)
@@ -126,6 +129,10 @@ TCHomeCoverViewDelegate>
     tableView.scrollIndicatorInsets = UIEdgeInsetsMake(insetTop, 0, 0, 0);
     [tableView setContentOffset:CGPointMake(0, -insetTop)];
     [tableView registerClass:[TCHomeMessageCell class] forCellReuseIdentifier:@"TCHomeMessageCell"];
+    [tableView registerClass:[TCHomeMessageOnlyMainTitleMiddleCell class] forCellReuseIdentifier:@"TCHomeMessageOnlyMainTitleMiddleCell"];
+    [tableView registerClass:[TCHomeMessageSubTitleCell class] forCellReuseIdentifier:@"TCHomeMessageSubTitleCell"];
+    [tableView registerClass:[TCHomeMessageExtendCreditMiddleCell class] forCellReuseIdentifier:@"TCHomeMessageExtendCreditMiddleCell"];
+    [tableView registerClass:[TCHomeMessageMoneyMiddleCell class] forCellReuseIdentifier:@"TCHomeMessageMoneyMiddleCell"];
     [self.view insertSubview:tableView belowSubview:self.toolBarView];
     self.tableView = tableView;
     
@@ -231,8 +238,22 @@ TCHomeCoverViewDelegate>
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TCHomeMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageCell" forIndexPath:indexPath];
-    cell.homeMessage = self.messageArr[indexPath.row];
+    
+    TCHomeMessage *message = self.messageArr[indexPath.row];
+    TCMessageType type = message.messageBody.homeMessageType.type;
+    TCHomeMessageCell *cell;
+    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageMoneyMiddleCell" forIndexPath:indexPath];
+    }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageExtendCreditMiddleCell" forIndexPath:indexPath];
+    }else if (type == TCMessageTypeRentCheckIn) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageOnlyMainTitleMiddleCell" forIndexPath:indexPath];
+    }else {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageSubTitleCell" forIndexPath:indexPath];
+    }
+    
+//    TCHomeMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageCell" forIndexPath:indexPath];
+    cell.homeMessage = message;
     cell.delegate = self;
     return cell;
 }
@@ -240,9 +261,24 @@ TCHomeCoverViewDelegate>
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView fd_heightForCellWithIdentifier:@"TCHomeMessageCell" configuration:^(TCHomeMessageCell *cell) {
-        cell.homeMessage = self.messageArr[indexPath.row];
-    }];
+    
+    TCHomeMessage *message = self.messageArr[indexPath.row];
+    TCMessageType type = message.messageBody.homeMessageType.type;
+    CGFloat scale = TCScreenWidth > 375.0 ? 3 : 2;
+    CGFloat baseH = 80+4*(1/scale);
+    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw) {
+        return baseH+102;
+    }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment) {
+        return baseH+102;
+    }else if (type == TCMessageTypeRentCheckIn) {
+        return baseH+143;
+    }else {
+        return baseH+62;
+    }
+    
+//    return [tableView fd_heightForCellWithIdentifier:@"TCHomeMessageCell" configuration:^(TCHomeMessageCell *cell) {
+//        cell.homeMessage = self.messageArr[indexPath.row];
+//    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

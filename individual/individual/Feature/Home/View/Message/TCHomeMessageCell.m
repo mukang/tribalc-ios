@@ -28,8 +28,6 @@
 
 @property (strong, nonatomic) UIView *lineView2;
 
-@property (strong, nonatomic) UIView *middleView;
-
 @property (strong, nonatomic) UIView *lineView3;
 
 @property (strong, nonatomic) UIButton *checkBtn;
@@ -92,41 +90,41 @@
             self.titleIcon.image = [UIImage imageNamed:@"bussinessAssistantIcon"];
         }
         
-        if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw) {
-            [self.currentView removeFromSuperview];
-            [self.middleView addSubview:self.moneyMiddleView];
-            self.moneyMiddleView.homeMessage = homeMessage;
-            [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.equalTo(@102);
-            }];
-            self.currentView = self.moneyMiddleView;
-        }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment) {
-            [self.currentView removeFromSuperview];
-            [self.middleView addSubview:self.extendCreditMiddleView];
-            self.extendCreditMiddleView.homeMessage = homeMessage;
-            [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.equalTo(@102);
-            }];
-            self.currentView = self.extendCreditMiddleView;
-        }else if (type == TCMessageTypeRentCheckIn) {
-            [self.currentView removeFromSuperview];
-            [self.middleView addSubview:self.onlyMainTitleMiddleView];
-            self.onlyMainTitleMiddleView.homeMessage = homeMessage;
-            [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.equalTo(@62);
-            }];
-            self.currentView = self.onlyMainTitleMiddleView;
-        }else {
-            [self.currentView removeFromSuperview];
-            [self.middleView addSubview:self.subTitleMiddleView];
-            self.subTitleMiddleView.homeMessage = homeMessage;
-            [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.equalTo(@143);
-            }];
-            self.currentView = self.subTitleMiddleView;
-        }
-        [self setNeedsUpdateConstraints];
-        [self updateConstraintsIfNeeded];
+//        if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw) {
+//            [self.currentView removeFromSuperview];
+//            [self.middleView addSubview:self.moneyMiddleView];
+//            self.moneyMiddleView.homeMessage = homeMessage;
+//            [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.height.equalTo(@102);
+//            }];
+//            self.currentView = self.moneyMiddleView;
+//        }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment) {
+//            [self.currentView removeFromSuperview];
+//            [self.middleView addSubview:self.extendCreditMiddleView];
+//            self.extendCreditMiddleView.homeMessage = homeMessage;
+//            [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.height.equalTo(@102);
+//            }];
+//            self.currentView = self.extendCreditMiddleView;
+//        }else if (type == TCMessageTypeRentCheckIn) {
+//            [self.currentView removeFromSuperview];
+//            [self.middleView addSubview:self.onlyMainTitleMiddleView];
+//            self.onlyMainTitleMiddleView.homeMessage = homeMessage;
+//            [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.height.equalTo(@62);
+//            }];
+//            self.currentView = self.onlyMainTitleMiddleView;
+//        }else {
+//            [self.currentView removeFromSuperview];
+//            [self.middleView addSubview:self.subTitleMiddleView];
+//            self.subTitleMiddleView.homeMessage = homeMessage;
+//            [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.height.equalTo(@143);
+//            }];
+//            self.currentView = self.subTitleMiddleView;
+//        }
+//        [self setNeedsUpdateConstraints];
+//        [self updateConstraintsIfNeeded];
     }
 }
 
@@ -217,6 +215,14 @@
     }];
     
 
+}
+
+- (NSDateFormatter *)dataFormatter {
+    if (_dataFormatter == nil) {
+        _dataFormatter = [[NSDateFormatter alloc] init];
+        [_dataFormatter setDateFormat:@"yyyy-MM-dd"];
+    }
+    return _dataFormatter;
 }
 
 - (TCMessageMiddleView *)extendCreditMiddleView {
