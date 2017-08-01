@@ -208,7 +208,7 @@
         iconImageView.layer.cornerRadius = TCRealValue(64)/2;
         iconImageView.clipsToBounds = YES;
         [headerView addSubview:iconImageView];
-        NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:[TCBuluoApi api].currentUserSession.userInfo.picture];
+        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:[TCBuluoApi api].currentUserSession.assigned needTimestamp:YES];
         [iconImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
         
         [iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
