@@ -278,12 +278,8 @@
         _iconImageView.layer.borderColor = TCBackgroundColor.CGColor;
         _iconImageView.clipsToBounds = YES;
         TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
-        if (userInfo.picture) {
-            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:userInfo.picture];
-            [_iconImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
-        } else {
-            [_iconImageView setImage:[UIImage imageNamed:@"profile_default_avatar_icon"]];
-        }
+        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userInfo.ID needTimestamp:YES];
+        [_iconImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
     }
     return _iconImageView;
 }

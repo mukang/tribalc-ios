@@ -82,13 +82,13 @@
         NSString *str = nil;
         switch (privilege.privilegeType) {
             case TCPrivilegeTypeDiscount:
-                str = [NSString stringWithFormat:@"满%0.0f元%0.2f折", privilege.condition, privilege.value * 10];
+                str = [NSString stringWithFormat:@"满%0.2f元%0.2f折", privilege.condition, privilege.value * 10];
                 break;
             case TCPrivilegeTypeReduce:
-                str = [NSString stringWithFormat:@"满%0.0f元减%0.0f元", privilege.condition, privilege.value];
+                str = [NSString stringWithFormat:@"满%0.2f元减%0.2f元", privilege.condition, privilege.value];
                 break;
             case TCPrivilegeTypeAliquot:
-                str = [NSString stringWithFormat:@"每满%0.0f元减%0.0f", privilege.condition, privilege.value];
+                str = [NSString stringWithFormat:@"每满%0.2f元减%0.2f", privilege.condition, privilege.value];
                 break;
                 
             default:
