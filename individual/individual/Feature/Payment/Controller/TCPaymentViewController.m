@@ -157,7 +157,7 @@ BaofuFuFingerClientDelegate
     self.containerView = containerView;
     
     TCPaymentDetailView *paymentDetailView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentDetailView" owner:nil options:nil].lastObject;
-    paymentDetailView.totalFee = self.totalFee;
+    paymentDetailView.totalFee = self.displayedFee ?: self.totalFee;
     paymentDetailView.methodLabel.text = @"余额支付";
     paymentDetailView.delegate = self;
     paymentDetailView.frame = containerView.bounds;
@@ -263,9 +263,11 @@ BaofuFuFingerClientDelegate
  显示余额充值页面
  */
 - (void)showRechargeViewController {
+    double fee = self.displayedFee ?: self.totalFee;
+    double balance = [self.walletAccount.creditStatus isEqualToString:@"NORMAL"] ? (self.walletAccount.balance + self.walletAccount.creditLimit - self.walletAccount.creditBalance) : self.walletAccount.balance;
     TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
     vc.walletAccount = self.walletAccount;
-    vc.suggestMoney = self.totalFee - self.walletAccount.balance;
+    vc.suggestMoney = fee - balance;
     vc.completionBlock = ^() {
         
     };
@@ -452,17 +454,9 @@ BaofuFuFingerClientDelegate
                 return;
             }
             
-            BOOL needRecharge = NO;
-            if ([walletAccount.creditStatus isEqualToString:@"NORMAL"]) {
-                if (weakSelf.totalFee > (walletAccount.balance + walletAccount.creditLimit - walletAccount.creditBalance)) {
-                    needRecharge = YES;
-                }
-            } else {
-                if (weakSelf.totalFee > walletAccount.balance) {
-                    needRecharge = YES;
-                }
-            }
-            if (needRecharge) {
+            double fee = weakSelf.displayedFee ?: weakSelf.totalFee;
+            double balance = [walletAccount.creditStatus isEqualToString:@"NORMAL"] ? (walletAccount.balance + walletAccount.creditLimit - walletAccount.creditBalance) : walletAccount.balance;
+            if (fee > balance) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您的钱包余额不足，请充值" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     [weakSelf showRechargeViewController];
