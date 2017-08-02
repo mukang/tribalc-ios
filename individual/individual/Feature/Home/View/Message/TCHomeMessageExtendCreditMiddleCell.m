@@ -58,7 +58,7 @@
         self.rightSubTitleLabel.text = [NSString stringWithFormat:@"应还金额:%.2f",homeMessage.messageBody.repaymentAmount];
     }else if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeCreditBillPayment) {
         self.rightSubTitleLabel.hidden = YES;
-        self.leftSubTitleLabel.text = [NSString stringWithFormat:@"应还金额:%.2f",homeMessage.messageBody.repaymentAmount];
+        self.leftSubTitleLabel.text = [NSString stringWithFormat:@"还款金额:%.2f",homeMessage.messageBody.repaymentAmount];
     }else if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeCreditDisable) {
         self.leftSubTitleLabel.text = homeMessage.messageBody.desc;
         self.rightSubTitleLabel.hidden = YES;

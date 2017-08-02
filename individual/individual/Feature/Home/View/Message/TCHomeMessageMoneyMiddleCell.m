@@ -78,7 +78,7 @@
     }];
     
     [self.moneySubTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.height.equalTo(self.moneyDesLabel);
+        make.left.right.equalTo(self.moneyDesLabel);
         make.top.equalTo(self.moneyDesLabel.mas_bottom).offset(5);
     }];
 }
@@ -99,6 +99,7 @@
         _moneyDesLabel = [[UILabel alloc] init];
         _moneyDesLabel.textColor = TCBlackColor;
         _moneyDesLabel.font = [UIFont systemFontOfSize:12];
+        _moneyDesLabel.numberOfLines = 0;
     }
     return _moneyDesLabel;
 }
