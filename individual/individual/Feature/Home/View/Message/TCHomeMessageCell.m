@@ -10,7 +10,7 @@
 #import "TCHomeMessage.h"
 #import "TCMessageMiddleView.h"
 
-#define kScale (TCScreenWidth > 375 ? 3 : 2)
+#define kScale (TCScreenWidth > 375 ? 3.0 : 2.0)
 
 @interface TCHomeMessageCell ()
 
@@ -186,7 +186,7 @@
     [self.lineView2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.contentView);
         make.top.equalTo(self.lineView1.mas_bottom).offset(40);
-        make.height.equalTo(@(1/kScale));
+        make.height.equalTo(self.lineView1);
     }];
     
     [self.middleView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -198,7 +198,7 @@
     [self.lineView3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.contentView);
         make.top.equalTo(self.middleView.mas_bottom);
-        make.height.equalTo(@(1/kScale));
+        make.height.equalTo(self.lineView1);
     }];
     
     [self.checkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -210,7 +210,7 @@
     [self.lineView4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.contentView);
         make.top.equalTo(self.checkBtn.mas_bottom);
-        make.height.equalTo(@(1/kScale));
+        make.height.equalTo(self.lineView1);
         make.bottom.equalTo(self.contentView);
     }];
     
@@ -256,7 +256,7 @@
 - (UIView *)lineView4 {
     if (_lineView4 == nil) {
         _lineView4 = [[UIView alloc] init];
-        _lineView4.backgroundColor = TCSeparatorLineColor;
+        _lineView4.backgroundColor = TCBackgroundColor;
     }
     return _lineView4;
 }
@@ -274,7 +274,7 @@
 - (UIView *)lineView3 {
     if (_lineView3 == nil) {
         _lineView3 = [[UIView alloc] init];
-        _lineView3.backgroundColor = TCSeparatorLineColor;
+        _lineView3.backgroundColor = TCBackgroundColor;
     }
     return _lineView3;
 }
@@ -290,7 +290,7 @@
 - (UIView *)lineView2 {
     if (_lineView2 == nil) {
         _lineView2 = [[UIView alloc] init];
-        _lineView2.backgroundColor = TCSeparatorLineColor;
+        _lineView2.backgroundColor = TCBackgroundColor;
     }
     return _lineView2;
 }
@@ -336,7 +336,7 @@
 - (UIView *)lineView1 {
     if (_lineView1 == nil) {
         _lineView1 = [[UIView alloc] init];
-        _lineView1.backgroundColor = TCSeparatorLineColor;
+        _lineView1.backgroundColor = TCBackgroundColor;
     }
     return _lineView1;
 }

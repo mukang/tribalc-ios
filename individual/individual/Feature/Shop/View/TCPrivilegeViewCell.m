@@ -78,11 +78,11 @@
     
     hour = startSecond / 3600;
     minute = (startSecond / 60) % 60;
-    NSString *startStr = [NSString stringWithFormat:@"%02zd:%02zd", hour, minute];
+    NSString *startStr = [NSString stringWithFormat:@"%02lld:%02lld", hour, minute];
     
     hour = endSecond / 3600;
     minute = (endSecond / 60) % 60;
-    NSString *endStr = (startSecond < endSecond) ? [NSString stringWithFormat:@"%02zd:%02zd", hour, minute] : [NSString stringWithFormat:@"次日%02zd:%02zd", hour, minute];
+    NSString *endStr = (startSecond < endSecond) ? [NSString stringWithFormat:@"%02lld:%02lld", hour, minute] : [NSString stringWithFormat:@"次日%02lld:%02lld", hour, minute];
     
     self.validLabel.text = [NSString stringWithFormat:@"（有效时间：每天%@-%@）", startStr, endStr];
 }
