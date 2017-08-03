@@ -66,7 +66,7 @@
     label.text = [NSString stringWithFormat:@"地址    %@", storeInfo.address];
     
     label = self.labels[1];
-    label.text = [NSString stringWithFormat:@"电话    %@", storeInfo.phone];
+    label.text = [NSString stringWithFormat:@"电话    %@", storeInfo.serviceLine];
     
     label = self.labels[2];
     label.text = [NSString stringWithFormat:@"时间    %@", storeInfo.businessHours];

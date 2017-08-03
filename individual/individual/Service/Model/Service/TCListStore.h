@@ -57,7 +57,7 @@
 /** 营业时间 */
 @property (copy, nonatomic) NSString *businessHours;
 /** 电话 */
-@property (copy, nonatomic) NSString *phone;
+@property (copy, nonatomic) NSString *serviceLine;
 /** 优惠信息 */
 @property (copy, nonatomic) NSArray *privileges;
 
