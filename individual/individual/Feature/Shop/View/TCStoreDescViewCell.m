@@ -51,6 +51,7 @@
     
     UILabel *descLabel = [[UILabel alloc] init];
     descLabel.textAlignment = NSTextAlignmentLeft;
+    descLabel.numberOfLines = 0;
     [self.contentView addSubview:descLabel];
     
     self.nameLabel = nameLabel;
