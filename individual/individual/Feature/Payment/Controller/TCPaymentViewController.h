@@ -28,6 +28,8 @@
 /** 付款目的 */
 @property (nonatomic, readonly) TCPayPurpose payPurpose;
 
+/** 显示的费用，例如优惠后的价格 */
+@property (nonatomic) double displayedFee;
 /** 订单ID数组
  （payPurpose为TCPayPurposeOrder时，必填） */
 @property (copy, nonatomic) NSArray *orderIDs;

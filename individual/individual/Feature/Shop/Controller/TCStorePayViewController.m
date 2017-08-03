@@ -121,7 +121,7 @@
         startSecond = [[privilege.activityTime firstObject] longLongValue];
         endSecond = [[privilege.activityTime lastObject] longLongValue];
         if (startSecond < endSecond) {
-            if (startSecond <= currentSecond <= endSecond) {
+            if (currentSecond >= startSecond && currentSecond <= endSecond) {
                 [temp addObject:privilege];
             }
         } else {
@@ -268,7 +268,7 @@
 
 - (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
     TCPaySuccessViewController *paySuccessVC = [[TCPaySuccessViewController alloc] init];
-    paySuccessVC.totalAmount = payment.totalAmount;
+    paySuccessVC.totalAmount = self.realAmount;
     paySuccessVC.storeName = self.navigationItem.title;
     paySuccessVC.fromController = self.fromController;
     [self.navigationController pushViewController:paySuccessVC animated:YES];
@@ -344,6 +344,7 @@
     TCPaymentViewController *vc = [[TCPaymentViewController alloc] initWithTotalFee:self.amount
                                                                          payPurpose:TCPayPurposeFace2Face
                                                                      fromController:self];
+    vc.displayedFee = self.realAmount;
     vc.delegate = self;
     vc.targetID = self.storeID;
     [vc show:YES];
