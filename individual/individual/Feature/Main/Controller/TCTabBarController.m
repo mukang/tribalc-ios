@@ -48,6 +48,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     
     weakSelf = self;
     self.updateIsShow = NO;
+    self.tabBar.translucent = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self addChildController:[[TCHomeViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
@@ -55,7 +56,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [self addChildController:[[TCToolsViewController alloc] init] title:@"常用" image:@"tabBar_common_normal" selectedImage:@"tabBar_common_selected"];
     [self addChildController:[[TCProfileViewController alloc] init] title:@"我的" image:@"tabBar_profile_normal" selectedImage:@"tabBar_profile_selected"];
     
-    [self setValue:[[TCTabBar alloc] init] forKey:@"tabBar"];
+//    [self setValue:[[TCTabBar alloc] init] forKey:@"tabBar"];
     
     [self registerNotifications];
     [self setupAMapServices];
