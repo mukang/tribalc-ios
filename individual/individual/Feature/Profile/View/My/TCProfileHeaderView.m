@@ -33,6 +33,7 @@
 
 - (void)setupSubviews {
     UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.image = [UIImage imageNamed:@"profile_header_bg"];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:imageView];
     

@@ -63,6 +63,7 @@
     [self setupSubviews];
     [self updateNavigationBarWithAlpha:0.0];
     [self registerNotifications];
+    [self reloadUserData];
 }
 
 - (void)dealloc {
