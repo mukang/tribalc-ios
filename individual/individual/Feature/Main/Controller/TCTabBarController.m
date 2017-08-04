@@ -113,6 +113,9 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(fetchAppVersionInfo)
                                                  name:TCClientNeedForceUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showLoginViewController)
+                                                 name:TCBuluoApiNotificationUserDidLogout object:nil];
 }
 
 - (void)removeNotifications {
