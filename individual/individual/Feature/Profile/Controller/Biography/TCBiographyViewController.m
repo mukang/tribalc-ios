@@ -27,6 +27,7 @@
 #import <TCCommonLibs/TCImageCompressHandler.h>
 #import <TCCommonLibs/TCImageURLSynthesizer.h>
 
+#import <SDWebImage/SDWebImageManager.h>
 #import <UIImageView+WebCache.h>
 
 @interface TCBiographyViewController () <UITableViewDelegate, UITableViewDataSource, TCPhotoModeViewDelegate, TCPhotoPickerDelegate>
@@ -157,7 +158,7 @@
         TCBiographyAvatarViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBiographyAvatarViewCell" forIndexPath:indexPath];
         UIImage *currentAvatarImage = cell.avatarImageView.image;
         NSString *userID = [[TCBuluoApi api] currentUserSession].assigned;
-        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userID needTimestamp:YES];
+        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userID needTimestamp:NO];
         UIImage *placeholderImage = [UIImage imageNamed:@"profile_default_avatar_icon"];
         if (currentAvatarImage) {
             placeholderImage = currentAvatarImage;
@@ -286,14 +287,23 @@
     NSString *imagePath = [TCImageURLSynthesizer synthesizeImagePathWithName:name source:kTCImageSourceOSS];
     [[TCBuluoApi api] changeUserAvatar:imagePath result:^(BOOL success, NSError *error) {
         if (success) {
-            [MBProgressHUD hideHUD:YES];
-            [weakSelf.tableView reloadData];
-            if (weakSelf.bioEditBlock) {
-                weakSelf.bioEditBlock();
-            }
+            [weakSelf handleRemoveImageWithImagePath:imagePath];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"头像上传失败，%@", reason]];
+        }
+    }];
+}
+
+- (void)handleRemoveImageWithImagePath:(NSString *)imagePath {
+    NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:imagePath];
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    NSString *cacheKey = [manager cacheKeyForURL:URL];
+    [manager.imageCache removeImageForKey:cacheKey withCompletion:^{
+        [MBProgressHUD hideHUD:YES];
+        [weakSelf.tableView reloadData];
+        if (weakSelf.bioEditBlock) {
+            weakSelf.bioEditBlock();
         }
     }];
 }

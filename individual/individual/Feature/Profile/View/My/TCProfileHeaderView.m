@@ -77,7 +77,7 @@
 - (void)reloadData {
     TCUserInfo *userInfo = [[TCBuluoApi  api] currentUserSession].userInfo;
     if (userInfo) {
-        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userInfo.ID needTimestamp:YES];
+        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userInfo.ID needTimestamp:NO];
         UIImage *placeholderImage = self.avatarView.image ?: [UIImage imageNamed:@"profile_default_avatar_icon"];
         [self.avatarView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
         self.nameLabel.text = userInfo.nickname;
