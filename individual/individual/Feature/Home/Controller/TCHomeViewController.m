@@ -29,6 +29,8 @@
 
 #import <TCCommonLibs/UIImage+Category.h>
 #import <MJRefresh/MJRefresh.h>
+#import<AVFoundation/AVCaptureDevice.h>
+#import <AVFoundation/AVMediaFormat.h>
 
 #define toolsViewH     96
 #define bannerViewH    (TCRealValue(75) + 7.5)
@@ -496,6 +498,42 @@ TCHomeCoverViewDelegate>
 }
 
 - (void)handleClickScanButton {
+    
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (status == AVAuthorizationStatusRestricted) { // 因为家长控制, 导致应用无法方法相册(跟用户的选择没有关系)
+        [MBProgressHUD showHUDWithMessage:@"因为系统原因, 无法访问相册" afterDelay:1.0];
+    } else if (status == AVAuthorizationStatusDenied) { // 用户拒绝当前应用访问相册(用户当初点击了"不允许")
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还没允许海托邦商户版访问相机" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            [self setAuth];
+        }];
+        [alertController addAction:cancelAction];
+        [alertController addAction:deleteAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else if (status == AVAuthorizationStatusAuthorized) { // 用户允许当前应用访问相册(用户当初点击了"好")
+        [self toQRCodeVC];
+    } else if (status == AVAuthorizationStatusNotDetermined) { // 用户还没有做出选择
+        // 弹框请求用户授权
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if(granted){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self toQRCodeVC];
+                });
+            }
+        }];
+    }
+}
+
+- (void)setAuth {
+    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
+
+- (void)toQRCodeVC {
     TCQRCodeViewController *vc = [[TCQRCodeViewController alloc] init];
     vc.fromController = self;
     vc.hidesBottomBarWhenPushed = YES;

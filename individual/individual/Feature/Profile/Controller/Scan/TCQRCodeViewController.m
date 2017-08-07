@@ -284,6 +284,10 @@
     return UIStatusBarStyleLightContent;
 }
 
+- (void)dealloc {
+    NSLog(@"TCQRCodeViewController --  dealloc");
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
