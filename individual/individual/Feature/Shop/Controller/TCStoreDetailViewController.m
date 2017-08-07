@@ -13,17 +13,17 @@
 #import "TCStoreDescViewCell.h"
 #import "TCStoreTagsViewCell.h"
 #import "TCStorePrivilegeViewCell.h"
-#import "TCStorePayViewCell.h"
 
 #import "TCBuluoApi.h"
 
 #import <TCCommonLibs/UIImage+Category.h>
+#import <TCCommonLibs/TCCommonButton.h>
 #import <UITableView+FDTemplateLayoutCell.h>
 
 #define headerViewH TCRealValue(252)
 #define navBarH     64.0
 
-@interface TCStoreDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, TCStorePayViewCellDelegate>
+@interface TCStoreDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) UINavigationBar *navBar;
 @property (weak, nonatomic) UINavigationItem *navItem;
@@ -49,6 +49,7 @@
     [self setupNavBar];
     [self setupSubviews];
     [self loadNetData];
+    [self updateNavigationBarWithAlpha:0.0];
 }
 
 #pragma mark - Private Methods
@@ -70,8 +71,6 @@
     
     self.navBar = navBar;
     self.navItem = navItem;
-    
-    [self updateNavigationBarWithAlpha:0.0];
 }
 
 - (void)setupSubviews {
@@ -84,8 +83,7 @@
     [tableView registerClass:[TCStoreDescViewCell class] forCellReuseIdentifier:@"TCStoreDescViewCell"];
     [tableView registerClass:[TCStoreTagsViewCell class] forCellReuseIdentifier:@"TCStoreTagsViewCell"];
     [tableView registerClass:[TCStorePrivilegeViewCell class] forCellReuseIdentifier:@"TCStorePrivilegeViewCell"];
-    [tableView registerClass:[TCStorePayViewCell class] forCellReuseIdentifier:@"TCStorePayViewCell"];
-    [self.tableView setContentOffset:CGPointMake(0, -headerViewH) animated:NO];
+    [tableView setContentOffset:CGPointMake(0, -headerViewH) animated:NO];
     [self.view insertSubview:tableView belowSubview:self.navBar];
     self.tableView = tableView;
     
@@ -93,14 +91,24 @@
     [self.tableView addSubview:headerView];
     self.headerView = headerView;
     
+    TCCommonButton *payButton = [TCCommonButton bottomButtonWithTitle:@"买  单"
+                                                                color:TCCommonButtonColorPurple
+                                                               target:self
+                                                               action:@selector(handleClickPaybutton)];
+    [self.view addSubview:payButton];
+    
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(weakSelf.view);
-        make.bottom.equalTo(weakSelf.view);
+        make.top.left.right.equalTo(self.view);
+        make.bottom.equalTo(payButton.mas_top);
     }];
     [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.width.equalTo(tableView);
+        make.left.width.equalTo(tableView);
         make.top.equalTo(tableView).offset(-headerViewH);
         make.height.mas_equalTo(headerViewH);
+    }];
+    [payButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(49);
+        make.left.bottom.right.equalTo(self.view);
     }];
 }
 
@@ -128,7 +136,7 @@
     }
     
     [self.headerView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.tableView).offset(offsetY);
+        make.top.equalTo(self.tableView).offset(offsetY);
         make.height.mas_equalTo(-offsetY);
     }];
 }
@@ -173,7 +181,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -197,13 +205,6 @@
         {
             TCStorePrivilegeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCStorePrivilegeViewCell" forIndexPath:indexPath];
             cell.storeInfo = self.storeInfo;
-            currentCell = cell;
-        }
-            break;
-        case 3:
-        {
-            TCStorePayViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCStorePayViewCell" forIndexPath:indexPath];
-            cell.delegate = self;
             currentCell = cell;
         }
             break;
@@ -246,9 +247,6 @@
                                                  }];
         }
             break;
-        case 3:
-            return 92;
-            break;
             
         default:
             break;
@@ -263,9 +261,9 @@
     [self updateNavigationBar];
 }
 
-#pragma mark - TCStorePayViewCellDelegate
+#pragma mark - Actions 
 
-- (void)didClickPayButtonInStorePayViewCell:(TCStorePayViewCell *)cell {
+- (void)handleClickPaybutton {
     TCStorePayViewController *vc = [[TCStorePayViewController alloc] init];
     vc.storeID = self.storeID;
     vc.fromController = self;

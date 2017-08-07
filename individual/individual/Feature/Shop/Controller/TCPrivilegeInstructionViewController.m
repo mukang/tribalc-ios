@@ -58,7 +58,7 @@
 
 - (void)loadNetData {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchStorePrivilegeByStoreID:self.storeID isValid:NO result:^(TCListStore *storeInfo, NSError *error) {
+    [[TCBuluoApi api] fetchStorePrivilegeByStoreID:self.storeID isValid:YES result:^(TCListStore *storeInfo, NSError *error) {
         if (storeInfo) {
             [MBProgressHUD hideHUD:YES];
             weakSelf.navigationItem.title = storeInfo.storeName;

@@ -54,10 +54,6 @@
 
 - (void)setupNavBar {
     self.navigationItem.title = @"收货地址";
-    UIButton *backbtn = [TCGetNavigationItem getBarButtonWithFrame:CGRectMake(0, 10, 0, 17) AndImageName:@"back"];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backbtn];
-    [backbtn addTarget:self action:@selector(handleCickBackButton:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = backItem;
 }
 
 - (void)setupSubviews {

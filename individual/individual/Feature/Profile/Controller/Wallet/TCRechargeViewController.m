@@ -266,7 +266,7 @@ TCRechargeMethodsViewDelegate>
 
 - (void)didSelectedAddBankCardInRechargeMethodsView:(TCRechargeMethodsView *)view {
     TCBankCardAddViewController *vc = [[TCBankCardAddViewController alloc] init];
-    vc.walletID = self.walletAccount.ID;
+    vc.walletID = [[TCBuluoApi api] currentUserSession].assigned;
     vc.bankCardAddBlock = ^() {
         [weakSelf handleLoadBankCardList];
     };
