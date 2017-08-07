@@ -11,6 +11,7 @@
 #import "TCRechargeViewController.h"
 #import "TCCreditViewController.h"
 #import "TCWalletBillViewController.h"
+#import "TCWalletPasswordViewController.h"
 
 #import "TCCompanyWalletTitleView.h"
 #import "TCWalletBalanceView.h"
@@ -116,6 +117,10 @@
             [self handleClickRentButton];
             break;
             break;
+        case 4:
+            [self handleClickPasswordButton];
+            break;
+            break;
             
         default:
             break;
@@ -155,6 +160,25 @@
 
 - (void)handleClickRentButton {
     
+}
+
+- (void)handleClickPasswordButton {
+    if (!self.walletAccount) {
+        [MBProgressHUD showHUDWithMessage:@"暂时无法设置支付密码"];
+        return;
+    }
+    TCWalletPasswordType passwordType;
+    NSString *oldPassword;
+    if (self.walletAccount.password) {
+        passwordType = TCWalletPasswordTypeResetInputOldPassword;
+        oldPassword = self.walletAccount.password;
+    } else {
+        passwordType = TCWalletPasswordTypeFirstTimeInputPassword;
+    }
+    TCWalletPasswordViewController *vc = [[TCWalletPasswordViewController alloc] initWithPasswordType:passwordType];
+    vc.walletID = self.walletAccount.ID;
+    vc.oldPassword = oldPassword;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

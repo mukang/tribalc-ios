@@ -1187,7 +1187,7 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         if (imageType == TCUploadImageTypeNormal) {
             int64_t timestamp = [[NSDate date] timeIntervalSince1970] * 1000;
-            [request setValue:[NSString stringWithFormat:@"%zd/picture.jpg", timestamp] forParam:@"key"];
+            [request setValue:[NSString stringWithFormat:@"%lld/picture.jpg", timestamp] forParam:@"key"];
         } else {
             [request setValue:@"icon.jpg" forParam:@"key"];
         }

@@ -63,7 +63,7 @@
     self.nameLabel.text = companyInfo.companyName;
     
     self.introLabel.text = companyInfo.desc;
-    if (companyInfo.desc.length > 80) {
+    if (companyInfo.desc.length > 120) {
         self.foldButton.hidden = NO;
         if (self.fold) {
             self.introLabel.numberOfLines = 4;

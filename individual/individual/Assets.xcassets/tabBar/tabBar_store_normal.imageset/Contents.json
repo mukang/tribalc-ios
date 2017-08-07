@@ -6,12 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "tabBar_discover_selected@2x.png",
+      "filename" : "tabBar_store_normal@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "tabBar_discover_selected@3x.png",
+      "filename" : "tabBar_store_normal@3x.png",
       "scale" : "3x"
     }
   ],

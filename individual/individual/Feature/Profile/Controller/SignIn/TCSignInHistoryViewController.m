@@ -278,7 +278,7 @@
         _iconImageView.layer.borderColor = TCBackgroundColor.CGColor;
         _iconImageView.clipsToBounds = YES;
         TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
-        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userInfo.ID needTimestamp:YES];
+        NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userInfo.ID needTimestamp:NO];
         [_iconImageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"profile_default_avatar_icon"] options:SDWebImageRetryFailed];
     }
     return _iconImageView;
