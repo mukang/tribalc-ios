@@ -132,7 +132,7 @@
             cell.backgroundColor = [UIColor whiteColor];
             cell.contentView.backgroundColor = [UIColor whiteColor];
             cell.logoImageView.image = [UIImage imageNamed:@"balance_icon"];
-            cell.titleLabel.text = [NSString stringWithFormat:@"企业余额（人民币%0.2f）", self.walletAccount.balance];
+            cell.titleLabel.text = [NSString stringWithFormat:@"企业余额（¥%0.2f）", self.walletAccount.balance];
             cell.hideMarkIcon = YES;
             cell.showRechargeButton = (self.walletAccount.balance < (self.creditBill.amount - self.creditBill.paidAmount));
             cell.delegate = self;

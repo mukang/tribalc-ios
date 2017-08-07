@@ -8,18 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, TCWalletFeatureType) {
-    TCWalletFeatureTypeRecharge = 0,
-    TCWalletFeatureTypeWithdraw,
-    TCWalletFeatureTypeCredit,
-    TCWalletFeatureTypeBankCard,
-    TCWalletFeatureTypeSweepCode,
-    TCWalletFeatureTypeStatement,
-    TCWalletFeatureTypeCoupon,
-    TCWalletFeatureTypeFinance,
-    TCWalletFeatureTypePassword
-};
-
 typedef NS_ENUM(NSInteger, TCWalletFeaturesViewType) {
     TCWalletFeaturesViewTypeIndividual = 0,
     TCWalletFeaturesViewTypeCompany

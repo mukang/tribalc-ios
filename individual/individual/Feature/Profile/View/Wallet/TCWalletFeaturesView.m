@@ -125,16 +125,6 @@
         make.height.left.right.equalTo(firstHorizontalLine);
         make.centerY.equalTo(containerView.mas_bottom).multipliedBy(2/3.0f);
     }];
-    
-    
-    if (_type == TCWalletFeaturesViewTypeCompany) {
-        UIButton *button = [self.buttons lastObject];
-        button.hidden = YES;
-        firstVerticalLine.hidden = YES;
-        secondVerticalLine.hidden = YES;
-        firstHorizontalLine.hidden = YES;
-        secondHorizontalLine.hidden = YES;
-    }
 }
 
 - (UIView *)creatLineView {
@@ -187,7 +177,8 @@
                                 @{@"title": @"充值", @"imageName": @"company_recharge_button"},
                                 @{@"title": @"对账单", @"imageName": @"company_statement_button"},
                                 @{@"title": @"企业授信", @"imageName": @"company_credit_button"},
-                                @{@"title": @"企业缴租", @"imageName": @"company_rent_button"}
+                                @{@"title": @"企业缴租", @"imageName": @"company_rent_button"},
+                                @{@"title": @"支付密码", @"imageName": @"company_password_button"}
                                 ];
     }
     return _materialsOfCompany;

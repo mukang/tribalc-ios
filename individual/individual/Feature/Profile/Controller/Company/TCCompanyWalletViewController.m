@@ -116,6 +116,10 @@
             [self handleClickRentButton];
             break;
             break;
+        case 4:
+            [self handleClickPasswordButton];
+            break;
+            break;
             
         default:
             break;
@@ -154,6 +158,10 @@
 }
 
 - (void)handleClickRentButton {
+    
+}
+
+- (void)handleClickPasswordButton {
     
 }
 
