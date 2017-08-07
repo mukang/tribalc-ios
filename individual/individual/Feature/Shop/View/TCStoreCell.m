@@ -159,6 +159,8 @@
 - (UIImageView *)bgImageView {
     if (_bgImageView == nil) {
         _bgImageView = [[UIImageView alloc] init];
+        _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _bgImageView.clipsToBounds = YES;
     }
     return _bgImageView;
 }
