@@ -25,6 +25,7 @@
 @property (nonatomic) double totalFee;
 /** 付款方式 */
 @property (weak, nonatomic) IBOutlet UILabel *methodLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowIcon;
 
 @property (weak, nonatomic) id<TCPaymentDetailViewDelegate> delegate;
 

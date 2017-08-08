@@ -28,8 +28,8 @@
     
     self.confirmButton.layer.cornerRadius = 2.5;
     self.confirmButton.layer.masksToBounds = YES;
-    UIImage *normalImage = [UIImage imageWithColor:TCRGBColor(81, 199, 209)];
-    UIImage *highlightedImage = [UIImage imageWithColor:TCRGBColor(10, 164, 177)];
+    UIImage *normalImage = [UIImage imageWithColor:TCRGBColor(151, 171, 234)];
+    UIImage *highlightedImage = [UIImage imageWithColor:TCRGBColor(112, 139, 224)];
     [self.confirmButton setBackgroundImage:normalImage forState:UIControlStateNormal];
     [self.confirmButton setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
     

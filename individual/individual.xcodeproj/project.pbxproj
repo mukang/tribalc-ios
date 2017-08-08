@@ -344,6 +344,7 @@
 		7AAB1A061ED574EF00EF5F69 /* TCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A051ED574EF00EF5F69 /* TCWebViewController.m */; };
 		7AAB1A0C1ED5A4EC00EF5F69 /* TCMainPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A0B1ED5A4EC00EF5F69 /* TCMainPage.m */; };
 		7AAB1A101ED95E7E00EF5F69 /* TCAppVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB1A0F1ED95E7E00EF5F69 /* TCAppVersion.m */; };
+		7AABE8431F396BE4001F3BC5 /* TCCompanyPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AABE8421F396BE4001F3BC5 /* TCCompanyPaymentViewController.m */; };
 		7AADCC631EE7A33D004AA1DA /* TCPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC621EE7A33D004AA1DA /* TCPaymentViewController.m */; };
 		7AADCC701EE80154004AA1DA /* TCPaymentBankCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC651EE80154004AA1DA /* TCPaymentBankCardView.m */; };
 		7AADCC711EE80154004AA1DA /* TCPaymentDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AADCC671EE80154004AA1DA /* TCPaymentDetailView.m */; };
@@ -1084,6 +1085,8 @@
 		7AAB1A0D1ED8142800EF5F69 /* TCUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserDefaultsKeys.h; sourceTree = "<group>"; };
 		7AAB1A0E1ED95E7E00EF5F69 /* TCAppVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAppVersion.h; sourceTree = "<group>"; };
 		7AAB1A0F1ED95E7E00EF5F69 /* TCAppVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAppVersion.m; sourceTree = "<group>"; };
+		7AABE8411F396BE4001F3BC5 /* TCCompanyPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyPaymentViewController.h; sourceTree = "<group>"; };
+		7AABE8421F396BE4001F3BC5 /* TCCompanyPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyPaymentViewController.m; sourceTree = "<group>"; };
 		7AADCC611EE7A33D004AA1DA /* TCPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentViewController.h; sourceTree = "<group>"; };
 		7AADCC621EE7A33D004AA1DA /* TCPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPaymentViewController.m; sourceTree = "<group>"; };
 		7AADCC641EE80154004AA1DA /* TCPaymentBankCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPaymentBankCardView.h; sourceTree = "<group>"; };
@@ -2568,6 +2571,8 @@
 			children = (
 				7AADCC611EE7A33D004AA1DA /* TCPaymentViewController.h */,
 				7AADCC621EE7A33D004AA1DA /* TCPaymentViewController.m */,
+				7AABE8411F396BE4001F3BC5 /* TCCompanyPaymentViewController.h */,
+				7AABE8421F396BE4001F3BC5 /* TCCompanyPaymentViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3353,6 +3358,7 @@
 				7AC346EA1E0144B500E28EC9 /* TCWalletBillDetailHeaderView.m in Sources */,
 				7AC346D41E01432D00E28EC9 /* TCWalletBillViewController.m in Sources */,
 				5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */,
+				7AABE8431F396BE4001F3BC5 /* TCCompanyPaymentViewController.m in Sources */,
 				7A925E051F20E83600D697DE /* TCPrivilegeViewCell.m in Sources */,
 				7A8352EA1E5EE3C4003A8E76 /* TCServiceMapViewController.m in Sources */,
 				5546F9651F305C8600E9A9B0 /* TCHomeMessageSubTitleCell.m in Sources */,

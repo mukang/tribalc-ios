@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,7 +40,7 @@
                         <action selector="handleCickCloseButton:" destination="RKM-SG-f2B" eventType="touchUpInside" id="CH1-ZK-gs4"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bpu-h4-QKb" customClass="TCExtendButton">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bpu-h4-QKb" customClass="TCExtendButton">
                     <rect key="frame" x="338" y="23" width="17" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="17.5" id="W15-06-mN6"/>
@@ -167,6 +167,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="amountLabel" destination="Drv-aD-zSS" id="SYb-s1-5uA"/>
+                <outlet property="arrowIcon" destination="9LT-Yu-q8J" id="KqV-KV-cLB"/>
                 <outlet property="closeButton" destination="Ant-2f-ACK" id="FcU-Xz-vz1"/>
                 <outlet property="confirmButton" destination="XWV-Xd-N4f" id="oY7-iX-SJg"/>
                 <outlet property="containerView" destination="pya-UC-UmG" id="uJ1-4G-Dkm"/>

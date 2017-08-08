@@ -431,6 +431,41 @@ BaofuFuFingerClientDelegate
 }
 
 /**
+ 使用微信付款
+ */
+- (void)handlePaymentWithWechat {
+    
+}
+
+/**
+ 使用余额宝付款
+ */
+- (void)handlePaymentWithAlipay {
+    
+}
+
+/**
+ 付款成功
+ */
+- (void)handlePaymentSucceedWithPayment:(TCUserPayment *)payment {
+    [MBProgressHUD hideHUD:YES];
+    if ([self.paymentPasswordView.textField isFirstResponder]) {
+        [self.paymentPasswordView.textField resignFirstResponder];
+    }
+    if ([self.bankCardView.codeTextField isFirstResponder]) {
+        [self.bankCardView.codeTextField resignFirstResponder];
+    }
+    [self dismiss:YES completion:^{
+        if ([weakSelf.delegate respondsToSelector:@selector(paymentViewController:didFinishedPaymentWithPayment:)]) {
+            TCUserPayment *userPayment = payment ?: weakSelf.payment;
+            [weakSelf.delegate paymentViewController:weakSelf didFinishedPaymentWithPayment:userPayment];
+        }
+    }];
+}
+
+#pragma mark - 余额支付
+
+/**
  使用余额付款
  */
 - (void)handlePaymentWithBalance {
@@ -475,53 +510,6 @@ BaofuFuFingerClientDelegate
         }
     }];
 }
-
-/**
- 使用宝付付款
- */
-- (void)handlePaymentWithBankCard {
-    if (self.payment) {
-        [MBProgressHUD showHUD:YES];
-        [self fetchBFSessionInfoWithPaymentID:self.payment.ID refetchVCode:NO];
-    } else {
-        [self commitBFPayRequest];
-    }
-}
-
-/**
- 使用微信付款
- */
-- (void)handlePaymentWithWechat {
-    
-}
-
-/**
- 使用余额宝付款
- */
-- (void)handlePaymentWithAlipay {
-    
-}
-
-/**
- 付款成功
- */
-- (void)handlePaymentSucceedWithPayment:(TCUserPayment *)payment {
-    [MBProgressHUD hideHUD:YES];
-    if ([self.paymentPasswordView.textField isFirstResponder]) {
-        [self.paymentPasswordView.textField resignFirstResponder];
-    }
-    if ([self.bankCardView.codeTextField isFirstResponder]) {
-        [self.bankCardView.codeTextField resignFirstResponder];
-    }
-    [self dismiss:YES completion:^{
-        if ([weakSelf.delegate respondsToSelector:@selector(paymentViewController:didFinishedPaymentWithPayment:)]) {
-            TCUserPayment *userPayment = payment ?: weakSelf.payment;
-            [weakSelf.delegate paymentViewController:weakSelf didFinishedPaymentWithPayment:userPayment];
-        }
-    }];
-}
-
-#pragma mark - 余额支付
 
 /**
  提交付款申请
@@ -581,6 +569,18 @@ BaofuFuFingerClientDelegate
 }
 
 #pragma mark - 宝付银行卡支付
+
+/**
+ 使用宝付付款
+ */
+- (void)handlePaymentWithBankCard {
+    if (self.payment) {
+        [MBProgressHUD showHUD:YES];
+        [self fetchBFSessionInfoWithPaymentID:self.payment.ID refetchVCode:NO];
+    } else {
+        [self commitBFPayRequest];
+    }
+}
 
 /**
  提交付款申请
