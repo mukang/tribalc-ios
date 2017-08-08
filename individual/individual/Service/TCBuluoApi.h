@@ -302,7 +302,7 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
 
  @param resultBlock 结果回调，bankCardList为nil时表示获取失败，失败原因见error的code和userInfo
  */
-- (void)fetchBankCardListByWalletID:(NSString *)walletID result:(void (^)(NSArray *bankCardList, NSError *error))resultBlock;
+- (void)fetchBankCardList:(void (^)(NSArray *bankCardList, NSError *error))resultBlock;
 
 /**
  准备添加银行卡信息

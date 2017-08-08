@@ -411,7 +411,7 @@ BaofuFuFingerClientDelegate
 - (void)handleTapChangePaymentMethodView {
     // 获取银行卡列表
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletID result:^(NSArray *bankCardList, NSError *error) {
+    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
         if (error) {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取支付方式失败，%@", reason]];

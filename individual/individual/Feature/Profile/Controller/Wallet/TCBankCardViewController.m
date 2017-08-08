@@ -65,7 +65,7 @@
 }
 
 - (void)loadNetData {
-    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletAccount.ID result:^(NSArray *bankCardList, NSError *error) {
+    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
         if (bankCardList) {
             [weakSelf.dataList removeAllObjects];
             [weakSelf.dataList addObjectsFromArray:bankCardList];

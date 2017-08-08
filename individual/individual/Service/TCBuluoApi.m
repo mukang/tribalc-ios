@@ -879,9 +879,9 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchBankCardListByWalletID:(NSString *)walletID result:(void (^)(NSArray *, NSError *))resultBlock {
+- (void)fetchBankCardList:(void (^)(NSArray *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bank_cards?me=%@", walletID, self.currentUserSession.assigned];
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bank_cards?me=%@", self.currentUserSession.assigned, self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {

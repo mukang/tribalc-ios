@@ -730,7 +730,7 @@
  */
 - (void)handleLoadBankCardList {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchBankCardListByWalletID:self.walletAccount.ID result:^(NSArray *bankCardList, NSError *error) {
+    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
         if (bankCardList) {
             [MBProgressHUD hideHUD:YES];
             for (TCBankCard *bankCard in bankCardList) {

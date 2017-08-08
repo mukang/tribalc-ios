@@ -348,8 +348,7 @@ TCRechargeMethodsViewDelegate>
  */
 - (void)handleLoadBankCardList {
     [MBProgressHUD showHUD:YES];
-    NSString *userID = [[TCBuluoApi api] currentUserSession].assigned;
-    [[TCBuluoApi api] fetchBankCardListByWalletID:userID result:^(NSArray *bankCardList, NSError *error) {
+    [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
         if (bankCardList) {
             [MBProgressHUD hideHUD:YES];
             for (TCBankCard *bankCard in bankCardList) {
