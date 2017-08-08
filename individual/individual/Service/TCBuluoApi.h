@@ -848,6 +848,21 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)checkSmartLockTemporaryPasswordWithSN:(NSString *)sn sourceId:(NSString *)sourceId result:(void(^)(NSString * password, NSError *error))resultBlock;
 
+/**
+ 获取企业当前缴租协议计划项
+
+ @param resultBlock 结果回调
+ */
+- (void)fetchCompanyCurrentRentPlanItemByCompanyID:(NSString *)companyID result:(void(^)(TCRentPlanItem *planItem, NSError *error))resultBlock;
+
+/**
+ 获取企业缴租协议计划项列表
+
+ @param protocolID 协议id
+ @param resultBlock 结果回调
+ */
+- (void)fetchCompanyRentPlanItemListByRentProtocolID:(NSString *)protocolID result:(void(^)(TCRentPlanItem *planItem, NSError *error))resultBlock;
+
 #pragma mark - 消息服务
 
 /**

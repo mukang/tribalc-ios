@@ -2823,6 +2823,65 @@ NSString *const TCBuluoApiNotificationUserInfoDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchCompanyCurrentRentPlanItemByCompanyID:(NSString *)companyID result:(void (^)(TCRentPlanItem *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"rent_plan_items?status=ACTIVED&ownerId=%@&me=%@", companyID, self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                NSArray *dics = response.data;
+                TCRentPlanItem *rentPlanItem = nil;
+                if (dics.count) {
+                    rentPlanItem = [[TCRentPlanItem alloc] initWithObjectDictionary:dics[0]];
+                }
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(rentPlanItem, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+- (void)fetchCompanyRentPlanItemListByRentProtocolID:(NSString *)protocolID result:(void (^)(TCRentPlanItem *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"rent_protocols/%@/plan_items?me=%@&fetchAll=true", protocolID, self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                NSArray *dics = response.data;
+                NSMutableArray *temp = [NSMutableArray array];
+                for (int i=0; i<dics.count; i++) {
+                    TCRentPlanItem *planItem = [[TCRentPlanItem alloc] initWithObjectDictionary:dics[i]];
+                    [temp addObject:planItem];
+                }
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock([temp copy], nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 #pragma mark - 消息服务
 
 - (void)fetchHomeMessageWrapperByPullType:(TCDataListPullType)pullType count:(NSInteger)count sinceTime:(int64_t)sinceTime result:(void (^)(TCHomeMessageWrapper *, NSError *))resultBlock {
