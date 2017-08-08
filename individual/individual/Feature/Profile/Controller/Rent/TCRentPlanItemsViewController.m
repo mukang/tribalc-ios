@@ -8,6 +8,7 @@
 
 #import "TCRentPlanItemsViewController.h"
 #import "TCApartmentPayViewController.h"
+#import "TCCompanyRentPayViewController.h"
 
 #import "TCRentPlanItemsHeaderView.h"
 #import "TCRentPlanItemViewCell.h"
@@ -19,12 +20,19 @@
 @property (copy, nonatomic) NSArray *planItems;
 
 @property (weak, nonatomic) UITableView *tableView;
-@property (weak, nonatomic) TCRentPlanItemsHeaderView *headerView;
 
 @end
 
 @implementation TCRentPlanItemsViewController {
     __weak TCRentPlanItemsViewController *weakSelf;
+}
+
+- (instancetype)initWithRentPlanItemsType:(TCRentPlanItemsType)type {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _type = type;
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -56,10 +64,25 @@
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
-    TCRentPlanItemsHeaderView *headerView = [[TCRentPlanItemsHeaderView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 71)];
-    headerView.rentProtocol = self.rentProtocol;
-    self.tableView.tableHeaderView = headerView;
-    self.headerView = headerView;
+    if (self.type == TCRentPlanItemsTypeIndividual) {
+        TCRentPlanItemsHeaderView *headerView = [[TCRentPlanItemsHeaderView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 71)];
+        headerView.rentProtocol = self.rentProtocol;
+        self.tableView.tableHeaderView = headerView;
+    } else {
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 40)];
+        headerView.backgroundColor = [UIColor whiteColor];
+        UILabel *nameLabel = [[UILabel alloc] init];
+        nameLabel.text = self.companyName;
+        nameLabel.textColor = TCBlackColor;
+        nameLabel.font = [UIFont systemFontOfSize:14];
+        [headerView addSubview:nameLabel];
+        self.tableView.tableHeaderView = headerView;
+        
+        [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(headerView).offset(20);
+            make.centerY.equalTo(headerView);
+        }];
+    }
     
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.bottom.equalTo(self.view);
@@ -68,7 +91,8 @@
 
 - (void)loadRentPlanItems {
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] fetchRentPlanItemListByRentProtocolID:self.rentProtocol.ID result:^(NSArray *rentPlanItemList, NSError *error) {
+    NSString *rentProtocolID = (self.type == TCRentPlanItemsTypeIndividual) ? self.rentProtocol.ID : self.rentProtocolID;
+    [[TCBuluoApi api] fetchRentPlanItemListByRentProtocolID:rentProtocolID result:^(NSArray *rentPlanItemList, NSError *error) {
         if (rentPlanItemList) {
             [MBProgressHUD hideHUD:YES];
             TCRentPlanItem *lastPlanItem = nil;
@@ -121,9 +145,16 @@
 #pragma mark - TCRentPlanItemViewCellDelegate
 
 - (void)rentPlanItemViewCell:(TCRentPlanItemViewCell *)cell didClickPayButtonWithPlanItem:(TCRentPlanItem *)planItem {
-    TCApartmentPayViewController *vc = [[TCApartmentPayViewController alloc] init];
-    vc.rentProtocol = self.rentProtocol;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.type == TCRentPlanItemsTypeIndividual) {
+        TCApartmentPayViewController *vc = [[TCApartmentPayViewController alloc] init];
+        vc.rentProtocol = self.rentProtocol;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        TCCompanyRentPayViewController *vc = [[TCCompanyRentPayViewController alloc] init];
+        vc.companyID = self.companyID;
+        vc.companyName = self.companyName;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -287,7 +287,7 @@ TCPaymentViewControllerDelegate>
 #pragma mark - TCApartmentRentPayFinishViewDelegate
 
 - (void)didClickPayPlanInApartmentRentPayFinishView:(TCApartmentRentPayFinishView *)view {
-    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] init];
+    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] initWithRentPlanItemsType:TCRentPlanItemsTypeIndividual];
     vc.rentProtocol = self.rentProtocol;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -295,7 +295,7 @@ TCPaymentViewControllerDelegate>
 #pragma mark - TCPaymentViewControllerDelegate
 
 - (void)paymentViewController:(TCPaymentViewController *)controller didFinishedPaymentWithPayment:(TCUserPayment *)payment {
-    TCApartmentRentPaySuccessViewController *vc = [[TCApartmentRentPaySuccessViewController alloc] init];
+    TCApartmentRentPaySuccessViewController *vc = [[TCApartmentRentPaySuccessViewController alloc] initWithRentPaySuccessType:TCRentPaySuccessTypeIndividual];
     vc.itemNum = self.rentPlanItem.num;
     vc.rentProtocol = self.rentProtocol;
     vc.paySuccess = ^{
@@ -307,7 +307,7 @@ TCPaymentViewControllerDelegate>
 #pragma mark - Actions
 
 - (void)handleClickPayPlanButton:(id)sender {
-    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] init];
+    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] initWithRentPlanItemsType:TCRentPlanItemsTypeIndividual];
     vc.rentProtocol = self.rentProtocol;
     [self.navigationController pushViewController:vc animated:YES];
 }

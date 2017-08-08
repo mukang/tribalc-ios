@@ -68,7 +68,7 @@
 
 //还款计划
 - (void)didClickCheckPayPlanWithRentProtocol:(TCRentProtocol *)rentProtocol {
-    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] init];
+    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] initWithRentPlanItemsType:TCRentPlanItemsTypeIndividual];
     vc.rentProtocol = rentProtocol;
     [self.navigationController pushViewController:vc animated:YES];
 }

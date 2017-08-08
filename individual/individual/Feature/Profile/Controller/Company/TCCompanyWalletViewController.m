@@ -12,6 +12,7 @@
 #import "TCCreditViewController.h"
 #import "TCWalletBillViewController.h"
 #import "TCWalletPasswordViewController.h"
+#import "TCCompanyRentPayViewController.h"
 
 #import "TCCompanyWalletTitleView.h"
 #import "TCWalletBalanceView.h"
@@ -159,7 +160,10 @@
 }
 
 - (void)handleClickRentButton {
-    
+    TCCompanyRentPayViewController *vc = [[TCCompanyRentPayViewController alloc] init];
+    vc.companyID = self.companyID;
+    vc.companyName = [[TCBuluoApi api] currentUserSession].userInfo.companyName;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleClickPasswordButton {

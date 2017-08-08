@@ -9,12 +9,29 @@
 #import <TCCommonLibs/TCBaseViewController.h>
 @class TCRentProtocol;
 
+typedef NS_ENUM(NSInteger, TCRentPaySuccessType) {
+    TCRentPaySuccessTypeIndividual = 0,
+    TCRentPaySuccessTypeCompany
+};
+
 typedef void(^TCApartmentRentPaySuccess)();
 
 @interface TCApartmentRentPaySuccessViewController : TCBaseViewController
 
+/** 公共 */
 @property (nonatomic) NSInteger itemNum;
-@property (strong, nonatomic) TCRentProtocol *rentProtocol;
 @property (copy, nonatomic) TCApartmentRentPaySuccess paySuccess;
+@property (nonatomic, readonly) TCRentPaySuccessType type;
+
+/** 个人需传 */
+@property (strong, nonatomic) TCRentProtocol *rentProtocol;
+
+/** 企业需传 */
+@property (copy, nonatomic) NSString *companyID;
+@property (copy, nonatomic) NSString *companyName;
+@property (copy, nonatomic) NSString *rentProtocolID;
+
+
+- (instancetype)initWithRentPaySuccessType:(TCRentPaySuccessType)type;
 
 @end

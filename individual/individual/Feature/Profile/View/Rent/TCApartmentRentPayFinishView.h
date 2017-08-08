@@ -8,13 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, TCRentPayFinishViewType) {
+    TCRentPayFinishViewTypeIndividual = 0,
+    TCRentPayFinishViewTypeCompany
+};
+
 @protocol TCApartmentRentPayFinishViewDelegate;
 /**
  全部房租缴纳完成
  */
 @interface TCApartmentRentPayFinishView : UIView
 
+@property (nonatomic, readonly) TCRentPayFinishViewType type;
 @property (weak, nonatomic) id<TCApartmentRentPayFinishViewDelegate> delegate;
+
+- (instancetype)initWithType:(TCRentPayFinishViewType)type;
 
 @end
 

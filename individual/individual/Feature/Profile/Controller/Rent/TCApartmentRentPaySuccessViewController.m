@@ -20,6 +20,14 @@
 
 @implementation TCApartmentRentPaySuccessViewController
 
+- (instancetype)initWithRentPaySuccessType:(TCRentPaySuccessType)type {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _type = type;
+    }
+    return self;
+}
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
@@ -37,8 +45,10 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"apartment_rent_pay_success"]];
     [self.view addSubview:imageView];
     
+    NSString *differenceStr = (self.type == TCRentPaySuccessTypeIndividual) ? @"房租" : @"租金";
+    
     UILabel *firstLabel = [[UILabel alloc] init];
-    firstLabel.text = [NSString stringWithFormat:@"恭喜，第%zd期房租已缴纳成功，可在", self.itemNum];
+    firstLabel.text = [NSString stringWithFormat:@"恭喜，第%zd期%@已缴纳成功，可在", self.itemNum, differenceStr];
     firstLabel.textAlignment = NSTextAlignmentCenter;
     firstLabel.textColor = TCGrayColor;
     firstLabel.font = [UIFont systemFontOfSize:TCRealValue(12.5)];
@@ -70,7 +80,10 @@
     secondLabel.attributedText = attText;
     [self.view addSubview:secondLabel];
     
-    TCCommonButton *backButton = [TCCommonButton buttonWithTitle:@"返  回" target:self action:@selector(handleClickBackButton:)];
+    TCCommonButton *backButton = [TCCommonButton buttonWithTitle:@"返  回"
+                                                           color:TCCommonButtonColorPurple
+                                                          target:self
+                                                          action:@selector(handleClickBackButton:)];
     [self.view addSubview:backButton];
     
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -94,8 +107,16 @@
 }
 
 - (void)handleClickPayPlan {
-    TCRentPlanItemsViewController *vc = [[TCRentPlanItemsViewController alloc] init];
-    vc.rentProtocol = self.rentProtocol;
+    TCRentPlanItemsViewController *vc = nil;
+    if (self.type == TCRentPaySuccessTypeIndividual) {
+        vc = [[TCRentPlanItemsViewController alloc] initWithRentPlanItemsType:TCRentPlanItemsTypeIndividual];
+        vc.rentProtocol = self.rentProtocol;
+    } else {
+        vc = [[TCRentPlanItemsViewController alloc] initWithRentPlanItemsType:TCRentPlanItemsTypeCompany];
+        vc.companyID = self.companyID;
+        vc.companyName = self.companyName;
+        vc.rentProtocolID = self.rentProtocolID;
+    }
     [self.navigationController pushViewController:vc animated:YES];
 }
 

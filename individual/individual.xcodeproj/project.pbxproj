@@ -228,6 +228,8 @@
 		7A384F9C1E10B9AF00E6DB9E /* TCUserSipInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384F9B1E10B9AF00E6DB9E /* TCUserSipInfo.m */; };
 		7A384FA51E1124D600E6DB9E /* TCIDAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A384FA31E1124D600E6DB9E /* TCIDAuthViewController.m */; };
 		7A384FA61E1124D600E6DB9E /* TCIDAuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A384FA41E1124D600E6DB9E /* TCIDAuthViewController.xib */; };
+		7A38923A1F39AFF7000DBA30 /* TCCompanyRentPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3892391F39AFF7000DBA30 /* TCCompanyRentPayViewController.m */; };
+		7A38923D1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A38923C1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m */; };
 		7A4514881DD30C48009F170A /* TCModelImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514871DD30C48009F170A /* TCModelImport.m */; };
 		7A455D5E1EBC912400A2F9ED /* TCWithdrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A455D5D1EBC912400A2F9ED /* TCWithdrawViewController.m */; };
 		7A455D631EBC913900A2F9ED /* TCWithdrawAmountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A455D601EBC913900A2F9ED /* TCWithdrawAmountView.m */; };
@@ -865,6 +867,10 @@
 		7A384FA21E1124D600E6DB9E /* TCIDAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCIDAuthViewController.h; sourceTree = "<group>"; };
 		7A384FA31E1124D600E6DB9E /* TCIDAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCIDAuthViewController.m; sourceTree = "<group>"; };
 		7A384FA41E1124D600E6DB9E /* TCIDAuthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCIDAuthViewController.xib; sourceTree = "<group>"; };
+		7A3892381F39AFF7000DBA30 /* TCCompanyRentPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyRentPayViewController.h; sourceTree = "<group>"; };
+		7A3892391F39AFF7000DBA30 /* TCCompanyRentPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyRentPayViewController.m; sourceTree = "<group>"; };
+		7A38923B1F39B13C000DBA30 /* TCCompanyRentPayDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyRentPayDetailView.h; sourceTree = "<group>"; };
+		7A38923C1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyRentPayDetailView.m; sourceTree = "<group>"; };
 		7A4514861DD30C48009F170A /* TCModelImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCModelImport.h; sourceTree = "<group>"; };
 		7A4514871DD30C48009F170A /* TCModelImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCModelImport.m; sourceTree = "<group>"; };
 		7A455D5C1EBC912400A2F9ED /* TCWithdrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWithdrawViewController.h; sourceTree = "<group>"; };
@@ -1952,6 +1958,8 @@
 				7A243F341F288EB700192E22 /* TCCompanyWalletViewController.m */,
 				7A2427DC1F2AE36B00951209 /* TCCompanyRepaymentViewController.h */,
 				7A2427DD1F2AE36B00951209 /* TCCompanyRepaymentViewController.m */,
+				7A3892381F39AFF7000DBA30 /* TCCompanyRentPayViewController.h */,
+				7A3892391F39AFF7000DBA30 /* TCCompanyRentPayViewController.m */,
 			);
 			path = Company;
 			sourceTree = "<group>";
@@ -2312,6 +2320,8 @@
 				7A084C371E002CF000224677 /* TCCompanyNameViewCell.m */,
 				7A243F391F28934800192E22 /* TCCompanyWalletTitleView.h */,
 				7A243F3A1F28934800192E22 /* TCCompanyWalletTitleView.m */,
+				7A38923B1F39B13C000DBA30 /* TCCompanyRentPayDetailView.h */,
+				7A38923C1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m */,
 			);
 			path = Company;
 			sourceTree = "<group>";
@@ -3353,6 +3363,7 @@
 				7A1580311DD1DE8200B8F768 /* TCPhotoPicker.m in Sources */,
 				7A58C5F21E120F0300C55A2C /* TCIDAuthDetailViewCell.m in Sources */,
 				7A190B0A1DC0CBFE00651905 /* TCLoginViewController.m in Sources */,
+				7A38923A1F39AFF7000DBA30 /* TCCompanyRentPayViewController.m in Sources */,
 				7ABA7E441F00BCAB00DCC2D0 /* TCRentPlanItem.m in Sources */,
 				7A381BD71DED7856008BDBF7 /* TCCommunityLocationViewCell.m in Sources */,
 				7AC346EA1E0144B500E28EC9 /* TCWalletBillDetailHeaderView.m in Sources */,
@@ -3574,6 +3585,7 @@
 				7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */,
 				7ABA7E781F03A3F400DCC2D0 /* TCApartmentPayViewController.m in Sources */,
 				7A243F2C1F2601E100192E22 /* TCRepaymentViewController.m in Sources */,
+				7A38923D1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m in Sources */,
 				7A2F7C691E763BB6007B831D /* TCVisitorInfo.m in Sources */,
 				5546F9481F21DE5800E9A9B0 /* TCCreditViewController.m in Sources */,
 				7AAB1A001ED43CA900EF5F69 /* TCPromotionsManager.m in Sources */,

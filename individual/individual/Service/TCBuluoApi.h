@@ -853,15 +853,7 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
 
  @param resultBlock 结果回调
  */
-- (void)fetchCompanyCurrentRentPlanItemByCompanyID:(NSString *)companyID result:(void(^)(TCRentPlanItem *planItem, NSError *error))resultBlock;
-
-/**
- 获取企业缴租协议计划项列表
-
- @param protocolID 协议id
- @param resultBlock 结果回调
- */
-- (void)fetchCompanyRentPlanItemListByRentProtocolID:(NSString *)protocolID result:(void(^)(TCRentPlanItem *planItem, NSError *error))resultBlock;
+- (void)fetchCompanyCurrentRentPlanItemByCompanyID:(NSString *)companyID result:(void(^)(NSString *rentProtocolID, TCRentPlanItem *planItem, NSError *error))resultBlock;
 
 #pragma mark - 消息服务
 
