@@ -147,6 +147,11 @@
             [MBProgressHUD hideHUD:YES];
             self.rentProtocolArr = rentProtocolList;
             [self.tableView reloadData];
+            if (rentProtocolList.count > 0) {
+                self.downImageView.hidden = NO;
+            }else {
+                self.downImageView.hidden = YES;
+            }
         }else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取公寓列表失败，%@", reason]];
