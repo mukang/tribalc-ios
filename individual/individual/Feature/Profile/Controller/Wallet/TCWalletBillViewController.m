@@ -89,7 +89,7 @@
             }
             [weakSelf.tableView reloadData];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"获取订单失败！"];
+            [MBProgressHUD showHUDWithMessage:@"获取对账单失败！"];
         }
     }];
 }
@@ -122,7 +122,7 @@
             }
             [weakSelf.tableView reloadData];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"获取订单失败！"];
+            [MBProgressHUD showHUDWithMessage:@"获取对账单失败！"];
         }
     }];
 }
@@ -154,7 +154,7 @@
             }
             [weakSelf.tableView reloadData];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"获取订单失败！"];
+            [MBProgressHUD showHUDWithMessage:@"获取对账单失败！"];
         }
     }];
 }

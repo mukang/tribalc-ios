@@ -13,7 +13,7 @@
 /** 楼层 */
 @property (copy, nonatomic) NSString *floor;
 /** 约定时间 */
-@property (nonatomic) NSInteger appointTime;
+@property (nonatomic) int64_t appointTime;
 /** 维修项目(PIPE_FIX,PUBLIC_LIGHTING, WATER_PIPE_FIX, ELECTRICAL_FIX, OTHERS) */
 @property (copy, nonatomic) NSString *fixProject;
 /** 详细描述 */

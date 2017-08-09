@@ -179,6 +179,9 @@ TCHomeCoverViewDelegate>
         @StrongObj(self)
         if (messageWrapper) {
             [MBProgressHUD hideHUD:YES];
+            if (!messageWrapper.hasMore) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
             [self.messageArr addObjectsFromArray:messageWrapper.content];
             [self.tableView reloadData];
         }else {
@@ -195,6 +198,9 @@ TCHomeCoverViewDelegate>
         @StrongObj(self)
         [self.tableView.mj_header endRefreshing];
         if (messageWrapper) {
+            if (!messageWrapper.hasMore) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
             if ([messageWrapper.content isKindOfClass:[NSArray class]] && messageWrapper.content.count>0) {
                 [self.messageArr insertObjects:messageWrapper.content atIndexes:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(0, messageWrapper.content.count)]];
                 NSMutableArray *mutableArr = [NSMutableArray arrayWithCapacity:0];

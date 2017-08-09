@@ -75,10 +75,6 @@ TCGenderPickerViewDelegate>
     [self.tableView registerNib:nib forCellReuseIdentifier:@"TCCommonInputViewCell"];
 }
 
-#pragma mark - Status Bar
-
-
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -182,7 +178,7 @@ TCGenderPickerViewDelegate>
     if (indexPath.row == TCInputCellTypeBirthdate) {
         TCDatePickerView *datePickerView = [[TCDatePickerView alloc] initWithController:self];
         datePickerView.datePicker.datePickerMode = UIDatePickerModeDate;
-        datePickerView.datePicker.date = self.authInfo.birthday ? [NSDate dateWithTimeIntervalSince1970:self.authInfo.birthday/1000] : [self.dateFormatter dateFromString:@"1990年01月01日"];
+        datePickerView.datePicker.date = self.authInfo.birthday ? [NSDate dateWithTimeIntervalSince1970:self.authInfo.birthday/1000.0] : [self.dateFormatter dateFromString:@"1990年01月01日"];
         datePickerView.datePicker.maximumDate = [NSDate date];
         datePickerView.delegate = self;
         [datePickerView show];
@@ -199,7 +195,7 @@ TCGenderPickerViewDelegate>
 
 - (void)didClickConfirmButtonInDatePickerView:(TCDatePickerView *)view {
     NSTimeInterval timestamp = [view.datePicker.date timeIntervalSince1970];
-    self.authInfo.birthday = (NSInteger)(timestamp * 1000);
+    self.authInfo.birthday = timestamp * 1000;
     [self.tableView reloadData];
 }
 

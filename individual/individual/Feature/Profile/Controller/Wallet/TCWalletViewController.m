@@ -232,6 +232,7 @@
 
 - (void)handleClickStatementButton:(id)sender {
     TCWalletBillViewController *vc = [[TCWalletBillViewController alloc] initWithNibName:@"TCWalletBillViewController" bundle:[NSBundle mainBundle]];
+    vc.walletID = self.walletAccount.ID;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

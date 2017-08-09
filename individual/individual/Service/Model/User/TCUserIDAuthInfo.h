@@ -18,7 +18,7 @@
 /** 性别（UNKNOWN, MALE, FEMALE） */
 @property (copy, nonatomic) NSString *personSex;
 /** 出生日期 */
-@property (nonatomic) NSInteger birthday;
+@property (nonatomic) int64_t birthday;
 /** 身份证号 */
 @property (copy, nonatomic) NSString *idNo;
 

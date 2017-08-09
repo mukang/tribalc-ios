@@ -246,7 +246,7 @@ TCDatePickerViewDelegate>
 
 - (void)didClickConfirmButtonInDatePickerView:(TCDatePickerView *)view {
     NSTimeInterval timestamp = [view.datePicker.date timeIntervalSince1970];
-    self.repairsInfo.appointTime = (NSInteger)(timestamp * 1000);
+    self.repairsInfo.appointTime = timestamp * 1000;
     [self.tableView reloadData];
 }
 
