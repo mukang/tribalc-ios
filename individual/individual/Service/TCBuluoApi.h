@@ -13,6 +13,7 @@
 extern NSString *const TCBuluoApiNotificationUserDidLogin;
 extern NSString *const TCBuluoApiNotificationUserDidLogout;
 extern NSString *const TCBuluoApiNotificationUserInfoDidUpdate;
+extern NSString *const TCBuluoApiNotificationUserAuthDidUpdate;
 
 typedef NS_ENUM(NSInteger, TCPayPurpose) { // 付款目的
     TCPayPurposeOrder = 0,   // 订单
