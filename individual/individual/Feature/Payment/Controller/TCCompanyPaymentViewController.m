@@ -135,6 +135,7 @@ TCPaymentPasswordViewDelegate
     TCPaymentDetailView *paymentDetailView = [[NSBundle mainBundle] loadNibNamed:@"TCPaymentDetailView" owner:nil options:nil].lastObject;
     paymentDetailView.totalFee = self.totalFee;
     paymentDetailView.methodLabel.text = @"企业余额";
+    paymentDetailView.arrowIcon.hidden = YES;
     paymentDetailView.delegate = self;
     paymentDetailView.frame = containerView.bounds;
     [containerView addSubview:paymentDetailView];
