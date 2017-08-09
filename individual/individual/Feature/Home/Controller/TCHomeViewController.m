@@ -489,6 +489,8 @@ TCHomeCoverViewDelegate>
                                              selector:@selector(handleUserDidLogout:)
                                                  name:TCBuluoApiNotificationUserDidLogout
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserAuthDidUpdate) name:TCBuluoApiNotificationUserAuthDidUpdate object:nil];
+    
 }
 
 - (void)removeNotifications {
@@ -593,6 +595,10 @@ TCHomeCoverViewDelegate>
 - (void)handleUserDidLogout:(NSNotification *)noti {
     [self.messageArr removeAllObjects];
     [self.tableView reloadData];
+}
+
+- (void)handleUserAuthDidUpdate {
+    [self loadNewData];
 }
 
 #pragma mark - Override Methods

@@ -55,7 +55,7 @@
         
         self.desLabel.text = store.name;
         self.tagsLabel.text = [NSString stringWithFormat:@"%@ | %@", store.category, store.markPlace];
-        NSString *moneyStr = [NSString stringWithFormat:@"¥%.0f",store.avgprice];
+        NSString *moneyStr = [NSString stringWithFormat:@"¥%.2f",store.avgprice];
         NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
         [attStr setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} range:NSMakeRange(0, 1)];
         self.moneyLabel.attributedText = attStr;
