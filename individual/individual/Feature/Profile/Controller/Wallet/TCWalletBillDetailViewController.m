@@ -46,7 +46,7 @@
     self.tableView.tableFooterView = [UIView new];
     
     TCWalletBillDetailHeaderView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TCWalletBillDetailHeaderView" owner:nil options:nil] lastObject];
-    NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:self.walletBill.annotherId needTimestamp:NO];
+    NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:self.walletBill.anotherId needTimestamp:NO];
     UIImage *placeholderImage = [UIImage imageNamed:@"profile_default_avatar_icon"];
     [headerView.iconImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     self.tableView.tableHeaderView = headerView;

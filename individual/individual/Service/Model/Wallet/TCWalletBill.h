@@ -19,7 +19,7 @@
 /** 账单说明 */
 @property (copy, nonatomic) NSString *title;
 /** 对方ID */
-@property (copy, nonatomic) NSString *annotherId;
+@property (copy, nonatomic) NSString *anotherId;
 /** 交易额 */
 @property (nonatomic) CGFloat amount;
 /** 己方账户余额 */

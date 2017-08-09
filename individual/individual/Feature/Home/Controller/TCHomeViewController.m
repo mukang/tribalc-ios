@@ -74,8 +74,13 @@ TCHomeCoverViewDelegate>
     
     [self setupNavBar];
     [self setupSubviews];
-    [self loadData];
     [self registerNotifications];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self loadNewData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -142,8 +147,8 @@ TCHomeCoverViewDelegate>
     MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadOldData)];
     refreshFooter.stateLabel.textColor = TCGrayColor;
     refreshFooter.stateLabel.font = [UIFont systemFontOfSize:14];
-    refreshFooter.automaticallyHidden = YES;
     [refreshFooter setTitle:@"-我是有底线的-" forState:MJRefreshStateNoMoreData];
+    refreshFooter.hidden = YES;
     tableView.mj_footer = refreshFooter;
     
     MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
@@ -172,19 +177,21 @@ TCHomeCoverViewDelegate>
 
 #pragma mark - Load Data
 
-- (void)loadData {
+- (void)loadDataFirstTime {
     @WeakObj(self)
-    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullFirstTime count:20 sinceTime:0 result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
         @StrongObj(self)
+        [self.tableView.mj_header endRefreshing];
         if (messageWrapper) {
-            [MBProgressHUD hideHUD:YES];
+            if (messageWrapper.content.count) {
+                self.tableView.mj_footer.hidden = NO;
+            }
             if (!messageWrapper.hasMore) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
             }
             [self.messageArr addObjectsFromArray:messageWrapper.content];
             [self.tableView reloadData];
-        }else {
+        } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
         }
@@ -192,15 +199,16 @@ TCHomeCoverViewDelegate>
 }
 
 - (void)loadNewData {
-    @WeakObj(self)
     TCHomeMessage *firstMessage = (TCHomeMessage *)self.messageArr.firstObject;
+    if (!firstMessage) {
+        [self loadDataFirstTime];
+        return;
+    }
+    @WeakObj(self)
     [[TCBuluoApi api] fetchHomeMessageWrapperByPullType:TCDataListPullNewerList count:20 sinceTime:firstMessage.createTime result:^(TCHomeMessageWrapper *messageWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_header endRefreshing];
         if (messageWrapper) {
-            if (!messageWrapper.hasMore) {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            }
             if ([messageWrapper.content isKindOfClass:[NSArray class]] && messageWrapper.content.count>0) {
                 [self.messageArr insertObjects:messageWrapper.content atIndexes:[[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(0, messageWrapper.content.count)]];
                 NSMutableArray *mutableArr = [NSMutableArray arrayWithCapacity:0];
@@ -320,7 +328,7 @@ TCHomeCoverViewDelegate>
         if (success) {
             self.coverView.hidden = YES;
             [MBProgressHUD showHUDWithMessage:@"忽略成功" afterDelay:0.5];
-            [self loadData];
+            [self handleRefreshData];
         }else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
@@ -336,12 +344,13 @@ TCHomeCoverViewDelegate>
         if (success) {
             self.coverView.hidden = YES;
             [MBProgressHUD hideHUD:YES];
-            NSMutableArray *arr = [NSMutableArray arrayWithArray:self.messageArr];
-            [arr removeObject:message];
-            self.messageArr = arr;
+            [self.messageArr removeObject:message];
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             NSArray *indexPathArr = [NSArray arrayWithObjects:indexPath, nil];
             [self.tableView deleteRowsAtIndexPaths:indexPathArr withRowAnimation:UITableViewRowAnimationFade];
+            if (self.messageArr.count == 0) {
+                self.tableView.mj_footer.hidden = YES;
+            }
         }else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"忽略失败，%@", reason]];
@@ -440,7 +449,7 @@ TCHomeCoverViewDelegate>
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    
+    NSLog(@"%@ -- %@", NSStringFromCGPoint(velocity), NSStringFromCGPoint(*targetContentOffset));
     CGFloat maxOffsetY = -bannerViewH;
     CGFloat minOffsetY = -(toolsViewH + bannerViewH);
     CGFloat targetOffsetX = targetContentOffset->x;
@@ -489,8 +498,6 @@ TCHomeCoverViewDelegate>
                                              selector:@selector(handleUserDidLogout:)
                                                  name:TCBuluoApiNotificationUserDidLogout
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserAuthDidUpdate) name:TCBuluoApiNotificationUserAuthDidUpdate object:nil];
-    
 }
 
 - (void)removeNotifications {
@@ -588,17 +595,17 @@ TCHomeCoverViewDelegate>
 }
 
 - (void)handleUserDidLogin:(NSNotification *)noti {
-    [self.messageArr removeAllObjects];
-    [self loadData];
+    [self handleRefreshData];
 }
 
 - (void)handleUserDidLogout:(NSNotification *)noti {
-    [self.messageArr removeAllObjects];
-    [self.tableView reloadData];
+    [self handleRefreshData];
 }
 
-- (void)handleUserAuthDidUpdate {
-    [self loadNewData];
+- (void)handleRefreshData {
+    [self.messageArr removeAllObjects];
+    self.tableView.mj_footer.hidden = YES;
+    [self loadDataFirstTime];
 }
 
 #pragma mark - Override Methods

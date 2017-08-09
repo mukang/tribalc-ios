@@ -27,6 +27,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    self.iconImageView.layer.cornerRadius = 21;
+    self.iconImageView.layer.masksToBounds = YES;
 }
 
 - (void)setWalletBill:(TCWalletBill *)walletBill {
@@ -37,7 +40,7 @@
     self.amountLabel.text = [NSString stringWithFormat:@"%0.2f", walletBill.amount];
     self.titleLabel.text = walletBill.title;
     
-    NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:walletBill.annotherId needTimestamp:NO];
+    NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:walletBill.anotherId needTimestamp:NO];
     UIImage *placeholderImage = [UIImage imageNamed:@"profile_default_avatar_icon"];
     [self.iconImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
 }
