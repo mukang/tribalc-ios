@@ -40,6 +40,10 @@
 
 @property (strong, nonatomic) UILabel *nameLabel;
 
+@property (strong, nonatomic) UIButton *signInBtn;
+
+@property (assign, nonatomic) BOOL isTodaySignIn;
+
 @end
 
 @implementation TCSignInHistoryViewController
@@ -76,6 +80,7 @@
     [self.view addSubview:self.iconImageView];
     [self.view addSubview:self.nameLabel];
     [self.view addSubview:self.calendar];
+    [self.view addSubview:self.signInBtn];
     [self.view addSubview:self.continuityDaysView];
     [self.view addSubview:self.continuityTitleLabel];
     
@@ -100,8 +105,16 @@
 
     [self.calendar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.width.height.equalTo(@(TCRealValue(300)));
+        make.width.equalTo(@(TCRealValue(300)));
+        make.height.equalTo(@(TCRealValue(290)));
         make.top.equalTo(self.view).offset(TCRealValue(150));
+    }];
+    
+    [self.signInBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.width.equalTo(@(TCRealValue(150)));
+        make.height.equalTo(@(27));
+        make.top.equalTo(self.calendar.mas_bottom);
     }];
     
     [self.continuityDaysView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -131,7 +144,20 @@
     for (UIView *view in self.calendar.subviews) {
         view.backgroundColor = [UIColor clearColor];
     }
-    
+}
+
+- (void)signin {
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] signinDaily:^(TCSigninRecordDay *signinRecordDay, NSError *error) {
+        @StrongObj(self)
+        if (signinRecordDay) {
+            [MBProgressHUD showHUDWithMessage:@"签到成功" afterDelay:1.0];
+            [self loadData];
+        }else {
+            [MBProgressHUD showHUDWithMessage:@"签到失败，请稍后再试" afterDelay:1.0];
+        }
+    }];
 }
 
 #pragma mark FSCalendarDelegateAppearance
@@ -216,6 +242,7 @@
                                     if (signinRecordDay.dayNumber == day.integerValue) {
                                         if ([[NSCalendar currentCalendar] isDateInToday:date]) {
                                             cell.preferredTitleDefaultColor = [UIColor whiteColor];
+                                            self.isTodaySignIn = YES;
                                             return [UIImage imageNamed:@"signinedToday"];
                                         }else {
                                             cell.preferredTitleDefaultColor = TCRGBColor(237, 134, 40);
@@ -242,6 +269,28 @@
 
 - (BOOL)calendar:(FSCalendar *)calendar shouldSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
     return NO;
+}
+
+- (void)setIsTodaySignIn:(BOOL)isTodaySignIn {
+    _isTodaySignIn = isTodaySignIn;
+    
+    if (isTodaySignIn) {
+        self.signInBtn.backgroundColor = TCRGBColor(232, 232, 232);
+        self.signInBtn.enabled = NO;
+    }
+}
+
+- (UIButton *)signInBtn {
+    if (_signInBtn == nil) {
+        _signInBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_signInBtn setTitle:@"我要签到" forState:UIControlStateNormal];
+        [_signInBtn setTitle:@"今日已签到" forState:UIControlStateDisabled];
+        [_signInBtn setBackgroundColor:TCRGBColor(151, 171, 234)];
+        [_signInBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _signInBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_signInBtn addTarget:self action:@selector(signin) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _signInBtn;
 }
 
 - (FSCalendar *)calendar {
@@ -338,6 +387,10 @@
         _continuityTitleLabel.text = @"连续签到";
     }
     return _continuityTitleLabel;
+}
+
+- (void)dealloc {
+    NSLog(@"TCSignInHistoryViewController -- dealloc");
 }
 
 - (void)didReceiveMemoryWarning {
