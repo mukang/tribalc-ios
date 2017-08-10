@@ -16,6 +16,7 @@
 #import "TCPaymentPasswordView.h"
 
 #import "TCBuluoApi.h"
+#import "TCNotificationNames.h"
 
 #import <TCCommonLibs/TCCommonButton.h>
 #import <TCCommonLibs/UIImage+Category.h>
@@ -498,6 +499,10 @@
  */
 - (void)handleRepaymentSucceed {
     [MBProgressHUD showHUDWithMessage:@"还款成功！"];
+    
+    // 发送首页需要刷新数据的通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf.navigationController popToViewController:weakSelf.navigationController.childViewControllers[1] animated:YES];
     });

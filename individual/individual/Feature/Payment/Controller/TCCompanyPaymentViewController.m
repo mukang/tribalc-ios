@@ -14,6 +14,8 @@
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
 
+#import "TCNotificationNames.h"
+
 #import <TCCommonLibs/TCFunctions.h>
 
 static CGFloat const subviewHeight = 400;
@@ -247,6 +249,10 @@ TCPaymentPasswordViewDelegate
  */
 - (void)handlePaymentSucceedWithPayment:(TCUserPayment *)payment {
     [MBProgressHUD hideHUD:YES];
+    
+    // 发送首页需要刷新数据的通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
+    
     if ([self.paymentPasswordView.textField isFirstResponder]) {
         [self.paymentPasswordView.textField resignFirstResponder];
     }

@@ -15,6 +15,7 @@
 #import "TCGenderPickerView.h"
 
 #import "TCBuluoApi.h"
+#import "TCNotificationNames.h"
 
 typedef NS_ENUM(NSInteger, TCInputCellType) {
     TCInputCellTypeName = 0,
@@ -239,7 +240,11 @@ TCGenderPickerViewDelegate>
     [[TCBuluoApi api] authorizeUserIdentity:self.authInfo result:^(TCUserInfo *userInfo, NSError *error) {
         if (userInfo) {
             [MBProgressHUD showHUDWithMessage:@"认证申请已提交"];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserAuthDidUpdate object:nil];
+            // 发送首页需要刷新数据的通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf handleClickBackButton:nil];
             });
