@@ -198,7 +198,7 @@
     noVisitorView.backgroundColor = [UIColor whiteColor];
     noVisitorView.layer.cornerRadius = 5.0;
     noVisitorView.layer.borderColor = TCLightGrayColor.CGColor;
-    CGFloat scale = TCScreenWidth > 375.0 ? 3 : 2;
+    CGFloat scale = TCScreenWidth > 375.0 ? 3.0 : 2.0;
     noVisitorView.layer.borderWidth = 1 / scale;
     noVisitorView.clipsToBounds = YES;
     [self.view insertSubview:noVisitorView aboveSubview:self.tableView];
@@ -335,7 +335,7 @@
         _tableView.dataSource = self;
         _tableView.layer.cornerRadius = 5.0;
         _tableView.layer.borderColor = TCLightGrayColor.CGColor;
-        CGFloat scale = TCScreenWidth > 375.0 ? 3 : 2;
+        CGFloat scale = TCScreenWidth > 375.0 ? 3.0 : 2.0;
         _tableView.layer.borderWidth = 1 / scale;
         _tableView.clipsToBounds = YES;
         _tableView.rowHeight = 40.0;

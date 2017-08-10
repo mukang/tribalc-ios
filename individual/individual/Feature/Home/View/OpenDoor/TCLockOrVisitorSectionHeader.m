@@ -48,7 +48,7 @@
         make.width.equalTo(@18);
         make.height.equalTo(@17);
     }];
-    CGFloat scale = TCScreenWidth > 375.0 ? 3 : 2;
+    CGFloat scale = TCScreenWidth > 375.0 ? 3.0 : 2.0;
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(10);
         make.bottom.equalTo(self);
