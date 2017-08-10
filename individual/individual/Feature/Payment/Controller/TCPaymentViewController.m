@@ -16,6 +16,8 @@
 #import "TCPaymentBankCardView.h"
 #import "TCPaymentMethodView.h"
 
+#import "TCNotificationNames.h"
+
 #import <TCCommonLibs/TCFunctions.h>
 #import <BaofuFuFingerSDK/BaofuFuFingerSDK.h>
 
@@ -449,6 +451,10 @@ BaofuFuFingerClientDelegate
  */
 - (void)handlePaymentSucceedWithPayment:(TCUserPayment *)payment {
     [MBProgressHUD hideHUD:YES];
+    
+    // 发送首页需要刷新数据的通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
+    
     if ([self.paymentPasswordView.textField isFirstResponder]) {
         [self.paymentPasswordView.textField resignFirstResponder];
     }

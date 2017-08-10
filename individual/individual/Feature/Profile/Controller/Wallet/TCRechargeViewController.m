@@ -15,6 +15,7 @@
 
 #import "TCBuluoApi.h"
 #import "WXApiManager.h"
+#import "TCNotificationNames.h"
 
 #import <TCCommonLibs/TCCommonButton.h>
 #import <BaofuFuFingerSDK/BaofuFuFingerSDK.h>
@@ -334,6 +335,10 @@ TCRechargeMethodsViewDelegate>
  */
 - (void)handleRechargeSucceed {
     [MBProgressHUD showHUDWithMessage:@"充值成功"];
+    
+    // 发送首页需要刷新数据的通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
+    
     self.balanceLabel.text = [NSString stringWithFormat:@"余额：¥%0.2f", self.walletAccount.balance + [self.textField.text doubleValue]];
     if (self.completionBlock) {
         self.completionBlock();

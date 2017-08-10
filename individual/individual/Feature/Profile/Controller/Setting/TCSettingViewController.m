@@ -157,8 +157,8 @@
 }
 
 - (void)handleUserLogout {
-    [self.navigationController popToRootViewControllerAnimated:YES];
     [[TCBuluoApi api] logout:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

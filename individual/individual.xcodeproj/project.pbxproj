@@ -230,6 +230,7 @@
 		7A384FA61E1124D600E6DB9E /* TCIDAuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A384FA41E1124D600E6DB9E /* TCIDAuthViewController.xib */; };
 		7A38923A1F39AFF7000DBA30 /* TCCompanyRentPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3892391F39AFF7000DBA30 /* TCCompanyRentPayViewController.m */; };
 		7A38923D1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A38923C1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m */; };
+		7A3892411F3C0928000DBA30 /* TCNotificationNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3892401F3C0928000DBA30 /* TCNotificationNames.m */; };
 		7A4514881DD30C48009F170A /* TCModelImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4514871DD30C48009F170A /* TCModelImport.m */; };
 		7A455D5E1EBC912400A2F9ED /* TCWithdrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A455D5D1EBC912400A2F9ED /* TCWithdrawViewController.m */; };
 		7A455D631EBC913900A2F9ED /* TCWithdrawAmountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A455D601EBC913900A2F9ED /* TCWithdrawAmountView.m */; };
@@ -871,6 +872,8 @@
 		7A3892391F39AFF7000DBA30 /* TCCompanyRentPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyRentPayViewController.m; sourceTree = "<group>"; };
 		7A38923B1F39B13C000DBA30 /* TCCompanyRentPayDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyRentPayDetailView.h; sourceTree = "<group>"; };
 		7A38923C1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyRentPayDetailView.m; sourceTree = "<group>"; };
+		7A38923F1F3C0928000DBA30 /* TCNotificationNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCNotificationNames.h; sourceTree = "<group>"; };
+		7A3892401F3C0928000DBA30 /* TCNotificationNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCNotificationNames.m; sourceTree = "<group>"; };
 		7A4514861DD30C48009F170A /* TCModelImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCModelImport.h; sourceTree = "<group>"; };
 		7A4514871DD30C48009F170A /* TCModelImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCModelImport.m; sourceTree = "<group>"; };
 		7A455D5C1EBC912400A2F9ED /* TCWithdrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWithdrawViewController.h; sourceTree = "<group>"; };
@@ -2563,6 +2566,8 @@
 				7AAB19FE1ED43CA900EF5F69 /* TCPromotionsManager.h */,
 				7AAB19FF1ED43CA900EF5F69 /* TCPromotionsManager.m */,
 				7AAB1A0D1ED8142800EF5F69 /* TCUserDefaultsKeys.h */,
+				7A38923F1F3C0928000DBA30 /* TCNotificationNames.h */,
+				7A3892401F3C0928000DBA30 /* TCNotificationNames.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -3496,6 +3501,7 @@
 				09222E111DEE732D0064C0DF /* TCDetailStore.m in Sources */,
 				7AEB4CCA1E03936300F83A7C /* TCShippingAddressEditViewController.m in Sources */,
 				7A01916F1E7A92B500283822 /* TCLockQRCodeView.m in Sources */,
+				7A3892411F3C0928000DBA30 /* TCNotificationNames.m in Sources */,
 				7A64EA7D1E14EEE0008D0C12 /* WXApiManager.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,

@@ -15,6 +15,7 @@
 #import "TCBankCardViewController.h"
 
 #import "TCBuluoApi.h"
+#import "TCNotificationNames.h"
 
 #import <TCCommonLibs/TCCommonButton.h>
 #import <TCCommonLibs/UIImage+Category.h>
@@ -271,6 +272,10 @@
     [[TCBuluoApi api] commitWithdrawReqWithAmount:amount bankCardID:self.currentBankCard.ID walletID:self.walletAccount.ID result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD showHUDWithMessage:@"申请提现成功，资金将在48小时内到账，请注意查收"];
+            
+            // 发送首页需要刷新数据的通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf handleClickBackButton:nil];
                 if (weakSelf.completionBlock) {

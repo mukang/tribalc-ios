@@ -26,13 +26,14 @@
 #import "TCHomeMessageOnlyMainTitleMiddleCell.h"
 
 #import "TCBuluoApi.h"
+#import "TCNotificationNames.h"
 
 #import <TCCommonLibs/UIImage+Category.h>
 #import <MJRefresh/MJRefresh.h>
 #import<AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
 
-#define toolsViewH     96
+#define toolsViewH     112
 #define bannerViewH    (TCRealValue(75) + 7.5)
 
 @interface TCHomeViewController ()
@@ -74,13 +75,8 @@ TCHomeCoverViewDelegate>
     
     [self setupNavBar];
     [self setupSubviews];
+    [self loadDataFirstTime];
     [self registerNotifications];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    [self loadNewData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -328,7 +324,7 @@ TCHomeCoverViewDelegate>
         if (success) {
             self.coverView.hidden = YES;
             [MBProgressHUD showHUDWithMessage:@"忽略成功" afterDelay:0.5];
-            [self handleRefreshData];
+            [self handleReloadData];
         }else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
@@ -498,6 +494,11 @@ TCHomeCoverViewDelegate>
                                              selector:@selector(handleUserDidLogout:)
                                                  name:TCBuluoApiNotificationUserDidLogout
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadNewData)
+                                                 name:TCNotificationHomePageNeedRefreshData
+                                               object:nil];
+    
 }
 
 - (void)removeNotifications {
@@ -595,14 +596,16 @@ TCHomeCoverViewDelegate>
 }
 
 - (void)handleUserDidLogin:(NSNotification *)noti {
-    [self handleRefreshData];
+    [self handleReloadData];
 }
 
 - (void)handleUserDidLogout:(NSNotification *)noti {
-    [self handleRefreshData];
+    [self.messageArr removeAllObjects];
+    self.tableView.mj_footer.hidden = YES;
+    [self.tableView reloadData];
 }
 
-- (void)handleRefreshData {
+- (void)handleReloadData {
     [self.messageArr removeAllObjects];
     self.tableView.mj_footer.hidden = YES;
     [self loadDataFirstTime];
