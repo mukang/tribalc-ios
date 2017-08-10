@@ -34,7 +34,7 @@
 #import <AVFoundation/AVMediaFormat.h>
 
 #define toolsViewH     112
-#define bannerViewH    (TCRealValue(75) + 7.5)
+#define bannerViewH    (TCRealValue(76.5) + 7.5)
 
 @interface TCHomeViewController ()
 <UITableViewDataSource,
@@ -102,7 +102,7 @@ TCHomeCoverViewDelegate>
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     UIView *navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
-    navBarView.backgroundColor = TCRGBColor(151, 171, 234);
+    navBarView.backgroundColor = TCRGBColor(113, 130, 220);
     [self.view addSubview:navBarView];
     self.navBarView = navBarView;
     

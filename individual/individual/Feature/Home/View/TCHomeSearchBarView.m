@@ -21,7 +21,7 @@
 
 - (void)setupSubviews {
     UIView *bgView = [[UIView alloc] init];
-    bgView.backgroundColor = TCRGBColor(123, 146, 216);
+    bgView.backgroundColor = TCRGBColor(94, 111, 204);
     [self addSubview:bgView];
     
     UIImageView *searchIcon = [[UIImageView alloc] init];
