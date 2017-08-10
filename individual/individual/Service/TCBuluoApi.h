@@ -764,7 +764,7 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  @param sort 排序
  @param resultBlock 回调
  */
-- (void)fetchStoreListWithSellingPointId:(NSString *)sellingPointId limitSize:(NSInteger)limitSize sortSkip:(NSInteger)sortSkip sort:(NSString *)sort result:(void(^)(TCStoreWrapper *storeWrapper, NSError *error))resultBlock;
+- (void)fetchStoreListWithSellingPointId:(NSString *)sellingPointId limitSize:(NSInteger)limitSize sortSkip:(NSString *)sortSkip sort:(NSString *)sort result:(void(^)(TCStoreWrapper *storeWrapper, NSError *error))resultBlock;
 
 /**
  获取店铺信息（新版接口）

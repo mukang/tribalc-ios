@@ -2530,11 +2530,11 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchStoreListWithSellingPointId:(NSString *)sellingPointId limitSize:(NSInteger)limitSize sortSkip:(NSInteger)sortSkip sort:(NSString *)sort result:(void(^)(TCStoreWrapper *storeWrapper, NSError *error))resultBlock {
+- (void)fetchStoreListWithSellingPointId:(NSString *)sellingPointId limitSize:(NSInteger)limitSize sortSkip:(NSString *)sortSkip sort:(NSString *)sort result:(void(^)(TCStoreWrapper *storeWrapper, NSError *error))resultBlock {
     NSString *selfId = [self isUserSessionValid] ? [NSString stringWithFormat:@"me=%@",self.currentUserSession.assigned] : @"";
     NSString *sellingPointIdStr = sellingPointId ? [NSString stringWithFormat:@"&sellingPointId=%@",sellingPointId] : @"";
     NSString *limitSizeStr = limitSize ? [NSString stringWithFormat:@"&limitSize=%ld",(long)limitSize] : @"";
-    NSString *sortSkipStr = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%ld",(long)sortSkip] : @"";
+    NSString *sortSkipStr = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%@", sortSkip] : @"";
     NSString *sortStr = sort ? [NSString stringWithFormat:@"&sort=%@",sort] : @"";
     NSString *apiName = [NSString stringWithFormat:@"stores?%@%@%@%@%@", selfId, sellingPointIdStr, limitSizeStr, sortSkipStr, sortStr];
     TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];

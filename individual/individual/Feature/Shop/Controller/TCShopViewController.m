@@ -32,9 +32,9 @@
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = nil;
     [self setUpViews];
-    [self loadDataIsMore:NO];
+    [self loadData];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessOrFail) name:TCBuluoApiNotificationUserDidLogin object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessOrFail) name:TCBuluoApiNotificationUserDidLogout object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logOut) name:TCBuluoApiNotificationUserDidLogout object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -43,8 +43,15 @@
 
 #pragma mark private action
 
+- (void)logOut {
+    self.stores = nil;
+    [self.tableView reloadData];
+}
+
 - (void)loginSuccessOrFail {
-    [self loadDataIsMore:NO];
+    self.stores = nil;
+    [self.tableView reloadData];
+    [self loadData];
 }
 
 - (void)setUpViews {
@@ -54,37 +61,44 @@
     }];
 }
 
-- (void)loadDataIsMore:(BOOL)isMore {
+- (void)loadData {
     @WeakObj(self)
-    [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchStoreListWithSellingPointId:nil limitSize:0 sortSkip:0 sort:nil result:^(TCStoreWrapper *storeWrapper, NSError *error) {
         @StrongObj(self)
         if (storeWrapper) {
-            [MBProgressHUD hideHUD:YES];
             self.storeWrapper = storeWrapper;
-            
+            self.stores = storeWrapper.content;
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView reloadData];
+            if ([self.stores isKindOfClass:[NSArray class]] && self.stores.count > 0) {
+                self.tableView.mj_footer.hidden = NO;
+            }else {
+                self.tableView.mj_footer.hidden = YES;
+            }
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
+        }
+    }];
+
+}
+
+- (void)loadOldData {
+    @WeakObj(self)
+    [[TCBuluoApi api] fetchStoreListWithSellingPointId:nil limitSize:0 sortSkip:self.storeWrapper.nextSkip sort:nil result:^(TCStoreWrapper *storeWrapper, NSError *error) {
+        @StrongObj(self)
+        if (storeWrapper) {
+            self.storeWrapper = storeWrapper;
             if (!storeWrapper.hasMore) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
             }
-            
-            if (isMore) {
-                NSMutableArray *mutableArr = [NSMutableArray arrayWithArray:self.stores];
-                [mutableArr addObjectsFromArray:storeWrapper.content];
-                self.stores = mutableArr;
-                [self.tableView.mj_footer endRefreshing];
-            }else {
-                self.stores = storeWrapper.content;
-                [self.tableView.mj_header endRefreshing];
-                self.tableView.mj_footer.hidden = NO;
-            }
+            NSMutableArray *mutableArr = [NSMutableArray arrayWithArray:self.stores];
+            [mutableArr addObjectsFromArray:storeWrapper.content];
+            self.stores = mutableArr;
+            [self.tableView.mj_footer endRefreshing];
             [self.tableView reloadData];
-            
         }else {
-            if (isMore) {
-                [self.tableView.mj_footer endRefreshing];
-            }else {
-                [self.tableView.mj_header endRefreshing];
-            }
+            [self.tableView.mj_footer endRefreshing];
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
         }
@@ -124,14 +138,14 @@
     @WeakObj(self)
     TCRefreshHeader *refreshHeader = [TCRefreshHeader headerWithRefreshingBlock:^(void) {
         @StrongObj(self)
-        [self loadDataIsMore:NO];
+        [self loadData];
     }];
     _tableView.mj_header = refreshHeader;
     
     TCRefreshFooter *refreshFooter = [TCRefreshFooter footerWithRefreshingBlock:^(void) {
         @StrongObj(self)
         if (self.storeWrapper.hasMore) {
-            [self loadDataIsMore:YES];
+            [self loadOldData];
         }else {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
         }
