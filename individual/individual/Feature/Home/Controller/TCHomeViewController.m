@@ -276,7 +276,7 @@ TCHomeCoverViewDelegate>
     
     TCHomeMessage *message = self.messageArr[indexPath.row];
     TCMessageType type = message.messageBody.homeMessageType.type;
-    CGFloat scale = TCScreenWidth > 375.0 ? 3 : 2;
+    CGFloat scale = TCScreenWidth > 375.0 ? 3.0 : 2.0;
     CGFloat baseH = 80+4*(1/scale);
     if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw) {
         return baseH+102;
@@ -341,9 +341,13 @@ TCHomeCoverViewDelegate>
             self.coverView.hidden = YES;
             [MBProgressHUD hideHUD:YES];
             [self.messageArr removeObject:message];
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            NSArray *indexPathArr = [NSArray arrayWithObjects:indexPath, nil];
-            [self.tableView deleteRowsAtIndexPaths:indexPathArr withRowAnimation:UITableViewRowAnimationFade];
+            if (self.messageArr.count > 3) {
+                NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+                NSArray *indexPathArr = [NSArray arrayWithObjects:indexPath, nil];
+                [self.tableView deleteRowsAtIndexPaths:indexPathArr withRowAnimation:UITableViewRowAnimationFade];
+            } else {
+                [self.tableView reloadData];
+            }
             if (self.messageArr.count == 0) {
                 self.tableView.mj_footer.hidden = YES;
             }
@@ -445,13 +449,20 @@ TCHomeCoverViewDelegate>
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    NSLog(@"%@ -- %@", NSStringFromCGPoint(velocity), NSStringFromCGPoint(*targetContentOffset));
+    
     CGFloat maxOffsetY = -bannerViewH;
     CGFloat minOffsetY = -(toolsViewH + bannerViewH);
     CGFloat targetOffsetX = targetContentOffset->x;
     CGFloat targetOffsetY = targetContentOffset->y;
     
     if (targetOffsetY <= minOffsetY || targetOffsetY >= maxOffsetY) {
+        return;
+    }
+    
+    CGFloat slidingH = scrollView.contentSize.height + scrollView.contentInset.top + scrollView.contentInset.bottom;
+    CGFloat visualH = TCScreenHeight - 64 - 49;
+    CGFloat invalidL = slidingH - visualH;
+    if (invalidL >= 0 && invalidL <= toolsViewH) {
         return;
     }
     
