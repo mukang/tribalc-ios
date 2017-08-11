@@ -10,6 +10,6 @@
 
 @interface TCContractViewController : TCBaseViewController
 
-- (instancetype)initWithPictures:(NSString *)picturesStr;
+- (instancetype)initWithPictures:(NSArray *)pictures;
 
 @end

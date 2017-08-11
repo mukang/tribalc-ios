@@ -17,10 +17,7 @@
 
 @property (strong, nonatomic) UIPageControl *pageControl;
 
-@property (copy, nonatomic) NSString *picturesStr;
-
 @property (copy, nonatomic) NSArray *pictures;
-
 
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, assign) CFTimeInterval lastTimerTick;
@@ -32,10 +29,10 @@
 
 @implementation TCContractViewController
 
-- (instancetype)initWithPictures:(NSString *)picturesStr {
+- (instancetype)initWithPictures:(NSArray *)pictures {
     if (self = [super init]) {
-        if ([picturesStr isKindOfClass:[NSString class]]) {
-            self.picturesStr = picturesStr;
+        if ([pictures isKindOfClass:[NSArray class]]) {
+            self.pictures = pictures;
             [self setUpViews];
         }
     }
@@ -64,18 +61,7 @@
     }];
 }
 
-- (void)setPicturesStr:(NSString *)picturesStr {
-    if (_picturesStr != picturesStr) {
-        _picturesStr = picturesStr;
-        self.pictures = [picturesStr componentsSeparatedByString:@","];
-    }
-}
-
 #pragma maek UIScrollViewDelegate 
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-}
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
     CGFloat contentOffsetX = scrollView.contentOffset.x;
@@ -101,7 +87,7 @@
     
     if (index > MAX_INDEX) index = MAX_INDEX;
     if (index < MIN_INDEX) index = MIN_INDEX;
-    
+    self.pageControl.currentPage = index;
     CGPoint newTargetContentOffset= CGPointMake(index * (self.view.frame.size.width + TCRealValue(20)), 0);
     *targetContentOffset = CGPointMake(scrollView.contentOffset.x, 0);
     [self scrollToPoint:newTargetContentOffset];
@@ -150,7 +136,6 @@
     if (_scrollView == nil) {
         _scrollView = [[UIScrollView alloc] init];
         _scrollView.delegate = self;
-//        _scrollView.pagingEnabled = YES;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.alwaysBounceVertical = NO; 
@@ -205,6 +190,10 @@
         _pageControl.numberOfPages = self.pictures.count;
     }
     return _pageControl;
+}
+
+- (void)dealloc {
+    NSLog(@"TCContractViewController -- dealloc");
 }
 
 @end

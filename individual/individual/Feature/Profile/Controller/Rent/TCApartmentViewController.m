@@ -40,7 +40,6 @@
     [super viewDidLoad];
     
     [self setupNavBar];
-//    [self setUpDownView];
     [self loadData];
 }
 
@@ -48,7 +47,6 @@
 
 // 我的合同
 - (void)didClickCheckContractWithRentProtocol:(TCRentProtocol *)rentProtocol {
-//    NSString *str = @"oss://5919aac90cf223abd9dffa1d/1494855230696_detail0?scale=1.34,oss://5919aac90cf223abd9dffa1d/1494855249450_detail1?scale=0.53,oss://5919aac90cf223abd9dffa1d/1494855230696_detail0?scale=1.34,oss://5919aac90cf223abd9dffa1d/1494855249450_detail1?scale=0.53";
     TCContractViewController *contractVC = [[TCContractViewController alloc] initWithPictures:rentProtocol.pictures];
     [self.navigationController pushViewController:contractVC animated:YES];
 }
@@ -101,23 +99,45 @@
 
 - (void)updateNavigationBarWithAlpha:(CGFloat)alpha {
     UIColor *tintColor = nil, *titleColor = nil;
+    NSString *imageName;
     if (alpha > 0.7) {
         self.needsLightContentStatusBar = YES;
         tintColor = [UIColor whiteColor];
         titleColor = [UIColor whiteColor];
+        imageName = @"nav_back_item_white";
     } else {
         self.needsLightContentStatusBar = NO;
         tintColor = TCBlackColor;
-        titleColor = [UIColor clearColor];
+        titleColor = TCBlackColor;
+        imageName = @"nav_back_item";
     }
+    self.navItem.leftBarButtonItem.image = [UIImage imageNamed:imageName];
     [self.navBar setTintColor:tintColor];
-//    self.navBar.titleTextAttributes = @{
-//                                        NSFontAttributeName : [UIFont systemFontOfSize:16],
-//                                        NSForegroundColorAttributeName : titleColor
-//                                        };
+    self.navBar.titleTextAttributes = @{
+                                        NSFontAttributeName : [UIFont systemFontOfSize:16],
+                                        NSForegroundColorAttributeName : titleColor
+                                        };
     
     UIImage *bgImage = [UIImage imageWithColor:TCARGBColor(42, 42, 42, alpha)];
     [self.navBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
+}
+
+#pragma mark - Status Bar
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationFade;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.needsLightContentStatusBar ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
+}
+
+- (void)setNeedsLightContentStatusBar:(BOOL)needsLightContentStatusBar {
+    BOOL statusBarNeedsUpdate = (needsLightContentStatusBar != _needsLightContentStatusBar);
+    _needsLightContentStatusBar = needsLightContentStatusBar;
+    if (statusBarNeedsUpdate) {
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
 }
 
 #pragma mark UITableViewDelegate
@@ -171,7 +191,7 @@
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"我的公寓"];
     navBar.titleTextAttributes = @{
                                    NSFontAttributeName : [UIFont systemFontOfSize:16],
-                                   NSForegroundColorAttributeName : [UIColor whiteColor]
+                                   NSForegroundColorAttributeName : TCBlackColor
                                    };
     UIImage *backImage = [[UIImage imageNamed:@"nav_back_item"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     navItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backImage
@@ -185,7 +205,6 @@
 }
 
 - (void)setUpDownView {
-//    [self.view addSubview:self.downImageView];
     [self.view insertSubview:self.downImageView belowSubview:self.navBar];
     [self.downImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);

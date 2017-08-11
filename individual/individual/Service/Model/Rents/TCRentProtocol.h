@@ -53,7 +53,7 @@
 /** 房源编号 */
 @property (copy, nonatomic) NSString *sourceNum;
 /** 合同照片 */
-@property (copy, nonatomic) NSString *pictures;
+@property (copy, nonatomic) NSArray *pictures;
 /** 租客姓名 */
 @property (copy, nonatomic) NSString *rentName;
 /** 租客性别 */
