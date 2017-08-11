@@ -175,6 +175,8 @@ TCBankPickerViewControllerDelegate>
 #pragma mark - TCApartmentWithholdConfirmViewCellDelegate
 
 - (void)didClickConfirmButtonInApartmentWithholdConfirmViewCell:(TCApartmentWithholdConfirmViewCell *)cell {
+    [self.tableView endEditing:YES];
+    
     if (self.withholdInfo.userName.length == 0) {
         [MBProgressHUD showHUDWithMessage:@"请您填写开户名！"];
         return;
@@ -196,7 +198,7 @@ TCBankPickerViewControllerDelegate>
         return;
     }
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] modifyRentProtocolWithholdByRentProtocolID:self.withholdInfo.ID withholdInfo:self.withholdInfo result:^(BOOL success, NSError *error) {
+    [[TCBuluoApi api] modifyRentProtocolWithholdByRentProtocolID:self.rentProtocolID withholdInfo:self.withholdInfo result:^(BOOL success, NSError *error) {
         if (success) {
             [MBProgressHUD hideHUD:YES];
             if (weakSelf.addWithholdSuccess) {

@@ -35,14 +35,16 @@
     weakSelf = self;
     
     [self setupSubviews];
+    
     if (self.isForWithdraw) {
         self.navigationItem.title = @"银行卡";
         self.addBankCardButton.hidden = YES;
         self.bottomConstraint.constant = 0;
     } else {
         [self setupNavBar];
-        [self loadNetData];
     }
+    
+    [self loadNetData];
 }
 
 - (void)setupNavBar {
