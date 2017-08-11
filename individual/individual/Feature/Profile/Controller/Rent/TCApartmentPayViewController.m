@@ -323,6 +323,7 @@ TCPaymentViewControllerDelegate>
             [MBProgressHUD hideHUD:YES];
             TCApartmentAddWithholdViewController *vc = [[TCApartmentAddWithholdViewController alloc] init];
             vc.isEdit = withholdInfo ? YES : NO;
+            vc.rentProtocolID = self.rentProtocol.ID;
             vc.withholdInfo = withholdInfo;
             vc.banks = bankCardList;
             vc.addWithholdSuccess = ^{

@@ -14,6 +14,8 @@ typedef void(^TCApartmentAddWithholdSuccess)();
 @interface TCApartmentAddWithholdViewController : TCBaseViewController
 
 @property (nonatomic) BOOL isEdit; // 是否是修改代扣信息
+/** 租赁协议id */
+@property (copy, nonatomic) NSString *rentProtocolID;
 @property (strong, nonatomic) TCRentProtocolWithholdInfo *withholdInfo;
 @property (copy, nonatomic) NSArray *banks;
 
