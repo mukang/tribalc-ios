@@ -108,7 +108,7 @@ TCHomeCoverViewDelegate>
     
     TCHomeSearchBarView *searchBarView = [[TCHomeSearchBarView alloc] initWithFrame:navBarView.frame];
     searchBarView.delegate = self;
-    searchBarView.titleLabel.text = @"热门电影：乘风破浪";
+    searchBarView.titleLabel.text = @"嗨托邦";
     [self.view addSubview:searchBarView];
     self.searchBarView = searchBarView;
     
@@ -397,7 +397,7 @@ TCHomeCoverViewDelegate>
 }
 
 - (void)didClickMeetingButtonInHomeToolsView:(TCHomeToolsView *)view {
-    NSLog(@"%s", __func__);
+    [self btnClickUnifyTips];
 }
 
 #pragma mark - UIScrollViewDelegate
