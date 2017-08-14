@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCNumberTextField.h"
 @class TCWalletAccount;
 @protocol TCWithdrawAmountViewDelegate;
 
@@ -14,7 +15,7 @@
 
 @property (strong, nonatomic)  TCWalletAccount *walletAccount;
 @property (nonatomic) double enabledAmount;
-@property (weak, nonatomic) UITextField *amountTextField;
+@property (weak, nonatomic) TCNumberTextField *amountTextField;
 
 @property (weak, nonatomic) id<TCWithdrawAmountViewDelegate> delegate;
 

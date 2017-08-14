@@ -34,6 +34,7 @@
 @property (weak, nonatomic) TCWithdrawBankCardInfoView *bankCardInfoView;
 @property (weak, nonatomic) TCWithdrawAmountView *amountView;
 @property (weak, nonatomic) TCCommonButton *withdrawButton;
+@property (weak, nonatomic) UILabel *promptLabel;
 
 /** 输入框里是否含有小数点 */
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
@@ -119,6 +120,13 @@
     amountView.delegate = self;
     [self.view addSubview:amountView];
     
+    UILabel *promptLabel = [[UILabel alloc] init];
+    promptLabel.text = @"提现金额将于48小时内到账，节假日顺延";
+    promptLabel.textColor = TCGrayColor;
+    promptLabel.textAlignment = NSTextAlignmentCenter;
+    promptLabel.font = [UIFont systemFontOfSize:12];
+    [self.view addSubview:promptLabel];
+    
     TCCommonButton *withdrawButton = [TCCommonButton buttonWithTitle:@"确认提现"
                                                                color:TCCommonButtonColorBlue
                                                               target:self
@@ -131,6 +139,7 @@
     
     self.bankCardInfoView = bankCardInfoView;
     self.amountView = amountView;
+    self.promptLabel = promptLabel;
     self.withdrawButton = withdrawButton;
 }
 
@@ -144,6 +153,10 @@
         make.top.equalTo(weakSelf.bankCardInfoView.mas_bottom).offset(14);
         make.left.right.equalTo(weakSelf.view);
         make.height.mas_equalTo(130);
+    }];
+    [self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.amountView.mas_bottom).offset(26.5);
     }];
     [self.withdrawButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.amountView.mas_bottom).offset(53);

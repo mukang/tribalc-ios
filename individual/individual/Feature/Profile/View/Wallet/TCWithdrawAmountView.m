@@ -16,9 +16,10 @@
 
 @property (weak, nonatomic) UILabel *titleLabel;
 @property (weak, nonatomic) UILabel *symbolLabel;
-@property (weak, nonatomic) UILabel *enabledAmountLabel;
+@property (weak, nonatomic) UILabel *disabledAmountLabel;
 @property (weak, nonatomic) UIView *lineView;
 @property (weak, nonatomic) TCExtendButton *allWithdrawButton;
+@property (weak, nonatomic) UILabel *placeholderLabel;
 
 @end
 
@@ -30,8 +31,13 @@
         self.backgroundColor = [UIColor whiteColor];
         [self setupSubviews];
         [self setupConstraints];
+        [self registerNotifications];
     }
     return self;
+}
+
+- (void)dealloc {
+    [self removeNotifications];
 }
 
 - (void)setupSubviews {
@@ -47,21 +53,28 @@
     [symbolLabel sizeToFit];
     [self addSubview:symbolLabel];
     
-    UITextField *amountTextField = [[UITextField alloc] init];
+    TCNumberTextField *amountTextField = [[TCNumberTextField alloc] init];
     amountTextField.textColor = TCBlackColor;
     amountTextField.font = [UIFont boldSystemFontOfSize:30];
     amountTextField.keyboardType = UIKeyboardTypeDecimalPad;
     amountTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self addSubview:amountTextField];
     
+    UILabel *placeholderLabel = [[UILabel alloc] init];
+    placeholderLabel.textColor = TCGrayColor;
+    placeholderLabel.textAlignment = NSTextAlignmentLeft;
+    placeholderLabel.font = [UIFont systemFontOfSize:12];
+    [amountTextField addSubview:placeholderLabel];
+    self.placeholderLabel = placeholderLabel;
+    
     UIView *lineView = [[UIView alloc] init];
     lineView.backgroundColor = TCSeparatorLineColor;
     [self addSubview:lineView];
     
-    UILabel *enabledAmountLabel = [[UILabel alloc] init];
-    enabledAmountLabel.textColor = TCGrayColor;
-    enabledAmountLabel.font = [UIFont systemFontOfSize:12];
-    [self addSubview:enabledAmountLabel];
+    UILabel *disabledAmountLabel = [[UILabel alloc] init];
+    disabledAmountLabel.textColor = TCGrayColor;
+    disabledAmountLabel.font = [UIFont systemFontOfSize:12];
+    [self addSubview:disabledAmountLabel];
     
     TCExtendButton *allWithdrawButton = [TCExtendButton buttonWithType:UIButtonTypeCustom];
     [allWithdrawButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"全部提现"
@@ -80,8 +93,9 @@
     self.titleLabel = titleLabel;
     self.symbolLabel = symbolLabel;
     self.amountTextField = amountTextField;
+    self.placeholderLabel = placeholderLabel;
     self.lineView = lineView;
-    self.enabledAmountLabel = enabledAmountLabel;
+    self.disabledAmountLabel = disabledAmountLabel;
     self.allWithdrawButton = allWithdrawButton;
 }
 
@@ -102,13 +116,17 @@
         make.right.equalTo(weakSelf).offset(-20);
         make.centerY.equalTo(weakSelf.symbolLabel);
     }];
+    [self.placeholderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.amountTextField).offset(2);
+        make.centerY.equalTo(weakSelf.amountTextField);
+    }];
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf).offset(20);
         make.right.equalTo(weakSelf).offset(-20);
         make.bottom.equalTo(weakSelf).offset(-34);
         make.height.mas_equalTo(0.5);
     }];
-    [self.enabledAmountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.disabledAmountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf).offset(20);
         make.centerY.equalTo(weakSelf.lineView.mas_bottom).offset(17);
     }];
@@ -121,6 +139,7 @@
 #pragma mark - Actions
 
 - (void)handleClickAllWithdrawButton:(UIButton *)sender {
+    self.placeholderLabel.hidden = YES;
     if ([self.delegate respondsToSelector:@selector(didClickAllWithdrawButtonInWithdrawAmountView:)]) {
         [self.delegate didClickAllWithdrawButtonInWithdrawAmountView:self];
     }
@@ -132,21 +151,46 @@
     _walletAccount = walletAccount;
     
     self.titleLabel.text = [NSString stringWithFormat:@"提现金额（收取%0.2f元服务费）", walletAccount.withdrawCharge];
-}
-
-- (void)setEnabledAmount:(double)enabledAmount {
-    _enabledAmount = enabledAmount;
     
-    NSString *enabledAmountStr = [NSString stringWithFormat:@"%0.2f", self.enabledAmount];
-    NSString *str = [NSString stringWithFormat:@"可转出金额：%@元", enabledAmountStr];
-    NSRange highlightRange = [str rangeOfString:enabledAmountStr];
+    NSString *disabledAmountStr = [NSString stringWithFormat:@"%0.2f", walletAccount.limitedBalance];
+    NSString *str = [NSString stringWithFormat:@"不可提现金额：%@元", disabledAmountStr];
+    NSRange highlightRange = [str rangeOfString:disabledAmountStr];
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:str
                                                                                attributes:@{
                                                                                             NSFontAttributeName: [UIFont systemFontOfSize:12],
                                                                                             NSForegroundColorAttributeName: TCGrayColor
                                                                                             }];
     [attStr addAttribute:NSForegroundColorAttributeName value:TCRGBColor(229, 16, 16) range:highlightRange];
-    self.enabledAmountLabel.attributedText = attStr;
+    self.disabledAmountLabel.attributedText = attStr;
+}
+
+- (void)setEnabledAmount:(double)enabledAmount {
+    _enabledAmount = enabledAmount;
+    
+    self.placeholderLabel.text = [NSString stringWithFormat:@"可提现金额%0.2f元", enabledAmount];
+}
+
+#pragma mark - Notifications
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)handleTextFieldTextDidChangeNotification:(NSNotification *)notification {
+    TCNumberTextField *textField = (TCNumberTextField *)notification.object;
+    if (![textField isEqual:self.amountTextField]) {
+        return;
+    }
+    
+    if (textField.text.length) {
+        self.placeholderLabel.hidden = YES;
+    } else {
+        self.placeholderLabel.hidden = NO;
+    }
 }
 
 @end
