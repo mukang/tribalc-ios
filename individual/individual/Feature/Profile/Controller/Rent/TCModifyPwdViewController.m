@@ -64,6 +64,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = TCBackgroundColor;
     [self setUpSubViews];
+    self.title = @"修改密码";
 }
 
 #pragma mark UITextFieldDelegate
