@@ -263,8 +263,6 @@ TCHomeCoverViewDelegate>
     }else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageSubTitleCell" forIndexPath:indexPath];
     }
-    
-//    TCHomeMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageCell" forIndexPath:indexPath];
     cell.homeMessage = message;
     cell.delegate = self;
     return cell;
@@ -287,10 +285,6 @@ TCHomeCoverViewDelegate>
     }else {
         return baseH+143;
     }
-    
-//    return [tableView fd_heightForCellWithIdentifier:@"TCHomeMessageCell" configuration:^(TCHomeMessageCell *cell) {
-//        cell.homeMessage = self.messageArr[indexPath.row];
-//    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
