@@ -52,7 +52,7 @@
     CABasicAnimation*pathAnimation;
     
     pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 1.0;
+    pathAnimation.duration = 2.0 * (self.walletAccount.creditBalance/self.walletAccount.creditLimit);
 
     pathAnimation.repeatCount = 1;
     
@@ -63,8 +63,6 @@
     pathAnimation.fromValue= [NSNumber numberWithInt:0.0];
         
     pathAnimation.toValue= [NSNumber numberWithInt:1.0];
-    
-//    pathAnimation.delegate=self;
     
     [_progressLayer addAnimation:pathAnimation forKey:@"strokeStart"];
 }

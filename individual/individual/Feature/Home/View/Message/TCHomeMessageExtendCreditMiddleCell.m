@@ -52,17 +52,25 @@
     if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeCreditEnable) {
         self.leftSubTitleLabel.text = homeMessage.messageBody.desc;
         self.rightSubTitleLabel.hidden = YES;
+        self.secondSubTitleLabel.hidden = YES;
     }else if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeCreditBillGeneration) {
         self.leftSubTitleLabel.text = [NSString stringWithFormat:@"还款日:%@",[self.dataFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:homeMessage.messageBody.repaymentTime/1000]]];
         self.rightSubTitleLabel.hidden = NO;
         self.rightSubTitleLabel.text = [NSString stringWithFormat:@"应还金额:%.2f",homeMessage.messageBody.repaymentAmount];
+        self.secondSubTitleLabel.hidden = YES;
     }else if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeCreditBillPayment) {
         self.rightSubTitleLabel.hidden = YES;
         self.leftSubTitleLabel.text = [NSString stringWithFormat:@"还款金额:%.2f",homeMessage.messageBody.repaymentAmount];
+        self.secondSubTitleLabel.hidden = YES;
     }else if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeCreditDisable) {
         self.leftSubTitleLabel.text = homeMessage.messageBody.desc;
         self.rightSubTitleLabel.hidden = YES;
         self.secondSubTitleLabel.text = [NSString stringWithFormat:@"欠款金额:%.2f",homeMessage.messageBody.repaymentAmount];
+        self.secondSubTitleLabel.hidden = NO;
+    }else if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeCompaniesAdmin) {
+        self.leftSubTitleLabel.text = homeMessage.messageBody.desc;
+        self.rightSubTitleLabel.hidden = YES;
+        self.secondSubTitleLabel.hidden = YES;
     }
 
 }
@@ -88,16 +96,16 @@
         make.left.equalTo(self.mainTitleLabel);
         make.top.equalTo(self.mainTitleLabel.mas_bottom).offset(5);
         make.right.equalTo(self.middleView).offset(-30);
-        make.height.equalTo(@20);
+//        make.height.equalTo(@20);
     }];
     
     [self.rightSubTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.middleView).offset(-TCRealValue(35));
-        make.top.height.equalTo(self.leftSubTitleLabel);
+        make.top.equalTo(self.leftSubTitleLabel);
     }];
     
     [self.secondSubTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.left.height.equalTo(self.leftSubTitleLabel);
+        make.right.left.equalTo(self.leftSubTitleLabel);
         make.top.equalTo(self.leftSubTitleLabel.mas_bottom).offset(5);
         
     }];
@@ -129,6 +137,7 @@
         _leftSubTitleLabel = [[UILabel alloc] init];
         _leftSubTitleLabel.textColor = TCBlackColor;
         _leftSubTitleLabel.font = [UIFont systemFontOfSize:12];
+        _leftSubTitleLabel.numberOfLines = 0;
     }
     return _leftSubTitleLabel;
 }
