@@ -16,6 +16,8 @@
 
 @property (strong, nonatomic) UIImageView *bgImageView;
 
+@property (strong, nonatomic) UIImageView *coverImageView;
+
 @property (strong, nonatomic) UIImageView *iconImageView;
 
 @property (strong, nonatomic) UILabel *desLabel;
@@ -65,6 +67,7 @@
 - (void)setUpViews {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.bgImageView];
+    [self.contentView addSubview:self.coverImageView];
     [self.contentView addSubview:self.iconImageView];
     [self.contentView addSubview:self.desLabel];
     [self.contentView addSubview:self.locationImageView];
@@ -72,6 +75,10 @@
     [self.contentView addSubview:self.moneyLabel];
     
     [self.bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.contentView);
+    }];
+    
+    [self.coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.contentView);
     }];
     
@@ -154,6 +161,16 @@
         _iconImageView.layer.borderWidth = 2.0;
     }
     return _iconImageView;
+}
+
+- (UIImageView *)coverImageView {
+    if (_coverImageView == nil) {
+        _coverImageView = [[UIImageView alloc] init];
+        _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _coverImageView.clipsToBounds = YES;
+        _coverImageView.image = [UIImage imageNamed:@"store_cover"];
+    }
+    return _coverImageView;
 }
 
 - (UIImageView *)bgImageView {
