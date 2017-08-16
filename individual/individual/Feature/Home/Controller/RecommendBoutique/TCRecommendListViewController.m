@@ -35,6 +35,7 @@
 # pragma mark - Navigation Bar
 - (void)setupNavigationBar {
     self.navigationItem.title = @"精品推荐";
+    self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"good_shopping_white"]
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
@@ -144,6 +145,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     TCGoods *goodInfo = goodsInfoWrapper.content[indexPath.row];
     TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodId:goodInfo.ID];
+    recommendInfoViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:recommendInfoViewController animated:YES];
 }
 
