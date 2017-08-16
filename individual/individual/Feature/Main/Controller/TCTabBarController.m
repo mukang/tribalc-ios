@@ -26,6 +26,7 @@
 #import <EAIntroView/EAIntroView.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import "TCShopViewController.h"
+#import "TCRecommendListViewController.h"
 
 static NSString *const kAppVersion = @"kAppVersion";
 static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
@@ -53,7 +54,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     
     [self addChildController:[[TCHomeViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
     [self addChildController:[[TCShopViewController alloc] init] title:@"嗨购" image:@"tabBar_store_normal" selectedImage:@"tabBar_store_selected"];
-//    [self addChildController:[[TCToolsViewController alloc] init] title:@"常用" image:@"tabBar_common_normal" selectedImage:@"tabBar_common_selected"];
+    [self addChildController:[[TCRecommendListViewController alloc] init] title:@"社区" image:@"tabBar_community_normal" selectedImage:@"tabBar_community_selected"];
     [self addChildController:[[TCProfileViewController alloc] init] title:@"我的" image:@"tabBar_profile_normal" selectedImage:@"tabBar_profile_selected"];
     
 //    [self setValue:[[TCTabBar alloc] init] forKey:@"tabBar"];
