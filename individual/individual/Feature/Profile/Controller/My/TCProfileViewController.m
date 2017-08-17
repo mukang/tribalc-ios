@@ -234,16 +234,16 @@
                 [self handleClickScanButton];
                 break;
             case 2:
-                [self handleClickSigninButton];
+                [self handleClickOrderButton];
                 break;
             case 3:
-                [self handleClickRepairsButton];
+                [self handleClickSigninButton];
                 break;
                 
             default:
                 break;
         }
-    } else {
+    } else if (indexPath.row == 1) {
         switch (index) {
             case 0:
                 [self handleClickIdentityButton];
@@ -261,6 +261,8 @@
             default:
                 break;
         }
+    } else {
+        [self handleClickRepairsButton];
     }
 }
 
@@ -355,6 +357,13 @@
     TCSignInHistoryViewController *signInHistoryVc = [[TCSignInHistoryViewController alloc] init];
     signInHistoryVc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:signInHistoryVc animated:YES];
+}
+
+- (void)handleClickOrderButton {
+    TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:TCGoodsOrderStatusAll];
+    vc.fromController = self;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleClickRepairsButton {
@@ -459,14 +468,17 @@
                             @[
                                 @{@"title": @"钱包", @"imageName": @"profile_wallet_icon"},
                                 @{@"title": @"付款", @"imageName": @"profile_scan_icon"},
-                                @{@"title": @"签到", @"imageName": @"profile_signin_icon"},
-                                @{@"title": @"报修", @"imageName": @"profile_repairs_icon"}
+                                @{@"title": @"订单", @"imageName": @"profile_order_icon"},
+                                @{@"title": @"签到", @"imageName": @"profile_signin_icon"}
                               ],
                             @[
                                 @{@"title": @"身份认证", @"imageName": @"profile_identity_icon"},
                                 @{@"title": @"我的公司", @"imageName": @"profile_company_icon"},
                                 @{@"title": @"我的公寓", @"imageName": @"profile_apartment_icon"},
                                 @{@"title": @"活动", @"imageName": @"profile_activity_icon"}
+                              ],
+                            @[
+                                @{@"title": @"报修", @"imageName": @"profile_repairs_icon"}
                               ]
                             ];
     }

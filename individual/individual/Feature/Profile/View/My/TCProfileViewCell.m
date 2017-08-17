@@ -79,10 +79,15 @@
     
     for (int i=0; i<4; i++) {
         UIButton *button = self.buttons[i];
-        NSDictionary *dic = materials[i];
-        
-        [button setImage:[UIImage imageNamed:dic[@"imageName"]] forState:UIControlStateNormal];
-        [button setTitle:dic[@"title"] forState:UIControlStateNormal];
+        if (i < materials.count) {
+            button.hidden = NO;
+            NSDictionary *dic = materials[i];
+            
+            [button setImage:[UIImage imageNamed:dic[@"imageName"]] forState:UIControlStateNormal];
+            [button setTitle:dic[@"title"] forState:UIControlStateNormal];
+        } else {
+            button.hidden = YES;
+        }
     }
 }
 
