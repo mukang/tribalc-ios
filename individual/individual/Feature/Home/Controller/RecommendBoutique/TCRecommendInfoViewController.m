@@ -275,7 +275,7 @@
     backBtn.layer.cornerRadius = TCRealValue(27.5 / 2);
     backBtn.backgroundColor = [UIColor colorWithRed:57/255.0 green:57/255.0 blue:57/255.0 alpha:1];
     
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav_back_item_white"]];
     [imgView sizeToFit];
     [imgView setFrame:CGRectMake(backBtn.width / 2 - imgView.width * 1.1 / 2 - 1.4, backBtn.height / 2 - imgView.height * 1.1 / 2, imgView.width * 1.1, imgView.height * 1.1)];
     [backBtn addSubview:imgView];
@@ -477,7 +477,7 @@
     }
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, collectionView.width, collectionView.height)];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.backgroundColor = [UIColor whiteColor];
     [cell.contentView addSubview:imageView];
     NSString *imageStr = mGoodDetail.pictures[indexPath.row];

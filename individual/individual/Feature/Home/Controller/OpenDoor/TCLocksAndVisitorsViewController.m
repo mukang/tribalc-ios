@@ -86,7 +86,7 @@
                                         NSFontAttributeName : [UIFont systemFontOfSize:16],
                                         NSForegroundColorAttributeName : TCBlackColor
                                         };
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item_black"]
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_back_item"]
                                                                  style:UIBarButtonItemStylePlain
                                                                 target:self
                                                                 action:@selector(pop)];

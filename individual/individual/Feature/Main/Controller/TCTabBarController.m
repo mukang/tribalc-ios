@@ -15,6 +15,8 @@
 #import "TCToolsViewController.h"
 #import "TCLoginViewController.h"
 #import "TCLaunchViewController.h"
+#import "TCShopViewController.h"
+#import "TCRecommendListViewController.h"
 
 #import "TCTabBar.h"
 #import "TCForceUpdateView.h"
@@ -25,8 +27,6 @@
 #import <TCCommonLibs/TCFunctions.h>
 #import <EAIntroView/EAIntroView.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
-#import "TCShopViewController.h"
-#import "TCRecommendListViewController.h"
 
 static NSString *const kAppVersion = @"kAppVersion";
 static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";

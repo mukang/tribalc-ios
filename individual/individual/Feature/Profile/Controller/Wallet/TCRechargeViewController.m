@@ -97,7 +97,7 @@ TCRechargeMethodsViewDelegate>
     [self.view addSubview:navBar];
     
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"nav_back_item_black"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"nav_back_item"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                                                  style:UIBarButtonItemStylePlain
                                                                 target:self
                                                                 action:@selector(handleClickBackButton:)];

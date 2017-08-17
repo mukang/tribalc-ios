@@ -7,9 +7,20 @@
 //
 
 #import "TCRecommendListViewController.h"
-#import <TCCommonLibs/UIImage+Category.h>
+#import "TCShoppingCartViewController.h"
+#import "TCRecommendInfoViewController.h"
 
-@interface TCRecommendListViewController () {
+#import "TCRecommendGoodCell.h"
+#import "TCRecommendHeader.h"
+#import "TCRecommendFooter.h"
+
+#import "TCBuluoApi.h"
+
+#import <TCCommonLibs/UIImage+Category.h>
+#import <TCCommonLibs/TCClientConfig.h>
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+
+@interface TCRecommendListViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout> {
     TCGoodsWrapper *goodsInfoWrapper;
     UICollectionView *recommendCollectionView;
     UIImageView *collectionImageView;
