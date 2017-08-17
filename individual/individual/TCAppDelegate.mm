@@ -25,9 +25,6 @@
 
 #import <Bugly/Bugly.h>
 
-#import <SDImageCache.h>
-#import <SDImageCacheConfig.h>
-
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
 #import <UserNotifications/UserNotifications.h>
@@ -53,9 +50,6 @@ static NSString *const kBuglyAppID = @"900059019";
     TCTabBarController *tabBarController = [[TCTabBarController alloc] init];
     self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
-    
-    // 设置图片缓存时间
-    [SDImageCache sharedImageCache].config.maxCacheAge = 60 * 60 * 24;
     
     [self registerNotifications];
     
