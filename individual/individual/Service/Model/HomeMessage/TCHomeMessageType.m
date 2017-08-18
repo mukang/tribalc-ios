@@ -17,8 +17,10 @@
         _type = TCMessageTypeAccountWalletPayment;
     } else if ([homeMessageTypeEnum isEqualToString:@"ACCOUNT_WALLET_RECHARGE"]) {
         _type = TCMessageTypeAccountWalletRecharge;
-    } else if ([homeMessageTypeEnum isEqualToString:@"CREDIT_ENABLE"]) {
-        _type = TCMessageTypeCreditEnable;
+    } else if ([homeMessageTypeEnum isEqualToString:@"ACCOUNT_REGISTER"]) {
+        _type = TCMessageTypeAccountRegister;
+    } else if ([homeMessageTypeEnum isEqualToString:@"ACCOUNT_WALLET_WITHDRAW"]) {
+        _type = TCMessageTypeAccountWalletWithdraw;
     } else if ([homeMessageTypeEnum isEqualToString:@"CREDIT_DISABLE"]) {
         _type = TCMessageTypeCreditDisable;
     } else if ([homeMessageTypeEnum isEqualToString:@"CREDIT_BILL_GENERATION"]) {
@@ -41,7 +43,9 @@
         _type = TCMessageTypeCompaniesRentBillGeneration;
     } else if ([homeMessageTypeEnum isEqualToString:@"COMPANIES_RENT_BILL_PAYMENT"]) {
         _type = TCMessageTypeCompaniesRentBillPayment;
-    }else if ([homeMessageTypeEnum isEqualToString:@"ACCOUNT_REGISTER"]) {
+    } else if ([homeMessageTypeEnum isEqualToString:@"COMPANIES_WALLET_WITHDRAW"]) {
+        _type = TCMessageTypeCompaniesWalletWithdraw;
+    } else if ([homeMessageTypeEnum isEqualToString:@"ACCOUNT_REGISTER"]) {
         _type = TCMessageTypeAccountRegister;
     }
 }

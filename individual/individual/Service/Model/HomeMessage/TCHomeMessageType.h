@@ -11,6 +11,7 @@
 typedef NS_ENUM(NSInteger, TCMessageType) {
     TCMessageTypeAccountWalletPayment = 0,          // "钱包助手", "付款通知"
     TCMessageTypeAccountWalletRecharge,             // "钱包助手", "充值到账"
+    TCMessageTypeAccountWalletWithdraw,             // "钱包助手", "提现到账"
     TCMessageTypeCreditEnable,                      // "授信助手", "开通授信"
     TCMessageTypeCreditDisable,                     // "授信助手", "授信额度冻结"
     TCMessageTypeCreditBillGeneration,              // "授信助手", "账单生成"
@@ -23,6 +24,7 @@ typedef NS_ENUM(NSInteger, TCMessageType) {
     TCMessageTypeCompaniesAdmin,                    // "企业办公", "管理变更"
     TCMessageTypeCompaniesRentBillGeneration,       // "企业办公", "缴租提醒"
     TCMessageTypeCompaniesRentBillPayment,          // "企业办公", "租金缴纳"
+    TCMessageTypeCompaniesWalletWithdraw,           // "企业办公", "提现到账"
     TCMessageTypeAccountRegister                    // "账户推送", "欢迎登录"
 };
 

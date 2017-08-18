@@ -78,7 +78,7 @@
         self.timeLabel.text = dateStr;
         
         TCMessageType type = homeMessage.messageBody.homeMessageType.type;
-        if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge) {
+        if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeAccountWalletWithdraw) {
             self.titleIcon.image = [UIImage imageNamed:@"walletAssistantIcon"];
         }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment) {
             self.titleIcon.image = [UIImage imageNamed:@"creditAssistantIcon"];
@@ -86,7 +86,7 @@
             self.titleIcon.image = [UIImage imageNamed:@"apartmentAssistantIcon"];
         }else if (type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw) {
             self.titleIcon.image = [UIImage imageNamed:@"storeAssistantIcon"];
-        }else if (type == TCMessageTypeCompaniesAdmin || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeCompaniesRentBillPayment) {
+        }else if (type == TCMessageTypeCompaniesAdmin || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeCompaniesWalletWithdraw) {
             self.titleIcon.image = [UIImage imageNamed:@"bussinessAssistantIcon"];
         }else if (type == TCMessageTypeAccountRegister) {
             self.titleIcon.image = [UIImage imageNamed:@"accountAssistantIcon"];
