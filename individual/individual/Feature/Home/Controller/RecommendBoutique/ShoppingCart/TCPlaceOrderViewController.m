@@ -469,12 +469,13 @@
         TCOrder *order = orderDetailList[i];
         for (int j = 0; j < order.itemList.count; j++) {
             TCOrderItem *orderItem = order.itemList[j];
-            [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID, @"shoppingCartGoodsId":orderItem.ID }];
+            UITextField *textField = supplementFieldArr[i];
+            NSString *note = textField.text ? textField.text : @"";
+            [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID, @"shoppingCartGoodsId":orderItem.ID, @"note" : note}];
 
         }
     }
     NSString *addressId = userAddressView.shippingAddress.ID;
-    
     [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
 //            payView = [[TCBalancePayView alloc] initWithPayPrice:[weakSelf getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;

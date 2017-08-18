@@ -89,7 +89,7 @@
     [navBar setBackgroundImage:[UIImage imageNamed:@"TransparentPixel"] forBarMetrics:UIBarMetricsDefault];
     [self.view addSubview:navBar];
     
-    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"选择门锁"];
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"门锁二维码"];
     navBar.titleTextAttributes = @{
                                    NSFontAttributeName : [UIFont systemFontOfSize:16],
                                    NSForegroundColorAttributeName : [UIColor whiteColor]
@@ -258,7 +258,7 @@
     self.refreshBtn.hidden = YES;
     self.second = (NSInteger)(multiLockKey.endTime/1000 - [[NSDate date] timeIntervalSince1970]);
     self.secondLabel.text = [NSString stringWithFormat:@"%ld",(long)self.second];
-    self.deviceLabel.text = @"门锁二维码";
+    self.deviceLabel.text = @"请靠近识别设备";
     self.qRCodeView.codeImageView.image = [self generateQRCodeImageWithCodeString:multiLockKey.key size:CGSizeMake(TCRealValue(180), TCRealValue(180))];
     [self addGetPasswordTimer];
 }

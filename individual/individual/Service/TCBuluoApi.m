@@ -1373,10 +1373,8 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
         NSString *apiName = [NSString stringWithFormat:@"orders?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-
         [request setValue:addressId forParam:@"addressId"];
         [request setValue:itemList forParam:@"itemList"];
-        
         
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
