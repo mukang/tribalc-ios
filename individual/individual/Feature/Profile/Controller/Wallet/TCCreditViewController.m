@@ -52,7 +52,7 @@
     CABasicAnimation*pathAnimation;
     
     pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 2.0 * (self.walletAccount.creditBalance/self.walletAccount.creditLimit);
+    pathAnimation.duration = 1.5 * ((self.walletAccount.creditLimit-self.walletAccount.creditBalance)/self.walletAccount.creditLimit);
 
     pathAnimation.repeatCount = 1;
     
@@ -123,7 +123,7 @@
     _trackLayer.frame = mybound;
     
     //内圆
-    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:-((M_PI * 2) * (self.walletAccount.creditBalance/self.walletAccount.creditLimit))-M_PI_2 + (M_PI * 2) clockwise:YES];
+    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:((M_PI * 2) * ((self.walletAccount.creditLimit-self.walletAccount.creditBalance)/self.walletAccount.creditLimit))-M_PI_2 clockwise:YES];
 //    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:(M_PI * 2) * 0.6 - M_PI_2 clockwise:YES];
     
     _progressLayer = [CAShapeLayer new];
