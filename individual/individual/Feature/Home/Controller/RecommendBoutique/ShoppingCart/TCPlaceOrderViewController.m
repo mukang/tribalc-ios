@@ -470,9 +470,12 @@
         for (int j = 0; j < order.itemList.count; j++) {
             TCOrderItem *orderItem = order.itemList[j];
             UITextField *textField = supplementFieldArr[i];
-            NSString *note = textField.text ? textField.text : @"";
-            [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID, @"shoppingCartGoodsId":orderItem.ID, @"note" : note}];
-
+            NSString *note = textField.text;
+            if ([note isKindOfClass:[NSString class]] && note.length > 0) {
+                [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID, @"shoppingCartGoodsId":orderItem.ID, @"note" : note}];
+            }else {
+                [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID, @"shoppingCartGoodsId":orderItem.ID}];
+            }
         }
     }
     NSString *addressId = userAddressView.shippingAddress.ID;
