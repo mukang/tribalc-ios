@@ -170,8 +170,8 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 - (void)handleShowIntroView {
     if (![self isFirstLaunch]) return;
     
-    NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:3];
-    for (int i=0; i<3; i++) {
+    NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:4];
+    for (int i=0; i<4; i++) {
         NSString *imagePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"intro_image_%02zd", i+1] ofType:@"png"];
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         imageView.image = [UIImage imageWithContentsOfFile:imagePath];

@@ -196,9 +196,6 @@
 		7A29366C1F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A2936681F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a */; };
 		7A29366E1F3087CA002ACE31 /* libEgisDID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A29366A1F3087CA002ACE31 /* libEgisDID.a */; };
 		7A2966761F220EA70073E632 /* TCWalletCreditLimitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2966751F220EA70073E632 /* TCWalletCreditLimitView.m */; };
-		7A2A77321E6D4426000CFAA8 /* intro_image_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */; };
-		7A2A77331E6D4426000CFAA8 /* intro_image_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A77301E6D4426000CFAA8 /* intro_image_02.png */; };
-		7A2A77341E6D4426000CFAA8 /* intro_image_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A2A77311E6D4426000CFAA8 /* intro_image_03.png */; };
 		7A2CD74C1F04E2D800CEEF29 /* TCApartmentGuideWithholdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2CD74B1F04E2D800CEEF29 /* TCApartmentGuideWithholdView.m */; };
 		7A2CD74F1F04EB3800CEEF29 /* TCApartmentWithholdInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2CD74E1F04EB3800CEEF29 /* TCApartmentWithholdInfoView.m */; };
 		7A2F5C2C1E71536E00174EB1 /* TCLockQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F5C2B1E71536E00174EB1 /* TCLockQRCodeViewController.m */; };
@@ -403,6 +400,10 @@
 		7AD36DB71EDEAC3E00AB95FA /* TCForceUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
 		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
+		7AE736AA1F46E252001DE9FE /* intro_image_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AE736A61F46E252001DE9FE /* intro_image_01.png */; };
+		7AE736AB1F46E252001DE9FE /* intro_image_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AE736A71F46E252001DE9FE /* intro_image_02.png */; };
+		7AE736AC1F46E252001DE9FE /* intro_image_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AE736A81F46E252001DE9FE /* intro_image_03.png */; };
+		7AE736AD1F46E252001DE9FE /* intro_image_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AE736A91F46E252001DE9FE /* intro_image_04.png */; };
 		7AEB4CC21E03936300F83A7C /* TCBioEditNickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4CAE1E03936300F83A7C /* TCBioEditNickViewController.m */; };
 		7AEB4CC31E03936300F83A7C /* TCBioEditPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4CB01E03936300F83A7C /* TCBioEditPhoneViewController.m */; };
 		7AEB4CC41E03936300F83A7C /* TCBioEditPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AEB4CB11E03936300F83A7C /* TCBioEditPhoneViewController.xib */; };
@@ -813,9 +814,6 @@
 		7A29366A1F3087CA002ACE31 /* libEgisDID.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEgisDID.a; sourceTree = "<group>"; };
 		7A2966741F220EA70073E632 /* TCWalletCreditLimitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletCreditLimitView.h; sourceTree = "<group>"; };
 		7A2966751F220EA70073E632 /* TCWalletCreditLimitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletCreditLimitView.m; sourceTree = "<group>"; };
-		7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_01.png; sourceTree = "<group>"; };
-		7A2A77301E6D4426000CFAA8 /* intro_image_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_02.png; sourceTree = "<group>"; };
-		7A2A77311E6D4426000CFAA8 /* intro_image_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_03.png; sourceTree = "<group>"; };
 		7A2CD74A1F04E2D800CEEF29 /* TCApartmentGuideWithholdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentGuideWithholdView.h; sourceTree = "<group>"; };
 		7A2CD74B1F04E2D800CEEF29 /* TCApartmentGuideWithholdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentGuideWithholdView.m; sourceTree = "<group>"; };
 		7A2CD74D1F04EB3800CEEF29 /* TCApartmentWithholdInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentWithholdInfoView.h; sourceTree = "<group>"; };
@@ -1192,6 +1190,10 @@
 		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
 		7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetPasswordView.m; sourceTree = "<group>"; };
 		7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCGetPasswordView.xib; sourceTree = "<group>"; };
+		7AE736A61F46E252001DE9FE /* intro_image_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_01.png; sourceTree = "<group>"; };
+		7AE736A71F46E252001DE9FE /* intro_image_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_02.png; sourceTree = "<group>"; };
+		7AE736A81F46E252001DE9FE /* intro_image_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_03.png; sourceTree = "<group>"; };
+		7AE736A91F46E252001DE9FE /* intro_image_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_image_04.png; sourceTree = "<group>"; };
 		7AEB4CAD1E03936300F83A7C /* TCBioEditNickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditNickViewController.h; sourceTree = "<group>"; };
 		7AEB4CAE1E03936300F83A7C /* TCBioEditNickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditNickViewController.m; sourceTree = "<group>"; };
 		7AEB4CAF1E03936300F83A7C /* TCBioEditPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditPhoneViewController.h; sourceTree = "<group>"; };
@@ -2295,9 +2297,10 @@
 				7AB03F0C1EC3017100DFB037 /* HD4.0''.png */,
 				7AB03F0D1EC3017100DFB037 /* HD4.7''.png */,
 				7AB03F0E1EC3017100DFB037 /* HD5.5''.png */,
-				7A2A772F1E6D4426000CFAA8 /* intro_image_01.png */,
-				7A2A77301E6D4426000CFAA8 /* intro_image_02.png */,
-				7A2A77311E6D4426000CFAA8 /* intro_image_03.png */,
+				7AE736A61F46E252001DE9FE /* intro_image_01.png */,
+				7AE736A71F46E252001DE9FE /* intro_image_02.png */,
+				7AE736A81F46E252001DE9FE /* intro_image_03.png */,
+				7AE736A91F46E252001DE9FE /* intro_image_04.png */,
 				7A720AB41E13892200567216 /* downImage.jpg */,
 				7A720AB51E13892200567216 /* downImage01.jpg */,
 			);
@@ -3134,6 +3137,7 @@
 				7A7E941A1DF56C80006A47CE /* TCRepairsDescViewCell.xib in Resources */,
 				7A9CCEDF1DB62011003D90C6 /* LaunchScreen.storyboard in Resources */,
 				7A720AB61E13892200567216 /* downImage.jpg in Resources */,
+				7AE736AB1F46E252001DE9FE /* intro_image_02.png in Resources */,
 				7A4E050A1DEED401002371B0 /* TCCommunityVisitViewController.xib in Resources */,
 				7AEB4CC41E03936300F83A7C /* TCBioEditPhoneViewController.xib in Resources */,
 				7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */,
@@ -3142,7 +3146,6 @@
 				7A4BF1A71EB089C800DE1BF5 /* TCBankInfoList.plist in Resources */,
 				7A4E050F1DEEDC69002371B0 /* TCCommonInputViewCell.xib in Resources */,
 				7AB03F111EC3017100DFB037 /* HD5.5''.png in Resources */,
-				7A2A77341E6D4426000CFAA8 /* intro_image_03.png in Resources */,
 				7AC346F91E0144F300E28EC9 /* TCBankPickerView.xib in Resources */,
 				7AA643CD1F0C92E200DD421F /* TCBankPickerViewController.xib in Resources */,
 				7AC346EB1E0144B500E28EC9 /* TCWalletBillDetailHeaderView.xib in Resources */,
@@ -3159,7 +3162,6 @@
 				7A7E941F1DF57136006A47CE /* TCRepairsPhotosViewCell.xib in Resources */,
 				7AB03F0F1EC3017100DFB037 /* HD4.0''.png in Resources */,
 				7A381BD81DED7856008BDBF7 /* TCCommunityLocationViewCell.xib in Resources */,
-				7A2A77321E6D4426000CFAA8 /* intro_image_01.png in Resources */,
 				7A381BCE1DED6969008BDBF7 /* TCCommunityIntroViewCell.xib in Resources */,
 				7AC2922B1DC8BEB300B2C7E8 /* citylist.data in Resources */,
 				7A9CCEDC1DB62011003D90C6 /* Assets.xcassets in Resources */,
@@ -3179,13 +3181,15 @@
 				7AEB4CC61E03936300F83A7C /* TCBioEditSMSViewController.xib in Resources */,
 				7AEB4CF01E03944500F83A7C /* TCBiographyViewCell.xib in Resources */,
 				7A7E94011DF51712006A47CE /* TCToolsViewController.xib in Resources */,
+				7AE736AD1F46E252001DE9FE /* intro_image_04.png in Resources */,
+				7AE736AA1F46E252001DE9FE /* intro_image_01.png in Resources */,
 				7A7E94151DF55C31006A47CE /* TCRepairsDetailViewController.xib in Resources */,
 				7AC347011E01454100E28EC9 /* TCBankCardAddViewController.xib in Resources */,
 				7AEB4CCB1E03936300F83A7C /* TCShippingAddressEditViewController.xib in Resources */,
-				7A2A77331E6D4426000CFAA8 /* intro_image_02.png in Resources */,
 				7AC346ED1E0144B500E28EC9 /* TCWalletBillDetailViewCell.xib in Resources */,
 				7A7E94061DF51790006A47CE /* TCRepairsViewController.xib in Resources */,
 				7AC346F71E0144F300E28EC9 /* TCBankCardViewCell.xib in Resources */,
+				7AE736AC1F46E252001DE9FE /* intro_image_03.png in Resources */,
 				7AC346D51E01432D00E28EC9 /* TCWalletBillViewController.xib in Resources */,
 				7A1F12911DEC0BDD00A9B58F /* TCCommunitiesViewController.xib in Resources */,
 			);
