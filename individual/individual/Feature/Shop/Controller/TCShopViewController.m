@@ -157,7 +157,7 @@
 
 - (UITableView *)tableView {
     if (_tableView == nil) {
-        CGFloat width = self.view.bounds.size.width;
+//        CGFloat width = self.view.bounds.size.width;
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
@@ -165,23 +165,23 @@
         _tableView.rowHeight = TCRealValue(252);
         [_tableView registerClass:[TCStoreCell class] forCellReuseIdentifier:@"TCStoreCell"];
         [self setupTableViewRefreshView];
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, TCRealValue(48))];
-        _tableView.tableHeaderView = headerView;
-        
-        UILabel *label1 = [[UILabel alloc] init];
-        label1.text = @"向·你·推·荐";
-        label1.font = [UIFont systemFontOfSize:12];
-        label1.textColor = TCGrayColor;
-        label1.textAlignment = NSTextAlignmentCenter;
-        label1.frame = CGRectMake(0, TCRealValue(10), width, 15);
-        [headerView addSubview:label1];
-        
-        UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(label1.frame), width, 10)];
-        label2.textAlignment = NSTextAlignmentCenter;
-        label2.textColor = TCLightGrayColor;
-        label2.text = @"美味就是要分享";
-        label2.font = [UIFont systemFontOfSize:9];
-        [headerView addSubview:label2];
+//        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, TCRealValue(48))];
+//        _tableView.tableHeaderView = headerView;
+//        
+//        UILabel *label1 = [[UILabel alloc] init];
+//        label1.text = @"向·你·推·荐";
+//        label1.font = [UIFont systemFontOfSize:12];
+//        label1.textColor = TCGrayColor;
+//        label1.textAlignment = NSTextAlignmentCenter;
+//        label1.frame = CGRectMake(0, TCRealValue(10), width, 15);
+//        [headerView addSubview:label1];
+//        
+//        UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(label1.frame), width, 10)];
+//        label2.textAlignment = NSTextAlignmentCenter;
+//        label2.textColor = TCLightGrayColor;
+//        label2.text = @"美味就是要分享";
+//        label2.font = [UIFont systemFontOfSize:9];
+//        [headerView addSubview:label2];
         
     }
     return _tableView;
