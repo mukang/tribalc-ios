@@ -12,12 +12,12 @@
 #import "TCGetPasswordView.h"
 
 #import <YYText/YYText.h>
+#import <WechatOpenSDK/WXApi.h>
 
 #import "TCBuluoApi.h"
+#import "WXApiManager.h"
 
-#import "MBProgressHUD+Category.h"
-
-@interface TCLoginViewController () <UITextFieldDelegate, TCGetPasswordViewDelegate>
+@interface TCLoginViewController () <UITextFieldDelegate, TCGetPasswordViewDelegate, WXApiManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *accountTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -30,6 +30,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *alipayButtonBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *wechatButtonBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherLabelBottomConstraint;
+
+
+/** 微信唯一标示符 */
+@property (copy, nonatomic) NSString *wechatState;
 
 @end
 
@@ -216,8 +220,12 @@
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] login:phoneInfo result:^(TCUserSession *userSession, NSError *error) {
         if (userSession) {
-            [MBProgressHUD hideHUD:YES];
-            [weakSelf handleTapBackButton:nil];
+            if (weakSelf.wechatCode) {
+                [weakSelf handleWechatBindWithUserID:userSession.assigned];
+            } else {
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf handleTapBackButton:nil];
+            }
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"登录失败，%@", reason]];
@@ -230,7 +238,44 @@
 }
 
 - (IBAction)handleTapWechatButton:(UIButton *)sender {
-    NSLog(@"微信登录");
+    [WXApiManager sharedManager].delegate = self;
+    self.wechatState = [NSString stringWithFormat:@"buluo-gs-%d", arc4random()];
+    
+    SendAuthReq *req = [[SendAuthReq alloc] init];
+    req.scope = @"snsapi_userinfo";
+    req.state = self.wechatState;
+    [WXApi sendReq:req];
+}
+
+- (void)handleWechatLogin {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] loginByWechatCode:self.wechatCode result:^(BOOL isBind, TCUserSession *userSession, NSError *error) {
+        if (error) {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"登录失败，%@", reason]];
+        } else {
+            [MBProgressHUD hideHUD:YES];
+            if (isBind) {
+                [weakSelf handleTapBackButton:nil];
+            } else {
+                TCLoginViewController *vc = [[TCLoginViewController alloc] init];
+                vc.wechatCode = self.wechatCode;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    }];
+}
+
+- (void)handleWechatBindWithUserID:(NSString *)userID {
+    [[TCBuluoApi api] bindWechatByWechatCode:self.wechatCode userID:userID result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf handleTapBackButton:nil];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"绑定失败，%@", reason]];
+        }
+    }];
 }
 
 - (void)handleTapViewGesture:(UITapGestureRecognizer *)gesture {
@@ -269,6 +314,19 @@
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"验证码发送失败，%@", reason]];
         }
     }];
+}
+
+#pragma mark - WXApiManagerDelegate
+
+- (void)managerDidRecvAuthResponse:(SendAuthResp *)response {
+    if (response.errCode == WXSuccess) {
+        if ([response.state isEqualToString:self.wechatState]) {
+            self.wechatCode = response.code;
+            [self handleWechatLogin];
+        }
+    } else {
+        [MBProgressHUD showHUDWithMessage:response.errStr];
+    }
 }
 
 #pragma mark - Keyboard

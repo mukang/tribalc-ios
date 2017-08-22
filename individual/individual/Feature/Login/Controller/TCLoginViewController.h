@@ -10,4 +10,7 @@
 
 @interface TCLoginViewController : UIViewController
 
+/** 微信code */
+@property (copy, nonatomic) NSString *wechatCode;
+
 @end
