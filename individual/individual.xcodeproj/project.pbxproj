@@ -257,7 +257,6 @@
 		7A5F87721DE297A100E4130B /* TCWalletAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87711DE297A100E4130B /* TCWalletAccount.m */; };
 		7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F877E1DE2EEB100E4130B /* TCWalletBill.m */; };
 		7A5F87821DE2EFF500E4130B /* TCWalletBillWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5F87811DE2EFF500E4130B /* TCWalletBillWrapper.m */; };
-		7A64EA7A1E14EC55008D0C12 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A64EA761E14EC55008D0C12 /* libWeChatSDK.a */; };
 		7A64EA7D1E14EEE0008D0C12 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */; };
 		7A64EA801E15016E008D0C12 /* TCRechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A64EA7F1E15016E008D0C12 /* TCRechargeViewController.m */; };
 		7A64EA831E150D23008D0C12 /* TCRechargeInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A64EA821E150D23008D0C12 /* TCRechargeInputView.m */; };
@@ -926,10 +925,6 @@
 		7A5F877E1DE2EEB100E4130B /* TCWalletBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletBill.m; sourceTree = "<group>"; };
 		7A5F87801DE2EFF500E4130B /* TCWalletBillWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletBillWrapper.h; sourceTree = "<group>"; };
 		7A5F87811DE2EFF500E4130B /* TCWalletBillWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletBillWrapper.m; sourceTree = "<group>"; };
-		7A64EA761E14EC55008D0C12 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		7A64EA771E14EC55008D0C12 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
-		7A64EA781E14EC55008D0C12 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		7A64EA791E14EC55008D0C12 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		7A64EA7B1E14EEE0008D0C12 /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
 		7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		7A64EA7E1E15016E008D0C12 /* TCRechargeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRechargeViewController.h; sourceTree = "<group>"; };
@@ -1313,7 +1308,6 @@
 				559D84691E0C008800982697 /* OpenGLES.framework in Frameworks */,
 				559D84671E0C007E00982697 /* MessageUI.framework in Frameworks */,
 				D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */,
-				7A64EA7A1E14EC55008D0C12 /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2260,10 +2254,6 @@
 		7A64EA751E14EC33008D0C12 /* Wechat */ = {
 			isa = PBXGroup;
 			children = (
-				7A64EA761E14EC55008D0C12 /* libWeChatSDK.a */,
-				7A64EA771E14EC55008D0C12 /* WechatAuthSDK.h */,
-				7A64EA781E14EC55008D0C12 /* WXApi.h */,
-				7A64EA791E14EC55008D0C12 /* WXApiObject.h */,
 				7A64EA7B1E14EEE0008D0C12 /* WXApiManager.h */,
 				7A64EA7C1E14EEE0008D0C12 /* WXApiManager.m */,
 			);
