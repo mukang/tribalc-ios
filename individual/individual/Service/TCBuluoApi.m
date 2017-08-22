@@ -2945,4 +2945,55 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+#pragma mark - 认证信息
+
+- (void)loginByWechatCode:(NSString *)code result:(void (^)(BOOL, TCUserSession *, NSError *))resultBlock {
+    NSString *apiName = @"wechat/login";
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+    [request setValue:code forParam:@"code"];
+    [request setValue:@"PERSON" forParam:@"memberType"];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        BOOL isBind = NO;
+        TCUserSession *userSession = nil;
+        NSError *error = response.error;
+        
+        if (response.codeInResponse == 200) {
+            isBind = YES;
+            userSession = [[TCUserSession alloc] initWithObjectDictionary:response.data];
+            [self setUserSession:userSession];
+            [self fetchCurrentUserInfoWithUserID:userSession.assigned];
+            
+            TC_CALL_ASYNC_MQ({
+                [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserDidLogin object:nil];
+            });
+            
+        } else {
+            [self setUserSession:nil];
+        }
+        
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(isBind, userSession, error));
+        }
+    }];
+}
+
+- (void)bindWechatByWechatCode:(NSString *)code userID:(NSString *)userID result:(void (^)(BOOL, NSError *))resultBlock {
+    NSString *apiName = @"wechat/bind";
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+    [request setValue:code forParam:@"code"];
+    [request setValue:userID forParam:@"memberId"];
+    [request setValue:@"PERSON" forParam:@"memberType"];
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.codeInResponse == 200) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+            }
+        } else {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+            }
+        }
+    }];
+}
+
 @end

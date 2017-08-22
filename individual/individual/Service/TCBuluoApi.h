@@ -884,4 +884,23 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)ignoreAParticularTypeHomeMessageByMessageType:(NSString *)messageType result:(void(^)(BOOL success, NSError *error))resultBlock;
 
+#pragma mark - 认证信息
+
+/**
+ 微信登录
+
+ @param code 微信code
+ @param resultBlock 结果回调
+ */
+- (void)loginByWechatCode:(NSString *)code result:(void (^)(BOOL isBind, TCUserSession *userSession, NSError *error))resultBlock;
+
+/**
+ 微信绑定
+
+ @param code 微信code
+ @param userID 用户id
+ @param resultBlock 结果回调
+ */
+- (void)bindWechatByWechatCode:(NSString *)code userID:(NSString *)userID result:(void (^)(BOOL success, NSError *error))resultBlock;
+
 @end
