@@ -57,8 +57,6 @@
 		550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923011F039DCC00B007C8 /* TCApartmentViewController.m */; };
 		550923051F03A67400B007C8 /* TCApartmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923041F03A67400B007C8 /* TCApartmentCell.m */; };
 		550AA7661F03C76600509F0D /* TCContractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550AA7651F03C76500509F0D /* TCContractViewController.m */; };
-		550FB7401ED2F54E00D75E33 /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */; };
-		550FB7411ED2F54E00D75E33 /* ReleaseNotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */; };
 		550FB7431ED2F5BB00D75E33 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */; };
 		550FB7451ED2F5E300D75E33 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 550FB7441ED2F5E300D75E33 /* SystemConfiguration.framework */; };
 		550FB76D1ED5C18600D75E33 /* FSCalendar+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FB74C1ED5C18600D75E33 /* FSCalendar+Deprecated.m */; };
@@ -571,10 +569,6 @@
 		550923041F03A67400B007C8 /* TCApartmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentCell.m; sourceTree = "<group>"; };
 		550AA7641F03C76500509F0D /* TCContractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCContractViewController.h; sourceTree = "<group>"; };
 		550AA7651F03C76500509F0D /* TCContractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCContractViewController.m; sourceTree = "<group>"; };
-		550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libXG-SDK.a"; sourceTree = "<group>"; };
-		550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReleaseNotes.txt; sourceTree = "<group>"; };
-		550FB73E1ED2F54E00D75E33 /* XGPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPush.h; sourceTree = "<group>"; };
-		550FB73F1ED2F54E00D75E33 /* XGSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGSetting.h; sourceTree = "<group>"; };
 		550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		550FB7441ED2F5E300D75E33 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		550FB7461ED2F60E00D75E33 /* individual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = individual.entitlements; sourceTree = "<group>"; };
@@ -1285,7 +1279,6 @@
 				559D84911E0C019F00982697 /* libxml2.tbd in Frameworks */,
 				559D848F1E0C018300982697 /* AVFoundation.framework in Frameworks */,
 				559D848D1E0C017A00982697 /* libsqlite3.tbd in Frameworks */,
-				550FB7401ED2F54E00D75E33 /* libXG-SDK.a in Frameworks */,
 				559D848B1E0C016700982697 /* AudioToolbox.framework in Frameworks */,
 				559D84891E0C016000982697 /* VideoToolbox.framework in Frameworks */,
 				559D84871E0C015600982697 /* libz.tbd in Frameworks */,
@@ -1660,17 +1653,6 @@
 				CC42DEFF94EEA93F7DC0E615 /* libPods-individual.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		550FB73B1ED2F54100D75E33 /* XGPush */ = {
-			isa = PBXGroup;
-			children = (
-				550FB73C1ED2F54E00D75E33 /* libXG-SDK.a */,
-				550FB73D1ED2F54E00D75E33 /* ReleaseNotes.txt */,
-				550FB73E1ED2F54E00D75E33 /* XGPush.h */,
-				550FB73F1ED2F54E00D75E33 /* XGSetting.h */,
-			);
-			path = XGPush;
 			sourceTree = "<group>";
 		};
 		550FB74B1ED5C18600D75E33 /* FSCalendar */ = {
@@ -2542,7 +2524,6 @@
 			children = (
 				7AADCC821EE93A58004AA1DA /* MLBPasswordTextField */,
 				550FB74B1ED5C18600D75E33 /* FSCalendar */,
-				550FB73B1ED2F54100D75E33 /* XGPush */,
 				7AB03EFA1EC0759100DFB037 /* BaoFu */,
 				7A64EA751E14EC33008D0C12 /* Wechat */,
 			);
@@ -3158,7 +3139,6 @@
 				550FB77D1ED5C18700D75E33 /* Info.plist in Resources */,
 				7AEB4CCD1E03936300F83A7C /* TCShippingAddressViewController.xib in Resources */,
 				7A7E94241DF5723A006A47CE /* TCRepairsCommitViewCell.xib in Resources */,
-				550FB7411ED2F54E00D75E33 /* ReleaseNotes.txt in Resources */,
 				7A381BE21DED8A2A008BDBF7 /* TCCommunitySurroundingTitleViewCell.xib in Resources */,
 				7A14FC591DF6C09800DF3DDA /* TCRepairsPhotoViewCell.xib in Resources */,
 				7AEB4CEE1E03944500F83A7C /* TCBiographyAvatarViewCell.xib in Resources */,

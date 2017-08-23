@@ -13,9 +13,10 @@
 #import "TCNavigationController.h"
 
 #import "WXApiManager.h"
+#import <XGPush.h>
+#import <XGSetting.h>
+#import <Bugly/Bugly.h>
 #import <CoreLocation/CoreLocation.h>
-#import "XGSetting.h"
-#import "XGPush.h"
 
 #import "TCBuluoApi.h"
 #import "TCPromotionsManager.h"
@@ -23,7 +24,6 @@
 #import "TCUserDefaultsKeys.h"
 #import <TCCommonLibs/TCFunctions.h>
 
-#import <Bugly/Bugly.h>
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
@@ -342,7 +342,6 @@ static NSString *const kBuglyAppID = @"900059019";
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
-
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
