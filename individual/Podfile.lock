@@ -34,31 +34,31 @@ PODS:
   - SDWebImage (4.1.0):
     - SDWebImage/Core (= 4.1.0)
   - SDWebImage/Core (4.1.0)
-  - TCCommonLibs (0.5.5):
-    - TCCommonLibs/Category (= 0.5.5)
-    - TCCommonLibs/Controller (= 0.5.5)
-    - TCCommonLibs/DicToModel (= 0.5.5)
-    - TCCommonLibs/Tools (= 0.5.5)
-    - TCCommonLibs/UI (= 0.5.5)
-    - TCCommonLibs/Utility (= 0.5.5)
-    - TCCommonLibs/WebService (= 0.5.5)
-  - TCCommonLibs/Category (0.5.5):
+  - TCCommonLibs (0.5.6):
+    - TCCommonLibs/Category (= 0.5.6)
+    - TCCommonLibs/Controller (= 0.5.6)
+    - TCCommonLibs/DicToModel (= 0.5.6)
+    - TCCommonLibs/Tools (= 0.5.6)
+    - TCCommonLibs/UI (= 0.5.6)
+    - TCCommonLibs/Utility (= 0.5.6)
+    - TCCommonLibs/WebService (= 0.5.6)
+  - TCCommonLibs/Category (0.5.6):
     - SDWebImage
     - TCCommonLibs/Utility
-  - TCCommonLibs/Controller (0.5.5):
+  - TCCommonLibs/Controller (0.5.6):
     - TCCommonLibs/Category
-  - TCCommonLibs/DicToModel (0.5.5)
-  - TCCommonLibs/Tools (0.5.5):
+  - TCCommonLibs/DicToModel (0.5.6)
+  - TCCommonLibs/Tools (0.5.6):
     - TCCommonLibs/WebService
-  - TCCommonLibs/UI (0.5.5):
+  - TCCommonLibs/UI (0.5.6):
     - Masonry
     - MJRefresh
     - SDWebImage
     - TCCommonLibs/Category
     - TCCommonLibs/Tools
     - TCCommonLibs/Utility
-  - TCCommonLibs/Utility (0.5.5)
-  - TCCommonLibs/WebService (0.5.5):
+  - TCCommonLibs/Utility (0.5.6)
+  - TCCommonLibs/WebService (0.5.6):
     - AFNetworking
     - TCCommonLibs/Utility
   - UITableView+FDTemplateLayoutCell (1.6)
@@ -96,11 +96,11 @@ SPEC CHECKSUMS:
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
-  TCCommonLibs: 1419c3b43e78675eb2c35016d960b7e5c66fcf85
+  TCCommonLibs: 9d72bebb1d8a7e812ec98fa5877e615a0cd0efe8
   UITableView+FDTemplateLayoutCell: 5c949b4a5059c404b442926c0e80f81d10a2d66f
   WechatOpenSDK: 1fe7e3b07db860d6a936c3ff4a5aba6b890958d9
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: b845d1bd55854b95dd284036c3ad5b187646c2fe
+PODFILE CHECKSUM: 386b9954826c31889e9870beeec00d346fd65d98
 
 COCOAPODS: 1.2.1
