@@ -25,13 +25,14 @@
 #import "TCBuluoApi.h"
 
 #import <TCCommonLibs/TCFunctions.h>
+#import <CoreLocation/CoreLocation.h>
 #import <EAIntroView/EAIntroView.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 
 static NSString *const kAppVersion = @"kAppVersion";
 static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 
-@interface TCTabBarController () <TCForceUpdateViewDelegate>
+@interface TCTabBarController () <TCForceUpdateViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *updateWindow;
 /** 已经显示更新UI，防止重复显示 */
@@ -41,6 +42,8 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 
 @implementation TCTabBarController {
     __weak TCTabBarController *weakSelf;
+    CLLocationManager *_locationManager;
+    BOOL _isRequest;
 }
 
 - (void)viewDidLoad {
@@ -60,6 +63,7 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
 //    [self setValue:[[TCTabBar alloc] init] forKey:@"tabBar"];
     
     [self registerNotifications];
+    [self startLocationAction];
     [self setupAMapServices];
 }
 
@@ -195,6 +199,55 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     } else {
         return NO;
     }
+}
+
+#pragma mark - 定位相关
+
+- (void)startLocationAction
+{
+    _locationManager = [[CLLocationManager alloc] init];
+    if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [_locationManager requestWhenInUseAuthorization];
+    }
+    
+    if ([CLLocationManager locationServicesEnabled] &&
+        (!([CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted)
+         && !([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))) {
+            //定位功能可用，开始定位
+            _locationManager.delegate=self;
+            //设置定位精度
+            _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+            
+            [_locationManager stopUpdatingLocation];
+            [_locationManager startUpdatingLocation];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:TCUserDefaultsKeyAllowLocal];
+        }else {
+            [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:TCUserDefaultsKeyAllowLocal];
+        }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if (status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied) {
+        [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:TCUserDefaultsKeyAllowLocal];
+    }else {
+        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:TCUserDefaultsKeyAllowLocal];
+    }
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    
+    if (!_isRequest) {
+        CLLocation *location=[locations lastObject];//取出第一个位置
+        CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
+        
+        _isRequest = YES;
+        [_locationManager stopUpdatingLocation];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@[@(coordinate.latitude), @(coordinate.longitude)] forKey:TCBuluoUserLocationCoordinateKey];
+    }
+    
 }
 
 #pragma mark - AMapServices
