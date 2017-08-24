@@ -8,6 +8,7 @@
 
 #import "TCLoginViewController.h"
 #import "TCUserAgreementViewController.h"
+#import "TCBindPhoneViewController.h"
 
 #import "TCGetPasswordView.h"
 
@@ -34,6 +35,8 @@
 
 /** 微信唯一标示符 */
 @property (copy, nonatomic) NSString *wechatState;
+/** 微信code */
+@property (copy, nonatomic) NSString *wechatCode;
 
 @end
 
@@ -45,6 +48,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     weakSelf = self;
+    self.hideOriginalNavBar = YES;
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapViewGesture:)];
     tapGesture.cancelsTouchesInView = NO;
@@ -220,12 +224,8 @@
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] login:phoneInfo result:^(TCUserSession *userSession, NSError *error) {
         if (userSession) {
-            if (weakSelf.wechatCode) {
-                [weakSelf handleWechatBindWithUserID:userSession.assigned];
-            } else {
-                [MBProgressHUD hideHUD:YES];
-                [weakSelf handleTapBackButton:nil];
-            }
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf handleTapBackButton:nil];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"登录失败，%@", reason]];
@@ -258,24 +258,16 @@
             if (isBind) {
                 [weakSelf handleTapBackButton:nil];
             } else {
-                TCLoginViewController *vc = [[TCLoginViewController alloc] init];
-                vc.wechatCode = self.wechatCode;
-                [self.navigationController pushViewController:vc animated:YES];
+                [weakSelf handleShowBindPhoneViewController];
             }
         }
     }];
 }
 
-- (void)handleWechatBindWithUserID:(NSString *)userID {
-    [[TCBuluoApi api] bindWechatByWechatCode:self.wechatCode userID:userID result:^(BOOL success, NSError *error) {
-        if (success) {
-            [MBProgressHUD hideHUD:YES];
-            [weakSelf handleTapBackButton:nil];
-        } else {
-            NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"绑定失败，%@", reason]];
-        }
-    }];
+- (void)handleShowBindPhoneViewController {
+    TCBindPhoneViewController *vc = [[TCBindPhoneViewController alloc] init];
+    vc.wechatCode = self.wechatCode;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleTapViewGesture:(UITapGestureRecognizer *)gesture {

@@ -328,6 +328,7 @@
 		7A9CCEEA1DB62011003D90C6 /* individualTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEE91DB62011003D90C6 /* individualTests.m */; };
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
 		7AA1176F1F4E859600903445 /* TCAppDelegate+Push.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA1176E1F4E859600903445 /* TCAppDelegate+Push.m */; };
+		7AA117751F4EC1A800903445 /* TCBindPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA117741F4EC1A800903445 /* TCBindPhoneViewController.m */; };
 		7AA643B61F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */; };
 		7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BB1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m */; };
 		7AA643BF1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BE1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m */; };
@@ -1056,6 +1057,8 @@
 		7A9CCEF61DB62011003D90C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AA1176D1F4E859600903445 /* TCAppDelegate+Push.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TCAppDelegate+Push.h"; sourceTree = "<group>"; };
 		7AA1176E1F4E859600903445 /* TCAppDelegate+Push.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TCAppDelegate+Push.m"; sourceTree = "<group>"; };
+		7AA117731F4EC1A800903445 /* TCBindPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBindPhoneViewController.h; sourceTree = "<group>"; };
+		7AA117741F4EC1A800903445 /* TCBindPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBindPhoneViewController.m; sourceTree = "<group>"; };
 		7AA643B41F09DD4E00DD421F /* TCApartmentAddWithholdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentAddWithholdViewController.h; sourceTree = "<group>"; };
 		7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentAddWithholdViewController.m; sourceTree = "<group>"; };
 		7AA643BA1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentWithholdAddNameViewCell.h; sourceTree = "<group>"; };
@@ -1965,6 +1968,8 @@
 				7A190B091DC0CBFE00651905 /* TCLoginViewController.xib */,
 				7A720AC01E13BC9A00567216 /* TCUserAgreementViewController.h */,
 				7A720AC11E13BC9A00567216 /* TCUserAgreementViewController.m */,
+				7AA117731F4EC1A800903445 /* TCBindPhoneViewController.h */,
+				7AA117741F4EC1A800903445 /* TCBindPhoneViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3468,6 +3473,7 @@
 				7A46B9321F332232001E33DD /* TCSettingCacheViewCell.m in Sources */,
 				7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */,
 				092C69731DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m in Sources */,
+				7AA117751F4EC1A800903445 /* TCBindPhoneViewController.m in Sources */,
 				0929D2941E0A25820099B1BD /* TCSelectPrimaryBtn.m in Sources */,
 				7A1A85531E66D64700BB5EDB /* TCServiceSelectItemView.m in Sources */,
 				7A13EEB71DF814BD00377869 /* TCCompanyListViewController.m in Sources */,
