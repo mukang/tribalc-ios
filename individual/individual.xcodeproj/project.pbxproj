@@ -329,6 +329,8 @@
 		7A9CCEF51DB62011003D90C6 /* individualUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CCEF41DB62011003D90C6 /* individualUITests.m */; };
 		7AA1176F1F4E859600903445 /* TCAppDelegate+Push.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA1176E1F4E859600903445 /* TCAppDelegate+Push.m */; };
 		7AA117751F4EC1A800903445 /* TCBindPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA117741F4EC1A800903445 /* TCBindPhoneViewController.m */; };
+		7AA117781F4EE19E00903445 /* TCMessageManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA117771F4EE19E00903445 /* TCMessageManagementViewController.m */; };
+		7AA1177B1F4EE2EF00903445 /* TCMessageManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA1177A1F4EE2EF00903445 /* TCMessageManagement.m */; };
 		7AA643B61F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */; };
 		7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BB1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m */; };
 		7AA643BF1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BE1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m */; };
@@ -1059,6 +1061,10 @@
 		7AA1176E1F4E859600903445 /* TCAppDelegate+Push.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TCAppDelegate+Push.m"; sourceTree = "<group>"; };
 		7AA117731F4EC1A800903445 /* TCBindPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBindPhoneViewController.h; sourceTree = "<group>"; };
 		7AA117741F4EC1A800903445 /* TCBindPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBindPhoneViewController.m; sourceTree = "<group>"; };
+		7AA117761F4EE19E00903445 /* TCMessageManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMessageManagementViewController.h; sourceTree = "<group>"; };
+		7AA117771F4EE19E00903445 /* TCMessageManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMessageManagementViewController.m; sourceTree = "<group>"; };
+		7AA117791F4EE2EF00903445 /* TCMessageManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMessageManagement.h; sourceTree = "<group>"; };
+		7AA1177A1F4EE2EF00903445 /* TCMessageManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMessageManagement.m; sourceTree = "<group>"; };
 		7AA643B41F09DD4E00DD421F /* TCApartmentAddWithholdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentAddWithholdViewController.h; sourceTree = "<group>"; };
 		7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentAddWithholdViewController.m; sourceTree = "<group>"; };
 		7AA643BA1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentWithholdAddNameViewCell.h; sourceTree = "<group>"; };
@@ -2106,6 +2112,8 @@
 				7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */,
 				559D88241E0D17AF00982697 /* TCAboutUSViewController.h */,
 				559D88251E0D17AF00982697 /* TCAboutUSViewController.m */,
+				7AA117761F4EE19E00903445 /* TCMessageManagementViewController.h */,
+				7AA117771F4EE19E00903445 /* TCMessageManagementViewController.m */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -2379,6 +2387,8 @@
 				7A925DBA1F1DE76100D697DE /* TCHomeMessageBody.m */,
 				7A925DBC1F1DE77300D697DE /* TCHomeMessageType.h */,
 				7A925DBD1F1DE77300D697DE /* TCHomeMessageType.m */,
+				7AA117791F4EE2EF00903445 /* TCMessageManagement.h */,
+				7AA1177A1F4EE2EF00903445 /* TCMessageManagement.m */,
 			);
 			path = HomeMessage;
 			sourceTree = "<group>";
@@ -3344,6 +3354,7 @@
 				7A0DD8B51F25A0B800BA70A7 /* TCWalletFeaturesView.m in Sources */,
 				093048BC1DE57E56000FDCBF /* TCGoodDetail.m in Sources */,
 				7ABA7E751F03A24500DCC2D0 /* TCApartmentPayTabView.m in Sources */,
+				7AA1177B1F4EE2EF00903445 /* TCMessageManagement.m in Sources */,
 				7AFEC4991E55CF6800B0E754 /* TCUserOrderTableViewCell.m in Sources */,
 				09222E0E1DEE72550064C0DF /* TCServiceDetail.m in Sources */,
 				7A925DDE1F1F3FC100D697DE /* TCStoreTagsViewCell.m in Sources */,
@@ -3387,6 +3398,7 @@
 				7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */,
 				7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */,
 				092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */,
+				7AA117781F4EE19E00903445 /* TCMessageManagementViewController.m in Sources */,
 				55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */,
 				55BB9EBD1E72AF7800B0FD94 /* TCLockKey.m in Sources */,
 				092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */,

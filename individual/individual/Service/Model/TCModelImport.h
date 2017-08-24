@@ -108,6 +108,7 @@
 
 /*********** 消息服务 ***********/
 #import "TCHomeMessageWrapper.h"
+#import "TCMessageManagement.h"
 
 
 @interface TCModelImport : NSObject
