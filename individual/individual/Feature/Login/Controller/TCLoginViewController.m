@@ -59,14 +59,6 @@
     [self setupConstraints];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    if (self.navigationController) {
-        self.navigationController.navigationBarHidden = YES;
-    }
-}
-
 - (void)setupSubviews {
     
     NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:@"请输入手机号"
