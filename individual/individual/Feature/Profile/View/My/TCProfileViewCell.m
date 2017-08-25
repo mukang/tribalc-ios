@@ -7,12 +7,13 @@
 //
 
 #import "TCProfileViewCell.h"
+#import "TCProfileFeatureView.h"
 
 #define defaultTag 777
 
 @interface TCProfileViewCell ()
 
-@property (strong, nonatomic) NSMutableArray *buttons;
+@property (strong, nonatomic) NSMutableArray *featureViews;
 
 @end
 
@@ -32,30 +33,28 @@
     self.contentView.backgroundColor = [UIColor whiteColor];
     
     CGFloat padding = 20;
-    UIButton *lastButton = nil;
+    TCProfileFeatureView *lastView = nil;
     for (int i=0; i<4; i++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitleColor:TCBlackColor forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:14];
-        button.tag = defaultTag + i;
-        [button addTarget:self action:@selector(handleClickFeatureButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:button];
-        [self.buttons addObject:button];
+        TCProfileFeatureView *featureView = [[TCProfileFeatureView alloc] init];
+        featureView.button.tag = defaultTag + i;
+        [featureView.button addTarget:self action:@selector(handleClickFeatureButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:featureView];
+        [self.featureViews addObject:featureView];
         
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        [featureView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.bottom.equalTo(self.contentView);
-            if (lastButton) {
-                make.left.equalTo(lastButton.mas_right);
-                make.width.equalTo(lastButton);
+            if (lastView) {
+                make.left.equalTo(lastView.mas_right);
+                make.width.equalTo(lastView);
             } else {
                 make.left.equalTo(self.contentView).offset(padding);
             }
         }];
         
-        lastButton = button;
+        lastView = featureView;
     }
     
-    [lastButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [lastView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.contentView).offset(-padding);
     }];
 }
@@ -64,13 +63,13 @@
     [super layoutSubviews];
     
     CGFloat space = 10;
-    for (UIButton *button in self.buttons) {
+    for (TCProfileFeatureView *featureView in self.featureViews) {
         CGSize imageViewSize, labelSize;
-        imageViewSize = button.imageView.size;
-        labelSize = button.titleLabel.size;
+        imageViewSize = featureView.button.imageView.size;
+        labelSize = featureView.button.titleLabel.size;
         
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, labelSize.height + space, -labelSize.width);
-        button.titleEdgeInsets = UIEdgeInsetsMake(imageViewSize.height + space, -imageViewSize.width, 0, 0);
+        featureView.button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, labelSize.height + space, -labelSize.width);
+        featureView.button.titleEdgeInsets = UIEdgeInsetsMake(imageViewSize.height + space, -imageViewSize.width, 0, 0);
     }
 }
 
@@ -78,15 +77,15 @@
     _materials = materials;
     
     for (int i=0; i<4; i++) {
-        UIButton *button = self.buttons[i];
+        TCProfileFeatureView *featureView = self.featureViews[i];
         if (i < materials.count) {
-            button.hidden = NO;
+            featureView.hidden = NO;
             NSDictionary *dic = materials[i];
             
-            [button setImage:[UIImage imageNamed:dic[@"imageName"]] forState:UIControlStateNormal];
-            [button setTitle:dic[@"title"] forState:UIControlStateNormal];
+            [featureView.button setImage:[UIImage imageNamed:dic[@"imageName"]] forState:UIControlStateNormal];
+            [featureView.button setTitle:dic[@"title"] forState:UIControlStateNormal];
         } else {
-            button.hidden = YES;
+            featureView.hidden = YES;
         }
     }
 }
@@ -98,11 +97,11 @@
     }
 }
 
-- (NSMutableArray *)buttons {
-    if (_buttons == nil) {
-        _buttons = [NSMutableArray array];
+- (NSMutableArray *)featureViews {
+    if (_featureViews == nil) {
+        _featureViews = [NSMutableArray array];
     }
-    return _buttons;
+    return _featureViews;
 }
 
 @end

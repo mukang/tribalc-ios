@@ -332,6 +332,7 @@
 		7AA117781F4EE19E00903445 /* TCMessageManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA117771F4EE19E00903445 /* TCMessageManagementViewController.m */; };
 		7AA1177B1F4EE2EF00903445 /* TCMessageManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA1177A1F4EE2EF00903445 /* TCMessageManagement.m */; };
 		7AA1177E1F4FC01D00903445 /* TCMessageManagementViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA1177D1F4FC01D00903445 /* TCMessageManagementViewCell.m */; };
+		7AA117941F50324200903445 /* TCProfileFeatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA117931F50324200903445 /* TCProfileFeatureView.m */; };
 		7AA643B61F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */; };
 		7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BB1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m */; };
 		7AA643BF1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BE1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m */; };
@@ -1068,6 +1069,8 @@
 		7AA1177A1F4EE2EF00903445 /* TCMessageManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMessageManagement.m; sourceTree = "<group>"; };
 		7AA1177C1F4FC01D00903445 /* TCMessageManagementViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMessageManagementViewCell.h; sourceTree = "<group>"; };
 		7AA1177D1F4FC01D00903445 /* TCMessageManagementViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMessageManagementViewCell.m; sourceTree = "<group>"; };
+		7AA117921F50324200903445 /* TCProfileFeatureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCProfileFeatureView.h; sourceTree = "<group>"; };
+		7AA117931F50324200903445 /* TCProfileFeatureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCProfileFeatureView.m; sourceTree = "<group>"; };
 		7AA643B41F09DD4E00DD421F /* TCApartmentAddWithholdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentAddWithholdViewController.h; sourceTree = "<group>"; };
 		7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentAddWithholdViewController.m; sourceTree = "<group>"; };
 		7AA643BA1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentWithholdAddNameViewCell.h; sourceTree = "<group>"; };
@@ -2194,6 +2197,8 @@
 				7A46B9241F332232001E33DD /* TCProfileHeaderView.m */,
 				7A46B9341F34242E001E33DD /* TCProfileViewCell.h */,
 				7A46B9351F34242E001E33DD /* TCProfileViewCell.m */,
+				7AA117921F50324200903445 /* TCProfileFeatureView.h */,
+				7AA117931F50324200903445 /* TCProfileFeatureView.m */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -3510,6 +3515,7 @@
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,
 				7AFEC48D1E54729100B0E754 /* TCGoodsOrderStoreViewCell.m in Sources */,
 				7A7E94001DF51712006A47CE /* TCToolsViewController.m in Sources */,
+				7AA117941F50324200903445 /* TCProfileFeatureView.m in Sources */,
 				550FB7711ED5C18600D75E33 /* FSCalendarCell.m in Sources */,
 				7A925DB81F1DE45D00D697DE /* TCHomeMessage.m in Sources */,
 				7A1A85551E66D64700BB5EDB /* TCServiceTabBar.m in Sources */,
