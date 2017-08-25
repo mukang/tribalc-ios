@@ -48,6 +48,8 @@
 
 @property (copy, nonatomic) NSArray *materialsArray;
 
+@property (copy, nonatomic) NSDictionary *unreadMessageNumDic;
+
 @end
 
 @implementation TCProfileViewController {
@@ -66,6 +68,7 @@
     [self updateNavigationBarWithAlpha:0.0];
     [self registerNotifications];
     [self reloadUserData];
+    [self loadUnReadPushNumber];
 }
 
 - (void)dealloc {
@@ -75,6 +78,22 @@
 }
 
 #pragma mark - Private Methods
+
+- (void)setUnreadMessageNumDic:(NSDictionary *)unreadMessageNumDic {
+    _unreadMessageNumDic = unreadMessageNumDic;
+    
+    
+}
+
+- (void)loadUnReadPushNumber {
+    if (![[TCBuluoApi api] needLogin]) {
+        [[TCBuluoApi api] fetchUnReadPushMessageNumberWithResult:^(NSDictionary *unreadNumDic, NSError *error) {
+            if ([unreadNumDic isKindOfClass:[NSDictionary class]]) {
+                weakSelf.unreadMessageNumDic = unreadNumDic;
+            }
+        }];
+    }
+}
 
 - (void)setupNavBar {
     self.hideOriginalNavBar = YES;
@@ -421,6 +440,7 @@
 
 - (void)handleUserDidLogin:(id)sender {
     [self reloadUserData];
+    [self loadUnReadPushNumber];
 }
 
 - (void)handleUserDidLogout:(id)sender {

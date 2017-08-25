@@ -135,6 +135,7 @@ static NSString *const kBuglyAppID = @"900059019";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    [self loadUnReadPushNumber];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -167,6 +168,16 @@ static NSString *const kBuglyAppID = @"900059019";
     }
     
     return NO;
+}
+
+- (void)loadUnReadPushNumber {
+    if (![[TCBuluoApi api] needLogin]) {
+        [[TCBuluoApi api] fetchUnReadPushMessageNumberWithResult:^(NSDictionary *unreadNumDic, NSError *error) {
+            if ([unreadNumDic isKindOfClass:[NSDictionary class]]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"TCFetchUnReadMessageNumber" object:nil userInfo:unreadNumDic];
+            }
+        }];
+    }
 }
 
 - (void)pushUnitySetUpViewController {

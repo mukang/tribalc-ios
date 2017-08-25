@@ -3006,6 +3006,34 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchUnReadPushMessageNumberWithResult:(void(^)(NSDictionary *unreadNumDic, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"members/%@/xgMessages/count", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    if ([response.data isKindOfClass:[NSDictionary class]]) {
+                        TC_CALL_ASYNC_MQ(resultBlock(response.data, nil));
+                    }else {
+                        TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                    }
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 #pragma mark - 认证信息
 
 - (void)loginByWechatCode:(NSString *)code result:(void (^)(BOOL, TCUserSession *, NSError *))resultBlock {

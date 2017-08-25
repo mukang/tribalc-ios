@@ -900,6 +900,12 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)modifyMessageState:(BOOL)open messageType:(NSString *)messageType reuslt:(void(^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 获取未读消息数
+ @param resultBlock 结果回调
+ */
+- (void)fetchUnReadPushMessageNumberWithResult:(void(^)(NSDictionary *unreadNumDic, NSError *error))resultBlock;
+
 #pragma mark - 认证信息
 
 /**

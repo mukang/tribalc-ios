@@ -11,6 +11,9 @@
 #import <XGPush.h>
 #import <XGSetting.h>
 
+#import "TCTabBarController.h"
+#import "TCNavigationController.h"
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 #import <UserNotifications/UserNotifications.h>
 
@@ -160,21 +163,23 @@
     [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
-//- (void)handlePushNotiWithDic:(NSDictionary *)dic {
-//    if ([dic isKindOfClass:[NSDictionary class]]) {
-//        NSString *str = dic[@"router"];
-//        if ([str isKindOfClass:[NSString class]]) {
-//            if ([str hasPrefix:@"signin://"]) {
-//                TCTabBarController *tabVC = (TCTabBarController *)self.window.rootViewController;
-//                TCNavigationController *navVC = tabVC.selectedViewController;
-//                if (navVC) {
-//                    [navVC popToRootViewControllerAnimated:NO];
-//                    tabVC.selectedIndex = 3;
-//                }
-//            }
-//        }
-//    }
-//    
-//}
+- (void)handlePushNotiWithDic:(NSDictionary *)dic {
+    if ([dic isKindOfClass:[NSDictionary class]]) {
+        NSString *str = dic[@"router"];
+        if ([str isKindOfClass:[NSString class]]) {
+            if ([str hasPrefix:@"signin://"]) {
+                TCTabBarController *tabVC = (TCTabBarController *)self.window.rootViewController;
+                TCNavigationController *navVC = tabVC.selectedViewController;
+                if (navVC) {
+                    [navVC popToRootViewControllerAnimated:NO];
+                    tabVC.selectedIndex = 3;
+                }
+            }
+        }
+    }
+    
+}
+
+
 
 @end
