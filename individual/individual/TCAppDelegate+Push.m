@@ -14,6 +14,8 @@
 #import "TCTabBarController.h"
 #import "TCNavigationController.h"
 
+#import "TCBuluoApi.h"
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 #import <UserNotifications/UserNotifications.h>
 
@@ -29,20 +31,15 @@
 
 - (void)pushApplication:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [[XGSetting getInstance] enableDebug:YES];
-    [XGPush startApp:2200259391 appKey:@"IWZ2X9187TVW"];
+    [self registerNotifications];
     
-    [XGPush isPushOn:^(BOOL isPushOn) {
-        TCLog(@"[XGDemo] Push Is %@", isPushOn ? @"ON" : @"OFF");
-    }];
-    
-    [self registerAPNS];
-    
-    [XGPush handleLaunching:launchOptions successCallback:^{
-        TCLog(@"[XGDemo] Handle launching success");
-    } errorCallback:^{
-        TCLog(@"[XGDemo] Handle launching error");
-    }];
+    if (![[TCBuluoApi api] needLogin]) {
+        [self setUpPush:launchOptions];
+    }
+}
+
+- (void)pushApplicationWillEnterForeground:(UIApplication *)application {
+    [self loadUnReadPushNumber];
 }
 
 - (void)pushApplication:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -180,6 +177,92 @@
     
 }
 
+#pragma mark - Notification
 
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setUpAPNS) name:TCBuluoApiNotificationUserDidLogin object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(deleteAPNS) name:TCBuluoApiNotificationUserDidLogout object:nil];
+    
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Actions
+
+- (void)setUpAPNS {
+    [[XGSetting getInstance] enableDebug:YES];
+    [XGPush startApp:2200259391 appKey:@"IWZ2X9187TVW"];
+    [self registerAPNS];
+    //获取未读推送消息数
+    [self loadUnReadPushNumber];
+}
+
+- (void)deleteAPNS {
+    [XGPush unRegisterDevice:^{
+        NSLog(@"XGPush unRegister success");
+    } errorCallback:^{
+        NSLog(@"XGPush unRegister fail");
+    }];
+}
+
+- (void)setUpPush:(NSDictionary *)launchOptions {
+    
+    [[XGSetting getInstance] enableDebug:YES];
+    [XGPush startApp:2200259391 appKey:@"IWZ2X9187TVW"];
+    [self registerAPNS];
+    
+    [XGPush isPushOn:^(BOOL isPushOn) {
+        NSLog(@"[XGDemo] Push Is %@", isPushOn ? @"ON" : @"OFF");
+    }];
+    
+    [XGPush handleLaunching:launchOptions successCallback:^{
+        NSLog(@"[XGDemo] Handle launching success");
+        [self handlePushMessage:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
+    } errorCallback:^{
+        NSLog(@"[XGDemo] Handle launching error");
+    }];
+}
+
+- (void)handlePushMessage:(NSDictionary *)userInfo {
+    if ([[TCBuluoApi api] needLogin]) {
+        return;
+    }
+    if ([userInfo isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *messageDic = userInfo[@"message"];
+        if ([messageDic isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *typeDic = messageDic[@"messageBodyType"];
+            if ([typeDic isKindOfClass:[NSDictionary class]]) {
+                NSString *type = typeDic[@"name"];
+                if ([type isKindOfClass:[NSString class]]) {
+                    NSString *referenceId = messageDic[@"referenceId"];
+                    // 待发货
+                    if ([type isEqualToString:@"ORDER_SETTLE"]) {
+                        if ([referenceId isKindOfClass:[NSString class]]) {
+//                            [self toOrderDetailWithReferenceId:referenceId];
+                        }
+                    }else if ([type isEqualToString:@"TENANT_WITHDRAW"]) {  // 提现
+                        if ([referenceId isKindOfClass:[NSString class]]) {
+//                            [self toWithDrawDetailWithReferenceId:referenceId];
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+- (void)loadUnReadPushNumber {
+    if (![[TCBuluoApi api] needLogin]) {
+        [[TCBuluoApi api] fetchUnReadPushMessageNumberWithResult:^(NSDictionary *unreadNumDic, NSError *error) {
+            if ([unreadNumDic isKindOfClass:[NSDictionary class]]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"TCFetchUnReadMessageNumber" object:nil userInfo:unreadNumDic];
+            }
+        }];
+    }
+}
 
 @end
