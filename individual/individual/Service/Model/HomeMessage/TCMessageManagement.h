@@ -17,6 +17,6 @@
 /** 消息类型 */
 @property (strong, nonatomic) TCHomeMessageType *messageTypeView;
 /** 消息类型开关 */
-@property (nonatomic) BOOL open;
+@property (nonatomic) BOOL isOpen;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "TCSettingViewController.h"
 #import "TCSuggestionViewController.h"
+#import "TCMessageManagementViewController.h"
 
 #import <TCCommonLibs/TCCommonIndicatorViewCell.h>
 #import "TCSettingNotificationViewCell.h"
@@ -79,7 +80,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
+        return 2;
     } else {
         return 3;
     }
@@ -87,8 +88,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        TCSettingNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCSettingNotificationViewCell" forIndexPath:indexPath];
-        return cell;
+        if (indexPath.row == 0) {
+            TCSettingNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCSettingNotificationViewCell" forIndexPath:indexPath];
+            return cell;
+        } else {
+            TCCommonIndicatorViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCCommonIndicatorViewCell" forIndexPath:indexPath];
+            cell.titleLabel.text = @"消息管理";
+            return cell;
+        }
     } else {
         if (indexPath.row == 0) {
             TCSettingCacheViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCSettingCacheViewCell" forIndexPath:indexPath];
@@ -118,7 +125,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        
+        if (indexPath.row == 1) {
+            TCMessageManagementViewController *vc = [[TCMessageManagementViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     } else {
         switch (indexPath.row) {
             case 0:

@@ -331,6 +331,7 @@
 		7AA117751F4EC1A800903445 /* TCBindPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA117741F4EC1A800903445 /* TCBindPhoneViewController.m */; };
 		7AA117781F4EE19E00903445 /* TCMessageManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA117771F4EE19E00903445 /* TCMessageManagementViewController.m */; };
 		7AA1177B1F4EE2EF00903445 /* TCMessageManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA1177A1F4EE2EF00903445 /* TCMessageManagement.m */; };
+		7AA1177E1F4FC01D00903445 /* TCMessageManagementViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA1177D1F4FC01D00903445 /* TCMessageManagementViewCell.m */; };
 		7AA643B61F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */; };
 		7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BB1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m */; };
 		7AA643BF1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AA643BE1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m */; };
@@ -1065,6 +1066,8 @@
 		7AA117771F4EE19E00903445 /* TCMessageManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMessageManagementViewController.m; sourceTree = "<group>"; };
 		7AA117791F4EE2EF00903445 /* TCMessageManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMessageManagement.h; sourceTree = "<group>"; };
 		7AA1177A1F4EE2EF00903445 /* TCMessageManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMessageManagement.m; sourceTree = "<group>"; };
+		7AA1177C1F4FC01D00903445 /* TCMessageManagementViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMessageManagementViewCell.h; sourceTree = "<group>"; };
+		7AA1177D1F4FC01D00903445 /* TCMessageManagementViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMessageManagementViewCell.m; sourceTree = "<group>"; };
 		7AA643B41F09DD4E00DD421F /* TCApartmentAddWithholdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentAddWithholdViewController.h; sourceTree = "<group>"; };
 		7AA643B51F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentAddWithholdViewController.m; sourceTree = "<group>"; };
 		7AA643BA1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentWithholdAddNameViewCell.h; sourceTree = "<group>"; };
@@ -2213,6 +2216,8 @@
 				7A46B92C1F332232001E33DD /* TCSettingCacheViewCell.m */,
 				7A46B92D1F332232001E33DD /* TCSettingNotificationViewCell.h */,
 				7A46B92E1F332232001E33DD /* TCSettingNotificationViewCell.m */,
+				7AA1177C1F4FC01D00903445 /* TCMessageManagementViewCell.h */,
+				7AA1177D1F4FC01D00903445 /* TCMessageManagementViewCell.m */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -3377,6 +3382,7 @@
 				550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */,
 				7A8675211EF8D64F006E2742 /* TCNumberTextField.m in Sources */,
 				5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */,
+				7AA1177E1F4FC01D00903445 /* TCMessageManagementViewCell.m in Sources */,
 				550FB76F1ED5C18600D75E33 /* FSCalendarAppearance.m in Sources */,
 				7A64EA831E150D23008D0C12 /* TCRechargeInputView.m in Sources */,
 				7AC346F61E0144F300E28EC9 /* TCBankCardViewCell.m in Sources */,
