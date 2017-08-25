@@ -13,6 +13,7 @@
 
 #import "TCTabBarController.h"
 #import "TCNavigationController.h"
+#import "TCOrderDetailViewController.h"
 
 #import "TCBuluoApi.h"
 
@@ -44,7 +45,7 @@
 
 - (void)pushApplication:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
-    NSString *deviceTokenStr = [XGPush registerDevice:deviceToken account:@"myAccount" successCallback:^{
+    NSString *deviceTokenStr = [XGPush registerDevice:deviceToken account:[TCBuluoApi api].currentUserSession.assigned successCallback:^{
         TCLog(@"[XGDemo] register push success");
     } errorCallback:^{
         TCLog(@"[XGDemo] register push error");
@@ -66,6 +67,7 @@
     
     [XGPush handleReceiveNotification:userInfo
                       successCallback:^{
+                          [self handlePushMessage:userInfo];
                           TCLog(@"[XGDemo] Handle receive success");
                       } errorCallback:^{
                           TCLog(@"[XGDemo] Handle receive error");
@@ -83,6 +85,7 @@
     
     [XGPush handleReceiveNotification:userInfo
                       successCallback:^{
+                          [self loadUnReadPushNumber];
                           TCLog(@"[XGDemo] Handle receive success");
                       } errorCallback:^{
                           TCLog(@"[XGDemo] Handle receive error");
@@ -100,6 +103,7 @@
     NSLog(@"[XGDemo] click notification");
     [XGPush handleReceiveNotification:response.notification.request.content.userInfo
                       successCallback:^{
+                          [self handlePushMessage:response.notification.request.content.userInfo];
                           TCLog(@"[XGDemo] Handle receive success");
                       } errorCallback:^{
                           TCLog(@"[XGDemo] Handle receive error");
@@ -110,7 +114,7 @@
 
 // App 在前台弹通知需要调用这个接口
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
-    
+    [self loadUnReadPushNumber];
     completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
 }
 #endif
@@ -234,25 +238,31 @@
     if ([userInfo isKindOfClass:[NSDictionary class]]) {
         NSDictionary *messageDic = userInfo[@"message"];
         if ([messageDic isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *typeDic = messageDic[@"messageBodyType"];
-            if ([typeDic isKindOfClass:[NSDictionary class]]) {
-                NSString *type = typeDic[@"name"];
+            NSString *type = messageDic[@"messageBodyType"];
                 if ([type isKindOfClass:[NSString class]]) {
                     NSString *referenceId = messageDic[@"referenceId"];
                     // 待发货
-                    if ([type isEqualToString:@"ORDER_SETTLE"]) {
+                    if ([type isEqualToString:@"ORDER_DELIVERY"]) {
                         if ([referenceId isKindOfClass:[NSString class]]) {
-//                            [self toOrderDetailWithReferenceId:referenceId];
-                        }
-                    }else if ([type isEqualToString:@"TENANT_WITHDRAW"]) {  // 提现
-                        if ([referenceId isKindOfClass:[NSString class]]) {
-//                            [self toWithDrawDetailWithReferenceId:referenceId];
+                            [self toOrderDetailWithReferenceId:referenceId];
                         }
                     }
                 }
-            }
         }
     }
+}
+
+- (void)toOrderDetailWithReferenceId:(NSString *)referenceId {
+    [[TCBuluoApi api] fetchOrderDetailWithOrderID:referenceId result:^(TCOrder *order, NSError *error) {
+        if (order) {
+            TCOrderDetailViewController *vc = [[TCOrderDetailViewController alloc] init];
+            vc.goodsOrder = order;
+            TCTabBarController *tabVC = (TCTabBarController *)self.window.rootViewController;
+            TCNavigationController *nav = (TCNavigationController *)tabVC.selectedViewController;
+            vc.hidesBottomBarWhenPushed = YES;
+            [nav pushViewController:vc animated:YES];
+        }
+    }];
 }
 
 - (void)loadUnReadPushNumber {

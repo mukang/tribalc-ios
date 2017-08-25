@@ -55,10 +55,10 @@
     _unreadNumDic = unreadNumDic;
     NSDictionary *dic = unreadNumDic[@"messageTypeCount"];
     if ([dic isKindOfClass:[NSDictionary class]]) {
-        NSNumber *num = dic[@"ORDER_SETTLE"];
-        if ([num isKindOfClass:[NSNumber class]]) {
-            TCTabButton *tabBtn = self.allButtons[3];
-            tabBtn.num = num;
+        NSNumber *num2 = dic[@"ORDER_DELIVERY"];
+        if ([num2 isKindOfClass:[NSNumber class]]) {
+            TCTabButton *tabBtn = self.allButtons[2];
+            tabBtn.num = num2;
         }
     }
 }
@@ -103,9 +103,6 @@
     
     NSInteger i = btn.tag - 10000;
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    if (i == 2) {
-        [self clearUnReadNumWithBtn:btn type:@"ORDER_DELIVERY"];
-    }
     
     [UIView animateWithDuration:0.3 animations:^{
         _lineView.frame = CGRectMake(btn.frame.origin.x, CGRectGetMaxY(btn.frame), kBtnWidth, 2);

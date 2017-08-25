@@ -58,6 +58,7 @@
     
     [self setupSubviews];
     [self.tabView selectIndex:self.goodsOrderStatus];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setUpUnreadMessageNumber:) name:@"TCFetchUnReadMessageNumber" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -82,12 +83,29 @@
 - (void)dealloc {
     self.collectionView.dataSource = nil;
     self.collectionView.delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Private Methods
 
+- (void)setUpUnreadMessageNumber:(NSNotification *)noti {
+    NSDictionary *dic = noti.userInfo;
+    if ([dic isKindOfClass:[NSDictionary class]]) {
+        self.unreadNumDic = dic;
+    }
+}
+
+- (void)setUnreadNumDic:(NSDictionary *)unreadNumDic {
+    if ([unreadNumDic isKindOfClass:[NSDictionary class]]) {
+        _unreadNumDic = unreadNumDic;
+        
+        self.tabView.unreadNumDic = unreadNumDic;
+    }
+}
+
 - (void)setupSubviews {
     TCTabView *tabView = [[TCTabView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 40) titleArr:@[@"全部", @"待付款", @"待收货", @"已完成"]];
+    tabView.unreadNumDic = self.unreadNumDic;
     tabView.tapBlock = ^(NSInteger index) {
         weakSelf.currentStatus = [weakSelf getCurrentStatusWithIndex:index];
         [weakSelf loadNewData];
@@ -141,8 +159,21 @@
     return currentStatus;
 }
 
+- (void)postHasReadmessage {
+    if ([self.currentStatus isEqualToString:@"DELIVERY"]) {
+        [[TCBuluoApi api] postHasReadMessageType:self.currentStatus result:^(BOOL success, NSError *error) {
+            NSLog(@"已读");
+        }];
+    }
+}
+
 - (void)loadNewData {
     [MBProgressHUD showHUD:YES];
+    
+    if ([self.currentStatus isEqualToString:@"DELIVERY"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TCClearUnreadNum" object:nil userInfo:@{@"index":@2,@"type":@"ORDER_DELIVERY"}];
+    }
+    
     [[TCBuluoApi api] fetchOrderWrapper:self.currentStatus limiSize:self.limitSize sortSkip:nil result:^(TCOrderWrapper *orderWrapper, NSError *error) {
         [weakSelf.collectionView.mj_header endRefreshing];
         [weakSelf.collectionView.mj_footer endRefreshing];
@@ -152,6 +183,7 @@
             [weakSelf.dataList removeAllObjects];
             [weakSelf.dataList addObjectsFromArray:orderWrapper.content];
             [weakSelf.collectionView reloadData];
+            [weakSelf postHasReadmessage];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取订单数据失败，%@", reason]];

@@ -906,6 +906,14 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)fetchUnReadPushMessageNumberWithResult:(void(^)(NSDictionary *unreadNumDic, NSError *error))resultBlock;
 
+
+/**
+ 提交已读消息类型
+ @param type 已读类型
+ @param resultBlock 结果回调
+ */
+- (void)postHasReadMessageType:(NSString *)type result:(void(^)(BOOL success, NSError *error))resultBlock;
+
 #pragma mark - 认证信息
 
 /**

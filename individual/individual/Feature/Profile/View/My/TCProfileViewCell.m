@@ -77,10 +77,13 @@
     if ([unReadNumDic isKindOfClass:[NSDictionary class]]) {
         _unReadNumDic = unReadNumDic;
         
-        NSNumber *num = unReadNumDic[@"ORDER_DELIVERY"];
-        if ([num isKindOfClass:[NSNumber class]]) {
-            TCProfileFeatureView *featureView = self.featureViews[2];
-            featureView.unReadNum = num;
+        NSDictionary *dic = unReadNumDic[@"messageTypeCount"];
+        if ([dic isKindOfClass:[NSDictionary class]]) {
+            NSNumber *num = dic[@"ORDER_DELIVERY"];
+            if ([num isKindOfClass:[NSNumber class]]) {
+                TCProfileFeatureView *featureView = self.featureViews[2];
+                featureView.unReadNum = num;
+            }
         }
     }
 }

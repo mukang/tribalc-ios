@@ -377,6 +377,13 @@
     }
 }
 
+- (void)setUpUnreadMessageNumber:(NSNotification *)noti {
+    NSDictionary *dic = noti.userInfo;
+    if ([dic isKindOfClass:[NSDictionary class]]) {
+        self.unreadMessageNumDic = dic;
+    }
+}
+
 - (void)setAuth {
     NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
     if ([[UIApplication sharedApplication] canOpenURL:url]) {
@@ -402,6 +409,7 @@
 - (void)handleClickOrderButton {
     TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:TCGoodsOrderStatusAll];
     vc.fromController = self;
+    vc.unreadNumDic = self.unreadMessageNumDic;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -479,6 +487,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidLogout:) name:TCBuluoApiNotificationUserDidLogout object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoDidUpdate:) name:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subtractUnreadNum:) name:@"TCSubtractCurrentUnReadNum" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setUpUnreadMessageNumber:) name:@"TCFetchUnReadMessageNumber" object:nil];
 }
 
 - (void)removeNotifications {

@@ -19,6 +19,9 @@ typedef NS_ENUM(NSInteger, TCGoodsOrderStatus) {
 
 @property (weak, nonatomic) UIViewController *fromController;
 @property (nonatomic, readonly) TCGoodsOrderStatus goodsOrderStatus;
+
+@property (copy, nonatomic) NSDictionary *unreadNumDic;
+
 - (instancetype)initWithGoodsOrderStatus:(TCGoodsOrderStatus)goodsOrderStatus;
 
 @end
