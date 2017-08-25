@@ -18,4 +18,6 @@
 - (void)pushApplication:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
 - (void)pushApplication:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
+- (void)pushApplicationWillEnterForeground:(UIApplication *)application;
+
 @end
