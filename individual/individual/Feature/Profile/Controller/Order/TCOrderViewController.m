@@ -13,8 +13,8 @@
 #import "TCGoodsOrderViewCell.h"
 #import "TCGoodsOrderHeaderView.h"
 #import "TCGoodsOrderFooterView.h"
+#import "TCTabView.h"
 
-#import <TCCommonLibs/TCTabView.h>
 #import <TCCommonLibs/TCRefreshHeader.h>
 #import <TCCommonLibs/TCRefreshFooter.h>
 

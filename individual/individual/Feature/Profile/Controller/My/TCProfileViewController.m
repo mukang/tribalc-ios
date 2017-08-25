@@ -79,10 +79,28 @@
 
 #pragma mark - Private Methods
 
+- (void)subtractUnreadNum:(NSNotification *)noti {
+    NSDictionary *dic = noti.userInfo;
+    if ([dic isKindOfClass:[NSDictionary class]]) {
+        NSNumber *num = dic[@"unreadNum"];
+        NSString *type = dic[@"type"];
+        if ([num isKindOfClass:[NSNumber class]] && [type isKindOfClass:[NSString class]]) {
+            NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:self.unreadMessageNumDic];
+            NSDictionary *messageTypeCountDic = self.unreadMessageNumDic[@"messageTypeCount"];
+            if ([messageTypeCountDic isKindOfClass:[NSDictionary class]]) {
+                NSMutableDictionary *mutableMessageTypeCountDic = [NSMutableDictionary dictionaryWithDictionary:messageTypeCountDic];
+                [mutableMessageTypeCountDic setObject:@0 forKey:type];
+                mutableDic[@"messageTypeCount"] = mutableMessageTypeCountDic;
+                self.unreadMessageNumDic = mutableDic;
+            }
+        }
+    }
+}
+
 - (void)setUnreadMessageNumDic:(NSDictionary *)unreadMessageNumDic {
     _unreadMessageNumDic = unreadMessageNumDic;
     
-    
+    [self.tableView reloadData];
 }
 
 - (void)loadUnReadPushNumber {
@@ -206,6 +224,9 @@
     TCProfileViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCProfileViewCell" forIndexPath:indexPath];
     cell.materials = self.materialsArray[indexPath.row];
     cell.delegate = self;
+    if (indexPath.row == 0) {
+        cell.unReadNumDic = self.unreadMessageNumDic;
+    }
     return cell;
 }
 
@@ -457,6 +478,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidLogin:) name:TCBuluoApiNotificationUserDidLogin object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidLogout:) name:TCBuluoApiNotificationUserDidLogout object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserInfoDidUpdate:) name:TCBuluoApiNotificationUserInfoDidUpdate object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subtractUnreadNum:) name:@"TCSubtractCurrentUnReadNum" object:nil];
 }
 
 - (void)removeNotifications {

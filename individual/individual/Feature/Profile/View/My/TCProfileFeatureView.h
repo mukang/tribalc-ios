@@ -12,4 +12,6 @@
 
 @property (weak, nonatomic) UIButton *button;
 
+@property (copy, nonatomic) NSNumber *unReadNum;
+
 @end

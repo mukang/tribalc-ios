@@ -14,6 +14,8 @@
 @property (copy, nonatomic) NSArray *materials;
 @property (weak, nonatomic) id<TCProfileViewCellDelegate> delegate;
 
+@property (copy, nonatomic) NSDictionary *unReadNumDic;
+
 @end
 
 @protocol TCProfileViewCellDelegate <NSObject>

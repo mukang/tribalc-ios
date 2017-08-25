@@ -73,6 +73,18 @@
     }
 }
 
+- (void)setUnReadNumDic:(NSDictionary *)unReadNumDic {
+    if ([unReadNumDic isKindOfClass:[NSDictionary class]]) {
+        _unReadNumDic = unReadNumDic;
+        
+        NSNumber *num = unReadNumDic[@"ORDER_DELIVERY"];
+        if ([num isKindOfClass:[NSNumber class]]) {
+            TCProfileFeatureView *featureView = self.featureViews[2];
+            featureView.unReadNum = num;
+        }
+    }
+}
+
 - (void)setMaterials:(NSArray *)materials {
     _materials = materials;
     
