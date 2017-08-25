@@ -26,9 +26,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (nonatomic, weak) TCGetPasswordView *getPasswordView;
 @property (nonatomic, weak) YYLabel *noticeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *wechatButton;
+@property (weak, nonatomic) IBOutlet UILabel *otherLoginLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *accountViewTopConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *alipayButtonBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *wechatButtonBottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherLabelBottomConstraint;
 
@@ -110,12 +111,16 @@
     noticeLabel.y = 200;
     [self.view addSubview:noticeLabel];
     self.noticeLabel = noticeLabel;
+    
+    if (![WXApi isWXAppInstalled]) {
+        self.wechatButton.hidden = YES;
+        self.otherLoginLabel.hidden = YES;
+    }
 }
 
 - (void)setupConstraints {
     // constraint
     self.accountViewTopConstraint.constant = TCRealValue(305);
-    self.alipayButtonBottomConstraint.constant = TCRealValue(63.5);
     self.wechatButtonBottomConstraint.constant = TCRealValue(63.5);
     self.otherLabelBottomConstraint.constant = TCRealValue(42);
     
@@ -231,10 +236,6 @@
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"登录失败，%@", reason]];
         }
     }];
-}
-
-- (IBAction)handleTapAlipayButton:(UIButton *)sender {
-    NSLog(@"支付宝登录");
 }
 
 - (IBAction)handleTapWechatButton:(UIButton *)sender {
