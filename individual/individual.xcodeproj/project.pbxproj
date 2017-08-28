@@ -93,6 +93,7 @@
 		5546F9681F305CA600E9A9B0 /* TCHomeMessageOnlyMainTitleMiddleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5546F9671F305CA600E9A9B0 /* TCHomeMessageOnlyMainTitleMiddleCell.m */; };
 		5574CF401F503B95002EE1F5 /* TCTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5574CF3D1F503B95002EE1F5 /* TCTabButton.m */; };
 		5574CF411F503B95002EE1F5 /* TCTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5574CF3F1F503B95002EE1F5 /* TCTabView.m */; };
+		5574CF441F53FFFA002EE1F5 /* TCHomeMessageWelfareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5574CF431F53FFFA002EE1F5 /* TCHomeMessageWelfareCell.m */; };
 		5599A95B1ECEF193002A61F9 /* TCSignInHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */; };
 		559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */ = {isa = PBXBuildFile; fileRef = 559D84561E0BD24900982697 /* NSObject+TCNomal.m */; };
 		559D84671E0C007E00982697 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D84661E0C007E00982697 /* MessageUI.framework */; };
@@ -648,6 +649,8 @@
 		5574CF3D1F503B95002EE1F5 /* TCTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTabButton.m; sourceTree = "<group>"; };
 		5574CF3E1F503B95002EE1F5 /* TCTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCTabView.h; sourceTree = "<group>"; };
 		5574CF3F1F503B95002EE1F5 /* TCTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTabView.m; sourceTree = "<group>"; };
+		5574CF421F53FFFA002EE1F5 /* TCHomeMessageWelfareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCHomeMessageWelfareCell.h; sourceTree = "<group>"; };
+		5574CF431F53FFFA002EE1F5 /* TCHomeMessageWelfareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeMessageWelfareCell.m; sourceTree = "<group>"; };
 		5599A9591ECEF193002A61F9 /* TCSignInHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSignInHistoryViewController.h; sourceTree = "<group>"; };
 		5599A95A1ECEF193002A61F9 /* TCSignInHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSignInHistoryViewController.m; sourceTree = "<group>"; };
 		559D84551E0BD24900982697 /* NSObject+TCNomal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TCNomal.h"; sourceTree = "<group>"; };
@@ -1801,6 +1804,8 @@
 				5546F9641F305C8600E9A9B0 /* TCHomeMessageSubTitleCell.m */,
 				5546F9661F305CA600E9A9B0 /* TCHomeMessageOnlyMainTitleMiddleCell.h */,
 				5546F9671F305CA600E9A9B0 /* TCHomeMessageOnlyMainTitleMiddleCell.m */,
+				5574CF421F53FFFA002EE1F5 /* TCHomeMessageWelfareCell.h */,
+				5574CF431F53FFFA002EE1F5 /* TCHomeMessageWelfareCell.m */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -3570,6 +3575,7 @@
 				7A9CCED11DB62011003D90C6 /* main.m in Sources */,
 				0925590F1DED78CB00EFA4FB /* TCMarkStore.m in Sources */,
 				7AFEC47E1E54056D00B0E754 /* TCGoodsOrderGoodsViewCell.m in Sources */,
+				5574CF441F53FFFA002EE1F5 /* TCHomeMessageWelfareCell.m in Sources */,
 				7AEB4CC51E03936300F83A7C /* TCBioEditSMSViewController.m in Sources */,
 				550FB7721ED5C18600D75E33 /* FSCalendarCollectionView.m in Sources */,
 				7AEB4D021E03E83800F83A7C /* TCBioEditEmotionViewController.m in Sources */,

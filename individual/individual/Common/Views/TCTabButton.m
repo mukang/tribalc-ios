@@ -48,7 +48,7 @@
     if ([num isKindOfClass:[NSNumber class]]) {
         _num = num;
         if ([num integerValue]) {
-            self.unReadNumLabel.text = [NSString stringWithFormat:@"%d",[num integerValue]];
+            self.unReadNumLabel.text = [NSString stringWithFormat:@"%ld",(long)[num integerValue]];
             self.unReadNumLabel.hidden = NO;
         }else {
             self.unReadNumLabel.hidden = YES;
