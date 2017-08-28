@@ -242,6 +242,7 @@
 		7A46B9361F34242E001E33DD /* TCProfileViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A46B9351F34242E001E33DD /* TCProfileViewCell.m */; };
 		7A48A6A71E5A8EC2006CAB62 /* TCServiceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */; };
 		7A48A6AA1E5A93AF006CAB62 /* TCServiceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */; };
+		7A4A36531F540BE9008D277C /* TCBadgeNumberManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4A36521F540BE9008D277C /* TCBadgeNumberManager.m */; };
 		7A4BF1A71EB089C800DE1BF5 /* TCBankInfoList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A4BF1A61EB089C800DE1BF5 /* TCBankInfoList.plist */; };
 		7A4BF1AE1EB0BE2E00DE1BF5 /* TCBFPayInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4BF1AD1EB0BE2E00DE1BF5 /* TCBFPayInfo.m */; };
 		7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E05071DEED401002371B0 /* TCCommunityVisitViewController.m */; };
@@ -905,6 +906,8 @@
 		7A48A6A61E5A8EC2006CAB62 /* TCServiceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceDetailViewController.m; sourceTree = "<group>"; };
 		7A48A6A81E5A93AF006CAB62 /* TCServiceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceHeaderView.h; sourceTree = "<group>"; };
 		7A48A6A91E5A93AF006CAB62 /* TCServiceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceHeaderView.m; sourceTree = "<group>"; };
+		7A4A36511F540BE9008D277C /* TCBadgeNumberManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBadgeNumberManager.h; sourceTree = "<group>"; };
+		7A4A36521F540BE9008D277C /* TCBadgeNumberManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBadgeNumberManager.m; sourceTree = "<group>"; };
 		7A4BF1A61EB089C800DE1BF5 /* TCBankInfoList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TCBankInfoList.plist; sourceTree = "<group>"; };
 		7A4BF1AC1EB0BE2E00DE1BF5 /* TCBFPayInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBFPayInfo.h; sourceTree = "<group>"; };
 		7A4BF1AD1EB0BE2E00DE1BF5 /* TCBFPayInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBFPayInfo.m; sourceTree = "<group>"; };
@@ -2582,6 +2585,8 @@
 				7AAB1A0D1ED8142800EF5F69 /* TCUserDefaultsKeys.h */,
 				7A38923F1F3C0928000DBA30 /* TCNotificationNames.h */,
 				7A3892401F3C0928000DBA30 /* TCNotificationNames.m */,
+				7A4A36511F540BE9008D277C /* TCBadgeNumberManager.h */,
+				7A4A36521F540BE9008D277C /* TCBadgeNumberManager.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -3598,6 +3603,7 @@
 				550FB7761ED5C18700D75E33 /* FSCalendarDelegationProxy.m in Sources */,
 				7A8352E71E5EE3A6003A8E76 /* TCServiceAnnotationView.m in Sources */,
 				7AFEC4961E555D2E00B0E754 /* TCGoodsOrderStatusViewCell.m in Sources */,
+				7A4A36531F540BE9008D277C /* TCBadgeNumberManager.m in Sources */,
 				7AC347021E01454100E28EC9 /* TCBankCardViewController.m in Sources */,
 				09AE0F791DED462700F307D8 /* TCComputeView.m in Sources */,
 				7A720AC21E13BC9A00567216 /* TCUserAgreementViewController.m in Sources */,

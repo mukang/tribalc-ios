@@ -50,7 +50,7 @@
     } errorCallback:^{
         TCLog(@"[XGDemo] register push error");
     }];
-    NSLog(@"[XGDemo] device token is %@", deviceTokenStr);
+    TCLog(@"[XGDemo] device token is %@", deviceTokenStr);
 }
 
 - (void)pushApplication:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
