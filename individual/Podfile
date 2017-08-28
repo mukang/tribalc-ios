@@ -14,6 +14,6 @@ pod 'AMapSearch-NO-IDFA'
 pod 'AMapLocation-NO-IDFA'
 pod 'FLEX', '~> 2.0', :configurations => ['Debug']
 pod 'Bugly'
-pod 'WechatOpenSDK'
+pod 'WechatOpenSDK', '~> 1.7.9'
 pod 'QQ_XGPush'
 end
