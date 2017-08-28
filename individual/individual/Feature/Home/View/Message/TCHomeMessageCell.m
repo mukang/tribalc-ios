@@ -16,6 +16,8 @@
 
 @property (strong, nonatomic) UIView *topBgView;
 
+@property (strong, nonatomic) UIImageView *bgImageView;
+
 @property (strong, nonatomic) UIView *lineView1;
 
 @property (strong, nonatomic) UIImageView *titleIcon;
@@ -88,8 +90,33 @@
             self.titleIcon.image = [UIImage imageNamed:@"storeAssistantIcon"];
         }else if (type == TCMessageTypeCompaniesAdmin || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeCompaniesWalletWithdraw) {
             self.titleIcon.image = [UIImage imageNamed:@"bussinessAssistantIcon"];
+        }else if (type == TCMessageTypeWelfare) {
+            self.titleIcon.image = [UIImage imageNamed:@"welfareAssistantIcon"];
         }else {
             self.titleIcon.image = [UIImage imageNamed:@"accountAssistantIcon"];
+        }
+        
+        if (type == TCMessageTypeWelfare) {
+            self.bgImageView.hidden = NO;
+            self.titleLabel.backgroundColor = [UIColor clearColor];
+            self.timeLabel.backgroundColor = [UIColor clearColor];
+            [self.moreActionBtn setBackgroundColor:[UIColor clearColor]];
+            self.lineView2.hidden = YES;
+            self.middleView.backgroundColor = [UIColor clearColor];
+            self.lineView3.hidden = YES;
+            [self.checkBtn setBackgroundColor:[UIColor clearColor]];
+            [self.checkBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }else {
+            self.bgImageView.hidden = YES;
+            self.titleLabel.backgroundColor = [UIColor whiteColor];
+            self.timeLabel.backgroundColor = [UIColor whiteColor];
+            [self.moreActionBtn setBackgroundColor:[UIColor whiteColor]];
+            self.lineView2.hidden = NO;
+            self.middleView.backgroundColor = [UIColor whiteColor];
+            self.lineView3.hidden = NO;
+            [self.checkBtn setBackgroundColor:[UIColor whiteColor]];
+            [self.checkBtn setTitleColor:TCGrayColor forState:UIControlStateNormal];
+
         }
     }
 }
@@ -103,6 +130,7 @@
 - (void)setUpViews {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.topBgView];
+    [self.contentView addSubview:self.bgImageView];
     [self.contentView addSubview:self.lineView1];
     [self.contentView addSubview:self.titleIcon];
     [self.contentView addSubview:self.titleLabel];
@@ -117,6 +145,12 @@
     [self.topBgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.contentView);
         make.height.equalTo(@8);
+    }];
+    
+    [self.bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.topBgView.mas_bottom);
+        make.left.right.equalTo(self.contentView);
+        make.height.equalTo(@(TCRealValue(174)));
     }];
     
     [self.lineView1 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -305,6 +339,15 @@
         _lineView1.backgroundColor = TCBackgroundColor;
     }
     return _lineView1;
+}
+
+- (UIImageView *)bgImageView {
+    if (_bgImageView == nil) {
+        _bgImageView = [[UIImageView alloc] init];
+        _bgImageView.image = [UIImage imageNamed:@"welfareMessageBgImage"];
+        _bgImageView.hidden = YES;
+    }
+    return _bgImageView;
 }
 
 - (UIView *)topBgView {

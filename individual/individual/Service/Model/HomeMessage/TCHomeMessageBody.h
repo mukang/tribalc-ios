@@ -30,4 +30,6 @@
 
 @property (assign, nonatomic) int64_t applicationTime;
 
+@property (copy, nonatomic) NSString *remark;
+
 @end

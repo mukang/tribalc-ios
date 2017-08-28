@@ -24,6 +24,7 @@
 #import "TCHomeMessageMoneyMiddleCell.h"
 #import "TCHomeMessageExtendCreditMiddleCell.h"
 #import "TCHomeMessageOnlyMainTitleMiddleCell.h"
+#import "TCHomeMessageWelfareCell.h"
 
 #import "TCBuluoApi.h"
 #import "TCNotificationNames.h"
@@ -136,6 +137,7 @@ TCHomeCoverViewDelegate>
     [tableView registerClass:[TCHomeMessageSubTitleCell class] forCellReuseIdentifier:@"TCHomeMessageSubTitleCell"];
     [tableView registerClass:[TCHomeMessageExtendCreditMiddleCell class] forCellReuseIdentifier:@"TCHomeMessageExtendCreditMiddleCell"];
     [tableView registerClass:[TCHomeMessageMoneyMiddleCell class] forCellReuseIdentifier:@"TCHomeMessageMoneyMiddleCell"];
+    [tableView registerClass:[TCHomeMessageWelfareCell class] forCellReuseIdentifier:@"TCHomeMessageWelfareCell"];
     [self.view insertSubview:tableView belowSubview:self.toolBarView];
     self.tableView = tableView;
     
@@ -260,6 +262,8 @@ TCHomeCoverViewDelegate>
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageExtendCreditMiddleCell" forIndexPath:indexPath];
     }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageSubTitleCell" forIndexPath:indexPath];
+    }else if (type == TCMessageTypeWelfare) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageWelfareCell" forIndexPath:indexPath];
     }else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageOnlyMainTitleMiddleCell" forIndexPath:indexPath];
     }
@@ -282,6 +286,8 @@ TCHomeCoverViewDelegate>
         return baseH+102;
     }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration) {
         return baseH+143;
+    }else if (type == TCMessageTypeWelfare) {
+        return 8+TCRealValue(174);
     }else {
         return baseH+62;
     }

@@ -47,6 +47,8 @@
         _type = TCMessageTypeCompaniesWalletWithdraw;
     } else if ([homeMessageTypeEnum isEqualToString:@"ACCOUNT_REGISTER"]) {
         _type = TCMessageTypeAccountRegister;
+    } else if ([homeMessageTypeEnum isEqualToString:@"WELFARE"]) {
+        _type = TCMessageTypeWelfare;
     }
 }
 
