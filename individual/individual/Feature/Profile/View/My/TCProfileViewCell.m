@@ -80,9 +80,11 @@
         NSDictionary *dic = unReadNumDic[@"messageTypeCount"];
         if ([dic isKindOfClass:[NSDictionary class]]) {
             NSNumber *num = dic[@"ORDER_DELIVERY"];
+            TCProfileFeatureView *featureView = self.featureViews[2];
             if ([num isKindOfClass:[NSNumber class]]) {
-                TCProfileFeatureView *featureView = self.featureViews[2];
                 featureView.unReadNum = num;
+            }else {
+                featureView.unReadNum = @0;
             }
         }
     }
