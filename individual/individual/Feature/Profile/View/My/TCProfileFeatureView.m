@@ -41,7 +41,7 @@
     unreadNumLabel.hidden = YES;
     [unreadNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self).offset(-10);
-        make.top.equalTo(self).offset(5);
+        make.top.equalTo(self).offset(10);
         make.height.equalTo(@16);
         make.width.mas_greaterThanOrEqualTo(@16);
     }];
