@@ -22,13 +22,13 @@
         
         [self createSalePriceLabelWithPrice:price];
         
-        _originPriceLab = [self getOriginPriceLabelWithFrame:CGRectMake(_priceDecimalLab.x + _priceDecimalLab.width + TCRealValue(16), _priceDecimalLab.y, 0, TCRealValue(12)) AndOriginPrice:originPrice];
+        _originPriceLab = [self getOriginPriceLabelWithFrame:CGRectMake(_priceDecimalLab.x + _priceDecimalLab.width + TCRealValue(16), _priceDecimalLab.y + TCRealValue(5), 0, TCRealValue(12)) AndOriginPrice:originPrice];
         [self addSubview:_originPriceLab];
 
         [self setHeight:_priceIntegerLab.y + _priceIntegerLab.height + TCRealValue(16)];
         
         _tagLab = [self createTagLabelWithTag:tags];
-        [_tagLab setOrigin:CGPointMake(self.width - TCRealValue(20) - _tagLab.width, _priceDecimalLab.y)];
+        [_tagLab setOrigin:CGPointMake(self.width - TCRealValue(20) - _tagLab.width, _priceDecimalLab.y + TCRealValue(5))];
         [self addSubview:_tagLab];
         
         tagImgView = [[UIImageView alloc] initWithFrame:CGRectMake(_tagLab.x - TCRealValue(12), _tagLab.y + TCRealValue(2.5), TCRealValue(11), TCRealValue(12))];
@@ -52,9 +52,9 @@
     if ([priceStr rangeOfString:@"."].location != NSNotFound) {
         NSString *priceDecimalStr = [priceStr componentsSeparatedByString:@"."][1];
         priceDecimalStr = [NSString stringWithFormat:@".%@", priceDecimalStr];
-        _priceDecimalLab = [self createPriceLabelWithOrigin:CGPointMake(_priceIntegerLab.x + _priceIntegerLab.width, _priceIntegerLab.y + TCRealValue(17) - TCRealValue(12)) AndFontSize:TCRealValue(12) AndText:priceDecimalStr];
+        _priceDecimalLab = [self createPriceLabelWithOrigin:CGPointMake(_priceIntegerLab.x + _priceIntegerLab.width, _priceIntegerLab.y) AndFontSize:TCRealValue(17) AndText:priceDecimalStr];
     } else {
-        _priceDecimalLab = [[UILabel alloc] initWithFrame:CGRectMake(_priceIntegerLab.x + _priceIntegerLab.width, _priceIntegerLab.y + TCRealValue(17) - TCRealValue(12), 0, 0)];
+        _priceDecimalLab = [[UILabel alloc] initWithFrame:CGRectMake(_priceIntegerLab.x + _priceIntegerLab.width, _priceIntegerLab.y, 0, 0)];
     }
     [self addSubview:_priceDecimalLab];
     
