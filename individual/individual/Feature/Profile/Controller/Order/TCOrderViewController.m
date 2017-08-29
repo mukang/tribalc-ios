@@ -161,7 +161,7 @@
 
 - (void)postHasReadmessage {
     if ([self.currentStatus isEqualToString:@"DELIVERY"]) {
-        [[TCBuluoApi api] postHasReadMessageType:@"ORDER_DELIVERY" result:^(BOOL success, NSError *error) {
+        [[TCBuluoApi api] postHasReadMessageType:@"ORDER_DELIVERY" referenceID:nil result:^(BOOL success, NSError *error) {
             if (success) {
                 TCLog(@"已读");
             }

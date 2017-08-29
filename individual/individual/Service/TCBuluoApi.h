@@ -912,7 +912,7 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  @param type 已读类型
  @param resultBlock 结果回调
  */
-- (void)postHasReadMessageType:(NSString *)type result:(void(^)(BOOL success, NSError *error))resultBlock;
+- (void)postHasReadMessageType:(NSString *)type referenceID:(NSString *)referenceID result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 #pragma mark - 认证信息
 

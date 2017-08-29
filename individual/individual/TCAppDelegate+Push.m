@@ -261,6 +261,8 @@
             TCNavigationController *nav = (TCNavigationController *)tabVC.selectedViewController;
             vc.hidesBottomBarWhenPushed = YES;
             [nav pushViewController:vc animated:YES];
+            
+            [self postHadReadMessageType:@"ORDER_DELIVERY" referenceId:referenceId isNeedUpdate:YES];
         }
     }];
 }
@@ -273,6 +275,16 @@
             }
         }];
     }
+}
+
+- (void)postHadReadMessageType:(NSString *)type referenceId:(NSString *)referenceId isNeedUpdate:(BOOL)needUpdate {
+    [[TCBuluoApi api] postHasReadMessageType:type referenceID:referenceId result:^(BOOL success, NSError *error) {
+        if (success) {
+            if (needUpdate) {
+                [self loadUnReadPushNumber];
+            }
+        }
+    }];
 }
 
 @end
