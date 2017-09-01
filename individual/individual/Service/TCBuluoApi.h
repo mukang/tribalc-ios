@@ -406,14 +406,16 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  @param goodsID 商品的ID
  @param resultBlock 结果回调，TCGoodDetail为nil时表示获取失败，失败原因见error的code和userInfo
  */
+- (void)fetchGoodsDetail:(NSString *)goodsID result:(void (^)(TCGoodsDetail *goodsDetail, NSError *error))resultBlock;
 - (void)fetchGoodDetail:(NSString *)goodsID result:(void (^)(TCGoodDetail *goodDetail, NSError *error))resultBlock;
 
 /**
  获取商品规格
  
- @param goodStandardId 商品规格的ID
- @param resultBlock 结果回调，TCGoodStandards为nil时表示获取失败，失败原因见error的code和userInfo
+ @param goodsStandardID 商品规格的id
+ @param resultBlock 结果回调，goodsStandard为nil时表示获取失败，失败原因见error的code和userInfo
  */
+- (void)fetchGoodsStandard:(NSString *)goodsStandardID result:(void (^)(TCGoodsStandard *goodsStandard, NSError *error))resultBlock;
 - (void)fetchGoodStandards:(NSString *)goodStandardId result:(void (^)(TCGoodStandards *goodStandard, NSError *error))resultBlock;
 
 

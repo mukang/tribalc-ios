@@ -24,9 +24,12 @@
 #import "TCUserPayment.h"
 #import "TCCreditBillWrapper.h"
 
-/********** 商业相关 **********/
-#import "TCGoods.h"
+/********** 商品相关 **********/
 #import "TCGoodsWrapper.h"
+#import "TCGoods.h"
+#import "TCGoodsDetail.h"
+#import "TCGoodsStandard.h"
+
 #import "TCGoodDetail.h"
 #import "TCGoodStandards.h"
 #import "TCStoreInfo.h"
