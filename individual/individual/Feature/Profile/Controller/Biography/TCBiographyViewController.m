@@ -296,7 +296,8 @@
 }
 
 - (void)handleRemoveImageWithImagePath:(NSString *)imagePath {
-    NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:imagePath];
+    NSString *userID = [[TCBuluoApi api] currentUserSession].assigned;
+    NSURL *URL = [TCImageURLSynthesizer synthesizeAvatarImageURLWithUserID:userID needTimestamp:NO];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     NSString *cacheKey = [manager cacheKeyForURL:URL];
     [manager.imageCache removeImageForKey:cacheKey withCompletion:^{

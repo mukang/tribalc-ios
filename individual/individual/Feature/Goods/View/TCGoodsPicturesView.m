@@ -11,8 +11,8 @@
 
 @interface TCGoodsPicturesView () <TCPicturesHeaderViewDelegate>
 
-@property (copy, nonatomic) TCPicturesHeaderView *headerView;
-@property (copy, nonatomic) UIPageControl *pageControl;
+@property (weak, nonatomic) TCPicturesHeaderView *headerView;
+@property (weak, nonatomic) UIPageControl *pageControl;
 
 @end
 

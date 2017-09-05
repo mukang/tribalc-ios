@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TCGoodsDetail;
 
 @interface TCGoodsStoreInfoViewCell : UITableViewCell
+
+@property (strong, nonatomic) TCGoodsDetail *goodsDetail;
 
 @end

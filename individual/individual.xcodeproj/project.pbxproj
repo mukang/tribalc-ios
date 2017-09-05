@@ -276,6 +276,9 @@
 		7A720AB71E13892200567216 /* downImage01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7A720AB51E13892200567216 /* downImage01.jpg */; };
 		7A720ABF1E13BBFD00567216 /* TCUserAgreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7A720ABE1E13BBFD00567216 /* TCUserAgreement.rtf */; };
 		7A720AC21E13BC9A00567216 /* TCUserAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A720AC11E13BC9A00567216 /* TCUserAgreementViewController.m */; };
+		7A7403B01F5D46D3007FCB3D /* TCGoodsDetailInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7403AF1F5D46D3007FCB3D /* TCGoodsDetailInfoViewCell.m */; };
+		7A7403B31F5D541A007FCB3D /* TCGoodsToolsBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7403B21F5D541A007FCB3D /* TCGoodsToolsBar.m */; };
+		7A7403B61F5E4283007FCB3D /* TCGoodsStandardSelectViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7403B51F5E4283007FCB3D /* TCGoodsStandardSelectViewCell.m */; };
 		7A74674B1DF90F8300ACD815 /* TCCompanyIntroViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A74674A1DF90F8300ACD815 /* TCCompanyIntroViewCell.m */; };
 		7A74674F1DF947EF00ACD815 /* TCCompanyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A74674E1DF947EF00ACD815 /* TCCompanyInfo.m */; };
 		7A7467521DF961AD00ACD815 /* TCUserCompanyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7467511DF961AD00ACD815 /* TCUserCompanyInfo.m */; };
@@ -973,6 +976,12 @@
 		7A720ABE1E13BBFD00567216 /* TCUserAgreement.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TCUserAgreement.rtf; sourceTree = "<group>"; };
 		7A720AC01E13BC9A00567216 /* TCUserAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCUserAgreementViewController.h; sourceTree = "<group>"; };
 		7A720AC11E13BC9A00567216 /* TCUserAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCUserAgreementViewController.m; sourceTree = "<group>"; };
+		7A7403AE1F5D46D3007FCB3D /* TCGoodsDetailInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsDetailInfoViewCell.h; sourceTree = "<group>"; };
+		7A7403AF1F5D46D3007FCB3D /* TCGoodsDetailInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsDetailInfoViewCell.m; sourceTree = "<group>"; };
+		7A7403B11F5D541A007FCB3D /* TCGoodsToolsBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsToolsBar.h; sourceTree = "<group>"; };
+		7A7403B21F5D541A007FCB3D /* TCGoodsToolsBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsToolsBar.m; sourceTree = "<group>"; };
+		7A7403B41F5E4283007FCB3D /* TCGoodsStandardSelectViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsStandardSelectViewCell.h; sourceTree = "<group>"; };
+		7A7403B51F5E4283007FCB3D /* TCGoodsStandardSelectViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsStandardSelectViewCell.m; sourceTree = "<group>"; };
 		7A7467491DF90F8300ACD815 /* TCCompanyIntroViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyIntroViewCell.h; sourceTree = "<group>"; };
 		7A74674A1DF90F8300ACD815 /* TCCompanyIntroViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyIntroViewCell.m; sourceTree = "<group>"; };
 		7A74674D1DF947EF00ACD815 /* TCCompanyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyInfo.h; sourceTree = "<group>"; };
@@ -2292,8 +2301,14 @@
 				7A4A36641F59607F008D277C /* TCGoodsPicturesView.m */,
 				7A4A36661F596686008D277C /* TCGoodsTitleViewCell.h */,
 				7A4A36671F596686008D277C /* TCGoodsTitleViewCell.m */,
+				7A7403B41F5E4283007FCB3D /* TCGoodsStandardSelectViewCell.h */,
+				7A7403B51F5E4283007FCB3D /* TCGoodsStandardSelectViewCell.m */,
 				7A4A36691F5966DE008D277C /* TCGoodsStoreInfoViewCell.h */,
 				7A4A366A1F5966DE008D277C /* TCGoodsStoreInfoViewCell.m */,
+				7A7403AE1F5D46D3007FCB3D /* TCGoodsDetailInfoViewCell.h */,
+				7A7403AF1F5D46D3007FCB3D /* TCGoodsDetailInfoViewCell.m */,
+				7A7403B11F5D541A007FCB3D /* TCGoodsToolsBar.h */,
+				7A7403B21F5D541A007FCB3D /* TCGoodsToolsBar.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3393,6 +3408,7 @@
 				7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */,
 				092C69801DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m in Sources */,
 				550FB7781ED5C18700D75E33 /* FSCalendarHeaderView.m in Sources */,
+				7A7403B31F5D541A007FCB3D /* TCGoodsToolsBar.m in Sources */,
 				7A190AFC1DC0AAC200651905 /* TCNavigationController.m in Sources */,
 				7A22D93A1ECEF11B009A6A64 /* TCFeatureSwitches.m in Sources */,
 				7A48A6AA1E5A93AF006CAB62 /* TCServiceHeaderView.m in Sources */,
@@ -3539,6 +3555,7 @@
 				7AB03F051EC1ACD000DFB037 /* TCBFSessionInfo.m in Sources */,
 				7A084C381E002CF000224677 /* TCCompanyNameViewCell.m in Sources */,
 				7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */,
+				7A7403B61F5E4283007FCB3D /* TCGoodsStandardSelectViewCell.m in Sources */,
 				7A925DC41F1DF31100D697DE /* TCHomeMessageWrapper.m in Sources */,
 				7A925DF91F2094C200D697DE /* TCStorePayPrivilegeViewCell.m in Sources */,
 				0928B3411DF96F930085A182 /* TCSelectStandardView.m in Sources */,
@@ -3658,6 +3675,7 @@
 				7A3368631ECC6263008EAC84 /* TCMultiLockKey.m in Sources */,
 				7AADCC751EE80154004AA1DA /* TCPaymentPasswordView.m in Sources */,
 				7A4A36681F596686008D277C /* TCGoodsTitleViewCell.m in Sources */,
+				7A7403B01F5D46D3007FCB3D /* TCGoodsDetailInfoViewCell.m in Sources */,
 				098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */,
 				7A7E941E1DF57136006A47CE /* TCRepairsPhotosViewCell.m in Sources */,
 				7AA643B61F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m in Sources */,
