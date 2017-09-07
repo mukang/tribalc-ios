@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TCGoodsStandardDescriptions.h"
 
 @interface TCGoodsStandard : NSObject
 
 /** 商品规格ID */
 @property (copy, nonatomic) NSString *ID;
 /** 规格描述信息 */
-@property (copy, nonatomic) NSDictionary *descriptions;
+@property (strong, nonatomic) TCGoodsStandardDescriptions *descriptions;
 /** 规格索引信息 */
 @property (copy, nonatomic) NSDictionary *goodsIndexes;
 

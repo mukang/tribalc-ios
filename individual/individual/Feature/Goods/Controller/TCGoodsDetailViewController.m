@@ -7,6 +7,7 @@
 //
 
 #import "TCGoodsDetailViewController.h"
+#import "TCGoodsStandardViewController.h"
 
 #import "TCGoodsPicturesView.h"
 #import "TCGoodsTitleViewCell.h"
@@ -29,6 +30,8 @@
 
 @property (strong, nonatomic) TCGoodsDetail *goodsDetail;
 @property (strong, nonatomic) TCGoodsStandard *goodsStandard;
+/** 可能为nil */
+@property (copy, nonatomic) NSString *currentStandardKey;
 
 @end
 
@@ -115,15 +118,45 @@
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchGoodsDetail:self.goodsID result:^(TCGoodsDetail *goodsDetail, NSError *error) {
         if (goodsDetail) {
-            [MBProgressHUD hideHUD:YES];
             weakSelf.goodsDetail = goodsDetail;
-            weakSelf.picturesView.pictures = goodsDetail.pictures;
-            [weakSelf.tableView reloadData];
+            if (goodsDetail.standardId) {
+                [weakSelf loadGoodsStandardWithStandardID:goodsDetail.standardId];
+            } else {
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf refreshData];
+            }
         } else {
             NSString *message = error.localizedDescription ? : @"获取数据失败，请稍后再试";
             [MBProgressHUD showHUDWithMessage:message];
         }
     }];
+}
+
+- (void)loadGoodsStandardWithStandardID:(NSString *)standardID {
+    [[TCBuluoApi api] fetchGoodsStandard:standardID result:^(TCGoodsStandard *goodsStandard, NSError *error) {
+        if (goodsStandard) {
+            [MBProgressHUD hideHUD:YES];
+            weakSelf.goodsStandard = goodsStandard;
+            NSDictionary *goodsIndexes = goodsStandard.goodsIndexes;
+            for (NSString *key in goodsIndexes.allKeys) {
+                TCGoodsDetail *goodsDetail = goodsIndexes[key];
+                if ([goodsDetail.ID isEqualToString:self.goodsDetail.ID]) {
+                    weakSelf.currentStandardKey = key;
+                    break;
+                }
+            }
+            [weakSelf refreshData];
+        } else {
+            NSString *message = error.localizedDescription ? : @"获取数据失败，请稍后再试";
+            [MBProgressHUD showHUDWithMessage:message];
+        }
+    }];
+}
+
+/** 刷新数据 */
+- (void)refreshData {
+    weakSelf.picturesView.pictures = self.goodsDetail.pictures;
+    [weakSelf.tableView reloadData];
 }
 
 - (void)updateHeaderView {
@@ -226,6 +259,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+        TCGoodsStandardViewController *vc = [[TCGoodsStandardViewController alloc] initWithStandardViewMode:TCGoodsStandardViewModeSelect fromController:self];
+        vc.goodsStandard = self.goodsStandard;
+        vc.goodsDetail = self.goodsDetail;
+        vc.currentStandardKey = self.currentStandardKey;
+        [vc show:YES];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

@@ -10,4 +10,10 @@
 
 @implementation TCGoodsStandard
 
++ (NSDictionary *)objectClassInDictionary {
+    return @{
+             @"descriptions": [TCGoodsStandardDescriptions class]
+             };
+}
+
 @end

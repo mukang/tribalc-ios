@@ -1284,12 +1284,12 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
             }
         } else {
             TCGoodsStandard *goodsStandard = [[TCGoodsStandard alloc] initWithObjectDictionary:response.data];
-            NSDictionary *tempDic = [NSDictionary dictionary];
+            NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
             for (NSString *key in goodsStandard.goodsIndexes.allKeys) {
                 TCGoodsDetail *goodsDetail = [[TCGoodsDetail alloc] initWithObjectDictionary:goodsStandard.goodsIndexes[key]];
                 [tempDic setValue:goodsDetail forKey:key];
             }
-            goodsStandard.goodsIndexes = tempDic;
+            goodsStandard.goodsIndexes = [tempDic copy];
             if (resultBlock) {
                 TC_CALL_ASYNC_MQ(resultBlock(goodsStandard, nil));
             }
