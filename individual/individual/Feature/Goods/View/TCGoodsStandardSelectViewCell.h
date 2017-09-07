@@ -10,4 +10,5 @@
 
 @interface TCGoodsStandardSelectViewCell : UITableViewCell
 
+
 @end

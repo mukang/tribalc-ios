@@ -14,12 +14,24 @@ typedef NS_ENUM(NSInteger, TCGoodsStandardUnitsLevel) {
     TCGoodsStandardUnitsLevelSecondary
 };
 
+@protocol TCGoodsStandardUnitsViewDelegate;
 @interface TCGoodsStandardUnitsView : UIView
 
+@property (copy, nonatomic) NSString *currentKey;
 @property (nonatomic, readonly) TCGoodsStandardUnitsLevel unitsLevel;
+
+@property (weak, nonatomic) id<TCGoodsStandardUnitsViewDelegate> delegate;
 
 - (instancetype)initWithUnitsLevel:(TCGoodsStandardUnitsLevel)level goodsStandard:(TCGoodsStandard *)goodsStandard;
 
-- (void)reloadDataWithCurrentStandardKey:(NSString *)currentStandardKey;
+- (void)reloadStandardDataWithAnotherKey:(NSString *)anotherKey;
+
+@end
+
+
+@protocol TCGoodsStandardUnitsViewDelegate <NSObject>
+
+@optional
+- (void)goodsStandardUnitsView:(TCGoodsStandardUnitsView *)view didSelectUnitWithKey:(NSString *)key;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "TCGoodsDetailViewController.h"
 #import "TCGoodsStandardViewController.h"
+#import "TCLoginViewController.h"
 
 #import "TCGoodsPicturesView.h"
 #import "TCGoodsTitleViewCell.h"
@@ -23,15 +24,18 @@
 
 #define headerViewH TCScreenWidth
 
-@interface TCGoodsDetailViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TCGoodsDetailViewController () <UITableViewDataSource, UITableViewDelegate, TCGoodsStandardViewControllerDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) TCGoodsPicturesView *picturesView;
 
 @property (strong, nonatomic) TCGoodsDetail *goodsDetail;
 @property (strong, nonatomic) TCGoodsStandard *goodsStandard;
-/** 可能为nil */
-@property (copy, nonatomic) NSString *currentStandardKey;
+
+/** 一级规格 */
+@property (copy, nonatomic) NSString *primaryKey;
+/** 二级规格 */
+@property (copy, nonatomic) NSString *secondaryKey;
 
 @end
 
@@ -141,7 +145,13 @@
             for (NSString *key in goodsIndexes.allKeys) {
                 TCGoodsDetail *goodsDetail = goodsIndexes[key];
                 if ([goodsDetail.ID isEqualToString:self.goodsDetail.ID]) {
-                    weakSelf.currentStandardKey = key;
+                    if (goodsStandard.descriptions.secondary) {
+                        NSArray *tempArray = [key componentsSeparatedByString:@"^"];
+                        weakSelf.primaryKey = [tempArray firstObject];
+                        weakSelf.secondaryKey = [tempArray lastObject];
+                    } else {
+                        weakSelf.primaryKey = key;
+                    }
                     break;
                 }
             }
@@ -155,8 +165,8 @@
 
 /** 刷新数据 */
 - (void)refreshData {
-    weakSelf.picturesView.pictures = self.goodsDetail.pictures;
-    [weakSelf.tableView reloadData];
+    self.picturesView.pictures = self.goodsDetail.pictures;
+    [self.tableView reloadData];
 }
 
 - (void)updateHeaderView {
@@ -199,6 +209,15 @@
         case 1:
         {
             TCGoodsStandardSelectViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCGoodsStandardSelectViewCell" forIndexPath:indexPath];
+            if (self.primaryKey) {
+                if (self.secondaryKey) {
+                    cell.textLabel.text = [NSString stringWithFormat:@"已选:\"%@\" \"%@\"", self.primaryKey, self.secondaryKey];
+                } else {
+                    cell.textLabel.text = [NSString stringWithFormat:@"已选:\"%@\"", self.primaryKey];
+                }
+            } else {
+                cell.textLabel.text = @"请选择规格和数量";
+            }
             currentCell = cell;
         }
             break;
@@ -263,11 +282,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
-        TCGoodsStandardViewController *vc = [[TCGoodsStandardViewController alloc] initWithStandardViewMode:TCGoodsStandardViewModeSelect fromController:self];
-        vc.goodsStandard = self.goodsStandard;
-        vc.goodsDetail = self.goodsDetail;
-        vc.currentStandardKey = self.currentStandardKey;
-        [vc show:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self showGoodsStandardViewWithMode:TCGoodsStandardViewModeSelect comfirmType:0];
     }
 }
 
@@ -277,6 +293,15 @@
     [self updateHeaderView];
 }
 
+#pragma mark - TCGoodsStandardViewControllerDelegate
+
+- (void)standardKeyDidChangeInGoodsStandardViewController:(TCGoodsStandardViewController *)controller {
+    self.primaryKey = controller.primaryKey;
+    self.secondaryKey = controller.secondaryKey;
+    self.goodsDetail = controller.goodsDetail;
+    [self refreshData];
+}
+
 #pragma mark - Actions
 
 - (void)handleClickShoppingCartButton:(id)sender {
@@ -284,11 +309,22 @@
 }
 
 - (void)handleClickAddShoppingCartButton:(id)sender {
-    
+    [self showGoodsStandardViewWithMode:TCGoodsStandardViewModeConfirm comfirmType:TCGoodsStandardConfirmTypeAddShoppingCart];
 }
 
 - (void)handleClickBuyButton:(id)sender {
-    
+    [self showGoodsStandardViewWithMode:TCGoodsStandardViewModeConfirm comfirmType:TCGoodsStandardConfirmTypeBuyNow];
+}
+
+- (void)showGoodsStandardViewWithMode:(TCGoodsStandardViewMode)mode comfirmType:(TCGoodsStandardConfirmType)confirmType {
+    TCGoodsStandardViewController *vc = [[TCGoodsStandardViewController alloc] initWithStandardViewMode:mode fromController:self];
+    vc.primaryKey = self.primaryKey;
+    vc.secondaryKey = self.secondaryKey;
+    vc.goodsStandard = self.goodsStandard;
+    vc.goodsDetail = self.goodsDetail;
+    vc.confirmType = confirmType;
+    vc.delegate = self;
+    [vc show:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -7,14 +7,10 @@
 //
 
 #import "TCGoodsStandardView.h"
-#import "TCGoodsStandardUnitsView.h"
 
 @interface TCGoodsStandardView ()
 
 @property (strong, nonatomic) TCGoodsStandard *goodsStandard;
-
-@property (weak, nonatomic) TCGoodsStandardUnitsView *primaryView;
-@property (weak, nonatomic) TCGoodsStandardUnitsView *secondaryView;
 
 @end
 
@@ -37,39 +33,32 @@
         make.edges.equalTo(self);
     }];
     
-    TCGoodsStandardDescriptions *descriptions = self.goodsStandard.descriptions;
-    if (descriptions.primary) {
-        TCGoodsStandardUnitsView *primaryView = [[TCGoodsStandardUnitsView alloc] initWithUnitsLevel:TCGoodsStandardUnitsLevelPrimary goodsStandard:self.goodsStandard];
+    if (!_goodsStandard) {
+        
+    } else {
+        TCGoodsStandardDescriptions *descriptions = _goodsStandard.descriptions;
+        
+        TCGoodsStandardUnitsView *primaryView = [[TCGoodsStandardUnitsView alloc] initWithUnitsLevel:TCGoodsStandardUnitsLevelPrimary goodsStandard:_goodsStandard];
         [containerView addSubview:primaryView];
         self.primaryView = primaryView;
         
         [primaryView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.left.right.equalTo(containerView);
         }];
-    }
-    
-    if (descriptions.secondary) {
-        TCGoodsStandardUnitsView *secondaryView = [[TCGoodsStandardUnitsView alloc] initWithUnitsLevel:TCGoodsStandardUnitsLevelSecondary goodsStandard:self.goodsStandard];
-        [containerView addSubview:secondaryView];
-        self.secondaryView = secondaryView;
         
-        [secondaryView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.primaryView.mas_bottom);
-            make.left.right.bottom.equalTo(containerView);
-        }];
-    } else {
-        [self.primaryView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(containerView);
-        }];
-    }
-}
-
-- (void)reloadStandarDataWithCurrentStandardKey:(NSString *)currentStandardKey {
-    if (self.primaryView) {
-        [self.primaryView reloadDataWithCurrentStandardKey:currentStandardKey];
-        
-        if (self.secondaryView) {
-            [self.secondaryView reloadDataWithCurrentStandardKey:currentStandardKey];
+        if (descriptions.secondary) {
+            TCGoodsStandardUnitsView *secondaryView = [[TCGoodsStandardUnitsView alloc] initWithUnitsLevel:TCGoodsStandardUnitsLevelSecondary goodsStandard:_goodsStandard];
+            [containerView addSubview:secondaryView];
+            self.secondaryView = secondaryView;
+            
+            [secondaryView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(primaryView.mas_bottom);
+                make.left.right.bottom.equalTo(containerView);
+            }];
+        } else {
+            [primaryView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(containerView);
+            }];
         }
     }
 }

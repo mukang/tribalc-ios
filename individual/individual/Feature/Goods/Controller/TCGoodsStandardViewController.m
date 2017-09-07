@@ -12,9 +12,9 @@
 #import "TCGoodsStandardView.h"
 
 static CGFloat const subviewHeight = 446;
-static CGFloat const duration = 0.25;
+static CGFloat const duration = 0.1;
 
-@interface TCGoodsStandardViewController ()
+@interface TCGoodsStandardViewController () <TCGoodsStandardUnitsViewDelegate>
 
 /** 显示的时候是否有动画 */
 @property (nonatomic) BOOL showAnimated;
@@ -22,8 +22,6 @@ static CGFloat const duration = 0.25;
 @property (weak, nonatomic) UIView *containerView;
 @property (weak, nonatomic) TCGoodsStandardHeaderView *standardHeaderView;
 @property (weak, nonatomic) TCGoodsStandardView *standardView;
-
-@property (strong, nonatomic) NSDate *startDate;
 
 @end
 
@@ -57,16 +55,11 @@ static CGFloat const duration = 0.25;
     
     self.view.backgroundColor = TCARGBColor(0, 0, 0, 0);
     
-    self.startDate = [NSDate date];
     [self setupSubviews];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    
-    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:self.startDate];
-    TCLog(@"---> %f", timeInterval * 1000);
     
     if (self.showAnimated) {
         [UIView animateWithDuration:duration animations:^{
@@ -127,12 +120,18 @@ static CGFloat const duration = 0.25;
     self.containerView = containerView;
     
     TCGoodsStandardHeaderView *standardHeaderView = [[TCGoodsStandardHeaderView alloc] init];
-    standardHeaderView.goodsDetail = self.goodsDetail;
+    [standardHeaderView.closeButton addTarget:self action:@selector(handleClickCloseButton:) forControlEvents:UIControlEventTouchUpInside];
     [containerView addSubview:standardHeaderView];
     self.standardHeaderView = standardHeaderView;
+    [self refreshStandardHeaderView];
     
     TCGoodsStandardView *standardView = [[TCGoodsStandardView alloc] initWithGoodsStandard:self.goodsStandard];
-    [standardView reloadStandarDataWithCurrentStandardKey:self.currentStandardKey];
+    standardView.primaryView.currentKey = self.primaryKey;
+    standardView.secondaryView.currentKey = self.secondaryKey;
+    [standardView.primaryView reloadStandardDataWithAnotherKey:self.secondaryKey];
+    [standardView.secondaryView reloadStandardDataWithAnotherKey:self.primaryKey];
+    standardView.primaryView.delegate = self;
+    standardView.secondaryView.delegate = self;
     [containerView addSubview:standardView];
     self.standardView = standardView;
     
@@ -144,6 +143,51 @@ static CGFloat const duration = 0.25;
         make.top.equalTo(standardHeaderView.mas_bottom);
         make.left.right.bottom.equalTo(containerView);
     }];
+}
+
+- (void)refreshStandardHeaderView {
+    self.standardHeaderView.goodsDetail = self.goodsDetail;
+    NSString *standardStr = nil;
+    if (self.primaryKey) {
+        if (self.secondaryKey) {
+            standardStr = [NSString stringWithFormat:@"%@ %@", self.primaryKey, self.secondaryKey];
+        } else {
+            standardStr = self.primaryKey;
+        }
+    }
+    self.standardHeaderView.standardStr = standardStr;
+}
+
+#pragma mark - TCGoodsStandardUnitsViewDelegate
+
+- (void)goodsStandardUnitsView:(TCGoodsStandardUnitsView *)view didSelectUnitWithKey:(NSString *)key {
+    NSString *standardKey = nil;
+    if (view.unitsLevel == TCGoodsStandardUnitsLevelPrimary) {
+        self.primaryKey = key;
+        if (self.standardView.secondaryView) {
+            standardKey = [NSString stringWithFormat:@"%@^%@", key, self.secondaryKey];
+            [self.standardView.secondaryView reloadStandardDataWithAnotherKey:key];
+        } else {
+            standardKey = key;
+        }
+    } else {
+        self.secondaryKey = key;
+        standardKey = [NSString stringWithFormat:@"%@^%@", self.primaryKey, key];
+        [self.standardView.primaryView reloadStandardDataWithAnotherKey:key];
+    }
+    self.goodsDetail = self.goodsStandard.goodsIndexes[standardKey];
+    
+    [self refreshStandardHeaderView];
+    
+    if ([self.delegate respondsToSelector:@selector(standardKeyDidChangeInGoodsStandardViewController:)]) {
+        [self.delegate standardKeyDidChangeInGoodsStandardViewController:self];
+    }
+}
+
+#pragma mark - Actions
+
+- (void)handleClickCloseButton:(id)sender {
+    [self dismiss:YES completion:nil];
 }
 
 

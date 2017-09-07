@@ -15,6 +15,8 @@
 @property (strong, nonatomic) TCGoodsStandard *goodsStandard;
 @property (strong, nonatomic) NSMutableArray *views;
 
+@property (weak, nonatomic) TCGoodsStandardUnitView *selectedUnitView;
+
 @end
 
 @implementation TCGoodsStandardUnitsView
@@ -62,6 +64,9 @@
         [self addSubview:unitView];
         [self.views addObject:unitView];
         
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapStandardUnitView:)];
+        [unitView addGestureRecognizer:tap];
+        
         if (lastView == nil) {
             tempMaxX = padding + unitView.realWidth;
             [unitView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -76,7 +81,7 @@
                     make.left.equalTo(lastView.mas_right).offset(marginH);
                 }];
             } else {
-                tempMaxX = padding - marginH;
+                tempMaxX = padding + unitView.realWidth;
                 [unitView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(lastView.mas_bottom).offset(marginV);
                     make.left.equalTo(self).offset(padding);
@@ -92,27 +97,44 @@
     }];
 }
 
-- (void)reloadDataWithCurrentStandardKey:(NSString *)currentStandardKey {
-    NSArray *tempArray = [currentStandardKey componentsSeparatedByString:@"^"];
+- (void)reloadStandardDataWithAnotherKey:(NSString *)anotherKey {
     for (int i=0; i<self.views.count; i++) {
         TCGoodsStandardUnitView *unitView = self.views[i];
         NSString *key = nil;
-        if (self.unitsLevel == TCGoodsStandardUnitsLevelPrimary) {
-            key = [NSString stringWithFormat:@"%@^%@", unitView.title, [tempArray lastObject]];
+        if (anotherKey) {
+            if (self.unitsLevel == TCGoodsStandardUnitsLevelPrimary) {
+                key = [NSString stringWithFormat:@"%@^%@", unitView.title, anotherKey];
+            } else {
+                key = [NSString stringWithFormat:@"%@^%@", anotherKey, unitView.title];
+            }
         } else {
-            key = [NSString stringWithFormat:@"%@^%@", [tempArray firstObject], unitView.title];
+            key = unitView.title;
         }
         
         TCGoodsDetail *goodsDetail = [self.goodsStandard.goodsIndexes objectForKey:key];
         NSInteger repertory = goodsDetail.repertory;
         if (repertory) {
-            if ([key isEqualToString:currentStandardKey]) {
+            if ([unitView.title isEqualToString:self.currentKey]) {
                 unitView.type = TCGoodsStandardUnitViewTypeSelected;
+                self.selectedUnitView = unitView;
             } else {
                 unitView.type = TCGoodsStandardUnitViewTypeNormal;
             }
         } else {
             unitView.type = TCGoodsStandardUnitViewTypeDisabled;
+        }
+    }
+}
+
+- (void)handleTapStandardUnitView:(UITapGestureRecognizer *)gesture {
+    TCGoodsStandardUnitView *unitView = (TCGoodsStandardUnitView *)gesture.view;
+    if (unitView.type == TCGoodsStandardUnitViewTypeNormal) {
+        self.selectedUnitView.type = TCGoodsStandardUnitViewTypeNormal;
+        unitView.type = TCGoodsStandardUnitViewTypeSelected;
+        self.selectedUnitView = unitView;
+        self.currentKey = unitView.title;
+        if ([self.delegate respondsToSelector:@selector(goodsStandardUnitsView:didSelectUnitWithKey:)]) {
+            [self.delegate goodsStandardUnitsView:self didSelectUnitWithKey:unitView.title];
         }
     }
 }

@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "TCGoodsStandard.h"
+#import "TCGoodsStandardUnitsView.h"
 
 @interface TCGoodsStandardView : UIScrollView
 
-- (instancetype)initWithGoodsStandard:(TCGoodsStandard *)goodsStandard;
+@property (weak, nonatomic) TCGoodsStandardUnitsView *primaryView;
+@property (weak, nonatomic) TCGoodsStandardUnitsView *secondaryView;
 
-- (void)reloadStandarDataWithCurrentStandardKey:(NSString *)currentStandardKey;
+- (instancetype)initWithGoodsStandard:(TCGoodsStandard *)goodsStandard;
 
 @end

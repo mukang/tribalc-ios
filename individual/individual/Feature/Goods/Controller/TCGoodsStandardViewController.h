@@ -20,15 +20,22 @@ typedef NS_ENUM(NSInteger, TCGoodsStandardConfirmType) {
     TCGoodsStandardConfirmTypeBuyNow               // 点击确定执行立即购买操作
 };
 
+@protocol TCGoodsStandardViewControllerDelegate;
 @interface TCGoodsStandardViewController : TCBaseViewController
 
-@property (copy, nonatomic) NSString *currentStandardKey;
+/** 一级规格 */
+@property (copy, nonatomic) NSString *primaryKey;
+/** 二级规格 */
+@property (copy, nonatomic) NSString *secondaryKey;
+
 @property (strong, nonatomic) TCGoodsDetail *goodsDetail;
 @property (strong, nonatomic) TCGoodsStandard *goodsStandard;
 /** 规格页面风格（分为“确定”和“选择加入购物车或立即购买”） */
 @property (nonatomic, readonly) TCGoodsStandardViewMode standardViewMode;
 /** 点击确认按钮后需执行的操作（standardViewMode为TCGoodsStandardViewModeConfirm时有效） */
-@property (nonatomic) TCGoodsStandardConfirmType comfirmType;
+@property (nonatomic) TCGoodsStandardConfirmType confirmType;
+
+@property (weak, nonatomic) id<TCGoodsStandardViewControllerDelegate> delegate;
 
 /**
  指定初始化方法
@@ -53,5 +60,13 @@ typedef NS_ENUM(NSInteger, TCGoodsStandardConfirmType) {
  @param completion 完成退出后的回调
  */
 - (void)dismiss:(BOOL)animated completion:(void (^)())completion;
+
+@end
+
+
+@protocol TCGoodsStandardViewControllerDelegate <NSObject>
+
+@optional
+- (void)standardKeyDidChangeInGoodsStandardViewController:(TCGoodsStandardViewController *)controller;
 
 @end
