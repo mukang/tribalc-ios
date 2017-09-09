@@ -22,7 +22,6 @@
     UIScrollView *mScrollView;
     NSMutableArray *orderDetailList;
     NSMutableArray *supplementFieldArr;
-//    TCBalancePayView *payView;
     TCOrderAddressView *userAddressView;
     CGFloat cursorHeight;
     
@@ -36,9 +35,10 @@
     __weak TCPlaceOrderViewController *weakSelf;
 }
 
-- (instancetype)initWithListShoppingCartArr:(NSArray *)listShoppingCartArr {
-    self = [super init];
+- (instancetype)initWithListShoppingCartArr:(NSArray *)listShoppingCartArr type:(TCPlaceOrderType)type {
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
+        _type = type;
         orderDetailList = [[NSMutableArray alloc] init];
         for (int i = 0; i < listShoppingCartArr.count; i++) {
             TCListShoppingCart *listShoppingCart = listShoppingCartArr[i];
@@ -54,6 +54,7 @@
     
     weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    
     
     [self initNavigationBar];
     
@@ -471,19 +472,23 @@
             TCOrderItem *orderItem = order.itemList[j];
             UITextField *textField = supplementFieldArr[i];
             NSString *note = textField.text;
+            
+            TCOrderCreateItem *createItem = [[TCOrderCreateItem alloc] init];
+            createItem.amount = orderItem.amount;
+            createItem.goodsId = orderItem.goods.ID;
+            createItem.shoppingCartGoodsId = orderItem.ID;
             if ([note isKindOfClass:[NSString class]] && note.length > 0) {
-                [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID, @"shoppingCartGoodsId":orderItem.ID, @"note" : note}];
-            }else {
-                [itemList addObject:@{ @"amount":[NSNumber numberWithInteger:orderItem.amount], @"goodsId":orderItem.goods.ID, @"shoppingCartGoodsId":orderItem.ID}];
+                createItem.note = note;
             }
+            
+            [itemList addObject:createItem];
         }
     }
     NSString *addressId = userAddressView.shippingAddress.ID;
-    [[TCBuluoApi api] createOrderWithItemList:itemList AddressId:addressId result:^(NSArray *orderList, NSError *error) {
+    BOOL isDirect = (self.type == TCPlaceOrderTypeBuyDirect) ? YES : NO;
+    
+    [[TCBuluoApi api] createOrderListWithItemList:itemList addressID:addressId isDirect:isDirect result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
-//            payView = [[TCBalancePayView alloc] initWithPayPrice:[weakSelf getAllOrderTotalPrice] AndPayAction:@selector(touchPayMoneyBtn:) AndCloseAction:@selector(touchClosePayMoneyBtn:) AndTarget:self ] ;
-//            payView.orderArr = orderList;
-//            [payView showPayView];
             [weakSelf handleShowPaymentViewWithOrderList:orderList];
             [MBProgressHUD hideHUD:YES];
         } else {

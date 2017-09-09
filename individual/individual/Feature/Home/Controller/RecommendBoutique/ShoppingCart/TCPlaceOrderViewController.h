@@ -10,12 +10,17 @@
 #import "UIImageView+WebCache.h"
 #import <TCCommonLibs/TCBaseViewController.h>
 
+typedef NS_ENUM(NSInteger, TCPlaceOrderType) {
+    TCPlaceOrderTypeShoppingCart = 0,
+    TCPlaceOrderTypeBuyDirect
+};
+
 @interface TCPlaceOrderViewController : TCBaseViewController <UITableViewDelegate, UITableViewDataSource, SDWebImageManagerDelegate, UITextFieldDelegate>
 
+@property (nonatomic, readonly) TCPlaceOrderType type;
 @property (weak, nonatomic) UIViewController *fromController;
 
-- (instancetype)initWithListShoppingCartArr:(NSArray *)listShoppingCart;
-
+- (instancetype)initWithListShoppingCartArr:(NSArray *)listShoppingCartArr type:(TCPlaceOrderType)type;
 
 
 @end

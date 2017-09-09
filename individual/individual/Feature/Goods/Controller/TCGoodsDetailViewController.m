@@ -8,7 +8,8 @@
 
 #import "TCGoodsDetailViewController.h"
 #import "TCGoodsStandardViewController.h"
-#import "TCLoginViewController.h"
+#import "TCPlaceOrderViewController.h"
+#import "TCShoppingCartViewController.h"
 
 #import "TCGoodsPicturesView.h"
 #import "TCGoodsTitleViewCell.h"
@@ -302,10 +303,36 @@
     [self refreshData];
 }
 
+- (void)buyNowInGoodsStandardViewController:(TCGoodsStandardViewController *)controller {
+    TCGoods *goods = [[TCGoods alloc] init];
+    goods.ID = self.goodsDetail.ID;
+    goods.storeId = self.goodsDetail.storeId;
+    goods.name = self.goodsDetail.name;
+    goods.brand = self.goodsDetail.brand;
+    goods.mainPicture = self.goodsDetail.mainPicture;
+    goods.salePrice = self.goodsDetail.salePrice;
+    goods.expressFee = self.goodsDetail.expressFee;
+    
+    TCCartItem *cartItem = [[TCCartItem alloc] init];
+    cartItem.amount = controller.quantity;
+    cartItem.standardId = self.goodsDetail.standardId;
+    cartItem.repertory = self.goodsDetail.repertory;
+    cartItem.goods = goods;
+    
+    TCListShoppingCart *shoppingCart = [[TCListShoppingCart alloc] init];
+    shoppingCart.goodsList = @[cartItem];
+    shoppingCart.store = self.goodsDetail.tMarkStore;
+    
+    TCPlaceOrderViewController *vc = [[TCPlaceOrderViewController alloc] initWithListShoppingCartArr:@[shoppingCart] type:TCPlaceOrderTypeBuyDirect];
+    vc.fromController = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - Actions
 
 - (void)handleClickShoppingCartButton:(id)sender {
-    
+    TCShoppingCartViewController *vc = [[TCShoppingCartViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleClickAddShoppingCartButton:(id)sender {

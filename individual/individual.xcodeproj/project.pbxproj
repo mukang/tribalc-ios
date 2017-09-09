@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		091AABA41DE7CE1B003A4192 /* TCGoodTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 091AABA31DE7CE1B003A4192 /* TCGoodTitleView.m */; };
 		091BC6E21DD0968300EB5FBD /* TCGetNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */; };
 		091D30461DFFC02E00112417 /* TCCartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 091D30451DFFC02E00112417 /* TCCartItem.m */; };
 		09222E0E1DEE72550064C0DF /* TCServiceDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 09222E0D1DEE72550064C0DF /* TCServiceDetail.m */; };
@@ -24,34 +23,22 @@
 		0928B3351DF8F7090085A182 /* TCReservationDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0928B3341DF8F7090085A182 /* TCReservationDetail.m */; };
 		0928B3381DF921AC0085A182 /* TCShoppingCartWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0928B3371DF921AC0085A182 /* TCShoppingCartWrapper.m */; };
 		0928B33B1DF921B80085A182 /* TCListShoppingCart.m in Sources */ = {isa = PBXBuildFile; fileRef = 0928B33A1DF921B80085A182 /* TCListShoppingCart.m */; };
-		0928B3411DF96F930085A182 /* TCSelectStandardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0928B3401DF96F930085A182 /* TCSelectStandardView.m */; };
 		0929D2841E0A24F00099B1BD /* TCRecommendFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0929D2811E0A24F00099B1BD /* TCRecommendFooter.m */; };
 		0929D2851E0A24F00099B1BD /* TCRecommendHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0929D2831E0A24F00099B1BD /* TCRecommendHeader.m */; };
-		0929D2911E0A25820099B1BD /* TCGoodSelectTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0929D2881E0A25820099B1BD /* TCGoodSelectTitleView.m */; };
-		0929D2921E0A25820099B1BD /* TCGoodSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0929D28A1E0A25820099B1BD /* TCGoodSelectView.m */; };
-		0929D2941E0A25820099B1BD /* TCSelectPrimaryBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 0929D28E1E0A25820099B1BD /* TCSelectPrimaryBtn.m */; };
-		0929D2951E0A25820099B1BD /* TCSelectSecondaryBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 0929D2901E0A25820099B1BD /* TCSelectSecondaryBtn.m */; };
-		0929D2981E0A262A0099B1BD /* TCSelectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0929D2971E0A262A0099B1BD /* TCSelectButton.m */; };
 		092B408B1DD5624300CEDAC6 /* TCComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 092B408A1DD5624300CEDAC6 /* TCComponent.m */; };
-		092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C67E21DE6E245008873E7 /* TCGoodStandards.m */; };
 		092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C696F1DEFD33500FE2FD8 /* TCReserveRadioBtnView.m */; };
 		092C69731DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C69721DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m */; };
 		092C697D1DF0378600FE2FD8 /* TCUserReserveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C697C1DF0378600FE2FD8 /* TCUserReserveViewController.m */; };
 		092C69801DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092C697F1DF03D9500FE2FD8 /* TCUserReserveTableViewCell.m */; };
 		092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD3FE1DD99F9F0073A9C1 /* TCShoppingCartViewController.m */; };
 		092CD4071DD99F9F0073A9C1 /* TCRecommendGoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4001DD99F9F0073A9C1 /* TCRecommendGoodCell.m */; };
-		092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4021DD99F9F0073A9C1 /* TCRecommendInfoViewController.m */; };
 		092CD4091DD99F9F0073A9C1 /* TCRecommendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4041DD99F9F0073A9C1 /* TCRecommendListViewController.m */; };
-		092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */; };
-		093048BC1DE57E56000FDCBF /* TCGoodDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 093048BB1DE57E56000FDCBF /* TCGoodDetail.m */; };
 		0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0955A4A01DF83A7C0019A57D /* TCReservationWrapper.m */; };
 		0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0955A4A31DF83AB60019A57D /* TCReservation.m */; };
 		096254351DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 096254341DF3B26E00BA0AA0 /* TCUserReserveDetailViewController.m */; };
 		0978DB141DE96E40006B6437 /* TCOrderAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0978DB131DE96E40006B6437 /* TCOrderAddressView.m */; };
 		098435D91DFD118200B8CA63 /* TCPlaceOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435D81DFD118200B8CA63 /* TCPlaceOrderViewController.m */; };
 		098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */; };
-		098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098FDD5C1DFE7F0C00205663 /* TCBalancePayView.m */; };
-		0990F19A1E07CA11002692F6 /* TCGoodShopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0990F1991E07CA11002692F6 /* TCGoodShopView.m */; };
 		09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */; };
 		09AE0F791DED462700F307D8 /* TCComputeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F781DED462700F307D8 /* TCComputeView.m */; };
 		550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923011F039DCC00B007C8 /* TCApartmentViewController.m */; };
@@ -420,6 +407,8 @@
 		7ACA4FE01DD59EF5006634E8 /* TCUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACA4FDF1DD59EF5006634E8 /* TCUserTests.m */; };
 		7ACA4FE31DD5B8C2006634E8 /* TCUserPhoneInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACA4FE21DD5B8C2006634E8 /* TCUserPhoneInfo.m */; };
 		7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */; };
+		7AD326D61F62360900EBE7BF /* TCGoodsQuantityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD326D51F62360900EBE7BF /* TCGoodsQuantityView.m */; };
+		7AD326DC1F6294FF00EBE7BF /* TCOrderCreateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD326DB1F6294FF00EBE7BF /* TCOrderCreateItem.m */; };
 		7AD36DB71EDEAC3E00AB95FA /* TCForceUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
 		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
@@ -494,8 +483,6 @@
 
 /* Begin PBXFileReference section */
 		00B709DAE0FFB5E148A931FB /* Pods-individual.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-individual.debug.xcconfig"; path = "Pods/Target Support Files/Pods-individual/Pods-individual.debug.xcconfig"; sourceTree = "<group>"; };
-		091AABA21DE7CE1B003A4192 /* TCGoodTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodTitleView.h; sourceTree = "<group>"; };
-		091AABA31DE7CE1B003A4192 /* TCGoodTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodTitleView.m; sourceTree = "<group>"; };
 		091BC6E01DD0968300EB5FBD /* TCGetNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetNavigationItem.h; sourceTree = "<group>"; };
 		091BC6E11DD0968300EB5FBD /* TCGetNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetNavigationItem.m; sourceTree = "<group>"; };
 		091D30441DFFC02E00112417 /* TCCartItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCartItem.h; sourceTree = "<group>"; };
@@ -528,26 +515,12 @@
 		0928B3371DF921AC0085A182 /* TCShoppingCartWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShoppingCartWrapper.m; sourceTree = "<group>"; };
 		0928B3391DF921B70085A182 /* TCListShoppingCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCListShoppingCart.h; sourceTree = "<group>"; };
 		0928B33A1DF921B80085A182 /* TCListShoppingCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCListShoppingCart.m; sourceTree = "<group>"; };
-		0928B33F1DF96F930085A182 /* TCSelectStandardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectStandardView.h; sourceTree = "<group>"; };
-		0928B3401DF96F930085A182 /* TCSelectStandardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectStandardView.m; sourceTree = "<group>"; };
 		0929D2801E0A24F00099B1BD /* TCRecommendFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendFooter.h; sourceTree = "<group>"; };
 		0929D2811E0A24F00099B1BD /* TCRecommendFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendFooter.m; sourceTree = "<group>"; };
 		0929D2821E0A24F00099B1BD /* TCRecommendHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendHeader.h; sourceTree = "<group>"; };
 		0929D2831E0A24F00099B1BD /* TCRecommendHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendHeader.m; sourceTree = "<group>"; };
-		0929D2871E0A25820099B1BD /* TCGoodSelectTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodSelectTitleView.h; sourceTree = "<group>"; };
-		0929D2881E0A25820099B1BD /* TCGoodSelectTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodSelectTitleView.m; sourceTree = "<group>"; };
-		0929D2891E0A25820099B1BD /* TCGoodSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodSelectView.h; sourceTree = "<group>"; };
-		0929D28A1E0A25820099B1BD /* TCGoodSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodSelectView.m; sourceTree = "<group>"; };
-		0929D28D1E0A25820099B1BD /* TCSelectPrimaryBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectPrimaryBtn.h; sourceTree = "<group>"; };
-		0929D28E1E0A25820099B1BD /* TCSelectPrimaryBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectPrimaryBtn.m; sourceTree = "<group>"; };
-		0929D28F1E0A25820099B1BD /* TCSelectSecondaryBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectSecondaryBtn.h; sourceTree = "<group>"; };
-		0929D2901E0A25820099B1BD /* TCSelectSecondaryBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectSecondaryBtn.m; sourceTree = "<group>"; };
-		0929D2961E0A262A0099B1BD /* TCSelectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSelectButton.h; sourceTree = "<group>"; };
-		0929D2971E0A262A0099B1BD /* TCSelectButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSelectButton.m; sourceTree = "<group>"; };
 		092B40891DD5624300CEDAC6 /* TCComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCComponent.h; sourceTree = "<group>"; };
 		092B408A1DD5624300CEDAC6 /* TCComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCComponent.m; sourceTree = "<group>"; };
-		092C67E11DE6E245008873E7 /* TCGoodStandards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodStandards.h; sourceTree = "<group>"; };
-		092C67E21DE6E245008873E7 /* TCGoodStandards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodStandards.m; sourceTree = "<group>"; };
 		092C696E1DEFD33500FE2FD8 /* TCReserveRadioBtnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReserveRadioBtnView.h; sourceTree = "<group>"; };
 		092C696F1DEFD33500FE2FD8 /* TCReserveRadioBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCReserveRadioBtnView.m; sourceTree = "<group>"; };
 		092C69711DF002C100FE2FD8 /* TCReserveUserBaseInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReserveUserBaseInfoView.h; sourceTree = "<group>"; };
@@ -560,14 +533,8 @@
 		092CD3FE1DD99F9F0073A9C1 /* TCShoppingCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShoppingCartViewController.m; sourceTree = "<group>"; };
 		092CD3FF1DD99F9F0073A9C1 /* TCRecommendGoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendGoodCell.h; sourceTree = "<group>"; };
 		092CD4001DD99F9F0073A9C1 /* TCRecommendGoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendGoodCell.m; sourceTree = "<group>"; };
-		092CD4011DD99F9F0073A9C1 /* TCRecommendInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendInfoViewController.h; sourceTree = "<group>"; };
-		092CD4021DD99F9F0073A9C1 /* TCRecommendInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendInfoViewController.m; sourceTree = "<group>"; };
 		092CD4031DD99F9F0073A9C1 /* TCRecommendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRecommendListViewController.h; sourceTree = "<group>"; };
 		092CD4041DD99F9F0073A9C1 /* TCRecommendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRecommendListViewController.m; sourceTree = "<group>"; };
-		092CD4131DD9A07C0073A9C1 /* TCImgPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCImgPageControl.h; sourceTree = "<group>"; };
-		092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCImgPageControl.m; sourceTree = "<group>"; };
-		093048BA1DE57E56000FDCBF /* TCGoodDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodDetail.h; sourceTree = "<group>"; };
-		093048BB1DE57E56000FDCBF /* TCGoodDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodDetail.m; sourceTree = "<group>"; };
 		0955A49F1DF83A7C0019A57D /* TCReservationWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReservationWrapper.h; sourceTree = "<group>"; };
 		0955A4A01DF83A7C0019A57D /* TCReservationWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCReservationWrapper.m; sourceTree = "<group>"; };
 		0955A4A21DF83AB60019A57D /* TCReservation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCReservation.h; sourceTree = "<group>"; };
@@ -580,10 +547,6 @@
 		098435D81DFD118200B8CA63 /* TCPlaceOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPlaceOrderViewController.m; sourceTree = "<group>"; };
 		098435DD1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCOrderDetailAlertView.h; sourceTree = "<group>"; };
 		098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOrderDetailAlertView.m; sourceTree = "<group>"; };
-		098FDD5B1DFE7F0C00205663 /* TCBalancePayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBalancePayView.h; sourceTree = "<group>"; };
-		098FDD5C1DFE7F0C00205663 /* TCBalancePayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBalancePayView.m; sourceTree = "<group>"; };
-		0990F1981E07CA11002692F6 /* TCGoodShopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodShopView.h; sourceTree = "<group>"; };
-		0990F1991E07CA11002692F6 /* TCGoodShopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodShopView.m; sourceTree = "<group>"; };
 		09AE0F701DED2A7E00F307D8 /* TCServiceWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCServiceWrapper.h; sourceTree = "<group>"; };
 		09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCServiceWrapper.m; sourceTree = "<group>"; };
 		09AE0F771DED462700F307D8 /* TCComputeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCComputeView.h; sourceTree = "<group>"; };
@@ -1252,6 +1215,10 @@
 		7ACE57A61DC73BD9004B383A /* TCVicinityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCVicinityViewController.h; sourceTree = "<group>"; };
 		7ACE57A71DC73BD9004B383A /* TCVicinityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCVicinityViewController.m; sourceTree = "<group>"; };
 		7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCVicinityViewController.xib; sourceTree = "<group>"; };
+		7AD326D41F62360900EBE7BF /* TCGoodsQuantityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsQuantityView.h; sourceTree = "<group>"; };
+		7AD326D51F62360900EBE7BF /* TCGoodsQuantityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsQuantityView.m; sourceTree = "<group>"; };
+		7AD326DA1F6294FF00EBE7BF /* TCOrderCreateItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCOrderCreateItem.h; sourceTree = "<group>"; };
+		7AD326DB1F6294FF00EBE7BF /* TCOrderCreateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOrderCreateItem.m; sourceTree = "<group>"; };
 		7AD36DB51EDEAC3E00AB95FA /* TCForceUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCForceUpdateView.h; sourceTree = "<group>"; };
 		7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCForceUpdateView.m; sourceTree = "<group>"; };
 		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
@@ -1499,6 +1466,8 @@
 				09222E7B1DEEC0D60064C0DF /* TCOrder.m */,
 				09222E7D1DEEC2C70064C0DF /* TCOrderItem.h */,
 				09222E7E1DEEC2C70064C0DF /* TCOrderItem.m */,
+				7AD326DA1F6294FF00EBE7BF /* TCOrderCreateItem.h */,
+				7AD326DB1F6294FF00EBE7BF /* TCOrderCreateItem.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1514,31 +1483,12 @@
 			path = Refresh;
 			sourceTree = "<group>";
 		};
-		0929D2861E0A25820099B1BD /* SelectStandard */ = {
-			isa = PBXGroup;
-			children = (
-				0929D2871E0A25820099B1BD /* TCGoodSelectTitleView.h */,
-				0929D2881E0A25820099B1BD /* TCGoodSelectTitleView.m */,
-				0929D2891E0A25820099B1BD /* TCGoodSelectView.h */,
-				0929D28A1E0A25820099B1BD /* TCGoodSelectView.m */,
-				0929D28D1E0A25820099B1BD /* TCSelectPrimaryBtn.h */,
-				0929D28E1E0A25820099B1BD /* TCSelectPrimaryBtn.m */,
-				0929D28F1E0A25820099B1BD /* TCSelectSecondaryBtn.h */,
-				0929D2901E0A25820099B1BD /* TCSelectSecondaryBtn.m */,
-				0929D2961E0A262A0099B1BD /* TCSelectButton.h */,
-				0929D2971E0A262A0099B1BD /* TCSelectButton.m */,
-			);
-			path = SelectStandard;
-			sourceTree = "<group>";
-		};
 		092CD3F91DD99F9F0073A9C1 /* RecommendBoutique */ = {
 			isa = PBXGroup;
 			children = (
 				092CD3FA1DD99F9F0073A9C1 /* ShoppingCart */,
 				092CD3FF1DD99F9F0073A9C1 /* TCRecommendGoodCell.h */,
 				092CD4001DD99F9F0073A9C1 /* TCRecommendGoodCell.m */,
-				092CD4011DD99F9F0073A9C1 /* TCRecommendInfoViewController.h */,
-				092CD4021DD99F9F0073A9C1 /* TCRecommendInfoViewController.m */,
 				092CD4031DD99F9F0073A9C1 /* TCRecommendListViewController.h */,
 				092CD4041DD99F9F0073A9C1 /* TCRecommendListViewController.m */,
 			);
@@ -1583,14 +1533,7 @@
 		092CD4121DD9A07C0073A9C1 /* RecommendBoutique */ = {
 			isa = PBXGroup;
 			children = (
-				0929D2861E0A25820099B1BD /* SelectStandard */,
 				0929D27F1E0A24F00099B1BD /* Refresh */,
-				092CD4131DD9A07C0073A9C1 /* TCImgPageControl.h */,
-				092CD4141DD9A07C0073A9C1 /* TCImgPageControl.m */,
-				091AABA21DE7CE1B003A4192 /* TCGoodTitleView.h */,
-				091AABA31DE7CE1B003A4192 /* TCGoodTitleView.m */,
-				0990F1981E07CA11002692F6 /* TCGoodShopView.h */,
-				0990F1991E07CA11002692F6 /* TCGoodShopView.m */,
 			);
 			path = RecommendBoutique;
 			sourceTree = "<group>";
@@ -1687,10 +1630,6 @@
 			children = (
 				09AE0F771DED462700F307D8 /* TCComputeView.h */,
 				09AE0F781DED462700F307D8 /* TCComputeView.m */,
-				0928B33F1DF96F930085A182 /* TCSelectStandardView.h */,
-				0928B3401DF96F930085A182 /* TCSelectStandardView.m */,
-				098FDD5B1DFE7F0C00205663 /* TCBalancePayView.h */,
-				098FDD5C1DFE7F0C00205663 /* TCBalancePayView.m */,
 				0926267E1E0BA3F300F5A18C /* TCShoppingCartBottom.h */,
 				0926267F1E0BA3F300F5A18C /* TCShoppingCartBottom.m */,
 				092626811E0BA44000F5A18C /* TCShoppingCartSelectButton.h */,
@@ -2006,10 +1945,6 @@
 				7A7403C41F5F9749007FCB3D /* TCGoodsStandardDescriptions.m */,
 				7A7403C91F5F9BEB007FCB3D /* TCGoodsStandardUnits.h */,
 				7A7403CA1F5F9BEB007FCB3D /* TCGoodsStandardUnits.m */,
-				093048BA1DE57E56000FDCBF /* TCGoodDetail.h */,
-				093048BB1DE57E56000FDCBF /* TCGoodDetail.m */,
-				092C67E11DE6E245008873E7 /* TCGoodStandards.h */,
-				092C67E21DE6E245008873E7 /* TCGoodStandards.m */,
 			);
 			path = Goods;
 			sourceTree = "<group>";
@@ -2344,6 +2279,8 @@
 				7A7403D01F5FA193007FCB3D /* TCGoodsStandardUnitsView.m */,
 				7A2B438F1F5FEED80077C3F0 /* TCGoodsStandardView.h */,
 				7A2B43901F5FEED80077C3F0 /* TCGoodsStandardView.m */,
+				7AD326D41F62360900EBE7BF /* TCGoodsQuantityView.h */,
+				7AD326D51F62360900EBE7BF /* TCGoodsQuantityView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3406,7 +3343,6 @@
 				7A5899131F0657D20013E07A /* TCApartmentRentPaySuccessViewController.m in Sources */,
 				7A13EEB21DF814AD00377869 /* TCCommunityListViewController.m in Sources */,
 				7AEB4CCC1E03936300F83A7C /* TCShippingAddressViewController.m in Sources */,
-				091AABA41DE7CE1B003A4192 /* TCGoodTitleView.m in Sources */,
 				7AA643BF1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m in Sources */,
 				7A243F291F25EC5900192E22 /* TCWalletBalanceView.m in Sources */,
 				092626801E0BA3F300F5A18C /* TCShoppingCartBottom.m in Sources */,
@@ -3492,8 +3428,8 @@
 				7A2CD74C1F04E2D800CEEF29 /* TCApartmentGuideWithholdView.m in Sources */,
 				7A7E94141DF55C31006A47CE /* TCRepairsDetailViewController.m in Sources */,
 				7A0DD8B51F25A0B800BA70A7 /* TCWalletFeaturesView.m in Sources */,
-				093048BC1DE57E56000FDCBF /* TCGoodDetail.m in Sources */,
 				7ABA7E751F03A24500DCC2D0 /* TCApartmentPayTabView.m in Sources */,
+				7AD326D61F62360900EBE7BF /* TCGoodsQuantityView.m in Sources */,
 				7AA1177B1F4EE2EF00903445 /* TCMessageManagement.m in Sources */,
 				7AFEC4991E55CF6800B0E754 /* TCUserOrderTableViewCell.m in Sources */,
 				09222E0E1DEE72550064C0DF /* TCServiceDetail.m in Sources */,
@@ -3527,7 +3463,6 @@
 				7A22D9411ECEF9CF009A6A64 /* TCSigninRecordDay.m in Sources */,
 				7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */,
 				7A46B9201F332033001E33DD /* TCProfileViewController.m in Sources */,
-				0929D2911E0A25820099B1BD /* TCGoodSelectTitleView.m in Sources */,
 				7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */,
 				55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */,
 				7AEB4CF91E03955A00F83A7C /* TCBioEditNickViewCell.m in Sources */,
@@ -3547,7 +3482,6 @@
 				7A1A857C1E6800B200BB5EDB /* TCServiceLocationViewController.m in Sources */,
 				559E77D11F1CC64300CDE11D /* TCStoreCell.m in Sources */,
 				0955A4A11DF83A7C0019A57D /* TCReservationWrapper.m in Sources */,
-				092CD4251DD9A07C0073A9C1 /* TCImgPageControl.m in Sources */,
 				7AEB4CF11E03944500F83A7C /* TCCityPickerView.m in Sources */,
 				7AAB1A061ED574EF00EF5F69 /* TCWebViewController.m in Sources */,
 				55BB9EB61E7293B800B0FD94 /* TCLockOrVisitorSectionHeader.m in Sources */,
@@ -3556,7 +3490,6 @@
 				559D84571E0BD24900982697 /* NSObject+TCNomal.m in Sources */,
 				7A4A36651F59607F008D277C /* TCGoodsPicturesView.m in Sources */,
 				7AADCC741EE80154004AA1DA /* TCPaymentMethodViewCell.m in Sources */,
-				098FDD5D1DFE7F0C00205663 /* TCBalancePayView.m in Sources */,
 				7A5F877F1DE2EEB100E4130B /* TCWalletBill.m in Sources */,
 				7A0EA7341E00F0F700823505 /* TCCommunityListInCity.m in Sources */,
 				559E78191F20E23F00CDE11D /* TCMessageMiddleView.m in Sources */,
@@ -3589,7 +3522,6 @@
 				7A0E009B1E2DC1DE0028555D /* TCLaunchViewController.m in Sources */,
 				7AA643CB1F0B945000DD421F /* TCRentPlanItemsHeaderView.m in Sources */,
 				7A1F12901DEC0BDD00A9B58F /* TCCommunitiesViewController.m in Sources */,
-				0929D2951E0A25820099B1BD /* TCSelectSecondaryBtn.m in Sources */,
 				09222E791DEEC0920064C0DF /* TCOrderWrapper.m in Sources */,
 				7A455D641EBC913900A2F9ED /* TCWithdrawBankCardInfoView.m in Sources */,
 				550923051F03A67400B007C8 /* TCApartmentCell.m in Sources */,
@@ -3599,13 +3531,11 @@
 				7A7403B61F5E4283007FCB3D /* TCGoodsStandardSelectViewCell.m in Sources */,
 				7A925DC41F1DF31100D697DE /* TCHomeMessageWrapper.m in Sources */,
 				7A925DF91F2094C200D697DE /* TCStorePayPrivilegeViewCell.m in Sources */,
-				0928B3411DF96F930085A182 /* TCSelectStandardView.m in Sources */,
 				7A34AF581DDB0E7400217161 /* TCUserShippingAddress.m in Sources */,
 				0928B33B1DF921B80085A182 /* TCListShoppingCart.m in Sources */,
 				091D30461DFFC02E00112417 /* TCCartItem.m in Sources */,
 				7A925DFF1F20E78F00D697DE /* TCPrivilegeInstructionViewController.m in Sources */,
 				7A11F7181DE46894005F3EAB /* TCBankCard.m in Sources */,
-				0929D2981E0A262A0099B1BD /* TCSelectButton.m in Sources */,
 				7A46B92F1F332232001E33DD /* TCProfileHeaderView.m in Sources */,
 				5526A5CD1F05FA2900A8D410 /* TCModifyPwdViewController.m in Sources */,
 				55BB9EB31E728C7200B0FD94 /* TCVisitorLocksCell.m in Sources */,
@@ -3634,7 +3564,6 @@
 				7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */,
 				092C69731DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m in Sources */,
 				7AA117751F4EC1A800903445 /* TCBindPhoneViewController.m in Sources */,
-				0929D2941E0A25820099B1BD /* TCSelectPrimaryBtn.m in Sources */,
 				7A1A85531E66D64700BB5EDB /* TCServiceSelectItemView.m in Sources */,
 				7A13EEB71DF814BD00377869 /* TCCompanyListViewController.m in Sources */,
 				559E78181F20E23F00CDE11D /* TCHomeMessageCell.m in Sources */,
@@ -3664,7 +3593,7 @@
 				7A925DD81F1F3B9600D697DE /* TCStoreDetailViewController.m in Sources */,
 				7A27F9CF1EA8980C00B9BCFE /* TCRechargeMethodViewCell.m in Sources */,
 				7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */,
-				092CD4081DD99F9F0073A9C1 /* TCRecommendInfoViewController.m in Sources */,
+				7AD326DC1F6294FF00EBE7BF /* TCOrderCreateItem.m in Sources */,
 				55BB9EC01E72B49100B0FD94 /* TCLockWrapper.m in Sources */,
 				7A925DF31F2091C400D697DE /* TCStorePayViewController.m in Sources */,
 				7A4BF1AE1EB0BE2E00DE1BF5 /* TCBFPayInfo.m in Sources */,
@@ -3703,7 +3632,6 @@
 				7AEB4CFF1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m in Sources */,
 				7AC346F81E0144F300E28EC9 /* TCBankPickerView.m in Sources */,
 				7ABA7E471F00F78A00DCC2D0 /* TCRentProtocol.m in Sources */,
-				092C67E31DE6E245008873E7 /* TCGoodStandards.m in Sources */,
 				7AEB4D051E03F02F00F83A7C /* TCBioEditBirthdateViewController.m in Sources */,
 				7A084C351E001BFF00224677 /* TCCompanyApplyNameViewCell.m in Sources */,
 				7ABA7E7E1F04B25E00DCC2D0 /* TCApartmentRentPayFinishView.m in Sources */,
@@ -3722,7 +3650,6 @@
 				7A7E941E1DF57136006A47CE /* TCRepairsPhotosViewCell.m in Sources */,
 				7AA643B61F09DD4E00DD421F /* TCApartmentAddWithholdViewController.m in Sources */,
 				7AA1176F1F4E859600903445 /* TCAppDelegate+Push.m in Sources */,
-				0990F19A1E07CA11002692F6 /* TCGoodShopView.m in Sources */,
 				7A46B9211F332033001E33DD /* TCQRCodeViewController.m in Sources */,
 				7AEB4CF31E03944500F83A7C /* TCShippingAddressEditViewCell.m in Sources */,
 				7AEB4CC91E03936300F83A7C /* TCBiographyViewController.m in Sources */,
@@ -3766,7 +3693,6 @@
 				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.mm in Sources */,
 				7A925DED1F1F6A7100D697DE /* TCStoreTagView.m in Sources */,
-				0929D2921E0A25820099B1BD /* TCGoodSelectView.m in Sources */,
 				7A6506D31DC993D400B0EDBF /* TCTabBar.m in Sources */,
 				7A7E94051DF51790006A47CE /* TCRepairsViewController.m in Sources */,
 				7AFEC4661E53F9FB00B0E754 /* TCOrderViewController.m in Sources */,

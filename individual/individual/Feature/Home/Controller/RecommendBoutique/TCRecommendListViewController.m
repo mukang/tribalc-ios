@@ -8,7 +8,6 @@
 
 #import "TCRecommendListViewController.h"
 #import "TCShoppingCartViewController.h"
-#import "TCRecommendInfoViewController.h"
 #import "TCGoodsDetailViewController.h"
 
 #import "TCRecommendGoodCell.h"
@@ -156,9 +155,6 @@
 #pragma mark - UICollectionDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     TCGoods *goodInfo = goodsInfoWrapper.content[indexPath.row];
-//    TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodId:goodInfo.ID];
-//    recommendInfoViewController.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:recommendInfoViewController animated:YES];
     TCGoodsDetailViewController *vc = [[TCGoodsDetailViewController alloc] init];
     vc.goodsID = goodInfo.ID;
     vc.hidesBottomBarWhenPushed = YES;

@@ -30,8 +30,6 @@
 #import "TCGoodsDetail.h"
 #import "TCGoodsStandard.h"
 
-#import "TCGoodDetail.h"
-#import "TCGoodStandards.h"
 #import "TCStoreInfo.h"
 #import "TCStoreDetailInfo.h"
 
@@ -48,6 +46,7 @@
 #import "TCOrderWrapper.h"
 #import "TCOrderItem.h"
 #import "TCOrder.h"
+#import "TCOrderCreateItem.h"
 
 /********** 预订相关 **********/
 #import "TCReservationWrapper.h"

@@ -407,7 +407,6 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  @param resultBlock 结果回调，TCGoodDetail为nil时表示获取失败，失败原因见error的code和userInfo
  */
 - (void)fetchGoodsDetail:(NSString *)goodsID result:(void (^)(TCGoodsDetail *goodsDetail, NSError *error))resultBlock;
-- (void)fetchGoodDetail:(NSString *)goodsID result:(void (^)(TCGoodDetail *goodDetail, NSError *error))resultBlock;
 
 /**
  获取商品规格
@@ -416,7 +415,6 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  @param resultBlock 结果回调，goodsStandard为nil时表示获取失败，失败原因见error的code和userInfo
  */
 - (void)fetchGoodsStandard:(NSString *)goodsStandardID result:(void (^)(TCGoodsStandard *goodsStandard, NSError *error))resultBlock;
-- (void)fetchGoodStandards:(NSString *)goodStandardId result:(void (^)(TCGoodStandards *goodStandard, NSError *error))resultBlock;
 
 
 #pragma mark - 服务类资源
@@ -466,6 +464,16 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
 - (void)createOrderWithItemList:(NSArray *)itemList AddressId:(NSString *)addressId result:(void(^)(NSArray *orderList, NSError *error))resultBlock;
 
 /**
+ 创建商品订单
+
+ @param itemList TCOrderCreateItem数组
+ @param addressID 收货地址id
+ @param isDirect 是否是直接下单
+ @param resultBlock 结果回调
+ */
+- (void)createOrderListWithItemList:(NSArray *)itemList addressID:(NSString *)addressID isDirect:(BOOL)isDirect result:(void(^)(NSArray *orderList, NSError *error))resultBlock;
+
+/**
  更改订单状态
  
  @param statusStr 更改后的状态
@@ -493,11 +501,18 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
 #pragma mark - 购物车资源
 - (void)fetchShoppingCartWrapperWithSortSkip:(NSString *)sortSkip result:(void (^)(TCShoppingCartWrapper *shoppingCartWrapper, NSError *error))resultBlock;
 
-- (void)createShoppingCartWithAmount:(NSInteger)amount goodsId:(NSString *)goodsId result:(void(^)(BOOL success, NSError *error))resultBlock;
-
 - (void)changeShoppingCartWithShoppingCartGoodsId:(NSString *)shoppingCartGoodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCCartItem *cartItem, NSError *error))resultBlock;
 
 - (void)deleteShoppingCartWithShoppingCartArr:(NSArray *)cartArr result:(void(^)(BOOL success, NSError *error))resultBlock;
+
+/**
+ 添加到购物车
+
+ @param goodsID 商品id
+ @param quantity 数量
+ @param resultBlock 结果回调
+ */
+- (void)addToShoppingCartWithGoodsID:(NSString *)goodsID quantity:(NSInteger)quantity result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 #pragma mark - 上传图片资源
 

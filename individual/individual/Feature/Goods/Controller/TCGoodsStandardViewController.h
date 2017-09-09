@@ -16,8 +16,9 @@ typedef NS_ENUM(NSInteger, TCGoodsStandardViewMode) {
 };
 
 typedef NS_ENUM(NSInteger, TCGoodsStandardConfirmType) {
-    TCGoodsStandardConfirmTypeAddShoppingCart = 0, // 点击确定执行加入购物车操作
-    TCGoodsStandardConfirmTypeBuyNow               // 点击确定执行立即购买操作
+    TCGoodsStandardConfirmTypeBuyNow = 0,           // 点击确定执行立即购买操作
+    TCGoodsStandardConfirmTypeAddShoppingCart,      // 点击确定执行加入购物车操作
+    TCGoodsStandardConfirmTypeModifyShoppingCart    // 点击确定执行修改购物车操作
 };
 
 @protocol TCGoodsStandardViewControllerDelegate;
@@ -27,6 +28,8 @@ typedef NS_ENUM(NSInteger, TCGoodsStandardConfirmType) {
 @property (copy, nonatomic) NSString *primaryKey;
 /** 二级规格 */
 @property (copy, nonatomic) NSString *secondaryKey;
+/** 产品数量 */
+@property (nonatomic) NSInteger quantity;
 
 @property (strong, nonatomic) TCGoodsDetail *goodsDetail;
 @property (strong, nonatomic) TCGoodsStandard *goodsStandard;
@@ -34,6 +37,8 @@ typedef NS_ENUM(NSInteger, TCGoodsStandardConfirmType) {
 @property (nonatomic, readonly) TCGoodsStandardViewMode standardViewMode;
 /** 点击确认按钮后需执行的操作（standardViewMode为TCGoodsStandardViewModeConfirm时有效） */
 @property (nonatomic) TCGoodsStandardConfirmType confirmType;
+/** cartItemID，当confirmType为TCGoodsStandardConfirmTypeModifyShoppingCart时，必填 */
+@property (copy, nonatomic) NSString *cartItemID;
 
 @property (weak, nonatomic) id<TCGoodsStandardViewControllerDelegate> delegate;
 
@@ -68,5 +73,7 @@ typedef NS_ENUM(NSInteger, TCGoodsStandardConfirmType) {
 
 @optional
 - (void)standardKeyDidChangeInGoodsStandardViewController:(TCGoodsStandardViewController *)controller;
+- (void)buyNowInGoodsStandardViewController:(TCGoodsStandardViewController *)controller;
+- (void)didModifyShoppingCartInGoodsStandardViewController:(TCGoodsStandardViewController *)controller;
 
 @end

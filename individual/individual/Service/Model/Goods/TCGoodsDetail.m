@@ -11,7 +11,7 @@
 @implementation TCGoodsDetail
 
 + (NSDictionary *)objectClassInDictionary {
-    return @{@"tMarkStore":[TCStoreInfo class]};
+    return @{@"tMarkStore":[TCMarkStore class]};
 }
 
 @end

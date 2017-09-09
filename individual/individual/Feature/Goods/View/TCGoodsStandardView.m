@@ -33,8 +33,19 @@
         make.edges.equalTo(self);
     }];
     
+    TCGoodsQuantityView *quantityView = [[TCGoodsQuantityView alloc] init];
+    [containerView addSubview:quantityView];
+    self.quantityView = quantityView;
+    
+    [quantityView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(85);
+        make.left.right.bottom.equalTo(containerView);
+    }];
+    
     if (!_goodsStandard) {
-        
+        [quantityView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(containerView);
+        }];
     } else {
         TCGoodsStandardDescriptions *descriptions = _goodsStandard.descriptions;
         
@@ -53,11 +64,14 @@
             
             [secondaryView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(primaryView.mas_bottom);
-                make.left.right.bottom.equalTo(containerView);
+                make.left.right.equalTo(containerView);
+            }];
+            [quantityView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(secondaryView.mas_bottom);
             }];
         } else {
-            [primaryView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(containerView);
+            [quantityView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(primaryView.mas_bottom);
             }];
         }
     }

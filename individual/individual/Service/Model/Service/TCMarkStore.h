@@ -16,6 +16,8 @@
 @property (copy, nonatomic) NSString *name;
 /** 店铺logo */
 @property (copy, nonatomic) NSString *logo;
+/** 电话 */
+@property (copy, nonatomic) NSString *phone;
 
 
 @end

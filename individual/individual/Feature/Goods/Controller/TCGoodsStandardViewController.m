@@ -11,6 +11,10 @@
 #import "TCGoodsStandardHeaderView.h"
 #import "TCGoodsStandardView.h"
 
+#import "TCBuluoApi.h"
+
+#import <TCCommonLibs/UIImage+Category.h>
+
 static CGFloat const subviewHeight = 446;
 static CGFloat const duration = 0.1;
 
@@ -34,6 +38,7 @@ static CGFloat const duration = 0.1;
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _standardViewMode = mode;
+        _quantity = 1;
         weakSelf = self;
         sourceController = controller;
     }
@@ -132,17 +137,79 @@ static CGFloat const duration = 0.1;
     [standardView.secondaryView reloadStandardDataWithAnotherKey:self.primaryKey];
     standardView.primaryView.delegate = self;
     standardView.secondaryView.delegate = self;
+    [standardView.quantityView.minusButton addTarget:self
+                                              action:@selector(handleClickMinusButton:)
+                                    forControlEvents:UIControlEventTouchUpInside];
+    [standardView.quantityView.addButton addTarget:self
+                                            action:@selector(handleClickAddButton:)
+                                  forControlEvents:UIControlEventTouchUpInside];
+    standardView.quantityView.quantity = self.quantity;
+    
     [containerView addSubview:standardView];
     self.standardView = standardView;
     
+    CGFloat bottomH = 49.0;
     [standardHeaderView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(containerView);
         make.height.mas_equalTo(115);
     }];
     [standardView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(standardHeaderView.mas_bottom);
-        make.left.right.bottom.equalTo(containerView);
+        make.left.right.equalTo(containerView);
+        make.bottom.equalTo(containerView).offset(-bottomH);
     }];
+    
+    if (_standardViewMode == TCGoodsStandardViewModeConfirm) {
+        UIButton *confirmButton = [self creatButtonWithTitle:@"确  定"
+                                                 normalImage:[UIImage imageWithColor:TCRGBColor(113, 130, 220)]
+                                            highlightedImage:[UIImage imageWithColor:TCRGBColor(90, 111, 220)]];
+        [confirmButton addTarget:self
+                          action:@selector(handleClickConfirmButton:)
+                forControlEvents:UIControlEventTouchUpInside];
+        [containerView addSubview:confirmButton];
+        
+        [confirmButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(bottomH);
+            make.left.right.bottom.equalTo(containerView);
+        }];
+        
+    } else {
+        UIButton *addShoppingCartButton = [self creatButtonWithTitle:@"加入购物车"
+                                                         normalImage:[UIImage imageWithColor:TCRGBColor(151, 171, 234)]
+                                                    highlightedImage:[UIImage imageWithColor:TCRGBColor(125, 151, 234)]];
+        [addShoppingCartButton addTarget:self
+                                  action:@selector(handleClickAddShoppingCartButton:)
+                        forControlEvents:UIControlEventTouchUpInside];
+        [containerView addSubview:addShoppingCartButton];
+        
+        UIButton *buyButton = [self creatButtonWithTitle:@"立即购买"
+                                             normalImage:[UIImage imageWithColor:TCRGBColor(113, 130, 220)]
+                                        highlightedImage:[UIImage imageWithColor:TCRGBColor(90, 111, 220)]];
+        [buyButton addTarget:self
+                      action:@selector(handleClickBuyButton:)
+            forControlEvents:UIControlEventTouchUpInside];
+        [containerView addSubview:buyButton];
+        
+        [addShoppingCartButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.bottom.equalTo(containerView);
+            make.height.mas_equalTo(bottomH);
+        }];
+        [buyButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.height.equalTo(addShoppingCartButton);
+            make.left.equalTo(addShoppingCartButton.mas_right);
+            make.right.bottom.equalTo(containerView);
+        }];
+    }
+}
+
+- (UIButton *)creatButtonWithTitle:(NSString *)title normalImage:(UIImage *)normalImage highlightedImage:(UIImage *)highlightedImage {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:normalImage forState:UIControlStateNormal];
+    [button setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:16];
+    return button;
 }
 
 - (void)refreshStandardHeaderView {
@@ -176,6 +243,8 @@ static CGFloat const duration = 0.1;
         [self.standardView.primaryView reloadStandardDataWithAnotherKey:key];
     }
     self.goodsDetail = self.goodsStandard.goodsIndexes[standardKey];
+    self.quantity = 1;
+    self.standardView.quantityView.quantity = self.quantity;
     
     [self refreshStandardHeaderView];
     
@@ -190,6 +259,85 @@ static CGFloat const duration = 0.1;
     [self dismiss:YES completion:nil];
 }
 
+- (void)handleClickMinusButton:(id)sender {
+    self.quantity --;
+    self.standardView.quantityView.quantity = self.quantity;
+}
+
+- (void)handleClickAddButton:(id)sender {
+    if (self.quantity < self.goodsDetail.repertory) {
+        self.quantity ++;
+        self.standardView.quantityView.quantity = self.quantity;
+    } else {
+        [MBProgressHUD showHUDWithMessage:@"库存不足"];
+    }
+}
+
+- (void)handleClickConfirmButton:(id)sender {
+    if (self.confirmType == TCGoodsStandardConfirmTypeAddShoppingCart) {
+        [self handleAddShoppingCart];
+    } else if (self.confirmType == TCGoodsStandardConfirmTypeBuyNow) {
+        [self handleBuyNow];
+    } else {
+        [self handleModifyShoppingCart];
+    }
+}
+
+- (void)handleClickAddShoppingCartButton:(id)sender {
+    [self handleAddShoppingCart];
+}
+
+- (void)handleClickBuyButton:(id)sender {
+    [self handleBuyNow];
+}
+
+- (void)handleAddShoppingCart {
+    if (self.quantity > self.goodsDetail.repertory) {
+        [MBProgressHUD showHUDWithMessage:@"库存不足"];
+        return;
+    }
+    
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] addToShoppingCartWithGoodsID:self.goodsDetail.ID quantity:self.quantity result:^(BOOL success, NSError *error) {
+        if (success) {
+            [MBProgressHUD showHUDWithMessage:@"添加到购物车成功"];
+            [weakSelf dismiss:YES completion:nil];
+        } else {
+            NSString *message = error.localizedDescription ?: @"添加失败，请稍后再试";
+            [MBProgressHUD showHUDWithMessage:message];
+        }
+    }];
+}
+
+- (void)handleBuyNow {
+    if (self.quantity > self.goodsDetail.repertory) {
+        [MBProgressHUD showHUDWithMessage:@"库存不足"];
+        return;
+    }
+    
+    [self dismiss:YES completion:^{
+        if ([weakSelf.delegate respondsToSelector:@selector(buyNowInGoodsStandardViewController:)]) {
+            [weakSelf.delegate buyNowInGoodsStandardViewController:self];
+        }
+    }];
+}
+
+- (void)handleModifyShoppingCart {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] changeShoppingCartWithShoppingCartGoodsId:self.cartItemID AndNewGoodsId:self.goodsDetail.ID AndAmount:self.quantity result:^(TCCartItem *cartItem, NSError *error) {
+        if (cartItem) {
+            [MBProgressHUD showHUDWithMessage:@"修改成功"];
+            [self dismiss:YES completion:^{
+                if ([weakSelf.delegate respondsToSelector:@selector(didModifyShoppingCartInGoodsStandardViewController:)]) {
+                    [weakSelf.delegate didModifyShoppingCartInGoodsStandardViewController:self];
+                }
+            }];
+        } else {
+            NSString *message = error.localizedDescription ?: @"修改失败，请稍后再试";
+            [MBProgressHUD showHUDWithMessage:message];
+        }
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -7,10 +7,12 @@
 //
 
 #import "TCShoppingCartViewController.h"
-#import "TCRecommendInfoViewController.h"
+#import "TCGoodsDetailViewController.h"
 #import "TCShoppingCartBottom.h"
 
-@interface TCShoppingCartViewController () {
+#import "TCGoodsStandardViewController.h"
+
+@interface TCShoppingCartViewController () <TCGoodsStandardViewControllerDelegate> {
     UITableView *cartTableView;
     UIButton *navRightBtn;
     TCShoppingCartBottom *cartBottomView;
@@ -240,12 +242,7 @@
     [self setuptotalPriceLab];
 
 }
-- (void)shoppingCartCell:(TCShoppingCartListTableViewCell *)cell didSelectSelectStandardWithCartItem:(TCCartItem *)cartItem {
-    TCSelectStandardView *standardView = [[TCSelectStandardView alloc] initWithCartItem:cartItem];
-    standardView.delegate = self;
-    [[UIApplication sharedApplication].keyWindow addSubview:standardView];
 
-}
 - (void)shoppingCartCell:(TCShoppingCartListTableViewCell *)cell AddOrSubAmountWithCartItem:(TCCartItem *)cartItem {
     [self changeGoodStandardWithShoppingCartId:cartItem.ID newGoodId:cartItem.goods.ID amount:cartItem.amount];
 }
@@ -269,8 +266,9 @@
     if (!isEdit) {
         TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[indexPath.section];
         TCCartItem *cartItem = listShoppingCart.goodsList[indexPath.row];
-        TCRecommendInfoViewController *recommendInfoViewController = [[TCRecommendInfoViewController alloc] initWithGoodId:cartItem.goods.ID];
-        [self.navigationController pushViewController:recommendInfoViewController animated:YES];
+        TCGoodsDetailViewController *vc = [[TCGoodsDetailViewController alloc] init];
+        vc.goodsID = cartItem.goods.ID;
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
@@ -309,13 +307,6 @@
     editBtn.hiddenSelectButton = YES;
     return editBtn;
 }
-
-#pragma mark - TCSelectStandardViewDelegate
-- (void)selectStandardView:(TCSelectStandardView *)standardView didSelectConfirmButtonWithNumber:(NSInteger)number NewGoodsId:(NSString *)goodsId ShoppingCartGoodsId:(NSString *)shoppingCartGoodsId {
-    [self changeGoodStandardWithShoppingCartId:shoppingCartGoodsId newGoodId:goodsId amount:number];
-}
-
-
 
 #pragma mark - Setup UITableViewCell
 
@@ -395,7 +386,11 @@
     return NO;
 }
 
+#pragma mark - TCGoodsStandardViewControllerDelegate
 
+- (void)didModifyShoppingCartInGoodsStandardViewController:(TCGoodsStandardViewController *)controller {
+    [self changeGoodStandardWithShoppingCartId:controller.cartItemID newGoodId:controller.goodsDetail.ID amount:controller.quantity];
+}
 
 # pragma mark - Click Action
 
@@ -423,7 +418,7 @@
     
     NSArray *selectArr = [self getShoppingCartArrWithSelect:YES];
     if (selectArr.count != 0) {
-        TCPlaceOrderViewController *placeOrderViewController = [[TCPlaceOrderViewController alloc] initWithListShoppingCartArr:selectArr];
+        TCPlaceOrderViewController *placeOrderViewController = [[TCPlaceOrderViewController alloc] initWithListShoppingCartArr:selectArr type:TCPlaceOrderTypeShoppingCart];
         placeOrderViewController.fromController = self;
         [self.navigationController pushViewController:placeOrderViewController animated:YES];
     } else {
@@ -471,10 +466,70 @@
     NSInteger section = button.section;
     NSInteger row = button.row;
     TCListShoppingCart *listShoppingCart = shoppingCartWrapper.content[section];
-    TCCartItem *orderItem = listShoppingCart.goodsList[row];
-    TCSelectStandardView *standardView = [[TCSelectStandardView alloc] initWithCartItem:orderItem ];
-    standardView.delegate = self;
-    [[UIApplication sharedApplication].keyWindow addSubview:standardView];
+    TCCartItem *cartItem = listShoppingCart.goodsList[row];
+    
+    if (cartItem.standardId == nil) {
+        TCGoodsDetail *goodsDetail = [[TCGoodsDetail alloc] init];
+        goodsDetail.tMarkStore = listShoppingCart.store;
+        goodsDetail.ID = cartItem.goods.ID;
+        goodsDetail.name = cartItem.goods.name;
+        goodsDetail.brand = cartItem.goods.brand;
+        goodsDetail.mainPicture = cartItem.goods.mainPicture;
+        goodsDetail.repertory = cartItem.repertory;
+        goodsDetail.salePrice = cartItem.goods.salePrice;
+        TCGoodsStandardViewController *vc = [[TCGoodsStandardViewController alloc] initWithStandardViewMode:TCGoodsStandardViewModeConfirm fromController:self];
+        vc.delegate = self;
+        vc.goodsDetail = goodsDetail;
+        vc.quantity = cartItem.amount;
+        vc.cartItemID = cartItem.ID;
+        vc.confirmType = TCGoodsStandardConfirmTypeModifyShoppingCart;
+        [vc show:YES];
+    } else {
+        [MBProgressHUD showHUD:YES];
+        [[TCBuluoApi api] fetchGoodsStandard:cartItem.standardId result:^(TCGoodsStandard *goodsStandard, NSError *error) {
+            if (goodsStandard) {
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf showStandardViewWithGoodsStandard:goodsStandard cartItem:cartItem];
+            } else {
+                NSString *message = error.localizedDescription ?: @"操作失败，请稍后再试";
+                [MBProgressHUD showHUDWithMessage:message];
+            }
+        }];
+    }
+//    TCSelectStandardView *standardView = [[TCSelectStandardView alloc] initWithCartItem:orderItem ];
+//    standardView.delegate = self;
+//    [[UIApplication sharedApplication].keyWindow addSubview:standardView];
+}
+
+- (void)showStandardViewWithGoodsStandard:(TCGoodsStandard *)goodsStandard cartItem:(TCCartItem *)cartItem {
+    NSString *primaryKey = nil, *secondaryKey = nil;
+    TCGoodsDetail *goodsDetail = nil;
+    NSDictionary *goodsIndexes = goodsStandard.goodsIndexes;
+    for (NSString *key in goodsIndexes.allKeys) {
+        TCGoodsDetail *temp = goodsIndexes[key];
+        if ([temp.ID isEqualToString:cartItem.goods.ID]) {
+            if (goodsStandard.descriptions.secondary) {
+                NSArray *tempArray = [key componentsSeparatedByString:@"^"];
+                primaryKey = [tempArray firstObject];
+                secondaryKey = [tempArray lastObject];
+            } else {
+                primaryKey = key;
+            }
+            goodsDetail = temp;
+            break;
+        }
+    }
+    
+    TCGoodsStandardViewController *vc = [[TCGoodsStandardViewController alloc] initWithStandardViewMode:TCGoodsStandardViewModeConfirm fromController:self];
+    vc.delegate = self;
+    vc.goodsDetail = goodsDetail;
+    vc.quantity = cartItem.amount;
+    vc.goodsStandard = goodsStandard;
+    vc.primaryKey = primaryKey;
+    vc.secondaryKey = secondaryKey;
+    vc.cartItemID = cartItem.ID;
+    vc.confirmType = TCGoodsStandardConfirmTypeModifyShoppingCart;
+    [vc show:YES];
 }
 
 - (void)touchGoodDeleteBtn:(TCShoppingCartSelectButton *)button {

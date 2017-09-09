@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TCStoreInfo.h"
+#import "TCMarkStore.h"
 
 @interface TCGoodsDetail : NSObject
 
@@ -61,6 +61,6 @@
 /** 发货地 */
 @property (copy, nonatomic) NSString *dispatchPlace;
 /** 店铺简要信息 */
-@property (strong, nonatomic) TCStoreInfo *tMarkStore;
+@property (strong, nonatomic) TCMarkStore *tMarkStore;
 
 @end

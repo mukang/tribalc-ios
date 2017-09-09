@@ -75,7 +75,7 @@
     }];
     [self.originPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.priceLabel.mas_right).offset(17);
-        make.bottom.equalTo(self.priceLabel).offset(-1);
+        make.bottom.equalTo(self.contentView).offset(-18);
     }];
     [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.originPriceLabel);

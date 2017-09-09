@@ -1254,25 +1254,6 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
-- (void)fetchGoodDetail:(NSString *)goodsID result:(void (^)(TCGoodDetail *, NSError *))resultBlock {
-    NSString *apiName = [NSString stringWithFormat:@"goods/%@", goodsID];
-    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
-    request.token = self.currentUserSession.token;
-    [[TCClient client] send:request finish:^(TCClientResponse *response) {
-        if (response.error) {
-            if (resultBlock) {
-                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
-            }
-        } else {
-            
-            TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:response.data];
-            if (resultBlock) {
-                TC_CALL_ASYNC_MQ(resultBlock(goodDetail, nil));
-            }
-        }
-    }];
-}
-
 - (void)fetchGoodsStandard:(NSString *)goodsStandardID result:(void (^)(TCGoodsStandard *, NSError *))resultBlock {
     NSString *apiName = [NSString stringWithFormat:@"goods_standards/%@", goodsStandardID];
     TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
@@ -1296,26 +1277,6 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
         }
     }];
 }
-
-- (void)fetchGoodStandards:(NSString *)goodStandardId result:(void (^)(TCGoodStandards *, NSError *))resultBlock {
-    NSString *apiName = [NSString stringWithFormat:@"goods_standards/%@", goodStandardId];
-    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
-    request.token = self.currentUserSession.token;
-    [[TCClient client] send:request finish:^(TCClientResponse *response) {
-        if (response.error) {
-            if (resultBlock) {
-                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
-            }
-        } else {
-            TCGoodStandards *goodStandard = [[TCGoodStandards alloc] initWithObjectDictionary:response.data];
-            if (resultBlock) {
-                TC_CALL_ASYNC_MQ(resultBlock(goodStandard, nil));
-            }
-        }
-    }];
-}
-
-
 
 #pragma mark - 服务类资源
 
@@ -1436,6 +1397,48 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
             }
         }];
     }  else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+- (void)createOrderListWithItemList:(NSArray *)itemList addressID:(NSString *)addressID isDirect:(BOOL)isDirect result:(void (^)(NSArray *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = nil;
+        if (isDirect) {
+            apiName = [NSString stringWithFormat:@"orders/direct?me=%@", self.currentUserSession.assigned];
+        } else {
+            apiName = [NSString stringWithFormat:@"orders?me=%@", self.currentUserSession.assigned];
+        }
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [request setValue:addressID forParam:@"addressId"];
+        NSMutableArray *temp = [NSMutableArray arrayWithCapacity:itemList.count];
+        for (TCOrderCreateItem *item in itemList) {
+            [temp addObject:[item toObjectDictionary]];
+        }
+        [request setValue:[temp copy] forParam:@"itemList"];
+        
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                NSArray *result = response.data;
+                NSMutableArray *orderList = [[NSMutableArray alloc] init];
+                for (int i = 0; i < result.count; i++) {
+                    TCOrder *order = [[TCOrder alloc] initWithObjectDictionary:result[i]];
+                    [orderList addObject:order];
+                }
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock([orderList copy], nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
             TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
@@ -1640,34 +1643,6 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)createShoppingCartWithAmount:(NSInteger)amount goodsId:(NSString *)goodsId result:(void(^)(BOOL, NSError *))resultBlock {
-    if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart", self.currentUserSession.assigned];
-        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
-        request.token = self.currentUserSession.token;
-        
-        [request setValue:[NSNumber numberWithInteger:amount] forParam:@"amount"];
-        [request setValue:goodsId forParam:@"goodsId"];
-        
-        [[TCClient client] send:request finish:^(TCClientResponse *respone) {
-            if (respone.codeInResponse == 201) {
-                if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
-                }
-            } else {
-                if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(NO, respone.error));
-                }
-            }
-        }];
-    }  else {
-        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
-        if (resultBlock) {
-            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
-        }
-    }
-}
-
 - (void)changeShoppingCartWithShoppingCartGoodsId:(NSString *)shoppingCartGoodsId AndNewGoodsId:(NSString *)newGoodsId AndAmount:(NSInteger)amount result:(void(^)(TCCartItem *, NSError *))resultBlock{
     if ([self isUserSessionValid]) {
 
@@ -1731,7 +1706,31 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     
 }
 
-
+- (void)addToShoppingCartWithGoodsID:(NSString *)goodsID quantity:(NSInteger)quantity result:(void (^)(BOOL, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"persons/%@/shopping_cart", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [request setValue:goodsID forParam:@"goodsId"];
+        [request setValue:@(quantity) forParam:@"amount"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 201) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+}
 
 #pragma mark - 上传图片资源
 

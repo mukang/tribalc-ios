@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "TCGoodsStandard.h"
 #import "TCGoodsStandardUnitsView.h"
+#import "TCGoodsQuantityView.h"
 
 @interface TCGoodsStandardView : UIScrollView
 
 @property (weak, nonatomic) TCGoodsStandardUnitsView *primaryView;
 @property (weak, nonatomic) TCGoodsStandardUnitsView *secondaryView;
+@property (weak, nonatomic) TCGoodsQuantityView *quantityView;
 
 - (instancetype)initWithGoodsStandard:(TCGoodsStandard *)goodsStandard;
 

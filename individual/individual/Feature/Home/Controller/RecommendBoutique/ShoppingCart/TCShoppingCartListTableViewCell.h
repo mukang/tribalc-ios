@@ -18,6 +18,7 @@
 @class TCShoppingCartListTableViewCell;
 @protocol TCShoppingCartListTableViewCellDelegate <NSObject>
 
+@optional;
 - (void)shoppingCartCell:(TCShoppingCartListTableViewCell *)cell didTouchSelectButtonWithIndexPath:(NSIndexPath *)indexPath;
 
 - (void)shoppingCartCell:(TCShoppingCartListTableViewCell *)cell didSelectSelectStandardWithCartItem:(TCCartItem *)cartItem;

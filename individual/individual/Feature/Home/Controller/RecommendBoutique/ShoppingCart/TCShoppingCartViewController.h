@@ -14,11 +14,10 @@
 #import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import "TCShoppingCartWrapper.h"
 #import "TCPlaceOrderViewController.h"
-#import "TCSelectStandardView.h"
 #import "TCShoppingCartListTableViewCell.h"
 #import <TCCommonLibs/TCBaseViewController.h>
 
-@interface TCShoppingCartViewController : TCBaseViewController <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, TCShoppingCartListTableViewCellDelegate, TCSelectStandardViewDelegate>
+@interface TCShoppingCartViewController : TCBaseViewController <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, TCShoppingCartListTableViewCellDelegate>
 
 
 @end
