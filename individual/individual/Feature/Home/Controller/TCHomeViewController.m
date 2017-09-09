@@ -34,6 +34,7 @@
 #import<AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
 
+
 #define toolsViewH     112
 #define bannerViewH    (TCRealValue(76.5) + 7.5)
 
@@ -78,6 +79,7 @@ TCHomeCoverViewDelegate>
     [self setupSubviews];
     [self loadDataFirstTime];
     [self registerNotifications];
+//    [self loadWeatherData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -174,6 +176,24 @@ TCHomeCoverViewDelegate>
 }
 
 #pragma mark - Load Data
+
+- (void)loadWeatherData {
+    NSArray *weatherArr = [[NSUserDefaults standardUserDefaults] objectForKey:TCBuluoUserLocationCoordinateKey];
+    NSString *location;
+    if ([weatherArr isKindOfClass:[NSArray class]] && weatherArr.count == 2) {
+        location = [NSString stringWithFormat:@"%@:%@",weatherArr[0],weatherArr[1]];
+    }else {
+        location = @"beijing";
+    }
+    
+    [[TCBuluoApi api] fetchWeatherDataWithLocation:location result:^(NSDictionary *weatherDic, NSError *error) {
+        if ([weatherDic isKindOfClass:[NSDictionary class]]) {
+            self.bannerView.weatherDic = weatherDic;
+        }else {
+            
+        }
+    }];
+}
 
 - (void)loadDataFirstTime {
     @WeakObj(self)
@@ -322,7 +342,7 @@ TCHomeCoverViewDelegate>
     [[TCBuluoApi api] ignoreAParticularTypeHomeMessageByMessageType:message.messageBody.homeMessageType.homeMessageTypeEnum result:^(BOOL success, NSError *error) {
         @StrongObj(self)
         if (success) {
-            self.coverView.hidden = YES;
+            [self tap];
             [MBProgressHUD showHUDWithMessage:@"忽略成功" afterDelay:0.5];
             [self handleReloadData];
         }else {
@@ -338,7 +358,7 @@ TCHomeCoverViewDelegate>
     [[TCBuluoApi api] ignoreAHomeMessageByMessageID:message.ID result:^(BOOL success, NSError *error) {
         @StrongObj(self)
         if (success) {
-            self.coverView.hidden = YES;
+            [self tap];
             [MBProgressHUD hideHUD:YES];
             [self.messageArr removeObject:message];
             if (self.messageArr.count > 3) {
@@ -479,6 +499,8 @@ TCHomeCoverViewDelegate>
 - (void)tap {
     self.coverView.hidden = YES;
     self.coverView.homeMessage = nil;
+    [self.coverView removeFromSuperview];
+    self.coverView = nil;
 }
 
 
@@ -619,6 +641,7 @@ TCHomeCoverViewDelegate>
 - (void)handleReloadData {
     [self.messageArr removeAllObjects];
     self.tableView.mj_footer.hidden = YES;
+    [self.tableView reloadData];
     [self loadDataFirstTime];
 }
 

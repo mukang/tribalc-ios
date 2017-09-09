@@ -10,6 +10,8 @@
 
 @interface TCHomeBannerView : UIView
 
+@property (copy, nonatomic) NSDictionary *weatherDic;
+
 - (void)imagePlayerStartPlaying;
 - (void)imagePlayerStopPlaying;
 

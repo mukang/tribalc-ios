@@ -33,5 +33,7 @@
 @property (copy, nonatomic) NSString *bgImage;
 /** 显示删除按钮 */
 @property (nonatomic) BOOL showDelete;
+/** 绑卡类型 Default NORMAL From { NORMAL // 通用卡, WITHDRAW //提现卡 } */
+@property (copy, nonatomic) NSString *bindType;
 
 @end

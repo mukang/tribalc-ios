@@ -41,6 +41,9 @@
 		098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */; };
 		09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */; };
 		09AE0F791DED462700F307D8 /* TCComputeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F781DED462700F307D8 /* TCComputeView.m */; };
+		550497091F629CB9007F753F /* TCBioEditPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550497071F629CB8007F753F /* TCBioEditPhoneController.m */; };
+		5504970A1F629CB9007F753F /* TCBioEditPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 550497081F629CB9007F753F /* TCBioEditPhoneController.xib */; };
+		5504970D1F62A526007F753F /* TCBioEditPhoneFailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5504970C1F62A526007F753F /* TCBioEditPhoneFailView.m */; };
 		550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923011F039DCC00B007C8 /* TCApartmentViewController.m */; };
 		550923051F03A67400B007C8 /* TCApartmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923041F03A67400B007C8 /* TCApartmentCell.m */; };
 		550AA7661F03C76600509F0D /* TCContractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550AA7651F03C76500509F0D /* TCContractViewController.m */; };
@@ -552,6 +555,11 @@
 		09AE0F771DED462700F307D8 /* TCComputeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCComputeView.h; sourceTree = "<group>"; };
 		09AE0F781DED462700F307D8 /* TCComputeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCComputeView.m; sourceTree = "<group>"; };
 		39C5AA3FC54D84E58748E333 /* Pods-individual.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-individual.release.xcconfig"; path = "Pods/Target Support Files/Pods-individual/Pods-individual.release.xcconfig"; sourceTree = "<group>"; };
+		550497061F629CB8007F753F /* TCBioEditPhoneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditPhoneController.h; sourceTree = "<group>"; };
+		550497071F629CB8007F753F /* TCBioEditPhoneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditPhoneController.m; sourceTree = "<group>"; };
+		550497081F629CB9007F753F /* TCBioEditPhoneController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditPhoneController.xib; sourceTree = "<group>"; };
+		5504970B1F62A526007F753F /* TCBioEditPhoneFailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditPhoneFailView.h; sourceTree = "<group>"; };
+		5504970C1F62A526007F753F /* TCBioEditPhoneFailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditPhoneFailView.m; sourceTree = "<group>"; };
 		550923001F039DCC00B007C8 /* TCApartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentViewController.h; sourceTree = "<group>"; };
 		550923011F039DCC00B007C8 /* TCApartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentViewController.m; sourceTree = "<group>"; };
 		550923031F03A67400B007C8 /* TCApartmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentCell.h; sourceTree = "<group>"; };
@@ -3016,6 +3024,9 @@
 		7AEB4CA91E03936300F83A7C /* Biography */ = {
 			isa = PBXGroup;
 			children = (
+				550497061F629CB8007F753F /* TCBioEditPhoneController.h */,
+				550497071F629CB8007F753F /* TCBioEditPhoneController.m */,
+				550497081F629CB9007F753F /* TCBioEditPhoneController.xib */,
 				7AEB4CB81E03936300F83A7C /* TCBiographyViewController.h */,
 				7AEB4CB91E03936300F83A7C /* TCBiographyViewController.m */,
 				7AEB4CAD1E03936300F83A7C /* TCBioEditNickViewController.h */,
@@ -3068,6 +3079,8 @@
 				7AEB4CE11E03944400F83A7C /* TCShippingAddressEditViewCell.h */,
 				7AEB4CE21E03944400F83A7C /* TCShippingAddressEditViewCell.m */,
 				7AEB4CE31E03944400F83A7C /* TCShippingAddressEditViewCell.xib */,
+				5504970B1F62A526007F753F /* TCBioEditPhoneFailView.h */,
+				5504970C1F62A526007F753F /* TCBioEditPhoneFailView.m */,
 			);
 			path = Biography;
 			sourceTree = "<group>";
@@ -3251,6 +3264,7 @@
 				7A7E94061DF51790006A47CE /* TCRepairsViewController.xib in Resources */,
 				7AC346F71E0144F300E28EC9 /* TCBankCardViewCell.xib in Resources */,
 				7AE736AC1F46E252001DE9FE /* intro_image_03.png in Resources */,
+				5504970A1F629CB9007F753F /* TCBioEditPhoneController.xib in Resources */,
 				7AC346D51E01432D00E28EC9 /* TCWalletBillViewController.xib in Resources */,
 				7A1F12911DEC0BDD00A9B58F /* TCCommunitiesViewController.xib in Resources */,
 			);
@@ -3500,6 +3514,7 @@
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
 				7AB03F261EC452B900DFB037 /* TCRechargeAddBankCardViewCell.m in Sources */,
 				7A2966761F220EA70073E632 /* TCWalletCreditLimitView.m in Sources */,
+				5504970D1F62A526007F753F /* TCBioEditPhoneFailView.m in Sources */,
 				5546F9511F26141A00E9A9B0 /* TCCreditBill.m in Sources */,
 				7A925DAA1F1C99B400D697DE /* TCSearchViewController.m in Sources */,
 				7A22D9151ECD94A4009A6A64 /* TCLockEquipViewCell.m in Sources */,
@@ -3690,6 +3705,7 @@
 				7A925DBE1F1DE77300D697DE /* TCHomeMessageType.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
 				7A1A85471E66D61000BB5EDB /* TCServiceListViewController.m in Sources */,
+				550497091F629CB9007F753F /* TCBioEditPhoneController.m in Sources */,
 				092CD4061DD99F9F0073A9C1 /* TCShoppingCartViewController.m in Sources */,
 				7A190AFF1DC0AB1300651905 /* TCAppDelegate.mm in Sources */,
 				7A925DED1F1F6A7100D697DE /* TCStoreTagView.m in Sources */,
