@@ -1237,6 +1237,24 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }];
 }
 
+- (void)fetchGoodsDetail:(NSString *)goodsID result:(void (^)(TCGoodsDetail *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"goods/%@", goodsID];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    request.token = self.currentUserSession.token;
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            TCGoodsDetail *goodsDetail = [[TCGoodsDetail alloc] initWithObjectDictionary:response.data];
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(goodsDetail, nil));
+            }
+        }
+    }];
+}
+
 - (void)fetchGoodDetail:(NSString *)goodsID result:(void (^)(TCGoodDetail *, NSError *))resultBlock {
     NSString *apiName = [NSString stringWithFormat:@"goods/%@", goodsID];
     TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
@@ -1251,6 +1269,30 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
             TCGoodDetail *goodDetail = [[TCGoodDetail alloc] initWithObjectDictionary:response.data];
             if (resultBlock) {
                 TC_CALL_ASYNC_MQ(resultBlock(goodDetail, nil));
+            }
+        }
+    }];
+}
+
+- (void)fetchGoodsStandard:(NSString *)goodsStandardID result:(void (^)(TCGoodsStandard *, NSError *))resultBlock {
+    NSString *apiName = [NSString stringWithFormat:@"goods_standards/%@", goodsStandardID];
+    TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+    request.token = self.currentUserSession.token;
+    [[TCClient client] send:request finish:^(TCClientResponse *response) {
+        if (response.error) {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
+        } else {
+            TCGoodsStandard *goodsStandard = [[TCGoodsStandard alloc] initWithObjectDictionary:response.data];
+            NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+            for (NSString *key in goodsStandard.goodsIndexes.allKeys) {
+                TCGoodsDetail *goodsDetail = [[TCGoodsDetail alloc] initWithObjectDictionary:goodsStandard.goodsIndexes[key]];
+                [tempDic setValue:goodsDetail forKey:key];
+            }
+            goodsStandard.goodsIndexes = [tempDic copy];
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(goodsStandard, nil));
             }
         }
     }];
