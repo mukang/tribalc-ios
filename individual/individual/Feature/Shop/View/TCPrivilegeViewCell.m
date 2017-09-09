@@ -57,15 +57,25 @@
 - (void)setPrivilege:(TCPrivilege *)privilege {
     _privilege = privilege;
     
+    NSNumber *conditionNumber = [NSNumber numberWithDouble:privilege.condition];
+    NSNumber *valueNumber = [NSNumber numberWithDouble:privilege.value];
+    
     switch (privilege.privilegeType) {
         case TCPrivilegeTypeDiscount:
-            self.titleLabel.text = [NSString stringWithFormat:@"满%0.2f元%0.2f折", privilege.condition, privilege.value * 10];
+        {
+            NSNumber *tempNumber = [NSNumber numberWithDouble:(privilege.value * 10)];
+            if (privilege.condition) {
+                self.titleLabel.text = [NSString stringWithFormat:@"满%@元%@折", conditionNumber, tempNumber];
+            } else {
+                self.titleLabel.text = [NSString stringWithFormat:@"优惠%@折", tempNumber];
+            }
+        }
             break;
         case TCPrivilegeTypeReduce:
-            self.titleLabel.text = [NSString stringWithFormat:@"满%0.2f元减%0.2f元", privilege.condition, privilege.value];
+            self.titleLabel.text = [NSString stringWithFormat:@"满%@元减%@元", conditionNumber, valueNumber];
             break;
         case TCPrivilegeTypeAliquot:
-            self.titleLabel.text = [NSString stringWithFormat:@"每满%0.2f元减%0.2f元", privilege.condition, privilege.value];
+            self.titleLabel.text = [NSString stringWithFormat:@"每满%@元减%@元", conditionNumber, valueNumber];
             break;
             
         default:

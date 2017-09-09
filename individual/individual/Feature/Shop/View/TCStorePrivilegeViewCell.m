@@ -79,16 +79,21 @@
     NSString *privilegeStr = [NSString string];
     for (int i=0; i<privileges.count; i++) {
         TCPrivilege *privilege = privileges[i];
+        NSNumber *conditionNumber = [NSNumber numberWithDouble:privilege.condition];
+        NSNumber *valueNumber = [NSNumber numberWithDouble:privilege.value];
         NSString *str = nil;
         switch (privilege.privilegeType) {
             case TCPrivilegeTypeDiscount:
-                str = [NSString stringWithFormat:@"满%0.2f元%0.2f折", privilege.condition, privilege.value * 10];
+            {
+                NSNumber *tempNumber = [NSNumber numberWithDouble:(privilege.value * 10)];
+                str = [NSString stringWithFormat:@"满%@元%@折", conditionNumber, tempNumber];
+            }
                 break;
             case TCPrivilegeTypeReduce:
-                str = [NSString stringWithFormat:@"满%0.2f元减%0.2f元", privilege.condition, privilege.value];
+                str = [NSString stringWithFormat:@"满%@元减%@元", conditionNumber, valueNumber];
                 break;
             case TCPrivilegeTypeAliquot:
-                str = [NSString stringWithFormat:@"每满%0.2f元减%0.2f", privilege.condition, privilege.value];
+                str = [NSString stringWithFormat:@"每满%@元减%@", conditionNumber, valueNumber];
                 break;
                 
             default:
