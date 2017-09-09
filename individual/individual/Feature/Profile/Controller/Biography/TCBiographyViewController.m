@@ -14,6 +14,8 @@
 #import "TCBioEditEmotionViewController.h"
 #import "TCBioEditBirthdateViewController.h"
 #import "TCBioEditLocationViewController.h"
+#import "TCBioEditSMSViewController.h"
+#import "TCBioEditPhoneController.h"
 
 #import "TCBiographyViewCell.h"
 #import "TCBiographyAvatarViewCell.h"
@@ -370,7 +372,13 @@
 }
 
 - (void)handleSelectPhoneCell {
-    TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
+//    TCBioEditPhoneViewController *editPhoneVC = [[TCBioEditPhoneViewController alloc] initWithNibName:@"TCBioEditPhoneViewController" bundle:[NSBundle mainBundle]];
+//    editPhoneVC.editPhoneBlock = ^(BOOL isEdit) {
+//        if (isEdit) {
+//            [weakSelf fetchUserInfo];
+//        }
+//    };
+    TCBioEditPhoneController *editPhoneVC = [[TCBioEditPhoneController alloc] initWithNibName:@"TCBioEditPhoneController" bundle:[NSBundle mainBundle]];
     editPhoneVC.editPhoneBlock = ^(BOOL isEdit) {
         if (isEdit) {
             [weakSelf fetchUserInfo];

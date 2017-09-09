@@ -261,6 +261,12 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)reserveCommunity:(TCCommunityReservationInfo *)communityReservationInfo result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 获取用户信息，并处理信息
+  */
+- (void)fetchCurrentUserInfo;
+
+
 #pragma mark - 钱包资源
 
 /**
@@ -932,5 +938,14 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  @param resultBlock 结果回调
  */
 - (void)bindWechatByWechatCode:(NSString *)code userID:(NSString *)userID result:(void (^)(BOOL success, NSError *error))resultBlock;
+
+#pragma mark - 天气信息
+/**
+ 获取天气信息
+ 
+ @param location 位置信息
+ @param resultBlock 结果回调
+ */
+- (void)fetchWeatherDataWithLocation:(NSString *)location result:(void (^)(NSDictionary *weatherDic, NSError *error))resultBlock;
 
 @end

@@ -86,6 +86,7 @@
     [XGPush handleReceiveNotification:userInfo
                       successCallback:^{
                           [self loadUnReadPushNumber];
+                          [self handlePushMessage:userInfo];
                           TCLog(@"[XGDemo] Handle receive success");
                       } errorCallback:^{
                           TCLog(@"[XGDemo] Handle receive error");
@@ -247,11 +248,18 @@
                             [self toOrderDetailWithReferenceId:referenceId];
                         }
                     }
+                    // 认证信息更改
+                    if ([type isEqualToString:@"ACCOUNT_AUTHENTICATION"]) {
+                        [self fetchAuthenticationInfo];
+                    }
                 }
         }
     }
 }
 
+- (void)fetchAuthenticationInfo {
+    [[TCBuluoApi api] fetchCurrentUserInfo];
+}
 - (void)toOrderDetailWithReferenceId:(NSString *)referenceId {
     [[TCBuluoApi api] fetchOrderDetailWithOrderID:referenceId result:^(TCOrder *order, NSError *error) {
         if (order) {

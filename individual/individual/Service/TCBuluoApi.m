@@ -11,6 +11,7 @@
 #import <TCCommonLibs/TCFunctions.h>
 #import <TCCommonLibs/TCArchiveService.h>
 #import <TCCommonLibs/NSObject+TCModel.h>
+#import <AFNetworking/AFNetworking.h>
 
 NSString *const TCBuluoApiNotificationUserDidLogin = @"TCBuluoApiNotificationUserDidLogin";
 NSString *const TCBuluoApiNotificationUserDidLogout = @"TCBuluoApiNotificationUserDidLogout";
@@ -100,8 +101,8 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchCurrentUserInfoWithUserID:(NSString *)userID {
-    [self fetchUserInfoWithUserID:userID result:^(TCUserInfo *userInfo, NSError *error) {
+- (void)fetchCurrentUserInfo {
+    [self fetchUserInfoWithUserID:self.currentUserSession.assigned result:^(TCUserInfo *userInfo, NSError *error) {
         if (userInfo) {
             TCUserSession *userSession = self.currentUserSession;
             userSession.userInfo = userInfo;
@@ -141,7 +142,7 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
         } else {
             userSession = [[TCUserSession alloc] initWithObjectDictionary:response.data];
             [self setUserSession:userSession];
-            [self fetchCurrentUserInfoWithUserID:userSession.assigned];
+            [self fetchCurrentUserInfo];
             
             TC_CALL_ASYNC_MQ({
                 [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserDidLogin object:nil];
@@ -3076,7 +3077,7 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
             isBind = YES;
             userSession = [[TCUserSession alloc] initWithObjectDictionary:response.data];
             [self setUserSession:userSession];
-            [self fetchCurrentUserInfoWithUserID:userSession.assigned];
+            [self fetchCurrentUserInfo];
             
             TC_CALL_ASYNC_MQ({
                 [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserDidLogin object:nil];
@@ -3109,6 +3110,33 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
             }
         }
     }];
+}
+
+- (void)fetchWeatherDataWithLocation:(NSString *)location result:(void (^)(NSDictionary *weatherDic, NSError *error))resultBlock {
+    
+    NSString *urlStr = [NSString stringWithFormat:@"https://api.seniverse.com/v3/weather/now.json?key=g63asgbhxrq20weo&location=%@&language=zh-Hans&unit=c",location];
+    
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:nil];
+    [manager GET:urlStr parameters:nil progress:nil
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+             if (resultBlock) {
+                 if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                     NSArray *arr = responseObject[@"results"];
+                     if ([arr isKindOfClass:[NSArray class]]) {
+                         if (arr.count > 0) {
+                             NSDictionary *dic = arr[0];
+                             if ([dic isKindOfClass:[NSDictionary class]]) {
+                                 TC_CALL_ASYNC_MQ(resultBlock(responseObject, nil));
+                             }
+                         }
+                     }
+                 }
+             }
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             if (resultBlock) {
+                 TC_CALL_ASYNC_MQ(resultBlock(nil, error));
+             }
+         }];
 }
 
 @end
