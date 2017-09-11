@@ -30,7 +30,6 @@
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) TCGoodsPicturesView *picturesView;
 
-@property (strong, nonatomic) TCGoodsDetail *goodsDetail;
 @property (strong, nonatomic) TCGoodsStandard *goodsStandard;
 
 /** 一级规格 */
@@ -83,6 +82,7 @@
     self.tableView = tableView;
     
     TCGoodsPicturesView *picturesView = [[TCGoodsPicturesView alloc] init];
+    picturesView.pictures = @[self.goodsDetail.mainPicture];
     [tableView addSubview:picturesView];
     self.picturesView = picturesView;
     
