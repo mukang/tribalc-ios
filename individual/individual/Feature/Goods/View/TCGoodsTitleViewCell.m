@@ -14,6 +14,7 @@
 @property (weak, nonatomic) UILabel *titleLabel;
 @property (weak, nonatomic) UILabel *priceLabel;
 @property (weak, nonatomic) UILabel *originPriceLabel;
+@property (weak, nonatomic) UIView *lineView;
 @property (weak, nonatomic) UIImageView *tagImageView;
 @property (weak, nonatomic) UILabel *tagLabel;
 
@@ -44,7 +45,13 @@
     [self.contentView addSubview:priceLabel];
     
     UILabel *originPriceLabel = [[UILabel alloc] init];
+    originPriceLabel.textColor = TCGrayColor;
+    originPriceLabel.font = [UIFont systemFontOfSize:12];
     [self.contentView addSubview:originPriceLabel];
+    
+    UIView *lineView = [[UIView alloc] init];
+    lineView.backgroundColor = TCGrayColor;
+    [self.contentView addSubview:lineView];
     
     UIImageView *tagImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"goods_tag"]];
     [self.contentView addSubview:tagImageView];
@@ -58,6 +65,7 @@
     self.titleLabel = titleLabel;
     self.priceLabel = priceLabel;
     self.originPriceLabel = originPriceLabel;
+    self.lineView = lineView;
     self.tagImageView = tagImageView;
     self.tagLabel = tagLabel;
 }
@@ -75,7 +83,11 @@
     }];
     [self.originPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.priceLabel.mas_right).offset(17);
-        make.bottom.equalTo(self.contentView).offset(-18);
+        make.centerY.equalTo(self.priceLabel).offset(1);
+    }];
+    [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(1);
+        make.left.right.centerY.equalTo(self.originPriceLabel);
     }];
     [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.originPriceLabel);
@@ -93,17 +105,7 @@
     
     self.titleLabel.text = goodsDetail.title;
     self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [NSNumber numberWithDouble:goodsDetail.salePrice]];
-    
-    NSString *originPriceStr = [NSString stringWithFormat:@"¥%@", [NSNumber numberWithDouble:goodsDetail.originPrice]];
-    NSAttributedString *originPriceAttStr = [[NSAttributedString alloc] initWithString:originPriceStr
-                                                                            attributes:@{
-                                                                                         NSFontAttributeName: [UIFont systemFontOfSize:12],
-                                                                                         NSForegroundColorAttributeName: TCLightGrayColor,
-                                                                                         NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle | NSUnderlinePatternSolid),
-                                                                                         NSBaselineOffsetAttributeName: @(NSUnderlineStyleSingle),
-                                                                                         NSStrikethroughColorAttributeName:TCLightGrayColor
-                                                                                         }];
-    self.originPriceLabel.attributedText = originPriceAttStr;
+    self.originPriceLabel.text = [NSString stringWithFormat:@"¥%@", [NSNumber numberWithDouble:goodsDetail.originPrice]];
     
     if (goodsDetail.tags.count) {
         self.tagImageView.hidden = NO;
