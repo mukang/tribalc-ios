@@ -36,6 +36,8 @@
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 /** 银行卡logo及背景图数据 */
 @property (copy, nonatomic) NSArray *bankInfoList;
+/** 银行卡模型列表 */
+@property (copy, nonatomic) NSArray *bankCardList;
 /** 输入框里是否含有小数点 */
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
 /** 宝付支付ID */

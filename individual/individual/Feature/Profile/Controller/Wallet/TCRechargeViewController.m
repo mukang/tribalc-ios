@@ -356,17 +356,22 @@ TCRechargeMethodsViewDelegate>
     [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
         if (bankCardList) {
             [MBProgressHUD hideHUD:YES];
+            NSMutableArray *tempArray = [NSMutableArray array];
             for (TCBankCard *bankCard in bankCardList) {
-                for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
-                    if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
-                        bankCard.logo = bankInfo[@"logo"];
-                        bankCard.bgImage = bankInfo[@"bgImage"];
-                        break;
+                if ([bankCard.bindType isEqualToString:@"NORMAL"]) {
+                    bankCard.logo = @"bank_logo_Default";
+                    bankCard.bgImage = @"bank_bg_Default";
+                    for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
+                        if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
+                            bankCard.logo = bankInfo[@"logo"];
+                            break;
+                        }
                     }
+                    [tempArray addObject:bankCard];
                 }
             }
             weakSelf.walletAccount.bankCards = bankCardList;
-            weakSelf.methodsView.bankCardList = bankCardList;
+            weakSelf.methodsView.bankCardList = [tempArray copy];
             [weakSelf.methodsView reloadBankCardList];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";

@@ -419,17 +419,21 @@ BaofuFuFingerClientDelegate
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取支付方式失败，%@", reason]];
         } else {
             [MBProgressHUD hideHUD:YES];
+            NSMutableArray *tempArray = [NSMutableArray array];
             for (TCBankCard *bankCard in bankCardList) {
-                bankCard.logo = @"bank_logo_Default";
-                bankCard.bgImage = @"bank_bg_Default";
-                for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
-                    if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
-                        bankCard.logo = bankInfo[@"logo"];
-                        break;
+                if ([bankCard.bindType isEqualToString:@"NORMAL"]) {
+                    bankCard.logo = @"bank_logo_Default";
+                    bankCard.bgImage = @"bank_bg_Default";
+                    for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
+                        if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
+                            bankCard.logo = bankInfo[@"logo"];
+                            break;
+                        }
                     }
+                    [tempArray addObject:bankCard];
                 }
             }
-            [weakSelf showPaymentMethodViewWithBankCardList:bankCardList];
+            [weakSelf showPaymentMethodViewWithBankCardList:[tempArray copy]];
         }
     }];
 }
