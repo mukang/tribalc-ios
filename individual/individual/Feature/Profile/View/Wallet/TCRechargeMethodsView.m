@@ -88,10 +88,17 @@
     [self.tableView reloadData];
     
     if (!self.bankCardList.count) return;
-    self.currentBankCard = self.bankCardList[0];
-    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
-                                animated:NO
-                          scrollPosition:UITableViewScrollPositionNone];
+    
+    for (int i=0; i<self.bankCardList.count; i++) {
+        TCBankCard *bankCard = self.bankCardList[i];
+        if (bankCard == TCBankCardTypeNormal) {
+            self.currentBankCard = self.bankCardList[i];
+            [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]
+                                        animated:NO
+                                  scrollPosition:UITableViewScrollPositionNone];
+            break;
+        }
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -107,14 +114,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.bankCardList.count) {
         TCRechargeMethodViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRechargeMethodViewCell" forIndexPath:indexPath];
-        TCBankCard *bankCard = self.bankCardList[indexPath.row];
-        NSString *bankCardNum = bankCard.bankCardNum;
-        NSString *lastNum;
-        if (bankCardNum.length >= 4) {
-            lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
-        }
-        cell.logoImageView.image = [UIImage imageNamed:bankCard.logo];
-        cell.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+        cell.isBankCardMode = YES;
+        cell.bankCard = self.bankCardList[indexPath.row];
         return cell;
     } else {
         TCRechargeAddBankCardViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCRechargeAddBankCardViewCell" forIndexPath:indexPath];
@@ -126,7 +127,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.bankCardList.count) {
-        self.currentBankCard = self.bankCardList[indexPath.row];
+        TCBankCard *bankCard = self.bankCardList[indexPath.row];
+        if (bankCard.type == TCBankCardTypeNormal) {
+            self.currentBankCard = bankCard;
+        }
     } else {
         if ([self.delegate respondsToSelector:@selector(didSelectedAddBankCardInRechargeMethodsView:)]) {
             [self.delegate didSelectedAddBankCardInRechargeMethodsView:self];
@@ -136,6 +140,7 @@
 
 #pragma mark - Override Methods
 
+/*
 - (void)setBankCardList:(NSArray *)bankCardList {
     _bankCardList = bankCardList;
     
@@ -163,5 +168,6 @@
                               scrollPosition:UITableViewScrollPositionNone];
     }
 }
+ */
 
 @end

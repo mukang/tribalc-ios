@@ -37,34 +37,86 @@
     [self.contentView addSubview:titleLabel];
     self.titleLabel = titleLabel;
     
+    UILabel *promptLabel = [[UILabel alloc] init];
+    promptLabel.text = @"该付款方式不支持当前交易";
+    promptLabel.textColor = TCSeparatorLineColor;
+    promptLabel.font = [UIFont systemFontOfSize:12];
+    [self.contentView addSubview:promptLabel];
+    self.promptLabel = promptLabel;
+    
     UIImageView *selectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profile_common_address_button_selected"]];
     selectedImageView.hidden = YES;
     [self.contentView addSubview:selectedImageView];
     self.selectedImageView = selectedImageView;
     
-    __weak typeof(self) weakSelf = self;
+    
     [logoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(17.5, 17.5));
-        make.left.equalTo(weakSelf.contentView.mas_left).with.offset(20);
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+        make.left.equalTo(self.contentView).with.offset(20);
+        make.centerY.equalTo(self.contentView);
     }];
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(21);
-        make.left.equalTo(logoImageView.mas_right).with.offset(11);
-        make.right.equalTo(selectedImageView.mas_left).with.offset(-11);
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+        make.left.equalTo(logoImageView.mas_right).offset(11);
+        make.right.equalTo(selectedImageView.mas_left).offset(-11);
+        make.centerY.equalTo(self.contentView);
+    }];
+    [promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.titleLabel);
+        make.centerY.equalTo(self.contentView).offset(10);
     }];
     [selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(17, 17));
-        make.right.equalTo(weakSelf.contentView.mas_right).with.offset(-20);
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+        make.right.equalTo(self.contentView).with.offset(-20);
+        make.centerY.equalTo(self.contentView);
     }];
+}
+
+- (void)setIsBankCardMode:(BOOL)isBankCardMode {
+    _isBankCardMode = isBankCardMode;
+    
+    if (!isBankCardMode) {
+        self.logoImageView.alpha = 1.0;
+        self.promptLabel.hidden = YES;
+        [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.contentView);
+        }];
+    }
+}
+
+- (void)setBankCard:(TCBankCard *)bankCard {
+    _bankCard = bankCard;
+    
+    NSString *bankCardNum = bankCard.bankCardNum;
+    NSString *lastNum;
+    if (bankCardNum.length >= 4) {
+        lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
+    }
+    self.logoImageView.image = [UIImage imageNamed:bankCard.logo];
+    self.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+    
+    if (bankCard.type == TCBankCardTypeWithdraw) {
+        self.logoImageView.alpha = 0.5;
+        self.promptLabel.hidden = NO;
+        [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.contentView).offset(-10);
+        }];
+    } else {
+        self.logoImageView.alpha = 1.0;
+        self.promptLabel.hidden = YES;
+        [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.contentView);
+        }];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+    if (self.isBankCardMode && self.bankCard.type == TCBankCardTypeWithdraw) {
+        return;
+    }
+    
     if (selected) {
         self.selectedImageView.hidden = NO;
     } else {

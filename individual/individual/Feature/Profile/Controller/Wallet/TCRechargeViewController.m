@@ -301,7 +301,7 @@ TCRechargeMethodsViewDelegate>
         [MBProgressHUD showHUDWithMessage:@"请输入充值金额"];
         return;
     }
-    if (!self.walletAccount.bankCards.count) {
+    if (!self.methodsView.currentBankCard.ID) {
         [MBProgressHUD showHUDWithMessage:@"添加银行卡后才能充值"];
         return;
     }
@@ -356,22 +356,17 @@ TCRechargeMethodsViewDelegate>
     [[TCBuluoApi api] fetchBankCardList:^(NSArray *bankCardList, NSError *error) {
         if (bankCardList) {
             [MBProgressHUD hideHUD:YES];
-            NSMutableArray *tempArray = [NSMutableArray array];
             for (TCBankCard *bankCard in bankCardList) {
-                if ([bankCard.bindType isEqualToString:@"NORMAL"]) {
-                    bankCard.logo = @"bank_logo_Default";
-                    bankCard.bgImage = @"bank_bg_Default";
-                    for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
-                        if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
-                            bankCard.logo = bankInfo[@"logo"];
-                            break;
-                        }
+                bankCard.logo = @"bank_logo_Default";
+                for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
+                    if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
+                        bankCard.logo = bankInfo[@"logo"];
+                        break;
                     }
-                    [tempArray addObject:bankCard];
                 }
             }
             weakSelf.walletAccount.bankCards = bankCardList;
-            weakSelf.methodsView.bankCardList = [tempArray copy];
+            weakSelf.methodsView.bankCardList = bankCardList;
             [weakSelf.methodsView reloadBankCardList];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -573,6 +568,7 @@ TCRechargeMethodsViewDelegate>
     
     for (TCBankCard *bankCard in walletAccount.bankCards) {
         for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
+            bankCard.logo = @"bank_logo_Default";
             if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
                 bankCard.logo = bankInfo[@"logo"];
                 break;

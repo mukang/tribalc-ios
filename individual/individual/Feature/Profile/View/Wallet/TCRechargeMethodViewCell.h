@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBankCard.h"
 
 @protocol TCRechargeMethodViewCellDelegate;
 @interface TCRechargeMethodViewCell : UITableViewCell
 
+@property (nonatomic) BOOL isBankCardMode;
+@property (strong, nonatomic) TCBankCard *bankCard;
+
 @property (weak, nonatomic) UIImageView *logoImageView;
 @property (weak, nonatomic) UILabel *titleLabel;
+@property (weak, nonatomic) UILabel *promptLabel;
 
 @property (nonatomic) BOOL hideMarkIcon; // default is NO
 @property (nonatomic) BOOL showRechargeButton; // default is NO

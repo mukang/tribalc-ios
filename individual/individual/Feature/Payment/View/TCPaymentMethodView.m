@@ -114,17 +114,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCPaymentMethodViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCPaymentMethodViewCell" forIndexPath:indexPath];
     if (indexPath.section == 0) {
+        cell.isBankCardMode = NO;
         cell.logoImageView.image = [UIImage imageNamed:@"balance_icon"];
         cell.titleLabel.text = @"余额支付";
     } else {
-        TCBankCard *bankCard = self.bankCardList[indexPath.row];
-        NSString *bankCardNum = bankCard.bankCardNum;
-        NSString *lastNum;
-        if (bankCardNum.length >= 4) {
-            lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
-        }
-        cell.logoImageView.image = [UIImage imageNamed:bankCard.logo];
-        cell.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+        cell.isBankCardMode = YES;
+        cell.bankCard = self.bankCardList[indexPath.row];
     }
     /*
     switch (indexPath.section) {
@@ -151,10 +146,15 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.delegate respondsToSelector:@selector(paymentMethodView:didSlectedPaymentMethod:)]) {
-        if (indexPath.section == TCPaymentMethodBankCard) {
-            self.currentBankCard = self.bankCardList[indexPath.row];
+    if (indexPath.section == TCPaymentMethodBankCard) {
+        TCBankCard *bankCard = self.bankCardList[indexPath.row];
+        if (bankCard.type == TCBankCardTypeWithdraw) {
+            return;
         }
+        self.currentBankCard = bankCard;
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(paymentMethodView:didSlectedPaymentMethod:)]) {
         [self.delegate paymentMethodView:self didSlectedPaymentMethod:indexPath.section];
     }
 }
@@ -179,9 +179,11 @@
         TCBankCard *bankCard = bankCardList[i];
         if ([bankCard.ID isEqualToString:self.currentBankCard.ID]) {
             self.currentBankCard = bankCard;
-            [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:self.paymentMethod]
-                                        animated:NO
-                                  scrollPosition:UITableViewScrollPositionNone];
+            if (bankCard.type == TCBankCardTypeNormal) {
+                [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:self.paymentMethod]
+                                            animated:NO
+                                      scrollPosition:UITableViewScrollPositionNone];
+            }
             break;
         }
     }

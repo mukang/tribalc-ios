@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, TCBankCardType) {
+    TCBankCardTypeNormal = 0,
+    TCBankCardTypeWithdraw
+};
+
 @interface TCBankCard : NSObject
 
 /** 银行卡ID */
@@ -35,5 +40,7 @@
 @property (nonatomic) BOOL showDelete;
 /** 绑卡类型 Default NORMAL From { NORMAL // 通用卡, WITHDRAW //提现卡 } */
 @property (copy, nonatomic) NSString *bindType;
+
+@property (nonatomic) TCBankCardType type;
 
 @end

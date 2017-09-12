@@ -176,6 +176,7 @@
 
 - (void)handleTapBankNameBgView:(UITapGestureRecognizer *)sender {
     [self.containerView endEditing:YES];
+    
     [self showPickerView];
 }
 
