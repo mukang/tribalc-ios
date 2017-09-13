@@ -106,6 +106,7 @@
 - (void)bankPickerView:(TCBankPickerView *)view didClickConfirmButtonWithBankCard:(TCBankCard *)bankCard {
     self.bankNameTextField.text = bankCard.bankName;
     self.bankCard = bankCard;
+    [self reloadUI];
     [self dismissPickerView];
 }
 
@@ -116,6 +117,18 @@
 #pragma mark - Actions
 
 - (IBAction)handleClickSendCodeButton:(UIButton *)sender {
+   [self prepareAddBankCard];
+}
+
+- (IBAction)handleClickConfirmButton:(UIButton *)sender {
+    if (self.bankCard.maxPaymentAmount == 0) {
+        [self prepareAddBankCard];
+    } else {
+        [self confirmAddBankCard];
+    }
+}
+
+- (void)prepareAddBankCard {
     if (self.nameTextField.text.length == 0) {
         [MBProgressHUD showHUDWithMessage:@"请输入开户名称"];
         return;
@@ -160,7 +173,7 @@
     }];
 }
 
-- (IBAction)handleClickConfirmButton:(UIButton *)sender {
+- (void)confirmAddBankCard {
     if (self.nameTextField.text.length == 0) {
         [MBProgressHUD showHUDWithMessage:@"请输入开户名称"];
         return;

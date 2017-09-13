@@ -46,7 +46,7 @@
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = bankCard.bankName;
     titleLabel.textColor = TCBlackColor;
-    titleLabel.font = [UIFont systemFontOfSize:16];
+    titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [containerView addSubview:titleLabel];
     
     UILabel *subTitleLabel = [[UILabel alloc] init];
@@ -54,14 +54,14 @@
     subTitleLabel.textColor = TCBlackColor;
     subTitleLabel.font = [UIFont systemFontOfSize:12];
     [containerView addSubview:subTitleLabel];
-    subTitleLabel.hidden = !bankCard.maxPaymentAmount;
+    subTitleLabel.hidden = bankCard.maxPaymentAmount;
     
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(containerView);
     }];
     [subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(containerView);
-        make.centerY.equalTo(containerView).offset(15);
+        make.centerY.equalTo(containerView).offset(20);
     }];
     
     return containerView;
