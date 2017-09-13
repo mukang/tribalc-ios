@@ -205,7 +205,7 @@
         } else if (indexPath.row == 0) {
             self.selectedIndexPath = indexPath;
         } else {
-            TCBankCard *bankCard = self.walletAccount.bankCards[self.selectedIndexPath.row - 1];
+            TCBankCard *bankCard = self.walletAccount.bankCards[indexPath.row - 1];
             if (bankCard.type == TCBankCardTypeNormal) {
                 self.selectedIndexPath = indexPath;
             }
@@ -781,6 +781,7 @@
     
     for (TCBankCard *bankCard in walletAccount.bankCards) {
         for (NSDictionary *bankInfo in self.bankInfoList) {
+            bankCard.logo = @"bank_logo_Default";
             if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
                 bankCard.logo = bankInfo[@"logo"];
                 break;

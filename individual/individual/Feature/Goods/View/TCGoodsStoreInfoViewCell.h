@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 @class TCGoodsDetail;
+@class TCMarkStore;
 
 @interface TCGoodsStoreInfoViewCell : UITableViewCell
 
+@property (strong, nonatomic) TCMarkStore *storeInfo;
 @property (strong, nonatomic) TCGoodsDetail *goodsDetail;
 
 @end

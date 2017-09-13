@@ -57,11 +57,7 @@ static CGFloat const duration = 0.1;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.view.backgroundColor = TCARGBColor(0, 0, 0, 0);
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleClickCloseButton:)];
-    [self.view addGestureRecognizer:tap];
-    
     [self setupSubviews];
 }
 
@@ -120,6 +116,16 @@ static CGFloat const duration = 0.1;
 #pragma mark - Private Methods
 
 - (void)setupSubviews {
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:bgView];
+    [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(handleClickCloseButton:)];
+    [bgView addGestureRecognizer:tap];
+    
     UIView *containerView = [[UIView alloc] init];
     containerView.backgroundColor = [UIColor whiteColor];
     containerView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, subviewHeight);
@@ -135,8 +141,10 @@ static CGFloat const duration = 0.1;
     TCGoodsStandardView *standardView = [[TCGoodsStandardView alloc] initWithGoodsStandard:self.goodsStandard];
     standardView.primaryView.currentKey = self.primaryKey;
     standardView.secondaryView.currentKey = self.secondaryKey;
-    [standardView.primaryView reloadStandardDataWithAnotherKey:self.secondaryKey];
-    [standardView.secondaryView reloadStandardDataWithAnotherKey:self.primaryKey];
+    if (self.primaryKey) {
+        [standardView.primaryView reloadStandardDataWithAnotherKey:self.secondaryKey];
+        [standardView.secondaryView reloadStandardDataWithAnotherKey:self.primaryKey];
+    }
     standardView.primaryView.delegate = self;
     standardView.secondaryView.delegate = self;
     [standardView.quantityView.minusButton addTarget:self
@@ -244,7 +252,13 @@ static CGFloat const duration = 0.1;
         standardKey = [NSString stringWithFormat:@"%@^%@", self.primaryKey, key];
         [self.standardView.primaryView reloadStandardDataWithAnotherKey:key];
     }
-    self.goodsDetail = self.goodsStandard.goodsIndexes[standardKey];
+    
+    TCGoodsDetail *goodsDetail = self.goodsStandard.goodsIndexes[standardKey];
+    if (!goodsDetail) {
+        return;
+    }
+    
+    self.goodsDetail = goodsDetail;
     self.quantity = 1;
     self.standardView.quantityView.quantity = self.quantity;
     

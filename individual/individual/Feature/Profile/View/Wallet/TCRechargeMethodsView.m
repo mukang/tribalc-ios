@@ -91,7 +91,7 @@
     
     for (int i=0; i<self.bankCardList.count; i++) {
         TCBankCard *bankCard = self.bankCardList[i];
-        if (bankCard == TCBankCardTypeNormal) {
+        if (bankCard.type == TCBankCardTypeNormal) {
             self.currentBankCard = self.bankCardList[i];
             [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]
                                         animated:NO

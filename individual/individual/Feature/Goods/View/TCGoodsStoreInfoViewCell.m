@@ -111,15 +111,19 @@
 - (void)setGoodsDetail:(TCGoodsDetail *)goodsDetail {
     _goodsDetail = goodsDetail;
     
-    NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:goodsDetail.tMarkStore.logo];
+    self.salesLabel.text = [NSString stringWithFormat:@"总销量：%zd", goodsDetail.saleQuantity];
+}
+
+- (void)setStoreInfo:(TCMarkStore *)storeInfo {
+    _storeInfo = storeInfo;
+    
+    NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:storeInfo.logo];
     UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(48.5, 48.5)];
     [self.logoView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
-    self.brandLabel.text = goodsDetail.tMarkStore.name;
+    self.brandLabel.text = storeInfo.name;
     
-    self.salesLabel.text = [NSString stringWithFormat:@"总销量：%zd", goodsDetail.saleQuantity];
-    
-    self.phoneLabel.text = [NSString stringWithFormat:@"电话：%@", goodsDetail.tMarkStore.phone];
+    self.phoneLabel.text = [NSString stringWithFormat:@"电话：%@", storeInfo.phone];
 }
 
 - (NSMutableArray *)starIcons {

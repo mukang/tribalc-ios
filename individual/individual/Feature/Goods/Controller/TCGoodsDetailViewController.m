@@ -30,6 +30,7 @@
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) TCGoodsPicturesView *picturesView;
 
+@property (strong, nonatomic) TCMarkStore *storeInfo;
 @property (strong, nonatomic) TCGoodsStandard *goodsStandard;
 
 /** 一级规格 */
@@ -124,6 +125,7 @@
     [[TCBuluoApi api] fetchGoodsDetail:self.goodsID result:^(TCGoodsDetail *goodsDetail, NSError *error) {
         if (goodsDetail) {
             weakSelf.goodsDetail = goodsDetail;
+            weakSelf.storeInfo = goodsDetail.tMarkStore;
             if (goodsDetail.standardId) {
                 [weakSelf loadGoodsStandardWithStandardID:goodsDetail.standardId];
             } else {
@@ -226,6 +228,7 @@
         {
             TCGoodsStoreInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCGoodsStoreInfoViewCell" forIndexPath:indexPath];
             cell.goodsDetail = self.goodsDetail;
+            cell.storeInfo = self.storeInfo;
             currentCell = cell;
         }
             break;

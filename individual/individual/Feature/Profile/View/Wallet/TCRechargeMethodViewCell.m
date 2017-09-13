@@ -129,13 +129,17 @@
     self.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
     
     if (bankCard.type == TCBankCardTypeWithdraw) {
+        self.userInteractionEnabled = NO;
         self.logoImageView.alpha = 0.5;
+        self.titleLabel.textColor = TCSeparatorLineColor;
         self.promptLabel.hidden = NO;
         [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView).offset(-10);
         }];
     } else {
+        self.userInteractionEnabled = YES;
         self.logoImageView.alpha = 1.0;
+        self.titleLabel.textColor = TCBlackColor;
         self.promptLabel.hidden = YES;
         [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView);

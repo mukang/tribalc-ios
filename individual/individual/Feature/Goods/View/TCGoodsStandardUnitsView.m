@@ -61,6 +61,7 @@
     for (int i=0; i<units.types.count; i++) {
         TCGoodsStandardUnitView *unitView = [[TCGoodsStandardUnitView alloc] init];
         unitView.title = units.types[i];
+        unitView.type = TCGoodsStandardUnitViewTypeNormal;
         [self addSubview:unitView];
         [self.views addObject:unitView];
         
