@@ -57,6 +57,7 @@
 
 - (void)dealloc {
     [self removeGetSMSTimer];
+    TCLog(@"TCBioEditPhoneController -- dealloc");
 }
 
 #pragma mark - Private Methods
@@ -69,8 +70,8 @@
 }
 
 - (void)setupSubviews {
-    UIImage *normalImage = [UIImage imageWithColor:TCRGBColor(81, 199, 209)];
-    UIImage *highlightedImage = [UIImage imageWithColor:TCRGBColor(10, 164, 177)];
+    UIImage *normalImage = [UIImage imageWithColor:TCRGBColor(151, 171, 234)];
+    UIImage *highlightedImage = [UIImage imageWithColor:TCRGBColor(112, 139, 224)];
     [self.commitButton setBackgroundImage:normalImage forState:UIControlStateNormal];
     [self.commitButton setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
     
@@ -95,7 +96,7 @@
     if ([newPhone isKindOfClass:[NSString class]] && newPhone.length > 0) {
         self.phone = newPhone;
     }else {
-        [MBProgressHUD showHUDWithMessage:@"请输入手机号" afterDelay:0.5];
+        [MBProgressHUD showHUDWithMessage:@"请输入手机号" afterDelay:1.0];
         return;
     }
     
@@ -118,12 +119,12 @@
     if ([phone isKindOfClass:[NSString class]] && phone.length > 0) {
         self.phone = phone;
     }else {
-        [MBProgressHUD showHUDWithMessage:@"请输入手机号"];
+        [MBProgressHUD showHUDWithMessage:@"请输入手机号" afterDelay:1.0];
         return;
     }
     
     if (code.length == 0) {
-        [MBProgressHUD showHUDWithMessage:@"请输入验证码"];
+        [MBProgressHUD showHUDWithMessage:@"请输入验证码" afterDelay:1.0];
         return;
     }
     
@@ -143,9 +144,11 @@
     phoneInfo.phone = self.phone;
     phoneInfo.verificationCode = code;
     [MBProgressHUD showHUD:YES];
+    @WeakObj(self)
     [[TCBuluoApi api] changeUserPhone:phoneInfo result:^(BOOL success, NSError *error) {
-        [MBProgressHUD hideHUD:YES];
+        @StrongObj(self)
         if (success) {
+             [MBProgressHUD hideHUD:YES];
             if (self.editPhoneBlock) {
                 self.editPhoneBlock(YES);
             }
@@ -155,13 +158,15 @@
             if ([error isKindOfClass:[NSError class]]) {
                 NSInteger code = error.code;
                 if (code == 403) {
+                    [MBProgressHUD hideHUD:YES];
                     TCBioEditPhoneFailView *failView = [[TCBioEditPhoneFailView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, TCScreenHeight)];
                     [self.navigationController.view addSubview:failView];
                     return;
                 }
             }
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
-            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"手机号修改失败，%@", reason]];
+//            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"手机号修改失败，%@", reason]];
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"手机号修改失败，%@", reason] afterDelay:1.0];
         }
     }];
 }
@@ -219,6 +224,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation
