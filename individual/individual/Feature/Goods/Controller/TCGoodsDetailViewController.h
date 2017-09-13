@@ -7,9 +7,11 @@
 //
 
 #import <TCCommonLibs/TCBaseViewController.h>
+#import "TCGoodsDetail.h"
 
 @interface TCGoodsDetailViewController : TCBaseViewController
 
 @property (copy, nonatomic) NSString *goodsID;
+@property (strong, nonatomic) TCGoodsDetail *goodsDetail;
 
 @end

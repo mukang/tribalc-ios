@@ -301,7 +301,7 @@ TCRechargeMethodsViewDelegate>
         [MBProgressHUD showHUDWithMessage:@"请输入充值金额"];
         return;
     }
-    if (!self.walletAccount.bankCards.count) {
+    if (!self.methodsView.currentBankCard.ID) {
         [MBProgressHUD showHUDWithMessage:@"添加银行卡后才能充值"];
         return;
     }
@@ -357,10 +357,10 @@ TCRechargeMethodsViewDelegate>
         if (bankCardList) {
             [MBProgressHUD hideHUD:YES];
             for (TCBankCard *bankCard in bankCardList) {
+                bankCard.logo = @"bank_logo_Default";
                 for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
                     if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
                         bankCard.logo = bankInfo[@"logo"];
-                        bankCard.bgImage = bankInfo[@"bgImage"];
                         break;
                     }
                 }
@@ -568,6 +568,7 @@ TCRechargeMethodsViewDelegate>
     
     for (TCBankCard *bankCard in walletAccount.bankCards) {
         for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
+            bankCard.logo = @"bank_logo_Default";
             if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
                 bankCard.logo = bankInfo[@"logo"];
                 break;

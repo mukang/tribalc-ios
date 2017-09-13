@@ -911,6 +911,36 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchReadyToBindBankCardList:(void (^)(NSArray *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"wallets/banks?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.error) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            } else {
+                NSMutableArray *bankCardList = [NSMutableArray array];
+                NSArray *dics = response.data;
+                for (NSDictionary *dic in dics) {
+                    TCBankCard *bankCard = [[TCBankCard alloc] initWithObjectDictionary:dic];
+                    [bankCardList addObject:bankCard];
+                }
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock([bankCardList copy], nil));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 - (void)prepareAddBankCard:(TCBankCard *)bankCard walletID:(NSString *)walletID result:(void (^)(TCBankCard *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bank_cards?me=%@", walletID, self.currentUserSession.assigned];
@@ -2987,7 +3017,7 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchMessageManagementList:(void (^)(NSArray *, NSError *))resultBlock {
+- (void)fetchMessageManagementWrapper:(void (^)(TCMessageManagementWrapper *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *agentPart = nil;
         if ([[TCBuluoApi api].currentUserSession.userInfo.roles containsObject:@"AGENT"]) {
@@ -3000,14 +3030,9 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
-                NSArray *array = response.data;
-                NSMutableArray *temp = [NSMutableArray arrayWithCapacity:array.count];
-                for (NSDictionary *dic in array) {
-                    TCMessageManagement *messageManagement = [[TCMessageManagement alloc] initWithObjectDictionary:dic];
-                    [temp addObject:messageManagement];
-                }
+                TCMessageManagementWrapper *messageManagementWrapper = [[TCMessageManagementWrapper alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock([temp copy], nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(messageManagementWrapper, nil));
                 }
             } else {
                 if (resultBlock) {

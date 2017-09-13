@@ -36,6 +36,8 @@
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 /** 银行卡logo及背景图数据 */
 @property (copy, nonatomic) NSArray *bankInfoList;
+/** 银行卡模型列表 */
+@property (copy, nonatomic) NSArray *bankCardList;
 /** 输入框里是否含有小数点 */
 @property (nonatomic, getter=isHavePoint) BOOL havePoint;
 /** 宝付支付ID */
@@ -151,17 +153,12 @@
             cell.backgroundColor = [UIColor whiteColor];
             cell.contentView.backgroundColor = [UIColor whiteColor];
             if (indexPath.row == 0) {
+                cell.isBankCardMode = NO;
                 cell.logoImageView.image = [UIImage imageNamed:@"balance_icon"];
                 cell.titleLabel.text = @"余额";
             } else {
-                TCBankCard *bankCard = self.walletAccount.bankCards[indexPath.row - 1];
-                NSString *bankCardNum = bankCard.bankCardNum;
-                NSString *lastNum;
-                if (bankCardNum.length >= 4) {
-                    lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
-                }
-                cell.logoImageView.image = [UIImage imageNamed:bankCard.logo];
-                cell.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+                cell.isBankCardMode = YES;
+                cell.bankCard = self.walletAccount.bankCards[indexPath.row - 1];
             }
             currentCell = cell;
         }
@@ -205,8 +202,13 @@
         
         if (indexPath.row == self.walletAccount.bankCards.count + 1) {
             [self handleSelectAddBankCardCell];
-        } else {
+        } else if (indexPath.row == 0) {
             self.selectedIndexPath = indexPath;
+        } else {
+            TCBankCard *bankCard = self.walletAccount.bankCards[self.selectedIndexPath.row - 1];
+            if (bankCard.type == TCBankCardTypeNormal) {
+                self.selectedIndexPath = indexPath;
+            }
         }
     }
 }
@@ -745,6 +747,7 @@
             }
             weakSelf.walletAccount.bankCards = bankCardList;
             [weakSelf.tableView reloadData];
+            weakSelf.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
             [weakSelf.tableView selectRowAtIndexPath:weakSelf.selectedIndexPath
                                             animated:NO
                                       scrollPosition:UITableViewScrollPositionNone];

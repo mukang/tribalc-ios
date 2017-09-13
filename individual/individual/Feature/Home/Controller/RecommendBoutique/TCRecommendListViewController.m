@@ -155,8 +155,16 @@
 #pragma mark - UICollectionDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     TCGoods *goodInfo = goodsInfoWrapper.content[indexPath.row];
+    TCGoodsDetail *goodsDetail = [[TCGoodsDetail alloc] init];
+    goodsDetail.name = goodInfo.name;
+    goodsDetail.brand = goodInfo.brand;
+    goodsDetail.mainPicture = goodInfo.mainPicture;
+    goodsDetail.originPrice = goodInfo.originPrice;
+    goodsDetail.salePrice = goodInfo.salePrice;
+    
     TCGoodsDetailViewController *vc = [[TCGoodsDetailViewController alloc] init];
     vc.goodsID = goodInfo.ID;
+    vc.goodsDetail = goodsDetail;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

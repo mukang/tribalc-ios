@@ -412,6 +412,7 @@
 		7ACE57AA1DC73BD9004B383A /* TCVicinityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ACE57A81DC73BD9004B383A /* TCVicinityViewController.xib */; };
 		7AD326D61F62360900EBE7BF /* TCGoodsQuantityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD326D51F62360900EBE7BF /* TCGoodsQuantityView.m */; };
 		7AD326DC1F6294FF00EBE7BF /* TCOrderCreateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD326DB1F6294FF00EBE7BF /* TCOrderCreateItem.m */; };
+		7AD326DF1F663E6B00EBE7BF /* TCMessageManagementWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD326DE1F663E6B00EBE7BF /* TCMessageManagementWrapper.m */; };
 		7AD36DB71EDEAC3E00AB95FA /* TCForceUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
 		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
@@ -1227,6 +1228,8 @@
 		7AD326D51F62360900EBE7BF /* TCGoodsQuantityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsQuantityView.m; sourceTree = "<group>"; };
 		7AD326DA1F6294FF00EBE7BF /* TCOrderCreateItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCOrderCreateItem.h; sourceTree = "<group>"; };
 		7AD326DB1F6294FF00EBE7BF /* TCOrderCreateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCOrderCreateItem.m; sourceTree = "<group>"; };
+		7AD326DD1F663E6B00EBE7BF /* TCMessageManagementWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMessageManagementWrapper.h; sourceTree = "<group>"; };
+		7AD326DE1F663E6B00EBE7BF /* TCMessageManagementWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMessageManagementWrapper.m; sourceTree = "<group>"; };
 		7AD36DB51EDEAC3E00AB95FA /* TCForceUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCForceUpdateView.h; sourceTree = "<group>"; };
 		7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCForceUpdateView.m; sourceTree = "<group>"; };
 		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
@@ -2465,6 +2468,8 @@
 				7A925DBD1F1DE77300D697DE /* TCHomeMessageType.m */,
 				7AA117791F4EE2EF00903445 /* TCMessageManagement.h */,
 				7AA1177A1F4EE2EF00903445 /* TCMessageManagement.m */,
+				7AD326DD1F663E6B00EBE7BF /* TCMessageManagementWrapper.h */,
+				7AD326DE1F663E6B00EBE7BF /* TCMessageManagementWrapper.m */,
 			);
 			path = HomeMessage;
 			sourceTree = "<group>";
@@ -3613,6 +3618,7 @@
 				7A925DF31F2091C400D697DE /* TCStorePayViewController.m in Sources */,
 				7A4BF1AE1EB0BE2E00DE1BF5 /* TCBFPayInfo.m in Sources */,
 				7A2CD74F1F04EB3800CEEF29 /* TCApartmentWithholdInfoView.m in Sources */,
+				7AD326DF1F663E6B00EBE7BF /* TCMessageManagementWrapper.m in Sources */,
 				0955A4A41DF83AB60019A57D /* TCReservation.m in Sources */,
 				7AEB4CFC1E03AC5400F83A7C /* TCBioEditGenderViewController.m in Sources */,
 				7A8352841E5C2D8A003A8E76 /* TCServicePromptViewCell.m in Sources */,

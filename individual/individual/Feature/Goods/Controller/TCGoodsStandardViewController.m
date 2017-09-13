@@ -59,6 +59,8 @@ static CGFloat const duration = 0.1;
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = TCARGBColor(0, 0, 0, 0);
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleClickCloseButton:)];
+    [self.view addGestureRecognizer:tap];
     
     [self setupSubviews];
 }

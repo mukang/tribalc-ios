@@ -421,7 +421,6 @@ BaofuFuFingerClientDelegate
             [MBProgressHUD hideHUD:YES];
             for (TCBankCard *bankCard in bankCardList) {
                 bankCard.logo = @"bank_logo_Default";
-                bankCard.bgImage = @"bank_bg_Default";
                 for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
                     if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
                         bankCard.logo = bankInfo[@"logo"];
