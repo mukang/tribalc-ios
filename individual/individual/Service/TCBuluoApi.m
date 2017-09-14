@@ -1439,7 +1439,7 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     if ([self isUserSessionValid]) {
         NSString *apiName = nil;
         if (isDirect) {
-            apiName = [NSString stringWithFormat:@"orders/direct?me=%@", self.currentUserSession.assigned];
+            apiName = [NSString stringWithFormat:@"orders?direct=true&me=%@", self.currentUserSession.assigned];
         } else {
             apiName = [NSString stringWithFormat:@"orders?me=%@", self.currentUserSession.assigned];
         }

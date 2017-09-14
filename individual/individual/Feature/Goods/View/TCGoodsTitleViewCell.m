@@ -104,7 +104,7 @@
     _goodsDetail = goodsDetail;
     
     self.titleLabel.text = goodsDetail.title;
-    self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [NSNumber numberWithDouble:goodsDetail.salePrice]];
+    self.priceLabel.text = goodsDetail.salePrice ? [NSString stringWithFormat:@"¥%@", [NSNumber numberWithDouble:goodsDetail.salePrice]] : @"免费";
     self.originPriceLabel.text = [NSString stringWithFormat:@"¥%@", [NSNumber numberWithDouble:goodsDetail.originPrice]];
     
     if (goodsDetail.tags.count) {

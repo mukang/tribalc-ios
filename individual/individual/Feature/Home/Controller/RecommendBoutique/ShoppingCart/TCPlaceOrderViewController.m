@@ -489,7 +489,7 @@
     
     [[TCBuluoApi api] createOrderListWithItemList:itemList addressID:addressId isDirect:isDirect result:^(NSArray *orderList, NSError *error) {
         if (orderList) {
-            [weakSelf handleShowPaymentViewWithOrderList:orderList];
+            [weakSelf filterOrderList:orderList];
             [MBProgressHUD hideHUD:YES];
         } else {
             weakSelf.confirmPayBtn.enabled = YES;
@@ -497,6 +497,25 @@
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提交信息失败，%@", reason]];
         }
     }];
+}
+
+- (void)filterOrderList:(NSArray *)orderList {
+    NSMutableArray *noSettledOrderList = [NSMutableArray array];
+    for (int i=0; i<orderList.count; i++) {
+        TCOrder *order = orderList[i];
+        if (order.orderStatus == TCOrderNoSettle) {
+            [noSettledOrderList addObject:order];
+        }
+    }
+    
+    if (noSettledOrderList.count) {
+        [self handleShowPaymentViewWithOrderList:[noSettledOrderList copy]];
+    } else {
+        // 跳转至“全部”订单列表
+        TCOrderViewController *vc = [[TCOrderViewController alloc] initWithGoodsOrderStatus:TCGoodsOrderStatusAll];
+        vc.fromController = self.fromController;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 /**
