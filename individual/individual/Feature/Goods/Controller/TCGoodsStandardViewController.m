@@ -144,6 +144,8 @@ static CGFloat const duration = 0.1;
     if (self.primaryKey) {
         [standardView.primaryView reloadStandardDataWithAnotherKey:self.secondaryKey];
         [standardView.secondaryView reloadStandardDataWithAnotherKey:self.primaryKey];
+    } else if (self.goodsStandard.descriptions.primary && !self.goodsStandard.descriptions.secondary) {
+        [standardView.primaryView reloadStandardDataWithAnotherKey:nil];
     }
     standardView.primaryView.delegate = self;
     standardView.secondaryView.delegate = self;
