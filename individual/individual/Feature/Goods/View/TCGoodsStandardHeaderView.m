@@ -17,6 +17,8 @@
 @property (weak, nonatomic) UIImageView *mainPictureView;
 @property (weak, nonatomic) UILabel *priceLabel;
 @property (weak, nonatomic) UILabel *repertoryLabel;
+@property (weak, nonatomic) UILabel *limitLabel;
+@property (weak, nonatomic) UILabel *residueLabel;
 @property (weak, nonatomic) UILabel *selectLabel;
 @property (weak, nonatomic) UILabel *standardLable;
 @property (weak, nonatomic) UIView *lineView;
@@ -44,7 +46,7 @@
     [self addSubview:mainPictureView];
     
     UILabel *priceLabel = [[UILabel alloc] init];
-    priceLabel.textColor = TCRGBColor(81, 199, 209);
+    priceLabel.textColor = TCRGBColor(113, 130, 220);
     priceLabel.font = [UIFont systemFontOfSize:16];
     [self addSubview:priceLabel];
     
@@ -52,6 +54,18 @@
     repertoryLabel.textColor = TCGrayColor;
     repertoryLabel.font = [UIFont systemFontOfSize:12];
     [self addSubview:repertoryLabel];
+    
+    UILabel *limitLabel = [[UILabel alloc] init];
+    limitLabel.textColor = TCRGBColor(244, 55, 49);
+    limitLabel.font = [UIFont systemFontOfSize:12];
+    limitLabel.hidden = YES;
+    [self addSubview:limitLabel];
+    
+    UILabel *residueLabel = [[UILabel alloc] init];
+    residueLabel.textColor = TCGrayColor;
+    residueLabel.font = [UIFont systemFontOfSize:12];
+    residueLabel.hidden = YES;
+    [self addSubview:residueLabel];
     
     UILabel *selectLabel = [[UILabel alloc] init];
     selectLabel.text = @"已选择";
@@ -76,6 +90,8 @@
     self.mainPictureView = mainPictureView;
     self.priceLabel = priceLabel;
     self.repertoryLabel = repertoryLabel;
+    self.limitLabel = limitLabel;
+    self.residueLabel = residueLabel;
     self.selectLabel = selectLabel;
     self.standardLable = standardLable;
     self.closeButton = closeButton;
@@ -95,6 +111,14 @@
     [self.repertoryLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.priceLabel);
         make.top.equalTo(self.priceLabel.mas_bottom).offset(12);
+    }];
+    [self.limitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.priceLabel);
+        make.top.equalTo(self.priceLabel.mas_bottom).offset(10);
+    }];
+    [self.residueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.limitLabel.mas_right);
+        make.centerY.equalTo(self.limitLabel);
     }];
     [self.selectLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.priceLabel);
@@ -124,7 +148,36 @@
     
     self.priceLabel.text = [NSString stringWithFormat:@"¥%@", [NSNumber numberWithDouble:goodsDetail.salePrice]];
     
-    self.repertoryLabel.text = [NSString stringWithFormat:@"（剩余：%zd）", goodsDetail.repertory];
+    self.repertoryLabel.text = [NSString stringWithFormat:@"库存：%zd", goodsDetail.repertory];
+    
+    self.limitLabel.text = [NSString stringWithFormat:@"每日限量%zd", goodsDetail.dailyLimit];
+    
+    NSInteger residue = goodsDetail.dailyLimit - goodsDetail.dailySaled;
+    if (residue < 0) residue = 0;
+    if (residue < goodsDetail.repertory) residue = goodsDetail.repertory;
+    self.residueLabel.text = [NSString stringWithFormat:@"（剩余%zd）", residue];
+    
+    CGFloat repertoryLabelTop = 0, selectLabelTop = 0;
+    if (goodsDetail.dailyLimit) {
+        repertoryLabelTop = 10;
+        selectLabelTop = 30;
+        self.limitLabel.hidden = NO;
+        self.residueLabel.hidden = NO;
+    } else {
+        repertoryLabelTop = 12;
+        selectLabelTop = 12;
+        self.limitLabel.hidden = YES;
+        self.residueLabel.hidden = YES;
+    }
+    
+    [self.repertoryLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.priceLabel.mas_bottom).offset(repertoryLabelTop);
+    }];
+    [self.selectLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.repertoryLabel.mas_bottom).offset(selectLabelTop);
+    }];
+    
+    [self layoutIfNeeded];
 }
 
 - (void)setStandardStr:(NSString *)standardStr {
