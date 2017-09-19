@@ -822,6 +822,36 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchWalletBillByBillID:(NSString *)billID result:(void (^)(TCWalletBill *walletBill, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bills/%@", self.currentUserSession.assigned,billID];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    TCWalletBill *walletBill = [[TCWalletBill alloc] initWithObjectDictionary:response.data];
+                    if (resultBlock) {
+                        TC_CALL_ASYNC_MQ(resultBlock(walletBill, nil));
+                    }
+                }
+            } else {
+                if (response.error) {
+                    if (resultBlock) {
+                        TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                    }
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+
+}
+
 - (void)fetchWalletBillWrapperByWalletID:(NSString *)walletID tradingType:(NSString *)tradingType count:(NSUInteger)count sortSkip:(NSString *)sortSkip result:(void (^)(TCWalletBillWrapper *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *tradingTypePart = tradingType ? [NSString stringWithFormat:@"tradingType=%@&", tradingType] : @"";

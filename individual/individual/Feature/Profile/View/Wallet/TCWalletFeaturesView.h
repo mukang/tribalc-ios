@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, TCWalletFeaturesViewType) {
 
 @property (nonatomic, readonly) TCWalletFeaturesViewType type;
 @property (weak, nonatomic) id<TCWalletFeaturesViewDelegate> delegate;
+@property (copy, nonatomic) NSString *creditStatus;
 
 - (instancetype)initWithType:(TCWalletFeaturesViewType)type;
 

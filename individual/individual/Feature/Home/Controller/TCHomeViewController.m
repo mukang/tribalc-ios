@@ -13,6 +13,14 @@
 #import "TCMyLockQRCodeController.h"
 #import "TCLocksAndVisitorsViewController.h"
 #import "TCRepairsViewController.h"
+#import "TCWalletBillDetailViewController.h"
+#import "TCCreditViewController.h"
+#import "TCApartmentViewController.h"
+#import "TCCompanyWalletViewController.h"
+#import "TCCompanyViewController.h"
+#import "TCCompanyApplyViewController.h"
+#import "TCApartmentPayViewController.h"
+#import "TCCompanyRentPayViewController.h"
 
 #import "TCHomeSearchBarView.h"
 #import "TCHomeToolBarView.h"
@@ -324,6 +332,55 @@ TCHomeCoverViewDelegate>
 
 #pragma mark - TCHomeMessageCellDelegate
 
+- (void)didClickCheckBtnWithHomeMessage:(TCHomeMessage *)message {
+    if (!message) {
+        return;
+    }
+    
+    if (!message.messageBody.homeMessageType) {
+        return;
+    }
+    
+    if (![message.messageBody.homeMessageType.homeMessageTypeEnum isKindOfClass:[NSString class]]) {
+        return;
+    }
+    
+    if (message.messageBody.homeMessageType.type == TCMessageTypeOther) {
+        return;
+    }
+    
+    TCMessageType type = message.messageBody.homeMessageType.type;
+    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeCreditBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeWelfare) {
+        // 对账单详情
+        [self getbillInfoWithHomeMessage:message];
+    }else if (type == TCMessageTypeAccountWalletWithdraw) {
+        // 提现记录详情
+        [self getbillInfoWithHomeMessage:message];
+    }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration) {
+        //授信
+        [self fetchWalletData];
+    }else if (type == TCMessageTypeRentCheckIn) {
+        //我的公寓
+        [self handleClickApartmentButton];
+    }else if (type == TCMessageTypeRentBillGeneration) {
+        // 租金账单详情
+        [self getRentProtocolWithMessage:message];
+    }else if (type == TCMessageTypeCompaniesAdmin) {
+        // 我的公司
+        [self handleClickCompanyButton];
+    }else if (type == TCMessageTypeCompaniesRentBillGeneration) {
+        //企业租金账单详情
+        [self handleCompanyRentBill];
+    }else if (type == TCMessageTypeCompaniesRentBillPayment) {
+        //企业对账单详情
+        [self getbillInfoWithHomeMessage:message];
+    }else if (type == TCMessageTypeCompaniesWalletWithdraw) {
+        //企业提现记录详情
+        [self getbillInfoWithHomeMessage:message];
+    }
+    
+}
+
 - (void)didClickMoreActionBtnWithMessageCell:(UITableViewCell *)cell {
     TCHomeMessageCell *messageCell = (TCHomeMessageCell *)cell;
     CGRect rect = [messageCell convertRect:messageCell.bounds toView:self.tabBarController.view];
@@ -332,6 +389,89 @@ TCHomeCoverViewDelegate>
     self.coverView.currentCell = (TCHomeMessageCell *)cell;
     self.coverView.homeMessage = messageCell.homeMessage;
     self.coverView.hidden = NO;
+}
+
+- (void)handleCompanyRentBill {
+    TCCompanyRentPayViewController *vc = [[TCCompanyRentPayViewController alloc] init];
+    vc.companyID = [[TCBuluoApi api] currentUserSession].userInfo.companyID;
+    vc.companyName = [[TCBuluoApi api] currentUserSession].userInfo.companyName;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)getRentProtocolWithMessage:(TCHomeMessage *)message {
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchCurrentRentProtocolBySourceID:message.messageBody.referenceId result:^(TCRentProtocol *rentProtocol, NSError *error) {
+        @StrongObj(self)
+        if ([rentProtocol isKindOfClass:[TCRentProtocol class]]) {
+            TCApartmentPayViewController *vc = [[TCApartmentPayViewController alloc] init];
+            vc.rentProtocol = rentProtocol;
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
+        }
+    }];
+}
+
+- (void)handleClickCompanyButton {
+    TCUserInfo *userInfo = [TCBuluoApi api].currentUserSession.userInfo;
+    if ([userInfo.roles containsObject:@"AGENT"]) {
+        TCCompanyWalletViewController *vc = [[TCCompanyWalletViewController alloc] init];
+        vc.companyID = userInfo.companyID;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        if (userInfo.companyID) {
+            TCCompanyViewController *vc = [[TCCompanyViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } else {
+            TCCompanyApplyViewController *vc = [[TCCompanyApplyViewController alloc] initWithCompanyApplyStatus:TCCompanyApplyStatusNotApply];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+}
+
+- (void)handleClickApartmentButton {
+    TCApartmentViewController *propertyListVc = [[TCApartmentViewController alloc] init];
+    propertyListVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:propertyListVc animated:YES];
+}
+
+- (void)fetchWalletData {
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {
+        @StrongObj(self)
+        if (walletAccount) {
+            [MBProgressHUD hideHUD:YES];
+            TCCreditViewController *creditVC = [[TCCreditViewController alloc] init];
+            creditVC.hidesBottomBarWhenPushed = YES;
+            creditVC.walletAccount = walletAccount;
+            [self.navigationController pushViewController:creditVC animated:YES];
+        } else {
+            [MBProgressHUD showHUDWithMessage:@"获取钱包信息失败！"];
+        }
+    }];
+}
+
+- (void)getbillInfoWithHomeMessage:(TCHomeMessage *)message {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchWalletBillByBillID:message.messageBody.referenceId result:^(TCWalletBill *walletBill, NSError *error) {
+        if (walletBill) {
+            [MBProgressHUD hideHUD:YES];
+            TCWalletBillDetailViewController *walletBillDetailVC = [[TCWalletBillDetailViewController alloc] init];
+            walletBillDetailVC.walletBill = walletBill;
+            walletBillDetailVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:walletBillDetailVC animated:YES];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取失败，%@", reason]];
+        }
+    }];
 }
 
 #pragma mark - TCHomeCoverViewDelegate
