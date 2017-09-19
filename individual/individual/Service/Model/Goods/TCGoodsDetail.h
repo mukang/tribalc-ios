@@ -63,4 +63,9 @@
 /** 店铺简要信息 */
 @property (strong, nonatomic) TCMarkStore *tMarkStore;
 
+/** 单日限量 */
+@property (nonatomic) NSInteger dailyLimit;
+/** 已售出 */
+@property (nonatomic) NSInteger dailySaled;
+
 @end

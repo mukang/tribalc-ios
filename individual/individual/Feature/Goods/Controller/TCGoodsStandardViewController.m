@@ -283,12 +283,17 @@ static CGFloat const duration = 0.1;
 }
 
 - (void)handleClickAddButton:(id)sender {
-    if (self.quantity < self.goodsDetail.repertory) {
-        self.quantity ++;
-        self.standardView.quantityView.quantity = self.quantity;
-    } else {
-        [MBProgressHUD showHUDWithMessage:@"库存不足"];
+    if (self.goodsDetail.dailyLimit && (self.quantity >= (self.goodsDetail.dailyLimit - self.goodsDetail.dailySaled))) {
+        [MBProgressHUD showHUDWithMessage:@"已超过商品每日限购数量"];
+        return;
     }
+    if (self.quantity >= self.goodsDetail.repertory) {
+        [MBProgressHUD showHUDWithMessage:@"库存不足"];
+        return;
+    }
+    
+    self.quantity ++;
+    self.standardView.quantityView.quantity = self.quantity;
 }
 
 - (void)handleClickConfirmButton:(id)sender {
@@ -302,19 +307,16 @@ static CGFloat const duration = 0.1;
 }
 
 - (void)handleClickAddShoppingCartButton:(id)sender {
+    [self determineTheResidualAmount];
     [self handleAddShoppingCart];
 }
 
 - (void)handleClickBuyButton:(id)sender {
+    [self determineTheResidualAmount];
     [self handleBuyNow];
 }
 
 - (void)handleAddShoppingCart {
-    if (self.quantity > self.goodsDetail.repertory) {
-        [MBProgressHUD showHUDWithMessage:@"库存不足"];
-        return;
-    }
-    
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] addToShoppingCartWithGoodsID:self.goodsDetail.ID quantity:self.quantity result:^(BOOL success, NSError *error) {
         if (success) {
@@ -328,16 +330,22 @@ static CGFloat const duration = 0.1;
 }
 
 - (void)handleBuyNow {
-    if (self.quantity > self.goodsDetail.repertory) {
-        [MBProgressHUD showHUDWithMessage:@"库存不足"];
-        return;
-    }
-    
     [self dismiss:YES completion:^{
         if ([weakSelf.delegate respondsToSelector:@selector(buyNowInGoodsStandardViewController:)]) {
             [weakSelf.delegate buyNowInGoodsStandardViewController:self];
         }
     }];
+}
+
+- (void)determineTheResidualAmount {
+    if (self.goodsDetail.dailyLimit && (self.quantity >= (self.goodsDetail.dailyLimit - self.goodsDetail.dailySaled))) {
+        [MBProgressHUD showHUDWithMessage:@"已超过商品每日限购数量"];
+        return;
+    }
+    if (self.quantity >= self.goodsDetail.repertory) {
+        [MBProgressHUD showHUDWithMessage:@"库存不足"];
+        return;
+    }
 }
 
 - (void)handleModifyShoppingCart {
