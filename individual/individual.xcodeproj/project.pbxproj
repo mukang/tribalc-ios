@@ -196,6 +196,9 @@
 		7A2F7C721E768C36007B831D /* TCAddVisitorTimeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C711E768C36007B831D /* TCAddVisitorTimeViewCell.m */; };
 		7A2F7C751E768C4E007B831D /* TCAddVisitorDeviceViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C741E768C4E007B831D /* TCAddVisitorDeviceViewCell.m */; };
 		7A2F7C781E76BFCC007B831D /* TCLockEquipPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F7C771E76BFCC007B831D /* TCLockEquipPickerView.m */; };
+		7A2FA1721F711548002F13C6 /* TCCommonPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2FA1711F711548002F13C6 /* TCCommonPaymentViewController.m */; };
+		7A2FA1781F711F03002F13C6 /* TCCommonPaymentInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2FA1771F711F03002F13C6 /* TCCommonPaymentInputView.m */; };
+		7A2FA17B1F7120AA002F13C6 /* TCCommonPaymentMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2FA17A1F7120AA002F13C6 /* TCCommonPaymentMethodView.m */; };
 		7A3321981E0D07E1003049DB /* TCSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3321971E0D07E1003049DB /* TCSettingViewController.m */; };
 		7A33219B1E0D0945003049DB /* TCSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219A1E0D0945003049DB /* TCSuggestionViewController.m */; };
 		7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A33219D1E0D3AA9003049DB /* TCVicinityTitleView.m */; };
@@ -829,6 +832,12 @@
 		7A2F7C741E768C4E007B831D /* TCAddVisitorDeviceViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAddVisitorDeviceViewCell.m; sourceTree = "<group>"; };
 		7A2F7C761E76BFCC007B831D /* TCLockEquipPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockEquipPickerView.h; sourceTree = "<group>"; };
 		7A2F7C771E76BFCC007B831D /* TCLockEquipPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockEquipPickerView.m; sourceTree = "<group>"; };
+		7A2FA1701F711548002F13C6 /* TCCommonPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommonPaymentViewController.h; sourceTree = "<group>"; };
+		7A2FA1711F711548002F13C6 /* TCCommonPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommonPaymentViewController.m; sourceTree = "<group>"; };
+		7A2FA1761F711F03002F13C6 /* TCCommonPaymentInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommonPaymentInputView.h; sourceTree = "<group>"; };
+		7A2FA1771F711F03002F13C6 /* TCCommonPaymentInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommonPaymentInputView.m; sourceTree = "<group>"; };
+		7A2FA1791F7120AA002F13C6 /* TCCommonPaymentMethodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCommonPaymentMethodView.h; sourceTree = "<group>"; };
+		7A2FA17A1F7120AA002F13C6 /* TCCommonPaymentMethodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCommonPaymentMethodView.m; sourceTree = "<group>"; };
 		7A3321961E0D07E1003049DB /* TCSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSettingViewController.h; sourceTree = "<group>"; };
 		7A3321971E0D07E1003049DB /* TCSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSettingViewController.m; sourceTree = "<group>"; };
 		7A3321991E0D0945003049DB /* TCSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSuggestionViewController.h; sourceTree = "<group>"; };
@@ -2666,6 +2675,8 @@
 				7AADCC621EE7A33D004AA1DA /* TCPaymentViewController.m */,
 				7AABE8411F396BE4001F3BC5 /* TCCompanyPaymentViewController.h */,
 				7AABE8421F396BE4001F3BC5 /* TCCompanyPaymentViewController.m */,
+				7A2FA1701F711548002F13C6 /* TCCommonPaymentViewController.h */,
+				7A2FA1711F711548002F13C6 /* TCCommonPaymentViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2685,6 +2696,10 @@
 				7AADCC6D1EE80154004AA1DA /* TCPaymentPasswordView.h */,
 				7AADCC6E1EE80154004AA1DA /* TCPaymentPasswordView.m */,
 				7AADCC6F1EE80154004AA1DA /* TCPaymentPasswordView.xib */,
+				7A2FA1791F7120AA002F13C6 /* TCCommonPaymentMethodView.h */,
+				7A2FA17A1F7120AA002F13C6 /* TCCommonPaymentMethodView.m */,
+				7A2FA1761F711F03002F13C6 /* TCCommonPaymentInputView.h */,
+				7A2FA1771F711F03002F13C6 /* TCCommonPaymentInputView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3567,6 +3582,7 @@
 				7A16665E1DFAC213007B5733 /* TCCompanyTitleViewCell.m in Sources */,
 				0928B3351DF8F7090085A182 /* TCReservationDetail.m in Sources */,
 				5546F9681F305CA600E9A9B0 /* TCHomeMessageOnlyMainTitleMiddleCell.m in Sources */,
+				7A2FA1781F711F03002F13C6 /* TCCommonPaymentInputView.m in Sources */,
 				7A46B9301F332232001E33DD /* TCScannerBorder.m in Sources */,
 				092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */,
 				7A925DCF1F1F072600D697DE /* TCStoreWrapper.m in Sources */,
@@ -3600,6 +3616,7 @@
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,
 				7AFEC48D1E54729100B0E754 /* TCGoodsOrderStoreViewCell.m in Sources */,
+				7A2FA1721F711548002F13C6 /* TCCommonPaymentViewController.m in Sources */,
 				7A7E94001DF51712006A47CE /* TCToolsViewController.m in Sources */,
 				7AA117941F50324200903445 /* TCProfileFeatureView.m in Sources */,
 				550FB7711ED5C18600D75E33 /* FSCalendarCell.m in Sources */,
@@ -3651,6 +3668,7 @@
 				7A243F3B1F28934800192E22 /* TCCompanyWalletTitleView.m in Sources */,
 				7AEB4CF51E03944500F83A7C /* TCShippingAddressViewCell.m in Sources */,
 				7AEB4CFF1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m in Sources */,
+				7A2FA17B1F7120AA002F13C6 /* TCCommonPaymentMethodView.m in Sources */,
 				7AC346F81E0144F300E28EC9 /* TCBankPickerView.m in Sources */,
 				7ABA7E471F00F78A00DCC2D0 /* TCRentProtocol.m in Sources */,
 				7AEB4D051E03F02F00F83A7C /* TCBioEditBirthdateViewController.m in Sources */,
