@@ -26,7 +26,8 @@ typedef NS_ENUM(NSInteger, TCMessageType) {
     TCMessageTypeCompaniesRentBillPayment,          // "企业办公", "租金缴纳"
     TCMessageTypeCompaniesWalletWithdraw,           // "企业办公", "提现到账"
     TCMessageTypeAccountRegister,                   // "账户推送", "欢迎登录"
-    TCMessageTypeWelfare                            // "福利"
+    TCMessageTypeWelfare,                           // "福利"
+    TCMessageTypeOther
 };
 
 @interface TCHomeMessageType : NSObject

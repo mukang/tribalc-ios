@@ -13,6 +13,7 @@
 
 #import "TCWalletAccount.h"
 #import <TCCommonLibs/TCCommonButton.h>
+#import <TCCommonLibs/UIImage+Category.h>
 #import "TCCreditBill.h"
 #import "TCBuluoApi.h"
 
@@ -123,8 +124,13 @@
     _trackLayer.frame = mybound;
     
     //内圆
-    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:((M_PI * 2) * ((self.walletAccount.creditLimit-self.walletAccount.creditBalance)/self.walletAccount.creditLimit))-M_PI_2 clockwise:YES];
-//    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:(M_PI * 2) * 0.6 - M_PI_2 clockwise:YES];
+    CGFloat scale = (self.walletAccount.creditLimit-self.walletAccount.creditBalance)/self.walletAccount.creditLimit;
+    if (scale > 0.98 && scale < 1) {
+        scale = 0.98;
+    }
+//    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:((M_PI * 2) * ((self.walletAccount.creditLimit-self.walletAccount.creditBalance)/self.walletAccount.creditLimit))-M_PI_2 clockwise:YES];
+    
+    _progressPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(TCScreenWidth/2, 100) radius:(mybound.size.width - 0.7)/ 2 startAngle:-M_PI_2 endAngle:((M_PI * 2) * scale)-M_PI_2 clockwise:YES];
     
     _progressLayer = [CAShapeLayer new];
     _progressLayer.fillColor = [UIColor clearColor].CGColor;
@@ -172,7 +178,7 @@
     
     if (indexPath.section == 0) {
         cell.textLabel.text = @"本期账单";
-        cell.imageView.image = [UIImage imageNamed:@"currentBill"];
+        
         if (self.creditBill) {
             if ([self.creditBill.status isEqualToString:@"PAID"]) {
                 UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(TCScreenWidth-90, 15, 70, 15)];
@@ -184,10 +190,15 @@
                 statusLabel.textColor = TCRGBColor(151, 171, 234);
                 [cell addSubview:statusLabel];
                 cell.detailTextLabel.text = nil;
+            }else if ([self.creditBill.status isEqualToString:@"OVERDUE"]) {
+                cell.imageView.image = [UIImage imageNamed:@"wallet_credit_billday_overdue"];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",self.creditBill.amount];
             }else{
+                cell.imageView.image = [UIImage imageNamed:@"currentBill"];
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",self.creditBill.amount];
             }
         }else {
+            cell.imageView.image = [UIImage imageNamed:@"currentBill"];
             cell.detailTextLabel.text = @"0.00";
         }
         
@@ -248,9 +259,16 @@
     if (!_gradientLayer) {
         _gradientLayer             = [CAGradientLayer layer];
         // 设置颜色
-        _gradientLayer.colors = @[(__bridge id)TCRGBColor(130, 207, 246).CGColor,
-                                  
-                                  (__bridge id)TCRGBColor(126, 152, 226).CGColor];
+        if ([self.walletAccount.creditStatus isKindOfClass:[NSString class]] && [self.walletAccount.creditStatus isEqualToString:@"OVERDUE"]) {
+            _gradientLayer.colors = @[(__bridge id)TCRGBColor(252, 142, 87).CGColor,
+                                      
+                                      (__bridge id)TCRGBColor(244, 55, 49).CGColor];
+        }else {
+            _gradientLayer.colors = @[(__bridge id)TCRGBColor(130, 207, 246).CGColor,
+                                      
+                                      (__bridge id)TCRGBColor(126, 152, 226).CGColor];
+        }
+        
         // 设置颜色渐变方向
         _gradientLayer.startPoint = CGPointMake(0, 0);
         _gradientLayer.endPoint = CGPointMake(0, 1);
@@ -281,6 +299,9 @@
         if ([self.creditBill.status isEqualToString:@"PAID"]) {
             [repayBtn setTitle:@"已还清" forState:UIControlStateNormal];
             repayBtn.enabled = NO;
+        }else if ([self.creditBill.status isEqualToString:@"OVERDUE"]) {
+            [repayBtn setBackgroundImage: [UIImage imageWithColor:TCRGBColor(244, 55, 49)] forState:UIControlStateNormal];
+            [repayBtn setBackgroundImage: [UIImage imageWithColor:TCRGBColor(244, 55, 49)] forState:UIControlStateHighlighted];
         }
     }
     return _tableView;
@@ -314,6 +335,17 @@
         [mutableAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(str.length-2, 2)];
         _moneyLabel.attributedText = mutableAtt;
         
+        if ([self.walletAccount.state isKindOfClass:[NSString class]] && [self.walletAccount.state isEqualToString:@"OVERDUE"]) {
+            UILabel *overdueLabel = [[UILabel alloc] initWithFrame:CGRectMake((TCScreenWidth-55)/2, 130, 55, 17)];
+            overdueLabel.text = @"已逾期";
+            overdueLabel.textColor = [UIColor whiteColor];
+            overdueLabel.backgroundColor = TCRGBColor(244, 55, 49);
+            overdueLabel.font = [UIFont systemFontOfSize:12];
+            overdueLabel.layer.cornerRadius = 8;
+            overdueLabel.clipsToBounds = YES;
+        overdueLabel.textAlignment = NSTextAlignmentCenter;
+            [_headerView addSubview:overdueLabel];
+        }
     }
     return _headerView;
 }

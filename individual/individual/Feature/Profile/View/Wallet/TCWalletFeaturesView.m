@@ -18,6 +18,8 @@
 
 @property (strong, nonatomic) NSMutableArray *buttons;
 
+@property (weak, nonatomic) UIImageView *overDueImageView;
+
 @end
 
 @implementation TCWalletFeaturesView
@@ -87,6 +89,24 @@
             }];
         }
         lastButton = button;
+        
+        if (i == 2) {
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"wallet_credit_overdue"]];
+            [button addSubview:imageView];
+            self.overDueImageView = imageView;
+            
+            if ([self.creditStatus isKindOfClass:[NSString class]] && [self.creditStatus isEqualToString:@"OVERDUE"]) {
+                imageView.hidden = NO;
+            }else {
+                imageView.hidden = YES;
+            }
+            
+            [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(button).offset(-5);
+                make.top.equalTo(button).offset(5);
+                make.width.height.equalTo(@30);
+            }];
+        }
     }
     
     UIView *topLine = [self creatLineView];
@@ -125,6 +145,17 @@
         make.height.left.right.equalTo(firstHorizontalLine);
         make.centerY.equalTo(containerView.mas_bottom).multipliedBy(2/3.0f);
     }];
+}
+
+- (void)setCreditStatus:(NSString *)creditStatus {
+
+    _creditStatus = creditStatus;
+    
+    if ([creditStatus isKindOfClass:[NSString class]] && [creditStatus isEqualToString:@"OVERDUE"]) {
+        self.overDueImageView.hidden = NO;
+    }else {
+        self.overDueImageView.hidden = YES;
+    }
 }
 
 - (UIView *)creatLineView {

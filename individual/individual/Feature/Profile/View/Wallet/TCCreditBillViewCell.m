@@ -19,6 +19,8 @@
 
 @property (strong, nonatomic) UILabel *moneyLabel;
 
+@property (strong, nonatomic) UILabel *overdueLabel;
+
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @property (strong, nonatomic) UIView *lineView;
@@ -40,6 +42,11 @@
     self.titleLabel.text = [NSString stringWithFormat:@"%@账单",creditBill.monthDate];
     self.subTitleLabel.text = [NSString stringWithFormat:@"%@-%@",[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:creditBill.zeroDate/1000]],[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:creditBill.billDate/1000]]];
     self.moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",creditBill.amount];
+    if ([creditBill.status isKindOfClass:[NSString class]] &&[creditBill.status isEqualToString:@"OVERDUE"]) {
+        self.overdueLabel.hidden = NO;
+    }else {
+        self.overdueLabel.hidden = YES;
+    }
 }
 
 - (void)setUpViews {
@@ -48,6 +55,7 @@
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.subTitleLabel];
     [self.contentView addSubview:self.moneyLabel];
+    [self.contentView addSubview:self.overdueLabel];
     [self.contentView addSubview:self.lineView];
     
 //    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -70,8 +78,12 @@
     [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.titleLabel.mas_right);
         make.right.equalTo(self.contentView).offset(-TCRealValue(15));
-        make.centerY.equalTo(self.contentView);
-        make.height.equalTo(@30);
+        make.top.equalTo(self.titleLabel);
+    }];
+    
+    [self.overdueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.moneyLabel);
+        make.top.equalTo(self.subTitleLabel);
     }];
     
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -96,6 +108,18 @@
         [_dateFormatter setDateFormat:@"yyyy/MM/dd"];
     }
     return _dateFormatter;
+}
+
+- (UILabel *)overdueLabel {
+    if (_overdueLabel == nil) {
+        _overdueLabel = [[UILabel alloc] init];
+        _overdueLabel.font = [UIFont systemFontOfSize:14];
+        _overdueLabel.textAlignment = NSTextAlignmentRight;
+        _overdueLabel.textColor = TCRGBColor(244, 55, 49);
+        _overdueLabel.text = @"已逾期";
+        _overdueLabel.hidden = YES;
+    }
+    return _moneyLabel;
 }
 
 - (UILabel *)moneyLabel {

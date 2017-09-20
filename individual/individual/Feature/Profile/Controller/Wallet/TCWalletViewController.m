@@ -29,6 +29,8 @@
 @property (weak, nonatomic) UINavigationBar *navBar;
 @property (weak, nonatomic) TCWalletBalanceView *balanceView;
 
+@property (weak, nonatomic) TCWalletFeaturesView *featuresView;
+
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
 
 @end
@@ -96,6 +98,7 @@
     TCWalletFeaturesView *featuresView = [[TCWalletFeaturesView alloc] initWithType:TCWalletFeaturesViewTypeIndividual];
     featuresView.delegate = self;
     [self.view addSubview:featuresView];
+    self.featuresView = featuresView;
     
     [balanceView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self.view);
@@ -114,6 +117,7 @@
             [MBProgressHUD hideHUD:YES];
             weakSelf.walletAccount = walletAccount;
             weakSelf.balanceView.walletAccount = walletAccount;
+            weakSelf.featuresView.creditStatus = walletAccount.creditStatus;
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取钱包信息失败！"];
         }
