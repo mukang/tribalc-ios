@@ -58,7 +58,7 @@
 - (void)loadGoodsData {
     [MBProgressHUD showHUD:YES];
     TCBuluoApi *api = [TCBuluoApi api];
-    [api fetchGoodsWrapper:20 sortSkip:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+    [api fetchGoodsWrapper:20 sortSkip:nil storeId:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
         if (goodsWrapper) {
             [MBProgressHUD hideHUD:YES];
             goodsInfoWrapper = goodsWrapper;
@@ -74,7 +74,7 @@
 - (void)loadGoodsDataWithSortSkip:(NSString *)sortSkip {
     if (goodsInfoWrapper.hasMore == YES) {
         TCBuluoApi *api = [TCBuluoApi api];
-        [api fetchGoodsWrapper:20 sortSkip:sortSkip result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+        [api fetchGoodsWrapper:20 sortSkip:sortSkip storeId:nil result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
             if (goodsWrapper) {
                 NSArray *infoArr = goodsInfoWrapper.content;
                 goodsInfoWrapper = goodsWrapper;

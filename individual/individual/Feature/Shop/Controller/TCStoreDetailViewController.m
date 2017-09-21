@@ -8,11 +8,14 @@
 
 #import "TCStoreDetailViewController.h"
 #import "TCStorePayViewController.h"
+#import "TCGoodsViewController.h"
+#import "TCGoodsDetailViewController.h"
 
 #import "TCStoreHeaderView.h"
 #import "TCStoreDescViewCell.h"
 #import "TCStoreTagsViewCell.h"
 #import "TCStorePrivilegeViewCell.h"
+#import "TCStoreGoodsCell.h"
 
 #import "TCBuluoApi.h"
 
@@ -31,7 +34,11 @@
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) TCStoreHeaderView *headerView;
 
+@property (strong, nonatomic) UIView *footerView;
+
 @property (strong, nonatomic) TCListStore *storeInfo;
+
+@property (strong, nonatomic) NSMutableArray *mutableGoodsArr;
 
 @end
 
@@ -49,6 +56,7 @@
     [self setupNavBar];
     [self setupSubviews];
     [self loadNetData];
+    [self loadGoodsData];
     [self updateNavigationBarWithAlpha:0.0];
 }
 
@@ -83,6 +91,7 @@
     [tableView registerClass:[TCStoreDescViewCell class] forCellReuseIdentifier:@"TCStoreDescViewCell"];
     [tableView registerClass:[TCStoreTagsViewCell class] forCellReuseIdentifier:@"TCStoreTagsViewCell"];
     [tableView registerClass:[TCStorePrivilegeViewCell class] forCellReuseIdentifier:@"TCStorePrivilegeViewCell"];
+    [tableView registerClass:[TCStoreGoodsCell class] forCellReuseIdentifier:@"TCStoreGoodsCell"];
     [tableView setContentOffset:CGPointMake(0, -headerViewH) animated:NO];
     [self.view insertSubview:tableView belowSubview:self.navBar];
     self.tableView = tableView;
@@ -112,6 +121,24 @@
     }];
 }
 
+- (void)loadGoodsData {
+    [[TCBuluoApi api] fetchGoodsWrapper:3 sortSkip:nil storeId:self.storeID result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+        if ([goodsWrapper isKindOfClass:[TCGoodsWrapper class]]) {
+            NSArray *arr = goodsWrapper.content;
+            if ([arr isKindOfClass:[NSArray class]] && arr.count > 0) {
+                [weakSelf.mutableGoodsArr addObjectsFromArray:arr];
+                if (weakSelf.storeInfo) {
+                    weakSelf.tableView.tableFooterView = weakSelf.footerView;
+                    [weakSelf.tableView reloadData];
+                }
+            }
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请退出该页面重试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
+        }
+    }];
+}
+
 - (void)loadNetData {
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchStoreInfoByStoreID:self.storeID result:^(TCListStore *storeInfo, NSError *error) {
@@ -120,6 +147,9 @@
             weakSelf.navItem.title = storeInfo.name;
             weakSelf.storeInfo = storeInfo;
             weakSelf.headerView.pictures = storeInfo.pictures;
+            if (weakSelf.mutableGoodsArr.count > 0) {
+                weakSelf.tableView.tableFooterView = weakSelf.footerView;
+            }
             [weakSelf.tableView reloadData];
         } else {
             NSString *reason = error.localizedDescription ?: @"请退出该页面重试";
@@ -181,7 +211,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 3+self.mutableGoodsArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -210,12 +240,35 @@
             break;
             
         default:
+        {
+            TCStoreGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCStoreGoodsCell" forIndexPath:indexPath];
+            cell.goods = self.mutableGoodsArr[indexPath.row-3];
+            return cell;
+        }
             break;
     }
     return currentCell;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row > 2) {
+        TCGoods *goodInfo = self.mutableGoodsArr[indexPath.row-3];
+        TCGoodsDetail *goodsDetail = [[TCGoodsDetail alloc] init];
+        goodsDetail.name = goodInfo.name;
+        goodsDetail.brand = goodInfo.brand;
+        goodsDetail.mainPicture = goodInfo.mainPicture;
+        goodsDetail.originPrice = goodInfo.originPrice;
+        goodsDetail.salePrice = goodInfo.salePrice;
+        
+        TCGoodsDetailViewController *vc = [[TCGoodsDetailViewController alloc] init];
+        vc.goodsID = goodInfo.ID;
+        vc.goodsDetail = goodsDetail;
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = 0;
@@ -249,6 +302,7 @@
             break;
             
         default:
+            height = 112.5;
             break;
     }
     return height;
@@ -263,11 +317,46 @@
 
 #pragma mark - Actions 
 
+- (void)handleClickMoreGoods {
+    TCGoodsViewController *goodsVC = [[TCGoodsViewController alloc] init];
+    goodsVC.storeId = self.storeID;
+    goodsVC.title = self.storeInfo.name;
+    [self.navigationController pushViewController:goodsVC animated:YES];
+}
+
 - (void)handleClickPaybutton {
     TCStorePayViewController *vc = [[TCStorePayViewController alloc] init];
     vc.storeID = self.storeID;
     vc.fromController = self;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (UIView *)footerView {
+    if (_footerView == nil) {
+        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 80)];
+        _footerView.backgroundColor = [UIColor whiteColor];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(15, 10, TCScreenWidth-30, 0.5)];
+        lineView.backgroundColor = TCSeparatorLineColor;
+        [_footerView addSubview:lineView];
+        UIButton *moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [moreBtn setBackgroundColor:[UIColor whiteColor]];
+        [moreBtn setTitle:@"更多商品 >" forState:UIControlStateNormal];
+        [moreBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
+        [moreBtn addTarget:self action:@selector(handleClickMoreGoods) forControlEvents:UIControlEventTouchUpInside];
+        moreBtn.layer.borderColor = TCBlackColor.CGColor;
+        moreBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        moreBtn.layer.borderWidth = 0.5;
+        moreBtn.frame = CGRectMake((TCScreenWidth-100)/2, 20, 100, 27);
+        [_footerView addSubview:moreBtn];
+    }
+    return _footerView;
+}
+
+- (NSMutableArray *)mutableGoodsArr {
+    if (_mutableGoodsArr == nil) {
+        _mutableGoodsArr = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _mutableGoodsArr;
 }
 
 - (void)didReceiveMemoryWarning {

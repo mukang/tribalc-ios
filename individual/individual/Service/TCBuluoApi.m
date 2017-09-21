@@ -824,7 +824,7 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
 
 - (void)fetchWalletBillByBillID:(NSString *)billID result:(void (^)(TCWalletBill *walletBill, NSError *error))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bills/%@", self.currentUserSession.assigned,billID];
+        NSString *apiName = [NSString stringWithFormat:@"wallets/%@/bills/%@?me=%@", self.currentUserSession.assigned,billID,self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
@@ -836,10 +836,8 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
                     }
                 }
             } else {
-                if (response.error) {
-                    if (resultBlock) {
-                        TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
-                    }
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             }
         }];
@@ -1277,23 +1275,34 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
 
 #pragma mark - 商品类资源
 
-- (void)fetchGoodsWrapper:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip result:(void (^)(TCGoodsWrapper *, NSError *))resultBlock {
+- (void)fetchGoodsWrapper:(NSUInteger)limitSize sortSkip:(NSString *)sortSkip storeId:(NSString *)storeId result:(void (^)(TCGoodsWrapper *, NSError *))resultBlock {
     NSString *limitSizePart = [NSString stringWithFormat:@"limitSize=%zd", limitSize];
     NSString *sortSkipPart = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%@", sortSkip] : @"";
-    NSString *apiName = [NSString stringWithFormat:@"goods?%@%@", limitSizePart, sortSkipPart];
+    NSString *storeIdPart = storeId ? [NSString stringWithFormat:@"&storeId=%@",storeId] : @"";
+    NSString *apiName = [NSString stringWithFormat:@"goods?%@%@%@", limitSizePart, sortSkipPart,storeIdPart];
     TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
     request.token = self.currentUserSession.token;
     [[TCClient client] send:request finish:^(TCClientResponse *response) {
-        if (response.error) {
-            if (resultBlock) {
-                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
-            }
-        } else {
+        if (response.codeInResponse == 200) {
             TCGoodsWrapper *goodsWrapper = [[TCGoodsWrapper alloc] initWithObjectDictionary:response.data];
             if (resultBlock) {
                 TC_CALL_ASYNC_MQ(resultBlock(goodsWrapper, nil));
             }
+        }else {
+            if (resultBlock) {
+                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+            }
         }
+//        if (response.error) {
+//            if (resultBlock) {
+//                TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+//            }
+//        } else {
+//            TCGoodsWrapper *goodsWrapper = [[TCGoodsWrapper alloc] initWithObjectDictionary:response.data];
+//            if (resultBlock) {
+//                TC_CALL_ASYNC_MQ(resultBlock(goodsWrapper, nil));
+//            }
+//        }
     }];
 }
 

@@ -31,4 +31,6 @@
 /** 运费 */
 @property (nonatomic) double expressFee;
 
+@property (copy, nonatomic) NSArray *tags;
+
 @end

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <TCCommonLibs/TCBaseViewController.h>
 @class TCWalletBill;
 
-@interface TCWalletBillDetailViewController : UIViewController
+@interface TCWalletBillDetailViewController : TCBaseViewController
 
 @property (strong, nonatomic) TCWalletBill *walletBill;
 
