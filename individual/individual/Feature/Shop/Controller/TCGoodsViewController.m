@@ -130,8 +130,8 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerClass:[TCStoreGoodsCell class] forCellReuseIdentifier:@"TCStoreGoodsCell"];
         
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 10)];
-        view.backgroundColor = [UIColor redColor];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 11)];
+        view.backgroundColor = TCRGBColor(239, 245, 245);
         [_tableView addSubview:view];
         
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadOldData)];
