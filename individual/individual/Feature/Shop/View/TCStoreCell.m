@@ -104,7 +104,7 @@
     [self.tagsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.locationImageView).offset(-TCRealValue(2));
         make.left.equalTo(self.locationImageView.mas_right).offset(TCRealValue(5));
-        make.width.equalTo(@(TCRealValue(220)));
+//        make.width.equalTo(@(TCRealValue(220)));
     }];
     
     [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {

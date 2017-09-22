@@ -114,7 +114,7 @@
     }];
     [self.limitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.priceLabel);
-        make.top.equalTo(self.priceLabel.mas_bottom).offset(10);
+        make.top.equalTo(self.repertoryLabel.mas_bottom).offset(8);
     }];
     [self.residueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.limitLabel.mas_right);

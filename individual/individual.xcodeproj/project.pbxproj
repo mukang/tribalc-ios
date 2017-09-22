@@ -127,6 +127,8 @@
 		55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F031E040B2500A849D7 /* TCPropertyDetailController.m */; };
 		55F06F061E040B2500A849D7 /* TCPropertyDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */; };
 		55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F1F1E07EC6500A849D7 /* TCScanner.m */; };
+		55FBB3441F7363E2008027C3 /* TCStoreGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FBB3431F7363E2008027C3 /* TCStoreGoodsCell.m */; };
+		55FBB3471F738D11008027C3 /* TCGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FBB3461F738D11008027C3 /* TCGoodsViewController.m */; };
 		7A01916E1E7A92B500283822 /* TCLockQRCodeTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A01916B1E7A92B500283822 /* TCLockQRCodeTitleView.m */; };
 		7A01916F1E7A92B500283822 /* TCLockQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A01916D1E7A92B500283822 /* TCLockQRCodeView.m */; };
 		7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A084C311E000D3B00224677 /* TCCompanyApplyTitleViewCell.m */; };
@@ -699,6 +701,10 @@
 		55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPropertyDetailController.xib; sourceTree = "<group>"; };
 		55F06F1E1E07EC6500A849D7 /* TCScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCScanner.h; sourceTree = "<group>"; };
 		55F06F1F1E07EC6500A849D7 /* TCScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCScanner.m; sourceTree = "<group>"; };
+		55FBB3421F7363E2008027C3 /* TCStoreGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStoreGoodsCell.h; sourceTree = "<group>"; };
+		55FBB3431F7363E2008027C3 /* TCStoreGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreGoodsCell.m; sourceTree = "<group>"; };
+		55FBB3451F738D11008027C3 /* TCGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsViewController.h; sourceTree = "<group>"; };
+		55FBB3461F738D11008027C3 /* TCGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGoodsViewController.m; sourceTree = "<group>"; };
 		7A01916A1E7A92B500283822 /* TCLockQRCodeTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockQRCodeTitleView.h; sourceTree = "<group>"; };
 		7A01916B1E7A92B500283822 /* TCLockQRCodeTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockQRCodeTitleView.m; sourceTree = "<group>"; };
 		7A01916C1E7A92B500283822 /* TCLockQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLockQRCodeView.h; sourceTree = "<group>"; };
@@ -1776,6 +1782,8 @@
 				7A925E011F20E82000D697DE /* TCPrivilegeInstructionViewCell.m */,
 				7A925E031F20E83600D697DE /* TCPrivilegeViewCell.h */,
 				7A925E041F20E83600D697DE /* TCPrivilegeViewCell.m */,
+				55FBB3421F7363E2008027C3 /* TCStoreGoodsCell.h */,
+				55FBB3431F7363E2008027C3 /* TCStoreGoodsCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2473,6 +2481,8 @@
 				7A925DF21F2091C400D697DE /* TCStorePayViewController.m */,
 				7A925DFD1F20E78F00D697DE /* TCPrivilegeInstructionViewController.h */,
 				7A925DFE1F20E78F00D697DE /* TCPrivilegeInstructionViewController.m */,
+				55FBB3451F738D11008027C3 /* TCGoodsViewController.h */,
+				55FBB3461F738D11008027C3 /* TCGoodsViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3407,6 +3417,7 @@
 				7A13EEAD1DF8140A00377869 /* TCCompanyApplyDetailViewController.m in Sources */,
 				0928B3381DF921AC0085A182 /* TCShoppingCartWrapper.m in Sources */,
 				098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */,
+				55FBB3471F738D11008027C3 /* TCGoodsViewController.m in Sources */,
 				7AC346DE1E01434B00E28EC9 /* TCWalletPasswordViewController.m in Sources */,
 				7AAB19FA1ED29F3A00EF5F69 /* TCActivityInfo.m in Sources */,
 				7AC346EC1E0144B500E28EC9 /* TCWalletBillDetailViewCell.m in Sources */,
@@ -3494,6 +3505,7 @@
 				559E78191F20E23F00CDE11D /* TCMessageMiddleView.m in Sources */,
 				7AFEC47F1E54056D00B0E754 /* TCGoodsOrderHeaderView.m in Sources */,
 				550FB7701ED5C18600D75E33 /* FSCalendarCalculator.m in Sources */,
+				55FBB3441F7363E2008027C3 /* TCStoreGoodsCell.m in Sources */,
 				7A7403B91F5E7E67007FCB3D /* TCGoodsStandardViewController.m in Sources */,
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,

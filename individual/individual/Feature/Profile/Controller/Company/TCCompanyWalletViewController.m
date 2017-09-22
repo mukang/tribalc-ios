@@ -28,6 +28,8 @@
 @property (weak, nonatomic) TCCompanyWalletTitleView *titleView;
 @property (weak, nonatomic) TCWalletBalanceView *balanceView;
 
+@property (weak, nonatomic) TCWalletFeaturesView *featuresView;
+
 @end
 
 @implementation TCCompanyWalletViewController {
@@ -68,6 +70,7 @@
     TCWalletFeaturesView *featuresView = [[TCWalletFeaturesView alloc] initWithType:TCWalletFeaturesViewTypeCompany];
     featuresView.delegate = self;
     [self.view addSubview:featuresView];
+    self.featuresView = featuresView;
     
     [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(22.5);
@@ -91,6 +94,7 @@
             [MBProgressHUD hideHUD:YES];
             weakSelf.walletAccount = walletAccount;
             weakSelf.balanceView.walletAccount = walletAccount;
+            weakSelf.featuresView.creditStatus = walletAccount.creditStatus;
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取钱包信息失败！"];
         }

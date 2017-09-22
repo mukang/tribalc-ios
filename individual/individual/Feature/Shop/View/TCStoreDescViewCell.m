@@ -76,10 +76,10 @@
         make.centerY.equalTo(self.locationIcon);
     }];
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.locationIcon.mas_bottom).offset(55);
+        make.top.equalTo(self.locationIcon.mas_bottom).offset(25);
         make.left.equalTo(self.locationIcon);
         make.right.equalTo(self.contentView).offset(-20);
-        make.bottom.equalTo(self.contentView).offset(-30);
+        make.bottom.equalTo(self.contentView).offset(-15);
     }];
 }
 
