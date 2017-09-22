@@ -94,11 +94,13 @@
     if (self.creditBill && ![self.creditBill.status isEqualToString:@"PAID"]) {
         if (self.companyID) {
             TCCommonPaymentViewController *vc = [[TCCommonPaymentViewController alloc] initWithPaymentPurpose:TCCommonPaymentPurposeCompanyRepayment];
+            vc.fromController = self.fromController;
             vc.walletAccount = self.walletAccount;
             vc.creditBill = self.creditBill;
             [self.navigationController pushViewController:vc animated:YES];
         } else {
             TCCommonPaymentViewController *vc = [[TCCommonPaymentViewController alloc] initWithPaymentPurpose:TCCommonPaymentPurposeRepayment];
+            vc.fromController = self.fromController;
             vc.walletAccount = self.walletAccount;
             vc.creditBill = self.creditBill;
             [self.navigationController pushViewController:vc animated:YES];

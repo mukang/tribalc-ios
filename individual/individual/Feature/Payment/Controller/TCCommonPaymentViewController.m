@@ -748,7 +748,11 @@ static CGFloat const duration = 0.25;
     [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf.navigationController popToViewController:weakSelf.navigationController.childViewControllers[1] animated:YES];
+        if (weakSelf.fromController) {
+            [weakSelf.navigationController popToViewController:weakSelf.fromController animated:YES];
+        } else {
+            [weakSelf.navigationController popToViewController:weakSelf.navigationController.childViewControllers[1] animated:YES];
+        }
     });
 }
 

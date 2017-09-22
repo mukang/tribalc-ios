@@ -16,4 +16,6 @@
 @property (copy, nonatomic) NSString *companyID;
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
 
+@property (weak, nonatomic) UIViewController *fromController;
+
 @end

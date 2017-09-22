@@ -449,6 +449,7 @@ TCHomeCoverViewDelegate>
         if (walletAccount) {
             [MBProgressHUD hideHUD:YES];
             TCCreditViewController *creditVC = [[TCCreditViewController alloc] init];
+            creditVC.fromController = weakSelf;
             creditVC.hidesBottomBarWhenPushed = YES;
             creditVC.walletAccount = walletAccount;
             [self.navigationController pushViewController:creditVC animated:YES];

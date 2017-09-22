@@ -26,6 +26,8 @@ typedef void(^TCRechargeCompletionBlock)();
 /** 充值完成的回调 */
 @property (copy, nonatomic) TCRechargeCompletionBlock rechargeCompletionBlock;
 
+@property (weak, nonatomic) UIViewController *fromController;
+
 - (instancetype)initWithPaymentPurpose:(TCCommonPaymentPurpose)paymentPurpose;
 
 @end
