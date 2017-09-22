@@ -86,6 +86,11 @@
                 [self.mutableGoodsArr addObjectsFromArray:goodsWrapper.content];
             }
             [self.tableView reloadData];
+            if (goodsWrapper.hasMore) {
+                self.tableView.mj_footer.hidden = NO;
+            }else {
+                self.tableView.mj_footer.hidden = YES;
+            }
         }else {
             NSString *reason = error.localizedDescription ?: @"请退出该页面重试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取数据失败，%@", reason]];
