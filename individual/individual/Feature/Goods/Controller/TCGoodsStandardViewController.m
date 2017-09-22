@@ -307,12 +307,16 @@ static CGFloat const duration = 0.1;
 }
 
 - (void)handleClickAddShoppingCartButton:(id)sender {
-    [self determineTheResidualAmount];
+    if ([self determineTheResidualAmount]) {
+        return;
+    }
     [self handleAddShoppingCart];
 }
 
 - (void)handleClickBuyButton:(id)sender {
-    [self determineTheResidualAmount];
+    if ([self determineTheResidualAmount]) {
+        return;
+    }
     [self handleBuyNow];
 }
 
@@ -337,15 +341,16 @@ static CGFloat const duration = 0.1;
     }];
 }
 
-- (void)determineTheResidualAmount {
-    if (self.goodsDetail.dailyLimit && (self.quantity >= (self.goodsDetail.dailyLimit - self.goodsDetail.dailySaled))) {
+- (BOOL)determineTheResidualAmount {
+    if (self.goodsDetail.dailyLimit && (self.quantity > (self.goodsDetail.dailyLimit - self.goodsDetail.dailySaled))) {
         [MBProgressHUD showHUDWithMessage:@"已超过商品每日限购数量"];
-        return;
+        return YES;
     }
-    if (self.quantity >= self.goodsDetail.repertory) {
+    if (self.quantity > self.goodsDetail.repertory) {
         [MBProgressHUD showHUDWithMessage:@"库存不足"];
-        return;
+        return YES;
     }
+    return NO;
 }
 
 - (void)handleModifyShoppingCart {
