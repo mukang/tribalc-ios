@@ -415,6 +415,10 @@ static CGFloat const duration = 0.25;
 }
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
+    if ([self.inputView.textField isFirstResponder]) {
+        [self.inputView.textField resignFirstResponder];
+    }
+    
     if (self.paymentPurpose == TCCommonPaymentPurposeRepayment || self.paymentPurpose == TCCommonPaymentPurposeCompanyRepayment) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
@@ -724,7 +728,7 @@ static CGFloat const duration = 0.25;
     // 发送首页需要刷新数据的通知
     [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
         if (weakSelf.rechargeCompletionBlock) {
             weakSelf.rechargeCompletionBlock();
@@ -743,7 +747,7 @@ static CGFloat const duration = 0.25;
     // 发送首页需要刷新数据的通知
     [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf.navigationController popToViewController:weakSelf.navigationController.childViewControllers[1] animated:YES];
     });
 }

@@ -94,7 +94,7 @@ static CGFloat const duration = 0.1;
     if (animated) {
         [UIView animateWithDuration:duration animations:^{
             weakSelf.view.backgroundColor = TCARGBColor(0, 0, 0, 0);
-            weakSelf.containerView.y = TCScreenHeight;
+            weakSelf.containerView.y = TCScreenHeight + 16;
         } completion:^(BOOL finished) {
             [weakSelf dismissViewControllerAnimated:NO completion:^{
                 if (completion) {
@@ -104,7 +104,7 @@ static CGFloat const duration = 0.1;
         }];
     } else {
         self.view.backgroundColor = TCARGBColor(0, 0, 0, 0);
-        self.containerView.y = TCScreenHeight;
+        self.containerView.y = TCScreenHeight + 16;
         [weakSelf dismissViewControllerAnimated:NO completion:^{
             if (completion) {
                 completion();
@@ -128,7 +128,7 @@ static CGFloat const duration = 0.1;
     
     UIView *containerView = [[UIView alloc] init];
     containerView.backgroundColor = [UIColor whiteColor];
-    containerView.frame = CGRectMake(0, TCScreenHeight, TCScreenWidth, subviewHeight);
+    containerView.frame = CGRectMake(0, TCScreenHeight + 16, TCScreenWidth, subviewHeight);
     [self.view addSubview:containerView];
     self.containerView = containerView;
     

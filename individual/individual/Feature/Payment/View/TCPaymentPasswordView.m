@@ -25,11 +25,14 @@
     textField.mlb_dotColor = TCBlackColor;
     textField.mlb_dotRadius = 7;
     textField.mlb_delegate = self;
-    textField.size = CGSizeMake(TCRealValue(337), 49.5);
-    textField.centerX = self.width * 0.5;
-    textField.y = 85;
     [self addSubview:textField];
     self.textField = textField;
+    
+    [textField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(TCRealValue(337), 49.5));
+        make.top.equalTo(self).offset(85);
+        make.centerX.equalTo(self);
+    }];
     
     self.backButton.hitTestSlop = UIEdgeInsetsMake(-20, -20, -20, -20);
 }
