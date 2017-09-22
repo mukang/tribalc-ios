@@ -631,18 +631,18 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
 /**
  获取调起微信支付接口所需信息
 
- @param money 支付金额（元）
- @param resultBlock 回调结果，rechargeWechatInfo为nil表示获取失败，失败原因见error的code和userInfo
+ @param requestInfo 请求数据
+ @param resultBlock 结果回调
  */
-- (void)fetchWechatRechargeInfoWithMoney:(double)money result:(void(^)(TCWechatRechargeInfo *wechatRechargeInfo, NSError *error))resultBlock;
+- (void)fetchWechatPaymentInfo:(TCWechatPaymentRequestInfo *)requestInfo result:(void(^)(TCWechatPaymentInfo *wechatPaymentInfo, NSError *error))resultBlock;
 
 /**
  获取微信充值结果
-
+ 
  @param prepayID 预支付ID，可以在“获取调起微信支付接口所需信息”接口中得到
  @param resultBlock 回调结果，success为NO时表示获取或充值失败，失败原因见error的code和userInfo
  */
-- (void)fetchWechatRechargeResultWithPrepayID:(NSString *)prepayID result:(void(^)(BOOL success, NSError *error))resultBlock;
+- (void)fetchWechatPaymentResultWithPrepayID:(NSString *)prepayID result:(void(^)(BOOL success, NSError *error))resultBlock;
 
 /**
  获取宝付SESSION_ID

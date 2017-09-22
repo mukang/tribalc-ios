@@ -7,21 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TCBankCard.h"
-
-typedef NS_ENUM(NSInteger, TCCommonPaymentMethod) {
-    TCCommonPaymentMethodBalance = 0,
-    TCCommonPaymentMethodWechat,
-    TCCommonPaymentMethodBankCard
-};
+#import "TCPaymentEnum.h"
+#import "TCPaymentMethodModel.h"
 
 @interface TCCommonPaymentMethodView : UIView
 
-@property (nonatomic) TCCommonPaymentMethod method;
+@property (nonatomic, readonly) TCCommonPaymentPurpose paymentPurpose;
+@property (strong, nonatomic) TCPaymentMethodModel *methodModel;
 
-/** 当method==TCCommonPaymentMethodBalance时，必传 */
-@property (nonatomic) double balance;
-/** 当method==TCCommonPaymentMethodBankCard时，必传 */
-@property (strong, nonatomic) TCBankCard *bankCard;
+- (instancetype)initWithPaymentPurpose:(TCCommonPaymentPurpose)paymentPurpose;
 
 @end

@@ -15,18 +15,17 @@
 @property (weak, nonatomic) UILabel *subtitleLabel;
 @property (weak, nonatomic) UIImageView *arrowView;
 
-/** 银行卡logo及背景图数据 */
-@property (copy, nonatomic) NSArray *bankInfoList;
-
 @end
 
 @implementation TCCommonPaymentMethodView
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+- (instancetype)initWithPaymentPurpose:(TCCommonPaymentPurpose)paymentPurpose {
+    self = [super initWithFrame:CGRectZero];
     if (self) {
+        _paymentPurpose = paymentPurpose;
         self.backgroundColor = [UIColor whiteColor];
         [self setupSubviews];
+        [self setupConstraints];
     }
     return self;
 }
@@ -51,11 +50,12 @@
     self.logoImageView = logoImageView;
     self.titleLabel = titleLabel;
     self.subtitleLabel = subtitleLabel;
+    self.arrowView = arrowView;
 }
 
 - (void)setupConstraints {
     [self.logoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(40.5, 40.5));
+        make.size.mas_equalTo(CGSizeMake(27, 27));
         make.left.equalTo(self).offset(20);
         make.centerY.equalTo(self);
     }];
@@ -69,72 +69,68 @@
     }];
     [self.arrowView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(10, 16.5));
-        make.right.equalTo(self).offset(20);
+        make.right.equalTo(self).offset(-20);
         make.centerY.equalTo(self);
     }];
 }
 
-- (void)setMethod:(TCCommonPaymentMethod)method {
-    _method = method;
+- (void)setMethodModel:(TCPaymentMethodModel *)methodModel {
+    _methodModel = methodModel;
     
-    if (method == TCCommonPaymentMethodWechat) {
+    self.arrowView.hidden = (self.paymentPurpose == TCCommonPaymentPurposeCompanyRepayment);
+    
+    if (methodModel.isSingleRow) {
         self.subtitleLabel.hidden = YES;
         [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.logoImageView.mas_right).offset(10);
             make.centerY.equalTo(self);
         }];
-        self.titleLabel.text = @"微信支付";
-        self.logoImageView.image = [UIImage imageNamed:@"payment_common_wechat"];
     } else {
         self.subtitleLabel.hidden = NO;
         [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.logoImageView.mas_right).offset(10);
             make.top.equalTo(self).offset(10);
         }];
-        if (method == TCCommonPaymentMethodBalance) {
+    }
+    
+    switch (methodModel.paymentMethod) {
+        case TCPaymentMethodNone:
+            self.titleLabel.text = @"添加银行卡付款";
+            self.logoImageView.image = [UIImage imageNamed:@"payment_add_bank_card"];
+            break;
+        case TCPaymentMethodBalance:
             self.titleLabel.text = @"余额支付";
+            self.subtitleLabel.text = methodModel.prompt;
             self.logoImageView.image = [UIImage imageNamed:@"payment_common_balance"];
+            if (self.paymentPurpose == TCCommonPaymentPurposeCompanyRepayment) {
+                self.arrowView.hidden = YES;
+                self.titleLabel.text = @"企业余额";
+            }
+            break;
+        case TCPaymentMethodWechat:
+            self.titleLabel.text = @"微信支付";
+            self.logoImageView.image = [UIImage imageNamed:@"payment_common_wechat"];
+            break;
+        case TCPaymentMethodBankCard:
+        {
+            TCBankCard *bankCard = methodModel.bankCard;
+            NSString *bankCardNum = bankCard.bankCardNum;
+            NSString *lastNum = nil;
+            if (bankCardNum.length >= 4) {
+                lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
+            }
+            self.logoImageView.image = [UIImage imageNamed:bankCard.logo];
+            self.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+            self.subtitleLabel.text = [NSString stringWithFormat:@"银行单笔限额%lld元", bankCard.maxPaymentAmount];
         }
+            break;
+            
+        default:
+            break;
     }
     
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
-}
-
-- (void)setBalance:(double)balance {
-    _balance = balance;
-    
-    self.subtitleLabel.text = [NSString stringWithFormat:@"可用余额%0.2f元", balance];
-}
-
-- (void)setBankCard:(TCBankCard *)bankCard {
-    _bankCard = bankCard;
-    
-    bankCard.logo = @"bank_logo_Default";
-    for (NSDictionary *bankInfo in self.bankInfoList) {
-        if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
-            bankCard.logo = bankInfo[@"logo"];
-            break;
-        }
-    }
-    
-    NSString *bankCardNum = bankCard.bankCardNum;
-    NSString *lastNum;
-    if (bankCardNum.length >= 4) {
-        lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
-    }
-    
-    self.logoImageView.image = [UIImage imageNamed:bankCard.logo];
-    self.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
-    self.subtitleLabel.text = [NSString stringWithFormat:@"单笔最高支付%lld元", bankCard.maxPaymentAmount];
-}
-
-- (NSArray *)bankInfoList {
-    if (_bankInfoList == nil) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"TCBankInfoList" ofType:@"plist"];
-        _bankInfoList = [NSArray arrayWithContentsOfFile:path];
-    }
-    return _bankInfoList;
 }
 
 @end

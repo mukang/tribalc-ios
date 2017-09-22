@@ -8,8 +8,7 @@
 
 #import "TCCreditViewController.h"
 #import "TCCreditBillViewController.h"
-#import "TCRepaymentViewController.h"
-#import "TCCompanyRepaymentViewController.h"
+#import "TCCommonPaymentViewController.h"
 
 #import "TCWalletAccount.h"
 #import <TCCommonLibs/TCCommonButton.h>
@@ -94,12 +93,12 @@
     
     if (self.creditBill && ![self.creditBill.status isEqualToString:@"PAID"]) {
         if (self.companyID) {
-            TCCompanyRepaymentViewController *vc = [[TCCompanyRepaymentViewController alloc] init];
+            TCCommonPaymentViewController *vc = [[TCCommonPaymentViewController alloc] initWithPaymentPurpose:TCCommonPaymentPurposeCompanyRepayment];
             vc.walletAccount = self.walletAccount;
             vc.creditBill = self.creditBill;
             [self.navigationController pushViewController:vc animated:YES];
         } else {
-            TCRepaymentViewController *vc = [[TCRepaymentViewController alloc] init];
+            TCCommonPaymentViewController *vc = [[TCCommonPaymentViewController alloc] initWithPaymentPurpose:TCCommonPaymentPurposeRepayment];
             vc.walletAccount = self.walletAccount;
             vc.creditBill = self.creditBill;
             [self.navigationController pushViewController:vc animated:YES];

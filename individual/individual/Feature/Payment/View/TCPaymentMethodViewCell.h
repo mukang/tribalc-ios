@@ -7,15 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TCBankCard.h"
+#import "TCPaymentMethodModel.h"
 
 @interface TCPaymentMethodViewCell : UITableViewCell
 
-@property (weak, nonatomic) UIImageView *logoImageView;
-@property (weak, nonatomic) UILabel *titleLabel;
-@property (weak, nonatomic) UILabel *promptLabel;
-
-@property (nonatomic) BOOL isBankCardMode;
-@property (strong, nonatomic) TCBankCard *bankCard;
+@property (strong, nonatomic) TCPaymentMethodModel *methodModel;
 
 @end

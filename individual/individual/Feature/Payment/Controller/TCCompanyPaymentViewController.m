@@ -8,7 +8,7 @@
 
 #import "TCCompanyPaymentViewController.h"
 #import "TCNavigationController.h"
-#import "TCRechargeViewController.h"
+#import "TCCommonPaymentViewController.h"
 #import "TCWalletPasswordViewController.h"
 
 #import "TCPaymentDetailView.h"
@@ -181,13 +181,9 @@ TCPaymentPasswordViewDelegate
  */
 - (void)showRechargeViewController {
     double balance = [self.walletAccount.creditStatus isEqualToString:@"NORMAL"] ? (self.walletAccount.balance + self.walletAccount.creditLimit - self.walletAccount.creditBalance) : self.walletAccount.balance;
-    TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
+    TCCommonPaymentViewController *vc = [[TCCommonPaymentViewController alloc] initWithPaymentPurpose:TCCommonPaymentPurposeCompanyRecharge];
     vc.walletAccount = self.walletAccount;
-    vc.suggestMoney = self.totalFee - balance;
-    vc.companyID = self.companyID;
-    vc.completionBlock = ^() {
-        
-    };
+    vc.suggestAmount = self.totalFee - balance;
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }

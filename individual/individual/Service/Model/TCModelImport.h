@@ -75,9 +75,6 @@
 #import "TCPropertyManage.h"
 #import "TCPropertyRepairsInfo.h"
 
-/********** 第三方支付 **********/
-#import "TCWechatRechargeInfo.h"
-
 /*********** 门锁 ***********/
 #import "TCLockKey.h"
 #import "TCLockEquip.h"
@@ -90,6 +87,8 @@
 #import "TCBFSessionInfo.h"
 #import "TCPaymentRequestInfo.h"
 #import "TCCreditBill.h"
+#import "TCWechatPaymentInfo.h"
+#import "TCWechatPaymentRequestInfo.h"
 
 /*********** 系统初始化相关 ***********/
 #import "TCAppVersion.h"

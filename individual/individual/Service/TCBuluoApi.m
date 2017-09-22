@@ -2057,21 +2057,24 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
 
 #pragma mark - 第三方支付
 
-- (void)fetchWechatRechargeInfoWithMoney:(double)money result:(void (^)(TCWechatRechargeInfo *, NSError *))resultBlock {
+- (void)fetchWechatPaymentInfo:(TCWechatPaymentRequestInfo *)requestInfo result:(void (^)(TCWechatPaymentInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"recharge/wechat/unifiedorder?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
         request.token = self.currentUserSession.token;
-        [request setValue:[NSNumber numberWithDouble:money] forParam:@"value"];
+        NSDictionary *dict = [requestInfo toObjectDictionary];
+        for (NSString *key in dict.allKeys) {
+            [request setValue:dict[key] forParam:key];
+        }
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.error) {
                 if (resultBlock) {
                     TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
                 }
             } else {
-                TCWechatRechargeInfo *rechargeInfo = [[TCWechatRechargeInfo alloc] initWithObjectDictionary:response.data];
+                TCWechatPaymentInfo *paymentInfo = [[TCWechatPaymentInfo alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(rechargeInfo, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(paymentInfo, nil));
                 }
             }
         }];
@@ -2083,7 +2086,7 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchWechatRechargeResultWithPrepayID:(NSString *)prepayID result:(void (^)(BOOL, NSError *))resultBlock {
+- (void)fetchWechatPaymentResultWithPrepayID:(NSString *)prepayID result:(void (^)(BOOL, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"recharge/wechat/orderquery?me=%@", self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];

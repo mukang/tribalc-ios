@@ -8,7 +8,7 @@
 
 #import "TCCompanyWalletViewController.h"
 #import "TCNavigationController.h"
-#import "TCRechargeViewController.h"
+#import "TCCommonPaymentViewController.h"
 #import "TCCreditViewController.h"
 #import "TCWalletBillViewController.h"
 #import "TCWalletPasswordViewController.h"
@@ -139,8 +139,7 @@
 }
 
 - (void)handleClickRechargeButton {
-    TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
-    vc.companyID = self.companyID;
+    TCCommonPaymentViewController *vc = [[TCCommonPaymentViewController alloc] initWithPaymentPurpose:TCCommonPaymentPurposeCompanyRecharge];
     vc.walletAccount = self.walletAccount;
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];

@@ -14,9 +14,9 @@
 
 @property (copy, nonatomic) NSString *ownerId;
 /** 账号余额 */
-@property (assign, nonatomic) CGFloat amount;
+@property (assign, nonatomic) double amount;
 /** 已还金额 */
-@property (assign, nonatomic) CGFloat paidAmount;
+@property (assign, nonatomic) double paidAmount;
 /** 起算日期 */
 @property (assign, nonatomic) int64_t zeroDate;
 /** 账单日期 */

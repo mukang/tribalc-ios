@@ -8,18 +8,21 @@
 
 #import "TCPaymentViewController.h"
 #import "TCNavigationController.h"
-#import "TCRechargeViewController.h"
+#import "TCCommonPaymentViewController.h"
 #import "TCWalletPasswordViewController.h"
 
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
 #import "TCPaymentBankCardView.h"
-#import "TCPaymentMethodView.h"
+#import "TCPaymentMethodsSelectView.h"
 
 #import "TCNotificationNames.h"
+#import "TCPaymentMethodModel.h"
+#import "WXApiManager.h"
 
 #import <TCCommonLibs/TCFunctions.h>
 #import <BaofuFuFingerSDK/BaofuFuFingerSDK.h>
+#import <WechatOpenSDK/WXApi.h>
 
 static CGFloat const subviewHeight = 400;
 static CGFloat const duration = 0.25;
@@ -27,9 +30,10 @@ static CGFloat const duration = 0.25;
 @interface TCPaymentViewController ()
 <TCPaymentDetailViewDelegate,
 TCPaymentPasswordViewDelegate,
-TCPaymentMethodViewDelegate,
+TCPaymentMethodsSelectViewDelegate,
 TCPaymentBankCardViewDelegate,
-BaofuFuFingerClientDelegate
+BaofuFuFingerClientDelegate,
+WXApiManagerDelegate
 >
 
 /** 显示的时候是否有动画 */
@@ -39,20 +43,19 @@ BaofuFuFingerClientDelegate
 @property (weak, nonatomic) TCPaymentDetailView *paymentDetailView;
 @property (weak, nonatomic) TCPaymentPasswordView *paymentPasswordView;
 @property (weak, nonatomic) TCPaymentBankCardView *bankCardView;
-@property (weak, nonatomic) TCPaymentMethodView *paymentMethodView;
+@property (weak, nonatomic) TCPaymentMethodsSelectView *methodsSelectView;
 
 /** 钱包信息 */
 @property (strong, nonatomic) TCWalletAccount *walletAccount;
 /** 银行卡logo及背景图数据 */
 @property (copy, nonatomic) NSArray *bankInfoList;
-/** 当前付款方式 */
-@property (nonatomic) TCPaymentMethod currentPaymentMethod;
-/** 当前的银行卡信息（付款方式为TCPaymentMethodBankCard时有值） */
-@property (strong, nonatomic) TCBankCard *currentBankCard;
+
+@property (strong, nonatomic) TCPaymentMethodModel *currentMethodModel;
 
 
 @property (strong, nonatomic) TCUserPayment *payment;
-
+/** 微信预支付id */
+@property (copy, nonatomic) NSString *wechatPrepayID;
 /** 宝付支付ID */
 @property (copy, nonatomic) NSString *bfPayID;
 
@@ -96,6 +99,7 @@ BaofuFuFingerClientDelegate
     self.view.backgroundColor = TCARGBColor(0, 0, 0, 0);
     
     [self setupSubviews];
+    [self setupCurrentMethodModel];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -167,6 +171,14 @@ BaofuFuFingerClientDelegate
     self.paymentDetailView = paymentDetailView;
 }
 
+- (void)setupCurrentMethodModel {
+    TCPaymentMethodModel *model = [[TCPaymentMethodModel alloc] init];
+    model.paymentMethod = TCPaymentMethodBalance;
+    model.selected = YES;
+    model.singleRow = YES;
+    self.currentMethodModel = model;
+}
+
 /**
  显示输入密码页
  */
@@ -203,7 +215,7 @@ BaofuFuFingerClientDelegate
  显示银行卡付款页
  */
 - (void)showBankCardView {
-    TCPaymentBankCardView *bankCardView = [[TCPaymentBankCardView alloc] initWithBankCard:self.currentBankCard];
+    TCPaymentBankCardView *bankCardView = [[TCPaymentBankCardView alloc] initWithBankCard:self.currentMethodModel.bankCard];
     bankCardView.frame = CGRectMake(self.containerView.width, 0, self.containerView.width, self.containerView.height);
     bankCardView.delegate = self;
     [self.containerView addSubview:bankCardView];
@@ -232,32 +244,29 @@ BaofuFuFingerClientDelegate
 /**
  显示选择支付方式页
  */
-- (void)showPaymentMethodViewWithBankCardList:(NSArray *)bankCardList {
-    TCPaymentMethodView *paymentMethodView = [[TCPaymentMethodView alloc] initWithPaymentMethod:self.currentPaymentMethod];
-    if (self.currentPaymentMethod == TCPaymentMethodBankCard) {
-        paymentMethodView.currentBankCard = self.currentBankCard;
-    }
-    paymentMethodView.bankCardList = bankCardList;
-    paymentMethodView.frame = CGRectMake(self.containerView.width, 0, self.containerView.width, self.containerView.height);
-    paymentMethodView.delegate = self;
-    [self.containerView addSubview:paymentMethodView];
-    self.paymentMethodView = paymentMethodView;
+- (void)showPaymentMethodsSelectViewWithMethodModels:(NSArray *)methodModels {
+    TCPaymentMethodsSelectView *methodsSelectView = [[TCPaymentMethodsSelectView alloc] initWithPaymentMethodModels:methodModels backButtonStyle:TCBackButtonStyleLeftArrow];
+    methodsSelectView.hideAddBankCardItem = YES;
+    methodsSelectView.frame = CGRectMake(self.containerView.width, 0, self.containerView.width, self.containerView.height);
+    methodsSelectView.delegate = self;
+    [self.containerView addSubview:methodsSelectView];
+    self.methodsSelectView = methodsSelectView;
     
     [UIView animateWithDuration:duration animations:^{
         weakSelf.paymentDetailView.x = - weakSelf.containerView.width;
-        weakSelf.paymentMethodView.x = 0;
+        weakSelf.methodsSelectView.x = 0;
     }];
 }
 
 /**
  退出选择支付方式页
  */
-- (void)dismissPaymentMethodView {
+- (void)dismissPaymentMethodsSelectView {
     [UIView animateWithDuration:duration animations:^{
         weakSelf.paymentDetailView.x = 0;
-        weakSelf.paymentMethodView.x = weakSelf.containerView.width;
+        weakSelf.methodsSelectView.x = weakSelf.containerView.width;
     } completion:^(BOOL finished) {
-        [weakSelf.paymentMethodView removeFromSuperview];
+        [weakSelf.methodsSelectView removeFromSuperview];
     }];
 }
 
@@ -267,12 +276,9 @@ BaofuFuFingerClientDelegate
 - (void)showRechargeViewController {
     double fee = self.displayedFee ?: self.totalFee;
     double balance = [self.walletAccount.creditStatus isEqualToString:@"NORMAL"] ? (self.walletAccount.balance + self.walletAccount.creditLimit - self.walletAccount.creditBalance) : self.walletAccount.balance;
-    TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
+    TCCommonPaymentViewController *vc = [[TCCommonPaymentViewController alloc] initWithPaymentPurpose:TCCommonPaymentPurposeRecharge];
     vc.walletAccount = self.walletAccount;
-    vc.suggestMoney = fee - balance;
-    vc.completionBlock = ^() {
-        
-    };
+    vc.suggestAmount = fee - balance;
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -286,6 +292,55 @@ BaofuFuFingerClientDelegate
     vc.modalMode = YES;
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - 创建模型数据源
+
+- (NSArray *)createPaymentMethodModelsWithBankCardList:(NSArray *)bankCardList {
+    NSMutableArray *models = [NSMutableArray array];
+    
+    // 余额支付
+    TCPaymentMethodModel *model = [[TCPaymentMethodModel alloc] init];
+    model.paymentMethod = TCPaymentMethodBalance;
+    model.singleRow = YES;
+    if (model.paymentMethod == self.currentMethodModel.paymentMethod) {
+        model.selected = YES;
+    }
+    [models addObject:model];
+    
+    // 微信支付
+    if ([WXApi isWXAppInstalled]) {
+        TCPaymentMethodModel *model = [[TCPaymentMethodModel alloc] init];
+        model.paymentMethod = TCPaymentMethodWechat;
+        model.singleRow = YES;
+        if (model.paymentMethod == self.currentMethodModel.paymentMethod) {
+            model.selected = YES;
+        }
+        [models addObject:model];
+    }
+    
+    // 银行卡支付
+    for (int i=0; i<bankCardList.count; i++) {
+        TCBankCard *bankCard = bankCardList[i];
+        bankCard.logo = @"bank_logo_Default";
+        for (NSDictionary *bankInfo in self.bankInfoList) {
+            if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
+                bankCard.logo = bankInfo[@"logo"];
+                break;
+            }
+        }
+        
+        TCPaymentMethodModel *model = [[TCPaymentMethodModel alloc] init];
+        model.paymentMethod = TCPaymentMethodBankCard;
+        model.bankCard = bankCard;
+        if (model.paymentMethod == self.currentMethodModel.paymentMethod && [bankCard.ID isEqualToString:self.currentMethodModel.bankCard.ID]) {
+            model.selected = YES;
+        }
+        model.invalid = (bankCard.type == TCBankCardTypeWithdraw);
+        [models addObject:model];
+    }
+    
+    return [models copy];
 }
 
 #pragma mark - TCPaymentDetailViewDelegate
@@ -334,18 +389,21 @@ BaofuFuFingerClientDelegate
     [self confirmBFPayWithVCode:code];
 }
 
-#pragma mark - TCPaymentMethodViewDelegate
+#pragma mark - TCPaymentMethodsSelectViewDelegate
 
-- (void)paymentMethodView:(TCPaymentMethodView *)view didSlectedPaymentMethod:(TCPaymentMethod)paymentMethod {
-    self.currentPaymentMethod = paymentMethod;
-    switch (paymentMethod) {
+- (void)paymentMethodsSelectView:(TCPaymentMethodsSelectView *)view didSlectedMethod:(TCPaymentMethodModel *)methodModel {
+    self.currentMethodModel = methodModel;
+    
+    switch (methodModel.paymentMethod) {
         case TCPaymentMethodBalance:
             self.paymentDetailView.methodLabel.text = @"余额支付";
             break;
+        case TCPaymentMethodWechat:
+            self.paymentDetailView.methodLabel.text = @"微信支付";
+            break;
         case TCPaymentMethodBankCard:
         {
-            self.currentBankCard = view.currentBankCard;
-            TCBankCard *bankCard = view.currentBankCard;
+            TCBankCard *bankCard = methodModel.bankCard;
             NSString *bankCardNum = bankCard.bankCardNum;
             NSString *lastNum;
             if (bankCardNum.length >= 4) {
@@ -354,22 +412,16 @@ BaofuFuFingerClientDelegate
             self.paymentDetailView.methodLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
         }
             break;
-            //        case TCPaymentMethodWechat:
-            //            self.paymentDetailView.methodLabel.text = @"微信支付";
-            //            break;
-            //        case TCPaymentMethodAlipay:
-            //            self.paymentDetailView.methodLabel.text = @"支付宝支付";
-            //            break;
             
         default:
             break;
     }
     
-    [self dismissPaymentMethodView];
+    [self dismissPaymentMethodsSelectView];
 }
 
-- (void)didClickBackButtonInPaymentMethodView:(TCPaymentMethodView *)view {
-    [self dismissPaymentMethodView];
+- (void)didClickBackButtonInPaymentMethodsSelectView:(TCPaymentMethodsSelectView *)view {
+    [self dismissPaymentMethodsSelectView];
 }
 
 #pragma mark - BaofuFuFingerClientDelegate
@@ -382,22 +434,36 @@ BaofuFuFingerClientDelegate
     [weakSelf showErrorMessageHUD:errorMessage];
 }
 
+#pragma mark - WXApiManagerDelegate
+
+- (void)managerDidRecvPayResponse:(PayResp *)response {
+    switch (response.errCode) {
+        case WXSuccess:
+            [self checkWechatPaymentResult];
+            break;
+            
+        default:
+            [MBProgressHUD showHUDWithMessage:@"充值失败"];
+            break;
+    }
+}
+
 #pragma mark - Actions
 
 /**
  点击了确认支付按钮
  */
 - (void)handleClickConfirmButton {
-    switch (self.currentPaymentMethod) {
+    switch (self.currentMethodModel.paymentMethod) {
         case TCPaymentMethodBalance:
             [self handlePaymentWithBalance];
+            break;
+        case TCPaymentMethodWechat:
+            [self handlePaymentWithWechat];
             break;
         case TCPaymentMethodBankCard:
             [self handlePaymentWithBankCard];
             break;
-//        case TCPaymentMethodWechat:
-//            [self handlePaymentWithWechat];
-//            break;
 //        case TCPaymentMethodAlipay:
 //            [self handlePaymentWithAlipay];
 //            break;
@@ -419,16 +485,8 @@ BaofuFuFingerClientDelegate
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取支付方式失败，%@", reason]];
         } else {
             [MBProgressHUD hideHUD:YES];
-            for (TCBankCard *bankCard in bankCardList) {
-                bankCard.logo = @"bank_logo_Default";
-                for (NSDictionary *bankInfo in weakSelf.bankInfoList) {
-                    if ([bankInfo[@"code"] isEqualToString:bankCard.bankCode]) {
-                        bankCard.logo = bankInfo[@"logo"];
-                        break;
-                    }
-                }
-            }
-            [weakSelf showPaymentMethodViewWithBankCardList:bankCardList];
+            NSArray *methodModels = [weakSelf createPaymentMethodModelsWithBankCardList:bankCardList];
+            [weakSelf showPaymentMethodsSelectViewWithMethodModels:methodModels];
         }
     }];
 }
@@ -437,7 +495,7 @@ BaofuFuFingerClientDelegate
  使用微信付款
  */
 - (void)handlePaymentWithWechat {
-    
+    [self commitWechatPaymentRequest];
 }
 
 /**
@@ -646,7 +704,7 @@ BaofuFuFingerClientDelegate
  */
 - (void)prepareBFPay {
     TCBFPayInfo *payInfo = [[TCBFPayInfo alloc] init];
-    payInfo.bankCardId = self.currentBankCard.ID;
+    payInfo.bankCardId = self.currentMethodModel.bankCard.ID;
     payInfo.totalFee = self.totalFee;
     payInfo.paymentId = self.bfSessionInfo.paymentId;
     [[TCBuluoApi api] prepareBFPayWithInfo:payInfo result:^(NSString *payID, NSError *error) {
@@ -720,6 +778,81 @@ BaofuFuFingerClientDelegate
     NSString *reason = errorMessage ?: @"请稍后再试";
     [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"%@，%@", result ,reason]];
 }
+
+#pragma mark - 微信支付
+
+- (void)commitWechatPaymentRequest {
+    [MBProgressHUD showHUD:YES];
+    TCPaymentRequestInfo *requestInfo = [[TCPaymentRequestInfo alloc] init];
+    requestInfo.payChannel = TCPayChannelWechat;
+    requestInfo.targetId = self.targetID;
+    requestInfo.totalFee = self.totalFee;
+    requestInfo.orderIds = self.orderIDs;
+    [[TCBuluoApi api] commitPaymentRequest:requestInfo payPurpose:self.payPurpose walletID:self.walletID result:^(TCUserPayment *userPayment, NSError *error) {
+        if (userPayment) {
+            [weakSelf fetchWechatPaymentInfoWithPaymentID:userPayment.ID];
+        } else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            if (error.code == 412 && weakSelf.payPurpose == TCPayPurposeFace2Face) { // 当时面对面付款申请时，错误码412表示平台向商户充值的会员卡余额不足
+                [MBProgressHUD hideHUD:YES];
+                [weakSelf showLackOfBalanceWithMessage:reason];
+            } else {
+                [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"申请付款失败，%@", reason]];
+            }
+        }
+    }];
+}
+
+- (void)fetchWechatPaymentInfoWithPaymentID:(NSString *)paymentID {
+    TCWechatPaymentRequestInfo *requestInfo = [[TCWechatPaymentRequestInfo alloc] init];
+    requestInfo.totalFee = self.totalFee;
+    requestInfo.paymentId = paymentID;
+    requestInfo.targetId = self.targetID;
+    [[TCBuluoApi api] fetchWechatPaymentInfo:requestInfo result:^(TCWechatPaymentInfo *wechatPaymentInfo, NSError *error) {
+        if (wechatPaymentInfo) {
+            [MBProgressHUD hideHUD:YES];
+            [weakSelf handleArouseWechatPayment:wechatPaymentInfo];
+        } else {
+            NSString *message = error.localizedDescription ?: @"申请付款失败，请稍后再试";
+            [MBProgressHUD showHUDWithMessage:message];
+        }
+    }];
+}
+
+/**
+ 调起微信支付
+ */
+ - (void)handleArouseWechatPayment:(TCWechatPaymentInfo *)paymentInfo {
+     [WXApiManager sharedManager].delegate = self;
+     self.wechatPrepayID = paymentInfo.prepayid;
+     PayReq *req = [[PayReq alloc] init];
+     req.partnerId = paymentInfo.partnerid;
+     req.prepayId = paymentInfo.prepayid;
+     req.nonceStr = paymentInfo.noncestr;
+     req.timeStamp = [paymentInfo.timestamp intValue];
+     req.package = paymentInfo.packageValue;
+     req.sign = paymentInfo.sign;
+     [WXApi sendReq:req];
+ }
+
+
+/**
+ 查询微信支付结果
+ */
+ - (void)checkWechatPaymentResult {
+     [MBProgressHUD showHUD:YES];
+     [[TCBuluoApi api] fetchWechatPaymentResultWithPrepayID:self.wechatPrepayID result:^(BOOL success, NSError *error) {
+         if (success) {
+             [weakSelf handlePaymentSucceedWithPayment:nil];
+         } else {
+             NSString *message = error.localizedDescription ?: @"付款失败，请稍后再试";
+             [MBProgressHUD showHUDWithMessage:message];
+         }
+     }];
+ }
+
+
+#pragma mark - 展示平台向商户充值的会员卡余额不足错误信息
 
 /**
  当时面对面付款申请时，错误码412表示平台向商户充值的会员卡余额不足

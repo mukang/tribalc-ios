@@ -11,7 +11,7 @@
 #import "TCWalletPasswordViewController.h"
 #import "TCBankCardViewController.h"
 #import "TCQRCodeViewController.h"
-#import "TCRechargeViewController.h"
+#import "TCCommonPaymentViewController.h"
 #import "TCNavigationController.h"
 #import "TCWithdrawViewController.h"
 #import "TCCreditViewController.h"
@@ -188,7 +188,7 @@
         [MBProgressHUD showHUDWithMessage:@"暂时无法充值"];
         return;
     }
-    TCRechargeViewController *vc = [[TCRechargeViewController alloc] init];
+    TCCommonPaymentViewController *vc = [[TCCommonPaymentViewController alloc] initWithPaymentPurpose:TCCommonPaymentPurposeRecharge];
     vc.walletAccount = self.walletAccount;
     TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nav animated:YES completion:nil];

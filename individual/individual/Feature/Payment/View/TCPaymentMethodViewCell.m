@@ -10,6 +10,9 @@
 
 @interface TCPaymentMethodViewCell ()
 
+@property (weak, nonatomic) UIImageView *logoImageView;
+@property (weak, nonatomic) UILabel *titleLabel;
+@property (weak, nonatomic) UILabel *promptLabel;
 @property (weak, nonatomic) UIImageView *selectedImageView;
 
 @end
@@ -38,13 +41,12 @@
     self.titleLabel = titleLabel;
     
     UILabel *promptLabel = [[UILabel alloc] init];
-    promptLabel.text = @"该付款方式不支持当前交易";
-    promptLabel.textColor = TCSeparatorLineColor;
+    promptLabel.textColor = TCGrayColor;
     promptLabel.font = [UIFont systemFontOfSize:12];
     [self.contentView addSubview:promptLabel];
     self.promptLabel = promptLabel;
     
-    UIImageView *selectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profile_common_address_button_selected"]];
+    UIImageView *selectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"payment_method_selected"]];
     selectedImageView.hidden = YES;
     [self.contentView addSubview:selectedImageView];
     self.selectedImageView = selectedImageView;
@@ -65,66 +67,62 @@
         make.centerY.equalTo(self.contentView).offset(10);
     }];
     [selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(17, 17));
+        make.size.mas_equalTo(CGSizeMake(18, 18));
         make.right.equalTo(self.contentView).with.offset(-20);
         make.centerY.equalTo(self.contentView);
     }];
 }
 
-- (void)setIsBankCardMode:(BOOL)isBankCardMode {
-    _isBankCardMode = isBankCardMode;
+- (void)setMethodModel:(TCPaymentMethodModel *)methodModel {
+    _methodModel = methodModel;
     
-    if (!isBankCardMode) {
-        self.logoImageView.alpha = 1.0;
+    // 是否选中
+    self.selectedImageView.hidden = !methodModel.isSelected;
+    
+    // 是否是单行
+    if (methodModel.isSingleRow) {
         self.promptLabel.hidden = YES;
         [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView);
         }];
-    }
-}
-
-- (void)setBankCard:(TCBankCard *)bankCard {
-    _bankCard = bankCard;
-    
-    NSString *bankCardNum = bankCard.bankCardNum;
-    NSString *lastNum;
-    if (bankCardNum.length >= 4) {
-        lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
-    }
-    self.logoImageView.image = [UIImage imageNamed:bankCard.logo];
-    self.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
-    
-    if (bankCard.type == TCBankCardTypeWithdraw) {
-        self.userInteractionEnabled = NO;
-        self.logoImageView.alpha = 0.5;
-        self.titleLabel.textColor = TCSeparatorLineColor;
+    } else {
         self.promptLabel.hidden = NO;
         [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView).offset(-10);
         }];
+    }
+    
+    // 是否不可用
+    if (methodModel.isInvalid) {
+        self.titleLabel.textColor = TCGrayColor;
+        self.logoImageView.alpha = 0.65;
     } else {
-        self.userInteractionEnabled = YES;
-        self.logoImageView.alpha = 1.0;
         self.titleLabel.textColor = TCBlackColor;
-        self.promptLabel.hidden = YES;
-        [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self.contentView);
-        }];
-    }
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-    if (self.isBankCardMode && self.bankCard.type == TCBankCardTypeWithdraw) {
-        return;
+        self.logoImageView.alpha = 1.0;
     }
     
-    if (selected) {
-        self.selectedImageView.hidden = NO;
-    } else {
-        self.selectedImageView.hidden = YES;
+    // 填充数据
+    if (methodModel.paymentMethod == TCPaymentMethodBalance) {
+        self.logoImageView.image = [UIImage imageNamed:@"balance_icon"];
+        self.titleLabel.text = @"余额支付";
+        self.promptLabel.text = methodModel.prompt;
+    } else if (methodModel.paymentMethod == TCPaymentMethodWechat) {
+        self.logoImageView.image = [UIImage imageNamed:@"wechat_icon"];
+        self.titleLabel.text = @"微信支付";
+    } else if (methodModel.paymentMethod == TCPaymentMethodBankCard) {
+        TCBankCard *bankCard = methodModel.bankCard;
+        NSString *bankCardNum = bankCard.bankCardNum;
+        NSString *lastNum;
+        if (bankCardNum.length >= 4) {
+            lastNum = [bankCardNum substringFromIndex:(bankCardNum.length - 4)];
+        }
+        self.logoImageView.image = [UIImage imageNamed:bankCard.logo];
+        self.titleLabel.text = [NSString stringWithFormat:@"%@储蓄卡(%@)", bankCard.bankName, lastNum];
+        if (methodModel.isInvalid) {
+            self.promptLabel.text = @"该付款方式不支持当前交易";
+        } else {
+            self.promptLabel.text = [NSString stringWithFormat:@"银行单笔限额%lld元", bankCard.maxPaymentAmount];
+        }
     }
 }
 
