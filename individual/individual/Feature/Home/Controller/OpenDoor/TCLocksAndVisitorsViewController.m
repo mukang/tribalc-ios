@@ -18,6 +18,7 @@
 #import "TCBuluoApi.h"
 #import "TCMyLockQRCodeController.h"
 #import "TCLockEquipViewCell.h"
+#import "TCNavigationBar.h"
 
 #define kTCLocksCellID @"TCLocksCell"
 #define kTCVisitorLockCellID @"TCVisitorLocksCell"
@@ -77,7 +78,7 @@
     self.hideOriginalNavBar = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
+    TCNavigationBar *navBar = [[TCNavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
     [navBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     [self.view addSubview:navBar];
     

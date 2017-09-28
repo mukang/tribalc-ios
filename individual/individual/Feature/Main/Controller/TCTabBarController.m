@@ -55,12 +55,18 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     self.tabBar.translucent = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
+    // 设置全局tableView
+    if (@available(iOS 11.0, *)) {
+        [UITableView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        [UITableView appearance].estimatedRowHeight = 0;
+        [UITableView appearance].estimatedSectionHeaderHeight = 0;
+        [UITableView appearance].estimatedSectionFooterHeight = 0;
+    }
+    
     [self addChildController:[[TCHomeViewController alloc] init] title:@"首页" image:@"tabBar_home_normal" selectedImage:@"tabBar_home_selected"];
     [self addChildController:[[TCShopViewController alloc] init] title:@"嗨店" image:@"tabBar_community_normal" selectedImage:@"tabBar_community_selected"];
     [self addChildController:[[TCRecommendListViewController alloc] init] title:@"嗨购" image:@"tabBar_store_normal" selectedImage:@"tabBar_store_selected"];
     [self addChildController:[[TCProfileViewController alloc] init] title:@"我的" image:@"tabBar_profile_normal" selectedImage:@"tabBar_profile_selected"];
-    
-//    [self setValue:[[TCTabBar alloc] init] forKey:@"tabBar"];
     
     [self registerNotifications];
     [self startLocationAction];

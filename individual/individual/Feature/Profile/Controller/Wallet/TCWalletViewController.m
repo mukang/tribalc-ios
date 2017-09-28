@@ -18,6 +18,7 @@
 
 #import "TCWalletBalanceView.h"
 #import "TCWalletFeaturesView.h"
+#import "TCNavigationBar.h"
 
 #import "TCBuluoApi.h"
 #import "TCUserDefaultsKeys.h"
@@ -26,7 +27,7 @@
 
 @interface TCWalletViewController () <TCWalletFeaturesViewDelegate>
 
-@property (weak, nonatomic) UINavigationBar *navBar;
+@property (weak, nonatomic) TCNavigationBar *navBar;
 @property (weak, nonatomic) TCWalletBalanceView *balanceView;
 
 @property (weak, nonatomic) TCWalletFeaturesView *featuresView;
@@ -68,7 +69,7 @@
     self.hideOriginalNavBar = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
+    TCNavigationBar *navBar = [[TCNavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
     [navBar setBackgroundImage:[UIImage imageNamed:@"TransparentPixel"] forBarMetrics:UIBarMetricsDefault];
     [navBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     [self.view addSubview:navBar];

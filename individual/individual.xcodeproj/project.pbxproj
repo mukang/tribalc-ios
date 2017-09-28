@@ -445,6 +445,7 @@
 		7AEB4D051E03F02F00F83A7C /* TCBioEditBirthdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D041E03F02F00F83A7C /* TCBioEditBirthdateViewController.m */; };
 		7AEB4D081E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D071E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m */; };
 		7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB4D0A1E0413CD00F83A7C /* TCBioEditLocationViewController.m */; };
+		7AF2A78E1F7C9D3C00F2571B /* TCNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF2A78D1F7C9D3C00F2571B /* TCNavigationBar.m */; };
 		7AF638AA1F735185009EB851 /* TCPaymentMethodsSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF638A91F735185009EB851 /* TCPaymentMethodsSelectView.m */; };
 		7AF638AD1F7356BD009EB851 /* TCPaymentMethodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF638AC1F7356BD009EB851 /* TCPaymentMethodModel.m */; };
 		7AF972D21E064BC9009D26A3 /* TCCommunityReservationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF972D11E064BC9009D26A3 /* TCCommunityReservationInfo.m */; };
@@ -1280,6 +1281,8 @@
 		7AEB4D071E03F06C00F83A7C /* TCBioEditBirthdateViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditBirthdateViewCell.m; sourceTree = "<group>"; };
 		7AEB4D091E0413CD00F83A7C /* TCBioEditLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditLocationViewController.h; sourceTree = "<group>"; };
 		7AEB4D0A1E0413CD00F83A7C /* TCBioEditLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditLocationViewController.m; sourceTree = "<group>"; };
+		7AF2A78C1F7C9D3C00F2571B /* TCNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCNavigationBar.h; sourceTree = "<group>"; };
+		7AF2A78D1F7C9D3C00F2571B /* TCNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCNavigationBar.m; sourceTree = "<group>"; };
 		7AF638A71F728716009EB851 /* TCPaymentEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCPaymentEnum.h; sourceTree = "<group>"; };
 		7AF638A81F735185009EB851 /* TCPaymentMethodsSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCPaymentMethodsSelectView.h; sourceTree = "<group>"; };
 		7AF638A91F735185009EB851 /* TCPaymentMethodsSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCPaymentMethodsSelectView.m; sourceTree = "<group>"; };
@@ -1940,6 +1943,8 @@
 				7AD36DB61EDEAC3E00AB95FA /* TCForceUpdateView.m */,
 				7A86751F1EF8D64F006E2742 /* TCNumberTextField.h */,
 				7A8675201EF8D64F006E2742 /* TCNumberTextField.m */,
+				7AF2A78C1F7C9D3C00F2571B /* TCNavigationBar.h */,
+				7AF2A78D1F7C9D3C00F2571B /* TCNavigationBar.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3559,6 +3564,7 @@
 				7A925E021F20E82000D697DE /* TCPrivilegeInstructionViewCell.m in Sources */,
 				7ABA7E7B1F03B55C00DCC2D0 /* TCApartmentRentPayDetailView.m in Sources */,
 				7A243F351F288EB700192E22 /* TCCompanyWalletViewController.m in Sources */,
+				7AF2A78E1F7C9D3C00F2571B /* TCNavigationBar.m in Sources */,
 				7A16665E1DFAC213007B5733 /* TCCompanyTitleViewCell.m in Sources */,
 				0928B3351DF8F7090085A182 /* TCReservationDetail.m in Sources */,
 				5546F9681F305CA600E9A9B0 /* TCHomeMessageOnlyMainTitleMiddleCell.m in Sources */,

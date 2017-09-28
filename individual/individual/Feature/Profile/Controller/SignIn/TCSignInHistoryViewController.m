@@ -16,8 +16,6 @@
 
 @interface TCSignInHistoryViewController ()<FSCalendarDelegate,FSCalendarDataSource>
 
-@property (weak, nonatomic) UINavigationBar *navBar;
-
 @property (weak, nonatomic) UINavigationItem *navItem;
 
 @property (strong, nonatomic) UIImageView *bgImageView;
