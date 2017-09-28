@@ -49,6 +49,8 @@
         _type = TCMessageTypeCompaniesWalletWithdraw;
     } else if ([homeMessageTypeEnum isEqualToString:@"WELFARE"]) {
         _type = TCMessageTypeWelfare;
+    } else if ([homeMessageTypeEnum isEqualToString:@"ORDER_REFUND"]) {
+        _type = TCMessageTypeOrderRefund;
     } else {
         _type = TCMessageTypeOther;
     }

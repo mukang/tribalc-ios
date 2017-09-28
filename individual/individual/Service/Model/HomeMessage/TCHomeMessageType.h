@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, TCMessageType) {
     TCMessageTypeCompaniesWalletWithdraw,           // "企业办公", "提现到账"
     TCMessageTypeAccountRegister,                   // "账户推送", "欢迎登录"
     TCMessageTypeWelfare,                           // "福利"
+    TCMessageTypeOrderRefund,                       // "订单退款"
     TCMessageTypeOther
 };
 

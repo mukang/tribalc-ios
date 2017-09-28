@@ -284,7 +284,7 @@ TCHomeCoverViewDelegate>
     TCHomeMessage *message = self.messageArr[indexPath.row];
     TCMessageType type = message.messageBody.homeMessageType.type;
     TCHomeMessageCell *cell;
-    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw || type == TCMessageTypeCompaniesWalletWithdraw || type == TCMessageTypeAccountWalletWithdraw) {
+    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw || type == TCMessageTypeCompaniesWalletWithdraw || type == TCMessageTypeAccountWalletWithdraw || type == TCMessageTypeOrderRefund) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageMoneyMiddleCell" forIndexPath:indexPath];
     }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment || type == TCMessageTypeCompaniesAdmin) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageExtendCreditMiddleCell" forIndexPath:indexPath];
@@ -308,7 +308,7 @@ TCHomeCoverViewDelegate>
     TCMessageType type = message.messageBody.homeMessageType.type;
     CGFloat scale = TCScreenWidth > 375.0 ? 3.0 : 2.0;
     CGFloat baseH = 80+4*(1/scale);
-    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw || type == TCMessageTypeCompaniesWalletWithdraw || type == TCMessageTypeAccountWalletWithdraw) {
+    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw || type == TCMessageTypeCompaniesWalletWithdraw || type == TCMessageTypeAccountWalletWithdraw || type == TCMessageTypeOrderRefund) {
         return baseH+102;
     }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment || type == TCMessageTypeCompaniesAdmin) {
         return baseH+102;
@@ -350,7 +350,7 @@ TCHomeCoverViewDelegate>
     }
     
     TCMessageType type = message.messageBody.homeMessageType.type;
-    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeCreditBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeWelfare) {
+    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeCreditBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeWelfare || type == TCMessageTypeOrderRefund) {
         // 对账单详情
         [self getbillInfoWithHomeMessage:message];
     }else if (type == TCMessageTypeAccountWalletWithdraw) {
