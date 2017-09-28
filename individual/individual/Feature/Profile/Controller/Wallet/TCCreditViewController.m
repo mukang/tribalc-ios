@@ -336,7 +336,7 @@
         [mutableAtt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(str.length-2, 2)];
         _moneyLabel.attributedText = mutableAtt;
         
-        if ([self.walletAccount.state isKindOfClass:[NSString class]] && [self.walletAccount.state isEqualToString:@"OVERDUE"]) {
+        if ([self.walletAccount.creditStatus isKindOfClass:[NSString class]] && [self.walletAccount.creditStatus isEqualToString:@"OVERDUE"]) {
             UILabel *overdueLabel = [[UILabel alloc] initWithFrame:CGRectMake((TCScreenWidth-55)/2, 130, 55, 17)];
             overdueLabel.text = @"已逾期";
             overdueLabel.textColor = [UIColor whiteColor];
@@ -344,7 +344,7 @@
             overdueLabel.font = [UIFont systemFontOfSize:12];
             overdueLabel.layer.cornerRadius = 8;
             overdueLabel.clipsToBounds = YES;
-        overdueLabel.textAlignment = NSTextAlignmentCenter;
+            overdueLabel.textAlignment = NSTextAlignmentCenter;
             [_headerView addSubview:overdueLabel];
         }
     }

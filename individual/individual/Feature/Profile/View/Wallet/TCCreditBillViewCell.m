@@ -63,26 +63,24 @@
 //        make.centerY.equalTo(self.contentView);
 //        make.width.height.equalTo(@44);
 //    }];
-    
+
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(TCRealValue(20));
         make.top.equalTo(self.contentView).offset(15);
-        make.width.equalTo(@155);
     }];
     
     [self.subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.width.equalTo(self.titleLabel);
+        make.left.equalTo(self.titleLabel);
         make.top.equalTo(self.titleLabel.mas_bottom).offset(5);
     }];
     
     [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.titleLabel.mas_right);
         make.right.equalTo(self.contentView).offset(-TCRealValue(15));
         make.top.equalTo(self.titleLabel);
     }];
-    
+
     [self.overdueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.moneyLabel);
+        make.right.equalTo(self.moneyLabel);
         make.top.equalTo(self.subTitleLabel);
     }];
     
@@ -113,13 +111,13 @@
 - (UILabel *)overdueLabel {
     if (_overdueLabel == nil) {
         _overdueLabel = [[UILabel alloc] init];
-        _overdueLabel.font = [UIFont systemFontOfSize:14];
+        _overdueLabel.font = [UIFont systemFontOfSize:12];
         _overdueLabel.textAlignment = NSTextAlignmentRight;
         _overdueLabel.textColor = TCRGBColor(244, 55, 49);
         _overdueLabel.text = @"已逾期";
         _overdueLabel.hidden = YES;
     }
-    return _moneyLabel;
+    return _overdueLabel;
 }
 
 - (UILabel *)moneyLabel {
