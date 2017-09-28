@@ -83,7 +83,9 @@
     self.tableView = tableView;
     
     TCGoodsPicturesView *picturesView = [[TCGoodsPicturesView alloc] init];
-    picturesView.pictures = @[self.goodsDetail.mainPicture];
+    if (self.goodsDetail.mainPicture) {
+        picturesView.pictures = @[self.goodsDetail.mainPicture];
+    }
     [tableView addSubview:picturesView];
     self.picturesView = picturesView;
     
