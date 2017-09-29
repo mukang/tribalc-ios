@@ -26,12 +26,21 @@
 @property (nonatomic) CGFloat balance;
 /** 交易类型 */
 @property (copy, nonatomic) NSString *tradingType;
+/** 自己转的 */
+@property (copy, nonatomic) NSString *tradingTypeStr;
 /** 支付方式 */
 @property (copy, nonatomic) NSString *payChannel;
+/** 自己转的 */
+@property (copy, nonatomic) NSString *payChannelStr;
+
 /** 关联订单ID */
 @property (copy, nonatomic) NSString *associatedOrderId;
 /** 备注信息 */
 @property (copy, nonatomic) NSString *note;
+
+@property (copy, nonatomic) NSString *identity;
+
+@property (copy, nonatomic) NSString *displayName;
 
 /** 月份信息 */
 @property (copy, nonatomic) NSString *monthDate;
