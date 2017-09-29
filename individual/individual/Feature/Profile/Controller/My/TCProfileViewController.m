@@ -26,6 +26,7 @@
 
 #import "TCProfileHeaderView.h"
 #import "TCProfileViewCell.h"
+#import "TCNavigationBar.h"
 
 #import "TCBuluoApi.h"
 
@@ -39,7 +40,7 @@
 
 @interface TCProfileViewController () <UITableViewDataSource, UITableViewDelegate, TCProfileHeaderViewDelegate, TCProfileViewCellDelegate>
 
-@property (weak, nonatomic) UINavigationBar *navBar;
+@property (weak, nonatomic) TCNavigationBar *navBar;
 @property (weak, nonatomic) UINavigationItem *navItem;
 
 @property (weak, nonatomic) UITableView *tableView;
@@ -69,6 +70,11 @@
     [self registerNotifications];
     [self reloadUserData];
     [self loadUnReadPushNumber];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
 }
 
 - (void)dealloc {
@@ -117,7 +123,7 @@
     self.hideOriginalNavBar = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, navBarH)];
+    TCNavigationBar *navBar = [[TCNavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, navBarH)];
     [self.view addSubview:navBar];
     
     UINavigationItem *navItem = [[UINavigationItem alloc] init];

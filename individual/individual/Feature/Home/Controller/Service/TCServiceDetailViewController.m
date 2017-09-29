@@ -17,6 +17,7 @@
 #import "TCServiceAddressViewCell.h"
 #import "TCServiceRecommendViewCell.h"
 #import "TCServicePromptViewCell.h"
+#import "TCNavigationBar.h"
 
 #import <TCCommonLibs/UIImage+Category.h>
 
@@ -30,7 +31,7 @@
 
 @interface TCServiceDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, TCServiceAddressViewCellDelegate>
 
-@property (weak, nonatomic) UINavigationBar *navBar;
+@property (weak, nonatomic) TCNavigationBar *navBar;
 @property (weak, nonatomic) UINavigationItem *navItem;
 
 @property (weak, nonatomic) UITableView *tableView;
@@ -70,7 +71,7 @@
     self.hideOriginalNavBar = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, navBarH)];
+    TCNavigationBar *navBar = [[TCNavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, navBarH)];
     [navBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     [self.view addSubview:navBar];
     

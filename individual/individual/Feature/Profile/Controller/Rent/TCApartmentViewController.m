@@ -11,6 +11,7 @@
 #import <TCCommonLibs/TCImageURLSynthesizer.h>
 #import <UIImageView+WebCache.h>
 #import "TCApartmentCell.h"
+#import "TCNavigationBar.h"
 #import "TCContractViewController.h"
 #import "TCModifyPwdViewController.h"
 #import "TCApartmentPayViewController.h"
@@ -20,7 +21,7 @@
 
 @interface TCApartmentViewController ()<UITableViewDelegate,UITableViewDataSource,TCApartmentCellDelegate>
 
-@property (weak, nonatomic) UINavigationBar *navBar;
+@property (weak, nonatomic) TCNavigationBar *navBar;
 
 @property (weak, nonatomic) UINavigationItem *navItem;
 
@@ -183,7 +184,7 @@
     self.hideOriginalNavBar = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
+    TCNavigationBar *navBar = [[TCNavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
     [navBar setShadowImage:[UIImage imageNamed:@"TransparentPixel"]];
     [navBar setBackgroundImage:[UIImage imageNamed:@"TransparentPixel"] forBarMetrics:UIBarMetricsDefault];
     [self.view addSubview:navBar];
