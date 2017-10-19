@@ -254,6 +254,7 @@
 		7A4E050E1DEEDC69002371B0 /* TCCommonInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A4E050C1DEEDC69002371B0 /* TCCommonInputViewCell.m */; };
 		7A4E050F1DEEDC69002371B0 /* TCCommonInputViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A4E050D1DEEDC69002371B0 /* TCCommonInputViewCell.xib */; };
 		7A5238251DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5238241DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m */; };
+		7A531BB81F98888600244D81 /* TCMeetingSelectTimeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A531BB71F98888600244D81 /* TCMeetingSelectTimeViewCell.m */; };
 		7A58990E1F05FA580013E07A /* TCRentProtocolWithholdInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A58990D1F05FA580013E07A /* TCRentProtocolWithholdInfo.m */; };
 		7A5899101F0638650013E07A /* TCWithholdBankInfoList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A58990F1F0638650013E07A /* TCWithholdBankInfoList.plist */; };
 		7A5899131F0657D20013E07A /* TCApartmentRentPaySuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5899121F0657D20013E07A /* TCApartmentRentPaySuccessViewController.m */; };
@@ -936,6 +937,10 @@
 		7A4E050D1DEEDC69002371B0 /* TCCommonInputViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCCommonInputViewCell.xib; sourceTree = "<group>"; };
 		7A5238231DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyEmployeesViewCell.h; sourceTree = "<group>"; };
 		7A5238241DFE40BA0011BB83 /* TCCompanyEmployeesViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyEmployeesViewCell.m; sourceTree = "<group>"; };
+		7A531BB31F98879A00244D81 /* TCMeetingRoomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomViewController.h; sourceTree = "<group>"; };
+		7A531BB41F98879A00244D81 /* TCMeetingRoomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomViewController.m; sourceTree = "<group>"; };
+		7A531BB61F98888600244D81 /* TCMeetingSelectTimeViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingSelectTimeViewCell.h; sourceTree = "<group>"; };
+		7A531BB71F98888600244D81 /* TCMeetingSelectTimeViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingSelectTimeViewCell.m; sourceTree = "<group>"; };
 		7A58990C1F05FA580013E07A /* TCRentProtocolWithholdInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentProtocolWithholdInfo.h; sourceTree = "<group>"; };
 		7A58990D1F05FA580013E07A /* TCRentProtocolWithholdInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentProtocolWithholdInfo.m; sourceTree = "<group>"; };
 		7A58990F1F0638650013E07A /* TCWithholdBankInfoList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TCWithholdBankInfoList.plist; sourceTree = "<group>"; };
@@ -2310,6 +2315,33 @@
 			path = Payment;
 			sourceTree = "<group>";
 		};
+		7A531BAE1F9886BF00244D81 /* Meeting */ = {
+			isa = PBXGroup;
+			children = (
+				7A531BB21F98879A00244D81 /* Controller */,
+				7A531BB51F98879B00244D81 /* View */,
+			);
+			path = Meeting;
+			sourceTree = "<group>";
+		};
+		7A531BB21F98879A00244D81 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7A531BB31F98879A00244D81 /* TCMeetingRoomViewController.h */,
+				7A531BB41F98879A00244D81 /* TCMeetingRoomViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7A531BB51F98879B00244D81 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7A531BB61F98888600244D81 /* TCMeetingSelectTimeViewCell.h */,
+				7A531BB71F98888600244D81 /* TCMeetingSelectTimeViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7A5F876F1DE2976900E4130B /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
@@ -2576,6 +2608,7 @@
 		7A9CCF061DB62790003D90C6 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				7A531BAE1F9886BF00244D81 /* Meeting */,
 				7A4A36571F590B1A008D277C /* Goods */,
 				559E77C61F1CAFAC00CDE11D /* Shop */,
 				7AADCC5B1EE7A2EF004AA1DA /* Payment */,
@@ -3650,6 +3683,7 @@
 				7AC346D91E01433E00E28EC9 /* TCWalletBillDetailViewController.m in Sources */,
 				7A243F3B1F28934800192E22 /* TCCompanyWalletTitleView.m in Sources */,
 				7AEB4CF51E03944500F83A7C /* TCShippingAddressViewCell.m in Sources */,
+				7A531BB81F98888600244D81 /* TCMeetingSelectTimeViewCell.m in Sources */,
 				7AEB4CFF1E03ADEB00F83A7C /* TCBioEditSelectViewCell.m in Sources */,
 				7A2FA17B1F7120AA002F13C6 /* TCCommonPaymentMethodView.m in Sources */,
 				7AC346F81E0144F300E28EC9 /* TCBankPickerView.m in Sources */,
