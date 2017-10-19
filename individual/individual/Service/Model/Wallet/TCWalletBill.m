@@ -10,6 +10,41 @@
 
 @implementation TCWalletBill
 
+- (void)setPayChannel:(NSString *)payChannel {
+    _payChannel = payChannel;
+    
+    if ([payChannel isKindOfClass:[NSString class]]) {
+        if ([payChannel isEqualToString:@"BALANCE"]) {
+            _payChannelStr = @"余额";
+        }else if ([payChannel isEqualToString:@"ALIPAY"]) {
+            _payChannelStr = @"支付宝";
+        }else if ([payChannel isEqualToString:@"WECHAT"]) {
+            _payChannelStr = @"微信";
+        }else if ([payChannel isEqualToString:@"BF_BANKCARD"]) {
+            _payChannelStr = @"银行卡";
+        }
+    }
+}
+
+- (void)setTradingType:(NSString *)tradingType {
+    _tradingType = tradingType;
+    if ([tradingType isKindOfClass:[NSString class]]) {
+        if ([tradingType isEqualToString:@"CREATED"]) {
+            _tradingTypeStr = @"未付款";
+        }else if ([tradingType isEqualToString:@"PAY"]) {
+            _tradingTypeStr = @"付款";
+        }else if ([tradingType isEqualToString:@"RECEIPT"]) {
+            _tradingTypeStr = @"收款";
+        }else if ([tradingType isEqualToString:@"RECHARGE"]) {
+            _tradingTypeStr = @"充值";
+        }else if ([tradingType isEqualToString:@"WITHDRAW"]) {
+            _tradingTypeStr = @"提现";
+        }else if ([tradingType isEqualToString:@"REFUND"]) {
+            _tradingTypeStr = @"退款";
+        }
+    }
+}
+
 - (void)setCreateTime:(NSInteger)createTime {
     _createTime = createTime;
     
