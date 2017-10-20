@@ -1,5 +1,5 @@
 //
-//  TCMeetingSelectTimeViewCell.h
+//  TCMeetingRoomTitleViewCell.h
 //  individual
 //
 //  Created by 穆康 on 2017/10/19.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TCMeetingSelectTimeViewCell : UITableViewCell
+@interface TCMeetingRoomTitleViewCell : UITableViewCell
+
+@property (weak, nonatomic) UILabel *titleLabel;
 
 @end

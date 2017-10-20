@@ -21,6 +21,7 @@
 #import "TCCompanyApplyViewController.h"
 #import "TCApartmentPayViewController.h"
 #import "TCCompanyRentPayViewController.h"
+#import "TCMeetingRoomViewController.h"
 
 #import "TCHomeSearchBarView.h"
 #import "TCHomeToolBarView.h"
@@ -558,7 +559,10 @@ TCHomeCoverViewDelegate>
 }
 
 - (void)didClickMeetingButtonInHomeToolsView:(TCHomeToolsView *)view {
-    [self btnClickUnifyTips];
+//    [self btnClickUnifyTips];
+    TCMeetingRoomViewController *vc = [[TCMeetingRoomViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
