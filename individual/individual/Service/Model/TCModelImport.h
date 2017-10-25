@@ -111,6 +111,9 @@
 #import "TCHomeMessageWrapper.h"
 #import "TCMessageManagementWrapper.h"
 
+/*********** 会议室预定 ***********/
+#import "TCBookingDate.h"
+
 
 @interface TCModelImport : NSObject
 

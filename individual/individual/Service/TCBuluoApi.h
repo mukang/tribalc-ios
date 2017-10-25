@@ -980,4 +980,15 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)fetchWeatherDataWithLocation:(NSString *)location result:(void (^)(NSDictionary *weatherDic, NSError *error))resultBlock;
 
+#pragma mark - 会议室预定
+
+/**
+ 会议室具体日期的预定信息
+
+ @param meetingRoomID 会议室id
+ @param searchDate 搜索日期
+ @param resultBlock 结果回调
+ */
+- (void)fetchBookingDateWithMeetingRoomID:(NSString *)meetingRoomID searchDate:(long long)searchDate result:(void (^)(TCBookingDate *bookingDate, NSError *error))resultBlock;
+
 @end
