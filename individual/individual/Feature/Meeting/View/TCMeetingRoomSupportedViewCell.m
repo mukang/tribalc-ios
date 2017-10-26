@@ -23,6 +23,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20);
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupSubviews];
         [self setupConstraints];
     }

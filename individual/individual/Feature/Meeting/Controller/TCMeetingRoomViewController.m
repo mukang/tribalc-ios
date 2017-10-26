@@ -7,6 +7,7 @@
 //
 
 #import "TCMeetingRoomViewController.h"
+#import "TCMeetingRoomBookingTimeViewController.h"
 
 #import "TCMeetingRoomSelectViewCell.h"
 #import "TCMeetingRoomSupportedViewCell.h"
@@ -228,6 +229,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 2) {
+            TCMeetingRoomBookingTimeViewController *vc = [[TCMeetingRoomBookingTimeViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
 }
 
 #pragma mark - Actions
