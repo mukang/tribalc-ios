@@ -41,9 +41,19 @@
 		098435DF1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098435DE1DFD5A9F00B8CA63 /* TCOrderDetailAlertView.m */; };
 		09AE0F721DED2A7E00F307D8 /* TCServiceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F711DED2A7E00F307D8 /* TCServiceWrapper.m */; };
 		09AE0F791DED462700F307D8 /* TCComputeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AE0F781DED462700F307D8 /* TCComputeView.m */; };
+		550149BC1F9D971A00F72F51 /* TCMeetingRoomConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550149BB1F9D971A00F72F51 /* TCMeetingRoomConditionsViewController.m */; };
+		550149BF1F9DD42700F72F51 /* TCMeetingRoomConditionsFloorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550149BE1F9DD42700F72F51 /* TCMeetingRoomConditionsFloorCell.m */; };
+		550149C21F9DDAAE00F72F51 /* TCMeetingRoomConditionsTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550149C11F9DDAAE00F72F51 /* TCMeetingRoomConditionsTimeCell.m */; };
+		550149C51F9DE7F600F72F51 /* TCMeetingRoomConditionsDurationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550149C41F9DE7F600F72F51 /* TCMeetingRoomConditionsDurationCell.m */; };
+		550149C81F9DF3D600F72F51 /* TCMeetingRoomConditionsDevicesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550149C71F9DF3D600F72F51 /* TCMeetingRoomConditionsDevicesCell.m */; };
+		550149CB1F9EE55200F72F51 /* TCMeetingRoomSearchResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550149CA1F9EE55200F72F51 /* TCMeetingRoomSearchResultController.m */; };
 		550497091F629CB9007F753F /* TCBioEditPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550497071F629CB8007F753F /* TCBioEditPhoneController.m */; };
 		5504970A1F629CB9007F753F /* TCBioEditPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 550497081F629CB9007F753F /* TCBioEditPhoneController.xib */; };
 		5504970D1F62A526007F753F /* TCBioEditPhoneFailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5504970C1F62A526007F753F /* TCBioEditPhoneFailView.m */; };
+		5505DEB51F9F1C8600BC0ED6 /* TCMeetingRoomSearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5505DEB41F9F1C8600BC0ED6 /* TCMeetingRoomSearchResultCell.m */; };
+		5508D5C71FA1E9CE00C2AAA6 /* TCMeetingRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508D5C61FA1E9CE00C2AAA6 /* TCMeetingRoom.m */; };
+		5508D5CA1FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508D5C91FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.m */; };
+		5508D5CD1FA1EB2100C2AAA6 /* TCMeetingParticipant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508D5CC1FA1EB2100C2AAA6 /* TCMeetingParticipant.m */; };
 		550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923011F039DCC00B007C8 /* TCApartmentViewController.m */; };
 		550923051F03A67400B007C8 /* TCApartmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923041F03A67400B007C8 /* TCApartmentCell.m */; };
 		550AA7661F03C76600509F0D /* TCContractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550AA7651F03C76500509F0D /* TCContractViewController.m */; };
@@ -113,6 +123,7 @@
 		559E78171F20E23F00CDE11D /* TCHomeCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 559E78121F20E23F00CDE11D /* TCHomeCoverView.m */; };
 		559E78181F20E23F00CDE11D /* TCHomeMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 559E78141F20E23F00CDE11D /* TCHomeMessageCell.m */; };
 		559E78191F20E23F00CDE11D /* TCMessageMiddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 559E78161F20E23F00CDE11D /* TCMessageMiddleView.m */; };
+		55A32B3E1FA0367800DBB048 /* TCMeetingRoomSearchResultHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A32B3D1FA0367800DBB048 /* TCMeetingRoomSearchResultHeaderView.m */; };
 		55A3650F1F7E2DEC00F9D7BB /* TCWalletBillDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A3650D1F7E2DEC00F9D7BB /* TCWalletBillDetailHeaderView.m */; };
 		55A365101F7E2DEC00F9D7BB /* TCWalletBillDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55A3650E1F7E2DEC00F9D7BB /* TCWalletBillDetailHeaderView.xib */; };
 		55BB9EB31E728C7200B0FD94 /* TCVisitorLocksCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EB21E728C7200B0FD94 /* TCVisitorLocksCell.m */; };
@@ -129,6 +140,8 @@
 		55F06F051E040B2500A849D7 /* TCPropertyDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F031E040B2500A849D7 /* TCPropertyDetailController.m */; };
 		55F06F061E040B2500A849D7 /* TCPropertyDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */; };
 		55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06F1F1E07EC6500A849D7 /* TCScanner.m */; };
+		55F79D721FA0A827000CC56E /* TCMeetingRoomConditionsNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F79D711FA0A827000CC56E /* TCMeetingRoomConditionsNumberCell.m */; };
+		55F79D761FA0AB10000CC56E /* TCMeetingRoomConditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F79D751FA0AB10000CC56E /* TCMeetingRoomConditions.m */; };
 		55FBB3441F7363E2008027C3 /* TCStoreGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FBB3431F7363E2008027C3 /* TCStoreGoodsCell.m */; };
 		55FBB3471F738D11008027C3 /* TCGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FBB3461F738D11008027C3 /* TCGoodsViewController.m */; };
 		7A01916E1E7A92B500283822 /* TCLockQRCodeTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A01916B1E7A92B500283822 /* TCLockQRCodeTitleView.m */; };
@@ -562,11 +575,31 @@
 		09AE0F771DED462700F307D8 /* TCComputeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCComputeView.h; sourceTree = "<group>"; };
 		09AE0F781DED462700F307D8 /* TCComputeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCComputeView.m; sourceTree = "<group>"; };
 		39C5AA3FC54D84E58748E333 /* Pods-individual.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-individual.release.xcconfig"; path = "Pods/Target Support Files/Pods-individual/Pods-individual.release.xcconfig"; sourceTree = "<group>"; };
+		550149BA1F9D971A00F72F51 /* TCMeetingRoomConditionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomConditionsViewController.h; sourceTree = "<group>"; };
+		550149BB1F9D971A00F72F51 /* TCMeetingRoomConditionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomConditionsViewController.m; sourceTree = "<group>"; };
+		550149BD1F9DD42700F72F51 /* TCMeetingRoomConditionsFloorCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomConditionsFloorCell.h; sourceTree = "<group>"; };
+		550149BE1F9DD42700F72F51 /* TCMeetingRoomConditionsFloorCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomConditionsFloorCell.m; sourceTree = "<group>"; };
+		550149C01F9DDAAE00F72F51 /* TCMeetingRoomConditionsTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomConditionsTimeCell.h; sourceTree = "<group>"; };
+		550149C11F9DDAAE00F72F51 /* TCMeetingRoomConditionsTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomConditionsTimeCell.m; sourceTree = "<group>"; };
+		550149C31F9DE7F600F72F51 /* TCMeetingRoomConditionsDurationCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomConditionsDurationCell.h; sourceTree = "<group>"; };
+		550149C41F9DE7F600F72F51 /* TCMeetingRoomConditionsDurationCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomConditionsDurationCell.m; sourceTree = "<group>"; };
+		550149C61F9DF3D600F72F51 /* TCMeetingRoomConditionsDevicesCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomConditionsDevicesCell.h; sourceTree = "<group>"; };
+		550149C71F9DF3D600F72F51 /* TCMeetingRoomConditionsDevicesCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomConditionsDevicesCell.m; sourceTree = "<group>"; };
+		550149C91F9EE55200F72F51 /* TCMeetingRoomSearchResultController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomSearchResultController.h; sourceTree = "<group>"; };
+		550149CA1F9EE55200F72F51 /* TCMeetingRoomSearchResultController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomSearchResultController.m; sourceTree = "<group>"; };
 		550497061F629CB8007F753F /* TCBioEditPhoneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditPhoneController.h; sourceTree = "<group>"; };
 		550497071F629CB8007F753F /* TCBioEditPhoneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditPhoneController.m; sourceTree = "<group>"; };
 		550497081F629CB9007F753F /* TCBioEditPhoneController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCBioEditPhoneController.xib; sourceTree = "<group>"; };
 		5504970B1F62A526007F753F /* TCBioEditPhoneFailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBioEditPhoneFailView.h; sourceTree = "<group>"; };
 		5504970C1F62A526007F753F /* TCBioEditPhoneFailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCBioEditPhoneFailView.m; sourceTree = "<group>"; };
+		5505DEB31F9F1C8600BC0ED6 /* TCMeetingRoomSearchResultCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomSearchResultCell.h; sourceTree = "<group>"; };
+		5505DEB41F9F1C8600BC0ED6 /* TCMeetingRoomSearchResultCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomSearchResultCell.m; sourceTree = "<group>"; };
+		5508D5C51FA1E9CE00C2AAA6 /* TCMeetingRoom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoom.h; sourceTree = "<group>"; };
+		5508D5C61FA1E9CE00C2AAA6 /* TCMeetingRoom.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoom.m; sourceTree = "<group>"; };
+		5508D5C81FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomEquipment.h; sourceTree = "<group>"; };
+		5508D5C91FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomEquipment.m; sourceTree = "<group>"; };
+		5508D5CB1FA1EB2100C2AAA6 /* TCMeetingParticipant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingParticipant.h; sourceTree = "<group>"; };
+		5508D5CC1FA1EB2100C2AAA6 /* TCMeetingParticipant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingParticipant.m; sourceTree = "<group>"; };
 		550923001F039DCC00B007C8 /* TCApartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentViewController.h; sourceTree = "<group>"; };
 		550923011F039DCC00B007C8 /* TCApartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentViewController.m; sourceTree = "<group>"; };
 		550923031F03A67400B007C8 /* TCApartmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentCell.h; sourceTree = "<group>"; };
@@ -681,6 +714,8 @@
 		559E78141F20E23F00CDE11D /* TCHomeMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCHomeMessageCell.m; sourceTree = "<group>"; };
 		559E78151F20E23F00CDE11D /* TCMessageMiddleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCMessageMiddleView.h; sourceTree = "<group>"; };
 		559E78161F20E23F00CDE11D /* TCMessageMiddleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCMessageMiddleView.m; sourceTree = "<group>"; };
+		55A32B3C1FA0367800DBB048 /* TCMeetingRoomSearchResultHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomSearchResultHeaderView.h; sourceTree = "<group>"; };
+		55A32B3D1FA0367800DBB048 /* TCMeetingRoomSearchResultHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomSearchResultHeaderView.m; sourceTree = "<group>"; };
 		55A3650C1F7E2DEC00F9D7BB /* TCWalletBillDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletBillDetailHeaderView.h; sourceTree = "<group>"; };
 		55A3650D1F7E2DEC00F9D7BB /* TCWalletBillDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletBillDetailHeaderView.m; sourceTree = "<group>"; };
 		55A3650E1F7E2DEC00F9D7BB /* TCWalletBillDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCWalletBillDetailHeaderView.xib; sourceTree = "<group>"; };
@@ -710,6 +745,10 @@
 		55F06F041E040B2500A849D7 /* TCPropertyDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCPropertyDetailController.xib; sourceTree = "<group>"; };
 		55F06F1E1E07EC6500A849D7 /* TCScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCScanner.h; sourceTree = "<group>"; };
 		55F06F1F1E07EC6500A849D7 /* TCScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCScanner.m; sourceTree = "<group>"; };
+		55F79D701FA0A827000CC56E /* TCMeetingRoomConditionsNumberCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomConditionsNumberCell.h; sourceTree = "<group>"; };
+		55F79D711FA0A827000CC56E /* TCMeetingRoomConditionsNumberCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomConditionsNumberCell.m; sourceTree = "<group>"; };
+		55F79D741FA0AB10000CC56E /* TCMeetingRoomConditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomConditions.h; sourceTree = "<group>"; };
+		55F79D751FA0AB10000CC56E /* TCMeetingRoomConditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomConditions.m; sourceTree = "<group>"; };
 		55FBB3421F7363E2008027C3 /* TCStoreGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStoreGoodsCell.h; sourceTree = "<group>"; };
 		55FBB3431F7363E2008027C3 /* TCStoreGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreGoodsCell.m; sourceTree = "<group>"; };
 		55FBB3451F738D11008027C3 /* TCGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsViewController.h; sourceTree = "<group>"; };
@@ -1933,6 +1972,21 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		55F79D731FA0AAE9000CC56E /* MeetingRoom */ = {
+			isa = PBXGroup;
+			children = (
+				55F79D741FA0AB10000CC56E /* TCMeetingRoomConditions.h */,
+				55F79D751FA0AB10000CC56E /* TCMeetingRoomConditions.m */,
+				5508D5C51FA1E9CE00C2AAA6 /* TCMeetingRoom.h */,
+				5508D5C61FA1E9CE00C2AAA6 /* TCMeetingRoom.m */,
+				5508D5C81FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.h */,
+				5508D5C91FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.m */,
+				5508D5CB1FA1EB2100C2AAA6 /* TCMeetingParticipant.h */,
+				5508D5CC1FA1EB2100C2AAA6 /* TCMeetingParticipant.m */,
+			);
+			path = MeetingRoom;
+			sourceTree = "<group>";
+		};
 		78C4E9954E04995E8CED7C6E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -2339,6 +2393,10 @@
 			children = (
 				7A531BB31F98879A00244D81 /* TCMeetingRoomViewController.h */,
 				7A531BB41F98879A00244D81 /* TCMeetingRoomViewController.m */,
+				550149BA1F9D971A00F72F51 /* TCMeetingRoomConditionsViewController.h */,
+				550149BB1F9D971A00F72F51 /* TCMeetingRoomConditionsViewController.m */,
+				550149C91F9EE55200F72F51 /* TCMeetingRoomSearchResultController.h */,
+				550149CA1F9EE55200F72F51 /* TCMeetingRoomSearchResultController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2354,6 +2412,20 @@
 				7A531BC01F98B0F300244D81 /* TCMeetingRoomInfoViewCell.m */,
 				7A531BC21F98B10700244D81 /* TCMeetingRoomTitleViewCell.h */,
 				7A531BC31F98B10700244D81 /* TCMeetingRoomTitleViewCell.m */,
+				550149BD1F9DD42700F72F51 /* TCMeetingRoomConditionsFloorCell.h */,
+				550149BE1F9DD42700F72F51 /* TCMeetingRoomConditionsFloorCell.m */,
+				550149C01F9DDAAE00F72F51 /* TCMeetingRoomConditionsTimeCell.h */,
+				550149C11F9DDAAE00F72F51 /* TCMeetingRoomConditionsTimeCell.m */,
+				550149C31F9DE7F600F72F51 /* TCMeetingRoomConditionsDurationCell.h */,
+				550149C41F9DE7F600F72F51 /* TCMeetingRoomConditionsDurationCell.m */,
+				550149C61F9DF3D600F72F51 /* TCMeetingRoomConditionsDevicesCell.h */,
+				550149C71F9DF3D600F72F51 /* TCMeetingRoomConditionsDevicesCell.m */,
+				5505DEB31F9F1C8600BC0ED6 /* TCMeetingRoomSearchResultCell.h */,
+				5505DEB41F9F1C8600BC0ED6 /* TCMeetingRoomSearchResultCell.m */,
+				55A32B3C1FA0367800DBB048 /* TCMeetingRoomSearchResultHeaderView.h */,
+				55A32B3D1FA0367800DBB048 /* TCMeetingRoomSearchResultHeaderView.m */,
+				55F79D701FA0A827000CC56E /* TCMeetingRoomConditionsNumberCell.h */,
+				55F79D711FA0A827000CC56E /* TCMeetingRoomConditionsNumberCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2792,6 +2864,7 @@
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
 				7AADCC7A1EE81977004AA1DA /* TCEnum.h */,
+				55F79D731FA0AAE9000CC56E /* MeetingRoom */,
 				7A925DB51F1DE45000D697DE /* HomeMessage */,
 				7ABA7E411F00BC9500DCC2D0 /* Rents */,
 				7A22D93E1ECEF901009A6A64 /* Activities */,
@@ -3408,6 +3481,7 @@
 				7AD660CA1F99E3AE002A6967 /* TCMeetingRoomViewController.m in Sources */,
 				7A13EEA81DF813F000377869 /* TCCompanyApplyViewController.m in Sources */,
 				7A11F6EC1DE3E39B005F3EAB /* TCVicinityViewController.m in Sources */,
+				5508D5C71FA1E9CE00C2AAA6 /* TCMeetingRoom.m in Sources */,
 				7A5899131F0657D20013E07A /* TCApartmentRentPaySuccessViewController.m in Sources */,
 				7A13EEB21DF814AD00377869 /* TCCommunityListViewController.m in Sources */,
 				7AEB4CCC1E03936300F83A7C /* TCShippingAddressViewController.m in Sources */,
@@ -3416,6 +3490,7 @@
 				092626801E0BA3F300F5A18C /* TCShoppingCartBottom.m in Sources */,
 				7AADCC631EE7A33D004AA1DA /* TCPaymentViewController.m in Sources */,
 				7AA643C21F0A48A300DD421F /* TCBankPickerViewController.m in Sources */,
+				5508D5CA1FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.m in Sources */,
 				7AA643C81F0B78F900DD421F /* TCRentPlanItemViewCell.m in Sources */,
 				7A22D93D1ECEF336009A6A64 /* TCAppInitializationInfo.m in Sources */,
 				7AFEC4841E54056E00B0E754 /* TCGoodsOrderViewCell.m in Sources */,
@@ -3429,12 +3504,14 @@
 				7A925DC81F1E077B00D697DE /* TCShopViewController.m in Sources */,
 				7AADCC701EE80154004AA1DA /* TCPaymentBankCardView.m in Sources */,
 				5546F95F1F305BFA00E9A9B0 /* TCHomeMessageMoneyMiddleCell.m in Sources */,
+				550149BF1F9DD42700F72F51 /* TCMeetingRoomConditionsFloorCell.m in Sources */,
 				7A8743F71F17775400A5ED9D /* TCHomeBannerView.m in Sources */,
 				559D88261E0D17AF00982697 /* TCAboutUSViewController.m in Sources */,
 				7A83527E1E5C1CF1003A8E76 /* TCServiceAddressViewCell.m in Sources */,
 				7AEB4D0B1E0413CD00F83A7C /* TCBioEditLocationViewController.m in Sources */,
 				7A7403CB1F5F9BEB007FCB3D /* TCGoodsStandardUnits.m in Sources */,
 				7A8352871E5C3DEB003A8E76 /* TCServiceFacilityView.m in Sources */,
+				550149C81F9DF3D600F72F51 /* TCMeetingRoomConditionsDevicesCell.m in Sources */,
 				7A1A85561E66D64700BB5EDB /* TCServiceTabItemView.m in Sources */,
 				550FB76D1ED5C18600D75E33 /* FSCalendar+Deprecated.m in Sources */,
 				7A1A85541E66D64700BB5EDB /* TCServiceSortView.m in Sources */,
@@ -3452,6 +3529,7 @@
 				7A48A6AA1E5A93AF006CAB62 /* TCServiceHeaderView.m in Sources */,
 				7A7403CE1F5F9C46007FCB3D /* TCGoodsStandardUnitView.m in Sources */,
 				7AAF23821DCB5C04002B81A5 /* TCUserSession.m in Sources */,
+				55A32B3E1FA0367800DBB048 /* TCMeetingRoomSearchResultHeaderView.m in Sources */,
 				0929D2841E0A24F00099B1BD /* TCRecommendFooter.m in Sources */,
 				09222E7F1DEEC2C70064C0DF /* TCOrderItem.m in Sources */,
 				55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */,
@@ -3478,6 +3556,7 @@
 				7AC346EC1E0144B500E28EC9 /* TCWalletBillDetailViewCell.m in Sources */,
 				7A4A365F1F5950D3008D277C /* TCGoodsDetail.m in Sources */,
 				7A7403BF1F5E9AC7007FCB3D /* TCGoodsStandardHeaderView.m in Sources */,
+				5508D5CD1FA1EB2100C2AAA6 /* TCMeetingParticipant.m in Sources */,
 				7A1A85521E66D64700BB5EDB /* TCServiceFilterView.m in Sources */,
 				7A8352811E5C249C003A8E76 /* TCServiceRecommendViewCell.m in Sources */,
 				09222E321DEE99860064C0DF /* TCReserveOnlineViewController.m in Sources */,
@@ -3559,6 +3638,7 @@
 				559E78191F20E23F00CDE11D /* TCMessageMiddleView.m in Sources */,
 				7AFEC47F1E54056D00B0E754 /* TCGoodsOrderHeaderView.m in Sources */,
 				550FB7701ED5C18600D75E33 /* FSCalendarCalculator.m in Sources */,
+				5505DEB51F9F1C8600BC0ED6 /* TCMeetingRoomSearchResultCell.m in Sources */,
 				55FBB3441F7363E2008027C3 /* TCStoreGoodsCell.m in Sources */,
 				7A7403B91F5E7E67007FCB3D /* TCGoodsStandardViewController.m in Sources */,
 				7A4514881DD30C48009F170A /* TCModelImport.m in Sources */,
@@ -3567,6 +3647,7 @@
 				5504970D1F62A526007F753F /* TCBioEditPhoneFailView.m in Sources */,
 				5546F9511F26141A00E9A9B0 /* TCCreditBill.m in Sources */,
 				7A925DAA1F1C99B400D697DE /* TCSearchViewController.m in Sources */,
+				55F79D721FA0A827000CC56E /* TCMeetingRoomConditionsNumberCell.m in Sources */,
 				7A22D9151ECD94A4009A6A64 /* TCLockEquipViewCell.m in Sources */,
 				7A2F7C6F1E768BAF007B831D /* TCAddVisitorViewController.m in Sources */,
 				7A4A365C1F590B32008D277C /* TCGoodsDetailViewController.m in Sources */,
@@ -3608,9 +3689,11 @@
 				5526A5CD1F05FA2900A8D410 /* TCModifyPwdViewController.m in Sources */,
 				55BB9EB31E728C7200B0FD94 /* TCVisitorLocksCell.m in Sources */,
 				7A7403D11F5FA193007FCB3D /* TCGoodsStandardUnitsView.m in Sources */,
+				550149CB1F9EE55200F72F51 /* TCMeetingRoomSearchResultController.m in Sources */,
 				550FB76E1ED5C18600D75E33 /* FSCalendar.m in Sources */,
 				7A3E5D541F73DD40004ECE83 /* TCWechatPaymentInfo.m in Sources */,
 				7A925E021F20E82000D697DE /* TCPrivilegeInstructionViewCell.m in Sources */,
+				550149BC1F9D971A00F72F51 /* TCMeetingRoomConditionsViewController.m in Sources */,
 				7ABA7E7B1F03B55C00DCC2D0 /* TCApartmentRentPayDetailView.m in Sources */,
 				7A243F351F288EB700192E22 /* TCCompanyWalletViewController.m in Sources */,
 				7AF2A78E1F7C9D3C00F2571B /* TCNavigationBar.m in Sources */,
@@ -3622,6 +3705,7 @@
 				092C69701DEFD33500FE2FD8 /* TCReserveRadioBtnView.m in Sources */,
 				7A925DCF1F1F072600D697DE /* TCStoreWrapper.m in Sources */,
 				0929D2851E0A24F00099B1BD /* TCRecommendHeader.m in Sources */,
+				55F79D761FA0AB10000CC56E /* TCMeetingRoomConditions.m in Sources */,
 				7AF972E11E095ED4009D26A3 /* TCUserPayment.m in Sources */,
 				7AF972DE1E09174B009D26A3 /* TCPropertyRepairsInfo.m in Sources */,
 				5574CF401F503B95002EE1F5 /* TCTabButton.m in Sources */,
@@ -3649,6 +3733,7 @@
 				7A3892411F3C0928000DBA30 /* TCNotificationNames.m in Sources */,
 				7A64EA7D1E14EEE0008D0C12 /* WXApiManager.m in Sources */,
 				7A190AF91DC0AA7D00651905 /* TCTabBarController.m in Sources */,
+				550149C21F9DDAAE00F72F51 /* TCMeetingRoomConditionsTimeCell.m in Sources */,
 				7A7E940A1DF51A01006A47CE /* TCRepairsViewCell.m in Sources */,
 				7AFEC48D1E54729100B0E754 /* TCGoodsOrderStoreViewCell.m in Sources */,
 				55A3650F1F7E2DEC00F9D7BB /* TCWalletBillDetailHeaderView.m in Sources */,
@@ -3660,6 +3745,7 @@
 				7A1A85551E66D64700BB5EDB /* TCServiceTabBar.m in Sources */,
 				7A58990E1F05FA580013E07A /* TCRentProtocolWithholdInfo.m in Sources */,
 				7A74674F1DF947EF00ACD815 /* TCCompanyInfo.m in Sources */,
+				550149C51F9DE7F600F72F51 /* TCMeetingRoomConditionsDurationCell.m in Sources */,
 				7A133EBF1DDC12DF00FCAB95 /* TCGoods.m in Sources */,
 				7A7E93F41DF502E7006A47CE /* TCGenderPickerView.m in Sources */,
 				7A925DD81F1F3B9600D697DE /* TCStoreDetailViewController.m in Sources */,
