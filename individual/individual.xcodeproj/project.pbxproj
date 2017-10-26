@@ -1996,21 +1996,6 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		55F79D731FA0AAE9000CC56E /* MeetingRoom */ = {
-			isa = PBXGroup;
-			children = (
-				55F79D741FA0AB10000CC56E /* TCMeetingRoomConditions.h */,
-				55F79D751FA0AB10000CC56E /* TCMeetingRoomConditions.m */,
-				5508D5C51FA1E9CE00C2AAA6 /* TCMeetingRoom.h */,
-				5508D5C61FA1E9CE00C2AAA6 /* TCMeetingRoom.m */,
-				5508D5C81FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.h */,
-				5508D5C91FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.m */,
-				5508D5CB1FA1EB2100C2AAA6 /* TCMeetingParticipant.h */,
-				5508D5CC1FA1EB2100C2AAA6 /* TCMeetingParticipant.m */,
-			);
-			path = MeetingRoom;
-			sourceTree = "<group>";
-		};
 		78C4E9954E04995E8CED7C6E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -2417,6 +2402,8 @@
 			children = (
 				7A531BB31F98879A00244D81 /* TCMeetingRoomViewController.h */,
 				7A531BB41F98879A00244D81 /* TCMeetingRoomViewController.m */,
+				7AD660CB1F9DD4D7002A6967 /* TCMeetingRoomBookingTimeViewController.h */,
+				7AD660CC1F9DD4D7002A6967 /* TCMeetingRoomBookingTimeViewController.m */,
 				550149BA1F9D971A00F72F51 /* TCMeetingRoomConditionsViewController.h */,
 				550149BB1F9D971A00F72F51 /* TCMeetingRoomConditionsViewController.m */,
 				550149C91F9EE55200F72F51 /* TCMeetingRoomSearchResultController.h */,
@@ -2436,6 +2423,16 @@
 				7A531BC01F98B0F300244D81 /* TCMeetingRoomInfoViewCell.m */,
 				7A531BC21F98B10700244D81 /* TCMeetingRoomTitleViewCell.h */,
 				7A531BC31F98B10700244D81 /* TCMeetingRoomTitleViewCell.m */,
+				7AD660CE1F9DD9FA002A6967 /* TCBookingTimeViewCell.h */,
+				7AD660CF1F9DD9FA002A6967 /* TCBookingTimeViewCell.m */,
+				7AD660D11F9DDA0F002A6967 /* TCBookingTimeView.h */,
+				7AD660D21F9DDA0F002A6967 /* TCBookingTimeView.m */,
+				7AD660D41F9E03B3002A6967 /* TCBookingTimeNoteView.h */,
+				7AD660D51F9E03B3002A6967 /* TCBookingTimeNoteView.m */,
+				7AD660D71F9E047B002A6967 /* TCBookingTimeNoteItem.h */,
+				7AD660D81F9E047B002A6967 /* TCBookingTimeNoteItem.m */,
+				7AD660DA1F9F2C26002A6967 /* TCBookingDateView.h */,
+				7AD660DB1F9F2C26002A6967 /* TCBookingDateView.m */,
 				550149BD1F9DD42700F72F51 /* TCMeetingRoomConditionsFloorCell.h */,
 				550149BE1F9DD42700F72F51 /* TCMeetingRoomConditionsFloorCell.m */,
 				550149C01F9DDAAE00F72F51 /* TCMeetingRoomConditionsTimeCell.h */,
@@ -2888,7 +2885,7 @@
 				7A4514861DD30C48009F170A /* TCModelImport.h */,
 				7A4514871DD30C48009F170A /* TCModelImport.m */,
 				7AADCC7A1EE81977004AA1DA /* TCEnum.h */,
-				55F79D731FA0AAE9000CC56E /* MeetingRoom */,
+				7AD660DD1F9F3ED4002A6967 /* Meeting */,
 				7A925DB51F1DE45000D697DE /* HomeMessage */,
 				7ABA7E411F00BC9500DCC2D0 /* Rents */,
 				7A22D93E1ECEF901009A6A64 /* Activities */,
@@ -3127,6 +3124,14 @@
 		7AD660DD1F9F3ED4002A6967 /* Meeting */ = {
 			isa = PBXGroup;
 			children = (
+				55F79D741FA0AB10000CC56E /* TCMeetingRoomConditions.h */,
+				55F79D751FA0AB10000CC56E /* TCMeetingRoomConditions.m */,
+				5508D5C51FA1E9CE00C2AAA6 /* TCMeetingRoom.h */,
+				5508D5C61FA1E9CE00C2AAA6 /* TCMeetingRoom.m */,
+				5508D5C81FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.h */,
+				5508D5C91FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.m */,
+				5508D5CB1FA1EB2100C2AAA6 /* TCMeetingParticipant.h */,
+				5508D5CC1FA1EB2100C2AAA6 /* TCMeetingParticipant.m */,
 				7AD660DE1F9F3EF8002A6967 /* TCBookingDate.h */,
 				7AD660DF1F9F3EF8002A6967 /* TCBookingDate.m */,
 				7AD660E11F9F3F06002A6967 /* TCBookingTime.h */,
