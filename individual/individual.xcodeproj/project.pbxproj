@@ -425,6 +425,9 @@
 		7AD660DC1F9F2C26002A6967 /* TCBookingDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD660DB1F9F2C26002A6967 /* TCBookingDateView.m */; };
 		7AD660E01F9F3EF8002A6967 /* TCBookingDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD660DF1F9F3EF8002A6967 /* TCBookingDate.m */; };
 		7AD660E31F9F3F06002A6967 /* TCBookingTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD660E21F9F3F06002A6967 /* TCBookingTime.m */; };
+		7AD6610B1FA096FA002A6967 /* TCBookingDateViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD6610A1FA096FA002A6967 /* TCBookingDateViewLayout.m */; };
+		7AD6610E1FA09DA0002A6967 /* TCBookingDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD6610D1FA09DA0002A6967 /* TCBookingDateCell.m */; };
+		7AD661111FA0A64E002A6967 /* TCBookingDateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD661101FA0A64E002A6967 /* TCBookingDateInfo.m */; };
 		7AE32B841DC1BD04004E303D /* TCGetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */; };
 		7AE32B861DC1DE0B004E303D /* TCGetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */; };
 		7AE736AA1F46E252001DE9FE /* intro_image_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AE736A61F46E252001DE9FE /* intro_image_01.png */; };
@@ -1268,6 +1271,12 @@
 		7AD660DF1F9F3EF8002A6967 /* TCBookingDate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingDate.m; sourceTree = "<group>"; };
 		7AD660E11F9F3F06002A6967 /* TCBookingTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCBookingTime.h; sourceTree = "<group>"; };
 		7AD660E21F9F3F06002A6967 /* TCBookingTime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingTime.m; sourceTree = "<group>"; };
+		7AD661091FA096FA002A6967 /* TCBookingDateViewLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCBookingDateViewLayout.h; sourceTree = "<group>"; };
+		7AD6610A1FA096FA002A6967 /* TCBookingDateViewLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingDateViewLayout.m; sourceTree = "<group>"; };
+		7AD6610C1FA09DA0002A6967 /* TCBookingDateCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCBookingDateCell.h; sourceTree = "<group>"; };
+		7AD6610D1FA09DA0002A6967 /* TCBookingDateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingDateCell.m; sourceTree = "<group>"; };
+		7AD6610F1FA0A64E002A6967 /* TCBookingDateInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCBookingDateInfo.h; sourceTree = "<group>"; };
+		7AD661101FA0A64E002A6967 /* TCBookingDateInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingDateInfo.m; sourceTree = "<group>"; };
 		7AE32B821DC1BD04004E303D /* TCGetPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGetPasswordView.h; sourceTree = "<group>"; };
 		7AE32B831DC1BD04004E303D /* TCGetPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCGetPasswordView.m; sourceTree = "<group>"; };
 		7AE32B851DC1DE0B004E303D /* TCGetPasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCGetPasswordView.xib; sourceTree = "<group>"; };
@@ -2390,6 +2399,10 @@
 				7AD660D81F9E047B002A6967 /* TCBookingTimeNoteItem.m */,
 				7AD660DA1F9F2C26002A6967 /* TCBookingDateView.h */,
 				7AD660DB1F9F2C26002A6967 /* TCBookingDateView.m */,
+				7AD6610C1FA09DA0002A6967 /* TCBookingDateCell.h */,
+				7AD6610D1FA09DA0002A6967 /* TCBookingDateCell.m */,
+				7AD661091FA096FA002A6967 /* TCBookingDateViewLayout.h */,
+				7AD6610A1FA096FA002A6967 /* TCBookingDateViewLayout.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3069,6 +3082,8 @@
 			children = (
 				7AD660DE1F9F3EF8002A6967 /* TCBookingDate.h */,
 				7AD660DF1F9F3EF8002A6967 /* TCBookingDate.m */,
+				7AD6610F1FA0A64E002A6967 /* TCBookingDateInfo.h */,
+				7AD661101FA0A64E002A6967 /* TCBookingDateInfo.m */,
 				7AD660E11F9F3F06002A6967 /* TCBookingTime.h */,
 				7AD660E21F9F3F06002A6967 /* TCBookingTime.m */,
 			);
@@ -3477,6 +3492,7 @@
 				7A925DC81F1E077B00D697DE /* TCShopViewController.m in Sources */,
 				7AADCC701EE80154004AA1DA /* TCPaymentBankCardView.m in Sources */,
 				5546F95F1F305BFA00E9A9B0 /* TCHomeMessageMoneyMiddleCell.m in Sources */,
+				7AD661111FA0A64E002A6967 /* TCBookingDateInfo.m in Sources */,
 				7A8743F71F17775400A5ED9D /* TCHomeBannerView.m in Sources */,
 				7AD660D01F9DD9FA002A6967 /* TCBookingTimeViewCell.m in Sources */,
 				559D88261E0D17AF00982697 /* TCAboutUSViewController.m in Sources */,
@@ -3564,6 +3580,7 @@
 				7AABE8431F396BE4001F3BC5 /* TCCompanyPaymentViewController.m in Sources */,
 				7A925E051F20E83600D697DE /* TCPrivilegeViewCell.m in Sources */,
 				7A8352EA1E5EE3C4003A8E76 /* TCServiceMapViewController.m in Sources */,
+				7AD6610B1FA096FA002A6967 /* TCBookingDateViewLayout.m in Sources */,
 				5546F9651F305C8600E9A9B0 /* TCHomeMessageSubTitleCell.m in Sources */,
 				7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */,
 				550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */,
@@ -3751,6 +3768,7 @@
 				550FB7721ED5C18600D75E33 /* FSCalendarCollectionView.m in Sources */,
 				7A531BC41F98B10700244D81 /* TCMeetingRoomTitleViewCell.m in Sources */,
 				7AEB4D021E03E83800F83A7C /* TCBioEditEmotionViewController.m in Sources */,
+				7AD6610E1FA09DA0002A6967 /* TCBookingDateCell.m in Sources */,
 				7A2F5C2C1E71536E00174EB1 /* TCLockQRCodeViewController.m in Sources */,
 				7AC346D91E01433E00E28EC9 /* TCWalletBillDetailViewController.m in Sources */,
 				7A243F3B1F28934800192E22 /* TCCompanyWalletTitleView.m in Sources */,

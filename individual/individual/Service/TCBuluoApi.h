@@ -989,6 +989,6 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  @param searchDate 搜索日期
  @param resultBlock 结果回调
  */
-- (void)fetchBookingDateWithMeetingRoomID:(NSString *)meetingRoomID searchDate:(long long)searchDate result:(void (^)(TCBookingDate *bookingDate, NSError *error))resultBlock;
+- (void)fetchBookingDateInfoWithMeetingRoomID:(NSString *)meetingRoomID searchDate:(long long)searchDate result:(void (^)(TCBookingDateInfo *bookingDateInfo, NSError *error))resultBlock;
 
 @end

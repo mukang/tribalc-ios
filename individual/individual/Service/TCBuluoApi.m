@@ -3249,15 +3249,15 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
 
 #pragma mark - 会议室预定
 
-- (void)fetchBookingDateWithMeetingRoomID:(NSString *)meetingRoomID searchDate:(long long)searchDate result:(void (^)(TCBookingDate *, NSError *))resultBlock {
+- (void)fetchBookingDateInfoWithMeetingRoomID:(NSString *)meetingRoomID searchDate:(long long)searchDate result:(void (^)(TCBookingDateInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *apiName = [NSString stringWithFormat:@"conference_rooms/%@/reservation?me=%@&searchDate=%lld", meetingRoomID, self.currentUserSession.assigned, searchDate];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
-                TCBookingDate *bookingDate = [[TCBookingDate alloc] initWithObjectDictionary:response.data];
+                TCBookingDateInfo *bookingDateInfo = [[TCBookingDateInfo alloc] initWithObjectDictionary:response.data];
                 if (resultBlock) {
-                    TC_CALL_ASYNC_MQ(resultBlock(bookingDate, nil));
+                    TC_CALL_ASYNC_MQ(resultBlock(bookingDateInfo, nil));
                 }
             } else {
                 if (resultBlock) {
