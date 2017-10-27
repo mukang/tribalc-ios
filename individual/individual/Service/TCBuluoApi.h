@@ -991,4 +991,18 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)fetchBookingDateWithMeetingRoomID:(NSString *)meetingRoomID searchDate:(long long)searchDate result:(void (^)(TCBookingDate *bookingDate, NSError *error))resultBlock;
 
+
+/**
+ 获取会议室
+
+ @param beginFloor 起始楼层
+ @param endFloor 结束楼层
+ @param attendance 参会人数
+ @param searchBeginDate 开始日期
+ @param searchEndDate 结束日期
+ @param equipments 设备
+ @param duration 时长
+ */
+- (void)fetchMeetingRoomWithBeginFloor:(NSString *)beginFloor endFloor:(NSString *)endFloor attendance:(NSString *)attendance searchBeginDate:(NSString *)searchBeginDate searchEndDate:(NSString *)searchEndDate equipments:(NSArray *)equipments duration:(NSString *)duration result:(void (^)(NSArray *meetingRooms, NSError *error))resultBlock;
+
 @end

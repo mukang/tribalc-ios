@@ -3273,4 +3273,42 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchMeetingRoomWithBeginFloor:(NSString *)beginFloor endFloor:(NSString *)endFloor attendance:(NSString *)attendance searchBeginDate:(NSString *)searchBeginDate searchEndDate:(NSString *)searchEndDate equipments:(NSArray *)equipments duration:(NSString *)duration result:(void (^)(NSArray *meetingRooms, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *beginFloorStr = beginFloor ? [NSString stringWithFormat:@"&beginFloor=%@",beginFloor] : @"";
+        NSString *endFloorStr = endFloor ? [NSString stringWithFormat:@"&endFloor=%@",endFloor] : @"";
+        NSString *attendanceStr = attendance ? [NSString stringWithFormat:@"&attendance=%@",attendance] : @"";
+        NSString *searchBeginDateStr = searchBeginDate ? [NSString stringWithFormat:@"&searchBeginDate=%@",searchBeginDate] : @"";
+        NSString *searchEndDateStr = searchEndDate ? [NSString stringWithFormat:@"&searchEndDate=%@",searchEndDate] : @"";
+        NSString *equipmentsStr = equipments ? [NSString stringWithFormat:@"&equipments=%@",equipments] : @"";
+        NSString *durationStr = duration ? [NSString stringWithFormat:@"&duration=%@",duration] : @"";
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms?me=%@%@%@%@%@%@%@%@", self.currentUserSession.assigned, beginFloorStr, endFloorStr, attendanceStr, searchBeginDateStr, searchEndDateStr, equipmentsStr, durationStr];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if ([response.data isKindOfClass:[NSArray class]]) {
+                    NSMutableArray *mutableArr = [NSMutableArray arrayWithCapacity:0];
+                    for (NSDictionary *dic in response.data) {
+                        TCMeetingRoom *meetingRoom = [[TCMeetingRoom alloc] initWithObjectDictionary:dic];
+                        [mutableArr addObject:meetingRoom];
+                    }
+                    if (resultBlock) {
+                        TC_CALL_ASYNC_MQ(resultBlock(mutableArr, nil));
+                    }
+                }
+                
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 @end

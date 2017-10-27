@@ -8,6 +8,12 @@
 
 #import "TCMeetingRoomSearchResultCell.h"
 
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <TCCommonLibs/UIImage+Category.h>
+
+#import "TCMeetingRoom.h"
+
 @interface TCMeetingRoomSearchResultCell ()
 
 @property (strong, nonatomic) UIImageView *leftImageView;
@@ -33,12 +39,47 @@
     return self;
 }
 
+- (void)setMeetingRoom:(TCMeetingRoom *)meetingRoom {
+    _meetingRoom = meetingRoom;
+    
+    if ([meetingRoom.pictures isKindOfClass:[NSArray class]] && meetingRoom.pictures.count > 0) {
+        NSString *str = meetingRoom.pictures[0];
+        if ([str isKindOfClass:[NSString class]]) {
+            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:str];
+            UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(143, 108)];
+            [self.leftImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
+        }
+    }
+    
+    self.titleLabel.text = meetingRoom.name;
+    NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld层",(long)meetingRoom.floor]];
+    NSTextAttachment *attch = [[NSTextAttachment alloc] init];
+    attch.bounds = CGRectMake(5, -4, 17, 17);
+    attch.image = [UIImage imageNamed:@"meeting_room_floor_icon"];
+    NSAttributedString *str = [NSAttributedString attributedStringWithAttachment:attch];
+    NSMutableAttributedString *mutableStr = [[NSMutableAttributedString alloc] initWithAttributedString:str];
+    [mutableStr appendAttributedString:att];
+    self.floorLabel.attributedText = mutableStr;
+    
+    NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld-%ld人",(long)meetingRoom.galleryful,(long)meetingRoom.maxGalleryful]];
+    NSTextAttachment *numAttch = [[NSTextAttachment alloc] init];
+    numAttch.bounds = CGRectMake(5, -4, 17, 17);
+    numAttch.image = [UIImage imageNamed:@"meeting_room_number_icon"];
+    NSAttributedString *numStr = [NSAttributedString attributedStringWithAttachment:numAttch];
+    NSMutableAttributedString *mutableNumStr = [[NSMutableAttributedString alloc] initWithAttributedString:numStr];
+    [mutableNumStr appendAttributedString:attStr];
+    self.numLabel.attributedText = mutableNumStr;
+    
+    self.priceLabel.text = [NSString stringWithFormat:@"%@元/小时",@(meetingRoom.fee)];
+}
+
 - (void)setUpViews {
     [self.contentView addSubview:self.leftImageView];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.floorLabel];
     [self.contentView addSubview:self.numLabel];
     [self.contentView addSubview:self.priceLabel];
+    [self.contentView addSubview:self.devicesView];
     
     [self.leftImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(15);

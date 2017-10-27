@@ -98,6 +98,12 @@
     }
 }
 
+- (void)hangleClickModifyBtn {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(headerViewDidClickModifyBtn)]) {
+        [self.delegate headerViewDidClickModifyBtn];
+    }
+}
+
 - (void)setUpViews {
     self.backgroundColor = TCRGBColor(239, 245, 245);
     [self addSubview:self.bgView];
@@ -304,8 +310,12 @@
 - (UIButton *)modifyBtn {
     if (_modifyBtn == nil) {
         _modifyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _modifyBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        _modifyBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -20);
         [_modifyBtn setTitle:@"修改" forState:UIControlStateNormal];
         [_modifyBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
+        [_modifyBtn addTarget:self action:@selector(hangleClickModifyBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_modifyBtn setImage:[UIImage imageNamed:@"meeting_room_conditions_modify"] forState:UIControlStateNormal];
     }
     return _modifyBtn;
 }
