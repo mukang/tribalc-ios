@@ -8,6 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TCBookingDateView : UIScrollView
+@protocol TCBookingDateViewDelegate;
+@interface TCBookingDateView : UIView
+
+@property (weak, nonatomic) id<TCBookingDateViewDelegate> delegate;
+
+- (instancetype)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate selectedDate:(NSDate *)selectedDate;
+
+- (void)setNewSelectedDate:(NSDate *)date;
 
 @end
+
+@protocol TCBookingDateViewDelegate <NSObject>
+
+@optional
+- (void)bookingDateView:(TCBookingDateView *)view didScrollToNewDate:(NSDate *)newDate;
+
+@end
+
+
+

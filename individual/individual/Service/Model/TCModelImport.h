@@ -112,6 +112,7 @@
 #import "TCMessageManagementWrapper.h"
 
 /*********** 会议室预定 ***********/
+#import "TCBookingDateInfo.h"
 #import "TCBookingDate.h"
 #import "TCMeetingRoomConditions.h"
 #import "TCMeetingRoom.h"

@@ -10,4 +10,6 @@
 
 @interface TCMeetingRoomBookingTimeViewController : TCBaseViewController
 
+@property (copy, nonatomic) NSString *meetingRoomID;
+
 @end
