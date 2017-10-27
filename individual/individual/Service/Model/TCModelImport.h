@@ -113,6 +113,8 @@
 
 /*********** 会议室预定 ***********/
 #import "TCBookingDateInfo.h"
+#import "TCBookingDate.h"
+#import "TCMeetingRoomConditions.h"
 
 
 @interface TCModelImport : NSObject

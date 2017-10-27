@@ -22,6 +22,7 @@
 #import "TCApartmentPayViewController.h"
 #import "TCCompanyRentPayViewController.h"
 #import "TCMeetingRoomViewController.h"
+#import "TCMeetingRoomConditionsViewController.h"
 
 #import "TCHomeSearchBarView.h"
 #import "TCHomeToolBarView.h"
@@ -560,7 +561,8 @@ TCHomeCoverViewDelegate>
 
 - (void)didClickMeetingButtonInHomeToolsView:(TCHomeToolsView *)view {
 //    [self btnClickUnifyTips];
-    TCMeetingRoomViewController *vc = [[TCMeetingRoomViewController alloc] init];
+//    TCMeetingRoomViewController *vc = [[TCMeetingRoomViewController alloc] init];
+    TCMeetingRoomConditionsViewController *vc = [[TCMeetingRoomConditionsViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
