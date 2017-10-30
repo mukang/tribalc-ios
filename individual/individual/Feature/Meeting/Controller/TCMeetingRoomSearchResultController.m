@@ -14,6 +14,7 @@
 #import "TCMeetingRoomSearchResultHeaderView.h"
 
 #import "TCMeetingRoomConditions.h"
+#import "TCBuluoApi.h"
 
 @interface TCMeetingRoomSearchResultController ()<UITableViewDelegate,UITableViewDataSource,TCMeetingRoomSearchResultHeaderViewDelegate>
 
@@ -31,6 +32,34 @@
     self.title = @"会议室预定";
     [self setUpViews];
     [self setUpNav];
+    [self loadData];
+}
+
+- (void)loadData {
+    NSMutableString *mutableStr = [[NSMutableString alloc] init];
+    [self.conditions.selectedDevices enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+        TCMeetingRoomEquipment *equ = (TCMeetingRoomEquipment *)obj;
+        [mutableStr appendString:equ.ID];
+        [mutableStr appendString:@","];
+    }];
+
+    if (mutableStr.length > 0) {
+        [mutableStr replaceCharactersInRange:NSMakeRange(mutableStr.length-1, 1) withString:@""];
+    }
+    
+    [MBProgressHUD showHUD:YES];
+    @WeakObj(self)
+    [[TCBuluoApi api] fetchMeetingRoomWithBeginFloor:self.conditions.startFloor endFloor:self.conditions.endFloor attendance:self.conditions.number searchBeginDate:self.conditions.startDate searchEndDate:self.conditions.endDate equipments:[mutableStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] duration:self.conditions.hours result:^(NSArray *meetingRooms, NSError *error) {
+        @StrongObj(self)
+        if ([meetingRooms isKindOfClass:[NSArray class]]) {
+            [MBProgressHUD hideHUD:YES];
+            self.arr = meetingRooms;
+            [self.tableView reloadData];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
+        }
+    }];
 }
 
 - (void)setUpNav {
@@ -56,16 +85,16 @@
 #pragma mark UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return self.arr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return self.arr.count;
-    return 10;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCMeetingRoomSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomSearchResultCell" forIndexPath:indexPath];
+    cell.meetingRoom = self.arr[indexPath.row];
     return cell;
 }
 
@@ -89,6 +118,10 @@
 
 #pragma mark UITableViewDelegate
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 #pragma mark TCMeetingRoomSearchResultHeaderViewDelegate
 
 - (void)headerViewDidClickModifyBtn {
@@ -105,16 +138,21 @@
         [_tableView registerClass:[TCMeetingRoomSearchResultCell class] forCellReuseIdentifier:@"TCMeetingRoomSearchResultCell"];
         NSMutableString *mutableStr = [[NSMutableString alloc] init];
         [self.conditions.selectedDevices enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
-            NSString *str = (NSString *)obj;
+            TCMeetingRoomEquipment *equ = (TCMeetingRoomEquipment *)obj;
+            NSString *str = equ.name;
             [mutableStr appendString:str];
+            [mutableStr appendString:@","];
         }];
+        if (mutableStr.length > 0) {
+            [mutableStr replaceCharactersInRange:NSMakeRange(mutableStr.length-1, 1) withString:@""];
+        }
         NSString *str = @"会议室设备：";
         CGSize titleSize = [str boundingRectWithSize:CGSizeMake(9999.0, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
         CGFloat maxW = TCScreenWidth - 12 - 25 - titleSize.width - 15 - 15;
         
         CGSize size = [mutableStr boundingRectWithSize:CGSizeMake(maxW, 9999.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
         
-        TCMeetingRoomSearchResultHeaderView *headerView = [[TCMeetingRoomSearchResultHeaderView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, -titleSize.height + size.height)];
+        TCMeetingRoomSearchResultHeaderView *headerView = [[TCMeetingRoomSearchResultHeaderView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 200-titleSize.height + size.height)];
         headerView.delegate = self;
         headerView.currentConditions = self.conditions;
         _tableView.tableHeaderView = headerView;

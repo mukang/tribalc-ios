@@ -13,6 +13,7 @@
 #import <TCCommonLibs/UIImage+Category.h>
 
 #import "TCMeetingRoom.h"
+#import "TCMeetingRoomEquipment.h"
 
 @interface TCMeetingRoomSearchResultCell ()
 
@@ -52,18 +53,18 @@
     }
     
     self.titleLabel.text = meetingRoom.name;
-    NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld层",(long)meetingRoom.floor]];
+    NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"  %ld层",(long)meetingRoom.floor]];
     NSTextAttachment *attch = [[NSTextAttachment alloc] init];
-    attch.bounds = CGRectMake(5, -4, 17, 17);
+//    attch.bounds = CGRectMake(0, -1, 15, 15);
     attch.image = [UIImage imageNamed:@"meeting_room_floor_icon"];
     NSAttributedString *str = [NSAttributedString attributedStringWithAttachment:attch];
     NSMutableAttributedString *mutableStr = [[NSMutableAttributedString alloc] initWithAttributedString:str];
     [mutableStr appendAttributedString:att];
     self.floorLabel.attributedText = mutableStr;
     
-    NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld-%ld人",(long)meetingRoom.galleryful,(long)meetingRoom.maxGalleryful]];
+    NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"  %ld-%ld人",(long)meetingRoom.galleryful,(long)meetingRoom.maxGalleryful]];
     NSTextAttachment *numAttch = [[NSTextAttachment alloc] init];
-    numAttch.bounds = CGRectMake(5, -4, 17, 17);
+//    numAttch.bounds = CGRectMake(5, -4, 17, 17);
     numAttch.image = [UIImage imageNamed:@"meeting_room_number_icon"];
     NSAttributedString *numStr = [NSAttributedString attributedStringWithAttachment:numAttch];
     NSMutableAttributedString *mutableNumStr = [[NSMutableAttributedString alloc] initWithAttributedString:numStr];
@@ -71,9 +72,50 @@
     self.numLabel.attributedText = mutableNumStr;
     
     self.priceLabel.text = [NSString stringWithFormat:@"%@元/小时",@(meetingRoom.fee)];
+    
+    if ([meetingRoom.equipments isKindOfClass:[NSArray class]] && meetingRoom.equipments.count > 0) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+        imageView.image = [UIImage imageNamed:@"meeting_room_device_icon"];
+        [self.devicesView addSubview:imageView];
+        
+        CGFloat maxW = TCScreenWidth - 15 - 143 - 15 - 15 - 5 - 15;
+        CGFloat margin = 12;
+        CGFloat height = 17;
+        CGFloat currentX = 20;
+        CGFloat currentY = 0;
+        for (int i = 0; i < meetingRoom.equipments.count; i++) {
+            if (currentY >= (height+10)*2) {
+                break;
+            }
+            TCMeetingRoomEquipment *equ = meetingRoom.equipments[i];
+            CGSize size = [equ.name boundingRectWithSize:CGSizeMake(maxW, 9999.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:11]} context:nil].size;
+            if (currentX + size.width + 10 + margin > maxW) {
+                if (currentY >= (height + 10)) {
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(currentX, currentY, maxW-currentX-margin, height)];
+                    label.text = @"……";
+                    label.textColor = TCGrayColor;
+                    label.font = [UIFont systemFontOfSize:11];
+                    [self.devicesView addSubview:label];
+                    break;
+                }else {
+                    currentX = 20;
+                    currentY += (10+height);
+                }
+            }
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(currentX, currentY, size.width+10, height)];
+            label.text = equ.name;
+            label.textColor = TCGrayColor;
+            label.font = [UIFont systemFontOfSize:11];
+            label.layer.borderColor = TCGrayColor.CGColor;
+            label.layer.borderWidth = 0.5;
+            [self.devicesView addSubview:label];
+            currentX += (size.width + 10 + margin);
+        }
+    }
 }
 
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.leftImageView];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.floorLabel];
@@ -97,7 +139,7 @@
     [self.floorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.titleLabel);
         make.top.equalTo(self.titleLabel.mas_bottom).offset(15);
-        make.width.equalTo(@55);
+        make.width.equalTo(@65);
     }];
     
     [self.numLabel mas_makeConstraints:^(MASConstraintMaker *make) {

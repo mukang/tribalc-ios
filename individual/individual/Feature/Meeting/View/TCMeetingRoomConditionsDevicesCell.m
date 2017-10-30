@@ -7,6 +7,7 @@
 //
 
 #import "TCMeetingRoomConditionsDevicesCell.h"
+#import "TCMeetingRoomEquipment.h"
 
 @interface TCMeetingRoomConditionsDevicesCell ()
 
@@ -39,7 +40,8 @@
         isDelete = NO;
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(devicesCellDidClickDeviceBtn:isDelete:)]) {
-        [self.delegate devicesCellDidClickDeviceBtn:btn.titleLabel.text isDelete:isDelete];
+        TCMeetingRoomEquipment *equ = self.devices[btn.tag-9000];
+        [self.delegate devicesCellDidClickDeviceBtn:equ isDelete:isDelete];
     }
 }
 
@@ -62,18 +64,19 @@
         CGFloat currentX = 15;
         [self.btns removeAllObjects];
         for (int i = 0;i < self.devices.count; i++) {
-            NSString *str = self.devices[i];
+            TCMeetingRoomEquipment *equ = self.devices[i];
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [self.btns addObject:btn];
             btn.selected = NO;
+            btn.tag = 9000 + i;
             btn.layer.borderWidth = 0.5;
             btn.layer.borderColor = TCBlackColor.CGColor;
             [btn setTitleColor:TCBlackColor forState:UIControlStateNormal];
-            [btn setTitle:str forState:UIControlStateNormal];
+            [btn setTitle:equ.name forState:UIControlStateNormal];
             btn.titleLabel.font = [UIFont systemFontOfSize:12];
             [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:btn];
-            CGSize size = [str boundingRectWithSize:CGSizeMake(9999.0, 15) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
+            CGSize size = [equ.name boundingRectWithSize:CGSizeMake(9999.0, 15) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
             CGFloat width = size.width + 15;
             if (!previousBtn) {
                 if (self.devices.count == 1) {

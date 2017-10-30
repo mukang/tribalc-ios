@@ -20,6 +20,7 @@
 #import <UITableView+FDTemplateLayoutCell.h>
 
 #import "TCMeetingRoomConditions.h"
+#import "TCBuluoApi.h"
 
 @interface TCMeetingRoomConditionsViewController ()
 <UITableViewDelegate,UITableViewDataSource,
@@ -57,11 +58,19 @@ TCMeetingRoomConditionsFloorCellDelegate>
     // Do any additional setup after loading the view.
     self.title = @"筛选条件";
     [self setUpViews];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.devices = @[@"窗户",@"投影仪",@"窗户",@"投影仪",@"窗户",@"投影仪",@"窗户",@"投影仪",@"窗户",@"投影仪"];
-        [self.tableView reloadData];
-    });
+
+    [self loadData];
+}
+
+- (void)loadData {
+    @WeakObj(self)
+    [[TCBuluoApi api] fetchMeetingRoomEquipmetsWithResult:^(NSArray *meetingRoomsEquipments, NSError *error) {
+        @StrongObj(self)
+        if ([meetingRoomsEquipments isKindOfClass:[NSArray class]]) {
+            self.devices = meetingRoomsEquipments;
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 - (void)setUpViews {
@@ -159,11 +168,11 @@ TCMeetingRoomConditionsFloorCellDelegate>
     NSTimeInterval timestamp = [view.datePicker.date timeIntervalSince1970];
     NSString *str = [self.dateFormatter stringFromDate:view.datePicker.date];
     if (self.isFirstDate) {
-        self.conditions.startDate = [NSString stringWithFormat:@"%f",timestamp];
+        self.conditions.startDate = [NSString stringWithFormat:@"%.0f",timestamp*1000];
         self.conditions.startDateStr = str;
         self.startTextField.text = str;
     }else {
-        self.conditions.endDate = [NSString stringWithFormat:@"%f",timestamp];
+        self.conditions.endDate = [NSString stringWithFormat:@"%.0f",timestamp*1000];
         self.conditions.endDateStr = str;
         self.endTextField.text = str;
     }
@@ -181,12 +190,12 @@ TCMeetingRoomConditionsFloorCellDelegate>
 
 #pragma mark TCMeetingRoomConditionsDevicesCellDelegate
 
-- (void)devicesCellDidClickDeviceBtn:(NSString *)title isDelete:(BOOL)isDelete {
+- (void)devicesCellDidClickDeviceBtn:(TCMeetingRoomEquipment *)equ isDelete:(BOOL)isDelete {
     if (isDelete) {
-        [self.conditions.selectedDevices removeObject:title];
+        [self.conditions.selectedDevices removeObject:equ];
     }else {
-        if (![self.conditions.selectedDevices containsObject:title]) {
-            [self.conditions.selectedDevices addObject:title];
+        if (![self.conditions.selectedDevices containsObject:equ]) {
+            [self.conditions.selectedDevices addObject:equ];
         }
     }
 }

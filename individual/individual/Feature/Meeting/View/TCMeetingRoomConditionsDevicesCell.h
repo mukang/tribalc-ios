@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCMeetingRoomEquipment;
+
 @protocol TCMeetingRoomConditionsDevicesCellDelegate <NSObject>
 
-- (void)devicesCellDidClickDeviceBtn:(NSString *)title isDelete:(BOOL)isDelete;
+- (void)devicesCellDidClickDeviceBtn:(TCMeetingRoomEquipment *)equ isDelete:(BOOL)isDelete;
 
 @end
 
