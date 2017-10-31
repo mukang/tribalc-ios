@@ -36,4 +36,31 @@
     }];
 }
 
+- (void)setBookingTime:(TCBookingTime *)bookingTime {
+    _bookingTime = bookingTime;
+    
+    self.titleLabel.text = bookingTime.timeStr;
+    
+    switch (bookingTime.status) {
+        case TCBookingTimeStatusNormal:
+            self.layer.borderColor = TCSeparatorLineColor.CGColor;
+            self.backgroundColor = [UIColor whiteColor];
+            self.titleLabel.textColor = TCBlackColor;
+            break;
+        case TCBookingTimeStatusSelected:
+            self.layer.borderColor = [UIColor clearColor].CGColor;
+            self.backgroundColor = TCRGBColor(151, 171, 234);
+            self.titleLabel.textColor = [UIColor whiteColor];
+            break;
+        case TCBookingTimeStatusDisabled:
+            self.layer.borderColor = [UIColor clearColor].CGColor;
+            self.backgroundColor = TCSeparatorLineColor;
+            self.titleLabel.textColor = [UIColor whiteColor];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 @end

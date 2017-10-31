@@ -8,6 +8,7 @@
 
 #import "TCBookingTimeView.h"
 #import "TCBookingTimeViewCell.h"
+#import "TCBookingTime.h"
 
 #define cellCount 30
 
@@ -67,9 +68,11 @@
         cell.layer.cornerRadius = height / 2.0;
         cell.layer.borderWidth = 0.5;
         cell.layer.masksToBounds = YES;
-        cell.backgroundColor = TCGrayColor;
         [contentView addSubview:cell];
         [self.cells addObject:cell];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBookingTimeCell:)];
+        [cell addGestureRecognizer:tap];
         
         [cell mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(width, height));
@@ -128,6 +131,21 @@
     [lastCell mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(contentView.mas_bottom).offset(-bottom);
     }];
+}
+
+- (void)reloadDataWithBookingTimeArray:(NSArray *)bookingTimeArray {
+    for (int i=0; i<cellCount; i++) {
+        TCBookingTimeViewCell *cell = self.cells[i];
+        TCBookingTime *bookingTime = bookingTimeArray[i];
+        cell.bookingTime = bookingTime;
+    }
+}
+
+- (void)handleTapBookingTimeCell:(UITapGestureRecognizer *)tapGesture {
+    if ([self.bookingTimedelegate respondsToSelector:@selector(bookingTimeView:didTapBookingTimeCellWithBookingTime:)]) {
+        TCBookingTimeViewCell *cell = (TCBookingTimeViewCell *)tapGesture.view;
+        [self.bookingTimedelegate bookingTimeView:self didTapBookingTimeCellWithBookingTime:cell.bookingTime];
+    }
 }
 
 - (UILabel *)createLabelWithTitle:(NSString *)title {

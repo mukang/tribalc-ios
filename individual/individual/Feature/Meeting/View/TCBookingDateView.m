@@ -9,7 +9,6 @@
 #import "TCBookingDateView.h"
 #import "TCBookingDateCell.h"
 #import "TCBookingDateViewLayout.h"
-#import "TCBookingDate.h"
 
 @interface TCBookingDateView () <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate
 >
@@ -24,6 +23,7 @@
 @property (strong, nonatomic) NSMutableArray *bookingDateArray;
 
 @property (strong, nonatomic) NSCalendar *currentCalendar;
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @property (weak, nonatomic) UICollectionView *collectionView;
 
@@ -56,7 +56,8 @@
         NSDate *date = [self.currentCalendar dateByAddingUnit:NSCalendarUnitDay value:i toDate:_startDate options:0];
         TCBookingDate *bookingDate = [[TCBookingDate alloc] init];
         bookingDate.date = date;
-        if ([date isEqualToDate:_selecteDate]) {
+        bookingDate.dateStr = [self.dateFormatter stringFromDate:date];
+        if ([self.currentCalendar isDate:date equalToDate:_selecteDate toUnitGranularity:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay]) {
             bookingDate.isSelected = YES;
             _selectedIndex = i;
         }
@@ -99,6 +100,11 @@
                                     atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                             animated:NO];
     }
+    
+    if ([self.delegate respondsToSelector:@selector(bookingDateView:didScrollToNewBookingDate:)]) {
+        TCBookingDate *bookingDate = self.bookingDateArray[self.currentIndex];
+        [self.delegate bookingDateView:self didScrollToNewBookingDate:bookingDate];
+    }
 }
 
 - (void)fetchCurrentIndexWithScrollView:(UIScrollView *)scrollView {
@@ -108,9 +114,9 @@
     }
     
     self.currentIndex = index;
-    if ([self.delegate respondsToSelector:@selector(bookingDateView:didScrollToNewDate:)]) {
+    if ([self.delegate respondsToSelector:@selector(bookingDateView:didScrollToNewBookingDate:)]) {
         TCBookingDate *bookingDate = self.bookingDateArray[index];
-        [self.delegate bookingDateView:self didScrollToNewDate:bookingDate.date];
+        [self.delegate bookingDateView:self didScrollToNewBookingDate:bookingDate];
     }
 }
 
@@ -125,12 +131,16 @@
         bookingDate.isSelected = NO;
     }
     
-    for (int i=0; i<self.bookingDateArray.count; i++) {
-        TCBookingDate *bookingDate = self.bookingDateArray[i];
-        if ([date isEqualToDate:bookingDate.date]) {
-            bookingDate.isSelected = YES;
-            self.selectedIndex = i;
+    if (date) {
+        for (int i=0; i<self.bookingDateArray.count; i++) {
+            TCBookingDate *bookingDate = self.bookingDateArray[i];
+            if ([date isEqualToDate:bookingDate.date]) {
+                bookingDate.isSelected = YES;
+                self.selectedIndex = i;
+            }
         }
+    } else {
+        self.selectedIndex = -1;
     }
     
     [self.collectionView reloadData];
@@ -173,6 +183,15 @@
         _currentCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     }
     return _currentCalendar;
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.calendar = self.currentCalendar;
+        _dateFormatter.dateFormat = @"yyyy-MM-dd";
+    }
+    return _dateFormatter;
 }
 
 @end
