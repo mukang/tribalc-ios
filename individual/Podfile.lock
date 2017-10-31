@@ -31,7 +31,7 @@ PODS:
   - MGSwipeTableCell (1.5.6)
   - MJRefresh (3.1.15)
   - pop (1.0.10)
-  - QQ_XGPush (3.0)
+  - QQ_XGPush (2.5.0)
   - SDWebImage (4.2.0):
     - SDWebImage/Core (= 4.2.0)
   - SDWebImage/Core (4.2.0)
@@ -76,7 +76,7 @@ DEPENDENCIES:
   - MBProgressHUD
   - MGSwipeTableCell (~> 1.5.6)
   - pop (~> 1.0.7)
-  - QQ_XGPush
+  - QQ_XGPush (~> 2.5.0)
   - TCCommonLibs
   - UITableView+FDTemplateLayoutCell
   - WechatOpenSDK
@@ -97,13 +97,13 @@ SPEC CHECKSUMS:
   MGSwipeTableCell: 616700eb0ffd1c611ba909066cb7fd739790a0a7
   MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
-  QQ_XGPush: 149a8e2b63ee21fe2680428e9b5e9d8ce6c6e2c4
+  QQ_XGPush: 8c3637d61e1b3fe6e7f60bb1c8aac34184c8bf40
   SDWebImage: b1189fd85365c18434270a11a5cad13a1e848d53
   TCCommonLibs: 4d661a333fe9cda5a4a4f81d524a26c15d730099
   UITableView+FDTemplateLayoutCell: 5c949b4a5059c404b442926c0e80f81d10a2d66f
   WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 62504d919edf98cef4cf6ea56331d653de6f57f7
+PODFILE CHECKSUM: a693cc7bc71882512ab2fcc6742bca8d402aaafc
 
 COCOAPODS: 1.2.1
