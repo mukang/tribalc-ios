@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBookingTime.h"
 
+@protocol TCBookingTimeViewDelegate;
 @interface TCBookingTimeView : UIScrollView
+
+@property (weak, nonatomic) id<TCBookingTimeViewDelegate> bookingTimedelegate;
+
+- (void)reloadDataWithBookingTimeArray:(NSArray *)bookingTimeArray;
+
+@end
+
+@protocol TCBookingTimeViewDelegate <NSObject>
+
+- (void)bookingTimeView:(TCBookingTimeView *)view didTapBookingTimeCellWithBookingTime:(TCBookingTime *)bookingTime;
 
 @end

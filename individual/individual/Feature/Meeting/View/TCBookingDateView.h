@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBookingDate.h"
 
 @protocol TCBookingDateViewDelegate;
 @interface TCBookingDateView : UIView
@@ -22,7 +23,7 @@
 @protocol TCBookingDateViewDelegate <NSObject>
 
 @optional
-- (void)bookingDateView:(TCBookingDateView *)view didScrollToNewDate:(NSDate *)newDate;
+- (void)bookingDateView:(TCBookingDateView *)view didScrollToNewBookingDate:(TCBookingDate *)newBookingDate;
 
 @end
 

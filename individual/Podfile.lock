@@ -17,24 +17,24 @@ PODS:
   - AMap2DMap-NO-IDFA (4.6.0):
     - AMapFoundation-NO-IDFA (~> 1.3)
   - AMapFoundation-NO-IDFA (1.4.2)
-  - AMapLocation-NO-IDFA (2.4.0):
+  - AMapLocation-NO-IDFA (2.5.0):
     - AMapFoundation-NO-IDFA (~> 1.4)
-  - AMapSearch-NO-IDFA (5.3.0):
-    - AMapFoundation-NO-IDFA (~> 1.2)
+  - AMapSearch-NO-IDFA (5.4.0):
+    - AMapFoundation-NO-IDFA (~> 1.4)
   - Bugly (2.4.8)
   - EAIntroView (2.10.0):
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
   - FLEX (2.4.0)
-  - Masonry (1.0.2)
+  - Masonry (1.1.0)
   - MBProgressHUD (1.0.0)
   - MGSwipeTableCell (1.5.6)
-  - MJRefresh (3.1.12)
+  - MJRefresh (3.1.15)
   - pop (1.0.10)
   - QQ_XGPush (2.5.0)
-  - SDWebImage (4.1.0):
-    - SDWebImage/Core (= 4.1.0)
-  - SDWebImage/Core (4.1.0)
+  - SDWebImage (4.2.0):
+    - SDWebImage/Core (= 4.2.0)
+  - SDWebImage/Core (4.2.0)
   - TCCommonLibs (0.5.7):
     - TCCommonLibs/Category (= 0.5.7)
     - TCCommonLibs/Controller (= 0.5.7)
@@ -76,7 +76,7 @@ DEPENDENCIES:
   - MBProgressHUD
   - MGSwipeTableCell (~> 1.5.6)
   - pop (~> 1.0.7)
-  - QQ_XGPush
+  - QQ_XGPush (~> 2.5.0)
   - TCCommonLibs
   - UITableView+FDTemplateLayoutCell
   - WechatOpenSDK
@@ -86,24 +86,24 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   AMap2DMap-NO-IDFA: 01c80e7e93568617b1b1b452cfec71f974f5bc8a
   AMapFoundation-NO-IDFA: 3b9ce87abc6a37c718cc320687469d0b74d5c953
-  AMapLocation-NO-IDFA: 9493012d3241a7d551942c7c1e1069b51f295083
-  AMapSearch-NO-IDFA: eb0f9b424e6c3cdcb0e8c656e9622e8d0ee54238
+  AMapLocation-NO-IDFA: be669085a8cc0d22820022fc61d58811d24b4e3a
+  AMapSearch-NO-IDFA: efddeaa3f62f6adb8f0170ebff3d799bcf637ade
   Bugly: da3c02408c14838d498429320545a8e439392978
   EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
-  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MGSwipeTableCell: 616700eb0ffd1c611ba909066cb7fd739790a0a7
-  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   QQ_XGPush: 8c3637d61e1b3fe6e7f60bb1c8aac34184c8bf40
-  SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
+  SDWebImage: b1189fd85365c18434270a11a5cad13a1e848d53
   TCCommonLibs: 4d661a333fe9cda5a4a4f81d524a26c15d730099
   UITableView+FDTemplateLayoutCell: 5c949b4a5059c404b442926c0e80f81d10a2d66f
   WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 62504d919edf98cef4cf6ea56331d653de6f57f7
+PODFILE CHECKSUM: a693cc7bc71882512ab2fcc6742bca8d402aaafc
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.2.1

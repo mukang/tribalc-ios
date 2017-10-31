@@ -11,6 +11,7 @@
 @interface TCBookingDate : NSObject
 
 @property (strong, nonatomic) NSDate *date;
+@property (copy, nonatomic) NSString *dateStr;
 
 @property (nonatomic) BOOL isSelected;
 

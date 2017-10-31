@@ -13,26 +13,25 @@
 #import "TCBookingTimeNoteView.h"
 
 #import "TCBuluoApi.h"
-#import "TCBookingTime.h"
+
 
 #import <TCCommonLibs/TCCommonButton.h>
 
 #define bookingTimeCount 30
 
-@interface TCMeetingRoomBookingTimeViewController () <TCBookingDateViewDelegate>
+@interface TCMeetingRoomBookingTimeViewController () <TCBookingDateViewDelegate, TCBookingTimeViewDelegate>
 
 @property (weak, nonatomic) TCBookingDateView *dateView;
 @property (weak, nonatomic) TCBookingTimeView *timeView;
 @property (weak, nonatomic) TCBookingTimeNoteView *noteView;
 @property (weak, nonatomic) TCCommonButton *confirmButton;
 
-@property (strong, nonatomic) NSDate *currentDate;
-@property (strong, nonatomic) NSDate *selectedDate;
+@property (strong, nonatomic) TCBookingDate *currentBookingDate;
 
 @property (copy, nonatomic) NSArray *bookingTimeNameArray;
 @property (copy, nonatomic) NSArray *bookingTimeStrArray;
 
-@property (strong, nonatomic) NSMutableArray *currentBookingTimeArray;
+@property (strong, nonatomic) NSMutableArray *bookingTimeArray;
 
 @end
 
@@ -61,7 +60,6 @@
     NSDate *startDate = [dateFormatter dateFromString:@"2017-10-26"];
     NSDate *endDate = [dateFormatter dateFromString:@"2017-11-02"];
     NSDate *selectedDate = [dateFormatter dateFromString:@"2017-11-01"];
-    self.currentDate = selectedDate;
     TCBookingDateView *dateView = [[TCBookingDateView alloc] initWithStartDate:startDate endDate:endDate selectedDate:selectedDate];
     dateView.delegate = self;
     [self.view addSubview:dateView];
@@ -70,6 +68,7 @@
     [self.view addSubview:noteView];
     
     TCBookingTimeView *timeView = [[TCBookingTimeView alloc] init];
+    timeView.bookingTimedelegate = self;
     [self.view addSubview:timeView];
     
     TCCommonButton *confirmButton = [TCCommonButton bottomButtonWithTitle:@"确  定"
@@ -105,9 +104,9 @@
     }];
 }
 
-- (void)loadBookingDateInfoWithNewDate:(NSDate *)newDate {
+- (void)loadBookingDateInfoWithDate:(NSDate *)date {
     [MBProgressHUD showHUD:YES];
-    long long searchDate = [newDate timeIntervalSince1970] * 1000;
+    long long searchDate = [date timeIntervalSince1970] * 1000;
     [[TCBuluoApi api] fetchBookingDateInfoWithMeetingRoomID:self.meetingRoomID searchDate:searchDate result:^(TCBookingDateInfo *bookingDateInfo, NSError *error) {
         if (bookingDateInfo) {
             [MBProgressHUD hideHUD:YES];
@@ -120,7 +119,7 @@
 }
 
 - (void)createBookingTimeArrayWithBookingDateInfo:(TCBookingDateInfo *)bookingDateInfo {
-    self.currentBookingTimeArray = [NSMutableArray arrayWithCapacity:bookingTimeCount];
+    [self.bookingTimeArray removeAllObjects];
     for (int i=0; i<bookingTimeCount; i++) {
         TCBookingTime *bookingTime = [[TCBookingTime alloc] init];
         NSString *name = self.bookingTimeNameArray[i];
@@ -132,24 +131,66 @@
         } else {
             bookingTime.status = TCBookingTimeStatusNormal;
         }
-        [self.currentBookingTimeArray addObject:bookingTime];
+        [self.bookingTimeArray addObject:bookingTime];
     }
+    
+    BOOL hasSelectedByOther = NO;
+    if ([self.currentBookingDate.date isEqualToDate:self.bookingDate.date]) {
+        for (NSInteger i=self.startBookingTime.num; i<=self.endBookingTime.num; i++) {
+            TCBookingTime *bookingTime = self.bookingTimeArray[i];
+            if (bookingTime.status == TCBookingTimeStatusDisabled) {
+                hasSelectedByOther = YES;
+                break;
+            }
+            bookingTime.status = TCBookingTimeStatusSelected;
+        }
+    }
+    
+    if (hasSelectedByOther) {
+        for (NSInteger i=self.startBookingTime.num; i<=self.endBookingTime.num; i++) {
+            TCBookingTime *bookingTime = self.bookingTimeArray[i];
+            if (bookingTime.status == TCBookingTimeStatusSelected) {
+                bookingTime.status = TCBookingTimeStatusNormal;
+            }
+        }
+        self.bookingDate = nil;
+        self.startBookingTime = nil;
+        self.endBookingTime = nil;
+        
+        [MBProgressHUD showHUDWithMessage:@"您选择的会议时间已被他人预定，请重新选择"];
+        [self.dateView setNewSelectedDate:nil];
+    }
+    
+    [self.timeView reloadDataWithBookingTimeArray:self.bookingTimeArray];
 }
 
 #pragma mark - TCBookingDateViewDelegate
 
-- (void)bookingDateView:(TCBookingDateView *)view didScrollToNewDate:(NSDate *)newDate {
-    self.currentDate = newDate;
+- (void)bookingDateView:(TCBookingDateView *)view didScrollToNewBookingDate:(TCBookingDate *)newBookingDate {
+    self.currentBookingDate = newBookingDate;
+    [self loadBookingDateInfoWithDate:newBookingDate.date];
+}
+
+#pragma mark - TCBookingTimeViewDelegate
+
+- (void)bookingTimeView:(TCBookingTimeView *)view didTapBookingTimeCellWithBookingTime:(TCBookingTime *)bookingTime {
     
 }
 
 #pragma mark - Actions
 
 - (void)handleClickConfirmButton {
-    [self.dateView setNewSelectedDate:self.currentDate];
+    [self.dateView setNewSelectedDate:self.currentBookingDate.date];
 }
 
 #pragma mark - Override Methods
+
+- (NSMutableArray *)bookingTimeArray {
+    if (_bookingTimeArray == nil) {
+        _bookingTimeArray = [NSMutableArray arrayWithCapacity:bookingTimeCount];
+    }
+    return _bookingTimeArray;
+}
 
 - (NSArray *)bookingTimeNameArray {
     if (_bookingTimeNameArray == nil) {

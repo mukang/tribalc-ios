@@ -13,8 +13,6 @@
 @property (weak, nonatomic) UILabel *titleLabel;
 @property (weak, nonatomic) UIImageView *markView;
 
-@property (strong, nonatomic) NSDateFormatter *dateFormatter;
-
 @end
 
 @implementation TCBookingDateCell
@@ -52,19 +50,8 @@
 - (void)setBookingDate:(TCBookingDate *)bookingDate {
     _bookingDate = bookingDate;
     
-    self.titleLabel.text = [self.dateFormatter stringFromDate:bookingDate.date];
+    self.titleLabel.text = bookingDate.dateStr;
     self.markView.hidden = !bookingDate.isSelected;
-}
-
-#pragma mark - Override Methods
-
-- (NSDateFormatter *)dateFormatter {
-    if (_dateFormatter == nil) {
-        _dateFormatter = [[NSDateFormatter alloc] init];
-        _dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];;
-        _dateFormatter.dateFormat = @"yyyy-MM-dd";
-    }
-    return _dateFormatter;
 }
 
 @end

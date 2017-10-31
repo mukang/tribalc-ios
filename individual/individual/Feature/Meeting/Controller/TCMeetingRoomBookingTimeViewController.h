@@ -7,9 +7,15 @@
 //
 
 #import <TCCommonLibs/TCBaseViewController.h>
+#import "TCBookingDate.h"
+#import "TCBookingTime.h"
 
 @interface TCMeetingRoomBookingTimeViewController : TCBaseViewController
 
 @property (copy, nonatomic) NSString *meetingRoomID;
+
+@property (strong, nonatomic) TCBookingDate *bookingDate;
+@property (strong, nonatomic) TCBookingTime *startBookingTime;
+@property (strong, nonatomic) TCBookingTime *endBookingTime;
 
 @end

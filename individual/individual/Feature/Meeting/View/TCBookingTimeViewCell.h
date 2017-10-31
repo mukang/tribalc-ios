@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCBookingTime.h"
 
 @interface TCBookingTimeViewCell : UIView
+
+@property (strong, nonatomic) TCBookingTime *bookingTime;
 
 @end
