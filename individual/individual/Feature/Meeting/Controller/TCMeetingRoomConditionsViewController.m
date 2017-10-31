@@ -262,6 +262,7 @@ TCMeetingRoomConditionsFloorCellDelegate>
     if (_datePickerView == nil) {
         _datePickerView = [[TCDatePickerView alloc] initWithController:self];
         _datePickerView.datePicker.date = [NSDate date];
+        
         _datePickerView.datePicker.datePickerMode = UIDatePickerModeDate;
         _datePickerView.datePicker.minimumDate = [NSDate date];
         _datePickerView.delegate = self;
@@ -272,6 +273,7 @@ TCMeetingRoomConditionsFloorCellDelegate>
 - (NSDateFormatter *)dateFormatter {
     if (_dateFormatter == nil) {
         _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         _dateFormatter.dateFormat = @"yyyy-MM-dd";
     }
     return _dateFormatter;
