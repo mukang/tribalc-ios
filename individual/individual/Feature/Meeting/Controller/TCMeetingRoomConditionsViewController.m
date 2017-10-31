@@ -49,6 +49,12 @@ TCMeetingRoomConditionsFloorCellDelegate>
 
 @property (weak, nonatomic) UITextField *endTextField;
 
+@property (strong, nonatomic) NSCalendar *calendar;
+
+@property (strong, nonatomic) NSDate *minDate;
+
+@property (strong, nonatomic) NSDate *maxDate;
+
 @end
 
 @implementation TCMeetingRoomConditionsViewController
@@ -88,9 +94,53 @@ TCMeetingRoomConditionsFloorCellDelegate>
 }
 
 - (void)next {
+    
+    if (!self.conditions.startDateStr && self.conditions.endDateStr) {
+        [MBProgressHUD showHUDWithMessage:@"请选择起始日期" afterDelay:1.0];
+        return;
+    }
+    
+    if (self.conditions.startDateStr && !self.conditions.endDateStr) {
+        NSInteger days = [self daysFromTimeInterval:self.conditions.startDate toTimeInterval:[self.maxDate timeIntervalSince1970]];
+        NSDate *endDate;
+        if (days > 7) {
+            endDate = [self moveDays:7 fromDate:[[NSDate alloc] initWithTimeIntervalSince1970:self.conditions.startDate] isAfter:YES];
+        }else {
+            endDate = self.maxDate;
+        }
+        
+        self.conditions.endDate = [endDate timeIntervalSince1970];
+        self.conditions.endDateStr = [self.dateFormatter stringFromDate:endDate];
+    }
+    
+    if (!self.conditions.startDateStr && !self.conditions.endDateStr) {
+        NSDate *endDate = [self moveDays:7 fromDate:[NSDate date] isAfter:YES];
+        self.conditions.startDate = [[NSDate date] timeIntervalSince1970];
+        self.conditions.endDate = [endDate timeIntervalSince1970];
+        self.conditions.startDateStr = [self.dateFormatter stringFromDate:[NSDate date]];
+        self.conditions.endDateStr = [self.dateFormatter stringFromDate:endDate];
+    }
+    
     TCMeetingRoomSearchResultController *resultVC = [[TCMeetingRoomSearchResultController alloc] init];
     resultVC.conditions = self.conditions;
     [self.navigationController pushViewController:resultVC animated:YES];
+}
+
+- (NSInteger)daysFromTimeInterval:(NSTimeInterval )fromTimeInterval toTimeInterval:(NSTimeInterval)toTimeInterval {
+    NSInteger days = (toTimeInterval - fromTimeInterval) / (60*60*24);
+    return days;
+}
+
+- (NSDate *)moveDays:(NSInteger)days fromDate:(NSDate *)date isAfter:(BOOL)isAfter {
+    NSCalendarUnit dayInfoUnits  = NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+    NSDateComponents *components = [self.calendar components: dayInfoUnits fromDate:date];
+    if (isAfter) {
+        components.day += days;
+    }else {
+        components.day -= days;
+    }
+    
+    return [self.calendar dateFromComponents:components];
 }
 
 #pragma mark UITableViewDataSource
@@ -168,11 +218,11 @@ TCMeetingRoomConditionsFloorCellDelegate>
     NSTimeInterval timestamp = [view.datePicker.date timeIntervalSince1970];
     NSString *str = [self.dateFormatter stringFromDate:view.datePicker.date];
     if (self.isFirstDate) {
-        self.conditions.startDate = [NSString stringWithFormat:@"%.0f",timestamp*1000];
+        self.conditions.startDate = timestamp;
         self.conditions.startDateStr = str;
         self.startTextField.text = str;
     }else {
-        self.conditions.endDate = [NSString stringWithFormat:@"%.0f",timestamp*1000];
+        self.conditions.endDate = timestamp;
         self.conditions.endDateStr = str;
         self.endTextField.text = str;
     }
@@ -206,9 +256,38 @@ TCMeetingRoomConditionsFloorCellDelegate>
     if (textfield.tag == 10001) {
         self.startTextField = textfield;
         self.isFirstDate = YES;
+        if (!self.conditions.endDateStr) {
+            self.datePickerView.datePicker.maximumDate = self.maxDate;
+            self.datePickerView.datePicker.minimumDate = self.minDate;
+        }else {
+            NSInteger days = [self daysFromTimeInterval:[[NSDate date] timeIntervalSince1970] toTimeInterval:self.conditions.endDate];
+            NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:self.conditions.endDate];
+            if (days > 7) {
+                self.datePickerView.datePicker.minimumDate = [self moveDays:7 fromDate:endDate isAfter:NO];
+                self.datePickerView.datePicker.maximumDate = endDate;
+            }else {
+                self.datePickerView.datePicker.maximumDate = endDate;
+                self.datePickerView.datePicker.minimumDate = self.minDate;
+            }
+        }
     }else {
         self.endTextField = textfield;
         self.isFirstDate = NO;
+        
+        if (!self.conditions.startDateStr) {
+            self.datePickerView.datePicker.maximumDate = self.maxDate;
+            self.datePickerView.datePicker.minimumDate = self.minDate;
+        }else {
+            NSDate *startDate = [[NSDate alloc] initWithTimeIntervalSince1970:self.conditions.startDate];
+            NSInteger days = [self daysFromTimeInterval:self.conditions.startDate toTimeInterval:[self.maxDate timeIntervalSince1970]];
+            if (days > 7) {
+                self.datePickerView.datePicker.minimumDate = startDate;
+                self.datePickerView.datePicker.maximumDate = [self moveDays:7 fromDate:startDate isAfter:YES];
+            }else {
+                self.datePickerView.datePicker.minimumDate = startDate;
+                self.datePickerView.datePicker.maximumDate = self.maxDate;
+            }
+        }
     }
     //弹出滚轮
     [self.view endEditing:YES];
@@ -273,10 +352,31 @@ TCMeetingRoomConditionsFloorCellDelegate>
 - (NSDateFormatter *)dateFormatter {
     if (_dateFormatter == nil) {
         _dateFormatter = [[NSDateFormatter alloc] init];
-        _dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+//        _dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         _dateFormatter.dateFormat = @"yyyy-MM-dd";
     }
     return _dateFormatter;
+}
+
+- (NSCalendar *)calendar {
+    if (_calendar == nil) {
+        _calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    }
+    return _calendar;
+}
+
+- (NSDate *)maxDate {
+    NSCalendarUnit dayInfoUnits  = NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+    NSDateComponents *components = [self.calendar components:dayInfoUnits fromDate:self.minDate];
+    // 指定月份(我这里是获取当前月份的下1个月的1号的date对象,所以用的++，其上个月或者其他同理)
+    components.month++;
+    // 转成需要的date对象return
+    NSDate *nextMonthDate =[self.calendar dateFromComponents:components];
+    return nextMonthDate;
+}
+
+- (NSDate *)minDate {
+    return [NSDate date];
 }
 
 - (void)dealloc {

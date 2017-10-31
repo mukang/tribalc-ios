@@ -18,9 +18,9 @@
 
 @property (copy, nonatomic) NSString *hours;
 
-@property (copy, nonatomic) NSString *startDate;
+@property (assign, nonatomic) NSTimeInterval startDate;
 
-@property (copy, nonatomic) NSString *endDate;
+@property (assign, nonatomic) NSTimeInterval endDate;
 
 @property (copy, nonatomic) NSString *startDateStr;
 

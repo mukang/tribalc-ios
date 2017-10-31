@@ -73,6 +73,7 @@
         _startFloorTextField.placeholder = @"请输入会议时长";
         _startFloorTextField.delegate = self;
         _startFloorTextField.keyboardType = UIKeyboardTypeDecimalPad;
+        _startFloorTextField.font = [UIFont systemFontOfSize:14];
     }
     return _startFloorTextField;
 }

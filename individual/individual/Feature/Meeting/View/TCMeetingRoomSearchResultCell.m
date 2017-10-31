@@ -55,7 +55,7 @@
     self.titleLabel.text = meetingRoom.name;
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"  %ld层",(long)meetingRoom.floor]];
     NSTextAttachment *attch = [[NSTextAttachment alloc] init];
-//    attch.bounds = CGRectMake(0, -1, 15, 15);
+    attch.bounds = CGRectMake(0, -2, 8, 11);
     attch.image = [UIImage imageNamed:@"meeting_room_floor_icon"];
     NSAttributedString *str = [NSAttributedString attributedStringWithAttachment:attch];
     NSMutableAttributedString *mutableStr = [[NSMutableAttributedString alloc] initWithAttributedString:str];
@@ -64,7 +64,7 @@
     
     NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"  %ld-%ld人",(long)meetingRoom.galleryful,(long)meetingRoom.maxGalleryful]];
     NSTextAttachment *numAttch = [[NSTextAttachment alloc] init];
-//    numAttch.bounds = CGRectMake(5, -4, 17, 17);
+    numAttch.bounds = CGRectMake(0, -1, 9, 11);
     numAttch.image = [UIImage imageNamed:@"meeting_room_number_icon"];
     NSAttributedString *numStr = [NSAttributedString attributedStringWithAttachment:numAttch];
     NSMutableAttributedString *mutableNumStr = [[NSMutableAttributedString alloc] initWithAttributedString:numStr];
@@ -74,11 +74,11 @@
     self.priceLabel.text = [NSString stringWithFormat:@"%@元/小时",@(meetingRoom.fee)];
     
     if ([meetingRoom.equipments isKindOfClass:[NSArray class]] && meetingRoom.equipments.count > 0) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 10, 10)];
         imageView.image = [UIImage imageNamed:@"meeting_room_device_icon"];
         [self.devicesView addSubview:imageView];
         
-        CGFloat maxW = TCScreenWidth - 15 - 143 - 15 - 15 - 5 - 15;
+        CGFloat maxW = TCScreenWidth - 15 - 143 - 10 - 10 - 5 - 15;
         CGFloat margin = 12;
         CGFloat height = 17;
         CGFloat currentX = 20;
@@ -108,6 +108,7 @@
             label.font = [UIFont systemFontOfSize:11];
             label.layer.borderColor = TCGrayColor.CGColor;
             label.layer.borderWidth = 0.5;
+            label.textAlignment = NSTextAlignmentCenter;
             [self.devicesView addSubview:label];
             currentX += (size.width + 10 + margin);
         }

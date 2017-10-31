@@ -3273,13 +3273,13 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchMeetingRoomWithBeginFloor:(NSString *)beginFloor endFloor:(NSString *)endFloor attendance:(NSString *)attendance searchBeginDate:(NSString *)searchBeginDate searchEndDate:(NSString *)searchEndDate equipments:(NSString *)equipments duration:(NSString *)duration result:(void (^)(NSArray *meetingRooms, NSError *error))resultBlock {
+- (void)fetchMeetingRoomWithBeginFloor:(NSString *)beginFloor endFloor:(NSString *)endFloor attendance:(NSString *)attendance searchBeginDate:(NSTimeInterval)searchBeginDate searchEndDate:(NSTimeInterval)searchEndDate equipments:(NSString *)equipments duration:(NSString *)duration result:(void (^)(NSArray *meetingRooms, NSError *error))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *beginFloorStr = beginFloor ? [NSString stringWithFormat:@"&beginFloor=%@",beginFloor] : @"";
         NSString *endFloorStr = endFloor ? [NSString stringWithFormat:@"&endFloor=%@",endFloor] : @"";
         NSString *attendanceStr = attendance ? [NSString stringWithFormat:@"&attendance=%@",attendance] : @"";
-        NSString *searchBeginDateStr = searchBeginDate ? [NSString stringWithFormat:@"&searchBeginDate=%@",searchBeginDate] : @"";
-        NSString *searchEndDateStr = searchEndDate ? [NSString stringWithFormat:@"&searchEndDate=%@",searchEndDate] : @"";
+        NSString *searchBeginDateStr = searchBeginDate ? [NSString stringWithFormat:@"&searchBeginDate=%@",[NSString stringWithFormat:@"%.0f",searchBeginDate]] : @"0";
+        NSString *searchEndDateStr = searchEndDate ? [NSString stringWithFormat:@"&searchEndDate=%@",[NSString stringWithFormat:@"%.0f",searchEndDate]] : @"0";
         NSString *equipmentsStr = equipments ? [NSString stringWithFormat:@"&equipments=%@",equipments] : @"";
         NSString *durationStr = duration ? [NSString stringWithFormat:@"&duration=%@",[NSString stringWithFormat:@"%.0f",duration.floatValue*3600]] : @"";
         NSString *apiName = [NSString stringWithFormat:@"conference_rooms/search?me=%@%@%@%@%@%@%@%@", self.currentUserSession.assigned, beginFloorStr, endFloorStr, attendanceStr, searchBeginDateStr, searchEndDateStr, equipmentsStr, durationStr];

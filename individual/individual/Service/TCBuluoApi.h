@@ -1003,7 +1003,7 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  @param equipments 设备
  @param duration 时长
  */
-- (void)fetchMeetingRoomWithBeginFloor:(NSString *)beginFloor endFloor:(NSString *)endFloor attendance:(NSString *)attendance searchBeginDate:(NSString *)searchBeginDate searchEndDate:(NSString *)searchEndDate equipments:(NSString *)equipments duration:(NSString *)duration result:(void (^)(NSArray *meetingRooms, NSError *error))resultBlock;
+- (void)fetchMeetingRoomWithBeginFloor:(NSString *)beginFloor endFloor:(NSString *)endFloor attendance:(NSString *)attendance searchBeginDate:(NSTimeInterval)searchBeginDate searchEndDate:(NSTimeInterval)searchEndDate equipments:(NSString *)equipments duration:(NSString *)duration result:(void (^)(NSArray *meetingRooms, NSError *error))resultBlock;
 
 
 /**

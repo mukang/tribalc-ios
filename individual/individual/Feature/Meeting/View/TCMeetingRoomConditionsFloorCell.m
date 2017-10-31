@@ -74,6 +74,7 @@
         _endFloorTextField.placeholder = @"请输入楼层范围";
         _endFloorTextField.delegate = self;
         _endFloorTextField.tag = 11112;
+        _endFloorTextField.font = [UIFont systemFontOfSize:14];
     }
     return _endFloorTextField;
 }
@@ -95,6 +96,7 @@
         _startFloorTextField.keyboardType = UIKeyboardTypeNumberPad;
         _startFloorTextField.tag = 11111;
         _startFloorTextField.delegate = self;
+        _startFloorTextField.font = [UIFont systemFontOfSize:14];
     }
     return _startFloorTextField;
 }
