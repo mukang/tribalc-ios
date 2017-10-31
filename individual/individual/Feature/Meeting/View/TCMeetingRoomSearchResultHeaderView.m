@@ -8,6 +8,7 @@
 
 #import "TCMeetingRoomSearchResultHeaderView.h"
 #import "TCMeetingRoomConditions.h"
+#import "TCMeetingRoomEquipment.h"
 
 @interface TCMeetingRoomSearchResultHeaderView ()
 
@@ -69,7 +70,6 @@
         self.timesLabel.text = [NSString stringWithFormat:@"%@ 至 %@",self.currentConditions.startDateStr,self.currentConditions.endDateStr];
     }else if (self.currentConditions.startDateStr && !self.currentConditions.endDateStr) {
         NSString *endStr = self.currentConditions.startDate;
-//        self.currentConditions.endDate = [NSString stringWithFormat:@"%f",([endStr floatValue] + (7 * 24 * 3600 *1000))];
         NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:([endStr floatValue] + (7 * 24 * 3600 *1000))];
         self.currentConditions.endDateStr = [self.dateFormatter stringFromDate:endDate];
         self.timesLabel.text = [NSString stringWithFormat:@"%@ 至 %@",self.currentConditions.startDateStr,self.currentConditions.endDateStr];
@@ -90,11 +90,22 @@
     if ([currentConditions.selectedDevices isKindOfClass:[NSMutableSet class]]) {
         NSMutableString *mutableStr = [[NSMutableString alloc] init];
         [currentConditions.selectedDevices enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
-            NSString *str = (NSString *)obj;
+            TCMeetingRoomEquipment *equ = (TCMeetingRoomEquipment *)obj;
+            NSString *str = equ.name;
             [mutableStr appendString:str];
+            [mutableStr appendString:@","];
         }];
+        if (mutableStr.length > 0) {
+            [mutableStr replaceCharactersInRange:NSMakeRange(mutableStr.length-1, 1) withString:@""];
+        }
         
         self.devicesLabel.text = mutableStr;
+    }
+}
+
+- (void)hangleClickModifyBtn {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(headerViewDidClickModifyBtn)]) {
+        [self.delegate headerViewDidClickModifyBtn];
     }
 }
 
@@ -304,8 +315,13 @@
 - (UIButton *)modifyBtn {
     if (_modifyBtn == nil) {
         _modifyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _modifyBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        _modifyBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -65);
+        _modifyBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -20, 0, 0);
         [_modifyBtn setTitle:@"修改" forState:UIControlStateNormal];
         [_modifyBtn setTitleColor:TCBlackColor forState:UIControlStateNormal];
+        [_modifyBtn addTarget:self action:@selector(hangleClickModifyBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_modifyBtn setImage:[UIImage imageNamed:@"meeting_room_conditions_modify"] forState:UIControlStateNormal];
     }
     return _modifyBtn;
 }

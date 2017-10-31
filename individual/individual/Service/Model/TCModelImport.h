@@ -115,6 +115,9 @@
 #import "TCBookingDateInfo.h"
 #import "TCBookingDate.h"
 #import "TCMeetingRoomConditions.h"
+#import "TCMeetingRoom.h"
+#import "TCMeetingParticipant.h"
+#import "TCMeetingRoomEquipment.h"
 
 
 @interface TCModelImport : NSObject

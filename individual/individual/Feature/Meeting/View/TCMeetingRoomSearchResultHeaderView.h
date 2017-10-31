@@ -10,8 +10,16 @@
 
 @class TCMeetingRoomConditions;
 
+@protocol TCMeetingRoomSearchResultHeaderViewDelegate <NSObject>
+
+- (void)headerViewDidClickModifyBtn;
+
+@end
+
 @interface TCMeetingRoomSearchResultHeaderView : UIView
 
 @property (strong, nonatomic) TCMeetingRoomConditions *currentConditions;
+
+@property (weak, nonatomic) id<TCMeetingRoomSearchResultHeaderViewDelegate> delegate;
 
 @end

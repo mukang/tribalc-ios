@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCMeetingRoom;
+
 @interface TCMeetingRoomSearchResultCell : UITableViewCell
+
+@property (strong, nonatomic) TCMeetingRoom *meetingRoom;
 
 @end
