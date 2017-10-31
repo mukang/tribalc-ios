@@ -14,6 +14,8 @@
 #import "TCMeetingRoomInfoViewCell.h"
 #import "TCMeetingRoomTitleViewCell.h"
 
+#import "TCBuluoApi.h"
+
 #import <TCCommonLibs/TCCommonButton.h>
 #import <UITableView+FDTemplateLayoutCell.h>
 
@@ -100,7 +102,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 5;
+            return 4;
             break;
         case 1:
             return 2;
@@ -127,47 +129,31 @@
             case 0:
             {
                 TCMeetingRoomTitleViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomTitleViewCell" forIndexPath:indexPath];
-                cell.titleLabel.text = @"星光时代UDC 会议室1";
+                cell.titleLabel.text = self.meetingRoom.name;
                 currentCell = cell;
             }
                 break;
             case 1:
             {
                 TCMeetingRoomSelectViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomSelectViewCell" forIndexPath:indexPath];
-                cell.titleLabel.text = @"预定日期";
+                cell.titleLabel.text = @"预定日期和时间";
                 cell.subTitleLabel.text = @"请选择";
                 currentCell = cell;
             }
                 break;
             case 2:
             {
-                TCMeetingRoomSelectViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomSelectViewCell" forIndexPath:indexPath];
-                cell.titleLabel.text = @"预定时间";
-                cell.subTitleLabel.text = @"请选择";
+                TCMeetingRoomSupportedViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomSupportedViewCell" forIndexPath:indexPath];
+                cell.meetingRoom = self.meetingRoom;
                 currentCell = cell;
             }
                 break;
             case 3:
             {
-                TCMeetingRoomSupportedViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomSupportedViewCell" forIndexPath:indexPath];
-                cell.timeLabel.text = @"9:00-20:00 开放";
-                cell.numLabel.text = @"可容纳6-8人";
-                NSString *str = @"投影仪  窗户  矿泉水  白板  桌子  椅子  纸笔  柠檬茶  玫瑰花  无线网络";
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.lineSpacing = 6;
-                NSAttributedString *attText = [[NSAttributedString alloc] initWithString:str attributes:@{
-                                                                                                          NSFontAttributeName: [UIFont systemFontOfSize:12],
-                                                                                                          NSParagraphStyleAttributeName: paragraphStyle
-                                                                                                          }];
-                cell.supportedLabel.attributedText = attText;
-                currentCell = cell;
-            }
-                break;
-            case 4:
-            {
                 TCMeetingRoomInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomInfoViewCell" forIndexPath:indexPath];
                 cell.titleLabel.text = @"预订人";
-                cell.subTitleLabel.text = @"张小花 15898768976";
+                TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+                cell.subTitleLabel.text = [NSString stringWithFormat:@"%@ %@", userInfo.name, userInfo.phone];
                 currentCell = cell;
             }
                 break;
@@ -189,10 +175,11 @@
         TCMeetingRoomInfoViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomInfoViewCell" forIndexPath:indexPath];
         if (section == 2) {
             cell.titleLabel.text = @"企业支付";
-            cell.subTitleLabel.text = @"杭州部落公社科技有限公司";
+            TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+            cell.subTitleLabel.text = userInfo.companyName;
         } else {
             cell.titleLabel.text = @"费用估计";
-            cell.subTitleLabel.text = @"¥ 30";
+            cell.subTitleLabel.text = [NSString stringWithFormat:@"¥ %0.2f", self.meetingRoom.fee];
         }
         currentCell = cell;
     }
@@ -202,18 +189,9 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0 && indexPath.row == 3) {
+    if (indexPath.section == 0 && indexPath.row == 2) {
         return [tableView fd_heightForCellWithIdentifier:@"TCMeetingRoomSupportedViewCell" configuration:^(TCMeetingRoomSupportedViewCell *cell) {
-            cell.timeLabel.text = @"9:00-20:00 开放";
-            cell.numLabel.text = @"可容纳6-8人";
-            NSString *str = @"投影仪  窗户  矿泉水  白板  桌子  椅子  纸笔  柠檬茶  玫瑰花  无线网络";
-            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            paragraphStyle.lineSpacing = 6;
-            NSAttributedString *attText = [[NSAttributedString alloc] initWithString:str attributes:@{
-                                                                                                      NSFontAttributeName: [UIFont systemFontOfSize:12],
-                                                                                                      NSParagraphStyleAttributeName: paragraphStyle
-                                                                                                      }];
-            cell.supportedLabel.attributedText = attText;
+            cell.meetingRoom = weakSelf.meetingRoom;
         }];
     } else {
         return 45;
@@ -235,8 +213,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0) {
-        if (indexPath.row == 2) {
+        if (indexPath.row == 1) {
             TCMeetingRoomBookingTimeViewController *vc = [[TCMeetingRoomBookingTimeViewController alloc] init];
+            vc.meetingRoomID = self.meetingRoom.ID;
+            vc.startDate = self.startDate;
+            vc.endDate = self.endDate;
             [self.navigationController pushViewController:vc animated:YES];
         }
     }

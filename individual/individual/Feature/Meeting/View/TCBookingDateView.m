@@ -57,7 +57,7 @@
         TCBookingDate *bookingDate = [[TCBookingDate alloc] init];
         bookingDate.date = date;
         bookingDate.dateStr = [self.dateFormatter stringFromDate:date];
-        if ([self.currentCalendar isDate:date equalToDate:_selecteDate toUnitGranularity:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay]) {
+        if ([date isEqualToDate:_selecteDate]) {
             bookingDate.isSelected = YES;
             _selectedIndex = i;
         }

@@ -8,6 +8,7 @@
 
 #import "TCMeetingRoomSearchResultController.h"
 #import "TCMeetingRoomBookingRecordController.h"
+#import "TCMeetingRoomViewController.h"
 
 #import "TCMeetingRoomSearchResultCell.h"
 #import "TCMeetingRoomSearchResultCell.h"
@@ -21,6 +22,8 @@
 @property (strong, nonatomic) UITableView *tableView;
 
 @property (strong, nonatomic) NSArray *arr;
+
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -42,7 +45,7 @@
         [mutableStr appendString:equ.ID];
         [mutableStr appendString:@","];
     }];
-
+    
     if (mutableStr.length > 0) {
         [mutableStr replaceCharactersInRange:NSMakeRange(mutableStr.length-1, 1) withString:@""];
     }
@@ -119,7 +122,12 @@
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    TCMeetingRoom *meetingRoom = self.arr[indexPath.row];
+    TCMeetingRoomViewController *vc = [[TCMeetingRoomViewController alloc] init];
+    vc.meetingRoom = meetingRoom;
+    vc.startDate = [self.dateFormatter dateFromString:self.conditions.startDateStr];
+    vc.endDate = [self.dateFormatter dateFromString:self.conditions.endDateStr];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark TCMeetingRoomSearchResultHeaderViewDelegate
@@ -162,6 +170,17 @@
 
 - (void)dealloc {
     NSLog(@"TCMeetingRoomSearchResultController -- dealloc");
+}
+
+#pragma mark - Override Methods
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        _dateFormatter.dateFormat = @"yyyy-MM-dd";
+    }
+    return _dateFormatter;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -7,8 +7,13 @@
 //
 
 #import "TCMeetingRoomSupportedViewCell.h"
+#import "TCMeetingRoomEquipment.h"
 
 @interface TCMeetingRoomSupportedViewCell ()
+
+@property (weak, nonatomic) UILabel *timeLabel;
+@property (weak, nonatomic) UILabel *supportedLabel;
+@property (weak, nonatomic) UILabel *numLabel;
 
 @property (weak, nonatomic) UILabel *titleLabel;
 @property (weak, nonatomic) UIImageView *timeIcon;
@@ -107,6 +112,27 @@
         make.size.left.equalTo(self.timeIcon);
         make.centerY.equalTo(self.numLabel);
     }];
+}
+
+- (void)setMeetingRoom:(TCMeetingRoom *)meetingRoom {
+    _meetingRoom = meetingRoom;
+    
+    self.timeLabel.text = [NSString stringWithFormat:@"%d:%02d-%d:%02d开放", meetingRoom.openTime / 3600, meetingRoom.openTime % 3600 / 60, meetingRoom.closeTime / 3600, meetingRoom.closeTime % 3600 / 60];
+    
+    NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:meetingRoom.equipments.count];
+    for (TCMeetingRoomEquipment *equipment in meetingRoom.equipments) {
+        [tempArray addObject:equipment.name];
+    }
+    NSString *str = [tempArray componentsJoinedByString:@"  "];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 6;
+    NSAttributedString *attText = [[NSAttributedString alloc] initWithString:str attributes:@{
+                                                                                              NSFontAttributeName: [UIFont systemFontOfSize:12],
+                                                                                              NSParagraphStyleAttributeName: paragraphStyle
+                                                                                              }];
+    self.supportedLabel.attributedText = attText;
+    
+    self.numLabel.text = [NSString stringWithFormat:@"可容纳%ld-%ld人", meetingRoom.galleryful, meetingRoom.maxGalleryful];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

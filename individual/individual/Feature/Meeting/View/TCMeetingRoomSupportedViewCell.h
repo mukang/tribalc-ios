@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TCMeetingRoom.h"
 
 @interface TCMeetingRoomSupportedViewCell : UITableViewCell
 
-@property (weak, nonatomic) UILabel *timeLabel;
-@property (weak, nonatomic) UILabel *supportedLabel;
-@property (weak, nonatomic) UILabel *numLabel;
+@property (strong, nonatomic) TCMeetingRoom *meetingRoom;
 
 @end

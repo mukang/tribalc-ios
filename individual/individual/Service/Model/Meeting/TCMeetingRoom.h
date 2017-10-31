@@ -24,9 +24,9 @@
 
 @property (assign, nonatomic) NSInteger maxGalleryful;
 
-@property (assign, nonatomic) double openTime;
+@property (assign, nonatomic) int openTime;
 
-@property (assign, nonatomic) double closeTime;
+@property (assign, nonatomic) int closeTime;
 
 @property (copy, nonatomic) NSArray *equipments;
 

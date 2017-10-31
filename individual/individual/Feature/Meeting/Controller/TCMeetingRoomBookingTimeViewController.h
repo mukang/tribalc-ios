@@ -14,6 +14,9 @@
 
 @property (copy, nonatomic) NSString *meetingRoomID;
 
+@property (strong, nonatomic) NSDate *startDate;
+@property (strong, nonatomic) NSDate *endDate;
+
 @property (strong, nonatomic) TCBookingDate *bookingDate;
 @property (strong, nonatomic) TCBookingTime *startBookingTime;
 @property (strong, nonatomic) TCBookingTime *endBookingTime;

@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, TCBookingTimeStatus) {
 @interface TCBookingTime : NSObject
 
 /** 标号 */
-@property (nonatomic) NSInteger num;
+@property (nonatomic) int num;
 /** 名字，例：t08A */
 @property (copy, nonatomic) NSString *name;
 /** 时间 */
