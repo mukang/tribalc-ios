@@ -68,13 +68,6 @@
     self.numberLabel.text = currentConditions.number;
     if (self.currentConditions.startDateStr && self.currentConditions.endDateStr) {
         self.timesLabel.text = [NSString stringWithFormat:@"%@ 至 %@",self.currentConditions.startDateStr,self.currentConditions.endDateStr];
-    }else if (self.currentConditions.startDateStr && !self.currentConditions.endDateStr) {
-        NSString *endStr = self.currentConditions.startDate;
-        NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:([endStr floatValue] + (7 * 24 * 3600 *1000))];
-        self.currentConditions.endDateStr = [self.dateFormatter stringFromDate:endDate];
-        self.timesLabel.text = [NSString stringWithFormat:@"%@ 至 %@",self.currentConditions.startDateStr,self.currentConditions.endDateStr];
-    }else if (!self.currentConditions.startDateStr && self.currentConditions.endDateStr) {
-        self.timesLabel.text = [NSString stringWithFormat:@"%@ 至 %@",[self.dateFormatter stringFromDate:[NSDate date]],self.currentConditions.endDateStr];
     }else {
         NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
         NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:(timeInterval + (7 * 24 * 3600))];

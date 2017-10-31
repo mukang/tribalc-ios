@@ -54,6 +54,7 @@
         _numberTextField.placeholder = @"请输入参会人数";
         _numberTextField.keyboardType = UIKeyboardTypeNumberPad;
         _numberTextField.delegate = self;
+        _numberTextField.font = [UIFont systemFontOfSize:14];
     }
     return _numberTextField;
 }

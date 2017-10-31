@@ -77,6 +77,7 @@
         _endTimeTextField.placeholder = @"请选择结束日期";
         _endTimeTextField.delegate = self;
         _endTimeTextField.tag = 10002;
+        _endTimeTextField.font = [UIFont systemFontOfSize:14];
     }
     return _endTimeTextField;
 }
@@ -95,6 +96,7 @@
         _startTimeTextField.placeholder = @"请选择开始日期";
         _startTimeTextField.tag = 10001;
         _startTimeTextField.delegate = self;
+        _startTimeTextField.font = [UIFont systemFontOfSize:14];
     }
     return _startTimeTextField;
 }
