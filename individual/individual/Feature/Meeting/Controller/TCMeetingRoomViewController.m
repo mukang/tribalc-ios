@@ -19,11 +19,15 @@
 #import <TCCommonLibs/TCCommonButton.h>
 #import <UITableView+FDTemplateLayoutCell.h>
 
-@interface TCMeetingRoomViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TCMeetingRoomViewController () <UITableViewDataSource, UITableViewDelegate, TCMeetingRoomBookingTimeViewControllerDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) UIImageView *headerView;
 @property (weak, nonatomic) TCCommonButton *nextButton;
+
+@property (strong, nonatomic) TCBookingDate *bookingDate;
+@property (strong, nonatomic) TCBookingTime *startBookingTime;
+@property (strong, nonatomic) TCBookingTime *endBookingTime;
 
 @end
 
@@ -137,7 +141,11 @@
             {
                 TCMeetingRoomSelectViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomSelectViewCell" forIndexPath:indexPath];
                 cell.titleLabel.text = @"预定日期和时间";
-                cell.subTitleLabel.text = @"请选择";
+                if (self.bookingDate) {
+                    cell.subTitleLabel.text = [NSString stringWithFormat:@"%@ %@-%@", self.bookingDate.dateStr, self.startBookingTime.startTimeStr, self.endBookingTime.endTimeStr];
+                } else {
+                    cell.subTitleLabel.text = @"请选择";
+                }
                 currentCell = cell;
             }
                 break;
@@ -218,9 +226,24 @@
             vc.meetingRoomID = self.meetingRoom.ID;
             vc.startDate = self.startDate;
             vc.endDate = self.endDate;
+            vc.selectedDate = self.bookingDate.date;
+            vc.bookingDate = self.bookingDate;
+            vc.startBookingTime = self.startBookingTime;
+            vc.endBookingTime = self.endBookingTime;
+            vc.delegate = self;
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
+}
+
+#pragma mark - TCMeetingRoomBookingTimeViewControllerDelegate
+
+- (void)didClickConfirmButtonInBookingTimeViewController:(TCMeetingRoomBookingTimeViewController *)vc {
+    self.bookingDate = vc.bookingDate;
+    self.startBookingTime = vc.startBookingTime;
+    self.endBookingTime = vc.endBookingTime;
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Actions

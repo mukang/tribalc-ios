@@ -60,7 +60,7 @@
 //    NSDate *startDate = [dateFormatter dateFromString:@"2017-10-26"];
 //    NSDate *endDate = [dateFormatter dateFromString:@"2017-11-02"];
 //    NSDate *selectedDate = [dateFormatter dateFromString:@"2017-11-01"];
-    TCBookingDateView *dateView = [[TCBookingDateView alloc] initWithStartDate:self.startDate endDate:self.endDate selectedDate:nil];
+    TCBookingDateView *dateView = [[TCBookingDateView alloc] initWithStartDate:self.startDate endDate:self.endDate selectedDate:self.selectedDate];
     dateView.delegate = self;
     [self.view addSubview:dateView];
     
@@ -116,6 +116,7 @@
         } else {
             NSString *message = error.localizedDescription ?: @"获取数据失败，请稍后再试";
             [MBProgressHUD showHUDWithMessage:message];
+            [self createBookingTimeArrayWithNoBookingDateInfo];
         }
     }];
 }
@@ -125,9 +126,11 @@
     for (int i=0; i<bookingTimeCount; i++) {
         TCBookingTime *bookingTime = [[TCBookingTime alloc] init];
         NSString *name = self.bookingTimeNameArray[i];
+        NSArray *timeStrs = self.bookingTimeStrArray[i];
         bookingTime.num = i;
         bookingTime.name = name;
-        bookingTime.timeStr = self.bookingTimeStrArray[i];
+        bookingTime.startTimeStr = [timeStrs firstObject];
+        bookingTime.endTimeStr = [timeStrs lastObject];
         if ([bookingDateInfo valueForKey:name]) {
             bookingTime.status = TCBookingTimeStatusDisabled;
         } else {
@@ -161,6 +164,21 @@
         
         [MBProgressHUD showHUDWithMessage:@"您选择的会议时间已被他人预定，请重新选择"];
         [self.dateView setNewSelectedDate:nil];
+    }
+    
+    [self.timeView reloadDataWithBookingTimeArray:self.bookingTimeArray];
+}
+
+- (void)createBookingTimeArrayWithNoBookingDateInfo {
+    [self.bookingTimeArray removeAllObjects];
+    for (int i=0; i<bookingTimeCount; i++) {
+        TCBookingTime *bookingTime = [[TCBookingTime alloc] init];
+        NSArray *timeStrs = self.bookingTimeStrArray[i];
+        bookingTime.num = i;
+        bookingTime.startTimeStr = [timeStrs firstObject];
+        bookingTime.endTimeStr = [timeStrs lastObject];
+        bookingTime.status = TCBookingTimeStatusDisabled;
+        [self.bookingTimeArray addObject:bookingTime];
     }
     
     [self.timeView reloadDataWithBookingTimeArray:self.bookingTimeArray];
@@ -246,7 +264,14 @@
 #pragma mark - Actions
 
 - (void)handleClickConfirmButton {
-    [self.dateView setNewSelectedDate:self.currentBookingDate.date];
+    if (!self.startBookingTime) {
+        [MBProgressHUD showHUDWithMessage:@"请选择时间"];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(didClickConfirmButtonInBookingTimeViewController:)]) {
+        [self.delegate didClickConfirmButtonInBookingTimeViewController:self];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Override Methods
@@ -267,7 +292,38 @@
 
 - (NSArray *)bookingTimeStrArray {
     if (_bookingTimeStrArray == nil) {
-        _bookingTimeStrArray = @[@"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00", @"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30", @"21:00", @"21:30", @"22:00", @"22:30"];
+        _bookingTimeStrArray = @[
+                                 @[@"08:00", @"08:30"],
+                                 @[@"08:30", @"09:00"],
+                                 @[@"09:00", @"09:30"],
+                                 @[@"09:30", @"10:00"],
+                                 @[@"10:00", @"10:30"],
+                                 @[@"10:30", @"11:00"],
+                                 @[@"11:00", @"11:30"],
+                                 @[@"11:30", @"12:00"],
+                                 @[@"12:00", @"12:30"],
+                                 @[@"12:30", @"13:00"],
+                                 @[@"13:00", @"13:30"],
+                                 @[@"13:30", @"14:00"],
+                                 @[@"14:00", @"14:30"],
+                                 @[@"14:30", @"15:00"],
+                                 @[@"15:00", @"15:30"],
+                                 @[@"15:30", @"16:00"],
+                                 @[@"16:00", @"16:30"],
+                                 @[@"16:30", @"17:00"],
+                                 @[@"17:00", @"17:30"],
+                                 @[@"17:30", @"18:00"],
+                                 @[@"18:00", @"18:30"],
+                                 @[@"18:30", @"19:00"],
+                                 @[@"19:00", @"19:30"],
+                                 @[@"19:30", @"20:00"],
+                                 @[@"20:00", @"20:30"],
+                                 @[@"20:30", @"21:00"],
+                                 @[@"21:00", @"21:30"],
+                                 @[@"21:30", @"22:00"],
+                                 @[@"22:00", @"22:30"],
+                                 @[@"22:30", @"23:00"]
+                                 ];
     }
     return _bookingTimeStrArray;
 }

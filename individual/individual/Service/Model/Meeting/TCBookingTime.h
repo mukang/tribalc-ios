@@ -20,8 +20,10 @@ typedef NS_ENUM(NSInteger, TCBookingTimeStatus) {
 @property (nonatomic) int num;
 /** 名字，例：t08A */
 @property (copy, nonatomic) NSString *name;
-/** 时间 */
-@property (copy, nonatomic) NSString *timeStr;
+/** 开始时间 */
+@property (copy, nonatomic) NSString *startTimeStr;
+/** 结束时间 */
+@property (copy, nonatomic) NSString *endTimeStr;
 /** 状态 */
 @property (nonatomic) TCBookingTimeStatus status;
 
