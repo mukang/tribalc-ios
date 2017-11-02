@@ -15,6 +15,9 @@
 #import "TCMeetingRoomReservationCancelView.h"
 
 #import "TCBuluoApi.h"
+#import "TCMeetingRoomReservationDetail.h"
+
+#import <UITableView+FDTemplateLayoutCell.h>
 
 @interface TCMeetingRoomBookingDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TCMeetingRoomReservationCancelViewDelegate>
 
@@ -26,6 +29,10 @@
 
 @property (strong, nonatomic) TCMeetingRoomReservationCancelView *cancelView;
 
+@property (strong, nonatomic) TCMeetingRoomReservationDetail *meetingRoomReservationDetail;
+
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation TCMeetingRoomBookingDetailViewController
@@ -33,6 +40,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpViews];
+    [self loadData];
+}
+
+- (void)loadData {
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchMeetingRoomReservationDetailWithID:self.reservationID result:^(TCMeetingRoomReservationDetail *meetingRoomReservationDetail, NSError *error) {
+        @StrongObj(self)
+        if (meetingRoomReservationDetail) {
+            [MBProgressHUD hideHUD:YES];
+            self.meetingRoomReservationDetail = meetingRoomReservationDetail;
+            [self.tableView reloadData];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
+        }
+    }];
 }
 
 - (void)handleCancelClick {
@@ -79,16 +103,21 @@
         return cell;
     }else if (indexPath.section == 1) {
         TCBookingDetailNameAndTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailNameAndTimeCell" forIndexPath:indexPath];
+        cell.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
         return cell;
     }else if (indexPath.section == 2) {
         TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
+        cell.title = @"预定人：";
+        cell.content = [NSString stringWithFormat:@"%@  %@",self.meetingRoomReservationDetail.personName,self.meetingRoomReservationDetail.personPhone];
         return cell;
     }else if (indexPath.section == 3) {
         TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
         cell.title = @"会议主旨";
+        cell.content = self.meetingRoomReservationDetail.subject;
         return cell;
     }else if (indexPath.section == 4) {
         TCBookingDetailMenbersAndDevicesCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailMenbersAndDevicesCell" forIndexPath:indexPath];
+        cell.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
         return cell;
     }else if (indexPath.section == 5) {
         TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
@@ -98,12 +127,12 @@
     }else if (indexPath.section == 6) {
         TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
         cell.title = @"费用估计";
-        cell.content = @"¥30";
+        cell.content = [NSString stringWithFormat:@"¥%@",@(self.meetingRoomReservationDetail.totalFee)];
         return cell;
     }else {
         TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
         cell.title = @"下单时间";
-        cell.content = @"2017-09-19 15:12:23";
+        cell.content = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.meetingRoomReservationDetail.createTime/1000]];
         return cell;
     }
 }
@@ -111,7 +140,15 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 4) {
-        return 180;
+        return [tableView fd_heightForCellWithIdentifier:@"TCBookingDetailMenbersAndDevicesCell" configuration:^(TCBookingDetailMenbersAndDevicesCell *cell) {
+            cell.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
+        }];
+    }
+    
+    if (indexPath.section == 1) {
+        return [tableView fd_heightForCellWithIdentifier:@"TCBookingDetailNameAndTimeCell" configuration:^(TCBookingDetailNameAndTimeCell *cell) {
+            cell.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
+        }];
     }
     
     return 45;
@@ -144,7 +181,7 @@
     [self.view addSubview:self.rightBtn];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.view);
-        make.bottom.equalTo(self.view).offset(49);
+        make.bottom.equalTo(self.leftBtn.mas_top);
     }];
     
     [self.leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -208,6 +245,14 @@
         _tableView.tableFooterView = footerLabel;
     }
     return _tableView;
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    }
+    return _dateFormatter;
 }
 
 - (void)didReceiveMemoryWarning {

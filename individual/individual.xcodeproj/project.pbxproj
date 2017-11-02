@@ -143,6 +143,7 @@
 		55D1A2771FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1A2761FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.m */; };
 		55D1A27A1FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1A2791FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.m */; };
 		55D1A27D1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1A27C1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.m */; };
+		55D1A2801FAB0EF6004FCC7E /* TCMeetingRoomReservationDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1A27F1FAB0EF6004FCC7E /* TCMeetingRoomReservationDetail.m */; };
 		55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */; };
 		55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */; };
 		55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */; };
@@ -775,6 +776,8 @@
 		55D1A2791FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomReservationCancelView.m; sourceTree = "<group>"; };
 		55D1A27B1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomBillViewController.h; sourceTree = "<group>"; };
 		55D1A27C1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomBillViewController.m; sourceTree = "<group>"; };
+		55D1A27E1FAB0EF6004FCC7E /* TCMeetingRoomReservationDetail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomReservationDetail.h; sourceTree = "<group>"; };
+		55D1A27F1FAB0EF6004FCC7E /* TCMeetingRoomReservationDetail.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomReservationDetail.m; sourceTree = "<group>"; };
 		55F06EEC1E03911400A849D7 /* TCPropertyManageListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageListController.h; sourceTree = "<group>"; };
 		55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageListController.m; sourceTree = "<group>"; };
 		55F06EF01E03977000A849D7 /* TCPropertyManageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageWrapper.h; sourceTree = "<group>"; };
@@ -3206,6 +3209,8 @@
 				55D1A2731FA97758004FCC7E /* TCMeetingRoomReservation.m */,
 				55D1A2751FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.h */,
 				55D1A2761FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.m */,
+				55D1A27E1FAB0EF6004FCC7E /* TCMeetingRoomReservationDetail.h */,
+				55D1A27F1FAB0EF6004FCC7E /* TCMeetingRoomReservationDetail.m */,
 			);
 			path = Meeting;
 			sourceTree = "<group>";
@@ -3968,6 +3973,7 @@
 				55BB9EBA1E72AF5400B0FD94 /* TCLockEquip.m in Sources */,
 				7A455D5E1EBC912400A2F9ED /* TCWithdrawViewController.m in Sources */,
 				7AFEC4801E54056D00B0E754 /* TCGoodsOrderNoteViewCell.m in Sources */,
+				55D1A2801FAB0EF6004FCC7E /* TCMeetingRoomReservationDetail.m in Sources */,
 				7A33219E1E0D3AA9003049DB /* TCVicinityTitleView.m in Sources */,
 				7ABA7E781F03A3F400DCC2D0 /* TCApartmentPayViewController.m in Sources */,
 				7A38923D1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m in Sources */,

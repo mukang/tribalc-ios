@@ -3400,6 +3400,38 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     } else {
         TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
         if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+}
+
+- (void)fetchMeetingRoomReservationDetailWithID:(NSString *)reservationId result:(void (^)(TCMeetingRoomReservationDetail *meetingRoomReservationDetail, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation/%@?me=%@", reservationId,self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    if ([response.data isKindOfClass:[NSDictionary class]]) {
+                        TCMeetingRoomReservationDetail *detail = [[TCMeetingRoomReservationDetail alloc] initWithObjectDictionary:response.data];
+                        TC_CALL_ASYNC_MQ(resultBlock(detail, nil));
+                    }else {
+                        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorServerResponseNotJSON andDescription:nil];
+                        if (resultBlock) {
+                            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+                        }
+                    }
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
             TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
         }
     }

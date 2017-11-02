@@ -14,4 +14,6 @@ typedef void(^DidCancelReservationBlock)();
 
 @property (copy, nonatomic) DidCancelReservationBlock block;
 
+@property (copy, nonatomic) NSString *reservationID;
+
 @end

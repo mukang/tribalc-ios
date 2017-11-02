@@ -1032,5 +1032,15 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)cancelMeetingRoomReservationWithID:(NSString *)reservationId result:(void (^)(BOOL isSuccess, NSError *error))resultBlock;
 
+
+/**
+ 获取会议室预定详情
+
+ @param reservationId 预定订单id
+ @param resultBlock 结果回调 meetingRoomReservationDetail有值表示成功
+ */
+- (void)fetchMeetingRoomReservationDetailWithID:(NSString *)reservationId result:(void (^)(TCMeetingRoomReservationDetail *meetingRoomReservationDetail, NSError *error))resultBlock;
+
+
 @end
 

@@ -28,4 +28,6 @@
 
 @property (copy, nonatomic) NSString *picture;
 
+@property (copy, nonatomic) NSString *subject;
+
 @end

@@ -101,8 +101,8 @@
 #pragma mark UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return self.meetingRoomReservationArr.count;
-    return 10;
+    return self.meetingRoomReservationArr.count;
+//    return 10;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -111,7 +111,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCMeetingRoomBookingRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomBookingRecordCell" forIndexPath:indexPath];
-//    cell.meetingRoomReservation = self.meetingRoomReservationArr[indexPath.section];
+    cell.meetingRoomReservation = self.meetingRoomReservationArr[indexPath.section];
     return cell;
 }
 
@@ -136,7 +136,9 @@
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    TCMeetingRoomReservation *reservation = self.meetingRoomReservationArr[indexPath.section];
     TCMeetingRoomBookingDetailViewController *detailVC = [[TCMeetingRoomBookingDetailViewController alloc] init];
+    detailVC.reservationID = reservation.ID;
     detailVC.block = ^{
         [self loadNewData];
     };
@@ -162,7 +164,7 @@
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadOldData)];
         refreshFooter.stateLabel.textColor = TCGrayColor;
         refreshFooter.stateLabel.font = [UIFont systemFontOfSize:14];
-        [refreshFooter setTitle:@"-我是有底线的-" forState:MJRefreshStateNoMoreData];
+//        [refreshFooter setTitle:@"-我是有底线的-" forState:MJRefreshStateNoMoreData];
         refreshFooter.automaticallyHidden = YES;
         _tableView.mj_footer = refreshFooter;
         
