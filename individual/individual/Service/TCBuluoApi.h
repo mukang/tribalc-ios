@@ -1013,5 +1013,24 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)fetchMeetingRoomEquipmetsWithResult:(void (^)(NSArray *meetingRoomsEquipments, NSError *error))resultBlock;
 
+
+/**
+ 获取会议室预定记录
+
+ @param sortSkip sortSkip
+ @param limitSize 请求条数
+ @param resultBlock 结果回调 meetingRoomReservationWrapper有值表示请求成功
+ */
+- (void)fetchMeetingRoomReservationWrapperWithSortSkip:(NSString *)sortSkip limitSize:(NSInteger)limitSize result:(void (^)(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error))resultBlock;
+
+
+/**
+ 取消会议室预定
+
+ @param reservationId 预定订单id
+ @param resultBlock 结果回调 isSuccess为YES表示取消成功 NO表示取消失败
+ */
+- (void)cancelMeetingRoomReservationWithID:(NSString *)reservationId result:(void (^)(BOOL isSuccess, NSError *error))resultBlock;
+
 @end
 

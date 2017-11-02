@@ -7,6 +7,7 @@
 //
 
 #import "TCBookingDetailSchedulerCell.h"
+#import "TCBuluoApi.h"
 
 @interface TCBookingDetailSchedulerCell ()
 
@@ -25,18 +26,29 @@
     return self;
 }
 
+- (void)setTitle:(NSString *)title {
+    _title = title;
+    self.schedulerTitleLabel.text = title;
+}
+
+- (void)setContent:(NSString *)content {
+    _content = content;
+    self.schedulerLabel.text = content;
+}
+
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.schedulerTitleLabel];
     [self.contentView addSubview:self.schedulerLabel];
     
     [self.schedulerTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(15);
-        make.top.equalTo(self.contentView);
+        make.top.bottom.equalTo(self.contentView);
     }];
     
     [self.schedulerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.schedulerTitleLabel.mas_right);
-        make.top.equalTo(self.contentView);
+        make.top.bottom.equalTo(self.contentView);
         make.right.equalTo(self.contentView).offset(-15);
     }];
 }
@@ -46,7 +58,7 @@
         _schedulerLabel = [[UILabel alloc] init];
         _schedulerLabel.font = [UIFont systemFontOfSize:14];
         _schedulerLabel.textColor = TCBlackColor;
-        _schedulerLabel.text = @"小雨 1567890000";
+        _schedulerLabel.text = [NSString stringWithFormat:@"%@  %@",[[TCBuluoApi api] currentUserSession].userInfo.name,[[TCBuluoApi api] currentUserSession].userInfo.phone];
     }
     return _schedulerLabel;
 }

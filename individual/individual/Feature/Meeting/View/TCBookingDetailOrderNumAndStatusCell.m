@@ -28,6 +28,7 @@
 }
 
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.orderNumTitleLabel];
     [self.contentView addSubview:self.orderNumLabel];
     [self.contentView addSubview:self.statusLabel];

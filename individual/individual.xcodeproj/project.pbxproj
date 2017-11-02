@@ -61,9 +61,6 @@
 		5508D5DC1FA33C4B00C2AAA6 /* TCBookingDetailNameAndTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508D5DB1FA33C4B00C2AAA6 /* TCBookingDetailNameAndTimeCell.m */; };
 		5508D5DF1FA33D0B00C2AAA6 /* TCBookingDetailSchedulerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508D5DE1FA33D0B00C2AAA6 /* TCBookingDetailSchedulerCell.m */; };
 		5508D5E21FA33D4E00C2AAA6 /* TCBookingDetailMenbersAndDevicesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508D5E11FA33D4E00C2AAA6 /* TCBookingDetailMenbersAndDevicesCell.m */; };
-		5508D5E51FA33DA800C2AAA6 /* TCBookingDetailPayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508D5E41FA33DA800C2AAA6 /* TCBookingDetailPayTypeCell.m */; };
-		5508D5E81FA33DC500C2AAA6 /* TCBookingDetailFeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508D5E71FA33DC500C2AAA6 /* TCBookingDetailFeeCell.m */; };
-		5508D5EB1FA33DF600C2AAA6 /* TCBookingDetailCreateOrderTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508D5EA1FA33DF600C2AAA6 /* TCBookingDetailCreateOrderTimeCell.m */; };
 		550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923011F039DCC00B007C8 /* TCApartmentViewController.m */; };
 		550923051F03A67400B007C8 /* TCApartmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 550923041F03A67400B007C8 /* TCApartmentCell.m */; };
 		550AA7661F03C76600509F0D /* TCContractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550AA7651F03C76500509F0D /* TCContractViewController.m */; };
@@ -142,6 +139,10 @@
 		55BB9EBD1E72AF7800B0FD94 /* TCLockKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EBC1E72AF7800B0FD94 /* TCLockKey.m */; };
 		55BB9EC01E72B49100B0FD94 /* TCLockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BB9EBF1E72B49100B0FD94 /* TCLockWrapper.m */; };
 		55BD1E071EE8FF39008C1E02 /* TCStoreDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BD1E061EE8FF39008C1E02 /* TCStoreDetailInfo.m */; };
+		55D1A2741FA97758004FCC7E /* TCMeetingRoomReservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1A2731FA97758004FCC7E /* TCMeetingRoomReservation.m */; };
+		55D1A2771FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1A2761FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.m */; };
+		55D1A27A1FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1A2791FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.m */; };
+		55D1A27D1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1A27C1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.m */; };
 		55F06EEE1E03911400A849D7 /* TCPropertyManageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */; };
 		55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF11E03977000A849D7 /* TCPropertyManageWrapper.m */; };
 		55F06EF51E0398BB00A849D7 /* TCPropertyManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F06EF41E0398BB00A849D7 /* TCPropertyManage.m */; };
@@ -635,12 +636,6 @@
 		5508D5DE1FA33D0B00C2AAA6 /* TCBookingDetailSchedulerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingDetailSchedulerCell.m; sourceTree = "<group>"; };
 		5508D5E01FA33D4E00C2AAA6 /* TCBookingDetailMenbersAndDevicesCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCBookingDetailMenbersAndDevicesCell.h; sourceTree = "<group>"; };
 		5508D5E11FA33D4E00C2AAA6 /* TCBookingDetailMenbersAndDevicesCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingDetailMenbersAndDevicesCell.m; sourceTree = "<group>"; };
-		5508D5E31FA33DA800C2AAA6 /* TCBookingDetailPayTypeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCBookingDetailPayTypeCell.h; sourceTree = "<group>"; };
-		5508D5E41FA33DA800C2AAA6 /* TCBookingDetailPayTypeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingDetailPayTypeCell.m; sourceTree = "<group>"; };
-		5508D5E61FA33DC500C2AAA6 /* TCBookingDetailFeeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCBookingDetailFeeCell.h; sourceTree = "<group>"; };
-		5508D5E71FA33DC500C2AAA6 /* TCBookingDetailFeeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingDetailFeeCell.m; sourceTree = "<group>"; };
-		5508D5E91FA33DF600C2AAA6 /* TCBookingDetailCreateOrderTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCBookingDetailCreateOrderTimeCell.h; sourceTree = "<group>"; };
-		5508D5EA1FA33DF600C2AAA6 /* TCBookingDetailCreateOrderTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCBookingDetailCreateOrderTimeCell.m; sourceTree = "<group>"; };
 		550923001F039DCC00B007C8 /* TCApartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentViewController.h; sourceTree = "<group>"; };
 		550923011F039DCC00B007C8 /* TCApartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCApartmentViewController.m; sourceTree = "<group>"; };
 		550923031F03A67400B007C8 /* TCApartmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCApartmentCell.h; sourceTree = "<group>"; };
@@ -772,6 +767,14 @@
 		55BB9EBF1E72B49100B0FD94 /* TCLockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLockWrapper.m; sourceTree = "<group>"; };
 		55BD1E051EE8FF39008C1E02 /* TCStoreDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCStoreDetailInfo.h; sourceTree = "<group>"; };
 		55BD1E061EE8FF39008C1E02 /* TCStoreDetailInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCStoreDetailInfo.m; sourceTree = "<group>"; };
+		55D1A2721FA97758004FCC7E /* TCMeetingRoomReservation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomReservation.h; sourceTree = "<group>"; };
+		55D1A2731FA97758004FCC7E /* TCMeetingRoomReservation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomReservation.m; sourceTree = "<group>"; };
+		55D1A2751FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomReservationWrapper.h; sourceTree = "<group>"; };
+		55D1A2761FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomReservationWrapper.m; sourceTree = "<group>"; };
+		55D1A2781FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomReservationCancelView.h; sourceTree = "<group>"; };
+		55D1A2791FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomReservationCancelView.m; sourceTree = "<group>"; };
+		55D1A27B1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomBillViewController.h; sourceTree = "<group>"; };
+		55D1A27C1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomBillViewController.m; sourceTree = "<group>"; };
 		55F06EEC1E03911400A849D7 /* TCPropertyManageListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageListController.h; sourceTree = "<group>"; };
 		55F06EED1E03911400A849D7 /* TCPropertyManageListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPropertyManageListController.m; sourceTree = "<group>"; };
 		55F06EF01E03977000A849D7 /* TCPropertyManageWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPropertyManageWrapper.h; sourceTree = "<group>"; };
@@ -2451,6 +2454,8 @@
 				5508D5CF1FA1FB9E00C2AAA6 /* TCMeetingRoomBookingRecordController.m */,
 				5508D5D41FA33B4200C2AAA6 /* TCMeetingRoomBookingDetailViewController.h */,
 				5508D5D51FA33B4200C2AAA6 /* TCMeetingRoomBookingDetailViewController.m */,
+				55D1A27B1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.h */,
+				55D1A27C1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2504,12 +2509,8 @@
 				5508D5DE1FA33D0B00C2AAA6 /* TCBookingDetailSchedulerCell.m */,
 				5508D5E01FA33D4E00C2AAA6 /* TCBookingDetailMenbersAndDevicesCell.h */,
 				5508D5E11FA33D4E00C2AAA6 /* TCBookingDetailMenbersAndDevicesCell.m */,
-				5508D5E31FA33DA800C2AAA6 /* TCBookingDetailPayTypeCell.h */,
-				5508D5E41FA33DA800C2AAA6 /* TCBookingDetailPayTypeCell.m */,
-				5508D5E61FA33DC500C2AAA6 /* TCBookingDetailFeeCell.h */,
-				5508D5E71FA33DC500C2AAA6 /* TCBookingDetailFeeCell.m */,
-				5508D5E91FA33DF600C2AAA6 /* TCBookingDetailCreateOrderTimeCell.h */,
-				5508D5EA1FA33DF600C2AAA6 /* TCBookingDetailCreateOrderTimeCell.m */,
+				55D1A2781FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.h */,
+				55D1A2791FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3201,6 +3202,10 @@
 				7AD661101FA0A64E002A6967 /* TCBookingDateInfo.m */,
 				7AD660E11F9F3F06002A6967 /* TCBookingTime.h */,
 				7AD660E21F9F3F06002A6967 /* TCBookingTime.m */,
+				55D1A2721FA97758004FCC7E /* TCMeetingRoomReservation.h */,
+				55D1A2731FA97758004FCC7E /* TCMeetingRoomReservation.m */,
+				55D1A2751FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.h */,
+				55D1A2761FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.m */,
 			);
 			path = Meeting;
 			sourceTree = "<group>";
@@ -3555,7 +3560,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-individual/Pods-individual-resources.sh",
 				"${PODS_ROOT}/AMap2DMap-NO-IDFA/MAMapKit.framework/AMap.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TCCommonLibs/TCCommonLibs.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/TCCommonLibs/TCCommonLibs.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -3581,7 +3586,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -3598,6 +3603,7 @@
 				7A5899131F0657D20013E07A /* TCApartmentRentPaySuccessViewController.m in Sources */,
 				7A13EEB21DF814AD00377869 /* TCCommunityListViewController.m in Sources */,
 				7AEB4CCC1E03936300F83A7C /* TCShippingAddressViewController.m in Sources */,
+				55D1A2771FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.m in Sources */,
 				7AA643BF1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m in Sources */,
 				7A243F291F25EC5900192E22 /* TCWalletBalanceView.m in Sources */,
 				092626801E0BA3F300F5A18C /* TCShoppingCartBottom.m in Sources */,
@@ -3662,6 +3668,7 @@
 				550FB77C1ED5C18700D75E33 /* FSCalendarWeekdayView.m in Sources */,
 				7A084C321E000D3B00224677 /* TCCompanyApplyTitleViewCell.m in Sources */,
 				7AADCC881EE93A58004AA1DA /* MLBPasswordTextField.m in Sources */,
+				55D1A27A1FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.m in Sources */,
 				7A46B9331F332232001E33DD /* TCSettingNotificationViewCell.m in Sources */,
 				7A13EEAD1DF8140A00377869 /* TCCompanyApplyDetailViewController.m in Sources */,
 				7AD660D91F9E047B002A6967 /* TCBookingTimeNoteItem.m in Sources */,
@@ -3714,7 +3721,6 @@
 				7AD6610B1FA096FA002A6967 /* TCBookingDateViewLayout.m in Sources */,
 				5546F9651F305C8600E9A9B0 /* TCHomeMessageSubTitleCell.m in Sources */,
 				7A381BCD1DED6969008BDBF7 /* TCCommunityIntroViewCell.m in Sources */,
-				5508D5E81FA33DC500C2AAA6 /* TCBookingDetailFeeCell.m in Sources */,
 				550923021F039DCC00B007C8 /* TCApartmentViewController.m in Sources */,
 				7A8675211EF8D64F006E2742 /* TCNumberTextField.m in Sources */,
 				5513065A1E714008004DF32F /* TCLocksAndVisitorsViewController.m in Sources */,
@@ -3766,7 +3772,6 @@
 				7A381BDC1DED7D54008BDBF7 /* TCCommunitySurroundingViewCell.m in Sources */,
 				7A2966761F220EA70073E632 /* TCWalletCreditLimitView.m in Sources */,
 				5504970D1F62A526007F753F /* TCBioEditPhoneFailView.m in Sources */,
-				5508D5E51FA33DA800C2AAA6 /* TCBookingDetailPayTypeCell.m in Sources */,
 				5546F9511F26141A00E9A9B0 /* TCCreditBill.m in Sources */,
 				7A925DAA1F1C99B400D697DE /* TCSearchViewController.m in Sources */,
 				55F79D721FA0A827000CC56E /* TCMeetingRoomConditionsNumberCell.m in Sources */,
@@ -3844,6 +3849,7 @@
 				7A46B9321F332232001E33DD /* TCSettingCacheViewCell.m in Sources */,
 				7AA643BC1F09EB1400DD421F /* TCApartmentWithholdAddNameViewCell.m in Sources */,
 				092C69731DF002C100FE2FD8 /* TCReserveUserBaseInfoView.m in Sources */,
+				55D1A27D1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.m in Sources */,
 				7AA117751F4EC1A800903445 /* TCBindPhoneViewController.m in Sources */,
 				7A1A85531E66D64700BB5EDB /* TCServiceSelectItemView.m in Sources */,
 				7A13EEB71DF814BD00377869 /* TCCompanyListViewController.m in Sources */,
@@ -3947,7 +3953,6 @@
 				7AD660D31F9DDA0F002A6967 /* TCBookingTimeView.m in Sources */,
 				7A8352E71E5EE3A6003A8E76 /* TCServiceAnnotationView.m in Sources */,
 				7AFEC4961E555D2E00B0E754 /* TCGoodsOrderStatusViewCell.m in Sources */,
-				5508D5EB1FA33DF600C2AAA6 /* TCBookingDetailCreateOrderTimeCell.m in Sources */,
 				7A531BBE1F9899B000244D81 /* TCMeetingRoomSupportedViewCell.m in Sources */,
 				7A4A36531F540BE9008D277C /* TCBadgeNumberManager.m in Sources */,
 				7AC347021E01454100E28EC9 /* TCBankCardViewController.m in Sources */,
@@ -3983,6 +3988,7 @@
 				5526A5D01F08D83500A8D410 /* TCCheckPwdViewController.m in Sources */,
 				550AA7661F03C76600509F0D /* TCContractViewController.m in Sources */,
 				7A925DBE1F1DE77300D697DE /* TCHomeMessageType.m in Sources */,
+				55D1A2741FA97758004FCC7E /* TCMeetingRoomReservation.m in Sources */,
 				55F06F201E07EC6500A849D7 /* TCScanner.m in Sources */,
 				7A1A85471E66D61000BB5EDB /* TCServiceListViewController.m in Sources */,
 				550497091F629CB9007F753F /* TCBioEditPhoneController.m in Sources */,

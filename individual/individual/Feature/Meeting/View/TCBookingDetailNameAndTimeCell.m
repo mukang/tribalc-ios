@@ -32,6 +32,7 @@
 }
 
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.meetingRoomNameTitleLabel];
     [self.contentView addSubview:self.meetingRoomNameLabel];
     [self.contentView addSubview:self.bookingTimeTitleLabel];

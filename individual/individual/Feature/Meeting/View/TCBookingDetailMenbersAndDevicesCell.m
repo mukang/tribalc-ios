@@ -40,6 +40,7 @@
 }
 
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.menbersTitleLabel];
     [self.contentView addSubview:self.menbersView];
     [self.contentView addSubview:self.lineView];
@@ -141,6 +142,7 @@
         _deviceTitleLabel.textColor = TCBlackColor;
         _deviceTitleLabel.font = [UIFont systemFontOfSize:14];
         _deviceTitleLabel.text = @"配套设施：";
+        [_deviceTitleLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     }
     return _deviceTitleLabel;
 }

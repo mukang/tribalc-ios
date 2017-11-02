@@ -7,6 +7,10 @@
 //
 
 #import "TCMeetingRoomBookingRecordCell.h"
+#import "TCMeetingRoomReservation.h"
+#import <TCCommonLibs/TCImageURLSynthesizer.h>
+#import <TCCommonLibs/UIImage+Category.h>
+#import <UIImageView+WebCache.h>
 
 @interface TCMeetingRoomBookingRecordCell ()
 
@@ -26,7 +30,11 @@
 
 @property (strong, nonatomic) UILabel *meetingRoomInfoLabel;
 
+@property (strong, nonatomic) UILabel *meetingRoomFloorLabel;
+
 @property (strong, nonatomic) UILabel *dateLabel;
+
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -34,12 +42,67 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        
+        [self setUpViews];
     }
     return self;
 }
 
+- (void)setMeetingRoomReservation:(TCMeetingRoomReservation *)meetingRoomReservation {
+    _meetingRoomReservation = meetingRoomReservation;
+    
+    self.orderNumLabel.text = [NSString stringWithFormat:@"订单号:%@",meetingRoomReservation.reservationNum];
+    if ([meetingRoomReservation.status isKindOfClass:[NSString class]]) {
+        if ([meetingRoomReservation.status isEqualToString:@"RESERVED"]) {
+            self.orderStatusLabel.text = @"预定成功";
+        }else if ([meetingRoomReservation.status isEqualToString:@"CANCEL"]) {
+            self.orderStatusLabel.text = @"已取消";
+        }else if ([meetingRoomReservation.status isEqualToString:@"FINISHED"]) {
+            self.orderStatusLabel.text = @"已完成";
+        }
+    }
+    
+    if ([meetingRoomReservation.picture isKindOfClass:[NSString class]]) {
+        NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:meetingRoomReservation.picture];
+        UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(97, 75)];
+        [self.meetingRoomImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
+    }
+    
+    self.meetingRoomTitleLabel.text = meetingRoomReservation.name;
+    
+    self.meetingRoomFloorLabel.text = [NSString stringWithFormat:@"%ld层",(long)meetingRoomReservation.floor];
+    
+    int64_t second = (meetingRoomReservation.conferenceEndTime - meetingRoomReservation.conferenceBeginTime)/1000;
+    CGFloat hour = second/3600;
+    int h = (int)hour;
+    if (hour > h) {
+        hour = h + 0.5;
+    }
+    
+    NSString *startDateStr = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:meetingRoomReservation.conferenceBeginTime/1000]];
+    NSString *endDateStr = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:meetingRoomReservation.conferenceEndTime/1000]];
+    NSArray *startDateArr = [startDateStr componentsSeparatedByString:@" "];
+    NSArray *endDateArr = [endDateStr componentsSeparatedByString:@" "];
+    NSString *startStr = startDateArr[0];
+    NSString *endStr = endDateArr[0];
+    NSString *end = endDateStr;
+    if ([startStr isEqualToString:endStr]) {
+        if (endDateArr.count == 2) {
+            end = endDateArr[1];
+        }
+    }
+    NSString *dateStr = [NSString stringWithFormat:@"%@-%@（%@小时）",startDateStr,end,@(hour)];
+    self.dateLabel.text = dateStr;
+    
+    self.timeLabel.text = [NSString stringWithFormat:@"共计%@小时",@(hour)];
+    
+    NSString *moneyStr = [NSString stringWithFormat:@"实付：¥%@",@(meetingRoomReservation.totalFee)];
+    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
+    [attStr setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} range:NSMakeRange(0, 3)];
+    self.moneyLabel.attributedText = attStr;
+}
+
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.orderNumLabel];
     [self.contentView addSubview:self.orderStatusLabel];
     [self.contentView addSubview:self.meetingRoomInfoView];
@@ -48,6 +111,7 @@
     [self.meetingRoomInfoView addSubview:self.meetingRoomImageView];
     [self.meetingRoomInfoView addSubview:self.meetingRoomTitleLabel];
     [self.meetingRoomInfoView addSubview:self.meetingRoomInfoLabel];
+    [self.meetingRoomInfoView addSubview:self.meetingRoomFloorLabel];
     [self.meetingRoomInfoView addSubview:self.dateLabel];
     
     [self.orderNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -62,7 +126,8 @@
     }];
     
     [self.meetingRoomInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.orderNumLabel);
+        make.left.equalTo(self.orderNumLabel);
+        make.right.equalTo(self.contentView).offset(-15);
         make.top.equalTo(self.orderNumLabel.mas_bottom);
         make.height.equalTo(@75);
     }];
@@ -91,9 +156,15 @@
     }];
     
     [self.meetingRoomInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.meetingRoomTitleLabel);
+        make.left.equalTo(self.meetingRoomTitleLabel);
         make.top.equalTo(self.meetingRoomTitleLabel.mas_bottom);
         make.height.equalTo(@25);
+    }];
+    
+    [self.meetingRoomFloorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.meetingRoomTitleLabel);
+        make.top.height.equalTo(self.meetingRoomInfoLabel);
+        make.left.equalTo(self.meetingRoomInfoLabel.mas_right).offset(10);
     }];
     
     [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -108,8 +179,18 @@
         _dateLabel = [[UILabel alloc] init];
         _dateLabel.font = [UIFont systemFontOfSize:11];
         _dateLabel.textColor = TCGrayColor;
+        _dateLabel.text = @"共计一小时";
     }
     return _dateLabel;
+}
+
+- (UILabel *)meetingRoomFloorLabel {
+    if (_meetingRoomFloorLabel == nil) {
+        _meetingRoomFloorLabel = [[UILabel alloc] init];
+        _meetingRoomFloorLabel.font = [UIFont systemFontOfSize:12];
+        _meetingRoomFloorLabel.textColor = TCGrayColor;
+    }
+    return _meetingRoomFloorLabel;
 }
 
 - (UILabel *)meetingRoomInfoLabel {
@@ -117,6 +198,7 @@
         _meetingRoomInfoLabel = [[UILabel alloc] init];
         _meetingRoomInfoLabel.font = [UIFont systemFontOfSize:12];
         _meetingRoomInfoLabel.textColor = TCGrayColor;
+        [_meetingRoomInfoLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     }
     return _meetingRoomInfoLabel;
 }
@@ -133,6 +215,7 @@
 - (UIImageView *)meetingRoomImageView {
     if (_meetingRoomImageView == nil) {
         _meetingRoomImageView = [[UIImageView alloc] init];
+        _meetingRoomImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     return _meetingRoomImageView;
 }
@@ -160,7 +243,7 @@
 - (UIView *)meetingRoomInfoView {
     if (_meetingRoomInfoView == nil) {
         _meetingRoomInfoView = [[UIView alloc] init];
-        _meetingRoomInfoView.backgroundColor = TCRGBColor(242, 243, 244);
+        _meetingRoomInfoView.backgroundColor = TCRGBColor(243, 243, 243);
     }
     return _meetingRoomInfoView;
 }
@@ -182,6 +265,14 @@
         _orderNumLabel.font = [UIFont systemFontOfSize:14];
     }
     return _orderNumLabel;
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.dateFormat = @"yyyy-MM-dd hh:mm";
+    }
+    return _dateFormatter;
 }
 
 - (void)awakeFromNib {

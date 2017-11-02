@@ -8,6 +8,10 @@
 
 #import <TCCommonLibs/TCBaseViewController.h>
 
+typedef void(^DidCancelReservationBlock)();
+
 @interface TCMeetingRoomBookingDetailViewController : TCBaseViewController
+
+@property (copy, nonatomic) DidCancelReservationBlock block;
 
 @end
