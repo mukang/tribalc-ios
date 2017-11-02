@@ -39,7 +39,7 @@
 - (void)setBookingTime:(TCBookingTime *)bookingTime {
     _bookingTime = bookingTime;
     
-    self.titleLabel.text = bookingTime.timeStr;
+    self.titleLabel.text = bookingTime.startTimeStr;
     
     switch (bookingTime.status) {
         case TCBookingTimeStatusNormal:

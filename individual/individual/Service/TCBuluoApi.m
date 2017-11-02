@@ -3251,8 +3251,9 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
 
 - (void)fetchBookingDateInfoWithMeetingRoomID:(NSString *)meetingRoomID searchDate:(long long)searchDate result:(void (^)(TCBookingDateInfo *, NSError *))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/%@/reservation?me=%@&searchDate=%lld", meetingRoomID, self.currentUserSession.assigned, searchDate];
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/%@/reservation_date?me=%@&searchDate=%lld", meetingRoomID, self.currentUserSession.assigned, searchDate];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
                 TCBookingDateInfo *bookingDateInfo = [[TCBookingDateInfo alloc] initWithObjectDictionary:response.data];

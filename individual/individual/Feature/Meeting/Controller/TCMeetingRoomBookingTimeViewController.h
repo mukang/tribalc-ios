@@ -10,12 +10,26 @@
 #import "TCBookingDate.h"
 #import "TCBookingTime.h"
 
+@protocol TCMeetingRoomBookingTimeViewControllerDelegate;
 @interface TCMeetingRoomBookingTimeViewController : TCBaseViewController
 
 @property (copy, nonatomic) NSString *meetingRoomID;
 
+@property (strong, nonatomic) NSDate *startDate;
+@property (strong, nonatomic) NSDate *endDate;
+@property (strong, nonatomic) NSDate *selectedDate;
+
 @property (strong, nonatomic) TCBookingDate *bookingDate;
 @property (strong, nonatomic) TCBookingTime *startBookingTime;
 @property (strong, nonatomic) TCBookingTime *endBookingTime;
+
+@property (weak, nonatomic) id<TCMeetingRoomBookingTimeViewControllerDelegate> delegate;
+
+@end
+
+@protocol TCMeetingRoomBookingTimeViewControllerDelegate <NSObject>
+
+@optional
+- (void)didClickConfirmButtonInBookingTimeViewController:(TCMeetingRoomBookingTimeViewController *)vc;
 
 @end
