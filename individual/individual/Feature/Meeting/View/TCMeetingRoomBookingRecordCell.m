@@ -270,7 +270,7 @@
 - (NSDateFormatter *)dateFormatter {
     if (_dateFormatter == nil) {
         _dateFormatter = [[NSDateFormatter alloc] init];
-        _dateFormatter.dateFormat = @"yyyy-MM-dd hh:mm";
+        _dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
     }
     return _dateFormatter;
 }
