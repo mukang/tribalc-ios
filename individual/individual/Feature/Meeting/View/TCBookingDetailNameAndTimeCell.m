@@ -39,7 +39,7 @@
     
     self.meetingRoomNameLabel.text = meetingRoomReservationDetail.name;
 //    self.meetingRoomNameLabel.text = @"少时诵诗书所所所所所所所少时诵诗书所所所所三生三世";
-    int64_t second = (meetingRoomReservationDetail.conferenceEndTime - meetingRoomReservationDetail.conferenceBeginTime)/1000;
+    int64_t second = (meetingRoomReservationDetail.planEndTime - meetingRoomReservationDetail.conferenceBeginTime)/1000;
     CGFloat hour = second/3600;
     int h = (int)hour;
     if (hour > h) {

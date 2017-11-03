@@ -18,8 +18,9 @@
 #import "TCMeetingRoomReservationDetail.h"
 
 #import <UITableView+FDTemplateLayoutCell.h>
+#import <TCCommonLibs/TCDatePickerView.h>
 
-@interface TCMeetingRoomBookingDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TCMeetingRoomReservationCancelViewDelegate>
+@interface TCMeetingRoomBookingDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TCMeetingRoomReservationCancelViewDelegate,TCDatePickerViewDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 
@@ -32,6 +33,12 @@
 @property (strong, nonatomic) TCMeetingRoomReservationDetail *meetingRoomReservationDetail;
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
+@property (strong, nonatomic) NSTimer *timer;
+
+@property (assign, nonatomic) int64_t maxDelayTime;
+
+@property (strong, nonatomic) TCDatePickerView *datePickerView;
 
 @end
 
@@ -66,13 +73,125 @@
     }];
 }
 
+- (void)setMeetingRoomReservationDetail:(TCMeetingRoomReservationDetail *)meetingRoomReservationDetail {
+    _meetingRoomReservationDetail = meetingRoomReservationDetail;
+    
+    NSString *status = meetingRoomReservationDetail.status;
+    status = @"RESERVED";
+    if ([status isKindOfClass:[NSString class]]) {
+        //预定成功
+        if ([status isEqualToString:@"RESERVED"]) {
+            self.title = @"预定成功";
+            NSTimeInterval currentDateTimeInterval = [[NSDate date] timeIntervalSince1970];
+            NSTimeInterval cha = meetingRoomReservationDetail.conferenceBeginTime/1000 - currentDateTimeInterval;
+            NSInteger min = cha / 60;
+            if (min < 30 && min >= 0) {
+                self.leftBtn.enabled = NO;
+                self.rightBtn.enabled = NO;
+            }else if (min < 0) {
+                self.title = @"已开始";
+                self.leftBtn.enabled = NO;
+                self.rightBtn.enabled = YES;
+                //延期
+                [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+            }
+        }else if ([status isEqualToString:@"PUTOFF"]) { // 正在延期
+            self.title = @"已开始";
+            self.leftBtn.enabled = NO;
+            self.rightBtn.enabled = YES;
+            //延期
+            [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+        }else if ([status isEqualToString:@"CANCEL"] || [status isEqualToString:@"FINISHED"] || [status isEqualToString:@"PUTOFF_AND_FINISHED"]) { //已完成 已延期完成 已取消
+            self.leftBtn.hidden = YES;
+            self.leftBtn.hidden = YES;
+            if ([status isEqualToString:@"CANCEL"]) {
+                self.title = @"已取消";
+            }else {
+                self.title = @"已完成";
+            }
+        }
+    }
+}
+
+- (void)modifyOrDelay {
+//    int64_t startT = self.meetingRoomReservationDetail.conferenceBeginTime/1000;
+//    int64_t currentT = [[NSDate date] timeIntervalSince1970];
+//    if (startT > currentT) {  // 修改
+//
+//    }else {  // 延期
+        [MBProgressHUD showHUD:YES];
+        @WeakObj(self)
+         [[TCBuluoApi api] fetchMeetingRoomReservationDelayTimeWithID:self.meetingRoomReservationDetail.ID result:^(int64_t delayTime, NSError *error) {
+            @StrongObj(self)
+             if (delayTime) {
+                 self.maxDelayTime = delayTime;
+                 if (delayTime > self.meetingRoomReservationDetail.conferenceEndTime) {
+                     [MBProgressHUD hideHUD:YES];
+                     self.datePickerView.datePicker.maximumDate = [NSDate dateWithTimeIntervalSince1970:delayTime/1000];
+                     [self.datePickerView show];
+                 }else {
+                     [MBProgressHUD showHUDWithMessage:@"无法延迟" afterDelay:1.0];
+                 }
+             }else {
+                 NSString *reason = error.localizedDescription ?: @"请稍后再试";
+                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
+             }
+         }];
+//    }
+}
+
+- (void)updateRightBtn {
+    NSTimeInterval currentT = [[NSDate date] timeIntervalSince1970];
+    NSTimeInterval chaT = self.meetingRoomReservationDetail.conferenceEndTime/1000 - currentT;
+//    if (chaT < 0) {
+//        [self.timer invalidate];
+//        self.timer = nil;
+////        self.leftBtn.hidden = YES;
+////        self.rightBtn.hidden = YES;
+//        return;
+//    }
+    NSInteger hour = chaT / 3600;
+    NSInteger min = ((int64_t)chaT % 3600)/60;
+    NSInteger sec = ((int64_t)chaT % 3600)%60;
+    NSString *hourStr = hour ? [NSString stringWithFormat:@"%ld:",(long)hour] : @"";
+    NSString *timeStr = [NSString stringWithFormat:@"%@%.2ld:%.2ld",hourStr,(long)min,(long)sec];
+    NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@  %@",timeStr,@"延期"]];
+    NSTextAttachment *nameAttch = [[NSTextAttachment alloc] init];
+    nameAttch.bounds = CGRectMake(0, -1, 11, 11);
+    nameAttch.image = [UIImage imageNamed:@"meeting_room_timer_icon"];
+    NSAttributedString *nameStr = [NSAttributedString attributedStringWithAttachment:nameAttch];
+    NSMutableAttributedString *mutableNameStr = [[NSMutableAttributedString alloc] initWithAttributedString:nameStr];
+    [mutableNameStr appendAttributedString:attStr];
+    
+    [self.rightBtn setAttributedTitle:mutableNameStr forState:UIControlStateNormal];
+}
+
+#pragma mark TCDatePickerViewDelegate
+
+- (void)didClickConfirmButtonInDatePickerView:(TCDatePickerView *)view {
+    NSTimeInterval timestamp = [view.datePicker.date timeIntervalSince1970];
+    // 调延迟接口
+    @WeakObj(self)
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] delayMeetingRoomReservationWithID:self.meetingRoomReservationDetail.ID delayTime:timestamp result:^(BOOL isSuccess, NSError *error) {
+     @StrongObj(self)
+        if (isSuccess) {
+            [MBProgressHUD showHUDWithMessage:@"延迟成功" afterDelay:1.0];
+            [self loadData];
+        }else {
+            NSString *reason = error.localizedDescription ?: @"请稍后再试";
+            [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"延迟失败，%@", reason]];
+        }
+    }];
+}
+
 #pragma mark TCMeetingRoomReservationCancelViewDelegate
 
 - (void)cancelViewDidClickCancelBtn {
     [self.cancelView removeFromSuperview];
     [MBProgressHUD showHUD:YES];
     @WeakObj(self)
-    [[TCBuluoApi api] cancelMeetingRoomReservationWithID:@"" result:^(BOOL isSuccess, NSError *error) {
+    [[TCBuluoApi api] cancelMeetingRoomReservationWithID:self.meetingRoomReservationDetail.ID result:^(BOOL isSuccess, NSError *error) {
         @StrongObj(self)
         if (isSuccess) {
             [MBProgressHUD hideHUD:YES];
@@ -90,6 +209,9 @@
 #pragma mark UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if ([self.meetingRoomReservationDetail.status isEqualToString:@"PUTOFF"] || [self.meetingRoomReservationDetail.status isEqualToString:@"PUTOFF_AND_FINISHED"]) {
+        return 9;
+    }
     return 8;
 }
 
@@ -129,10 +251,15 @@
         cell.title = @"费用估计";
         cell.content = [NSString stringWithFormat:@"¥%@",@(self.meetingRoomReservationDetail.totalFee)];
         return cell;
-    }else {
+    }else if (indexPath.section == 7) {
         TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
         cell.title = @"下单时间";
         cell.content = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.meetingRoomReservationDetail.createTime/1000]];
+        return cell;
+    }else {
+        TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
+        cell.title = @"延迟时间";
+        cell.content = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.meetingRoomReservationDetail.conferenceEndTime/1000]];
         return cell;
     }
 }
@@ -211,6 +338,8 @@
         [_rightBtn setTitle:@"修   改" forState:UIControlStateNormal];
         [_rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_rightBtn setBackgroundColor:TCRGBColor(111, 128, 217)];
+        _rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_rightBtn addTarget:self action:@selector(modifyOrDelay) forControlEvents:UIControlEventTouchUpInside];
     }
     return _rightBtn;
 }
@@ -222,6 +351,7 @@
         [_leftBtn setBackgroundColor:TCRGBColor(149, 168, 233)];
         [_leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_leftBtn addTarget:self action:@selector(handleCancelClick) forControlEvents:UIControlEventTouchUpInside];
+        _leftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     }
     return _leftBtn;
 }
@@ -253,6 +383,31 @@
         _dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     }
     return _dateFormatter;
+}
+
+- (NSTimer *)timer {
+    if (_timer == nil) {
+        _timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(updateRightBtn) userInfo:nil repeats:YES];
+    }
+    return _timer;
+}
+
+- (TCDatePickerView *)datePickerView {
+    if (_datePickerView == nil) {
+        _datePickerView = [[TCDatePickerView alloc] initWithController:self];
+        _datePickerView.datePicker.date = [NSDate date];
+        
+        _datePickerView.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        _datePickerView.datePicker.minimumDate = [NSDate date];
+        _datePickerView.delegate = self;
+    }
+    return _datePickerView;
+}
+
+- (void)dealloc {
+    [self.timer invalidate];
+    self.timer = nil;
+    NSLog(@"--- TCMeetingRoomBookingDetailViewController --- dealloc ");
 }
 
 - (void)didReceiveMemoryWarning {

@@ -64,7 +64,7 @@
             [self.meetingRoomReservationArr removeAllObjects];
             self.meetingRoomReservationWrapper = meetingRoomReservationWrapper;
             if ([meetingRoomReservationWrapper.content isKindOfClass:[NSArray class]]) {
-                [self.meetingRoomReservationArr addObject:meetingRoomReservationWrapper.content];
+                [self.meetingRoomReservationArr addObjectsFromArray:meetingRoomReservationWrapper.content];
             }
             [self.tableView reloadData];
         }else {
@@ -79,10 +79,9 @@
     [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:_meetingRoomReservationWrapper.nextSkip limitSize:20 result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
         @StrongObj(self)
         if (meetingRoomReservationWrapper) {
-            [self.meetingRoomReservationArr removeAllObjects];
             self.meetingRoomReservationWrapper = meetingRoomReservationWrapper;
             if ([meetingRoomReservationWrapper.content isKindOfClass:[NSArray class]]) {
-                [self.meetingRoomReservationArr addObject:meetingRoomReservationWrapper.content];
+                [self.meetingRoomReservationArr addObjectsFromArray:meetingRoomReservationWrapper.content];
             }
             [self.tableView reloadData];
             if (!meetingRoomReservationWrapper.hasMore) {

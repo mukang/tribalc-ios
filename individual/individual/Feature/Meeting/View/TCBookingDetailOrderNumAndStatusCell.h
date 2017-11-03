@@ -12,6 +12,4 @@
 
 @property (copy, nonatomic) NSString *reservationNum;
 
-@property (copy, nonatomic) NSString *status;
-
 @end

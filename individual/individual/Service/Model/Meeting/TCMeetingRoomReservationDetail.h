@@ -52,5 +52,8 @@
 
 @property (copy, nonatomic) NSString *picture;
 
+@property (copy, nonatomic) NSString *status;
+
+@property (assign, nonatomic) int64_t planEndTime;
 
 @end
