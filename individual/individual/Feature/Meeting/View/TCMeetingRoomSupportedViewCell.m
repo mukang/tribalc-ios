@@ -132,7 +132,7 @@
                                                                                               }];
     self.supportedLabel.attributedText = attText;
     
-    self.numLabel.text = [NSString stringWithFormat:@"可容纳%ld-%ld人", meetingRoom.galleryful, meetingRoom.maxGalleryful];
+    self.numLabel.text = [NSString stringWithFormat:@"可容纳%zd-%zd人", meetingRoom.galleryful, meetingRoom.maxGalleryful];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

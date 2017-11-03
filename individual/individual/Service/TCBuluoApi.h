@@ -1013,6 +1013,14 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)fetchMeetingRoomEquipmetsWithResult:(void (^)(NSArray *meetingRoomsEquipments, NSError *error))resultBlock;
 
+/**
+ 提交会议室预定信息
+
+ @param bookingRequestInfo 会议室预定信息
+ @param meetingRoomID 会议室id
+ @param resultBlock 结果回调
+ */
+- (void)commitBookingRequestInfo:(TCBookingRequestInfo *)bookingRequestInfo meetingRoomID:(NSString *)meetingRoomID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
 /**
  获取会议室预定记录

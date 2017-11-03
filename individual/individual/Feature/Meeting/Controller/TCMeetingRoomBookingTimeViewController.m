@@ -264,10 +264,6 @@
 #pragma mark - Actions
 
 - (void)handleClickConfirmButton {
-    if (!self.startBookingTime) {
-        [MBProgressHUD showHUDWithMessage:@"请选择时间"];
-        return;
-    }
     if ([self.delegate respondsToSelector:@selector(didClickConfirmButtonInBookingTimeViewController:)]) {
         [self.delegate didClickConfirmButtonInBookingTimeViewController:self];
     }
