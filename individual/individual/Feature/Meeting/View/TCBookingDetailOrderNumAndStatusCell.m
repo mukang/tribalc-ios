@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) UILabel *orderNumLabel;
 
-@property (strong, nonatomic) UILabel *statusLabel;
+//@property (strong, nonatomic) UILabel *statusLabel;
 
 @end
 
@@ -32,24 +32,10 @@
     self.orderNumLabel.text = reservationNum;
 }
 
-- (void)setStatus:(NSString *)status {
-    _status = status;
-    if ([status isKindOfClass:[NSString class]]) {
-        if ([status isEqualToString:@"RESERVED"]) {
-            self.statusLabel.text = @"预定成功";
-        }else if ([status isEqualToString:@"CANCEL"]) {
-            self.statusLabel.text = @"已取消";
-        }else if ([status isEqualToString:@"FINISHED"]) {
-            self.statusLabel.text = @"已完成";
-        }
-    }
-}
-
 - (void)setUpViews {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.orderNumTitleLabel];
     [self.contentView addSubview:self.orderNumLabel];
-    [self.contentView addSubview:self.statusLabel];
     
     [self.orderNumTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(15);
@@ -60,21 +46,7 @@
         make.left.equalTo(self.orderNumTitleLabel.mas_right);
         make.top.bottom.equalTo(self.orderNumTitleLabel);
     }];
-    
-    [self.statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.contentView).offset(-15);
-        make.top.bottom.equalTo(self.orderNumTitleLabel);
-    }];
-}
 
-- (UILabel *)statusLabel {
-    if (_statusLabel == nil) {
-        _statusLabel = [[UILabel alloc] init];
-        _statusLabel.font = [UIFont systemFontOfSize:14];
-        _statusLabel.textColor = TCBlackColor;
-        _statusLabel.text = @"预定成功";
-    }
-    return _statusLabel;
 }
 
 - (UILabel *)orderNumLabel {

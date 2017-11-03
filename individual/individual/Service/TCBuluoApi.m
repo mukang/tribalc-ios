@@ -3465,4 +3465,55 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchMeetingRoomReservationDelayTimeWithID:(NSString *)reservationId result:(void (^)(int64_t delayTime, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation/%@/time?me=%@", reservationId,self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    if (response.data) {
+                        TC_CALL_ASYNC_MQ(resultBlock([response.data longLongValue], nil));
+                    }
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(0, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(0, sessionError));
+        }
+    }
+}
+
+- (void)delayMeetingRoomReservationWithID:(NSString *)reservationId delayTime:(int64_t)delayTime result:(void (^)(BOOL isSuccess, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation/%@/time?me=%@", reservationId,self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [request setValue:[NSString stringWithFormat:@"%lld",delayTime*1000] forParam:@"putOffTime"];
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+}
+
 @end

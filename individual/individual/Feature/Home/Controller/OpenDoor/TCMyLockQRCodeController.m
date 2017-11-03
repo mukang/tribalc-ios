@@ -258,6 +258,9 @@
     self.coverView.hidden = YES;
     self.refreshBtn.hidden = YES;
     self.second = (NSInteger)(multiLockKey.endTime/1000 - [[NSDate date] timeIntervalSince1970]);
+    if (self.second < 30) {
+        self.second = 30;
+    }
     self.secondLabel.text = [NSString stringWithFormat:@"%ld",(long)self.second];
     self.deviceLabel.text = @"请靠近识别设备";
     self.qRCodeView.codeImageView.image = [self generateQRCodeImageWithCodeString:multiLockKey.key size:CGSizeMake(TCRealValue(180), TCRealValue(180))];

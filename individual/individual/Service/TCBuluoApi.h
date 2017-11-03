@@ -1049,5 +1049,24 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)fetchMeetingRoomReservationDetailWithID:(NSString *)reservationId result:(void (^)(TCMeetingRoomReservationDetail *meetingRoomReservationDetail, NSError *error))resultBlock;
 
+
+/**
+ 获取可延迟的最大时间
+
+ @param reservationId 预定订单id
+ @param resultBlock delayTime有值表示获取成功
+ */
+- (void)fetchMeetingRoomReservationDelayTimeWithID:(NSString *)reservationId result:(void (^)(int64_t delayTime, NSError *error))resultBlock;
+
+
+/**
+ 延迟会议室预定时间
+
+ @param reservationId 预定订单ID
+ @param delayTime 延迟到的时间戳
+ @param resultBlock 结果回到 isSuccess 返回yes 表示延迟成功
+ */
+- (void)delayMeetingRoomReservationWithID:(NSString *)reservationId delayTime:(int64_t)delayTime result:(void (^)(BOOL isSuccess, NSError *error))resultBlock;
+
 @end
 
