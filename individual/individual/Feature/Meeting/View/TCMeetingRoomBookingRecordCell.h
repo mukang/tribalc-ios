@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class TCMeetingRoomReservation;
+
 @interface TCMeetingRoomBookingRecordCell : UITableViewCell
+
+@property (strong, nonatomic) TCMeetingRoomReservation *meetingRoomReservation;
 
 @end

@@ -209,7 +209,8 @@
                                 @{@"title": @"对账单", @"imageName": @"company_statement_button"},
                                 @{@"title": @"企业授信", @"imageName": @"company_credit_button"},
                                 @{@"title": @"企业缴租", @"imageName": @"company_rent_button"},
-                                @{@"title": @"支付密码", @"imageName": @"company_password_button"}
+                                @{@"title": @"支付密码", @"imageName": @"company_password_button"},
+                                @{@"title": @"会议室", @"imageName": @"company_meetingRoom_button"}
                                 ];
     }
     return _materialsOfCompany;

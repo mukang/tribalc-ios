@@ -13,6 +13,7 @@
 #import "TCWalletBillViewController.h"
 #import "TCWalletPasswordViewController.h"
 #import "TCCompanyRentPayViewController.h"
+#import "TCMeetingRoomBillViewController.h"
 
 #import "TCCompanyWalletTitleView.h"
 #import "TCWalletBalanceView.h"
@@ -121,10 +122,11 @@
         case 3:
             [self handleClickRentButton];
             break;
-            break;
         case 4:
             [self handleClickPasswordButton];
             break;
+        case 5:
+            [self handleClickMeetingRoom];
             break;
             
         default:
@@ -133,6 +135,11 @@
 }
 
 #pragma mark - Actions
+
+- (void)handleClickMeetingRoom {
+    TCMeetingRoomBillViewController *vc = [[TCMeetingRoomBillViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void)handleClickCloseTitleButton:(id)seder {
     [self.titleView removeFromSuperview];

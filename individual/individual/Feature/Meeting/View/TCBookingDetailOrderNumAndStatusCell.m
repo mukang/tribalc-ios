@@ -27,7 +27,26 @@
     return self;
 }
 
+- (void)setReservationNum:(NSString *)reservationNum {
+    _reservationNum = reservationNum;
+    self.orderNumLabel.text = reservationNum;
+}
+
+- (void)setStatus:(NSString *)status {
+    _status = status;
+    if ([status isKindOfClass:[NSString class]]) {
+        if ([status isEqualToString:@"RESERVED"]) {
+            self.statusLabel.text = @"预定成功";
+        }else if ([status isEqualToString:@"CANCEL"]) {
+            self.statusLabel.text = @"已取消";
+        }else if ([status isEqualToString:@"FINISHED"]) {
+            self.statusLabel.text = @"已完成";
+        }
+    }
+}
+
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.orderNumTitleLabel];
     [self.contentView addSubview:self.orderNumLabel];
     [self.contentView addSubview:self.statusLabel];

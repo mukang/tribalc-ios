@@ -78,13 +78,9 @@
     UIImageView *headerView = [[UIImageView alloc] init];
     headerView.frame = CGRectMake(0, 0, TCScreenWidth, TCRealValue(215));
     tableView.tableHeaderView = headerView;
-    if (self.meetingRoom.pictures.count) {
-        NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:self.meetingRoom.pictures[0]];
-        UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCScreenWidth, TCRealValue(215))];
-        [headerView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
-    } else {
-        headerView.image = [UIImage placeholderImageWithSize:CGSizeMake(TCScreenWidth, TCRealValue(215))];
-    }
+    NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:self.meetingRoom.pictures];
+    UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(TCScreenWidth, TCRealValue(215))];
+    [headerView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     
     UILabel *footerView = [[UILabel alloc] init];
     footerView.text = @"您可在会议开始30分钟前取消订单";

@@ -7,6 +7,9 @@
 //
 
 #import "TCBookingDetailMenbersAndDevicesCell.h"
+#import "TCMeetingRoomReservationDetail.h"
+#import "TCMeetingRoomEquipment.h"
+#import "TCMeetingParticipant.h"
 
 @interface TCBookingDetailMenbersAndDevicesCell ()
 
@@ -39,7 +42,109 @@
     return self;
 }
 
+- (void)setMeetingRoomReservationDetail:(TCMeetingRoomReservationDetail *)meetingRoomReservationDetail {
+    _meetingRoomReservationDetail = meetingRoomReservationDetail;
+    
+    //参会人
+    if ([meetingRoomReservationDetail.conferenceParticipants isKindOfClass:[NSArray class]] && meetingRoomReservationDetail.conferenceParticipants.count > 0) {
+        UILabel *lastL;
+        for (int i = 0; i<meetingRoomReservationDetail.conferenceParticipants.count; i++) {
+            TCMeetingParticipant *participant = meetingRoomReservationDetail.conferenceParticipants[i];
+            UILabel *nameL= [[UILabel alloc] init];
+            nameL.textColor = TCBlackColor;
+            nameL.font = [UIFont systemFontOfSize:14];
+            
+            NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"  %@",participant.name]];
+            NSTextAttachment *nameAttch = [[NSTextAttachment alloc] init];
+            nameAttch.bounds = CGRectMake(0, -1, 9, 11);
+            nameAttch.image = [UIImage imageNamed:@"meeting_room_number_icon"];
+            NSAttributedString *nameStr = [NSAttributedString attributedStringWithAttachment:nameAttch];
+            NSMutableAttributedString *mutableNameStr = [[NSMutableAttributedString alloc] initWithAttributedString:nameStr];
+            [mutableNameStr appendAttributedString:attStr];
+            nameL.attributedText = mutableNameStr;
+            
+            UILabel *phoneL = [[UILabel alloc] init];
+            phoneL.textColor = TCBlackColor;
+            phoneL.font = [UIFont systemFontOfSize:14];
+            
+            NSAttributedString *phoneAttStr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"  %@",participant.phone]];
+            NSTextAttachment *phoneAttch = [[NSTextAttachment alloc] init];
+            phoneAttch.bounds = CGRectMake(0, -1, 9, 11);
+            phoneAttch.image = [UIImage imageNamed:@"meeting_room_phone_icon"];
+            NSAttributedString *phoneStr = [NSAttributedString attributedStringWithAttachment:phoneAttch];
+            NSMutableAttributedString *mutablePhoneStr = [[NSMutableAttributedString alloc] initWithAttributedString:phoneStr];
+            [mutablePhoneStr appendAttributedString:phoneAttStr];
+            phoneL.attributedText = mutablePhoneStr;
+            
+            [self.menbersView addSubview:nameL];
+            [self.menbersView addSubview:phoneL];
+            
+            if (i == 0) {
+                [nameL mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(self.menbersView);
+                    make.top.equalTo(self.menbersView).offset(20);
+                    make.width.equalTo(@70);
+                    make.height.equalTo(@15);
+                }];
+            }else if (i == meetingRoomReservationDetail.conferenceParticipants.count - 1) {
+                [nameL mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(self.menbersView);
+                    make.top.equalTo(lastL.mas_bottom).offset(10);
+                    make.width.height.equalTo(lastL);
+                    make.bottom.equalTo(self.menbersView).offset(-15);
+                }];
+            }else {
+                [nameL mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.width.height.equalTo(lastL);
+                    make.top.equalTo(lastL.mas_bottom).offset(10);
+                }];
+            }
+            
+            [phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(nameL.mas_right);
+                make.height.top.equalTo(nameL);
+            }];
+            
+            lastL = nameL;
+        }
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setImage:[UIImage imageNamed:@"meeting_room_show_participant"] forState:UIControlStateNormal];
+        [self.menbersView addSubview:btn];
+        
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.menbersView);
+            make.centerY.equalTo(self.menbersView);
+            make.width.height.equalTo(@30);
+        }];
+    }
+    
+    NSInteger openH = meetingRoomReservationDetail.openTime/3600;
+    NSInteger openM = (meetingRoomReservationDetail.openTime%3600)/60;
+    NSInteger closeH = meetingRoomReservationDetail.closeTime/3600;
+    NSInteger closeM = (meetingRoomReservationDetail.closeTime%3600)/60;
+    self.openTimeLabel.text = [NSString stringWithFormat:@"%ld:%.2ld-%ld:%.2ld",(long)openH, (long)openM,(long)closeH,(long)closeM];
+    
+    if ([meetingRoomReservationDetail.equipmentList isKindOfClass:[NSArray class]] && meetingRoomReservationDetail.equipmentList.count > 0) {
+        NSMutableString *mutabelStr = [NSMutableString stringWithCapacity:0];
+        for (TCMeetingRoomEquipment *equ in meetingRoomReservationDetail.equipmentList) {
+            if ([equ.name isKindOfClass:[NSString class]]) {
+                [mutabelStr appendString:equ.name];
+                [mutabelStr appendString:@" "];
+            }
+        }
+        self.devicesLabel.text = mutabelStr;
+    }
+    
+    self.numberLabel.text = [NSString stringWithFormat:@"可容纳%ld-%ld人",(long)meetingRoomReservationDetail.galleryful,(long)meetingRoomReservationDetail.maxGalleryful];
+    
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+    
+}
+
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.menbersTitleLabel];
     [self.contentView addSubview:self.menbersView];
     [self.contentView addSubview:self.lineView];
@@ -56,10 +161,10 @@
     }];
     
     [self.menbersView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.menbersTitleLabel.mas_right);
-        make.top.equalTo(self.menbersTitleLabel);
+        make.left.equalTo(self.menbersTitleLabel.mas_right).offset(10);
+        make.top.equalTo(self.contentView);
         make.right.equalTo(self.contentView).offset(-15);
-        make.height.equalTo(@50);
+        make.height.greaterThanOrEqualTo(@50);
     }];
     
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -87,6 +192,7 @@
         make.left.equalTo(self.deviceTitleLabel.mas_right);
         make.right.equalTo(self.contentView).offset(-15);
         make.top.equalTo(self.deviceTitleLabel);
+        make.height.greaterThanOrEqualTo(@20);
     }];
     
     [self.numberTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -109,7 +215,7 @@
         _numberLabel = [[UILabel alloc] init];
         _numberLabel.font = [UIFont systemFontOfSize:14];
         _numberLabel.textColor = TCBlackColor;
-        _numberLabel.text = @"可容纳6-8人";
+//        _numberLabel.text = @"可容纳6-8人";
     }
     return _numberLabel;
 }
@@ -130,7 +236,8 @@
         _devicesLabel.textColor = TCBlackColor;
         _devicesLabel.font = [UIFont systemFontOfSize:14];
         _devicesLabel.numberOfLines = 0;
-        _devicesLabel.text = @"投影仪  窗户  矿泉人  白板  桌子  椅子  纸笔  柠檬茶  玫瑰茶  无线网络";
+        [_devicesLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+//        _devicesLabel.text = @"投影仪  窗户  矿泉人  白板  桌子  椅子  纸笔  柠檬茶  玫瑰茶  无线网络";
     }
     return _devicesLabel;
 }
@@ -138,9 +245,10 @@
 - (UILabel *)deviceTitleLabel {
     if (_deviceTitleLabel == nil) {
         _deviceTitleLabel = [[UILabel alloc] init];
-        _deviceTitleLabel.textColor = TCBlackColor;
+        _deviceTitleLabel.textColor = TCGrayColor;
         _deviceTitleLabel.font = [UIFont systemFontOfSize:14];
         _deviceTitleLabel.text = @"配套设施：";
+        [_deviceTitleLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     }
     return _deviceTitleLabel;
 }

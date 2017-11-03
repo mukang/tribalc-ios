@@ -10,4 +10,8 @@
 
 @interface TCBookingDetailSchedulerCell : UITableViewCell
 
+@property (copy, nonatomic) NSString *title;
+
+@property (copy, nonatomic) NSString *content;
+
 @end

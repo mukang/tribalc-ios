@@ -30,6 +30,6 @@
 
 @property (copy, nonatomic) NSArray *equipments;
 
-@property (copy, nonatomic) NSArray *pictures;
+@property (copy, nonatomic) NSString *pictures;
 
 @end

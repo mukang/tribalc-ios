@@ -43,19 +43,17 @@
 - (void)setMeetingRoom:(TCMeetingRoom *)meetingRoom {
     _meetingRoom = meetingRoom;
     
-    if ([meetingRoom.pictures isKindOfClass:[NSArray class]] && meetingRoom.pictures.count > 0) {
-        NSString *str = meetingRoom.pictures[0];
-        if ([str isKindOfClass:[NSString class]]) {
-            NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:str];
-            UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(143, 108)];
-            [self.leftImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
-        }
+    NSString *picture = meetingRoom.pictures;
+    if ([picture isKindOfClass:[NSString class]]) {
+        NSURL *URL = [TCImageURLSynthesizer synthesizeImageURLWithPath:picture];
+        UIImage *placeholderImage = [UIImage placeholderImageWithSize:CGSizeMake(143, 108)];
+        [self.leftImageView sd_setImageWithURL:URL placeholderImage:placeholderImage options:SDWebImageRetryFailed];
     }
     
     self.titleLabel.text = meetingRoom.name;
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"  %ld层",(long)meetingRoom.floor]];
     NSTextAttachment *attch = [[NSTextAttachment alloc] init];
-    attch.bounds = CGRectMake(0, -2, 8, 11);
+    attch.bounds = CGRectMake(0, -2, 9, 11);
     attch.image = [UIImage imageNamed:@"meeting_room_floor_icon"];
     NSAttributedString *str = [NSAttributedString attributedStringWithAttachment:attch];
     NSMutableAttributedString *mutableStr = [[NSMutableAttributedString alloc] initWithAttributedString:str];
@@ -208,6 +206,7 @@
 - (UIImageView *)leftImageView {
     if (_leftImageView == nil) {
         _leftImageView = [[UIImageView alloc] init];
+        _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     return _leftImageView;
 }

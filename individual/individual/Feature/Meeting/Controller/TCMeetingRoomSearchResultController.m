@@ -143,6 +143,7 @@
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerClass:[TCMeetingRoomSearchResultCell class] forCellReuseIdentifier:@"TCMeetingRoomSearchResultCell"];
         NSMutableString *mutableStr = [[NSMutableString alloc] init];
         [self.conditions.selectedDevices enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {

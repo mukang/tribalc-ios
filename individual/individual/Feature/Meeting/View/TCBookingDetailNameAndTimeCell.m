@@ -7,6 +7,7 @@
 //
 
 #import "TCBookingDetailNameAndTimeCell.h"
+#import "TCMeetingRoomReservationDetail.h"
 
 @interface TCBookingDetailNameAndTimeCell ()
 
@@ -20,6 +21,8 @@
 
 @property (strong, nonatomic) UILabel *timesLabel;
 
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation TCBookingDetailNameAndTimeCell
@@ -31,7 +34,34 @@
     return self;
 }
 
+- (void)setMeetingRoomReservationDetail:(TCMeetingRoomReservationDetail *)meetingRoomReservationDetail {
+    _meetingRoomReservationDetail = meetingRoomReservationDetail;
+    
+    self.meetingRoomNameLabel.text = meetingRoomReservationDetail.name;
+//    self.meetingRoomNameLabel.text = @"少时诵诗书所所所所所所所少时诵诗书所所所所三生三世";
+    int64_t second = (meetingRoomReservationDetail.conferenceEndTime - meetingRoomReservationDetail.conferenceBeginTime)/1000;
+    CGFloat hour = second/3600;
+    int h = (int)hour;
+    if (hour > h) {
+        hour = h + 0.5;
+    }
+    
+    NSString *startDateStr = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceBeginTime/1000]];
+    NSString *endDateStr = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceEndTime/1000]];
+    NSArray *startDateArr = [startDateStr componentsSeparatedByString:@" "];
+    NSArray *endDateArr = [endDateStr componentsSeparatedByString:@" "];
+    NSString *startStr = startDateArr[0];
+    NSString *dateStr;
+    if (endDateArr.count == 2 && startDateArr.count == 2) {
+        dateStr = [NSString stringWithFormat:@"%@-%@（%@小时）",startDateArr[1],endDateArr[1],@(hour)];
+    }
+    self.bookingTimeLabel.text = startStr;
+    
+    self.timesLabel.text = dateStr;
+}
+
 - (void)setUpViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.contentView addSubview:self.meetingRoomNameTitleLabel];
     [self.contentView addSubview:self.meetingRoomNameLabel];
     [self.contentView addSubview:self.bookingTimeTitleLabel];
@@ -47,6 +77,7 @@
         make.left.equalTo(self.meetingRoomNameTitleLabel.mas_right);
         make.top.equalTo(self.meetingRoomNameTitleLabel);
         make.right.equalTo(self.contentView).offset(-15);
+        make.height.greaterThanOrEqualTo(@20);
     }];
     
     [self.bookingTimeTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -57,13 +88,13 @@
     [self.bookingTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.bookingTimeTitleLabel.mas_right);
         make.top.equalTo(self.bookingTimeTitleLabel);
-        make.right.equalTo(self.contentView.mas_right).offset(-15);
+//        make.right.equalTo(self.contentView).offset(-15);
     }];
     
     [self.timesLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.bookingTimeLabel);
         make.top.equalTo(self.bookingTimeLabel.mas_bottom).offset(10);
-        make.right.equalTo(self.contentView).offset(-15);
+//        make.right.equalTo(self.contentView).offset(-15);
         make.height.equalTo(@20);
         make.bottom.equalTo(self.contentView).offset(-15);
     }];
@@ -93,6 +124,9 @@
 - (UILabel *)bookingTimeTitleLabel {
     if (_bookingTimeTitleLabel == nil) {
         _bookingTimeTitleLabel = [[UILabel alloc] init];
+        _bookingTimeTitleLabel.text = @"预 定 时 间：";
+        _bookingTimeTitleLabel.font = [UIFont systemFontOfSize:14];
+        _bookingTimeTitleLabel.textColor = TCGrayColor;
     }
     return _bookingTimeTitleLabel;
 }
@@ -116,6 +150,14 @@
         _meetingRoomNameTitleLabel.font = [UIFont systemFontOfSize:14];
     }
     return _meetingRoomNameTitleLabel;
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    }
+    return _dateFormatter;
 }
 
 - (void)awakeFromNib {

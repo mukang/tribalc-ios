@@ -3373,4 +3373,96 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchMeetingRoomReservationWrapperWithSortSkip:(NSString *)sortSkip limitSize:(NSInteger)limitSize result:(void (^)(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *limitSizePart = [NSString stringWithFormat:@"&limitSize=%zd", limitSize];
+        NSString *sortSkipPart = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%@", sortSkip] : @"";
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation?me=%@%@%@", self.currentUserSession.assigned,limitSizePart,sortSkipPart];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if ([response.data isKindOfClass:[NSDictionary class]]) {
+                    
+                    TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper = [[TCMeetingRoomReservationWrapper alloc] initWithObjectDictionary:response.data];
+                    if (resultBlock) {
+                        TC_CALL_ASYNC_MQ(resultBlock(meetingRoomReservationWrapper, nil));
+                    }
+                }else {
+                    TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorServerResponseNotJSON andDescription:nil];
+                    if (resultBlock) {
+                        TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+                    }
+                }
+                
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
+- (void)cancelMeetingRoomReservationWithID:(NSString *)reservationId result:(void (^)(BOOL isSuccess, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation/%@/status", reservationId];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(YES, nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(NO, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(NO, sessionError));
+        }
+    }
+}
+
+- (void)fetchMeetingRoomReservationDetailWithID:(NSString *)reservationId result:(void (^)(TCMeetingRoomReservationDetail *meetingRoomReservationDetail, NSError *error))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation/%@?me=%@", reservationId,self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                if (resultBlock) {
+                    if ([response.data isKindOfClass:[NSDictionary class]]) {
+                        TCMeetingRoomReservationDetail *detail = [[TCMeetingRoomReservationDetail alloc] initWithObjectDictionary:response.data];
+                        TC_CALL_ASYNC_MQ(resultBlock(detail, nil));
+                    }else {
+                        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorServerResponseNotJSON andDescription:nil];
+                        if (resultBlock) {
+                            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+                        }
+                    }
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 @end
