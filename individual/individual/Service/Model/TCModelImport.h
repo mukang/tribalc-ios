@@ -118,6 +118,7 @@
 #import "TCMeetingRoom.h"
 #import "TCMeetingParticipant.h"
 #import "TCMeetingRoomEquipment.h"
+#import "TCBookingRequestInfo.h"
 
 
 @interface TCModelImport : NSObject
