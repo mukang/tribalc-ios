@@ -53,13 +53,6 @@
 #pragma mark - Private Methods
 
 - (void)setupSubviews {
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];;
-//    dateFormatter.dateFormat = @"yyyy-MM-dd";
-//
-//    NSDate *startDate = [dateFormatter dateFromString:@"2017-10-26"];
-//    NSDate *endDate = [dateFormatter dateFromString:@"2017-11-02"];
-//    NSDate *selectedDate = [dateFormatter dateFromString:@"2017-11-01"];
     TCBookingDateView *dateView = [[TCBookingDateView alloc] initWithStartDate:self.startDate endDate:self.endDate selectedDate:self.selectedDate];
     dateView.delegate = self;
     [self.view addSubview:dateView];

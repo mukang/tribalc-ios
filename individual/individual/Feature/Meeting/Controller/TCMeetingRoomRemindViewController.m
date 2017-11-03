@@ -10,7 +10,6 @@
 
 #import "TCMeetingRoomRemindViewCell.h"
 
-
 #import <TCCommonLibs/TCCommonButton.h>
 
 @interface TCMeetingRoomRemindViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -36,12 +35,9 @@
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     tableView.backgroundColor = TCBackgroundColor;
     tableView.separatorColor = TCSeparatorLineColor;
-    tableView.estimatedRowHeight = 45;
-    tableView.estimatedSectionHeaderHeight = 7;
-    tableView.estimatedSectionFooterHeight = CGFLOAT_MIN;
-    tableView.rowHeight = 45;
-    tableView.sectionHeaderHeight = 7;
-    tableView.sectionFooterHeight = CGFLOAT_MIN;
+    tableView.estimatedRowHeight = 0;
+    tableView.estimatedSectionHeaderHeight = 0;
+    tableView.estimatedSectionFooterHeight = 0;
     tableView.dataSource = self;
     tableView.delegate = self;
     [tableView registerClass:[TCMeetingRoomRemindViewCell class] forCellReuseIdentifier:@"TCMeetingRoomRemindViewCell"];
@@ -87,6 +83,18 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 45;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 7;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return CGFLOAT_MIN;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.currentRemind = self.remindArray[indexPath.row];
