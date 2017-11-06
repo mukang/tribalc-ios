@@ -81,6 +81,8 @@
 	<string>用于语音通话</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>用于获取相册的照片</string>
+	<key>NSContactsUsageDescription</key>
+	<string>用于获取通讯录</string>
 	<key>TCBuluoAppID</key>
 	<string>1212235024</string>
 	<key>TCBuluoAppStoreURL</key>

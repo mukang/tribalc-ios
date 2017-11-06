@@ -77,6 +77,10 @@
     [self addSubview:collectionView];
     self.collectionView = collectionView;
     
+    if (@available(iOS 11.0, *)) {
+        collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
+    
     UIView *lineView = [[UIView alloc] init];
     lineView.backgroundColor = TCRGBColor(243, 87, 90);
     [self addSubview:lineView];

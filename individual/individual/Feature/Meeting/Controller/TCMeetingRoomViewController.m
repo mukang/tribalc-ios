@@ -9,6 +9,7 @@
 #import "TCMeetingRoomViewController.h"
 #import "TCMeetingRoomBookingTimeViewController.h"
 #import "TCMeetingRoomRemindViewController.h"
+#import "TCMeetingRoomAddContactsViewController.h"
 
 #import "TCMeetingRoomSubjectViewCell.h"
 #import "TCMeetingRoomSelectViewCell.h"
@@ -242,6 +243,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView endEditing:YES];
     
     if (indexPath.section == 0) {
         if (indexPath.row == 2) {
@@ -258,7 +260,8 @@
         }
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            
+            TCMeetingRoomAddContactsViewController *vc = [[TCMeetingRoomAddContactsViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
         } else {
             TCMeetingRoomRemindViewController *vc = [[TCMeetingRoomRemindViewController alloc] init];
             vc.currentRemind = self.currentRemind;

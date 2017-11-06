@@ -18,4 +18,8 @@
 
 @property (copy, nonatomic) NSString *phone;
 
+@property (nonatomic, getter=isSelected) BOOL selected;
+
+@property (copy, nonatomic) NSString *avatar;
+
 @end

@@ -414,6 +414,10 @@
 		7AB2BBFF1FAACA1D0080E7AC /* TCMeetingRoomRemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB2BBFE1FAACA1D0080E7AC /* TCMeetingRoomRemindViewController.m */; };
 		7AB2BC021FAACBD30080E7AC /* TCMeetingRoomRemindViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB2BC011FAACBD30080E7AC /* TCMeetingRoomRemindViewCell.m */; };
 		7AB2BC051FAACF3E0080E7AC /* TCMeetingRoomRemind.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB2BC041FAACF3E0080E7AC /* TCMeetingRoomRemind.m */; };
+		7AB2BC081FAC1AE80080E7AC /* TCMeetingRoomContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB2BC071FAC1AE80080E7AC /* TCMeetingRoomContactsViewController.m */; };
+		7AB2BC0B1FAC1B310080E7AC /* TCMeetingRoomAddContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB2BC0A1FAC1B310080E7AC /* TCMeetingRoomAddContactsViewController.m */; };
+		7AB2BC0E1FAC62DE0080E7AC /* TCMeetingRoomNoParticipantView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB2BC0D1FAC62DE0080E7AC /* TCMeetingRoomNoParticipantView.m */; };
+		7AB2BC111FAC66E80080E7AC /* TCMeetingRoomAddContactsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB2BC101FAC66E80080E7AC /* TCMeetingRoomAddContactsViewCell.m */; };
 		7ABA7E441F00BCAB00DCC2D0 /* TCRentPlanItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA7E431F00BCAB00DCC2D0 /* TCRentPlanItem.m */; };
 		7ABA7E471F00F78A00DCC2D0 /* TCRentProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA7E461F00F78A00DCC2D0 /* TCRentProtocol.m */; };
 		7ABA7E751F03A24500DCC2D0 /* TCApartmentPayTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABA7E741F03A24500DCC2D0 /* TCApartmentPayTabView.m */; };
@@ -1289,6 +1293,14 @@
 		7AB2BC011FAACBD30080E7AC /* TCMeetingRoomRemindViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomRemindViewCell.m; sourceTree = "<group>"; };
 		7AB2BC031FAACF3E0080E7AC /* TCMeetingRoomRemind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomRemind.h; sourceTree = "<group>"; };
 		7AB2BC041FAACF3E0080E7AC /* TCMeetingRoomRemind.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomRemind.m; sourceTree = "<group>"; };
+		7AB2BC061FAC1AE80080E7AC /* TCMeetingRoomContactsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomContactsViewController.h; sourceTree = "<group>"; };
+		7AB2BC071FAC1AE80080E7AC /* TCMeetingRoomContactsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomContactsViewController.m; sourceTree = "<group>"; };
+		7AB2BC091FAC1B310080E7AC /* TCMeetingRoomAddContactsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomAddContactsViewController.h; sourceTree = "<group>"; };
+		7AB2BC0A1FAC1B310080E7AC /* TCMeetingRoomAddContactsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomAddContactsViewController.m; sourceTree = "<group>"; };
+		7AB2BC0C1FAC62DE0080E7AC /* TCMeetingRoomNoParticipantView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomNoParticipantView.h; sourceTree = "<group>"; };
+		7AB2BC0D1FAC62DE0080E7AC /* TCMeetingRoomNoParticipantView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomNoParticipantView.m; sourceTree = "<group>"; };
+		7AB2BC0F1FAC66E80080E7AC /* TCMeetingRoomAddContactsViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCMeetingRoomAddContactsViewCell.h; sourceTree = "<group>"; };
+		7AB2BC101FAC66E80080E7AC /* TCMeetingRoomAddContactsViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCMeetingRoomAddContactsViewCell.m; sourceTree = "<group>"; };
 		7ABA7E421F00BCAB00DCC2D0 /* TCRentPlanItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentPlanItem.h; sourceTree = "<group>"; };
 		7ABA7E431F00BCAB00DCC2D0 /* TCRentPlanItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCRentPlanItem.m; sourceTree = "<group>"; };
 		7ABA7E451F00F78A00DCC2D0 /* TCRentProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCRentProtocol.h; sourceTree = "<group>"; };
@@ -2476,6 +2488,10 @@
 				7AB2BBFE1FAACA1D0080E7AC /* TCMeetingRoomRemindViewController.m */,
 				55D1A27B1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.h */,
 				55D1A27C1FA9E5D0004FCC7E /* TCMeetingRoomBillViewController.m */,
+				7AB2BC061FAC1AE80080E7AC /* TCMeetingRoomContactsViewController.h */,
+				7AB2BC071FAC1AE80080E7AC /* TCMeetingRoomContactsViewController.m */,
+				7AB2BC091FAC1B310080E7AC /* TCMeetingRoomAddContactsViewController.h */,
+				7AB2BC0A1FAC1B310080E7AC /* TCMeetingRoomAddContactsViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2535,6 +2551,10 @@
 				5508D5E11FA33D4E00C2AAA6 /* TCBookingDetailMenbersAndDevicesCell.m */,
 				55D1A2781FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.h */,
 				55D1A2791FA9C57F004FCC7E /* TCMeetingRoomReservationCancelView.m */,
+				7AB2BC0C1FAC62DE0080E7AC /* TCMeetingRoomNoParticipantView.h */,
+				7AB2BC0D1FAC62DE0080E7AC /* TCMeetingRoomNoParticipantView.m */,
+				7AB2BC0F1FAC66E80080E7AC /* TCMeetingRoomAddContactsViewCell.h */,
+				7AB2BC101FAC66E80080E7AC /* TCMeetingRoomAddContactsViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3590,7 +3610,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-individual/Pods-individual-resources.sh",
 				"${PODS_ROOT}/AMap2DMap-NO-IDFA/MAMapKit.framework/AMap.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TCCommonLibs/TCCommonLibs.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/TCCommonLibs/TCCommonLibs.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -3636,6 +3656,7 @@
 				55D1A2771FA9786A004FCC7E /* TCMeetingRoomReservationWrapper.m in Sources */,
 				7AA643BF1F0A305A00DD421F /* TCApartmentWithholdConfirmViewCell.m in Sources */,
 				7A243F291F25EC5900192E22 /* TCWalletBalanceView.m in Sources */,
+				7AB2BC0E1FAC62DE0080E7AC /* TCMeetingRoomNoParticipantView.m in Sources */,
 				7A992A011FA9BDA20018E725 /* TCMeetingRoomSubjectViewCell.m in Sources */,
 				092626801E0BA3F300F5A18C /* TCShoppingCartBottom.m in Sources */,
 				7AADCC631EE7A33D004AA1DA /* TCPaymentViewController.m in Sources */,
@@ -3644,6 +3665,7 @@
 				5508D5CA1FA1EAED00C2AAA6 /* TCMeetingRoomEquipment.m in Sources */,
 				7AA643C81F0B78F900DD421F /* TCRentPlanItemViewCell.m in Sources */,
 				7A22D93D1ECEF336009A6A64 /* TCAppInitializationInfo.m in Sources */,
+				7AB2BC111FAC66E80080E7AC /* TCMeetingRoomAddContactsViewCell.m in Sources */,
 				5508D5DF1FA33D0B00C2AAA6 /* TCBookingDetailSchedulerCell.m in Sources */,
 				7AFEC4841E54056E00B0E754 /* TCGoodsOrderViewCell.m in Sources */,
 				7A925DD51F1F0A0500D697DE /* TCPrivilege.m in Sources */,
@@ -3765,6 +3787,7 @@
 				7A4E05091DEED401002371B0 /* TCCommunityVisitViewController.m in Sources */,
 				7A46B9201F332033001E33DD /* TCProfileViewController.m in Sources */,
 				7A384E821DE84CF20094E1F5 /* TCUploadInfo.m in Sources */,
+				7AB2BC081FAC1AE80080E7AC /* TCMeetingRoomContactsViewController.m in Sources */,
 				55F06EF21E03977000A849D7 /* TCPropertyManageWrapper.m in Sources */,
 				7AEB4CF91E03955A00F83A7C /* TCBioEditNickViewCell.m in Sources */,
 				092C697D1DF0378600FE2FD8 /* TCUserReserveViewController.m in Sources */,
@@ -3796,6 +3819,7 @@
 				7A0EA7341E00F0F700823505 /* TCCommunityListInCity.m in Sources */,
 				559E78191F20E23F00CDE11D /* TCMessageMiddleView.m in Sources */,
 				7AFEC47F1E54056D00B0E754 /* TCGoodsOrderHeaderView.m in Sources */,
+				7AB2BC0B1FAC1B310080E7AC /* TCMeetingRoomAddContactsViewController.m in Sources */,
 				550FB7701ED5C18600D75E33 /* FSCalendarCalculator.m in Sources */,
 				5505DEB51F9F1C8600BC0ED6 /* TCMeetingRoomSearchResultCell.m in Sources */,
 				55FBB3441F7363E2008027C3 /* TCStoreGoodsCell.m in Sources */,
