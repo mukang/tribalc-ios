@@ -399,6 +399,7 @@
         
         _datePickerView.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
         _datePickerView.datePicker.minimumDate = [NSDate date];
+        _datePickerView.datePicker.minuteInterval = 30;
         _datePickerView.delegate = self;
     }
     return _datePickerView;
