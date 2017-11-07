@@ -9,7 +9,8 @@
 #import "TCMeetingRoomViewController.h"
 #import "TCMeetingRoomBookingTimeViewController.h"
 #import "TCMeetingRoomRemindViewController.h"
-#import "TCMeetingRoomAddContactsViewController.h"
+#import "TCMeetingRoomContactsViewController.h"
+#import "TCMeetingRoomBookingRecordController.h"
 
 #import "TCMeetingRoomSubjectViewCell.h"
 #import "TCMeetingRoomSelectViewCell.h"
@@ -25,12 +26,13 @@
 #import <TCCommonLibs/UIImage+Category.h>
 #import <UIImageView+WebCache.h>
 
-@interface TCMeetingRoomViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, TCMeetingRoomBookingTimeViewControllerDelegate, TCMeetingRoomRemindViewControllerDelegate>
+@interface TCMeetingRoomViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, TCMeetingRoomBookingTimeViewControllerDelegate, TCMeetingRoomRemindViewControllerDelegate, TCMeetingRoomContactsViewControllerDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) UIImageView *headerView;
 @property (weak, nonatomic) TCCommonButton *nextButton;
 
+@property (nonatomic) CGFloat duration; // 以小时为单位
 @property (strong, nonatomic) TCBookingDate *bookingDate;
 @property (strong, nonatomic) TCBookingTime *startBookingTime;
 @property (strong, nonatomic) TCBookingTime *endBookingTime;
@@ -197,7 +199,12 @@
         TCMeetingRoomSelectViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomSelectViewCell" forIndexPath:indexPath];
         if (row == 0) {
             cell.titleLabel.text = @"参会人";
-            cell.subTitleLabel.text = @"添加参会人";
+            if (self.bookingRequestInfo.conferenceParticipants.count) {
+//                TCMeetingParticipant *participant = self.bookingRequestInfo.conferenceParticipants[0];
+                cell.subTitleLabel.text = [NSString stringWithFormat:@"%zd人", self.bookingRequestInfo.conferenceParticipants.count];
+            } else {
+                cell.subTitleLabel.text = @"添加参会人";
+            }
         } else {
             cell.titleLabel.text = @"提醒";
             cell.subTitleLabel.text = self.currentRemind ? self.currentRemind.remindStr : @"添加提醒";
@@ -211,7 +218,7 @@
             cell.subTitleLabel.text = userInfo.companyName;
         } else {
             cell.titleLabel.text = @"费用估计";
-            cell.subTitleLabel.text = [NSString stringWithFormat:@"¥ %0.2f", self.meetingRoom.fee];
+            cell.subTitleLabel.text = [NSString stringWithFormat:@"¥ %0.2f", self.meetingRoom.fee * self.duration];
         }
         currentCell = cell;
     }
@@ -260,7 +267,9 @@
         }
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            TCMeetingRoomAddContactsViewController *vc = [[TCMeetingRoomAddContactsViewController alloc] init];
+            TCMeetingRoomContactsViewController *vc = [[TCMeetingRoomContactsViewController alloc] init];
+            vc.participants = [NSMutableArray arrayWithArray:self.bookingRequestInfo.conferenceParticipants];
+            vc.delegate = self;
             [self.navigationController pushViewController:vc animated:YES];
         } else {
             TCMeetingRoomRemindViewController *vc = [[TCMeetingRoomRemindViewController alloc] init];
@@ -296,6 +305,7 @@
     self.bookingDate = vc.bookingDate;
     self.startBookingTime = vc.startBookingTime;
     self.endBookingTime = vc.endBookingTime;
+    self.duration = (self.endBookingTime.num - self.startBookingTime.num + 1) * 0.5;
     
     [self.tableView reloadData];
 }
@@ -304,6 +314,14 @@
 
 - (void)didClickConfirmButtonInMeetingRoomRemindViewController:(TCMeetingRoomRemindViewController *)vc {
     self.currentRemind = vc.currentRemind;
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark - TCMeetingRoomContactsViewControllerDelegate
+
+- (void)didClickBackButtonInMeetingRoomContactsViewController:(TCMeetingRoomContactsViewController *)vc {
+    self.bookingRequestInfo.conferenceParticipants = [vc.participants copy];
     
     [self.tableView reloadData];
 }
@@ -329,9 +347,12 @@
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] commitBookingRequestInfo:self.bookingRequestInfo meetingRoomID:self.meetingRoom.ID result:^(BOOL success, NSError *error) {
         if (success) {
-            [MBProgressHUD showHUDWithMessage:@"提交成功"];
+            [MBProgressHUD showHUDWithMessage:@"预定成功"];
+            TCMeetingRoomBookingRecordController *vc = [[TCMeetingRoomBookingRecordController alloc] init];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
         } else {
-            [MBProgressHUD showHUDWithMessage:@"提交失败"];
+            NSString *message = error.localizedDescription ?: @"预定失败，请稍后再试";
+            [MBProgressHUD showHUDWithMessage:message];
         }
     }];
 }
