@@ -9,11 +9,15 @@
 #import <TCCommonLibs/TCBaseViewController.h>
 #import "TCMeetingRoom.h"
 
+@class TCMeetingRoomReservationDetail;
+
 @interface TCMeetingRoomViewController : TCBaseViewController
 
 @property (strong, nonatomic) TCMeetingRoom *meetingRoom;
 
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *endDate;
+
+@property (strong, nonatomic) TCMeetingRoomReservationDetail *meetingRoomReservationDetail;
 
 @end

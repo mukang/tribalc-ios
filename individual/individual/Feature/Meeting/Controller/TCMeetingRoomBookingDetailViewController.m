@@ -7,6 +7,7 @@
 //
 
 #import "TCMeetingRoomBookingDetailViewController.h"
+#import "TCMeetingRoomViewController.h"
 
 #import "TCBookingDetailOrderNumAndStatusCell.h"
 #import "TCBookingDetailNameAndTimeCell.h"
@@ -114,11 +115,13 @@
 }
 
 - (void)modifyOrDelay {
-//    int64_t startT = self.meetingRoomReservationDetail.conferenceBeginTime/1000;
-//    int64_t currentT = [[NSDate date] timeIntervalSince1970];
-//    if (startT > currentT) {  // 修改
-//
-//    }else {  // 延期
+    int64_t startT = self.meetingRoomReservationDetail.conferenceBeginTime/1000;
+    int64_t currentT = [[NSDate date] timeIntervalSince1970];
+    if (startT > currentT) {  // 修改
+        TCMeetingRoomViewController *meetingRoomVC = [[TCMeetingRoomViewController alloc] init];
+        meetingRoomVC.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
+        [self.navigationController pushViewController:meetingRoomVC animated:YES];
+    }else {  // 延期
         [MBProgressHUD showHUD:YES];
         @WeakObj(self)
          [[TCBuluoApi api] fetchMeetingRoomReservationDelayTimeWithID:self.meetingRoomReservationDetail.ID result:^(int64_t delayTime, NSError *error) {
@@ -137,7 +140,7 @@
                  [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
              }
          }];
-//    }
+    }
 }
 
 - (void)updateRightBtn {
@@ -399,6 +402,7 @@
         
         _datePickerView.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
         _datePickerView.datePicker.minimumDate = [NSDate date];
+        _datePickerView.datePicker.minuteInterval = 30;
         _datePickerView.delegate = self;
     }
     return _datePickerView;
