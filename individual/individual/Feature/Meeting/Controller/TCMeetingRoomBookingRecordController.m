@@ -101,7 +101,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.meetingRoomReservationArr.count;
-//    return 10;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

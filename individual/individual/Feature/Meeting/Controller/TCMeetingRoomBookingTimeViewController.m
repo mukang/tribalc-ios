@@ -33,6 +33,9 @@
 
 @property (strong, nonatomic) NSMutableArray *bookingTimeArray;
 
+@property (strong, nonatomic) NSCalendar *currentCalendar;
+@property (strong, nonatomic) NSDateFormatter *timeFormatter;
+
 @end
 
 @implementation TCMeetingRoomBookingTimeViewController {
@@ -116,6 +119,7 @@
 
 - (void)createBookingTimeArrayWithBookingDateInfo:(TCBookingDateInfo *)bookingDateInfo {
     [self.bookingTimeArray removeAllObjects];
+    NSDate *currentDate = [NSDate date];
     for (int i=0; i<bookingTimeCount; i++) {
         TCBookingTime *bookingTime = [[TCBookingTime alloc] init];
         NSString *name = self.bookingTimeNameArray[i];
@@ -128,6 +132,11 @@
             bookingTime.status = TCBookingTimeStatusDisabled;
         } else {
             bookingTime.status = TCBookingTimeStatusNormal;
+        }
+        if ([self.currentCalendar compareDate:self.currentBookingDate.date toDate:currentDate toUnitGranularity:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay] == NSOrderedSame) {
+            if ([bookingTime.startTimeStr compare:[self.timeFormatter stringFromDate:currentDate]] != NSOrderedDescending) {
+                bookingTime.status = TCBookingTimeStatusDisabled;
+            }
         }
         [self.bookingTimeArray addObject:bookingTime];
     }
@@ -315,6 +324,22 @@
                                  ];
     }
     return _bookingTimeStrArray;
+}
+
+- (NSCalendar *)currentCalendar {
+    if (_currentCalendar == nil) {
+        _currentCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    }
+    return _currentCalendar;
+}
+
+- (NSDateFormatter *)timeFormatter {
+    if (_timeFormatter == nil) {
+        _timeFormatter = [[NSDateFormatter alloc] init];
+        _timeFormatter.calendar = self.currentCalendar;
+        _timeFormatter.dateFormat = @"HH:mm";
+    }
+    return _timeFormatter;
 }
 
 - (void)didReceiveMemoryWarning {
