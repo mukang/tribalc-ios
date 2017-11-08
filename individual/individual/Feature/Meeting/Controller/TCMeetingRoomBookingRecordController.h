@@ -8,6 +8,13 @@
 
 #import <TCCommonLibs/TCBaseViewController.h>
 
+typedef NS_ENUM(NSInteger, TCMeetingRoomBookingRecordControllerType) {
+    TCMeetingRoomContactsViewControllerTypeIndividual = 0,      // 个人
+    TCMeetingRoomContactsViewControllerTypeCompany          // 公司
+};
+
 @interface TCMeetingRoomBookingRecordController : TCBaseViewController
+
+- (instancetype)initWithMeetingRoomBookingRecordType:(TCMeetingRoomBookingRecordControllerType)type companyId:(NSString *)companyId;
 
 @end

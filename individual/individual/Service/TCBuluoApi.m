@@ -3373,11 +3373,12 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
-- (void)fetchMeetingRoomReservationWrapperWithSortSkip:(NSString *)sortSkip limitSize:(NSInteger)limitSize result:(void (^)(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error))resultBlock {
+- (void)fetchMeetingRoomReservationWrapperWithSortSkip:(NSString *)sortSkip limitSize:(NSInteger)limitSize companyId:(NSString *)companyId result:(void (^)(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error))resultBlock {
     if ([self isUserSessionValid]) {
         NSString *limitSizePart = [NSString stringWithFormat:@"&limitSize=%zd", limitSize];
         NSString *sortSkipPart = sortSkip ? [NSString stringWithFormat:@"&sortSkip=%@", sortSkip] : @"";
-        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation?me=%@%@%@", self.currentUserSession.assigned,limitSizePart,sortSkipPart];
+        NSString *companyIdPart = companyId ? [NSString stringWithFormat:@"&companyId=%@",companyId] : @"";
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation?me=%@%@%@%@", self.currentUserSession.assigned,limitSizePart,sortSkipPart,companyIdPart];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {

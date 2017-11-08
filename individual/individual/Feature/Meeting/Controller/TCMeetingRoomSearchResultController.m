@@ -74,7 +74,7 @@
 }
 
 - (void)handleClickRecordButton:(UIBarButtonItem *)barItem {
-    TCMeetingRoomBookingRecordController *recordVC = [[TCMeetingRoomBookingRecordController alloc] init];
+    TCMeetingRoomBookingRecordController *recordVC = [[TCMeetingRoomBookingRecordController alloc] initWithMeetingRoomBookingRecordType:TCMeetingRoomContactsViewControllerTypeIndividual companyId:nil];
     [self.navigationController pushViewController:recordVC animated:YES];
 }
 

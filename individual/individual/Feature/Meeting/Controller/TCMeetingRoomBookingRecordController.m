@@ -24,6 +24,10 @@
 
 @property (strong, nonatomic) NSMutableArray *meetingRoomReservationArr;
 
+@property (assign, nonatomic) TCMeetingRoomBookingRecordControllerType type;
+
+@property (copy, nonatomic) NSString *companyId;
+
 @end
 
 @implementation TCMeetingRoomBookingRecordController
@@ -36,10 +40,18 @@
     [self loadData];
 }
 
+- (instancetype)initWithMeetingRoomBookingRecordType:(TCMeetingRoomBookingRecordControllerType)type companyId:(NSString *)companyId{
+    if (self = [super init]) {
+        _type = type;
+        _companyId = companyId;
+    }
+    return self;
+}
+
 - (void)loadData {
     [MBProgressHUD showHUD:YES];
     @WeakObj(self)
-    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:nil limitSize:20 result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:nil limitSize:20 companyId:self.companyId result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
         @StrongObj(self)
         if (meetingRoomReservationWrapper) {
             [MBProgressHUD hideHUD:YES];
@@ -57,7 +69,7 @@
 
 - (void)loadNewData {
     @WeakObj(self)
-    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:nil limitSize:20 result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:nil limitSize:20 companyId:self.companyId result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_header endRefreshing];
         if (meetingRoomReservationWrapper) {
@@ -76,7 +88,7 @@
 
 - (void)loadOldData {
     @WeakObj(self)
-    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:_meetingRoomReservationWrapper.nextSkip limitSize:20 result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:_meetingRoomReservationWrapper.nextSkip limitSize:20 companyId:self.companyId result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
         @StrongObj(self)
         if (meetingRoomReservationWrapper) {
             self.meetingRoomReservationWrapper = meetingRoomReservationWrapper;
@@ -137,6 +149,9 @@
     TCMeetingRoomReservation *reservation = self.meetingRoomReservationArr[indexPath.section];
     TCMeetingRoomBookingDetailViewController *detailVC = [[TCMeetingRoomBookingDetailViewController alloc] init];
     detailVC.reservationID = reservation.ID;
+    if (self.type == TCMeetingRoomContactsViewControllerTypeCompany) {
+        detailVC.isCompany = YES;
+    }
     detailVC.block = ^{
         [self loadNewData];
     };
