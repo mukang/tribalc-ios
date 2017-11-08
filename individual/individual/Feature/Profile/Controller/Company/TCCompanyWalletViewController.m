@@ -13,7 +13,7 @@
 #import "TCWalletBillViewController.h"
 #import "TCWalletPasswordViewController.h"
 #import "TCCompanyRentPayViewController.h"
-#import "TCMeetingRoomBillViewController.h"
+#import "TCMeetingRoomBookingRecordController.h"
 
 #import "TCCompanyWalletTitleView.h"
 #import "TCWalletBalanceView.h"
@@ -137,7 +137,7 @@
 #pragma mark - Actions
 
 - (void)handleClickMeetingRoom {
-    TCMeetingRoomBillViewController *vc = [[TCMeetingRoomBillViewController alloc] init];
+    TCMeetingRoomBookingRecordController *vc = [[TCMeetingRoomBookingRecordController alloc] initWithMeetingRoomBookingRecordType:TCMeetingRoomContactsViewControllerTypeCompany companyId:self.companyID];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

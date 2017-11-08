@@ -21,6 +21,8 @@
 
 @property (strong, nonatomic) UILabel *fourSubTitleLabel;
 
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation TCHomeMessageSubTitleCell
@@ -34,6 +36,14 @@
 
 - (void)setHomeMessage:(TCHomeMessage *)homeMessage {
     [super setHomeMessage:homeMessage];
+    
+    if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeConferenceReservation) {
+        self.mainTitleLabel.text = homeMessage.messageBody.body;
+        self.leftSubTitleLabel.text = [NSString stringWithFormat:@"会议室：%@",homeMessage.messageBody.desc];
+        self.secondSubTitleLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:homeMessage.messageBody.applicationTime]];
+        self.thirdSubTitleLabel.text = [NSString stringWithFormat:@"会议主题：%@",homeMessage.messageBody.remark];
+        return;
+    }
     
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:homeMessage.messageBody.body];
     NSTextAttachment *attch = [[NSTextAttachment alloc] init];
@@ -153,6 +163,14 @@
         _mainTitleLabel.font = [UIFont systemFontOfSize:15];
     }
     return _mainTitleLabel;
+}
+
+- (NSDateFormatter *)dateFormatter {
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    }
+    return _dateFormatter;
 }
 
 

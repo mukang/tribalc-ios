@@ -427,7 +427,7 @@
         [[TCBuluoApi api] commitBookingRequestInfo:self.bookingRequestInfo meetingRoomID:self.meetingRoom.ID result:^(BOOL success, NSError *error) {
             if (success) {
                 [MBProgressHUD showHUDWithMessage:@"预定成功"];
-                TCMeetingRoomBookingRecordController *vc = [[TCMeetingRoomBookingRecordController alloc] init];
+                TCMeetingRoomBookingRecordController *vc = [[TCMeetingRoomBookingRecordController alloc] initWithMeetingRoomBookingRecordType:TCMeetingRoomContactsViewControllerTypeIndividual companyId:nil];
                 vc.isFromMeetingRoomVC = YES;
                 [weakSelf.navigationController pushViewController:vc animated:YES];
             } else {

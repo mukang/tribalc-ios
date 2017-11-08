@@ -89,6 +89,13 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
 - (void)setMeetingRoomReservationDetail:(TCMeetingRoomReservationDetail *)meetingRoomReservationDetail {
     _meetingRoomReservationDetail = meetingRoomReservationDetail;
     
+    if (self.isCompany) {
+        self.title = @"已完成";
+        self.leftBtn.hidden = YES;
+        self.rightBtn.hidden = YES;
+        return;
+    }
+    
     NSString *status = meetingRoomReservationDetail.status;
     if ([status isKindOfClass:[NSString class]]) {
         if ([status isEqualToString:@"CANCEL"] || [status isEqualToString:@"PAYED"] || [status isEqualToString:@"PUTOFF_AND_PAYED"]) { //已完成 已延期完成 已取消
@@ -143,6 +150,9 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
         meetingRoomVC.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
         meetingRoomVC.startDate = currentDate;
         meetingRoomVC.endDate = [calendar dateByAddingUnit:NSCalendarUnitMonth value:1 toDate:currentDate options:0];
+        meetingRoomVC.modifyBlock = ^{
+            [self loadData];
+        };
         [self.navigationController pushViewController:meetingRoomVC animated:YES];
     }else {  // 延期
         [MBProgressHUD showHUD:YES];
@@ -343,8 +353,8 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
     [self.view addSubview:self.leftBtn];
     [self.view addSubview:self.rightBtn];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.equalTo(self.view);
-        make.bottom.equalTo(self.leftBtn.mas_top);
+        make.left.top.right.bottom.equalTo(self.view);
+//        make.bottom.equalTo(self.leftBtn.mas_top);
     }];
     
     [self.leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -402,7 +412,7 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
         _tableView.backgroundColor = TCRGBColor(239, 245, 245);
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        UILabel *footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 80)];
+        UILabel *footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 80+49)];
         footerLabel.text = @"您可以在会议开始30分钟前取消订单";
         footerLabel.textAlignment = NSTextAlignmentCenter;
         footerLabel.font = [UIFont systemFontOfSize:12];

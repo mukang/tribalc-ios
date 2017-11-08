@@ -16,4 +16,6 @@ typedef void(^DidCancelReservationBlock)();
 
 @property (copy, nonatomic) NSString *reservationID;
 
+@property (assign, nonatomic) BOOL isCompany;
+
 @end

@@ -1027,9 +1027,10 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
 
  @param sortSkip sortSkip
  @param limitSize 请求条数
+ @param companyId 公司id
  @param resultBlock 结果回调 meetingRoomReservationWrapper有值表示请求成功
  */
-- (void)fetchMeetingRoomReservationWrapperWithSortSkip:(NSString *)sortSkip limitSize:(NSInteger)limitSize result:(void (^)(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error))resultBlock;
+- (void)fetchMeetingRoomReservationWrapperWithSortSkip:(NSString *)sortSkip limitSize:(NSInteger)limitSize companyId:(NSString *)companyId result:(void (^)(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error))resultBlock;
 
 
 /**
