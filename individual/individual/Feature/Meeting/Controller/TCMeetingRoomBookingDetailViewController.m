@@ -118,16 +118,22 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
         self.title = @"预定成功";
         self.leftBtn.enabled = NO;
         self.rightBtn.enabled = NO;
+        self.leftBtn.hidden = NO;
+        self.rightBtn.hidden = NO;
     }else if (min < 0) {
         self.title = @"已开始";
         self.leftBtn.enabled = NO;
         self.rightBtn.enabled = YES;
+        self.leftBtn.hidden = NO;
+        self.rightBtn.hidden = NO;
         //延期
         [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     }else {
         self.title = @"预定成功";
         self.leftBtn.enabled = YES;
+        self.leftBtn.hidden = NO;
         self.rightBtn.enabled = YES;
+        self.rightBtn.hidden = NO;
     }
     
     NSTimeInterval endCha = currentDateTimeInterval - meetingRoomReservationDetail.conferenceEndTime/1000;
@@ -386,6 +392,7 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
         [_rightBtn setBackgroundColor:TCRGBColor(111, 128, 217)];
         _rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [_rightBtn addTarget:self action:@selector(modifyOrDelay) forControlEvents:UIControlEventTouchUpInside];
+        _rightBtn.hidden = YES;
     }
     return _rightBtn;
 }
@@ -398,6 +405,7 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
         [_leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_leftBtn addTarget:self action:@selector(handleCancelClick) forControlEvents:UIControlEventTouchUpInside];
         _leftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        _leftBtn.hidden = YES;
     }
     return _leftBtn;
 }
@@ -412,13 +420,17 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
         _tableView.backgroundColor = TCRGBColor(239, 245, 245);
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        UILabel *footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 80+49)];
+        
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 80+49)];
+        footerView.backgroundColor = [UIColor clearColor];
+        UILabel *footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, TCScreenWidth, 80)];
         footerLabel.text = @"您可以在会议开始30分钟前取消订单";
         footerLabel.textAlignment = NSTextAlignmentCenter;
         footerLabel.font = [UIFont systemFontOfSize:12];
         footerLabel.textColor = TCGrayColor;
         footerLabel.backgroundColor = [UIColor clearColor];
-        _tableView.tableFooterView = footerLabel;
+        [footerView addSubview:footerLabel];
+        _tableView.tableFooterView = footerView;
     }
     return _tableView;
 }
