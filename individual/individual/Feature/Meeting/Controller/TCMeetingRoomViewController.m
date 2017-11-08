@@ -428,6 +428,7 @@
             if (success) {
                 [MBProgressHUD showHUDWithMessage:@"预定成功"];
                 TCMeetingRoomBookingRecordController *vc = [[TCMeetingRoomBookingRecordController alloc] init];
+                vc.isFromMeetingRoomVC = YES;
                 [weakSelf.navigationController pushViewController:vc animated:YES];
             } else {
                 NSString *message = error.localizedDescription ?: @"预定失败，请稍后再试";

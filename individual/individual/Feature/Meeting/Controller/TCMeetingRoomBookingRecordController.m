@@ -8,6 +8,7 @@
 
 #import "TCMeetingRoomBookingRecordController.h"
 #import "TCMeetingRoomBookingDetailViewController.h"
+#import "TCNavigationController.h"
 
 #import "TCMeetingRoomBookingRecordCell.h"
 
@@ -24,6 +25,9 @@
 
 @property (strong, nonatomic) NSMutableArray *meetingRoomReservationArr;
 
+@property (weak, nonatomic) TCNavigationController *nav;
+@property (nonatomic) BOOL originInteractivePopGestureEnabled;
+
 @end
 
 @implementation TCMeetingRoomBookingRecordController
@@ -34,6 +38,21 @@
     self.title = @"预定记录";
     [self setUpViews];
     [self loadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    TCNavigationController *nav = (TCNavigationController *)self.navigationController;
+    self.originInteractivePopGestureEnabled = nav.enableInteractivePopGesture;
+    nav.enableInteractivePopGesture = NO;
+    self.nav = nav;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    self.nav.enableInteractivePopGesture = self.originInteractivePopGestureEnabled;
 }
 
 - (void)loadData {
@@ -181,6 +200,14 @@
         _meetingRoomReservationArr = [NSMutableArray arrayWithCapacity:0];
     }
     return _meetingRoomReservationArr;
+}
+
+- (void)handleClickBackButton:(UIBarButtonItem *)sender {
+    if (self.isFromMeetingRoomVC) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+        [super handleClickBackButton:sender];
+    }
 }
 
 - (void)dealloc {

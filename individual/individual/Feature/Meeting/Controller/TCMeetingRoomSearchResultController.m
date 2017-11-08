@@ -123,7 +123,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     TCMeetingRoom *meetingRoom = self.arr[indexPath.row];
-    TCMeetingRoomViewController *vc = [[TCMeetingRoomViewController alloc] init];
+    TCMeetingRoomViewController *vc = [[TCMeetingRoomViewController alloc] initWithControllerType:TCMeetingRoomViewControllerTypeBooking];
     vc.meetingRoom = meetingRoom;
     vc.startDate = [self.dateFormatter dateFromString:self.conditions.startDateStr];
     vc.endDate = [self.dateFormatter dateFromString:self.conditions.endDateStr];

@@ -10,4 +10,6 @@
 
 @interface TCMeetingRoomBookingRecordController : TCBaseViewController
 
+@property (nonatomic) BOOL isFromMeetingRoomVC;
+
 @end
