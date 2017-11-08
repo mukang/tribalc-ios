@@ -8,6 +8,17 @@
 
 #import <TCCommonLibs/TCBaseViewController.h>
 
+@protocol TCMeetingRoomAddContactsViewControllerDelegate;
 @interface TCMeetingRoomAddContactsViewController : TCBaseViewController
+
+@property (weak, nonatomic) id<TCMeetingRoomAddContactsViewControllerDelegate> delegate;
+
+@end
+
+
+@protocol TCMeetingRoomAddContactsViewControllerDelegate <NSObject>
+
+@optional
+- (void)meetingRoomAddContactsViewController:(TCMeetingRoomAddContactsViewController *)vc didClickSaveButtonWithParticipantArray:(NSArray *)participantArray;
 
 @end
