@@ -3411,7 +3411,7 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
 
 - (void)cancelMeetingRoomReservationWithID:(NSString *)reservationId result:(void (^)(BOOL isSuccess, NSError *error))resultBlock {
     if ([self isUserSessionValid]) {
-        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation/%@/status", reservationId];
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation/%@/status?me=%@", reservationId,self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
         request.token = self.currentUserSession.token;
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
@@ -3496,7 +3496,7 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
         NSString *apiName = [NSString stringWithFormat:@"conference_rooms/reservation/%@/time?me=%@", reservationId,self.currentUserSession.assigned];
         TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPut apiName:apiName];
         request.token = self.currentUserSession.token;
-        [request setValue:[NSString stringWithFormat:@"%lld",delayTime*1000] forParam:@"putOffTime"];
+        [request setValue:[NSString stringWithFormat:@"%lld",delayTime*1000] forParam:@"value"];
         [[TCClient client] send:request finish:^(TCClientResponse *response) {
             if (response.codeInResponse == 200) {
                 if (resultBlock) {

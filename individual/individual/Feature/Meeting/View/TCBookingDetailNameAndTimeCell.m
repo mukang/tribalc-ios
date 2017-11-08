@@ -47,7 +47,7 @@
     }
     
     NSString *startDateStr = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceBeginTime/1000]];
-    NSString *endDateStr = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceEndTime/1000]];
+    NSString *endDateStr = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.planEndTime/1000]];
     NSArray *startDateArr = [startDateStr componentsSeparatedByString:@" "];
     NSArray *endDateArr = [endDateStr componentsSeparatedByString:@" "];
     NSString *startStr = startDateArr[0];

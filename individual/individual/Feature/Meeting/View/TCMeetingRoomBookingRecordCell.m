@@ -68,7 +68,7 @@
     }
     
     self.meetingRoomTitleLabel.text = meetingRoomReservation.name;
-    
+    self.meetingRoomInfoLabel.text = meetingRoomReservation.subject;
     self.meetingRoomFloorLabel.text = [NSString stringWithFormat:@"%ld层",(long)meetingRoomReservation.floor];
     
     int64_t second = (meetingRoomReservation.conferenceEndTime - meetingRoomReservation.conferenceBeginTime)/1000;

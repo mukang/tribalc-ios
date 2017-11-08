@@ -57,7 +57,7 @@
 
 - (void)loadNewData {
     @WeakObj(self)
-    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:_meetingRoomReservationWrapper.nextSkip limitSize:20 result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:nil limitSize:20 result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_header endRefreshing];
         if (meetingRoomReservationWrapper) {
@@ -182,6 +182,10 @@
         _meetingRoomReservationArr = [NSMutableArray arrayWithCapacity:0];
     }
     return _meetingRoomReservationArr;
+}
+
+- (void)dealloc {
+    NSLog(@"--- TCMeetingRoomBookingRecordController -- dealloc ---");
 }
 
 - (void)didReceiveMemoryWarning {

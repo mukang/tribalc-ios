@@ -51,6 +51,14 @@
     [self loadData];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
+}
+
 - (void)loadData {
     @WeakObj(self)
     [MBProgressHUD showHUD:YES];
@@ -78,40 +86,46 @@
     _meetingRoomReservationDetail = meetingRoomReservationDetail;
     
     NSString *status = meetingRoomReservationDetail.status;
-    status = @"RESERVED";
     if ([status isKindOfClass:[NSString class]]) {
-        //预定成功
-        if ([status isEqualToString:@"RESERVED"]) {
-            self.title = @"预定成功";
-            NSTimeInterval currentDateTimeInterval = [[NSDate date] timeIntervalSince1970];
-            NSTimeInterval cha = meetingRoomReservationDetail.conferenceBeginTime/1000 - currentDateTimeInterval;
-            NSInteger min = cha / 60;
-            if (min < 30 && min >= 0) {
-                self.leftBtn.enabled = NO;
-                self.rightBtn.enabled = NO;
-            }else if (min < 0) {
-                self.title = @"已开始";
-                self.leftBtn.enabled = NO;
-                self.rightBtn.enabled = YES;
-                //延期
-                [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-            }
-        }else if ([status isEqualToString:@"PUTOFF"]) { // 正在延期
-            self.title = @"已开始";
-            self.leftBtn.enabled = NO;
-            self.rightBtn.enabled = YES;
-            //延期
-            [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-        }else if ([status isEqualToString:@"CANCEL"] || [status isEqualToString:@"FINISHED"] || [status isEqualToString:@"PUTOFF_AND_FINISHED"]) { //已完成 已延期完成 已取消
-            self.leftBtn.hidden = YES;
-            self.leftBtn.hidden = YES;
+        if ([status isEqualToString:@"CANCEL"] || [status isEqualToString:@"PAYED"] || [status isEqualToString:@"PUTOFF_AND_PAYED"]) { //已完成 已延期完成 已取消
+        self.leftBtn.hidden = YES;
+        self.leftBtn.hidden = YES;
             if ([status isEqualToString:@"CANCEL"]) {
                 self.title = @"已取消";
             }else {
                 self.title = @"已完成";
             }
+            
         }
+        return;
     }
+    
+    NSTimeInterval currentDateTimeInterval = [[NSDate date] timeIntervalSince1970];
+    NSTimeInterval cha = meetingRoomReservationDetail.conferenceBeginTime/1000 - currentDateTimeInterval;
+    NSInteger min = cha / 60;
+    if (min < 30 && min >= 0) {
+        self.title = @"预定成功";
+        self.leftBtn.enabled = NO;
+        self.rightBtn.enabled = NO;
+    }else if (min < 0) {
+        self.title = @"已开始";
+        self.leftBtn.enabled = NO;
+        self.rightBtn.enabled = YES;
+        //延期
+        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    }else {
+        self.title = @"预定成功";
+        self.leftBtn.enabled = YES;
+        self.rightBtn.enabled = YES;
+    }
+    
+    NSTimeInterval endCha = currentDateTimeInterval - meetingRoomReservationDetail.conferenceEndTime/1000;
+    if (endCha >= 0) {
+        self.title = @"已结束";
+        self.leftBtn.hidden = YES;
+        self.rightBtn.hidden = YES;
+    }
+    
 }
 
 - (void)modifyOrDelay {
@@ -146,13 +160,14 @@
 - (void)updateRightBtn {
     NSTimeInterval currentT = [[NSDate date] timeIntervalSince1970];
     NSTimeInterval chaT = self.meetingRoomReservationDetail.conferenceEndTime/1000 - currentT;
-//    if (chaT < 0) {
-//        [self.timer invalidate];
-//        self.timer = nil;
-////        self.leftBtn.hidden = YES;
-////        self.rightBtn.hidden = YES;
-//        return;
-//    }
+    if (chaT < 0) {
+        [self.timer invalidate];
+        self.timer = nil;
+        self.leftBtn.hidden = YES;
+        self.rightBtn.hidden = YES;
+        self.title = @"已结束";
+        return;
+    }
     NSInteger hour = chaT / 3600;
     NSInteger min = ((int64_t)chaT % 3600)/60;
     NSInteger sec = ((int64_t)chaT % 3600)%60;
@@ -212,7 +227,7 @@
 #pragma mark UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([self.meetingRoomReservationDetail.status isEqualToString:@"PUTOFF"] || [self.meetingRoomReservationDetail.status isEqualToString:@"PUTOFF_AND_FINISHED"]) {
+    if (self.meetingRoomReservationDetail.planEndTime != self.meetingRoomReservationDetail.conferenceEndTime) {
         return 9;
     }
     return 8;
@@ -401,7 +416,7 @@
         _datePickerView.datePicker.date = [NSDate date];
         
         _datePickerView.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        _datePickerView.datePicker.minimumDate = [NSDate date];
+        _datePickerView.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:self.meetingRoomReservationDetail.conferenceEndTime/1000];
         _datePickerView.datePicker.minuteInterval = 30;
         _datePickerView.delegate = self;
     }
@@ -409,8 +424,11 @@
 }
 
 - (void)dealloc {
-    [self.timer invalidate];
-    self.timer = nil;
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
+    
     NSLog(@"--- TCMeetingRoomBookingDetailViewController --- dealloc ");
 }
 
