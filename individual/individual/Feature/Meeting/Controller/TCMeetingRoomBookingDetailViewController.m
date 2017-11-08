@@ -132,8 +132,13 @@
     int64_t startT = self.meetingRoomReservationDetail.conferenceBeginTime/1000;
     int64_t currentT = [[NSDate date] timeIntervalSince1970];
     if (startT > currentT) {  // 修改
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSDate *currentDate = [NSDate date];
+        
         TCMeetingRoomViewController *meetingRoomVC = [[TCMeetingRoomViewController alloc] init];
         meetingRoomVC.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
+        meetingRoomVC.startDate = currentDate;
+        meetingRoomVC.endDate = [calendar dateByAddingUnit:NSCalendarUnitMonth value:1 toDate:currentDate options:0];
         [self.navigationController pushViewController:meetingRoomVC animated:YES];
     }else {  // 延期
         [MBProgressHUD showHUD:YES];

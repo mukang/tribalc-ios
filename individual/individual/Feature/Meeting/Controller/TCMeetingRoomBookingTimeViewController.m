@@ -143,9 +143,11 @@
     
     BOOL hasSelectedByOther = NO;
     if ([self.currentBookingDate.date isEqualToDate:self.bookingDate.date]) {
+        NSString *userID = [TCBuluoApi api].currentUserSession.assigned;
         for (int i=self.startBookingTime.num; i<=self.endBookingTime.num; i++) {
             TCBookingTime *bookingTime = self.bookingTimeArray[i];
-            if (bookingTime.status == TCBookingTimeStatusDisabled) {
+            NSString *bookingTimeID = [bookingDateInfo valueForKey:bookingTime.name];
+            if (bookingTime.status == TCBookingTimeStatusDisabled || ![bookingTimeID isEqualToString:userID]) {
                 hasSelectedByOther = YES;
                 break;
             }
