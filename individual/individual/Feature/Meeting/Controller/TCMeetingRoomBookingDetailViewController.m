@@ -150,6 +150,9 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
         meetingRoomVC.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
         meetingRoomVC.startDate = currentDate;
         meetingRoomVC.endDate = [calendar dateByAddingUnit:NSCalendarUnitMonth value:1 toDate:currentDate options:0];
+        meetingRoomVC.modifyBlock = ^{
+            [self loadData];
+        };
         [self.navigationController pushViewController:meetingRoomVC animated:YES];
     }else {  // 延期
         [MBProgressHUD showHUD:YES];
