@@ -15,6 +15,8 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomBookingRecordControllerType) {
 
 @interface TCMeetingRoomBookingRecordController : TCBaseViewController
 
+@property (nonatomic) BOOL isFromMeetingRoomVC;
+
 - (instancetype)initWithMeetingRoomBookingRecordType:(TCMeetingRoomBookingRecordControllerType)type companyId:(NSString *)companyId;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "TCMeetingRoomBookingRecordController.h"
 #import "TCMeetingRoomBookingDetailViewController.h"
+#import "TCNavigationController.h"
 
 #import "TCMeetingRoomBookingRecordCell.h"
 
@@ -24,13 +25,23 @@
 
 @property (strong, nonatomic) NSMutableArray *meetingRoomReservationArr;
 
-@property (assign, nonatomic) TCMeetingRoomBookingRecordControllerType type;
+@property (weak, nonatomic) TCNavigationController *nav;
+@property (nonatomic) BOOL originInteractivePopGestureEnabled;
 
+@property (assign, nonatomic) TCMeetingRoomBookingRecordControllerType type;
 @property (copy, nonatomic) NSString *companyId;
 
 @end
 
 @implementation TCMeetingRoomBookingRecordController
+
+- (instancetype)initWithMeetingRoomBookingRecordType:(TCMeetingRoomBookingRecordControllerType)type companyId:(NSString *)companyId{
+    if (self = [super init]) {
+        _type = type;
+        _companyId = companyId;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,13 +51,21 @@
     [self loadData];
 }
 
-- (instancetype)initWithMeetingRoomBookingRecordType:(TCMeetingRoomBookingRecordControllerType)type companyId:(NSString *)companyId{
-    if (self = [super init]) {
-        _type = type;
-        _companyId = companyId;
-    }
-    return self;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    TCNavigationController *nav = (TCNavigationController *)self.navigationController;
+    self.originInteractivePopGestureEnabled = nav.enableInteractivePopGesture;
+    nav.enableInteractivePopGesture = NO;
+    self.nav = nav;
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    self.nav.enableInteractivePopGesture = self.originInteractivePopGestureEnabled;
+}
+
 
 - (void)loadData {
     [MBProgressHUD showHUD:YES];
@@ -196,6 +215,14 @@
         _meetingRoomReservationArr = [NSMutableArray arrayWithCapacity:0];
     }
     return _meetingRoomReservationArr;
+}
+
+- (void)handleClickBackButton:(UIBarButtonItem *)sender {
+    if (self.isFromMeetingRoomVC) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+        [super handleClickBackButton:sender];
+    }
 }
 
 - (void)dealloc {

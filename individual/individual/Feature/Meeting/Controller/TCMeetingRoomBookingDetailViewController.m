@@ -152,7 +152,7 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         NSDate *currentDate = [NSDate date];
         
-        TCMeetingRoomViewController *meetingRoomVC = [[TCMeetingRoomViewController alloc] init];
+        TCMeetingRoomViewController *meetingRoomVC = [[TCMeetingRoomViewController alloc] initWithControllerType:TCMeetingRoomViewControllerTypeModification];
         meetingRoomVC.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
         meetingRoomVC.startDate = currentDate;
         meetingRoomVC.endDate = [calendar dateByAddingUnit:NSCalendarUnitMonth value:1 toDate:currentDate options:0];
