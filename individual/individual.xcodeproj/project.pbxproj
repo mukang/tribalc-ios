@@ -3625,7 +3625,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-individual/Pods-individual-resources.sh",
 				"${PODS_ROOT}/AMap2DMap-NO-IDFA/MAMapKit.framework/AMap.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
-				$PODS_CONFIGURATION_BUILD_DIR/TCCommonLibs/TCCommonLibs.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/TCCommonLibs/TCCommonLibs.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
