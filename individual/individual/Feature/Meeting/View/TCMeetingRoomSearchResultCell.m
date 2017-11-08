@@ -138,7 +138,7 @@
     [self.floorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.titleLabel);
         make.top.equalTo(self.titleLabel.mas_bottom).offset(15);
-        make.width.equalTo(@65);
+        make.width.equalTo(@50);
     }];
     
     [self.numLabel mas_makeConstraints:^(MASConstraintMaker *make) {
