@@ -48,11 +48,19 @@
     __weak TCMeetingRoomViewController *weakSelf;
 }
 
+- (instancetype)initWithControllerType:(TCMeetingRoomViewControllerType)type {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _controllerType = type;
+        weakSelf = self;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    weakSelf = self;
     self.navigationItem.title = @"会议室预定";
     self.bookingRequestInfo = [[TCBookingRequestInfo alloc] init];
     
@@ -267,7 +275,7 @@
         }
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            TCMeetingRoomContactsViewController *vc = [[TCMeetingRoomContactsViewController alloc] init];
+            TCMeetingRoomContactsViewController *vc = [[TCMeetingRoomContactsViewController alloc] initWithControllerType:TCMeetingRoomContactsViewControllerTypeAdd];
             vc.participants = [NSMutableArray arrayWithArray:self.bookingRequestInfo.conferenceParticipants];
             vc.delegate = self;
             [self.navigationController pushViewController:vc animated:YES];

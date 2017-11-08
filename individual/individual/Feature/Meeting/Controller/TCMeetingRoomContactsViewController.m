@@ -37,6 +37,14 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
 
 @implementation TCMeetingRoomContactsViewController
 
+- (instancetype)initWithControllerType:(TCMeetingRoomContactsViewControllerType)controllerType {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _controllerType = controllerType;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -66,10 +74,6 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
 #pragma mark - Private Methods
 
 - (void)setupSubviews {
-    TCMeetingRoomNoParticipantView *noParticipantView = [[TCMeetingRoomNoParticipantView alloc] init];
-    [self.view addSubview:noParticipantView];
-    self.noParticipantView = noParticipantView;
-    
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     tableView.backgroundColor = TCBackgroundColor;
     tableView.separatorColor = TCSeparatorLineColor;
@@ -83,32 +87,46 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
-    TCCommonButton *button = [TCCommonButton buttonWithTitle:@"＋添加参会人"
-                                                       color:TCCommonButtonColorPurple
-                                                      target:self
-                                                      action:@selector(handleClickButton)];
-    [self.view addSubview:button];
-    self.button = button;
-    
-    if (self.participants.count) {
-        noParticipantView.hidden = YES;
-        tableView.hidden = NO;
-    } else {
-        noParticipantView.hidden = NO;
-        tableView.hidden = YES;
+    CGFloat buttonH = 0;
+    if (self.controllerType == TCMeetingRoomContactsViewControllerTypeAdd) {
+        buttonH = 49;
+        TCMeetingRoomNoParticipantView *noParticipantView = [[TCMeetingRoomNoParticipantView alloc] init];
+        [self.view addSubview:noParticipantView];
+        self.noParticipantView = noParticipantView;
+        
+        TCCommonButton *button = [TCCommonButton buttonWithTitle:@"＋添加参会人"
+                                                           color:TCCommonButtonColorPurple
+                                                          target:self
+                                                          action:@selector(handleClickButton)];
+        [self.view addSubview:button];
+        self.button = button;
+        
+        [noParticipantView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.left.right.equalTo(self.view);
+            make.bottom.equalTo(button.mas_top);
+        }];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(buttonH);
+            make.bottom.left.right.equalTo(self.view);
+        }];
+        
+        if (self.participants.count) {
+            noParticipantView.hidden = YES;
+            tableView.hidden = NO;
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑"
+                                                                                      style:UIBarButtonItemStylePlain
+                                                                                     target:self
+                                                                                     action:@selector(handleClickItem)];
+            [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15]}
+                                                                  forState:UIControlStateNormal];
+        } else {
+            noParticipantView.hidden = NO;
+            tableView.hidden = YES;
+        }
     }
-    
-    [noParticipantView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(self.view);
-        make.bottom.equalTo(button.mas_top);
-    }];
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(self.view);
-        make.bottom.equalTo(button.mas_top);
-    }];
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(49);
-        make.bottom.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.view).offset(-buttonH);
     }];
 }
 

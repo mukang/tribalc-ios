@@ -8,11 +8,20 @@
 
 #import <TCCommonLibs/TCBaseViewController.h>
 
+typedef NS_ENUM(NSInteger, TCMeetingRoomContactsViewControllerType) {
+    TCMeetingRoomContactsViewControllerTypeAdd = 0,      // 添加参会人
+    TCMeetingRoomContactsViewControllerTypeShow          // 只是展示
+};
+
 @protocol TCMeetingRoomContactsViewControllerDelegate;
 @interface TCMeetingRoomContactsViewController : TCBaseViewController
 
 @property (strong, nonatomic) NSMutableArray *participants;
 @property (weak, nonatomic) id<TCMeetingRoomContactsViewControllerDelegate> delegate;
+
+@property (nonatomic, readonly) TCMeetingRoomContactsViewControllerType controllerType;
+
+- (instancetype)initWithControllerType:(TCMeetingRoomContactsViewControllerType)controllerType;
 
 @end
 

@@ -8,16 +8,24 @@
 
 #import <TCCommonLibs/TCBaseViewController.h>
 #import "TCMeetingRoom.h"
+#import "TCMeetingRoomReservationDetail.h"
 
-@class TCMeetingRoomReservationDetail;
+
+typedef NS_ENUM(NSInteger, TCMeetingRoomViewControllerType) {
+    TCMeetingRoomViewControllerTypeBooking = 0,
+    TCMeetingRoomViewControllerTypeModification
+};
 
 @interface TCMeetingRoomViewController : TCBaseViewController
 
 @property (strong, nonatomic) TCMeetingRoom *meetingRoom;
+@property (strong, nonatomic) TCMeetingRoomReservationDetail *meetingRoomReservationDetail;
 
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *endDate;
 
-@property (strong, nonatomic) TCMeetingRoomReservationDetail *meetingRoomReservationDetail;
+@property (nonatomic, readonly) TCMeetingRoomViewControllerType controllerType;
+
+- (instancetype)initWithControllerType:(TCMeetingRoomViewControllerType)type;
 
 @end
