@@ -8,6 +8,7 @@
 
 #import "TCMeetingRoomConditionsViewController.h"
 #import "TCMeetingRoomSearchResultController.h"
+#import "TCMeetingRoomBookingRecordController.h"
 
 #import "TCMeetingRoomConditionsTimeCell.h"
 #import "TCMeetingRoomConditionsFloorCell.h"
@@ -64,7 +65,7 @@ TCMeetingRoomConditionsFloorCellDelegate>
     // Do any additional setup after loading the view.
     self.title = @"筛选条件";
     [self setUpViews];
-
+    [self setUpNav];
     [self loadData];
 }
 
@@ -91,6 +92,19 @@ TCMeetingRoomConditionsFloorCellDelegate>
         make.left.bottom.right.equalTo(self.view);
         make.height.equalTo(@47);
     }];
+}
+
+- (void)setUpNav {
+    UIBarButtonItem *recordItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"meeting_room_record"]
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(handleClickRecordButton:)];
+    self.navigationItem.rightBarButtonItem = recordItem;
+}
+
+- (void)handleClickRecordButton:(UIBarButtonItem *)barItem {
+    TCMeetingRoomBookingRecordController *recordVC = [[TCMeetingRoomBookingRecordController alloc] init];
+    [self.navigationController pushViewController:recordVC animated:YES];
 }
 
 - (void)next {

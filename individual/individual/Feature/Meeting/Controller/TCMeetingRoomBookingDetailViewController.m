@@ -8,6 +8,7 @@
 
 #import "TCMeetingRoomBookingDetailViewController.h"
 #import "TCMeetingRoomViewController.h"
+#import "TCMeetingRoomContactsViewController.h"
 
 #import "TCBookingDetailOrderNumAndStatusCell.h"
 #import "TCBookingDetailNameAndTimeCell.h"
@@ -21,7 +22,10 @@
 #import <UITableView+FDTemplateLayoutCell.h>
 #import <TCCommonLibs/TCDatePickerView.h>
 
-@interface TCMeetingRoomBookingDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TCMeetingRoomReservationCancelViewDelegate,TCDatePickerViewDelegate>
+@interface TCMeetingRoomBookingDetailViewController ()<UITableViewDelegate,UITableViewDataSource,
+TCMeetingRoomReservationCancelViewDelegate,
+TCDatePickerViewDelegate,
+TCBookingDetailMenbersAndDevicesCellDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 
@@ -263,6 +267,7 @@
     }else if (indexPath.section == 4) {
         TCBookingDetailMenbersAndDevicesCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailMenbersAndDevicesCell" forIndexPath:indexPath];
         cell.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
+        cell.delegate = self;
         return cell;
     }else if (indexPath.section == 5) {
         TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
@@ -320,6 +325,14 @@
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = TCRGBColor(243, 243, 243);
     return view;
+}
+
+#pragma mark TCBookingDetailMenbersAndDevicesCellDelegate
+
+- (void)didClickShowParticipants {
+    TCMeetingRoomContactsViewController *contactsVC = [[TCMeetingRoomContactsViewController alloc] initWithControllerType:TCMeetingRoomContactsViewControllerTypeShow];
+    contactsVC.participants = [NSMutableArray arrayWithArray:self.meetingRoomReservationDetail.conferenceParticipants];
+    [self.navigationController pushViewController:contactsVC animated:YES];
 }
 
 #pragma mark UITableViewDelegate

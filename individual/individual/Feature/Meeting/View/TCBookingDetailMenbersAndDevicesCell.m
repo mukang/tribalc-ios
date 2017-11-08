@@ -42,6 +42,12 @@
     return self;
 }
 
+- (void)showParticipant {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickShowParticipants)]) {
+        [self.delegate didClickShowParticipants];
+    }
+}
+
 - (void)setMeetingRoomReservationDetail:(TCMeetingRoomReservationDetail *)meetingRoomReservationDetail {
     _meetingRoomReservationDetail = meetingRoomReservationDetail;
     
@@ -110,6 +116,7 @@
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setImage:[UIImage imageNamed:@"meeting_room_show_participant"] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(showParticipant) forControlEvents:UIControlEventTouchUpInside];
         [self.menbersView addSubview:btn];
         
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {

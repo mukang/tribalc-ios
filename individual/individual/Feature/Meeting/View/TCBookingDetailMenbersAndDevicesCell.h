@@ -10,8 +10,16 @@
 
 @class TCMeetingRoomReservationDetail;
 
+@protocol TCBookingDetailMenbersAndDevicesCellDelegate <NSObject>
+
+- (void)didClickShowParticipants;
+
+@end
+
 @interface TCBookingDetailMenbersAndDevicesCell : UITableViewCell
 
 @property (strong, nonatomic) TCMeetingRoomReservationDetail *meetingRoomReservationDetail;
+
+@property (weak, nonatomic) id<TCBookingDetailMenbersAndDevicesCellDelegate> delegate;
 
 @end
