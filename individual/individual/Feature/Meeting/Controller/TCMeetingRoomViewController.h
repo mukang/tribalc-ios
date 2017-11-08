@@ -16,10 +16,13 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomViewControllerType) {
     TCMeetingRoomViewControllerTypeModification
 };
 
+typedef void(^TCMeetingRoomModifyBlock)();
+
 @interface TCMeetingRoomViewController : TCBaseViewController
 
 @property (strong, nonatomic) TCMeetingRoom *meetingRoom;
 @property (strong, nonatomic) TCMeetingRoomReservationDetail *meetingRoomReservationDetail;
+@property (copy, nonatomic) TCMeetingRoomModifyBlock modifyBlock;
 
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *endDate;

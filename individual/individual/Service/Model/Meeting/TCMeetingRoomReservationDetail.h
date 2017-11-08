@@ -12,15 +12,17 @@
 
 @property (copy, nonatomic) NSString *ID;
 
+@property (copy, nonatomic) NSString *conferenceId;
+
 @property (copy, nonatomic) NSString *name;
 
 @property (assign, nonatomic) NSInteger floor;
 
 @property (copy, nonatomic) NSString *communityName;
 
-@property (assign, nonatomic) NSInteger openTime;
+@property (assign, nonatomic) int openTime;
 
-@property (assign, nonatomic) NSInteger closeTime;
+@property (assign, nonatomic) int closeTime;
 
 @property (assign, nonatomic) int64_t conferenceBeginTime;
 
@@ -46,9 +48,11 @@
 
 @property (assign, nonatomic) int64_t createTime;
 
-@property (assign, nonatomic) NSInteger reminderTime;
+@property (assign, nonatomic) int reminderTime;
 
 @property (assign, nonatomic) CGFloat totalFee;
+
+@property (nonatomic) CGFloat fee;
 
 @property (copy, nonatomic) NSString *picture;
 

@@ -1069,5 +1069,14 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)delayMeetingRoomReservationWithID:(NSString *)reservationId delayTime:(int64_t)delayTime result:(void (^)(BOOL isSuccess, NSError *error))resultBlock;
 
+/**
+ 修改会议室预定信息
+
+ @param bookingRequestInfo 会议室预定信息
+ @param bookingOrderID 预定订单id
+ @param resultBlock 结果回调
+ */
+- (void)modifyMeetingRoomBookingInfo:(TCBookingRequestInfo *)bookingRequestInfo bookingOrderID:(NSString *)bookingOrderID result:(void (^)(BOOL success, NSError *error))resultBlock;
+
 @end
 

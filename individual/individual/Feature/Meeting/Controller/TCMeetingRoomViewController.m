@@ -26,6 +26,8 @@
 #import <TCCommonLibs/UIImage+Category.h>
 #import <UIImageView+WebCache.h>
 
+#define bookingTimeCount 30
+
 @interface TCMeetingRoomViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, TCMeetingRoomBookingTimeViewControllerDelegate, TCMeetingRoomRemindViewControllerDelegate, TCMeetingRoomContactsViewControllerDelegate>
 
 @property (weak, nonatomic) UITableView *tableView;
@@ -33,12 +35,16 @@
 @property (weak, nonatomic) TCCommonButton *nextButton;
 
 @property (nonatomic) CGFloat duration; // 以小时为单位
+@property (strong, nonatomic) NSCalendar *currentCalendar;
 @property (strong, nonatomic) TCBookingDate *bookingDate;
 @property (strong, nonatomic) TCBookingTime *startBookingTime;
 @property (strong, nonatomic) TCBookingTime *endBookingTime;
 @property (strong, nonatomic) TCMeetingRoomRemind *currentRemind;
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (copy, nonatomic) NSArray *bookingTimeNameArray;
+@property (copy, nonatomic) NSArray *bookingTimeStrArray;
+@property (copy, nonatomic) NSArray *remindArray;
 
 @property (strong, nonatomic) TCBookingRequestInfo *bookingRequestInfo;
 
@@ -62,7 +68,6 @@
     // Do any additional setup after loading the view.
     
     self.navigationItem.title = @"会议室预定";
-    self.bookingRequestInfo = [[TCBookingRequestInfo alloc] init];
     
     [self setupSubviews];
     [self setupConstraints];
@@ -121,6 +126,70 @@
         make.height.mas_equalTo(49);
         make.left.bottom.right.equalTo(self.view);
     }];
+}
+
+- (void)setMeetingRoomReservationDetail:(TCMeetingRoomReservationDetail *)meetingRoomReservationDetail {
+    _meetingRoomReservationDetail = meetingRoomReservationDetail;
+    
+    TCMeetingRoom *meetingRoom = [[TCMeetingRoom alloc] init];
+    meetingRoom.ID = meetingRoomReservationDetail.conferenceId;
+    meetingRoom.openTime = meetingRoomReservationDetail.openTime;
+    meetingRoom.closeTime = meetingRoomReservationDetail.closeTime;
+    meetingRoom.equipments = meetingRoomReservationDetail.equipmentList;
+    meetingRoom.pictures = meetingRoomReservationDetail.picture;
+    meetingRoom.floor = meetingRoomReservationDetail.floor;
+    meetingRoom.fee = meetingRoomReservationDetail.fee;
+    meetingRoom.galleryful = meetingRoomReservationDetail.galleryful;
+    meetingRoom.maxGalleryful = meetingRoomReservationDetail.maxGalleryful;
+    self.meetingRoom = meetingRoom;
+    
+    self.bookingRequestInfo.subject = meetingRoomReservationDetail.subject;
+    self.bookingRequestInfo.reminderTime = meetingRoomReservationDetail.reminderTime;
+    self.bookingRequestInfo.conferenceBeginTime = meetingRoomReservationDetail.conferenceBeginTime;
+    self.bookingRequestInfo.conferenceEndTime = meetingRoomReservationDetail.conferenceEndTime;
+    self.bookingRequestInfo.conferenceParticipants = meetingRoomReservationDetail.conferenceParticipants;
+    
+    NSDate *startDate = [NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceBeginTime / 1000.f];
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceEndTime / 1000.f];
+    TCBookingDate *bookingDate = [[TCBookingDate alloc] init];
+    self.dateFormatter.dateFormat = @"yyyy-MM-dd";
+    bookingDate.dateStr = [self.dateFormatter stringFromDate:startDate];
+    bookingDate.date = [self.dateFormatter dateFromString:bookingDate.dateStr];
+    bookingDate.isSelected = YES;
+    self.bookingDate = bookingDate;
+    
+    self.dateFormatter.dateFormat = @"HH:mm";
+    TCBookingTime *startBookingTime = [[TCBookingTime alloc] init];
+    TCBookingTime *endBookingTime = [[TCBookingTime alloc] init];
+    NSString *startTimeStr = [self.dateFormatter stringFromDate:startDate];
+    NSString *endTimeStr = [self.dateFormatter stringFromDate:endDate];
+    for (int i=0; i<bookingTimeCount; i++) {
+        NSArray *tempArray = self.bookingTimeStrArray[i];
+        NSString *first = [tempArray firstObject];
+        NSString *last = [tempArray lastObject];
+        if ([first isEqualToString:startTimeStr]) {
+            startBookingTime.num = i;
+            startBookingTime.name = self.bookingTimeNameArray[i];
+            startBookingTime.startTimeStr = first;
+            startBookingTime.endTimeStr = last;
+        }
+        if ([last isEqualToString:endTimeStr]) {
+            endBookingTime.num = i;
+            endBookingTime.name = self.bookingTimeNameArray[i];
+            endBookingTime.startTimeStr = first;
+            endBookingTime.endTimeStr = last;
+        }
+    }
+    self.startBookingTime = startBookingTime;
+    self.endBookingTime = endBookingTime;
+    self.duration = (endBookingTime.num - startBookingTime.num + 1) * 0.5;
+    
+    for (TCMeetingRoomRemind *remind in self.remindArray) {
+        if (remind.remindTime == meetingRoomReservationDetail.reminderTime) {
+            self.currentRemind = remind;
+        }
+        break;
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -208,7 +277,6 @@
         if (row == 0) {
             cell.titleLabel.text = @"参会人";
             if (self.bookingRequestInfo.conferenceParticipants.count) {
-//                TCMeetingParticipant *participant = self.bookingRequestInfo.conferenceParticipants[0];
                 cell.subTitleLabel.text = [NSString stringWithFormat:@"%zd人", self.bookingRequestInfo.conferenceParticipants.count];
             } else {
                 cell.subTitleLabel.text = @"添加参会人";
@@ -342,6 +410,7 @@
         return;
     }
     
+    self.dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
     NSString *startStr = [NSString stringWithFormat:@"%@ %@", self.bookingDate.dateStr, self.startBookingTime.startTimeStr];
     NSString *endStr = [NSString stringWithFormat:@"%@ %@", self.bookingDate.dateStr, self.endBookingTime.endTimeStr];
     NSDate *startDate = [self.dateFormatter dateFromString:startStr];
@@ -351,18 +420,36 @@
     self.bookingRequestInfo.conferenceEndTime = [endDate timeIntervalSince1970] * 1000;
     
     self.bookingRequestInfo.reminderTime = self.currentRemind.remindTime;
+    self.bookingRequestInfo.attendance = (int)self.bookingRequestInfo.conferenceParticipants.count + 1;
     
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi api] commitBookingRequestInfo:self.bookingRequestInfo meetingRoomID:self.meetingRoom.ID result:^(BOOL success, NSError *error) {
-        if (success) {
-            [MBProgressHUD showHUDWithMessage:@"预定成功"];
-            TCMeetingRoomBookingRecordController *vc = [[TCMeetingRoomBookingRecordController alloc] init];
-            [weakSelf.navigationController pushViewController:vc animated:YES];
-        } else {
-            NSString *message = error.localizedDescription ?: @"预定失败，请稍后再试";
-            [MBProgressHUD showHUDWithMessage:message];
-        }
-    }];
+    if (self.controllerType == TCMeetingRoomViewControllerTypeBooking) {
+        [[TCBuluoApi api] commitBookingRequestInfo:self.bookingRequestInfo meetingRoomID:self.meetingRoom.ID result:^(BOOL success, NSError *error) {
+            if (success) {
+                [MBProgressHUD showHUDWithMessage:@"预定成功"];
+                TCMeetingRoomBookingRecordController *vc = [[TCMeetingRoomBookingRecordController alloc] init];
+                [weakSelf.navigationController pushViewController:vc animated:YES];
+            } else {
+                NSString *message = error.localizedDescription ?: @"预定失败，请稍后再试";
+                [MBProgressHUD showHUDWithMessage:message];
+            }
+        }];
+    } else {
+        [[TCBuluoApi api] modifyMeetingRoomBookingInfo:self.bookingRequestInfo bookingOrderID:self.meetingRoomReservationDetail.ID result:^(BOOL success, NSError *error) {
+            if (success) {
+                [MBProgressHUD showHUDWithMessage:@"修改成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (weakSelf.modifyBlock) {
+                        weakSelf.modifyBlock();
+                    }
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                });
+            } else {
+                NSString *message = error.localizedDescription ?: @"修改失败，请稍后再试";
+                [MBProgressHUD showHUDWithMessage:message];
+            }
+        }];
+    }
 }
 
 #pragma mark - Override Methods
@@ -371,9 +458,72 @@
     if (_dateFormatter == nil) {
         _dateFormatter = [[NSDateFormatter alloc] init];
         _dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        _dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
     }
     return _dateFormatter;
+}
+
+- (TCBookingRequestInfo *)bookingRequestInfo {
+    if (_bookingRequestInfo == nil) {
+        _bookingRequestInfo = [[TCBookingRequestInfo alloc] init];
+    }
+    return _bookingRequestInfo;
+}
+
+- (NSArray *)bookingTimeNameArray {
+    if (_bookingTimeNameArray == nil) {
+        _bookingTimeNameArray = @[@"t08A", @"t08B", @"t09A", @"t09B", @"t10A", @"t10B", @"t11A", @"t11B", @"t12A", @"t12B", @"t13A", @"t13B", @"t14A", @"t14B", @"t15A", @"t15B", @"t16A", @"t16B", @"t17A", @"t17B", @"t18A", @"t18B", @"t19A", @"t19B", @"t20A", @"t20B", @"t21A", @"t21B", @"t22A", @"t22B"];
+    }
+    return _bookingTimeNameArray;
+}
+
+- (NSArray *)bookingTimeStrArray {
+    if (_bookingTimeStrArray == nil) {
+        _bookingTimeStrArray = @[
+                                 @[@"08:00", @"08:30"],
+                                 @[@"08:30", @"09:00"],
+                                 @[@"09:00", @"09:30"],
+                                 @[@"09:30", @"10:00"],
+                                 @[@"10:00", @"10:30"],
+                                 @[@"10:30", @"11:00"],
+                                 @[@"11:00", @"11:30"],
+                                 @[@"11:30", @"12:00"],
+                                 @[@"12:00", @"12:30"],
+                                 @[@"12:30", @"13:00"],
+                                 @[@"13:00", @"13:30"],
+                                 @[@"13:30", @"14:00"],
+                                 @[@"14:00", @"14:30"],
+                                 @[@"14:30", @"15:00"],
+                                 @[@"15:00", @"15:30"],
+                                 @[@"15:30", @"16:00"],
+                                 @[@"16:00", @"16:30"],
+                                 @[@"16:30", @"17:00"],
+                                 @[@"17:00", @"17:30"],
+                                 @[@"17:30", @"18:00"],
+                                 @[@"18:00", @"18:30"],
+                                 @[@"18:30", @"19:00"],
+                                 @[@"19:00", @"19:30"],
+                                 @[@"19:30", @"20:00"],
+                                 @[@"20:00", @"20:30"],
+                                 @[@"20:30", @"21:00"],
+                                 @[@"21:00", @"21:30"],
+                                 @[@"21:30", @"22:00"],
+                                 @[@"22:00", @"22:30"],
+                                 @[@"22:30", @"23:00"]
+                                 ];
+    }
+    return _bookingTimeStrArray;
+}
+
+- (NSArray *)remindArray {
+    if (_remindArray == nil) {
+        TCMeetingRoomRemind *remind01 = [TCMeetingRoomRemind remindWithRemindTime:0 remindStr:@"无需提醒"];
+        TCMeetingRoomRemind *remind02 = [TCMeetingRoomRemind remindWithRemindTime:300 remindStr:@"提前5分钟"];
+        TCMeetingRoomRemind *remind03 = [TCMeetingRoomRemind remindWithRemindTime:900 remindStr:@"提前15分钟"];
+        TCMeetingRoomRemind *remind04 = [TCMeetingRoomRemind remindWithRemindTime:1800 remindStr:@"提前30分钟"];
+        TCMeetingRoomRemind *remind05 = [TCMeetingRoomRemind remindWithRemindTime:3600 remindStr:@"提前1小时"];
+        _remindArray = @[remind01, remind02, remind03, remind04, remind05];
+    }
+    return _remindArray;
 }
 
 - (void)didReceiveMemoryWarning {
