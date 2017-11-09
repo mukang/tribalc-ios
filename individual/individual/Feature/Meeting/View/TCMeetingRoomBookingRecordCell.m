@@ -50,13 +50,20 @@
 - (void)setMeetingRoomReservation:(TCMeetingRoomReservation *)meetingRoomReservation {
     _meetingRoomReservation = meetingRoomReservation;
     
+    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+    if (meetingRoomReservation.conferenceBeginTime/1000 < now < meetingRoomReservation.conferenceEndTime/1000) {
+        self.orderStatusLabel.text = @"已开始";
+    }else if (meetingRoomReservation.conferenceEndTime <= now) {
+        self.orderStatusLabel.text = @"已结束";
+    }else {
+        self.orderStatusLabel.text = @"预定成功";
+    }
+    
     self.orderNumLabel.text = [NSString stringWithFormat:@"订单号:%@",meetingRoomReservation.reservationNum];
     if ([meetingRoomReservation.status isKindOfClass:[NSString class]]) {
-        if ([meetingRoomReservation.status isEqualToString:@"RESERVED"]) {
-            self.orderStatusLabel.text = @"预定成功";
-        }else if ([meetingRoomReservation.status isEqualToString:@"CANCEL"]) {
+        if ([meetingRoomReservation.status isEqualToString:@"CANCEL"]) {
             self.orderStatusLabel.text = @"已取消";
-        }else if ([meetingRoomReservation.status isEqualToString:@"FINISHED"]) {
+        }else if ([meetingRoomReservation.status isEqualToString:@"PUTOFF_AND_PAYED"] || [meetingRoomReservation.status isEqualToString:@"PAYED"]) {
             self.orderStatusLabel.text = @"已完成";
         }
     }
