@@ -128,7 +128,8 @@
         bookingTime.name = name;
         bookingTime.startTimeStr = [timeStrs firstObject];
         bookingTime.endTimeStr = [timeStrs lastObject];
-        if ([bookingDateInfo valueForKey:name]) {
+        NSString *bookingTimeID = [bookingDateInfo valueForKey:name];
+        if (bookingTimeID.length) {
             bookingTime.status = TCBookingTimeStatusDisabled;
         } else {
             bookingTime.status = TCBookingTimeStatusNormal;
@@ -141,13 +142,19 @@
         [self.bookingTimeArray addObject:bookingTime];
     }
     
+    if (self.originalBookingDate && [self.currentBookingDate.date isEqualToDate:self.originalBookingDate.date]) {
+        // 修改时间时会走这个循环，将用户原来预定的时间段置为未选状态
+        for (int i=self.originalStartBookingTime.num; i<=self.originalEndBookingTime.num; i++) {
+            TCBookingTime *bookingTime = self.bookingTimeArray[i];
+            bookingTime.status = TCBookingTimeStatusNormal;
+        }
+    }
+    
     BOOL hasSelectedByOther = NO;
     if ([self.currentBookingDate.date isEqualToDate:self.bookingDate.date]) {
-        NSString *userID = [TCBuluoApi api].currentUserSession.assigned;
         for (int i=self.startBookingTime.num; i<=self.endBookingTime.num; i++) {
             TCBookingTime *bookingTime = self.bookingTimeArray[i];
-            NSString *bookingTimeID = [bookingDateInfo valueForKey:bookingTime.name];
-            if (bookingTime.status == TCBookingTimeStatusDisabled || ![bookingTimeID isEqualToString:userID]) {
+            if (bookingTime.status == TCBookingTimeStatusDisabled) {
                 hasSelectedByOther = YES;
                 break;
             }

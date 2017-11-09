@@ -150,12 +150,15 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
     int64_t currentT = [[NSDate date] timeIntervalSince1970];
     if (startT > currentT) {  // 修改
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSDate *currentDate = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.calendar = calendar;
+        dateFormatter.dateFormat = @"yyyy-MM-dd";
+        NSDate *startDate = [dateFormatter dateFromString:[dateFormatter stringFromDate:[NSDate date]]];
         
         TCMeetingRoomViewController *meetingRoomVC = [[TCMeetingRoomViewController alloc] initWithControllerType:TCMeetingRoomViewControllerTypeModification];
         meetingRoomVC.meetingRoomReservationDetail = self.meetingRoomReservationDetail;
-        meetingRoomVC.startDate = currentDate;
-        meetingRoomVC.endDate = [calendar dateByAddingUnit:NSCalendarUnitMonth value:1 toDate:currentDate options:0];
+        meetingRoomVC.startDate = startDate;
+        meetingRoomVC.endDate = [calendar dateByAddingUnit:NSCalendarUnitMonth value:1 toDate:startDate options:0];
         meetingRoomVC.modifyBlock = ^{
             [self loadData];
         };

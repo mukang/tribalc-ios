@@ -23,6 +23,11 @@
 @property (strong, nonatomic) TCBookingTime *startBookingTime;
 @property (strong, nonatomic) TCBookingTime *endBookingTime;
 
+/** 原始的起始时间，修改时间时使用 */
+@property (strong, nonatomic) TCBookingDate *originalBookingDate;
+@property (strong, nonatomic) TCBookingTime *originalStartBookingTime;
+@property (strong, nonatomic) TCBookingTime *originalEndBookingTime;
+
 @property (weak, nonatomic) id<TCMeetingRoomBookingTimeViewControllerDelegate> delegate;
 
 @end

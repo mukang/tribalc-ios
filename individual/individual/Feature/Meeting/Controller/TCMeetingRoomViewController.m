@@ -41,6 +41,11 @@
 @property (strong, nonatomic) TCBookingTime *endBookingTime;
 @property (strong, nonatomic) TCMeetingRoomRemind *currentRemind;
 
+/** 原始的起始时间，修改时间时使用 */
+@property (strong, nonatomic) TCBookingDate *originalBookingDate;
+@property (strong, nonatomic) TCBookingTime *originalStartBookingTime;
+@property (strong, nonatomic) TCBookingTime *originalEndBookingTime;
+
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 @property (copy, nonatomic) NSArray *bookingTimeNameArray;
 @property (copy, nonatomic) NSArray *bookingTimeStrArray;
@@ -106,7 +111,8 @@
     footerView.frame = CGRectMake(0, 0, TCScreenWidth, 80);
     tableView.tableFooterView = footerView;
     
-    TCCommonButton *nextButton = [TCCommonButton buttonWithTitle:@"下一步"
+    NSString *title = (self.controllerType == TCMeetingRoomViewControllerTypeBooking) ? @"下一步" : @"修改";
+    TCCommonButton *nextButton = [TCCommonButton buttonWithTitle:title
                                                            color:TCCommonButtonColorPurple
                                                           target:self
                                                           action:@selector(handleClickNextButton)];
@@ -149,14 +155,15 @@
     self.bookingRequestInfo.conferenceEndTime = meetingRoomReservationDetail.conferenceEndTime;
     self.bookingRequestInfo.conferenceParticipants = meetingRoomReservationDetail.conferenceParticipants;
     
-    NSDate *startDate = [NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceBeginTime / 1000.f];
-    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceEndTime / 1000.f];
+    NSDate *startDate = [NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceBeginTime / 1000.0];
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:meetingRoomReservationDetail.conferenceEndTime / 1000.0];
     TCBookingDate *bookingDate = [[TCBookingDate alloc] init];
     self.dateFormatter.dateFormat = @"yyyy-MM-dd";
     bookingDate.dateStr = [self.dateFormatter stringFromDate:startDate];
     bookingDate.date = [self.dateFormatter dateFromString:bookingDate.dateStr];
     bookingDate.isSelected = YES;
     self.bookingDate = bookingDate;
+    self.originalBookingDate = bookingDate;
     
     self.dateFormatter.dateFormat = @"HH:mm";
     TCBookingTime *startBookingTime = [[TCBookingTime alloc] init];
@@ -182,6 +189,8 @@
     }
     self.startBookingTime = startBookingTime;
     self.endBookingTime = endBookingTime;
+    self.originalStartBookingTime = startBookingTime;
+    self.originalEndBookingTime = endBookingTime;
     self.duration = (endBookingTime.num - startBookingTime.num + 1) * 0.5;
     
     for (TCMeetingRoomRemind *remind in self.remindArray) {
@@ -338,6 +347,11 @@
             vc.bookingDate = self.bookingDate;
             vc.startBookingTime = self.startBookingTime;
             vc.endBookingTime = self.endBookingTime;
+            if (self.controllerType == TCMeetingRoomViewControllerTypeModification) {
+                vc.originalStartBookingTime = self.originalStartBookingTime;
+                vc.originalEndBookingTime = self.originalEndBookingTime;
+                vc.originalBookingDate = self.originalBookingDate;
+            }
             vc.delegate = self;
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -427,9 +441,11 @@
         [[TCBuluoApi api] commitBookingRequestInfo:self.bookingRequestInfo meetingRoomID:self.meetingRoom.ID result:^(BOOL success, NSError *error) {
             if (success) {
                 [MBProgressHUD showHUDWithMessage:@"预定成功"];
-                TCMeetingRoomBookingRecordController *vc = [[TCMeetingRoomBookingRecordController alloc] initWithMeetingRoomBookingRecordType:TCMeetingRoomContactsViewControllerTypeIndividual companyId:nil];
-                vc.isFromMeetingRoomVC = YES;
-                [weakSelf.navigationController pushViewController:vc animated:YES];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    TCMeetingRoomBookingRecordController *vc = [[TCMeetingRoomBookingRecordController alloc] initWithMeetingRoomBookingRecordType:TCMeetingRoomContactsViewControllerTypeIndividual companyId:nil];
+                    vc.isFromMeetingRoomVC = YES;
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                });
             } else {
                 NSString *message = error.localizedDescription ?: @"预定失败，请稍后再试";
                 [MBProgressHUD showHUDWithMessage:message];
