@@ -225,6 +225,7 @@
     if (_meetingRoomImageView == nil) {
         _meetingRoomImageView = [[UIImageView alloc] init];
         _meetingRoomImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _meetingRoomImageView.clipsToBounds = YES;
     }
     return _meetingRoomImageView;
 }

@@ -207,6 +207,7 @@
     if (_leftImageView == nil) {
         _leftImageView = [[UIImageView alloc] init];
         _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _leftImageView.clipsToBounds = YES;
     }
     return _leftImageView;
 }
