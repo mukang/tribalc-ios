@@ -10,7 +10,6 @@
 
 #import "TCBookingDateView.h"
 #import "TCBookingTimeView.h"
-#import "TCBookingTimeNoteView.h"
 
 #import "TCBuluoApi.h"
 
@@ -23,7 +22,6 @@
 
 @property (weak, nonatomic) TCBookingDateView *dateView;
 @property (weak, nonatomic) TCBookingTimeView *timeView;
-@property (weak, nonatomic) TCBookingTimeNoteView *noteView;
 @property (weak, nonatomic) TCCommonButton *confirmButton;
 
 @property (strong, nonatomic) TCBookingDate *currentBookingDate;
@@ -48,6 +46,7 @@
     
     weakSelf = self;
     self.navigationItem.title = @"预定时间";
+    self.view.backgroundColor = TCBackgroundColor;
     
     [self setupSubviews];
     [self setupConstraints];
@@ -59,9 +58,6 @@
     TCBookingDateView *dateView = [[TCBookingDateView alloc] initWithStartDate:self.startDate endDate:self.endDate selectedDate:self.selectedDate];
     dateView.delegate = self;
     [self.view addSubview:dateView];
-    
-    TCBookingTimeNoteView *noteView = [[TCBookingTimeNoteView alloc] init];
-    [self.view addSubview:noteView];
     
     TCBookingTimeView *timeView = [[TCBookingTimeView alloc] init];
     timeView.bookingTimedelegate = self;
@@ -75,7 +71,6 @@
     
     self.dateView = dateView;
     self.timeView = timeView;
-    self.noteView = noteView;
     self.confirmButton = confirmButton;
 }
 
@@ -84,13 +79,8 @@
         make.top.left.right.equalTo(self.view);
         make.height.mas_equalTo(45);
     }];
-    [self.noteView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dateView.mas_bottom);
-        make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(38);
-    }];
     [self.timeView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.noteView.mas_bottom);
+        make.top.equalTo(self.dateView.mas_bottom);
         make.bottom.equalTo(self.confirmButton.mas_top);
         make.left.right.equalTo(self.view);
     }];
