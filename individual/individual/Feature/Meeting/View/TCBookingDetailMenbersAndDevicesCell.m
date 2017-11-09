@@ -50,7 +50,9 @@
 
 - (void)setMeetingRoomReservationDetail:(TCMeetingRoomReservationDetail *)meetingRoomReservationDetail {
     _meetingRoomReservationDetail = meetingRoomReservationDetail;
-    
+    for (UIView *view in self.menbersView.subviews) {
+        [view removeFromSuperview];
+    }
     //参会人
     if ([meetingRoomReservationDetail.conferenceParticipants isKindOfClass:[NSArray class]] && meetingRoomReservationDetail.conferenceParticipants.count > 0) {
         UILabel *lastL;
@@ -89,7 +91,7 @@
                 [nameL mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.equalTo(self.menbersView);
                     make.top.equalTo(self.menbersView).offset(20);
-                    make.width.equalTo(@70);
+                    make.width.equalTo(@75);
                     make.height.equalTo(@15);
                 }];
             }else if (i == meetingRoomReservationDetail.conferenceParticipants.count - 1) {
@@ -122,7 +124,7 @@
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.menbersView);
             make.centerY.equalTo(self.menbersView);
-            make.width.height.equalTo(@30);
+            make.width.height.equalTo(@25);
         }];
     }
     
@@ -168,7 +170,7 @@
     }];
     
     [self.menbersView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.menbersTitleLabel.mas_right).offset(10);
+        make.left.equalTo(self.menbersTitleLabel.mas_right).offset(5);
         make.top.equalTo(self.contentView);
         make.right.equalTo(self.contentView).offset(-15);
         make.height.greaterThanOrEqualTo(@50);
