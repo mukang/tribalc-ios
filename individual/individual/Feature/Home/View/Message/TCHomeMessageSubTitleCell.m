@@ -40,7 +40,7 @@
     if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeConferenceReservation) {
         self.mainTitleLabel.text = homeMessage.messageBody.body;
         self.leftSubTitleLabel.text = [NSString stringWithFormat:@"会议室：%@",homeMessage.messageBody.desc];
-        self.secondSubTitleLabel.text = [NSString stringWithFormat:@"参会时间：%@",[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:homeMessage.messageBody.applicationTime]]];
+        self.secondSubTitleLabel.text = [NSString stringWithFormat:@"参会时间：%@",[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:homeMessage.messageBody.applicationTime/1000]]];
         self.thirdSubTitleLabel.text = [NSString stringWithFormat:@"会议主题：%@",homeMessage.messageBody.remark];
         return;
     }

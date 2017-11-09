@@ -285,11 +285,11 @@ TCHomeCoverViewDelegate>
     TCHomeMessage *message = self.messageArr[indexPath.row];
     TCMessageType type = message.messageBody.homeMessageType.type;
     TCHomeMessageCell *cell;
-    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw || type == TCMessageTypeCompaniesWalletWithdraw || type == TCMessageTypeAccountWalletWithdraw || type == TCMessageTypeOrderRefund) {
+    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw || type == TCMessageTypeCompaniesWalletWithdraw || type == TCMessageTypeAccountWalletWithdraw || type == TCMessageTypeOrderRefund || type == TCMessageTypeWelfarePayment) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageMoneyMiddleCell" forIndexPath:indexPath];
     }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment || type == TCMessageTypeCompaniesAdmin) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageExtendCreditMiddleCell" forIndexPath:indexPath];
-    }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration  || type == TCMessageTypeWelfarePayment || type == TCMessageTypeConferenceReservation) {
+    }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration || type == TCMessageTypeConferenceReservation) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageSubTitleCell" forIndexPath:indexPath];
     }else if (type == TCMessageTypeWelfare) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageWelfareCell" forIndexPath:indexPath];
@@ -309,11 +309,11 @@ TCHomeCoverViewDelegate>
     TCMessageType type = message.messageBody.homeMessageType.type;
     CGFloat scale = TCScreenWidth > 375.0 ? 3.0 : 2.0;
     CGFloat baseH = 80+4*(1/scale);
-    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw || type == TCMessageTypeCompaniesWalletWithdraw || type == TCMessageTypeAccountWalletWithdraw || type == TCMessageTypeOrderRefund) {
+    if (type == TCMessageTypeAccountWalletPayment || type == TCMessageTypeAccountWalletRecharge || type == TCMessageTypeTenantRecharge || type == TCMessageTypeTenantWithdraw || type == TCMessageTypeCompaniesWalletWithdraw || type == TCMessageTypeAccountWalletWithdraw || type == TCMessageTypeOrderRefund || type == TCMessageTypeWelfarePayment) {
         return baseH+102;
     }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment || type == TCMessageTypeCompaniesAdmin) {
         return baseH+102;
-    }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration || type == TCMessageTypeWelfarePayment || type == TCMessageTypeConferenceReservation) {
+    }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration || type == TCMessageTypeConferenceReservation) {
         return baseH+143;
     }else if (type == TCMessageTypeWelfare) {
         return 8+TCRealValue(174);

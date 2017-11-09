@@ -71,6 +71,10 @@
     
     self.priceLabel.text = [NSString stringWithFormat:@"%@元/小时",@(meetingRoom.fee)];
     
+    for (UIView *view in self.devicesView.subviews) {
+        [view removeFromSuperview];
+    }
+    
     if ([meetingRoom.equipments isKindOfClass:[NSArray class]] && meetingRoom.equipments.count > 0) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 10, 10)];
         imageView.image = [UIImage imageNamed:@"meeting_room_device_icon"];

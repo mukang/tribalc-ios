@@ -99,16 +99,15 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
     NSString *status = meetingRoomReservationDetail.status;
     if ([status isKindOfClass:[NSString class]]) {
         if ([status isEqualToString:@"CANCEL"] || [status isEqualToString:@"PAYED"] || [status isEqualToString:@"PUTOFF_AND_PAYED"]) { //已完成 已延期完成 已取消
-        self.leftBtn.hidden = YES;
-        self.leftBtn.hidden = YES;
+            self.leftBtn.hidden = YES;
+            self.leftBtn.hidden = YES;
             if ([status isEqualToString:@"CANCEL"]) {
                 self.title = @"已取消";
             }else {
                 self.title = @"已完成";
             }
-            
+            return;
         }
-        return;
     }
     
     NSTimeInterval currentDateTimeInterval = [[NSDate date] timeIntervalSince1970];

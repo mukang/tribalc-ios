@@ -55,7 +55,7 @@
     }
     //参会人
     if ([meetingRoomReservationDetail.conferenceParticipants isKindOfClass:[NSArray class]] && meetingRoomReservationDetail.conferenceParticipants.count > 0) {
-        UILabel *lastL;
+        UILabel *lastL = nil;
         for (int i = 0; i<meetingRoomReservationDetail.conferenceParticipants.count; i++) {
             TCMeetingParticipant *participant = meetingRoomReservationDetail.conferenceParticipants[i];
             UILabel *nameL= [[UILabel alloc] init];
