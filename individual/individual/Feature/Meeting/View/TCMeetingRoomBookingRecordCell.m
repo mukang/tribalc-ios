@@ -51,9 +51,9 @@
     _meetingRoomReservation = meetingRoomReservation;
     
     NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-    if (meetingRoomReservation.conferenceBeginTime/1000 < now < meetingRoomReservation.conferenceEndTime/1000) {
+    if (((meetingRoomReservation.conferenceBeginTime/1000) < now) && (now < (meetingRoomReservation.conferenceEndTime/1000))) {
         self.orderStatusLabel.text = @"已开始";
-    }else if (meetingRoomReservation.conferenceEndTime <= now) {
+    }else if ((meetingRoomReservation.conferenceEndTime/1000) <= now) {
         self.orderStatusLabel.text = @"已结束";
     }else {
         self.orderStatusLabel.text = @"预定成功";
@@ -79,7 +79,7 @@
     self.meetingRoomFloorLabel.text = [NSString stringWithFormat:@"%ld层",(long)meetingRoomReservation.floor];
     
     int64_t second = (meetingRoomReservation.conferenceEndTime - meetingRoomReservation.conferenceBeginTime)/1000;
-    CGFloat hour = second/3600;
+    CGFloat hour = second/3600.0;
     int h = (int)hour;
     if (hour > h) {
         hour = h + 0.5;
@@ -175,7 +175,8 @@
     }];
     
     [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.meetingRoomInfoLabel);
+        make.left.equalTo(self.meetingRoomInfoLabel);
+        make.right.equalTo(self.meetingRoomInfoView);
         make.top.equalTo(self.meetingRoomInfoLabel.mas_bottom).offset(4);
         make.height.equalTo(@20);
     }];
@@ -196,6 +197,7 @@
         _meetingRoomFloorLabel = [[UILabel alloc] init];
         _meetingRoomFloorLabel.font = [UIFont systemFontOfSize:12];
         _meetingRoomFloorLabel.textColor = TCGrayColor;
+        _meetingRoomFloorLabel.textAlignment = NSTextAlignmentRight;
     }
     return _meetingRoomFloorLabel;
 }
@@ -223,6 +225,7 @@
     if (_meetingRoomImageView == nil) {
         _meetingRoomImageView = [[UIImageView alloc] init];
         _meetingRoomImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _meetingRoomImageView.clipsToBounds = YES;
     }
     return _meetingRoomImageView;
 }
