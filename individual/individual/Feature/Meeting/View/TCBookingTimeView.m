@@ -9,6 +9,7 @@
 #import "TCBookingTimeView.h"
 #import "TCBookingTimeViewCell.h"
 #import "TCBookingTime.h"
+#import "TCBookingTimeNoteView.h"
 
 #define cellCount 30
 
@@ -33,6 +34,9 @@
     contentView.backgroundColor = [UIColor whiteColor];
     [self addSubview:contentView];
     
+    TCBookingTimeNoteView *noteView = [[TCBookingTimeNoteView alloc] init];
+    [contentView addSubview:noteView];
+    
     UILabel *forenoonLabel = [self createLabelWithTitle:@"上午"];
     [contentView addSubview:forenoonLabel];
     
@@ -52,9 +56,13 @@
         make.edges.equalTo(self);
         make.width.mas_equalTo(TCScreenWidth);
     }];
+    [noteView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(68);
+        make.top.left.right.equalTo(contentView);
+    }];
     [forenoonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(contentView).offset(15);
-        make.top.equalTo(contentView).offset(15);
+        make.top.equalTo(noteView.mas_bottom).offset(15);
     }];
     
     self.cells = [NSMutableArray arrayWithCapacity:cellCount];

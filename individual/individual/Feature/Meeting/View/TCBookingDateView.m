@@ -81,6 +81,9 @@
         collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
     
+    UIView *bottomLine = [self createLineView];
+    [self addSubview:bottomLine];
+    
     UIView *lineView = [[UIView alloc] init];
     lineView.backgroundColor = TCRGBColor(243, 87, 90);
     [self addSubview:lineView];
@@ -88,10 +91,20 @@
     [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
+    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(0.5);
+        make.left.bottom.right.equalTo(self);
+    }];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(80, 2));
         make.centerX.bottom.equalTo(self);
     }];
+}
+
+- (UIView *)createLineView {
+    UIView *lineView = [[UIView alloc] init];
+    lineView.backgroundColor = TCSeparatorLineColor;
+    return lineView;
 }
 
 - (void)layoutSubviews {
