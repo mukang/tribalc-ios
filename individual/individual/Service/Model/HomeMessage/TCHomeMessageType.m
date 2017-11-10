@@ -53,7 +53,7 @@
         _type = TCMessageTypeOrderRefund;
     } else if ([homeMessageTypeEnum isEqualToString:@"WELFARE_PAYMENT"]) {
         _type = TCMessageTypeWelfarePayment;
-    } else if ([homeMessageTypeEnum isEqualToString:@"CONFERENCE_RESERVATION_HOME_MESSAGE"]) {
+    } else if ([homeMessageTypeEnum isEqualToString:@"CONFERENCE_RESERVATION_SUCCESS"]) {
         _type = TCMessageTypeConferenceReservation;
     } else {
         _type = TCMessageTypeOther;

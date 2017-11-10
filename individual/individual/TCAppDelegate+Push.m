@@ -14,6 +14,7 @@
 #import "TCTabBarController.h"
 #import "TCNavigationController.h"
 #import "TCOrderDetailViewController.h"
+#import "TCMeetingRoomBookingDetailViewController.h"
 
 #import "TCBuluoApi.h"
 
@@ -252,9 +253,22 @@
                     if ([type isEqualToString:@"ACCOUNT_AUTHENTICATION"]) {
                         [self fetchAuthenticationInfo];
                     }
+                    
+                    if ([type isEqualToString:@"CONFERENCE_RESERVATION_REMIND"]) {
+                        
+                    }
                 }
         }
     }
+}
+
+- (void)getMeetingRoomReservationDetailWithReferenceId:(NSString *)referenceId {
+    TCMeetingRoomBookingDetailViewController *detailVC = [[TCMeetingRoomBookingDetailViewController alloc] init];
+    detailVC.reservationID = referenceId;
+    TCTabBarController *tabVC = (TCTabBarController *)self.window.rootViewController;
+    TCNavigationController *nav = (TCNavigationController *)tabVC.selectedViewController;
+    detailVC.hidesBottomBarWhenPushed = YES;
+    [nav pushViewController:detailVC animated:YES];
 }
 
 - (void)fetchAuthenticationInfo {

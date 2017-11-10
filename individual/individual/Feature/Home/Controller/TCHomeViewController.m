@@ -22,6 +22,7 @@
 #import "TCApartmentPayViewController.h"
 #import "TCCompanyRentPayViewController.h"
 #import "TCMeetingRoomConditionsViewController.h"
+#import "TCMeetingRoomBookingDetailViewController.h"
 
 #import "TCHomeSearchBarView.h"
 #import "TCHomeToolBarView.h"
@@ -378,8 +379,21 @@ TCHomeCoverViewDelegate>
     }else if (type == TCMessageTypeCompaniesWalletWithdraw) {
         //企业提现记录详情
         [self getbillInfoWithHomeMessage:message];
+    }else if (type == TCMessageTypeConferenceReservation) {
+        [self getMeetingRoomReservationDetailWithHomeMessage:message];
     }
     
+}
+
+- (void)getMeetingRoomReservationDetailWithHomeMessage:(TCHomeMessage *)message {
+    NSString *reservationID = message.messageBody.referenceId;
+    TCMeetingRoomBookingDetailViewController *detailVC = [[TCMeetingRoomBookingDetailViewController alloc] init];
+    detailVC.reservationID = reservationID;
+    detailVC.hidesBottomBarWhenPushed = YES;
+    detailVC.block = ^{
+        [self loadNewData];
+    };
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 - (void)didClickMoreActionBtnWithMessageCell:(UITableViewCell *)cell {
