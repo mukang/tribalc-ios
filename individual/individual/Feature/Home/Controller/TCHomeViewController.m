@@ -290,7 +290,7 @@ TCHomeCoverViewDelegate>
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageMoneyMiddleCell" forIndexPath:indexPath];
     }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment || type == TCMessageTypeCompaniesAdmin) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageExtendCreditMiddleCell" forIndexPath:indexPath];
-    }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration || type == TCMessageTypeConferenceReservation) {
+    }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration || type == TCMessageTypeConferenceReservation || type == TCMessageTypeConferenceReservationRemind) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageSubTitleCell" forIndexPath:indexPath];
     }else if (type == TCMessageTypeWelfare) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"TCHomeMessageWelfareCell" forIndexPath:indexPath];
@@ -314,7 +314,7 @@ TCHomeCoverViewDelegate>
         return baseH+102;
     }else if (type == TCMessageTypeCreditEnable || type == TCMessageTypeCreditDisable || type == TCMessageTypeCreditBillGeneration || type == TCMessageTypeCreditBillPayment || type == TCMessageTypeCompaniesAdmin) {
         return baseH+102;
-    }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration || type == TCMessageTypeConferenceReservation) {
+    }else if (type == TCMessageTypeCompaniesRentBillPayment || type == TCMessageTypeRentBillPayment || type == TCMessageTypeCompaniesRentBillGeneration || type == TCMessageTypeRentBillGeneration || type == TCMessageTypeConferenceReservation || type == TCMessageTypeConferenceReservationRemind) {
         return baseH+143;
     }else if (type == TCMessageTypeWelfare) {
         return 8+TCRealValue(174);
@@ -379,7 +379,7 @@ TCHomeCoverViewDelegate>
     }else if (type == TCMessageTypeCompaniesWalletWithdraw) {
         //企业提现记录详情
         [self getbillInfoWithHomeMessage:message];
-    }else if (type == TCMessageTypeConferenceReservation) {
+    }else if (type == TCMessageTypeConferenceReservation || type == TCMessageTypeConferenceReservationRemind) {
         [self getMeetingRoomReservationDetailWithHomeMessage:message];
     }
     

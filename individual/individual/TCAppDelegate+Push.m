@@ -255,7 +255,7 @@
                     }
                     
                     if ([type isEqualToString:@"CONFERENCE_RESERVATION_REMIND"]) {
-                        
+                        [self getMeetingRoomReservationDetailWithReferenceId:referenceId];
                     }
                 }
         }

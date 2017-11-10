@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, TCMessageType) {
     TCMessageTypeOrderRefund,                       // "订单退款"
     TCMessageTypeWelfarePayment,                    // "接收福利"
     TCMessageTypeConferenceReservation,             // "会议室预定"
+    TCMessageTypeConferenceReservationRemind,       // "会议室预定提醒"
     TCMessageTypeOther
 };
 
