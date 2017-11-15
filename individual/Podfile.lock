@@ -19,7 +19,7 @@ PODS:
   - AMapFoundation-NO-IDFA (1.4.2)
   - AMapLocation-NO-IDFA (2.5.0):
     - AMapFoundation-NO-IDFA (~> 1.4)
-  - AMapSearch-NO-IDFA (5.4.0):
+  - AMapSearch-NO-IDFA (5.5.0):
     - AMapFoundation-NO-IDFA (~> 1.4)
   - Bugly (2.4.8)
   - EAIntroView (2.10.0):
@@ -27,7 +27,7 @@ PODS:
   - EARestrictedScrollView (1.1.0)
   - FLEX (2.4.0)
   - Masonry (1.1.0)
-  - MBProgressHUD (1.0.0)
+  - MBProgressHUD (1.1.0)
   - MGSwipeTableCell (1.5.6)
   - MJRefresh (3.1.15)
   - pop (1.0.10)
@@ -35,31 +35,31 @@ PODS:
   - SDWebImage (4.2.2):
     - SDWebImage/Core (= 4.2.2)
   - SDWebImage/Core (4.2.2)
-  - TCCommonLibs (0.5.7):
-    - TCCommonLibs/Category (= 0.5.7)
-    - TCCommonLibs/Controller (= 0.5.7)
-    - TCCommonLibs/DicToModel (= 0.5.7)
-    - TCCommonLibs/Tools (= 0.5.7)
-    - TCCommonLibs/UI (= 0.5.7)
-    - TCCommonLibs/Utility (= 0.5.7)
-    - TCCommonLibs/WebService (= 0.5.7)
-  - TCCommonLibs/Category (0.5.7):
+  - TCCommonLibs (0.5.9):
+    - TCCommonLibs/Category (= 0.5.9)
+    - TCCommonLibs/Controller (= 0.5.9)
+    - TCCommonLibs/DicToModel (= 0.5.9)
+    - TCCommonLibs/Tools (= 0.5.9)
+    - TCCommonLibs/UI (= 0.5.9)
+    - TCCommonLibs/Utility (= 0.5.9)
+    - TCCommonLibs/WebService (= 0.5.9)
+  - TCCommonLibs/Category (0.5.9):
     - SDWebImage
     - TCCommonLibs/Utility
-  - TCCommonLibs/Controller (0.5.7):
+  - TCCommonLibs/Controller (0.5.9):
     - TCCommonLibs/Category
-  - TCCommonLibs/DicToModel (0.5.7)
-  - TCCommonLibs/Tools (0.5.7):
+  - TCCommonLibs/DicToModel (0.5.9)
+  - TCCommonLibs/Tools (0.5.9):
     - TCCommonLibs/WebService
-  - TCCommonLibs/UI (0.5.7):
+  - TCCommonLibs/UI (0.5.9):
     - Masonry
     - MJRefresh
     - SDWebImage
     - TCCommonLibs/Category
     - TCCommonLibs/Tools
     - TCCommonLibs/Utility
-  - TCCommonLibs/Utility (0.5.7)
-  - TCCommonLibs/WebService (0.5.7):
+  - TCCommonLibs/Utility (0.5.9)
+  - TCCommonLibs/WebService (0.5.9):
     - AFNetworking
     - TCCommonLibs/Utility
   - UITableView+FDTemplateLayoutCell (1.6)
@@ -87,19 +87,19 @@ SPEC CHECKSUMS:
   AMap2DMap-NO-IDFA: 01c80e7e93568617b1b1b452cfec71f974f5bc8a
   AMapFoundation-NO-IDFA: 3b9ce87abc6a37c718cc320687469d0b74d5c953
   AMapLocation-NO-IDFA: be669085a8cc0d22820022fc61d58811d24b4e3a
-  AMapSearch-NO-IDFA: efddeaa3f62f6adb8f0170ebff3d799bcf637ade
+  AMapSearch-NO-IDFA: 028a238a14fcb5f1ceda776a996f0af8f22757c4
   Bugly: da3c02408c14838d498429320545a8e439392978
   EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MGSwipeTableCell: 616700eb0ffd1c611ba909066cb7fd739790a0a7
   MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   QQ_XGPush: 8c3637d61e1b3fe6e7f60bb1c8aac34184c8bf40
   SDWebImage: 89a9d32cd520bbb46eb14e541d5109b3564af198
-  TCCommonLibs: 4d661a333fe9cda5a4a4f81d524a26c15d730099
+  TCCommonLibs: 54e60136670bef9659bef8a6a9a300c95aae4ce5
   UITableView+FDTemplateLayoutCell: 5c949b4a5059c404b442926c0e80f81d10a2d66f
   WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
