@@ -4372,7 +4372,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.buluo-gs.individual";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2457aadd-6198-465f-a5f1-5a94516d911e";
+				PROVISIONING_PROFILE = "33133f47-389c-4c89-a2eb-4aa102db4670";
 				PROVISIONING_PROFILE_SPECIFIER = "Individual Distribution";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
