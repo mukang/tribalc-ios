@@ -97,7 +97,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCMeetingRoomSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomSearchResultCell" forIndexPath:indexPath];
-    cell.meetingRoom = self.arr[indexPath.row];
+    cell.meetingRoom = self.arr[indexPath.section];
     return cell;
 }
 
