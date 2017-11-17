@@ -122,7 +122,7 @@
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TCMeetingRoom *meetingRoom = self.arr[indexPath.row];
+    TCMeetingRoom *meetingRoom = self.arr[indexPath.section];
     TCMeetingRoomViewController *vc = [[TCMeetingRoomViewController alloc] initWithControllerType:TCMeetingRoomViewControllerTypeBooking];
     vc.meetingRoom = meetingRoom;
     vc.startDate = [self.dateFormatter dateFromString:self.conditions.startDateStr];
