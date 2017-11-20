@@ -110,6 +110,7 @@
 - (void)createBookingTimeArrayWithBookingDateInfo:(TCBookingDateInfo *)bookingDateInfo {
     [self.bookingTimeArray removeAllObjects];
     NSDate *currentDate = [NSDate date];
+    NSDate *halfHourLaterDate = [currentDate dateByAddingTimeInterval:60 * 30];
     for (int i=0; i<bookingTimeCount; i++) {
         TCBookingTime *bookingTime = [[TCBookingTime alloc] init];
         NSString *name = self.bookingTimeNameArray[i];
@@ -125,7 +126,7 @@
             bookingTime.status = TCBookingTimeStatusNormal;
         }
         if ([self.currentCalendar compareDate:self.currentBookingDate.date toDate:currentDate toUnitGranularity:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay] == NSOrderedSame) {
-            if ([bookingTime.startTimeStr compare:[self.timeFormatter stringFromDate:currentDate]] != NSOrderedDescending) {
+            if ([bookingTime.startTimeStr compare:[self.timeFormatter stringFromDate:halfHourLaterDate]] != NSOrderedDescending) {
                 bookingTime.status = TCBookingTimeStatusDisabled;
             }
         }
