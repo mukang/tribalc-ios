@@ -151,6 +151,7 @@
     }];
     
     [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.numLabel.mas_right).offset(5);
         make.right.equalTo(self.contentView).offset(-15);
         make.top.equalTo(self.numLabel);
     }];

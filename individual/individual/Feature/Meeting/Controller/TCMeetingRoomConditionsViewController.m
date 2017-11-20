@@ -246,9 +246,13 @@ TCMeetingRoomConditionsFloorCellDelegate>
 
 - (void)floorCellDidEndEditingWithTextField:(UITextField *)textField {
     if (textField.tag == 11111) {
-        self.conditions.startFloor = textField.text;
+        if ([textField.text isKindOfClass:[NSString class]] && textField.text.length > 0) {
+            self.conditions.startFloor = textField.text;
+        }
     }else {
-        self.conditions.endFloor = textField.text;
+        if ([textField.text isKindOfClass:[NSString class]] && textField.text.length > 0) {
+            self.conditions.endFloor = textField.text;
+        }
     }
 }
 
@@ -311,13 +315,17 @@ TCMeetingRoomConditionsFloorCellDelegate>
 #pragma mark TCMeetingRoomConditionsTimeCellDelegate
 
 - (void)timeCellDidEndEditingWithTextField:(UITextField *)textfield {
-    self.conditions.hours = textfield.text;
+    if ([textfield.text isKindOfClass:[NSString class]] && textfield.text.length > 0) {
+        self.conditions.hours = textfield.text;
+    }
 }
 
 #pragma mark TCMeetingRoomConditionsNumberCellDelegate
 
 - (void)numberCelldidEndEditingWithTextField:(UITextField *)textfield {
-    self.conditions.number = textfield.text;
+    if ([textfield.text isKindOfClass:[NSString class]] && textfield.text.length > 0) {
+        self.conditions.number = textfield.text;
+    }
 }
 
 #pragma mark getter

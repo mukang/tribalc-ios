@@ -91,7 +91,7 @@
                 [nameL mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.equalTo(self.menbersView);
                     make.top.equalTo(self.menbersView).offset(20);
-                    make.width.equalTo(@75);
+                    make.width.equalTo(@80);
                     make.height.equalTo(@15);
                 }];
             }else if (i == meetingRoomReservationDetail.conferenceParticipants.count - 1) {
