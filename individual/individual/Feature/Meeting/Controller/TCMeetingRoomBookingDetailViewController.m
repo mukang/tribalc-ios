@@ -267,6 +267,7 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         TCBookingDetailOrderNumAndStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailOrderNumAndStatusCell" forIndexPath:indexPath];
+        cell.reservationNum = self.meetingRoomReservationDetail.reservationNum;
         return cell;
     }else if (indexPath.section == 1) {
         TCBookingDetailNameAndTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailNameAndTimeCell" forIndexPath:indexPath];
@@ -274,12 +275,12 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
         return cell;
     }else if (indexPath.section == 2) {
         TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
-        cell.title = @"预定人：";
+        cell.title = @"预  定  人：";
         cell.content = [NSString stringWithFormat:@"%@  %@",self.meetingRoomReservationDetail.personName,self.meetingRoomReservationDetail.personPhone];
         return cell;
     }else if (indexPath.section == 3) {
         TCBookingDetailSchedulerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailSchedulerCell" forIndexPath:indexPath];
-        cell.title = @"会议主旨";
+        cell.title = @"会议主题：";
         cell.content = self.meetingRoomReservationDetail.subject;
         return cell;
     }else if (indexPath.section == 4) {

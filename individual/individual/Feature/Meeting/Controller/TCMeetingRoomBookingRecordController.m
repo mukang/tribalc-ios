@@ -78,6 +78,11 @@
             if ([meetingRoomReservationWrapper.content isKindOfClass:[NSArray class]]) {
                 [self.meetingRoomReservationArr addObjectsFromArray:meetingRoomReservationWrapper.content];
             }
+            if (!meetingRoomReservationWrapper.hasMore) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }else {
+                [self.tableView.mj_footer resetNoMoreData];
+            }
             [self.tableView reloadData];
         }else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -97,6 +102,11 @@
             if ([meetingRoomReservationWrapper.content isKindOfClass:[NSArray class]]) {
                 [self.meetingRoomReservationArr addObjectsFromArray:meetingRoomReservationWrapper.content];
             }
+            if (!meetingRoomReservationWrapper.hasMore) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }else {
+                [self.tableView.mj_footer resetNoMoreData];
+            }
             [self.tableView reloadData];
         }else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -107,7 +117,7 @@
 
 - (void)loadOldData {
     @WeakObj(self)
-    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:_meetingRoomReservationWrapper.nextSkip limitSize:20 companyId:self.companyId result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchMeetingRoomReservationWrapperWithSortSkip:self.meetingRoomReservationWrapper.nextSkip limitSize:20 companyId:self.companyId result:^(TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper, NSError *error) {
         @StrongObj(self)
         if (meetingRoomReservationWrapper) {
             self.meetingRoomReservationWrapper = meetingRoomReservationWrapper;
