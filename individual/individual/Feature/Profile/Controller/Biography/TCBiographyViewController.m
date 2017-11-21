@@ -69,6 +69,9 @@
 - (void)setupSubviews {
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     tableView.backgroundColor = TCRGBColor(243, 243, 243);
+    tableView.estimatedRowHeight = 0;
+    tableView.estimatedSectionHeaderHeight = 0;
+    tableView.estimatedSectionFooterHeight = 0;
     tableView.dataSource = self;
     tableView.delegate = self;
     [self.view addSubview:tableView];

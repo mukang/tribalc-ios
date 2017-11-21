@@ -196,8 +196,8 @@
     for (TCMeetingRoomRemind *remind in self.remindArray) {
         if (remind.remindTime == meetingRoomReservationDetail.reminderTime) {
             self.currentRemind = remind;
+            break;
         }
-        break;
     }
 }
 
