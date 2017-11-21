@@ -267,6 +267,7 @@ TCBookingDetailMenbersAndDevicesCellDelegate>
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         TCBookingDetailOrderNumAndStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailOrderNumAndStatusCell" forIndexPath:indexPath];
+        cell.reservationNum = self.meetingRoomReservationDetail.reservationNum;
         return cell;
     }else if (indexPath.section == 1) {
         TCBookingDetailNameAndTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCBookingDetailNameAndTimeCell" forIndexPath:indexPath];
