@@ -102,7 +102,12 @@
     
     self.timeLabel.text = [NSString stringWithFormat:@"共计%@小时",@(hour)];
     
-    NSString *moneyStr = [NSString stringWithFormat:@"实付：¥%@",@(meetingRoomReservation.totalFee)];
+    NSString *moneyTitle = @"应付";
+    if ([meetingRoomReservation.status isKindOfClass:[NSString class]] && ([meetingRoomReservation.status isEqualToString:@"PUTOFF_AND_PAYED"] || [meetingRoomReservation.status isEqualToString:@"PAYED"])) {
+        moneyTitle = @"实付";
+    }
+    
+    NSString *moneyStr = [NSString stringWithFormat:@"%@：¥%@",moneyTitle, @(meetingRoomReservation.totalFee)];
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
     [attStr setAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} range:NSMakeRange(0, 3)];
     self.moneyLabel.attributedText = attStr;
