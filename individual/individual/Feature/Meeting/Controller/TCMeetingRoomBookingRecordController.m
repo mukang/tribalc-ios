@@ -80,6 +80,8 @@
             }
             if (!meetingRoomReservationWrapper.hasMore) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }else {
+                [self.tableView.mj_footer resetNoMoreData];
             }
             [self.tableView reloadData];
         }else {
@@ -102,6 +104,8 @@
             }
             if (!meetingRoomReservationWrapper.hasMore) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }else {
+                [self.tableView.mj_footer resetNoMoreData];
             }
             [self.tableView reloadData];
         }else {
