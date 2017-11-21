@@ -573,9 +573,14 @@ TCHomeCoverViewDelegate>
 }
 
 - (void)didClickMeetingButtonInHomeToolsView:(TCHomeToolsView *)view {
-    TCMeetingRoomConditionsViewController *vc = [[TCMeetingRoomConditionsViewController alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    TCUserInfo *userInfo = [TCBuluoApi api].currentUserSession.userInfo;
+    if (userInfo.companyID) {
+        TCMeetingRoomConditionsViewController *vc = [[TCMeetingRoomConditionsViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        [MBProgressHUD showHUDWithMessage:@"您还未绑定公司，暂不能预订会议室"];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
