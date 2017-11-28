@@ -26,7 +26,7 @@
 #import <TCCommonLibs/UIImage+Category.h>
 #import <TCCommonLibs/TCFunctions.h>
 #import <WechatOpenSDK/WXApi.h>
-#import <BaofuFuFingerSDK/BaofuFuFingerSDK.h>
+#import <BaofuFuFingerSDK/BaofuFuFingerClient.h>
 
 static CGFloat const subviewHeight = 400;
 static CGFloat const duration = 0.25;

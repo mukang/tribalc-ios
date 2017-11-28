@@ -21,7 +21,7 @@
 #import "WXApiManager.h"
 
 #import <TCCommonLibs/TCFunctions.h>
-#import <BaofuFuFingerSDK/BaofuFuFingerSDK.h>
+#import <BaofuFuFingerSDK/BaofuFuFingerClient.h>
 #import <WechatOpenSDK/WXApi.h>
 
 static CGFloat const subviewHeight = 400;

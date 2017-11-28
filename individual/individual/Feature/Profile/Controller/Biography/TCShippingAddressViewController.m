@@ -16,6 +16,8 @@
 
 #import "TCBuluoApi.h"
 
+#import <UITableView+FDTemplateLayoutCell.h>
+
 @interface TCShippingAddressViewController () <UITableViewDelegate, UITableViewDataSource, TCShippingAddressViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -57,7 +59,7 @@
 }
 
 - (void)setupSubviews {
-    self.tableView.estimatedRowHeight = 115;
+//    self.tableView.estimatedRowHeight = 115;
     UINib *nib = [UINib nibWithNibName:@"TCShippingAddressViewCell" bundle:[NSBundle mainBundle]];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"TCShippingAddressViewCell"];
 }
@@ -101,6 +103,12 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [tableView fd_heightForCellWithIdentifier:@"TCShippingAddressViewCell" configuration:^(TCShippingAddressViewCell *cell) {
+        cell.shippingAddress = weakSelf.dataList[indexPath.row];
+    }];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (isAddressSelect) {

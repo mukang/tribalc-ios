@@ -207,9 +207,6 @@
 		7A243F291F25EC5900192E22 /* TCWalletBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A243F281F25EC5900192E22 /* TCWalletBalanceView.m */; };
 		7A243F351F288EB700192E22 /* TCCompanyWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A243F341F288EB700192E22 /* TCCompanyWalletViewController.m */; };
 		7A243F3B1F28934800192E22 /* TCCompanyWalletTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A243F3A1F28934800192E22 /* TCCompanyWalletTitleView.m */; };
-		7A29366B1F3087CA002ACE31 /* BaofuFuFingerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A2936671F3087CA002ACE31 /* BaofuFuFingerSDK.framework */; };
-		7A29366C1F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A2936681F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a */; };
-		7A29366E1F3087CA002ACE31 /* libEgisDID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A29366A1F3087CA002ACE31 /* libEgisDID.a */; };
 		7A2966761F220EA70073E632 /* TCWalletCreditLimitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2966751F220EA70073E632 /* TCWalletCreditLimitView.m */; };
 		7A2B43911F5FEED80077C3F0 /* TCGoodsStandardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2B43901F5FEED80077C3F0 /* TCGoodsStandardView.m */; };
 		7A2CD74C1F04E2D800CEEF29 /* TCApartmentGuideWithholdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2CD74B1F04E2D800CEEF29 /* TCApartmentGuideWithholdView.m */; };
@@ -247,6 +244,11 @@
 		7A38923A1F39AFF7000DBA30 /* TCCompanyRentPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3892391F39AFF7000DBA30 /* TCCompanyRentPayViewController.m */; };
 		7A38923D1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A38923C1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m */; };
 		7A3892411F3C0928000DBA30 /* TCNotificationNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3892401F3C0928000DBA30 /* TCNotificationNames.m */; };
+		7A3A53671FCD5B1C0021118C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3A53661FCD5AFE0021118C /* Security.framework */; };
+		7A3A53691FCD5B3E0021118C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3A53681FCD5B340021118C /* UIKit.framework */; };
+		7A3A536B1FCD5B9E0021118C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3A536A1FCD5B940021118C /* AdSupport.framework */; };
+		7A3A536F1FCD5C690021118C /* PayegisDID.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7A3A536E1FCD5C680021118C /* PayegisDID.bundle */; };
+		7A3A53711FCD717E0021118C /* BaofuFuFingerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A3A53701FCD717E0021118C /* BaofuFuFingerSDK.framework */; };
 		7A3E5D4E1F73AD1F004ECE83 /* TCPaymentAddBankCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E5D4D1F73AD1F004ECE83 /* TCPaymentAddBankCardViewCell.m */; };
 		7A3E5D511F73DCDE004ECE83 /* TCWechatPaymentRequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E5D501F73DCDE004ECE83 /* TCWechatPaymentRequestInfo.m */; };
 		7A3E5D541F73DD40004ECE83 /* TCWechatPaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3E5D531F73DD40004ECE83 /* TCWechatPaymentInfo.m */; };
@@ -906,9 +908,6 @@
 		7A243F341F288EB700192E22 /* TCCompanyWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyWalletViewController.m; sourceTree = "<group>"; };
 		7A243F391F28934800192E22 /* TCCompanyWalletTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCompanyWalletTitleView.h; sourceTree = "<group>"; };
 		7A243F3A1F28934800192E22 /* TCCompanyWalletTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyWalletTitleView.m; sourceTree = "<group>"; };
-		7A2936671F3087CA002ACE31 /* BaofuFuFingerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaofuFuFingerSDK.framework; sourceTree = "<group>"; };
-		7A2936681F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = dfp_iossdk_lu_3.3.3.a; sourceTree = "<group>"; };
-		7A29366A1F3087CA002ACE31 /* libEgisDID.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEgisDID.a; sourceTree = "<group>"; };
 		7A2966741F220EA70073E632 /* TCWalletCreditLimitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWalletCreditLimitView.h; sourceTree = "<group>"; };
 		7A2966751F220EA70073E632 /* TCWalletCreditLimitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWalletCreditLimitView.m; sourceTree = "<group>"; };
 		7A2B438F1F5FEED80077C3F0 /* TCGoodsStandardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCGoodsStandardView.h; sourceTree = "<group>"; };
@@ -977,6 +976,11 @@
 		7A38923C1F39B13C000DBA30 /* TCCompanyRentPayDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCompanyRentPayDetailView.m; sourceTree = "<group>"; };
 		7A38923F1F3C0928000DBA30 /* TCNotificationNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCNotificationNames.h; sourceTree = "<group>"; };
 		7A3892401F3C0928000DBA30 /* TCNotificationNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCNotificationNames.m; sourceTree = "<group>"; };
+		7A3A53661FCD5AFE0021118C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		7A3A53681FCD5B340021118C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7A3A536A1FCD5B940021118C /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		7A3A536E1FCD5C680021118C /* PayegisDID.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PayegisDID.bundle; sourceTree = "<group>"; };
+		7A3A53701FCD717E0021118C /* BaofuFuFingerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaofuFuFingerSDK.framework; sourceTree = "<group>"; };
 		7A3E5D4C1F73AD1F004ECE83 /* TCPaymentAddBankCardViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCPaymentAddBankCardViewCell.h; sourceTree = "<group>"; };
 		7A3E5D4D1F73AD1F004ECE83 /* TCPaymentAddBankCardViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TCPaymentAddBankCardViewCell.m; sourceTree = "<group>"; };
 		7A3E5D4F1F73DCDE004ECE83 /* TCWechatPaymentRequestInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCWechatPaymentRequestInfo.h; sourceTree = "<group>"; };
@@ -1489,9 +1493,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A3A536B1FCD5B9E0021118C /* AdSupport.framework in Frameworks */,
+				7A3A53691FCD5B3E0021118C /* UIKit.framework in Frameworks */,
+				7A3A53671FCD5B1C0021118C /* Security.framework in Frameworks */,
 				550FB7451ED2F5E300D75E33 /* SystemConfiguration.framework in Frameworks */,
-				7A29366C1F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a in Frameworks */,
 				550FB7431ED2F5BB00D75E33 /* UserNotifications.framework in Frameworks */,
+				7A3A53711FCD717E0021118C /* BaofuFuFingerSDK.framework in Frameworks */,
 				559D84911E0C019F00982697 /* libxml2.tbd in Frameworks */,
 				559D848F1E0C018300982697 /* AVFoundation.framework in Frameworks */,
 				559D848D1E0C017A00982697 /* libsqlite3.tbd in Frameworks */,
@@ -1509,11 +1516,9 @@
 				559D84751E0C00C700982697 /* CoreAudio.framework in Frameworks */,
 				559D84731E0C00BB00982697 /* CoreMedia.framework in Frameworks */,
 				559D84711E0C00B200982697 /* CoreTelephony.framework in Frameworks */,
-				7A29366E1F3087CA002ACE31 /* libEgisDID.a in Frameworks */,
 				559D846F1E0C00A700982697 /* CoreVideo.framework in Frameworks */,
 				559D846D1E0C009B00982697 /* CoreLocation.framework in Frameworks */,
 				559D846B1E0C009300982697 /* QuartzCore.framework in Frameworks */,
-				7A29366B1F3087CA002ACE31 /* BaofuFuFingerSDK.framework in Frameworks */,
 				559D84691E0C008800982697 /* OpenGLES.framework in Frameworks */,
 				559D84671E0C007E00982697 /* MessageUI.framework in Frameworks */,
 				D33E5019C314D7CD7C4A1DA4 /* libPods-individual.a in Frameworks */,
@@ -1814,6 +1819,9 @@
 		3769491CE022BC9EEDD012C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7A3A536A1FCD5B940021118C /* AdSupport.framework */,
+				7A3A53681FCD5B340021118C /* UIKit.framework */,
+				7A3A53661FCD5AFE0021118C /* Security.framework */,
 				550FB7441ED2F5E300D75E33 /* SystemConfiguration.framework */,
 				550FB7421ED2F5BB00D75E33 /* UserNotifications.framework */,
 				559D84901E0C019F00982697 /* libxml2.tbd */,
@@ -3055,9 +3063,8 @@
 		7AB03EFA1EC0759100DFB037 /* BaoFu */ = {
 			isa = PBXGroup;
 			children = (
-				7A2936671F3087CA002ACE31 /* BaofuFuFingerSDK.framework */,
-				7A2936681F3087CA002ACE31 /* dfp_iossdk_lu_3.3.3.a */,
-				7A29366A1F3087CA002ACE31 /* libEgisDID.a */,
+				7A3A53701FCD717E0021118C /* BaofuFuFingerSDK.framework */,
+				7A3A536E1FCD5C680021118C /* PayegisDID.bundle */,
 			);
 			path = BaoFu;
 			sourceTree = "<group>";
@@ -3459,6 +3466,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -3502,6 +3512,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A3A536F1FCD5C690021118C /* PayegisDID.bundle in Resources */,
 				7AEB4CF21E03944500F83A7C /* TCCityPickerView.xib in Resources */,
 				55F06EFC1E03C19500A849D7 /* TCPropertyManageCell.xib in Resources */,
 				7AADCC721EE80154004AA1DA /* TCPaymentDetailView.xib in Resources */,
