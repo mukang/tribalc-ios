@@ -9,17 +9,19 @@
 #import "TCMeetingRoomAddContactsViewController.h"
 
 #import "TCMeetingRoomAddContactsViewCell.h"
+#import "TCMeetingRoomContactsTitleView.h"
+
+#import "TCBuluoApi.h"
 
 #import <TCCommonLibs/TCCommonButton.h>
 #import <TCCommonLibs/TCFunctions.h>
-#import <AddressBook/AddressBook.h>
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
-#import <Contacts/Contacts.h>
-#endif
+#import <PPGetAddressBook/PPGetAddressBook.h>
 
 @interface TCMeetingRoomAddContactsViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) NSMutableArray *participantArray;
+@property (strong, nonatomic) NSMutableDictionary<NSString *,NSArray *> *participantArrayDict;
+@property (strong, nonatomic) NSMutableArray *nameKeyArray;
+@property (strong, nonatomic) NSMutableDictionary *participantDict;
 
 @property (weak, nonatomic) UITableView *tableView;
 
@@ -35,20 +37,18 @@
     
     weakSelf = self;
     self.navigationItem.title = @"添加参会人";
-    self.participantArray = [NSMutableArray array];
+    self.participantArrayDict = [NSMutableDictionary dictionary];
+    self.nameKeyArray = [NSMutableArray array];
+    self.participantDict = [NSMutableDictionary dictionary];
     
     [self setupSubviews];
-    if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
-        [self requestAddressBook];
-    } else {
-        [self requestContacts];
-    }
+    [self loadContacts];
 }
 
 #pragma mark - Private Methods
 
 - (void)setupSubviews {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     tableView.backgroundColor = TCBackgroundColor;
     tableView.separatorColor = TCSeparatorLineColor;
     tableView.estimatedRowHeight = 0;
@@ -60,7 +60,7 @@
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
-    TCCommonButton *saveButton = [TCCommonButton buttonWithTitle:@"确  定"
+    TCCommonButton *saveButton = [TCCommonButton buttonWithTitle:@"保  存"
                                                            color:TCCommonButtonColorPurple
                                                           target:self
                                                           action:@selector(handleClickSaveButton)];
@@ -76,189 +76,64 @@
     }];
 }
 
-- (void)requestAddressBook {
-    [self.participantArray removeAllObjects];
-    
-    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
-    if (status == kABAuthorizationStatusAuthorized) {
-        // 用户已经授权给你的程序对通讯录进行访问
-        [self loadAddressBook];
-    } else if (status == kABAuthorizationStatusNotDetermined) {
-        // 用户还没有决定是否授权你的程序进行访问
-        ABAddressBookRef bookRef = ABAddressBookCreate();
-        ABAddressBookRequestAccessWithCompletion(bookRef, ^(bool granted, CFErrorRef error) {
-            if (granted) { //授权成功
-                TC_CALL_ASYNC_MQ({
-                    [weakSelf loadAddressBook];
-                });
-            }else{
-                TC_CALL_ASYNC_MQ({
-                    [MBProgressHUD showHUDWithMessage:@"授权失败，请稍后重试。"];
-                });
+- (void)loadContacts {
+    [MBProgressHUD showHUD:YES];
+    [[TCBuluoApi api] fetchMeetingRoomCommonContacts:^(NSArray *commonContacts, NSError *error) {
+        if (commonContacts.count) {
+            [weakSelf.participantArrayDict setObject:commonContacts forKey:@"*"];
+            [weakSelf.nameKeyArray addObject:@"*"];
+            for (TCMeetingParticipant *participant in commonContacts) {
+                [weakSelf.participantDict setObject:participant forKey:participant.phone];
             }
-            CFRelease(bookRef);
-        });
-    } else if (status == kABAuthorizationStatusRestricted || status == kABAuthorizationStatusDenied) {
-        // iOS 设备上一些许可配置阻止程序与通讯录数据库进行交互 或 用户明确的拒绝了你的程序对通讯录的访问
-        [MBProgressHUD showHUDWithMessage:@"您的通讯录暂未允许访问，请去设置->隐私里面授权。"];
-    }
-    
-    
-    /*
-     // 这个变量用于记录授权是否成功，即用户是否允许我们访问通讯录
-     int __block tip = 0;
-     //声明一个通讯簿的引用
-     ABAddressBookRef addBook = nil;
-     //创建通讯簿的引用
-     addBook = ABAddressBookCreateWithOptions(NULL, NULL);
-     //创建一个出事信号量为0的信号
-     dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-     //申请访问权限
-     ABAddressBookRequestAccessWithCompletion(addBook, ^(bool granted, CFErrorRef error) {
-     //granted 为YES 是表示用户允许，否则为不允许
-     if (!granted) {
-     tip = 1;
-     }
-     //发送一次信号
-     dispatch_semaphore_signal(sema);
-     });
-     
-     //等待信号触发
-     dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-     if (tip) {
-     //用户没有允许访问通讯录的提示
-     [MBProgressHUD showHUDWithMessage:@"您未允许访问通讯录"];
-     return;
-     }
-     
-     //获取所有联系人的数组
-     CFArrayRef allLinkPeople = ABAddressBookCopyArrayOfAllPeople(addBook);
-     //获取联系人总数
-     CFIndex peopleNumber = ABAddressBookGetPersonCount(addBook);
-     for (int i = 0; i < peopleNumber; i++) {
-     //获取联系人对象的引用
-     ABRecordRef people = CFArrayGetValueAtIndex(allLinkPeople, i);
-     //获取当前联系人名字
-     NSString *firstName = (__bridge NSString *)(ABRecordCopyValue(people, kABPersonFirstNameProperty));
-     //获取当前联系人姓氏
-     NSString *lastName = (__bridge NSString *)(ABRecordCopyValue(people, kABPersonLastNameProperty));
-     
-     ABMultiValueRef phones = ABRecordCopyValue(people, kABPersonPhoneProperty);
-     for (NSInteger j = 0; j < ABMultiValueGetCount(phones); j++) {
-     NSString *phone = (__bridge NSString *)(ABMultiValueCopyValueAtIndex(phones, j));
-     
-     TCMeetingParticipant *participant = [[TCMeetingParticipant alloc] init];
-     participant.name = [NSString stringWithFormat:@"%@%@", lastName, firstName];
-     participant.phone = phone;
-     
-     [self.participantArray addObject:participant];
-     }
-     //读取照片
-     //        NSData *image = (__bridge NSData *)(ABPersonCopyImageData(people));
-     }
-     
-     [weakSelf.tableView reloadData];
-     */
+        }
+        [weakSelf loadAddressBook];
+    }];
 }
 
 - (void)loadAddressBook {
-    // 创建通讯录对象
-    ABAddressBookRef bookRef = ABAddressBookCreate();
-    // 获取通讯录中所有的联系人
-    CFArrayRef arrayRef = ABAddressBookCopyArrayOfAllPeople(bookRef);
-    
-    // 遍历所有联系人
-    CFIndex count = CFArrayGetCount(arrayRef);
-    for (int i = 0; i < count; i++){
-        ABRecordRef record = CFArrayGetValueAtIndex(arrayRef, i);
-        
-        // 获取姓名
-        NSString *firstName = (__bridge_transfer NSString *)ABRecordCopyValue(record, kABPersonFirstNameProperty);
-        NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(record, kABPersonLastNameProperty);
-        
-        // 获取电话号码
-        ABMultiValueRef multiValue = ABRecordCopyValue(record, kABPersonPhoneProperty);
-        CFIndex phoneCount = ABMultiValueGetCount(multiValue);
-        for (int j = 0; j < phoneCount; j ++){
-//            NSString *label = (__bridge_transfer NSString *)ABMultiValueCopyLabelAtIndex(multiValue, j);
-            NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(multiValue, j);
-            
-            TCMeetingParticipant *participant = [[TCMeetingParticipant alloc] init];
-            participant.name = [NSString stringWithFormat:@"%@%@", lastName, firstName];
-            participant.phone = [weakSelf formatPhoneNum:phone];
-            
-            [self.participantArray addObject:participant];
-        }
-        
-        CFRelease(multiValue);
-    }
-    
-    CFRelease(bookRef);
-    CFRelease(arrayRef);
-}
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
-
-- (void)requestContacts {
-    [self.participantArray removeAllObjects];
-    
-    //用户允许访问数据
-    //判断是否授权
-    CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
-    if (status == CNAuthorizationStatusAuthorized) {
-        // 用户已经授权给你的程序对通讯录进行访问
-        [self loadContacts];
-    } else if (status == CNAuthorizationStatusNotDetermined){
-        // 用户还没有决定是否授权你的程序进行访问
-        CNContactStore *store = [[CNContactStore alloc] init];
-        [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
-            if (granted) { //授权成功
-                TC_CALL_ASYNC_MQ({
-                    [weakSelf loadContacts];
-                });
-            }else{
-                TC_CALL_ASYNC_MQ({
-                    [MBProgressHUD showHUDWithMessage:@"授权失败，请稍后重试。"];
-                });
-            }
-        }];
-    }else if (status == CNAuthorizationStatusRestricted || status == CNAuthorizationStatusDenied){
-        // iOS 设备上一些许可配置阻止程序与通讯录数据库进行交互 或 用户明确的拒绝了你的程序对通讯录的访问
-        [MBProgressHUD showHUDWithMessage:@"您的通讯录暂未允许访问，请去设置->隐私里面授权。"];
-    }
-}
-
-- (void)loadContacts {
-    [MBProgressHUD showHUD:YES];
-    //获取联系人仓库
-    CNContactStore *store = [[CNContactStore alloc]init];
-    //创建联系人信息的请求对象
-    NSArray *keys = @[CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey];
-    //根据请求key，获取请求对象
-    CNContactFetchRequest *request = [[CNContactFetchRequest alloc] initWithKeysToFetch:keys];
-    //发送请求
-    [store enumerateContactsWithFetchRequest:request error:nil usingBlock:^(CNContact * _Nonnull contact, BOOL * _Nonnull stop) {
-        //获取姓名
-        NSString *givenName = contact.givenName;
-        NSString *familyName = contact.familyName;
-        
-        //获取电话
-        NSArray *phoneArray = contact.phoneNumbers;
-        for (CNLabeledValue *labelValue in phoneArray) {
-            CNPhoneNumber *number = labelValue.value;
-            
-            TCMeetingParticipant *participant = [[TCMeetingParticipant alloc] init];
-            participant.name = [NSString stringWithFormat:@"%@%@", familyName, givenName];
-            participant.phone = [weakSelf formatPhoneNum:number.stringValue];
-            
-            [weakSelf.participantArray addObject:participant];
-        }
+    [PPGetAddressBook getOrderAddressBook:^(NSDictionary<NSString *,NSArray *> *addressBookDict, NSArray *nameKeys) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [weakSelf formatContactsWithAddressBookDict:addressBookDict nameKeys:nameKeys];
+        });
+    } authorizationFailure:^{
+        [MBProgressHUD hideHUD:YES];
+        UIAlertController *vc = [UIAlertController alertControllerWithTitle:@"温馨提示"
+                                                                    message:@"请在iPhone的“设置-隐私-通讯录”选项中，允许“嗨托邦”访问您的通讯录"
+                                                             preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil];
+        [vc addAction:action];
+        [weakSelf presentViewController:vc animated:YES completion:nil];
     }];
-    [MBProgressHUD hideHUD:YES];
-    [weakSelf.tableView reloadData];
 }
 
-#endif
+- (void)formatContactsWithAddressBookDict:(NSDictionary<NSString *,NSArray *> *)addressBookDict nameKeys:(NSArray *)nameKeys {
+    [self.nameKeyArray addObjectsFromArray:nameKeys];
+    for (int i=0; i<nameKeys.count; i++) {
+        NSString *nameKey = nameKeys[i];
+        NSArray *array = addressBookDict[nameKey];
+        NSMutableArray *temp = [NSMutableArray arrayWithCapacity:array.count];
+        for (int j=0; j<array.count; j++) {
+            PPPersonModel *personModel = array[j];
+            NSString *name = personModel.name;
+            for (int z=0; z<personModel.mobileArray.count; z++) {
+                NSString *phone = personModel.mobileArray[z];
+                if (!self.participantDict[phone]) {
+                    TCMeetingParticipant *participant = [[TCMeetingParticipant alloc] init];
+                    participant.name = name;
+                    participant.phone = phone;
+                    participant.selected = self.selectedParticipantDict[phone] ? YES : NO;
+                    [self.participantDict setObject:participant forKey:phone];
+                    [temp addObject:participant];
+                }
+            }
+        }
+        [self.participantArrayDict setObject:temp forKey:nameKey];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideHUD:YES];
+        [weakSelf.tableView reloadData];
+    });
+}
 
 - (NSString *)formatPhoneNum:(NSString *)originPhoneNum {
     originPhoneNum = [originPhoneNum stringByReplacingOccurrencesOfString:@"+86" withString:@""];
@@ -275,15 +150,27 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.nameKeyArray.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.participantArray.count;
+    NSString *nameKey = self.nameKeyArray[section];
+    NSArray *array = self.participantArrayDict[nameKey];
+    return array.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TCMeetingRoomAddContactsViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomAddContactsViewCell" forIndexPath:indexPath];
-    TCMeetingParticipant *participant = self.participantArray[indexPath.row];
+    NSString *nameKey = self.nameKeyArray[indexPath.section];
+    NSArray *array = self.participantArrayDict[nameKey];
+    TCMeetingParticipant *participant = array[indexPath.row];
     cell.participant = participant;
     return cell;
+}
+
+- (NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return self.nameKeyArray;
 }
 
 #pragma mark - UITableViewDelegate
@@ -293,34 +180,42 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 7;
+    return 25;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    TCMeetingRoomContactsTitleView *view = [[TCMeetingRoomContactsTitleView alloc] init];
+    if (section == 0 && self.nameKeyArray.count && [self.nameKeyArray[0] isEqualToString:@"*"]) {
+        view.title = @"常用联系人";
+    } else {
+        view.title = self.nameKeyArray[section];
+    }
+    return view;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TCMeetingParticipant *participant = self.participantArray[indexPath.row];
+    NSString *nameKey = self.nameKeyArray[indexPath.section];
+    NSArray *array = self.participantArrayDict[nameKey];
+    TCMeetingParticipant *participant = array[indexPath.row];
+    if (participant.isSelected) {
+        [self.selectedParticipantDict removeObjectForKey:participant.phone];
+    } else {
+        [self.selectedParticipantDict setObject:participant forKey:participant.phone];
+    }
     participant.selected = !participant.isSelected;
-    
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Actions
 
 - (void)handleClickSaveButton {
-    if ([self.delegate respondsToSelector:@selector(meetingRoomAddContactsViewController:didClickSaveButtonWithParticipantArray:)]) {
-        NSMutableArray *temp = [NSMutableArray array];
-        for (TCMeetingParticipant *participant in self.participantArray) {
-            if (participant.isSelected) {
-                [temp addObject:participant];
-            }
-        }
-        
-        [self.delegate meetingRoomAddContactsViewController:self didClickSaveButtonWithParticipantArray:[temp copy]];
+    if ([self.delegate respondsToSelector:@selector(meetingRoomAddContactsViewController:didClickSaveButtonWithSelectedParticipantDict:)]) {
+        [self.delegate meetingRoomAddContactsViewController:self didClickSaveButtonWithSelectedParticipantDict:self.selectedParticipantDict];
     }
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

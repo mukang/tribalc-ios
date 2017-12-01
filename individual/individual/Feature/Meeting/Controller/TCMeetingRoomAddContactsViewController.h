@@ -11,6 +11,7 @@
 @protocol TCMeetingRoomAddContactsViewControllerDelegate;
 @interface TCMeetingRoomAddContactsViewController : TCBaseViewController
 
+@property (strong, nonatomic) NSMutableDictionary *selectedParticipantDict;
 @property (weak, nonatomic) id<TCMeetingRoomAddContactsViewControllerDelegate> delegate;
 
 @end
@@ -19,6 +20,6 @@
 @protocol TCMeetingRoomAddContactsViewControllerDelegate <NSObject>
 
 @optional
-- (void)meetingRoomAddContactsViewController:(TCMeetingRoomAddContactsViewController *)vc didClickSaveButtonWithParticipantArray:(NSArray *)participantArray;
+- (void)meetingRoomAddContactsViewController:(TCMeetingRoomAddContactsViewController *)vc didClickSaveButtonWithSelectedParticipantDict:(NSMutableDictionary *)selectedParticipantDict;
 
 @end

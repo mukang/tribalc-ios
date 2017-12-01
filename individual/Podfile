@@ -16,4 +16,5 @@ pod 'FLEX', '~> 2.0', :configurations => ['Debug']
 pod 'Bugly'
 pod 'WechatOpenSDK'
 pod 'QQ_XGPush', '~> 2.5.0'
+pod 'PPGetAddressBook',:git => 'https://github.com/jkpang/PPGetAddressBook.git'
 end

@@ -7,10 +7,15 @@
 //
 
 #import <TCCommonLibs/TCBaseViewController.h>
+#import "TCMeetingParticipant.h"
+
+typedef void(^TCAddAttendeeBlock)(TCMeetingParticipant *participant);
 
 /**
  添加参会人
  */
 @interface TCMeetingRoomAddAttendeeViewController : TCBaseViewController
+
+@property (copy, nonatomic) TCAddAttendeeBlock addAttendeeblock;
 
 @end

@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MGSwipeTableCell/MGSwipeTableCell.h>
 #import "TCMeetingParticipant.h"
 
-@interface TCMeetingRoomContactsViewCell : UITableViewCell
+@interface TCMeetingRoomContactsViewCell : MGSwipeTableCell
 
 @property (strong, nonatomic) TCMeetingParticipant *participant;
 
 @end
+

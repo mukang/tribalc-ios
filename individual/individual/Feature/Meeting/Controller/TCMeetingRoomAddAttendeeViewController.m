@@ -24,6 +24,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.view.backgroundColor = TCBackgroundColor;
     self.navigationItem.title = @"参会人";
     [self setupSubviews];
 }
@@ -74,7 +75,14 @@
         return;
     }
     
+    TCMeetingParticipant *participant = [[TCMeetingParticipant alloc] init];
+    participant.name = name;
+    participant.phone = phone;
     
+    if (self.addAttendeeblock) {
+        self.addAttendeeblock(participant);
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (BOOL)deptNumInputShouldNumber:(NSString *)str {

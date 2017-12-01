@@ -7,11 +7,11 @@
 //
 
 #import "TCMeetingRoomContactsViewCell.h"
-#import "TCMeetingRoomContactsView.h"
 
 @interface TCMeetingRoomContactsViewCell ()
 
-@property (weak, nonatomic) TCMeetingRoomContactsView *contactsView;
+@property (weak, nonatomic) UILabel *nameLabel;
+@property (weak, nonatomic) UILabel *phoneLabel;
 
 @end
 
@@ -30,38 +30,43 @@
 - (void)setupSubviews {
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    TCMeetingRoomContactsView *contactsView = [[TCMeetingRoomContactsView alloc] init];
-    [self.contentView addSubview:contactsView];
-    self.contactsView = contactsView;
+    MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"删除" backgroundColor:TCRGBColor(252, 68, 68)];
+    [deleteButton setEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 20)];
+    self.rightButtons = @[deleteButton];
+    self.rightSwipeSettings.transition = MGSwipeTransitionDrag;
     
-    UIView *lineView = [[UIView alloc] init];
-    lineView.backgroundColor = TCSeparatorLineColor;
-    [self.contentView addSubview:lineView];
+    UILabel *nameLabel = [[UILabel alloc] init];
+    nameLabel.textColor = TCBlackColor;
+    nameLabel.font = [UIFont systemFontOfSize:16];
+    [self.contentView addSubview:nameLabel];
     
-    UIImageView *avatarView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"meeting_room_contacts_avatar"]];
-    [self.contentView addSubview:avatarView];
+    UILabel *phoneLabel = [[UILabel alloc] init];
+    phoneLabel.textColor = TCBlackColor;
+    phoneLabel.textAlignment = NSTextAlignmentRight;
+    phoneLabel.font = [UIFont systemFontOfSize:16];
+    [self.contentView addSubview:phoneLabel];
     
-    [contactsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.bottom.equalTo(self.contentView);
-        make.right.equalTo(self.contentView.mas_right).offset(-65);
-    }];
-    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(0.5);
-        make.top.bottom.equalTo(self.contentView);
-        make.left.equalTo(contactsView.mas_right);
-    }];
-    [avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(47.5, 47.5));
+    self.nameLabel = nameLabel;
+    self.phoneLabel = phoneLabel;
+    
+    [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).offset(20);
+        make.right.equalTo(phoneLabel.mas_left).offset(-20);
         make.centerY.equalTo(self.contentView);
-        make.centerX.equalTo(self.contentView.mas_right).offset(-32.5);
     }];
+    [phoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.contentView).offset(-20);
+        make.centerY.equalTo(self.contentView);
+    }];
+    [phoneLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [phoneLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 - (void)setParticipant:(TCMeetingParticipant *)participant {
     _participant = participant;
     
-    self.contactsView.nameLabel.text = participant.name;
-    self.contactsView.phoneLabel.text = participant.phone;
+    self.nameLabel.text = participant.name;
+    self.phoneLabel.text = participant.phone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

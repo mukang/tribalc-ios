@@ -1078,5 +1078,12 @@ typedef NS_ENUM(NSInteger, TCUploadImageType) { // 上传图像类型
  */
 - (void)modifyMeetingRoomBookingInfo:(TCBookingRequestInfo *)bookingRequestInfo bookingOrderID:(NSString *)bookingOrderID result:(void (^)(BOOL success, NSError *error))resultBlock;
 
+/**
+ 获取常用联系人
+
+ @param resultBlock 结果回调
+ */
+- (void)fetchMeetingRoomCommonContacts:(void (^)(NSArray *commonContacts, NSError *error))resultBlock;
+
 @end
 

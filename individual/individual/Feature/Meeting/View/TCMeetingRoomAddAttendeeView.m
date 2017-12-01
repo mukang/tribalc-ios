@@ -31,6 +31,9 @@
     TCNumberTextField *phoneTextField = [self createTextFieldWithPlaceholder:@"请您填写电话号码"];
     phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     
+    self.nameTextField = nameTextField;
+    self.phoneTextField = phoneTextField;
+    
     [topLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self);
     }];
