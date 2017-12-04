@@ -238,7 +238,7 @@
 
 - (TCCommonButton *)modifyBtn {
     if (_modifyBtn == nil) {
-        _modifyBtn = [TCCommonButton buttonWithTitle:@"确认修改" target:self action:@selector(modify)];
+        _modifyBtn = [TCCommonButton buttonWithTitle:@"确认修改" color:TCCommonButtonColorPurple target:self action:@selector(modify)];
     }
     return _modifyBtn;
 }

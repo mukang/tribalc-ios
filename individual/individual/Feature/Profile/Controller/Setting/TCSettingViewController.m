@@ -53,7 +53,7 @@
     [tableView registerClass:[TCCommonIndicatorViewCell class] forCellReuseIdentifier:@"TCCommonIndicatorViewCell"];
     [self.view addSubview:tableView];
     
-    TCCommonButton *logouButton = [TCCommonButton buttonWithTitle:@"退出" target:self action:@selector(handleClickLogoutButton:)];
+    TCCommonButton *logouButton = [TCCommonButton buttonWithTitle:@"退出" color:TCCommonButtonColorPurple target:self action:@selector(handleClickLogoutButton:)];
     [self.view addSubview:logouButton];
     
     [tableView mas_makeConstraints:^(MASConstraintMaker *make) {

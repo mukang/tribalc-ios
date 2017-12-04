@@ -55,8 +55,10 @@
         _type = TCMessageTypeWelfarePayment;
     } else if ([homeMessageTypeEnum isEqualToString:@"CONFERENCE_RESERVATION_SUCCESS"]) {
         _type = TCMessageTypeConferenceReservation;
-    }else if ([homeMessageTypeEnum isEqualToString:@"CONFERENCE_RESERVATION_REMIND"]){
+    } else if ([homeMessageTypeEnum isEqualToString:@"CONFERENCE_RESERVATION_REMIND"]){
         _type = TCMessageTypeConferenceReservationRemind;
+    } else if ([homeMessageTypeEnum isEqualToString:@"CONFERENCE_RESERVATION_CANCEL"]){
+        _type = TCMessageTypeConferenceReservationCancel;
     } else {
         _type = TCMessageTypeOther;
     }
