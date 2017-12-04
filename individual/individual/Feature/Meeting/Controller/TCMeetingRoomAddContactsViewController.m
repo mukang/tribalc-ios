@@ -78,6 +78,8 @@
 
 - (void)loadContacts {
     [MBProgressHUD showHUD:YES];
+    [weakSelf loadAddressBook];
+    /*
     [[TCBuluoApi api] fetchMeetingRoomCommonContacts:^(NSArray *commonContacts, NSError *error) {
         if (commonContacts.count) {
             [weakSelf.participantArrayDict setObject:commonContacts forKey:@"*"];
@@ -88,6 +90,7 @@
         }
         [weakSelf loadAddressBook];
     }];
+     */
 }
 
 - (void)loadAddressBook {
@@ -135,6 +138,7 @@
     });
 }
 
+/*
 - (NSString *)formatPhoneNum:(NSString *)originPhoneNum {
     originPhoneNum = [originPhoneNum stringByReplacingOccurrencesOfString:@"+86" withString:@""];
     
@@ -147,6 +151,7 @@
     
     return phoneNum;
 }
+ */
 
 #pragma mark - UITableViewDataSource
 
