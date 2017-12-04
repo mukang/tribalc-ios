@@ -117,7 +117,8 @@
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 64 - TCRealValue(49), self.view.width, TCRealValue(49))];
     UILabel *payMoneyLab = [TCComponent createLabelWithFrame:CGRectMake(TCRealValue(20), 0, TCRealValue(35), bottomView.height) AndFontSize:TCRealValue(14) AndTitle:@"合计:"];
     [bottomView addSubview:payMoneyLab];
-    UIButton *confirmPayBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - TCScreenWidth / 2, 0, TCScreenWidth / 2, bottomView.height) AndTitle:@"去付款" AndFontSize:TCRealValue(16) AndBackColor:[UIColor colorWithRed:81/255.0 green:199/255.0 blue:209/255.0 alpha:1] AndTextColor:[UIColor whiteColor]];
+    
+    UIButton *confirmPayBtn = [TCComponent createButtonWithFrame:CGRectMake(bottomView.width - TCScreenWidth / 2, 0, TCScreenWidth / 2, bottomView.height) AndTitle:@"去付款" AndFontSize:TCRealValue(16) AndBackColor:TCRGBColor(151, 171, 234) AndTextColor:[UIColor whiteColor]];
     [confirmPayBtn addTarget:self action:@selector(touchOrderPayBtn:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:confirmPayBtn];
     self.confirmPayBtn = confirmPayBtn;

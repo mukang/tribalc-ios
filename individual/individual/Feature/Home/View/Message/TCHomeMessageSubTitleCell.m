@@ -37,11 +37,16 @@
 - (void)setHomeMessage:(TCHomeMessage *)homeMessage {
     [super setHomeMessage:homeMessage];
     
-    if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeConferenceReservation || homeMessage.messageBody.homeMessageType.type == TCMessageTypeConferenceReservationRemind) {
+    if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeConferenceReservation || homeMessage.messageBody.homeMessageType.type == TCMessageTypeConferenceReservationRemind || homeMessage.messageBody.homeMessageType.type == TCMessageTypeConferenceReservationCancel) {
         self.mainTitleLabel.text = homeMessage.messageBody.body;
         self.leftSubTitleLabel.text = [NSString stringWithFormat:@"会议室：%@",homeMessage.messageBody.desc];
-        self.secondSubTitleLabel.text = [NSString stringWithFormat:@"参会时间：%@",[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:homeMessage.messageBody.applicationTime/1000]]];
-        self.thirdSubTitleLabel.text = [NSString stringWithFormat:@"会议主题：%@",homeMessage.messageBody.remark];
+        if (homeMessage.messageBody.homeMessageType.type == TCMessageTypeConferenceReservationCancel) {
+            self.secondSubTitleLabel.text = [NSString stringWithFormat:@"取消时间：%@",[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:homeMessage.messageBody.applicationTime/1000]]];
+            self.thirdSubTitleLabel.text = [NSString stringWithFormat:@"取消人：%@",homeMessage.messageBody.remark];
+        }else {
+            self.secondSubTitleLabel.text = [NSString stringWithFormat:@"参会时间：%@",[self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:homeMessage.messageBody.applicationTime/1000]]];
+            self.thirdSubTitleLabel.text = [NSString stringWithFormat:@"会议主题：%@",homeMessage.messageBody.remark];
+        }
         return;
     }
     
