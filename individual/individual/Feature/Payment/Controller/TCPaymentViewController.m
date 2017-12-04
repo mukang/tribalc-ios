@@ -65,6 +65,9 @@ WXApiManagerDelegate
 
 @property (copy, nonatomic) NSString *walletID;
 
+/** 余额支付正在进行中 */
+@property (nonatomic, getter=isUnderWay) BOOL underWay;
+
 @end
 
 @implementation TCPaymentViewController {
@@ -77,6 +80,7 @@ WXApiManagerDelegate
     if (self) {
         _totalFee = totalFee;
         _payPurpose = payPurpose;
+        _underWay = NO;
         weakSelf = self;
         sourceController = controller;
     }
@@ -584,6 +588,10 @@ WXApiManagerDelegate
         [MBProgressHUD showHUDWithMessage:@"付款失败，密码错误"];
         return;
     }
+    if (self.isUnderWay) {
+        return;
+    }
+    self.underWay = YES;
     
     [MBProgressHUD showHUD:YES];
     TCPaymentRequestInfo *requestInfo = [[TCPaymentRequestInfo alloc] init];
@@ -600,8 +608,10 @@ WXApiManagerDelegate
                 });
             } else if ([userPayment.status isEqualToString:@"FAILURE"]) { // 错误（余额不足）
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", userPayment.note]];
+                weakSelf.underWay = NO;
             } else { // 付款成功
                 [weakSelf handlePaymentSucceedWithPayment:userPayment];
+                weakSelf.underWay = NO;
             }
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
@@ -611,6 +621,7 @@ WXApiManagerDelegate
             } else {
                 [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
             }
+            weakSelf.underWay = NO;
         }
     }];
 }
@@ -630,6 +641,7 @@ WXApiManagerDelegate
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"付款失败，%@", reason]];
         }
+        weakSelf.underWay = NO;
     }];
 }
 

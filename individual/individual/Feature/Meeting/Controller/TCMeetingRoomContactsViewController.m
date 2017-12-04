@@ -8,27 +8,21 @@
 
 #import "TCMeetingRoomContactsViewController.h"
 #import "TCMeetingRoomAddContactsViewController.h"
+#import "TCMeetingRoomAddAttendeeViewController.h"
 #import "TCNavigationController.h"
 
 #import "TCMeetingRoomNoParticipantView.h"
 #import "TCMeetingRoomContactsViewCell.h"
-#import "TCMeetingRoomDeleteContactsViewCell.h"
 
 #import <TCCommonLibs/TCCommonButton.h>
+#import <TCCommonLibs/UIImage+Category.h>
+#import <PPGetAddressBook/PPGetAddressBook.h>
 
-typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
-    TCMeetingRoomContactsTypeNormal = 0,
-    TCMeetingRoomContactsTypeEditing
-};
-
-@interface TCMeetingRoomContactsViewController () <UITableViewDataSource, UITableViewDelegate, TCMeetingRoomAddContactsViewControllerDelegate, TCMeetingRoomDeleteContactsViewCellDelegate>
+@interface TCMeetingRoomContactsViewController () <UITableViewDataSource, UITableViewDelegate, TCMeetingRoomAddContactsViewControllerDelegate, MGSwipeTableCellDelegate>
 
 @property (weak, nonatomic) TCMeetingRoomNoParticipantView *noParticipantView;
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) TCCommonButton *button;
-
-
-@property (nonatomic) TCMeetingRoomContactsType type;
 
 @property (weak, nonatomic) TCNavigationController *nav;
 @property (nonatomic) BOOL originInteractivePopGestureEnabled;
@@ -41,6 +35,9 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _controllerType = controllerType;
+        _participants = [NSMutableArray array];
+        //请求用户获取通讯录权限
+        [PPGetAddressBook requestAddressBookAuthorization];
     }
     return self;
 }
@@ -50,8 +47,7 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
     // Do any additional setup after loading the view.
     
     self.navigationItem.title = @"参会人";
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.type = TCMeetingRoomContactsTypeNormal;
+    self.view.backgroundColor = TCBackgroundColor;
     
     [self setupSubviews];
 }
@@ -83,7 +79,6 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
     tableView.dataSource = self;
     tableView.delegate = self;
     [tableView registerClass:[TCMeetingRoomContactsViewCell class] forCellReuseIdentifier:@"TCMeetingRoomContactsViewCell"];
-    [tableView registerClass:[TCMeetingRoomDeleteContactsViewCell class] forCellReuseIdentifier:@"TCMeetingRoomDeleteContactsViewCell"];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     
@@ -94,31 +89,35 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
         [self.view addSubview:noParticipantView];
         self.noParticipantView = noParticipantView;
         
-        TCCommonButton *button = [TCCommonButton buttonWithTitle:@"＋添加参会人"
-                                                           color:TCCommonButtonColorPurple
-                                                          target:self
-                                                          action:@selector(handleClickButton)];
-        [self.view addSubview:button];
-        self.button = button;
+        UIButton *directlyAddButton = [self creatButtonWithTitle:@"直接添加"
+                                                     normalImage:[UIImage imageWithColor:TCRGBColor(151, 171, 234)]
+                                                highlightedImage:[UIImage imageWithColor:TCRGBColor(125, 151, 234)]];
+        [directlyAddButton addTarget:self action:@selector(handleClickDirectlyAddButton) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:directlyAddButton];
+        
+        UIButton *addressBookButton = [self creatButtonWithTitle:@"通讯录导入"
+                                                     normalImage:[UIImage imageWithColor:TCRGBColor(113, 130, 220)]
+                                                highlightedImage:[UIImage imageWithColor:TCRGBColor(90, 111, 220)]];
+        [addressBookButton addTarget:self action:@selector(handleClickAddressBookButton) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:addressBookButton];
         
         [noParticipantView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.left.right.equalTo(self.view);
-            make.bottom.equalTo(button.mas_top);
+            make.bottom.equalTo(directlyAddButton.mas_top);
         }];
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        [directlyAddButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(buttonH);
-            make.bottom.left.right.equalTo(self.view);
+            make.bottom.left.equalTo(self.view);
+            make.right.equalTo(addressBookButton.mas_left);
+        }];
+        [addressBookButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.equalTo(directlyAddButton);
+            make.bottom.right.equalTo(self.view);
         }];
         
         if (self.participants.count) {
             noParticipantView.hidden = YES;
             tableView.hidden = NO;
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑"
-                                                                                      style:UIBarButtonItemStylePlain
-                                                                                     target:self
-                                                                                     action:@selector(handleClickItem)];
-            [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15]}
-                                                                  forState:UIControlStateNormal];
         } else {
             noParticipantView.hidden = NO;
             tableView.hidden = YES;
@@ -130,35 +129,34 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
     }];
 }
 
+- (UIButton *)creatButtonWithTitle:(NSString *)title normalImage:(UIImage *)normalImage highlightedImage:(UIImage *)highlightedImage {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:normalImage forState:UIControlStateNormal];
+    [button setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:16];
+    return button;
+}
+
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.participants.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.type == TCMeetingRoomContactsTypeNormal) {
-        TCMeetingRoomContactsViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomContactsViewCell" forIndexPath:indexPath];
-        TCMeetingParticipant *participant = self.participants[indexPath.section];
-        cell.participant = participant;
-        return cell;
-    } else {
-        TCMeetingRoomDeleteContactsViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomDeleteContactsViewCell" forIndexPath:indexPath];
-        TCMeetingParticipant *participant = self.participants[indexPath.section];
-        cell.participant = participant;
-        cell.delegate = self;
-        return cell;
-    }
+    TCMeetingRoomContactsViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TCMeetingRoomContactsViewCell" forIndexPath:indexPath];
+    TCMeetingParticipant *participant = self.participants[indexPath.row];
+    cell.participant = participant;
+    cell.delegate = self;
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 90;
+    return 45;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -171,104 +169,79 @@ typedef NS_ENUM(NSInteger, TCMeetingRoomContactsType) {
 
 #pragma mark - TCMeetingRoomAddContactsViewControllerDelegate
 
-- (void)meetingRoomAddContactsViewController:(TCMeetingRoomAddContactsViewController *)vc didClickSaveButtonWithParticipantArray:(NSArray *)participantArray {
-    self.noParticipantView.hidden = YES;
-    self.tableView.hidden = NO;
-    for (TCMeetingParticipant *participant in participantArray) {
-        participant.selected = NO;
+- (void)meetingRoomAddContactsViewController:(TCMeetingRoomAddContactsViewController *)vc didClickSaveButtonWithSelectedParticipantDict:(NSMutableDictionary *)selectedParticipantDict {
+    NSMutableArray *tempArray = [NSMutableArray array];
+    for (NSString *key in selectedParticipantDict.allKeys) {
+        [tempArray addObject:selectedParticipantDict[key]];
     }
-    [self.participants addObjectsFromArray:participantArray];
+    if (tempArray.count) {
+        self.noParticipantView.hidden = YES;
+        self.tableView.hidden = NO;
+    } else {
+        self.noParticipantView.hidden = NO;
+        self.tableView.hidden = YES;
+    }
+    self.participants = tempArray;
     [self.tableView reloadData];
-    
-    if (self.participants.count) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑"
-                                                                                  style:UIBarButtonItemStylePlain
-                                                                                 target:self
-                                                                                 action:@selector(handleClickItem)];
-        [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15]}
-                                                              forState:UIControlStateNormal];
+}
+
+#pragma mark - MGSwipeTableCellDelegate
+
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
+    if (self.controllerType == TCMeetingRoomContactsViewControllerTypeAdd) {
+        return YES;
+    } else {
+        return NO;
     }
 }
 
-#pragma mark - TCMeetingRoomDeleteContactsViewCellDelegate
-
-- (void)meetingRoomDeleteContactsViewCell:(TCMeetingRoomDeleteContactsViewCell *)cell didTapSelectedViewWithParticipant:(TCMeetingParticipant *)participant {
-    participant.selected = !participant.isSelected;
-    
+- (BOOL)swipeTableCell:(TCMeetingRoomContactsViewCell *)cell tappedButtonAtIndex:(NSInteger)index direction:(MGSwipeDirection)direction fromExpansion:(BOOL)fromExpansion {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.participants removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    return YES;
 }
 
 #pragma mark - Actions
 
-- (void)handleClickButton {
-    if (self.type == TCMeetingRoomContactsTypeNormal) {
-        TCMeetingRoomAddContactsViewController *vc = [[TCMeetingRoomAddContactsViewController alloc] init];
-        vc.delegate = self;
-        [self.navigationController pushViewController:vc animated:YES];
-    } else {
-        NSMutableArray *temp = [NSMutableArray array];
-        for (TCMeetingParticipant *participant in self.participants) {
-            if (participant.isSelected) {
-                [temp addObject:participant];
+- (void)handleClickDirectlyAddButton {
+    __weak typeof(self) weakSelf = self;
+    TCMeetingRoomAddAttendeeViewController *vc = [[TCMeetingRoomAddAttendeeViewController alloc] init];
+    vc.addAttendeeblock = ^(TCMeetingParticipant *participant) {
+        weakSelf.noParticipantView.hidden = YES;
+        weakSelf.tableView.hidden = NO;
+        int index = -1;
+        for (int i=0; i<weakSelf.participants.count; i++) {
+            TCMeetingParticipant *temp = weakSelf.participants[i];
+            if ([participant.phone isEqualToString:temp.phone]) {
+                index = i;
+                break;
             }
         }
-        for (TCMeetingParticipant *participant in temp) {
-            [self.participants removeObject:participant];
+        if (index >= 0) {
+            [weakSelf.participants replaceObjectAtIndex:index withObject:participant];
+        } else {
+            [weakSelf.participants addObject:participant];
         }
-        [self.tableView reloadData];
-    }
+        [weakSelf.tableView reloadData];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)handleClickItem {
-    if (self.type == TCMeetingRoomContactsTypeNormal) {
-        for (TCMeetingParticipant *participant in self.participants) {
-            participant.selected = NO;
-        }
-        self.type = TCMeetingRoomContactsTypeEditing;
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存"
-                                                                                  style:UIBarButtonItemStylePlain
-                                                                                 target:self
-                                                                                 action:@selector(handleClickItem)];
-        [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15]}
-                                                              forState:UIControlStateNormal];
-        NSAttributedString *attTitle = [[NSAttributedString alloc] initWithString:@"删  除"
-                                                                       attributes:@{
-                                                                                    NSFontAttributeName: [UIFont systemFontOfSize:16],
-                                                                                    NSForegroundColorAttributeName: [UIColor whiteColor]
-                                                                                    }];
-        [self.button setAttributedTitle:attTitle forState:UIControlStateNormal];
-        [self.tableView reloadData];
-    } else {
-        self.type = TCMeetingRoomContactsTypeNormal;
-        if (self.participants.count) {
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑"
-                                                                                      style:UIBarButtonItemStylePlain
-                                                                                     target:self
-                                                                                     action:@selector(handleClickItem)];
-            [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15]}
-                                                                  forState:UIControlStateNormal];
-        } else {
-            self.navigationItem.rightBarButtonItem = nil;
-            self.noParticipantView.hidden = NO;
-            self.tableView.hidden = YES;
-        }
-        NSAttributedString *attTitle = [[NSAttributedString alloc] initWithString:@"＋添加参会人"
-                                                                       attributes:@{
-                                                                                    NSFontAttributeName: [UIFont systemFontOfSize:16],
-                                                                                    NSForegroundColorAttributeName: [UIColor whiteColor]
-                                                                                    }];
-        [self.button setAttributedTitle:attTitle forState:UIControlStateNormal];
-        [self.tableView reloadData];
+- (void)handleClickAddressBookButton {
+    TCMeetingRoomAddContactsViewController *vc = [[TCMeetingRoomAddContactsViewController alloc] init];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:self.participants.count];
+    for (int i=0; i<self.participants.count; i++) {
+        TCMeetingParticipant *participant = self.participants[i];
+        [dict setObject:participant forKey:participant.phone];
     }
+    vc.selectedParticipantDict = dict;
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    if (self.type == TCMeetingRoomContactsTypeEditing) {
-        [MBProgressHUD showHUDWithMessage:@"请保存之后再退出"];
-        return;
-    }
-    
     if ([self.delegate respondsToSelector:@selector(didClickBackButtonInMeetingRoomContactsViewController:)]) {
         [self.delegate didClickBackButtonInMeetingRoomContactsViewController:self];
     }

@@ -60,6 +60,8 @@ static CGFloat const duration = 0.25;
 @property (copy, nonatomic) NSArray *bankInfoList;
 @property (strong, nonatomic) TCPaymentMethodModel *currentMethodModel;
 
+/** 余额支付正在进行中 */
+@property (nonatomic, getter=isUnderWay) BOOL underWay;
 
 @end
 
@@ -71,6 +73,7 @@ static CGFloat const duration = 0.25;
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _paymentPurpose = paymentPurpose;
+        _underWay = NO;
         weakSelf = self;
     }
     return self;
@@ -469,6 +472,10 @@ static CGFloat const duration = 0.25;
         [MBProgressHUD showHUDWithMessage:@"密码错误，请重新输入"];
         return;
     }
+    if (self.isUnderWay) {
+        return;
+    }
+    self.underWay = YES;
     
     [MBProgressHUD showHUD:YES];
     [self.passwordView.textField resignFirstResponder];
@@ -488,12 +495,15 @@ static CGFloat const duration = 0.25;
             } else if ([userPayment.status isEqualToString:@"FAILURE"]) { // 错误（余额不足）
                 NSString *message = userPayment.note ?: @"还款失败，请稍后再试";
                 [MBProgressHUD showHUDWithMessage:message];
+                weakSelf.underWay = NO;
             } else { // 还款成功
                 [weakSelf handleRepaymentSucceed];
+                weakSelf.underWay = NO;
             }
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", reason]];
+            weakSelf.underWay = NO;
         }
     }];
 }
@@ -513,6 +523,7 @@ static CGFloat const duration = 0.25;
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"还款失败，%@", reason]];
         }
+        weakSelf.underWay = NO;
     }];
 }
 

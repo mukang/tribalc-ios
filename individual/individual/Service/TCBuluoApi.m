@@ -3545,4 +3545,34 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
     }
 }
 
+- (void)fetchMeetingRoomCommonContacts:(void (^)(NSArray *, NSError *))resultBlock {
+    if ([self isUserSessionValid]) {
+        NSString *apiName = [NSString stringWithFormat:@"conference_rooms/addressBook?me=%@", self.currentUserSession.assigned];
+        TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodGet apiName:apiName];
+        request.token = self.currentUserSession.token;
+        [[TCClient client] send:request finish:^(TCClientResponse *response) {
+            if (response.codeInResponse == 200) {
+                NSMutableArray *temp = [NSMutableArray array];
+                NSArray *array = response.data;
+                for (NSDictionary *dic in array) {
+                    TCMeetingParticipant *participant = [[TCMeetingParticipant alloc] initWithObjectDictionary:dic];
+                    [temp addObject:participant];
+                }
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock([temp copy], nil));
+                }
+            } else {
+                if (resultBlock) {
+                    TC_CALL_ASYNC_MQ(resultBlock(nil, response.error));
+                }
+            }
+        }];
+    } else {
+        TCClientRequestError *sessionError = [TCClientRequestError errorWithCode:TCClientRequestErrorUserSessionInvalid andDescription:nil];
+        if (resultBlock) {
+            TC_CALL_ASYNC_MQ(resultBlock(nil, sessionError));
+        }
+    }
+}
+
 @end

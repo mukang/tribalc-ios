@@ -31,6 +31,7 @@ PODS:
   - MGSwipeTableCell (1.5.6)
   - MJRefresh (3.1.15)
   - pop (1.0.10)
+  - PPGetAddressBook (0.2.8)
   - QQ_XGPush (2.5.0)
   - SDWebImage (4.2.2):
     - SDWebImage/Core (= 4.2.2)
@@ -76,11 +77,21 @@ DEPENDENCIES:
   - MBProgressHUD
   - MGSwipeTableCell (~> 1.5.6)
   - pop (~> 1.0.7)
+  - PPGetAddressBook (from `https://github.com/jkpang/PPGetAddressBook.git`)
   - QQ_XGPush (~> 2.5.0)
   - TCCommonLibs
   - UITableView+FDTemplateLayoutCell
   - WechatOpenSDK
   - YYText
+
+EXTERNAL SOURCES:
+  PPGetAddressBook:
+    :git: https://github.com/jkpang/PPGetAddressBook.git
+
+CHECKOUT OPTIONS:
+  PPGetAddressBook:
+    :commit: e4a8848d088a5642573b9e4ae3d0b86dd617601a
+    :git: https://github.com/jkpang/PPGetAddressBook.git
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -97,6 +108,7 @@ SPEC CHECKSUMS:
   MGSwipeTableCell: 616700eb0ffd1c611ba909066cb7fd739790a0a7
   MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
+  PPGetAddressBook: e4b6b0a87e852df5d5b90c44ecd9ded7f6f1ccf6
   QQ_XGPush: 8c3637d61e1b3fe6e7f60bb1c8aac34184c8bf40
   SDWebImage: 89a9d32cd520bbb46eb14e541d5109b3564af198
   TCCommonLibs: 54e60136670bef9659bef8a6a9a300c95aae4ce5
@@ -104,6 +116,6 @@ SPEC CHECKSUMS:
   WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: a693cc7bc71882512ab2fcc6742bca8d402aaafc
+PODFILE CHECKSUM: 7cfc3b2139672f5efa9d7ff5c726a75d57a2d848
 
 COCOAPODS: 1.3.1

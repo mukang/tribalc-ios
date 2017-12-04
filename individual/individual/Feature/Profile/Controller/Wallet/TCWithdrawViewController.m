@@ -44,6 +44,9 @@
 /** 密码输入页面 */
 @property (weak, nonatomic) TCPaymentPasswordView *passwordView;
 
+/** 提现申请正在进行中 */
+@property (nonatomic, getter=isUnderWay) BOOL underWay;
+
 @end
 
 @implementation TCWithdrawViewController {
@@ -59,6 +62,7 @@
         if (_enabledAmount < 0.0) {
             _enabledAmount = 0.0;
         }
+        _underWay = NO;
         [self updateBankCardList];
     }
     return self;
@@ -279,6 +283,10 @@
         [MBProgressHUD showHUDWithMessage:@"密码错误，请重新输入"];
         return;
     }
+    if (self.isUnderWay) {
+        return;
+    }
+    self.underWay = YES;
     
     [MBProgressHUD showHUD:YES];
     [self.passwordView.textField resignFirstResponder];
@@ -301,6 +309,7 @@
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"提现失败，%@", reason]];
         }
+        weakSelf.underWay = NO;
     }];
 }
 
