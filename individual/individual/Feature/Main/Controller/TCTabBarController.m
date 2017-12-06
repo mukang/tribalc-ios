@@ -69,8 +69,8 @@ static NSString *const AMapApiKey = @"7d500114464651a3aa323ec34eac6368";
     [self addChildController:[[TCProfileViewController alloc] init] title:@"我的" image:@"tabBar_profile_normal" selectedImage:@"tabBar_profile_selected"];
     
     [self registerNotifications];
-    [self startLocationAction];
-    [self setupAMapServices];
+//    [self startLocationAction];
+//    [self setupAMapServices];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
