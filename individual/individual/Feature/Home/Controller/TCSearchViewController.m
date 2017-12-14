@@ -68,7 +68,7 @@
     [self.view addSubview:noResultsView];
     self.noResultsView = noResultsView;
     
-    UIImageView *noResultsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search_no_results"]];
+    UIImageView *noResultsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"no_search_result"]];
     [noResultsView addSubview:noResultsIcon];
     
     UILabel *noResultsLabel = [[UILabel alloc] init];

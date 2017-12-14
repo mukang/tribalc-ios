@@ -10,6 +10,7 @@
 #import "TCBankCardAddViewController.h"
 
 #import "TCBankCardViewCell.h"
+#import "TCEmptyView.h"
 
 #import "TCBuluoApi.h"
 
@@ -21,6 +22,8 @@
 
 @property (strong, nonatomic) NSMutableArray *dataList;
 @property (copy, nonatomic) NSArray *bankInfoList;
+
+@property (strong, nonatomic) TCEmptyView *emptyView;
 
 @end
 
@@ -83,12 +86,26 @@
                     }
                 }
             }
-            [weakSelf.tableView reloadData];
+            [weakSelf reloadData];
+//            [weakSelf.tableView reloadData];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"获取银行卡信息失败，%@", reason]];
         }
     }];
+}
+
+- (void)reloadData {
+    [weakSelf.tableView reloadData];
+    if (weakSelf.dataList.count == 0) {
+        weakSelf.emptyView.hidden = NO;
+    }else {
+        if (_emptyView) {
+            weakSelf.emptyView.hidden = YES;
+            [weakSelf.emptyView removeFromSuperview];
+            weakSelf.emptyView = nil;
+        }
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -179,7 +196,8 @@
             [MBProgressHUD hideHUD:YES];
             [weakSelf.dataList removeObject:bankCard];
             weakSelf.walletAccount.bankCards = [NSArray arrayWithArray:weakSelf.dataList];
-            [weakSelf.tableView reloadData];
+//            [weakSelf.tableView reloadData];
+            [weakSelf reloadData];
         } else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"银行卡删除失败，%@", reason]];
@@ -188,6 +206,16 @@
 }
 
 #pragma mark - Override Methods
+
+- (TCEmptyView *)emptyView {
+    if (_emptyView == nil) {
+        _emptyView = [[TCEmptyView alloc] initWithFrame:self.view.bounds];
+        _emptyView.type = TCEmptyTypeNoBankCardResult;
+        _emptyView.hidden = YES;
+        [self.tableView addSubview:_emptyView];
+    }
+    return _emptyView;
+}
 
 - (NSMutableArray *)dataList {
     if (_dataList == nil) {

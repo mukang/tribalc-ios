@@ -66,7 +66,7 @@ TCGenderPickerViewDelegate>
 
 - (void)setupSubviews {
     
-    TCCommonButton *commitButton = [TCCommonButton buttonWithTitle:@"认证" target:self action:@selector(handleClickCommitButton:)];
+    TCCommonButton *commitButton = [TCCommonButton buttonWithTitle:@"认证" color:TCCommonButtonColorPurple target:self action:@selector(handleClickCommitButton:)];
     commitButton.centerX = TCScreenWidth * 0.5;
     commitButton.y = TCScreenHeight - commitButton.height - TCRealValue(70) - 64;
     [self.tableView addSubview:commitButton];

@@ -8,6 +8,7 @@
 
 #import "TCCreditBillViewController.h"
 #import "TCCreditBillViewCell.h"
+#import "TCEmptyView.h"
 #import "TCBuluoApi.h"
 #import <TCCommonLibs/TCRefreshHeader.h>
 #import <TCCommonLibs/TCRefreshFooter.h>
@@ -21,6 +22,8 @@
 @property (strong, nonatomic) NSMutableArray *dataList;
 
 @property (assign, nonatomic) int64_t sinceTime;
+
+@property (strong, nonatomic) TCEmptyView *emptyView;
 
 @end
 
@@ -64,7 +67,8 @@
                     }
                 }
             }
-            [self.tableView reloadData];
+            [self reloadData];
+//            [self.tableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取订单失败！"];
         }
@@ -99,7 +103,8 @@
                     }
                 }
             }
-            [self.tableView reloadData];
+            [self reloadData];
+//            [self.tableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取帐单失败！"];
         }
@@ -133,7 +138,8 @@
                     }
                 }
             }
-            [self.tableView reloadData];
+            [self reloadData];
+//            [self.tableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取帐单失败！"];
         }
@@ -174,11 +180,33 @@
     return view;
 }
 
+- (void)reloadData {
+    [self.tableView reloadData];
+    if (self.dataList.count) {
+        if (_emptyView) {
+            [self.emptyView removeFromSuperview];
+            self.emptyView = nil;
+        }
+    }else {
+        self.emptyView.hidden = NO;
+    }
+}
+
 - (void)setUpViews {
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
+}
+
+- (TCEmptyView *)emptyView {
+    if (_emptyView == nil) {
+        _emptyView = [[TCEmptyView alloc] initWithFrame:self.view.bounds];
+        _emptyView.type = TCEmptyTypeNoHistoryBillRecord;
+        _emptyView.hidden = YES;
+        [self.tableView addSubview:_emptyView];
+    }
+    return _emptyView;
 }
 
 - (NSMutableArray *)dataList {

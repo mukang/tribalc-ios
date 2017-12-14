@@ -7,12 +7,16 @@
 //
 
 #import "TCPropertyManageListController.h"
+#import "TCPropertyDetailController.h"
+
 #import "TCBuluoApi.h"
 #import "TCPropertyManageWrapper.h"
+
 #import "TCPropertyManageCell.h"
+#import "TCEmptyView.h"
+
 #import <TCCommonLibs/TCRefreshHeader.h>
 #import <TCCommonLibs/TCRefreshFooter.h>
-#import "TCPropertyDetailController.h"
 
 @interface TCPropertyManageListController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -20,25 +24,26 @@
 
 @property (nonatomic, strong) TCPropertyManageWrapper *propertymanageWrapper;
 
+@property (strong, nonatomic) TCEmptyView *emptyView;
+
 @property (nonatomic, strong) NSArray *currentList;
 
 @end
 
 @implementation TCPropertyManageListController
 
-- (UITableView *)propertyTableView {
-    if (_propertyTableView == nil) {
-        _propertyTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        _propertyTableView.delegate = self;
-        _propertyTableView.dataSource = self;
-        _propertyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self.view addSubview:_propertyTableView];
-        [self setupTableViewRefreshView];
-        UINib *nib = [UINib nibWithNibName:@"TCPropertyManageCell" bundle:[NSBundle mainBundle]];
-         [_propertyTableView registerNib:nib forCellReuseIdentifier:@"propertyManageCell"];
+- (void)reloadData {
+    [self.propertyTableView reloadData];
+    if ([self.currentList isKindOfClass:[NSArray class]] && self.currentList.count) {
+        if (_emptyView) {
+            [self.emptyView removeFromSuperview];
+            self.emptyView = nil;
+        }
+    }else {
+        self.emptyView.hidden = NO;
     }
-    return _propertyTableView;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,8 +79,9 @@
                 self.currentList = propertyManageWrapper.content;
                 [self.propertyTableView.mj_header endRefreshing];
                 self.propertyTableView.mj_footer.hidden = NO;
+                
             }
-            [self.propertyTableView reloadData];
+            [self reloadData];
             
         }else {
             if (isMore) {
@@ -181,8 +187,32 @@
     return cell;
 }
 
-#pragma mark - Status Bar
+#pragma mark getter
 
+- (UITableView *)propertyTableView {
+    if (_propertyTableView == nil) {
+        _propertyTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _propertyTableView.delegate = self;
+        _propertyTableView.dataSource = self;
+        _propertyTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self.view addSubview:_propertyTableView];
+        [self setupTableViewRefreshView];
+        UINib *nib = [UINib nibWithNibName:@"TCPropertyManageCell" bundle:[NSBundle mainBundle]];
+        [_propertyTableView registerNib:nib forCellReuseIdentifier:@"propertyManageCell"];
+    }
+    return _propertyTableView;
+}
+
+- (TCEmptyView *)emptyView {
+    if (_emptyView == nil) {
+        _emptyView = [[TCEmptyView alloc] initWithFrame:self.view.bounds];
+        [self.propertyTableView addSubview:_emptyView];
+        _emptyView.type = TCEmptyTypeNoRepairRecord;
+        _emptyView.des = @"暂无报修记录";
+        _emptyView.hidden = YES;
+    }
+    return _emptyView;
+}
 
 
 - (void)dealloc {

@@ -9,13 +9,17 @@
 #import "TCCompanyApplyViewController.h"
 #import "TCCompanyApplyDetailViewController.h"
 
+#import "TCEmptyView.h"
+
 #import <TCCommonLibs/TCCommonButton.h>
 #import "TCBuluoApi.h"
 
-@interface TCCompanyApplyViewController ()
+@interface TCCompanyApplyViewController ()<TCEmptyViewDelegate>
 
 @property (weak, nonatomic) UILabel *promptLabel;
 @property (weak, nonatomic) TCCommonButton *actionButton;
+
+@property (strong, nonatomic) TCEmptyView *emptyView;
 
 @end
 
@@ -41,7 +45,7 @@
     
     [self setupNavBar];
     [self setupSubviews];
-    [self setupConstraints];
+//    [self setupConstraints];
 }
 
 #pragma mark - Private Methods
@@ -54,62 +58,88 @@
                                                                             action:@selector(handleClickBackButton:)];
 }
 
-- (void)setupSubviews {
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    NSString *prompt;
-    NSString *actionTitle;
-    switch (self.applyStatus) {
-        case TCCompanyApplyStatusNotApply:
-            prompt = @"您还未绑定企业，请绑定";
-            actionTitle = @"申请绑定";
-            break;
-        case TCCompanyApplyStatusProcess:
-            prompt = @"您的申请已提交，请耐心等待";
-            actionTitle = @"返回首页";
-            break;
-        case TCCompanyApplyStatusFailure:
-            prompt = @"该公司拒绝了您的申请，请查看填写信息重新申请";
-            actionTitle = @"重新申请";
-            break;
-            
-        default:
-            break;
+#pragma mark TCEmptyViewDelegate
+
+- (void)emptyViewBtnDidClick {
+    TCUserInfo *userInfo = [TCBuluoApi api].currentUserSession.userInfo;
+    if (![userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+        [MBProgressHUD showHUDWithMessage:@"身份认证成功后才可绑定公司"];
+        return;
     }
     
-    UILabel *promptLabel = [[UILabel alloc] init];
-    promptLabel.text = prompt;
-    promptLabel.textAlignment = NSTextAlignmentCenter;
-    promptLabel.textColor = TCBlackColor;
-    promptLabel.font = [UIFont systemFontOfSize:16];
-    promptLabel.numberOfLines = 0;
-    [self.view addSubview:promptLabel];
-    self.promptLabel = promptLabel;
-    
-    TCCommonButton *actionButton = [TCCommonButton buttonWithTitle:actionTitle target:self action:@selector(handleClickActionButton:)];
-    [self.view addSubview:actionButton];
-    self.actionButton = actionButton;
+    TCCompanyApplyDetailViewController *vc = [[TCCompanyApplyDetailViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)setupConstraints {
-    [self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.view.mas_top).with.offset(TCRealValue(267));
-        make.left.equalTo(weakSelf.view.mas_left).with.offset(48);
-        make.right.equalTo(weakSelf.view.mas_right).with.offset(-48);
+- (void)setupSubviews {
+    
+    [self.view addSubview:self.emptyView];
+    [self.emptyView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
     }];
-    [self.actionButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.view.mas_top).with.offset(TCRealValue(321));
-        make.left.equalTo(weakSelf.view.mas_left).with.offset(30);
-        make.right.equalTo(weakSelf.view.mas_right).with.offset(-30);
-        make.height.mas_equalTo(40);
-    }];
+    
+//    NSString *prompt;
+//    NSString *actionTitle;
+//    switch (self.applyStatus) {
+//        case TCCompanyApplyStatusNotApply:
+//            prompt = @"您还未绑定企业，请绑定";
+//            actionTitle = @"申请绑定";
+//            break;
+//        case TCCompanyApplyStatusProcess:
+//            prompt = @"您的申请已提交，请耐心等待";
+//            actionTitle = @"返回首页";
+//            break;
+//        case TCCompanyApplyStatusFailure:
+//            prompt = @"该公司拒绝了您的申请，请查看填写信息重新申请";
+//            actionTitle = @"重新申请";
+//            break;
+//
+//        default:
+//            break;
+//    }
+//
+//    UILabel *promptLabel = [[UILabel alloc] init];
+//    promptLabel.text = prompt;
+//    promptLabel.textAlignment = NSTextAlignmentCenter;
+//    promptLabel.textColor = TCBlackColor;
+//    promptLabel.font = [UIFont systemFontOfSize:16];
+//    promptLabel.numberOfLines = 0;
+//    [self.view addSubview:promptLabel];
+//    self.promptLabel = promptLabel;
+//
+//    TCCommonButton *actionButton = [TCCommonButton buttonWithTitle:actionTitle target:self action:@selector(handleClickActionButton:)];
+//    [self.view addSubview:actionButton];
+//    self.actionButton = actionButton;
 }
+
+//- (void)setupConstraints {
+//    [self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(weakSelf.view.mas_top).with.offset(TCRealValue(267));
+//        make.left.equalTo(weakSelf.view.mas_left).with.offset(48);
+//        make.right.equalTo(weakSelf.view.mas_right).with.offset(-48);
+//    }];
+//    [self.actionButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(weakSelf.view.mas_top).with.offset(TCRealValue(321));
+//        make.left.equalTo(weakSelf.view.mas_left).with.offset(30);
+//        make.right.equalTo(weakSelf.view.mas_right).with.offset(-30);
+//        make.height.mas_equalTo(40);
+//    }];
+//}
 
 #pragma mark - Status Bar
 
 
 
 #pragma mark - Actions
+
+- (TCEmptyView *)emptyView {
+    if (_emptyView == nil) {
+        _emptyView = [[TCEmptyView alloc] init];
+        _emptyView.type = TCEmptyTypeNoBindCompany;
+        _emptyView.delegate = self;
+    }
+    return _emptyView;
+}
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
     UIViewController *vc = self.navigationController.childViewControllers[0];

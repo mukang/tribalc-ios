@@ -10,6 +10,7 @@
 #import "TCWalletBillDetailViewController.h"
 
 #import "TCWalletBillViewCell.h"
+#import "TCEmptyView.h"
 
 #import "TCBuluoApi.h"
 
@@ -22,6 +23,8 @@
 
 @property (copy, nonatomic) NSString *sortSkip;
 @property (strong, nonatomic) NSMutableArray *dataList;
+
+@property (strong, nonatomic) TCEmptyView *emptyView;
 
 @end
 
@@ -87,7 +90,8 @@
                     }
                 }
             }
-            [weakSelf.tableView reloadData];
+            [weakSelf reloadData];
+//            [weakSelf.tableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取对账单失败！"];
         }
@@ -120,7 +124,8 @@
                     }
                 }
             }
-            [weakSelf.tableView reloadData];
+            [weakSelf reloadData];
+//            [weakSelf.tableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取对账单失败！"];
         }
@@ -152,7 +157,8 @@
                     }
                 }
             }
-            [weakSelf.tableView reloadData];
+            [weakSelf reloadData];
+//            [weakSelf.tableView reloadData];
         } else {
             [MBProgressHUD showHUDWithMessage:@"获取对账单失败！"];
         }
@@ -215,6 +221,28 @@
 }
 
 #pragma mark - Override Methods
+
+- (void)reloadData {
+    [weakSelf.tableView reloadData];
+    if (weakSelf.dataList.count) {
+        if (_emptyView) {
+            [weakSelf.emptyView removeFromSuperview];
+            weakSelf.emptyView = nil;
+        }
+    }else {
+        weakSelf.emptyView.hidden = NO;
+    }
+}
+
+- (TCEmptyView *)emptyView {
+    if (_emptyView == nil) {
+        _emptyView = [[TCEmptyView alloc] initWithFrame:weakSelf.view.bounds];
+        _emptyView.type = TCEmptyTypeNoHistoryBillRecord;
+        _emptyView.hidden = YES;
+        [weakSelf.tableView addSubview:_emptyView];
+    }
+    return _emptyView;
+}
 
 - (NSMutableArray *)dataList {
     if (_dataList == nil) {

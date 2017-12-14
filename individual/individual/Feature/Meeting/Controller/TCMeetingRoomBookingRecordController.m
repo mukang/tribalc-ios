@@ -11,6 +11,7 @@
 #import "TCNavigationController.h"
 
 #import "TCMeetingRoomBookingRecordCell.h"
+#import "TCEmptyView.h"
 
 #import "TCMeetingRoomReservationWrapper.h"
 #import "TCBuluoApi.h"
@@ -20,6 +21,8 @@
 @interface TCMeetingRoomBookingRecordController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
+
+@property (strong, nonatomic) TCEmptyView *emptyView;
 
 @property (strong, nonatomic) TCMeetingRoomReservationWrapper *meetingRoomReservationWrapper;
 
@@ -83,7 +86,8 @@
             }else {
                 [self.tableView.mj_footer resetNoMoreData];
             }
-            [self.tableView reloadData];
+            [self reloadData];
+//            [self.tableView reloadData];
         }else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
@@ -107,7 +111,8 @@
             }else {
                 [self.tableView.mj_footer resetNoMoreData];
             }
-            [self.tableView reloadData];
+            [self reloadData];
+//            [self.tableView reloadData];
         }else {
             NSString *reason = error.localizedDescription ?: @"请稍后再试";
             [MBProgressHUD showHUDWithMessage:[NSString stringWithFormat:@"加载失败，%@", reason]];
@@ -124,7 +129,8 @@
             if ([meetingRoomReservationWrapper.content isKindOfClass:[NSArray class]]) {
                 [self.meetingRoomReservationArr addObjectsFromArray:meetingRoomReservationWrapper.content];
             }
-            [self.tableView reloadData];
+            [self reloadData];
+//            [self.tableView reloadData];
             if (!meetingRoomReservationWrapper.hasMore) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
             }else {
@@ -218,6 +224,28 @@
         _tableView.mj_header = refreshHeader;
     }
     return _tableView;
+}
+
+- (void)reloadData {
+    [self.tableView reloadData];
+    if (self.meetingRoomReservationArr.count) {
+        if (_emptyView) {
+            [self.emptyView removeFromSuperview];
+            self.emptyView = nil;
+        }
+    }else {
+        self.emptyView.hidden = NO;
+    }
+}
+
+- (TCEmptyView *)emptyView {
+    if (_emptyView == nil) {
+        _emptyView = [[TCEmptyView alloc] initWithFrame:self.view.bounds];
+        _emptyView.type = TCEmptyTypeNoMeetingRoom;
+        _emptyView.hidden = YES;
+        [self.tableView addSubview:_emptyView];
+    }
+    return _emptyView;
 }
 
 - (NSMutableArray *)meetingRoomReservationArr {
