@@ -10,6 +10,7 @@
 #import "TCNavigationController.h"
 #import "TCCommonPaymentViewController.h"
 #import "TCWalletPasswordViewController.h"
+#import "TCIDAuthViewController.h"
 
 #import "TCPaymentDetailView.h"
 #import "TCPaymentPasswordView.h"
@@ -298,6 +299,16 @@ WXApiManagerDelegate
     [self presentViewController:nav animated:YES completion:nil];
 }
 
+/**
+ 显示身份认证页面
+ */
+- (void)showIDAuthViewController {
+    TCIDAuthViewController *vc = [[TCIDAuthViewController alloc] initWithNibName:@"TCIDAuthViewController" bundle:[NSBundle mainBundle]];
+    vc.fromPayment = YES;
+    TCNavigationController *nav = [[TCNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
 #pragma mark - 创建模型数据源
 
 - (NSArray *)createPaymentMethodModelsWithBankCardList:(NSArray *)bankCardList {
@@ -538,6 +549,19 @@ WXApiManagerDelegate
  使用余额付款
  */
 - (void)handlePaymentWithBalance {
+    TCUserInfo *userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
+    if (![userInfo.authorizedStatus isEqualToString:@"SUCCESS"]) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您还未认证身份\n请先认证身份，再进行付款" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [weakSelf showIDAuthViewController];
+        }];
+        [alertController addAction:cancelAction];
+        [alertController addAction:confirmAction];
+        [weakSelf presentViewController:alertController animated:YES completion:nil];
+        return;
+    }
+    
     // 获取钱包信息
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] fetchWalletAccountInfo:^(TCWalletAccount *walletAccount, NSError *error) {

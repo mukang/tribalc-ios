@@ -214,8 +214,12 @@ TCGenderPickerViewDelegate>
 #pragma mark - Actions
 
 - (void)handleClickBackButton:(UIBarButtonItem *)sender {
-    UIViewController *vc = self.navigationController.childViewControllers[0];
-    [self.navigationController popToViewController:vc animated:YES];
+    if (self.fromPayment) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        UIViewController *vc = self.navigationController.childViewControllers[0];
+        [self.navigationController popToViewController:vc animated:YES];
+    }
 }
 
 - (void)handleClickCommitButton:(TCCommonButton *)sender {
@@ -239,13 +243,13 @@ TCGenderPickerViewDelegate>
     [MBProgressHUD showHUD:YES];
     [[TCBuluoApi api] authorizeUserIdentity:self.authInfo result:^(TCUserInfo *userInfo, NSError *error) {
         if (userInfo) {
-            [MBProgressHUD showHUDWithMessage:@"认证申请已提交"];
+            [MBProgressHUD showHUDWithMessage:@"认证成功"];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:TCBuluoApiNotificationUserAuthDidUpdate object:nil];
             // 发送首页需要刷新数据的通知
             [[NSNotificationCenter defaultCenter] postNotificationName:TCNotificationHomePageNeedRefreshData object:self];
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf handleClickBackButton:nil];
             });
         } else {

@@ -39,7 +39,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
-    self.userInfo = [[TCBuluoApi api] currentUserSession].userInfo;
     
     [self setupNavBar];
     if (self.authStatus == TCIDAuthStatusProcessing) {

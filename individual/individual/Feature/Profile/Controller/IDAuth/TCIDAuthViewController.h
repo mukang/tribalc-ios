@@ -11,4 +11,7 @@
 
 @interface TCIDAuthViewController : TCBaseViewController
 
+/** 来自付款页面 */
+@property (nonatomic) BOOL fromPayment;
+
 @end
