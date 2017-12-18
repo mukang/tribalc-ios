@@ -237,7 +237,7 @@
 - (TCEmptyView *)emptyView {
     if (_emptyView == nil) {
         _emptyView = [[TCEmptyView alloc] initWithFrame:weakSelf.view.bounds];
-        _emptyView.type = TCEmptyTypeNoHistoryBillRecord;
+        _emptyView.type = TCEmptyTypeNoBillResult;
         _emptyView.hidden = YES;
         [weakSelf.tableView addSubview:_emptyView];
     }
