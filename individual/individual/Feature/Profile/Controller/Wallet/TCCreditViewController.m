@@ -79,7 +79,7 @@
     [[TCBuluoApi api] fetchCurrentCreditBillByWalletID:self.walletAccount.ID result:^(TCCreditBill *creditBill, NSError *error) {
         @StrongObj(self)
         [MBProgressHUD hideHUD:YES];
-        if (creditBill) {
+        if (!error) {
             self.creditBill = creditBill;
             [self.tableView reloadData];
         }else {
