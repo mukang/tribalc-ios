@@ -419,6 +419,10 @@
 #pragma mark - Actions
 
 - (void)handleClickNextButton {
+    if (self.bookingRequestInfo.subject.length == 0) {
+        [MBProgressHUD showHUDWithMessage:@"请填写会议主题"];
+        return;
+    }
     if (!self.bookingDate) {
         [MBProgressHUD showHUDWithMessage:@"请选择会议日期和时间"];
         return;

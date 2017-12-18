@@ -3204,6 +3204,7 @@ NSString *const TCBuluoApiNotificationUserAuthDidUpdate = @"TCBuluoApiNotificati
 - (void)bindWechatByWechatCode:(NSString *)code userID:(NSString *)userID result:(void (^)(BOOL, NSError *))resultBlock {
     NSString *apiName = @"wechat/bind";
     TCClientRequest *request = [TCClientRequest requestWithHTTPMethod:TCClientHTTPMethodPost apiName:apiName];
+    request.token = self.currentUserSession.token;
     [request setValue:code forParam:@"code"];
     [request setValue:userID forParam:@"memberId"];
     [request setValue:@"PERSON" forParam:@"memberType"];
