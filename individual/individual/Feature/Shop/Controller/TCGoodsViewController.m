@@ -75,7 +75,7 @@
 - (void)loadData {
     @WeakObj(self)
     [MBProgressHUD showHUD:YES];
-    [[TCBuluoApi alloc] fetchGoodsWrapper:20 sortSkip:nil storeId:self.storeId result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchGoodsWrapper:20 sortSkip:nil storeId:self.storeId result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_header endRefreshing];
         if (goodsWrapper) {
@@ -100,7 +100,7 @@
 
 - (void)loadOldData {
     @WeakObj(self)
-    [[TCBuluoApi alloc] fetchGoodsWrapper:20 sortSkip:self.goodsWrapper.nextSkip storeId:self.storeId result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
+    [[TCBuluoApi api] fetchGoodsWrapper:20 sortSkip:self.goodsWrapper.nextSkip storeId:self.storeId result:^(TCGoodsWrapper *goodsWrapper, NSError *error) {
         @StrongObj(self)
         [self.tableView.mj_footer endRefreshing];
         if (goodsWrapper) {
